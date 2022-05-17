@@ -9,15 +9,17 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          const Text('main page'),
-          Text('data', style: Theme.of(context).textTheme.bodyText1),
-          TextButton(
-              onPressed: () => AutoRouter.of(context).navigateNamed(AppRoutes.login),
-              child: const Text('login'),
-          )
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            const Text('main page'),
+            Text('data', style: Theme.of(context).textTheme.bodyText1),
+            TextButton(
+                onPressed: () => context.router.pushNamed(AppRoutes.login),
+                child: const Text('push to login'),
+            )
+          ],
+        ),
       ),
     );
   }
