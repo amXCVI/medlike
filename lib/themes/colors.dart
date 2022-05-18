@@ -1,0 +1,22 @@
+import 'dart:ui';
+
+const Color mainBrandColor = Color(0xff3C94A8);
+const Color lightBrand = Color(0xffDFEAEC);
+const Color brandSecond = Color(0xffD2EFF4);
+const Color darkGreenFirst = Color(0xff4E767E);
+const Color darkGreenSecond = Color(0xff455A5F);
+const Color lightBrandSecond = Color(0xffD9E5E8);
+const Color lightBrandThird = Color(0xff8DB2B9);
+const Color lightBrandBackground = Color(0xffF9FCFC);
+const Color circleBgSecond = Color(0xffEDF5F7);
+const Color mainBrandSecond = Color(0xff358294);
+const Color brandSecondHover = Color(0xffCAE6EB);
+const Color gradientSecond = Color(0xff2B7A92);
+const Color mainBgAlpha = Color(0xff3C94A8);
+const Color red = Color(0xffCE8D96);
+const Color lightRed = Color(0xffF7DEDE);
+const Color mainError = Color(0xffFF5752);
+const Color mainText = Color(0xff151616);
+const Color lightText = Color(0xff9E9D9D);
+const Color mainDone = Color(0xff51E09F);
+const Color brandSecondActive = Color(0xffAED6DD);
