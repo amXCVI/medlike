@@ -34,7 +34,7 @@ class AppRouter extends _i3.RootStackRouter {
   @override
   List<_i3.RouteConfig> get routes => [
         _i3.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/main', fullMatch: true),
+            path: '/', redirectTo: '/login', fullMatch: true),
         _i3.RouteConfig(MainRoute.name, path: '/main'),
         _i3.RouteConfig(LoginRoute.name, path: '/login'),
         _i3.RouteConfig('*#redirect',

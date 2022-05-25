@@ -3,14 +3,18 @@ part of 'user_bloc.dart';
 @immutable
 abstract class UserState extends Equatable {}
 
-class Loading extends UserState {
+class UserLoginLoadingState extends UserState {
   @override
   List<Object?> get props => [];
 }
 
-class Authenticated extends UserState {
+class UserLoginLoadedState extends UserState {
+  final AuthTokenResponse authTokens;
+
+  UserLoginLoadedState(this.authTokens);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [authTokens];
 }
 
 class UnAuthenticated extends UserState {
@@ -18,13 +22,22 @@ class UnAuthenticated extends UserState {
   List<Object?> get props => [];
 }
 
-class AuthError extends UserState {
+class UserLoginErrorState extends UserState {
   final String error;
 
-  AuthError(this.error);
+  UserLoginErrorState(this.error);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
+}
+
+class UserCounter extends UserState {
+  final int counter;
+
+  UserCounter(this.counter);
+
+  @override
+  List<Object?> get props => [counter];
 }
 
 

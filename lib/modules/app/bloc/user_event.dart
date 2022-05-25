@@ -6,13 +6,15 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SignInWithPasswordRequested extends UserEvent {
+class LoginWithPasswordRequestedEvent extends UserEvent {
   late final String phone;
   late final String password;
 
-  SignInWithPasswordRequested(this.phone, this.password);
+  LoginWithPasswordRequestedEvent(this.phone, this.password);
 }
 
-class SignOutRequested extends UserEvent {}
+class LogoutRequestedEvent extends UserEvent {}
+
+class IncrementCounter extends UserEvent {}
 
 

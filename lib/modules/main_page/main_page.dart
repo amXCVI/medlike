@@ -15,9 +15,9 @@ class MainPage extends StatelessWidget {
             const Text('main page'),
             Text('data', style: Theme.of(context).textTheme.bodyText1),
             TextButton(
-                onPressed: () => context.router.pushNamed(AppRoutes.login),
-                child: const Text('push to login'),
-            )
+              onPressed: () => context.router.pushNamed(AppRoutes.login),
+              child: const Text('push to login'),
+            ),
           ],
         ),
       ),
