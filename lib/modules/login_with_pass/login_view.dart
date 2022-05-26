@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/data/repository/user_repository.dart';
-import 'package:medlike/modules/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/login_with_pass/password_input.dart';
+import 'package:medlike/modules/login_with_pass/phone_number_input.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:medlike/widgets/app_bar/unauth_app_bar/unauth_app_bar.dart';
 
 class LoginView extends StatelessWidget {
@@ -16,9 +17,8 @@ class LoginView extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: const UnAuthAppBar(title: 'Заполярье'),
       body: BlocProvider(
-        create: (context) => UserCubit(UserRepository()),
-        child: const LoginPageWidget(),
-      ),
+          create: (context) => UserCubit(UserRepository()),
+          child: LoginPageWidget()),
       bottomNavigationBar: const LoginPageBottomNavigationBar(),
     );
   }
@@ -50,62 +50,14 @@ class LoginPageBottomNavigationBar extends StatelessWidget {
   }
 }
 
-class LoginPageWidget extends StatefulWidget {
+class LoginPageWidget extends StatelessWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
   @override
-  State<LoginPageWidget> createState() => _LoginPageWidgetState();
-}
-
-class _LoginPageWidgetState extends State<LoginPageWidget> {
-  final GlobalKey<FormState> _loginPhoneFormKey = GlobalKey<FormState>();
-  final FocusNode _focus = FocusNode();
-  late final TextEditingController _controller = TextEditingController()
-    ..text = '';
-  final userRepository = UserRepository();
-
-  @override
-  void initState() {
-    super.initState();
-    _focus.addListener(_onFocusChange);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _focus.removeListener(_onFocusChange);
-    _focus.dispose();
-  }
-
-  void _onFocusChange() {
-    if (_focus.hasFocus && _controller.text.isEmpty) {
-      _controller.text = '+7';
-    }
-  }
-
-  void _onChangePhone(String text) {
-    RegExp exp = RegExp(r"[^0-9]+");
-    if (_controller.text.replaceAll(exp, '').length >= 11) {
-      _focus.unfocus();
-      _authenticateWithPhoneAndPassword(_controller.text);
-    }
-  }
-
-  void _authenticateWithPhoneAndPassword(String phone) {
-    RegExp exp = RegExp(r"[^0-9]+");
-    String phoneString = phone.replaceAll(exp, '');
-    UserCubit(UserRepository()).loginWithPassword(phoneString, 'Qwerty11@');
-    // UserBloc(userRepository: UserRepository()).add(
-    //   LoginWithPasswordRequestedEvent(phoneString, 'Qwerty11@'),
-    // );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserCubit>(
-      create: (context) => UserCubit(userRepository),
-      child: Material(
-        child: SingleChildScrollView(
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -141,82 +93,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           'assets/animations/onboarding_animation.json'),
                     )),
               ]),
-              Text('Введите номер телефона',
-                  style: Theme.of(context).textTheme.bodySmall),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Form(
-                  key: _loginPhoneFormKey,
-                  child: TextField(
-                    controller: _controller,
-                    onChanged: (text) => _onChangePhone(text),
-                    focusNode: _focus,
-                    autofocus: false,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [phoneMaskFormatter],
-                    decoration: const InputDecoration(
-                      hintText: '+7 (###) ###-##-##',
-                      hintStyle: TextStyle(fontSize: 17, color: lightText),
-                    ),
-                    style: const TextStyle(
-                      fontSize: 17,
-                      color: mainText,
-                    ),
-                    textAlign: TextAlign.center,
-                    showCursor: _focus.hasFocus && _controller.text.isNotEmpty
-                        ? true
-                        : false,
-                  ),
-                ),
-              ),
-              // state is UserLoginLoadedState
-              //     ? Text(state.authTokens.token)
-              //     : MaterialButton(
-              //         onPressed: () =>
-              //             _authenticateWithPhoneAndPassword(_controller.text),
-              //         child: Text('Load'),
-              //       ),
-              BlocBuilder<UserCubit, UserAuthState>(
-                builder: (context, state) {
-                  return MaterialButton(
-                    onPressed: () =>
-                        _authenticateWithPhoneAndPassword(_controller.text),
-                    child: Text('Login '),
-                  );
-                },
-              ),
-              Results(),
+              state.authScreen == UserAuthScreens.inputPhone
+                  ? const PhoneNumberInput()
+                  : const PasswordInput(),
+              state.authStatus == UserAuthStatuses.loadingAuth
+                  ? const CircularProgressIndicator()
+                  : const Text('')
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
-  }
-}
-
-class Results extends StatelessWidget {
-  const Results({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    UserCubit userCubit = context.watch<UserCubit>();
-    // return BlocBuilder<UserCubit, UserAuthState>(builder: (context, state) {
-      switch (userCubit.state.status) {
-        case UserAuthStatuses.unAuth:
-          return Text('Unauth');
-
-        case UserAuthStatuses.successAuth:
-          return Text('!!!SUCCESS!!!');
-
-        case UserAuthStatuses.failureAuth:
-          return Text('Failure: ${userCubit.state.error}');
-
-        case UserAuthStatuses.loadingAuth:
-          return CircularProgressIndicator();
-
-        default:
-          return Text('default');
-      // }
-    }
   }
 }
