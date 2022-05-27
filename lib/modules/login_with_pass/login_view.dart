@@ -1,10 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/main.dart';
 import 'package:medlike/modules/login_with_pass/password_input.dart';
 import 'package:medlike/modules/login_with_pass/phone_number_input.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/app_bar/unauth_app_bar/unauth_app_bar.dart';
 
@@ -18,7 +22,7 @@ class LoginView extends StatelessWidget {
       appBar: const UnAuthAppBar(title: 'Заполярье'),
       body: BlocProvider(
           create: (context) => UserCubit(UserRepository()),
-          child: LoginPageWidget()),
+          child: const LoginPageWidget()),
       bottomNavigationBar: const LoginPageBottomNavigationBar(),
     );
   }
@@ -57,6 +61,9 @@ class LoginPageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
+        if (state.authStatus == UserAuthStatuses.successAuth) {
+          RouteData.of(context).router.navigateNamed(AppRoutes.main);
+        }
         return SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,7 +105,7 @@ class LoginPageWidget extends StatelessWidget {
                   : const PasswordInput(),
               state.authStatus == UserAuthStatuses.loadingAuth
                   ? const CircularProgressIndicator()
-                  : const Text('')
+                  : const Text(''),
             ],
           ),
         );

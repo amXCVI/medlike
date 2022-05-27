@@ -51,4 +51,14 @@ class UserCubit extends Cubit<UserState> {
           authScreen: state.authScreen));
     }
   }
+
+  void signOut() async {
+    const storage = FlutterSecureStorage();
+
+    await storage.delete(key: 'accessToken');
+    await storage.delete(key: 'refreshToken');
+    emit(state.copyWith(
+        authStatus: UserAuthStatuses.unAuth,
+        authScreen: UserAuthScreens.inputPhone));
+  }
 }
