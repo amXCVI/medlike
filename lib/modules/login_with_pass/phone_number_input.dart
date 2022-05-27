@@ -38,9 +38,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
 
   void _onChangePhone(String text) {
     RegExp exp = RegExp(r"[^0-9]+");
-    if (_controller.text
-        .replaceAll(exp, '')
-        .length >= 11) {
+    if (_controller.text.replaceAll(exp, '').length >= 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
     }
@@ -57,7 +55,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     return Column(
       children: [
         Text('Введите номер телефона',
-            style: Theme.of(context).textTheme.bodySmall),
+            style: Theme.of(context).textTheme.labelMedium),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
@@ -69,18 +67,17 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               inputFormatters: [phoneMaskFormatter],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '+7 (###) ###-##-##',
-                hintStyle: TextStyle(fontSize: 17, color: lightText),
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: AppColors.lightText),
               ),
-              style: const TextStyle(
-                fontSize: 17,
-                color: mainText,
-              ),
+              style: Theme.of(context).textTheme.labelLarge,
               textAlign: TextAlign.center,
-              showCursor: _focus.hasFocus && _controller.text.isNotEmpty
-                  ? true
-                  : false,
+              showCursor:
+                  _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
             ),
           ),
         ),

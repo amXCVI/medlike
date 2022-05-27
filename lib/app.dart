@@ -11,7 +11,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Medlike Base App',
-      theme: lightTheme,
+      theme: AppTheme.lightAppTheme,
       routerDelegate: _router.delegate(),
       routeInformationParser: _router.defaultRouteParser(),
       debugShowCheckedModeBanner: false,

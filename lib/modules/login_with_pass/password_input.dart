@@ -41,7 +41,7 @@ class _PasswordInputState extends State<PasswordInput> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Введите пароль', style: Theme.of(context).textTheme.bodySmall),
+        Text('Введите пароль', style: Theme.of(context).textTheme.labelMedium),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
@@ -51,9 +51,12 @@ class _PasswordInputState extends State<PasswordInput> {
               onChanged: (text) => _onChangePassword(text),
               focusNode: _focus,
               autofocus: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '******',
-                hintStyle: TextStyle(fontSize: 17, color: lightText),
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: AppColors.lightText),
               ),
               obscureText: true,
               enableSuggestions: false,
@@ -62,10 +65,7 @@ class _PasswordInputState extends State<PasswordInput> {
               onSubmitted: (value) {
                 _authenticateWithPhoneAndPassword();
               },
-              style: const TextStyle(
-                fontSize: 17,
-                color: mainText,
-              ),
+              style: Theme.of(context).textTheme.labelLarge,
               textAlign: TextAlign.center,
             ),
           ),

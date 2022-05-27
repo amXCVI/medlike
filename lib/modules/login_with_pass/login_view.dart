@@ -4,10 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/main.dart';
 import 'package:medlike/modules/login_with_pass/password_input.dart';
 import 'package:medlike/modules/login_with_pass/phone_number_input.dart';
-import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/app_bar/unauth_app_bar/unauth_app_bar.dart';
@@ -39,13 +37,13 @@ class LoginPageBottomNavigationBar extends StatelessWidget {
         onPressed: () {},
         child: RichText(
           textAlign: TextAlign.center,
-          text: const TextSpan(
+          text: TextSpan(
             text: 'Используя приложение, вы принимаете условия ',
-            style: TextStyle(fontSize: 14, color: Colors.black54),
+            style: Theme.of(context).textTheme.bodySmall,
             children: <TextSpan>[
               TextSpan(
                   text: 'пользовательского соглашения',
-                  style: TextStyle(color: mainBrandColor)),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mainBrandColor)),
             ],
           ),
         ),

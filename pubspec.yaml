@@ -49,6 +49,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Muller
+      fonts:
+        - asset: assets/fonts/muller/Fontfabric-Muller-Bold.ttf
+          style: normal
+          weight: 700
+        - asset: assets/fonts/muller/Fontfabric-Muller-Light.ttf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/muller/Fontfabric-Muller-Medium.ttf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/muller/Fontfabric-Muller-Regular.ttf
+          style: normal
+          weight: 400
   assets:
     - assets/icons/
     - assets/images/
