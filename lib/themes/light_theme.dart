@@ -4,9 +4,10 @@ import 'package:medlike/themes/colors.dart';
 const lightBackgroundColor = Color(0xFFECECEC);
 
 final lightTheme = ThemeData(
-  backgroundColor: Colors.red,
-  scaffoldBackgroundColor: Colors.green,
+  backgroundColor: AppColors.mainAppBackground,
+  scaffoldBackgroundColor: AppColors.mainAppBackground,
   typography: Typography.material2021(),
+  /// Typography
   textTheme: const TextTheme(
     displayLarge: TextStyle(),
     displayMedium: TextStyle(),
@@ -21,7 +22,15 @@ final lightTheme = ThemeData(
     ),
     headlineSmall: TextStyle(),
     titleLarge: TextStyle(),
-    titleMedium: TextStyle(),
+    titleMedium: TextStyle(
+      /// Пункты меню
+      fontFamily: 'Muller',
+      fontSize: 16.0,
+      height: 1.25,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.3,
+      color: AppColors.mainText,
+    ),
     titleSmall: TextStyle(),
     bodyLarge: TextStyle(),
     bodyMedium: TextStyle(),
@@ -50,4 +59,28 @@ final lightTheme = ThemeData(
     ),
     labelSmall: TextStyle(),
   ),
+  /// Colors
+  primaryColor: AppColors.mainBrandColor,
+  primaryColorLight: AppColors.mainBrandSecond,
+  primaryColorDark: AppColors.darkGreenFirst,
+  // focusColor: AppColors.
+  hoverColor: AppColors.circleBgSecond,
+  // shadowColor: AppColors.
+  // canvasColor: AppColors.
+  // scaffoldBackgroundColor: AppColors.
+  // bottomAppBarColor: AppColors.
+  // cardColor: AppColors.
+  // dividerColor: AppColors.
+  // highlightColor: AppColors.
+  // splashColor: AppColors.
+  // selectedRowColor: AppColors.
+  // unselectedWidgetColor: AppColors.
+  // disabledColor: AppColors.
+  // secondaryHeaderColor: AppColors.
+  // backgroundColor: AppColors.
+  // dialogBackgroundColor: AppColors.
+  // indicatorColor: AppColors.
+  // hintColor: AppColors.
+  // errorColor: AppColors.
+  // toggleableActiveColor: AppColors.
 );

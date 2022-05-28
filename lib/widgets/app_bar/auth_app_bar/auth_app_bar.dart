@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 
-class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const UnAuthAppBar({Key? key, required this.title}) : super(key: key);
+class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AuthAppBar({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -13,14 +15,13 @@ class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      leading: Image.asset('assets/icons/ic_logo_launch.png'),
+      leading: IconButton(
+          onPressed: () {
+            RouteData.of(context).router.navigateNamed(AppRoutes.main);
+          },
+          icon: Image.asset('assets/icons/ic_logo_launch.png')),
       title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
       centerTitle: true,
-      actions: [
-        IconButton(
-            onPressed: () {},
-            icon: Image.asset('assets/icons/ic_feedback_navbar_outline.png'))
-      ],
     );
   }
 }

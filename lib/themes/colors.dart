@@ -43,8 +43,8 @@ class AppColors {
 // SecondaryContainer
   static const Color lightBrandSecond = Color(0xffD9E5E8);
 
-//
-  static const Color circleBgSecond = Color(0xffEDF5F7);
+// HoverColor
+  static const Color circleBgSecond = Color.fromRGBO(237, 245, 247, 1);
 
 //
   static const Color lightBrandThird = Color(0xff8DB2B9);
