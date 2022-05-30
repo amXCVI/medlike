@@ -1,13 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:medlike/app_constants/app_constants.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class DioInterceptors extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     if (kDebugMode) {
       print('REQUEST[${options.method}] => PATH: ${options.path}');
       print('DATA: ${options.data.toString()}');
     }
+    options.headers = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': 'Medlike',
+      'Authorization': 'Bearer ${await UserSecureStorage.getField(AppConstants().accessToken)}',
+    };
+
     return super.onRequest(options, handler);
   }
   @override
@@ -21,7 +30,7 @@ class DioInterceptors extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     if (kDebugMode) {
-      print('ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+      print('ERROR[${err.message}] => PATH: ${err.requestOptions.path}');
     }
     return super.onError(err, handler);
   }

@@ -10,19 +10,17 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final String currentRoute = context.router.currentPath;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 8.0),
-      child: Wrap(
-        children: mainMenuItemsList.map((item) {
-          return MainMenuItem(
-            svgIconPath: item.svgIconPath,
-            title: item.title,
-            isSelected: currentRoute.contains(item.link),
-            svgFilledIconPath: item.svgFilledIconPath,
-            link: item.link);
-        }).toList()
-      ),
+    return Flexible(
+      child: ListView(
+          shrinkWrap: true,
+          children: mainMenuItemsList.map((item) {
+            return MainMenuItem(
+                svgIconPath: item.svgIconPath,
+                title: item.title,
+                isSelected: currentRoute.contains(item.link),
+                svgFilledIconPath: item.svgFilledIconPath,
+                link: item.link);
+          }).toList()),
     );
-    ;
   }
 }

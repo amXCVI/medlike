@@ -70,7 +70,7 @@ final lightTheme = ThemeData(
   // scaffoldBackgroundColor: AppColors.
   // bottomAppBarColor: AppColors.
   // cardColor: AppColors.
-  // dividerColor: AppColors.
+  dividerColor: AppColors.mainSeparatorAlpha,
   // highlightColor: AppColors.
   // splashColor: AppColors.
   // selectedRowColor: AppColors.

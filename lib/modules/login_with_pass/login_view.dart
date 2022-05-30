@@ -104,6 +104,11 @@ class LoginPageWidget extends StatelessWidget {
               state.authStatus == UserAuthStatuses.loadingAuth
                   ? const CircularProgressIndicator()
                   : const Text(''),
+              MaterialButton(onPressed: () => {
+                context.read<UserCubit>().signIn('79400000000', 'Qwerty11@')
+              },
+                child: const Text('Default login'),
+              )
             ],
           ),
         );

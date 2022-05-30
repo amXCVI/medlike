@@ -36,10 +36,11 @@ class UserRepository {
 
   Future<void> signOut() async {}
 
-  Future<GetProfilesResponse> getProfiles() async {
+  Future<List<UserProfile>> getProfiles() async {
     try {
       final response = await _dioClient.get('/api/v1.0/profile');
-      return response.data;
+      final List profilesList = response.data;
+      return profilesList.map((e) => UserProfile.fromJson(e)).toList();
     } catch (err) {
       rethrow;
     }

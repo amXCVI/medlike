@@ -1,86 +1,79 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation'
+    '/freezed_annotation.dart';
+
+part 'user_models.freezed.dart';
 
 part 'user_models.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class AuthTokenRequest {
-  AuthTokenRequest(this.phone, this.password);
+@freezed
+class AuthTokenRequest with _$AuthTokenRequest {
+  const factory AuthTokenRequest({
+    required String phone,
+    required String password,
+  }) = _AuthTokenRequest;
 
-  final String phone;
-  final String password;
-
-  Map<String, dynamic> toJson() => _$AuthTokenRequestToJson(this);
+  factory AuthTokenRequest.fromJson(Map<String, Object?> json) =>
+      _$AuthTokenRequestFromJson(json);
 }
 
-@JsonSerializable(explicitToJson: true)
-class AuthTokenResponse {
-  AuthTokenResponse(this.token, this.refreshToken);
+@freezed
+class AuthTokenResponse with _$AuthTokenResponse {
+  const factory AuthTokenResponse({
+    required String token,
+    required String refreshToken,
+  }) = _AuthTokenResponse;
 
-  final String token;
-  final String refreshToken;
-
-  factory AuthTokenResponse.fromJson(Map<String, dynamic> json) =>
+  factory AuthTokenResponse.fromJson(Map<String, Object?> json) =>
       _$AuthTokenResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$AuthTokenResponseToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class UserProfileClinicBuilding {
-  UserProfileClinicBuilding(this.id, this.category, this.telemed);
+@freezed
+class UserProfileClinicBuilding with _$UserProfileClinicBuilding {
+  const factory UserProfileClinicBuilding({
+    required String id,
+    required List<String> category,
+    bool? telemed,
+  }) = _UserProfileClinicBuilding;
 
-  final String id;
-  final List<String> category;
-  final bool telemed;
-
-  factory UserProfileClinicBuilding.fromJson(Map<String, dynamic> json) =>
+  factory UserProfileClinicBuilding.fromJson(Map<String, Object?> json) =>
       _$UserProfileClinicBuildingFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserProfileClinicBuildingToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class UserProfileClinic {
-  UserProfileClinic(this.id, this.timeZoneOffset, this.buildings);
+@freezed
+class UserProfileClinic with _$UserProfileClinic {
+  const factory UserProfileClinic({
+    String? id,
+    int? timeZoneOffset,
+    List<UserProfileClinicBuilding>? buildings,
+  }) = _UserProfileClinic;
 
-  final String id;
-  final int timeZoneOffset;
-  final List<UserProfileClinicBuilding> buildings;
-
-  factory UserProfileClinic.fromJson(Map<String, dynamic> json) =>
+  factory UserProfileClinic.fromJson(Map<String, Object?> json) =>
       _$UserProfileClinicFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserProfileClinicToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class UserProfile {
-  UserProfile(this.id, this.barCode, this.firstName, this.middleName,
-      this.lastName, this.birthday, this.avatar, this.clinics);
+@freezed
+class UserProfile with _$UserProfile {
+  const factory UserProfile({
+    required String id,
+    String? barCode,
+    String? firstName,
+    String? middleName,
+    String? lastName,
+    DateTime? birthday,
+    String? avatar,
+    required List<UserProfileClinic> clinics,
+  }) = _UserProfile;
 
-  final String id;
-  final String barCode;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final DateTime birthday;
-  final String avatar;
-  final List<UserProfileClinic> clinics;
-
-  factory UserProfile.fromJson(Map<String, dynamic> json) =>
+  factory UserProfile.fromJson(Map<String, Object?> json) =>
       _$UserProfileFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserProfileToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class GetProfilesResponse {
-  GetProfilesResponse(this.profiles);
+@freezed
+class UserProfilesList with _$UserProfilesList {
+  const factory UserProfilesList({
+    required List<UserProfile> userProfilesList,
+  }) = _UserProfilesList;
 
-  final List<UserProfile> profiles;
-
-  factory GetProfilesResponse.fromJson(Map<String, dynamic> json) =>
-      _$GetProfilesResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$GetProfilesResponseToJson(this);
+  factory UserProfilesList.fromJson(Map<String, Object?> json) =>
+      _$UserProfilesListFromJson(json);
 }

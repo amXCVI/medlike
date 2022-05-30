@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:medlike/app_constants/app_constants.dart';
+import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'user_state.dart';
 
@@ -29,8 +32,8 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  /// Авторизация по номеру телефона и паролю
   void signIn(String phone, String password) async {
-    const storage = FlutterSecureStorage();
 
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
@@ -38,8 +41,8 @@ class UserCubit extends Cubit<UserState> {
     try {
       final response =
           await userRepository.signIn(phone: phone, password: password);
-      await storage.write(key: 'accessToken', value: response.token);
-      await storage.write(key: 'refreshToken', value: response.refreshToken);
+      UserSecureStorage.setField(AppConstants().accessToken, response.token);
+      UserSecureStorage.setField(AppConstants().refreshToken, response.refreshToken);
       emit(state.copyWith(
           authStatus: UserAuthStatuses.successAuth,
           token: response.token,
@@ -60,5 +63,29 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.unAuth,
         authScreen: UserAuthScreens.inputPhone));
+  }
+
+  /// Получает список профилей из всех МО
+  void getUserProfiles() async {
+    emit(state.copyWith(
+      authStatus: state.authStatus,
+      authScreen: state.authScreen,
+      getUserProfileStatus: GetUserProfilesStatusesList.loading,
+    ));
+    try {
+      final response = await userRepository.getProfiles();
+      emit(state.copyWith(
+        authStatus: state.authStatus,
+        authScreen: state.authScreen,
+        getUserProfileStatus: GetUserProfilesStatusesList.success,
+        userProfiles: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        authStatus: state.authStatus,
+        authScreen: state.authScreen,
+        getUserProfileStatus: GetUserProfilesStatusesList.failure,
+      ));
+    }
   }
 }

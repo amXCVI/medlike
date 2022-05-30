@@ -6,97 +6,102 @@ part of 'user_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthTokenRequest _$AuthTokenRequestFromJson(Map<String, dynamic> json) =>
-    AuthTokenRequest(
-      json['phone'] as String,
-      json['password'] as String,
+_$_AuthTokenRequest _$$_AuthTokenRequestFromJson(Map<String, dynamic> json) =>
+    _$_AuthTokenRequest(
+      phone: json['phone'] as String,
+      password: json['password'] as String,
     );
 
-Map<String, dynamic> _$AuthTokenRequestToJson(AuthTokenRequest instance) =>
+Map<String, dynamic> _$$_AuthTokenRequestToJson(_$_AuthTokenRequest instance) =>
     <String, dynamic>{
       'phone': instance.phone,
       'password': instance.password,
     };
 
-AuthTokenResponse _$AuthTokenResponseFromJson(Map<String, dynamic> json) =>
-    AuthTokenResponse(
-      json['token'] as String,
-      json['refreshToken'] as String,
+_$_AuthTokenResponse _$$_AuthTokenResponseFromJson(Map<String, dynamic> json) =>
+    _$_AuthTokenResponse(
+      token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
     );
 
-Map<String, dynamic> _$AuthTokenResponseToJson(AuthTokenResponse instance) =>
+Map<String, dynamic> _$$_AuthTokenResponseToJson(
+        _$_AuthTokenResponse instance) =>
     <String, dynamic>{
       'token': instance.token,
       'refreshToken': instance.refreshToken,
     };
 
-UserProfileClinicBuilding _$UserProfileClinicBuildingFromJson(
+_$_UserProfileClinicBuilding _$$_UserProfileClinicBuildingFromJson(
         Map<String, dynamic> json) =>
-    UserProfileClinicBuilding(
-      json['id'] as String,
-      (json['category'] as List<dynamic>).map((e) => e as String).toList(),
-      json['telemed'] as bool,
+    _$_UserProfileClinicBuilding(
+      id: json['id'] as String,
+      category:
+          (json['category'] as List<dynamic>).map((e) => e as String).toList(),
+      telemed: json['telemed'] as bool?,
     );
 
-Map<String, dynamic> _$UserProfileClinicBuildingToJson(
-        UserProfileClinicBuilding instance) =>
+Map<String, dynamic> _$$_UserProfileClinicBuildingToJson(
+        _$_UserProfileClinicBuilding instance) =>
     <String, dynamic>{
       'id': instance.id,
       'category': instance.category,
       'telemed': instance.telemed,
     };
 
-UserProfileClinic _$UserProfileClinicFromJson(Map<String, dynamic> json) =>
-    UserProfileClinic(
-      json['id'] as String,
-      json['timeZoneOffset'] as int,
-      (json['buildings'] as List<dynamic>)
-          .map((e) =>
+_$_UserProfileClinic _$$_UserProfileClinicFromJson(Map<String, dynamic> json) =>
+    _$_UserProfileClinic(
+      id: json['id'] as String?,
+      timeZoneOffset: json['timeZoneOffset'] as int?,
+      buildings: (json['buildings'] as List<dynamic>?)
+          ?.map((e) =>
               UserProfileClinicBuilding.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$UserProfileClinicToJson(UserProfileClinic instance) =>
+Map<String, dynamic> _$$_UserProfileClinicToJson(
+        _$_UserProfileClinic instance) =>
     <String, dynamic>{
       'id': instance.id,
       'timeZoneOffset': instance.timeZoneOffset,
-      'buildings': instance.buildings.map((e) => e.toJson()).toList(),
+      'buildings': instance.buildings,
     };
 
-UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
-      json['id'] as String,
-      json['barCode'] as String,
-      json['firstName'] as String,
-      json['middleName'] as String,
-      json['lastName'] as String,
-      DateTime.parse(json['birthday'] as String),
-      json['avatar'] as String,
-      (json['clinics'] as List<dynamic>)
+_$_UserProfile _$$_UserProfileFromJson(Map<String, dynamic> json) =>
+    _$_UserProfile(
+      id: json['id'] as String,
+      barCode: json['barCode'] as String?,
+      firstName: json['firstName'] as String?,
+      middleName: json['middleName'] as String?,
+      lastName: json['lastName'] as String?,
+      birthday: json['birthday'] == null
+          ? null
+          : DateTime.parse(json['birthday'] as String),
+      avatar: json['avatar'] as String?,
+      clinics: (json['clinics'] as List<dynamic>)
           .map((e) => UserProfileClinic.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
+Map<String, dynamic> _$$_UserProfileToJson(_$_UserProfile instance) =>
     <String, dynamic>{
       'id': instance.id,
       'barCode': instance.barCode,
       'firstName': instance.firstName,
       'middleName': instance.middleName,
       'lastName': instance.lastName,
-      'birthday': instance.birthday.toIso8601String(),
+      'birthday': instance.birthday?.toIso8601String(),
       'avatar': instance.avatar,
-      'clinics': instance.clinics.map((e) => e.toJson()).toList(),
+      'clinics': instance.clinics,
     };
 
-GetProfilesResponse _$GetProfilesResponseFromJson(Map<String, dynamic> json) =>
-    GetProfilesResponse(
-      (json['profiles'] as List<dynamic>)
+_$_UserProfilesList _$$_UserProfilesListFromJson(Map<String, dynamic> json) =>
+    _$_UserProfilesList(
+      userProfilesList: (json['userProfilesList'] as List<dynamic>)
           .map((e) => UserProfile.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$GetProfilesResponseToJson(
-        GetProfilesResponse instance) =>
+Map<String, dynamic> _$$_UserProfilesListToJson(_$_UserProfilesList instance) =>
     <String, dynamic>{
-      'profiles': instance.profiles.map((e) => e.toJson()).toList(),
+      'userProfilesList': instance.userProfilesList,
     };

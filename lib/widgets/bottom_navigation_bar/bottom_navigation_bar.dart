@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:medlike/widgets/main_menu/main_menu.dart';
+import 'package:medlike/widgets/main_menu/main_menu_items_list.dart';
+import 'package:medlike/widgets/main_menu/menu_item.dart';
+import 'package:medlike/widgets/user_profiles_list/user_profiles_list.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -17,14 +21,20 @@ class BottomBar extends StatelessWidget {
             MaterialButton(
               onPressed: () {
                 showModalBottomSheet(
+                    // isScrollControlled: true,
                     context: context,
-                    shape: const RoundedRectangleBorder( // <-- SEE HERE
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(12.0),
                       ),
                     ),
                     builder: (context) {
-                      return const MainMenu();
+                      return Column(
+                        children: const [
+                          UserProfilesList(),
+                          MainMenu(),
+                        ],
+                      );
                     });
               },
               shape: RoundedRectangleBorder(

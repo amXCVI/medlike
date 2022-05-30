@@ -4,6 +4,8 @@ part of 'user_cubit.dart';
 enum UserAuthStatuses { unAuth, successAuth, failureAuth, loadingAuth }
 /// Экраны авторизации. Ввод номера, ввод пароля
 enum UserAuthScreens { inputPhone, inputPassword }
+/// Загрузка профилей из всех МО
+enum GetUserProfilesStatusesList { initial, loading, success, failure}
 
 class UserState {
   final UserAuthStatuses authStatus;
@@ -11,6 +13,8 @@ class UserState {
   final String? userPhoneNumber;
   final String? token;
   final String? refreshToken;
+  final GetUserProfilesStatusesList? getUserProfileStatus;
+  final List<UserProfile>? userProfiles;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -18,6 +22,8 @@ class UserState {
     this.userPhoneNumber,
     this.token,
     this.refreshToken,
+    this.getUserProfileStatus,
+    this.userProfiles,
   });
 
   UserState copyWith({
@@ -26,6 +32,8 @@ class UserState {
     String? userPhoneNumber,
     String? token,
     String? refreshToken,
+    GetUserProfilesStatusesList? getUserProfileStatus,
+    List<UserProfile>? userProfiles,
   }) {
     return UserState(
       authStatus: authStatus,
@@ -33,8 +41,10 @@ class UserState {
       userPhoneNumber: userPhoneNumber,
       token: token,
       refreshToken: refreshToken,
+      getUserProfileStatus: getUserProfileStatus,
+      userProfiles: userProfiles,
     );
   }
 
-  List<Object?> get props => [authStatus, authScreen];
+  List<Object?> get props => [authStatus, authScreen, userProfiles];
 }

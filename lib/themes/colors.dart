@@ -66,4 +66,6 @@ class AppColors {
 
 //
   static const Color red = Color(0xffCE8D96);
+
+  static const Color mainSeparatorAlpha = Color.fromRGBO(158, 157, 157, 0.4);
 }
