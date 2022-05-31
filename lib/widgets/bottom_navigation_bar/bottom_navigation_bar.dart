@@ -31,9 +31,18 @@ class BottomBar extends StatelessWidget {
                             color: Theme.of(context).backgroundColor,
                           ),
                           child: Column(
-                            children: const [
-                              UserProfilesList(),
-                              MainMenu(),
+                            children: [
+                              const UserProfilesList(),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 1,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(color: Theme.of(context).dividerColor),
+                                  ),
+                                ),
+                              ),
+                              const MainMenu(),
                             ],
                           ),
                         ));

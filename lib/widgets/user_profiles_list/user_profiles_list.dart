@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profile_item.dart';
+import 'package:medlike/widgets/user_profiles_list/user_profile_skeleton.dart';
 
 class UserProfilesList extends StatelessWidget {
   const UserProfilesList({Key? key}) : super(key: key);
@@ -13,8 +14,7 @@ class UserProfilesList extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(12),
-            topLeft: Radius.circular(12)),
+            topRight: Radius.circular(12), topLeft: Radius.circular(12)),
         color: Theme.of(context).backgroundColor,
       ),
       height: 76.0,
@@ -22,10 +22,8 @@ class UserProfilesList extends StatelessWidget {
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           switch (state.getUserProfileStatus) {
-            case GetUserProfilesStatusesList.initial:
-              return const Center(child: CircularProgressIndicator());
             case GetUserProfilesStatusesList.failure:
-              return const Text('Error loading. Sorry');
+              return const Text('');
             case GetUserProfilesStatusesList.success:
               return ListView(
                   scrollDirection: Axis.horizontal,
@@ -34,7 +32,7 @@ class UserProfilesList extends StatelessWidget {
                       .map((item) => UserProfileItem(userProfileDate: item))
                       .toList());
             default:
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: UserProfileSkeleton());
           }
         },
       ),

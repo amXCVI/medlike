@@ -10,7 +10,7 @@ class UserProfileItem extends StatelessWidget {
 
   final UserProfile userProfileDate;
 
-  String getAgeByBirthday(DateTime birthday) {
+  String _getAgeByBirthday(DateTime birthday) {
     final DateTime currentDate = DateTime.now();
     final differentYears = currentDate.year - birthday.year;
     int lastDigit = differentYears;
@@ -32,11 +32,6 @@ class UserProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Theme.of(context).dividerColor),
-        ),
-      ),
       width: MediaQuery.of(context).size.width * 0.7,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4.0),
@@ -63,7 +58,7 @@ class UserProfileItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  '${DateFormat('dd.MM.yyyy').format(userProfileDate.birthday as DateTime)} (${getAgeByBirthday(userProfileDate.birthday as DateTime)})',
+                  '${DateFormat('dd.MM.yyyy').format(userProfileDate.birthday as DateTime)} (${_getAgeByBirthday(userProfileDate.birthday as DateTime)})',
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall

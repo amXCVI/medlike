@@ -34,7 +34,6 @@ class UserCubit extends Cubit<UserState> {
 
   /// Авторизация по номеру телефона и паролю
   void signIn(String phone, String password) async {
-
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -42,7 +41,8 @@ class UserCubit extends Cubit<UserState> {
       final response =
           await userRepository.signIn(phone: phone, password: password);
       UserSecureStorage.setField(AppConstants().accessToken, response.token);
-      UserSecureStorage.setField(AppConstants().refreshToken, response.refreshToken);
+      UserSecureStorage.setField(
+          AppConstants().refreshToken, response.refreshToken);
       emit(state.copyWith(
           authStatus: UserAuthStatuses.successAuth,
           token: response.token,
@@ -67,13 +67,24 @@ class UserCubit extends Cubit<UserState> {
 
   /// Получает список профилей из всех МО
   void getUserProfiles() async {
+    if (state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
+        state.userProfiles != null) {
+      emit(state.copyWith(
+        authStatus: state.authStatus,
+        authScreen: state.authScreen,
+        getUserProfileStatus: GetUserProfilesStatusesList.success,
+        userProfiles: state.userProfiles,
+      ));
+      return;
+    }
     emit(state.copyWith(
       authStatus: state.authStatus,
       authScreen: state.authScreen,
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
     try {
-      final response = await userRepository.getProfiles();
+      final List<UserProfile> response;
+      response = await userRepository.getProfiles();
       emit(state.copyWith(
         authStatus: state.authStatus,
         authScreen: state.authScreen,
