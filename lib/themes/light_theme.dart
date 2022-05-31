@@ -31,7 +31,13 @@ final lightTheme = ThemeData(
       letterSpacing: 0.3,
       color: AppColors.mainText,
     ),
-    titleSmall: TextStyle(),
+    titleSmall: TextStyle(
+      fontFamily: 'Muller',
+      fontSize: 17.0,
+      height: 1.18,
+      fontWeight: FontWeight.w500,
+      color: AppColors.mainText
+    ),
     bodyLarge: TextStyle(),
     bodyMedium: TextStyle(),
     bodySmall: TextStyle(
@@ -71,7 +77,7 @@ final lightTheme = ThemeData(
   // bottomAppBarColor: AppColors.
   // cardColor: AppColors.
   dividerColor: AppColors.mainSeparatorAlpha,
-  // highlightColor: AppColors.
+  highlightColor: AppColors.lightText, /// !
   // splashColor: AppColors.
   // selectedRowColor: AppColors.
   // unselectedWidgetColor: AppColors.

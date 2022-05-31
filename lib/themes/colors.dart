@@ -54,10 +54,6 @@ class AppColors {
 
 //
   static const Color mainText = Color(0xff151616);
-
-//
-  static const Color lightText = Color(0xff9E9D9D);
-
 //
   static const Color mainDone = Color(0xff51E09F);
 
@@ -68,4 +64,6 @@ class AppColors {
   static const Color red = Color(0xffCE8D96);
 
   static const Color mainSeparatorAlpha = Color.fromRGBO(158, 157, 157, 0.4);
+
+  static const Color lightText = Color.fromRGBO(158, 157, 157, 1);
 }

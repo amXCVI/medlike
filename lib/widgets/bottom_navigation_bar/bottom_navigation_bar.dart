@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:medlike/widgets/main_menu/main_menu.dart';
-import 'package:medlike/widgets/main_menu/main_menu_items_list.dart';
-import 'package:medlike/widgets/main_menu/menu_item.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profiles_list.dart';
 
 class BottomBar extends StatelessWidget {
@@ -21,21 +18,25 @@ class BottomBar extends StatelessWidget {
             MaterialButton(
               onPressed: () {
                 showModalBottomSheet(
-                    // isScrollControlled: true,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                     context: context,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12.0),
-                      ),
-                    ),
-                    builder: (context) {
-                      return Column(
-                        children: const [
-                          UserProfilesList(),
-                          MainMenu(),
-                        ],
-                      );
-                    });
+                    builder: (context) => Container(
+                          height: MediaQuery.of(context).size.height * 0.6,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                topLeft: Radius.circular(12)),
+                            color: Theme.of(context).backgroundColor,
+                          ),
+                          child: Column(
+                            children: const [
+                              UserProfilesList(),
+                              MainMenu(),
+                            ],
+                          ),
+                        ));
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),

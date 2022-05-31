@@ -26,7 +26,7 @@ class MainMenuItem extends StatelessWidget {
       title: Text(title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color:
-                  isSelected ? AppColors.mainBrandColor : AppColors.mainText)),
+                  isSelected ? Theme.of(context).primaryColor : AppColors.mainText)),
       selected: isSelected,
       selectedTileColor: Theme.of(context).hoverColor,
       shape: RoundedRectangleBorder(

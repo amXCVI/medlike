@@ -12,9 +12,9 @@ class UserProfilesList extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Theme.of(context).dividerColor),
-        ),
+        borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(12),
+            topLeft: Radius.circular(12)),
         color: Theme.of(context).backgroundColor,
       ),
       height: 76.0,
