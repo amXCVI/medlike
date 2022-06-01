@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 

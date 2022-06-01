@@ -4,8 +4,6 @@ import 'package:medlike/themes/colors.dart';
 const lightBackgroundColor = Color(0xFFECECEC);
 
 final lightTheme = ThemeData(
-  backgroundColor: AppColors.mainAppBackground,
-  scaffoldBackgroundColor: AppColors.mainAppBackground,
   typography: Typography.material2021(),
   /// Typography
   textTheme: const TextTheme(
@@ -66,14 +64,15 @@ final lightTheme = ThemeData(
     labelSmall: TextStyle(),
   ),
   /// Colors
-  primaryColor: AppColors.mainBrandColor,
+  backgroundColor: AppColors.mainAppBackground,
+  scaffoldBackgroundColor: AppColors.mainAppBackground,
+  primaryColor: AppColors.mainBrand[900],
   primaryColorLight: AppColors.mainBrandSecond,
   primaryColorDark: AppColors.darkGreenFirst,
   // focusColor: AppColors.
   hoverColor: AppColors.circleBgSecond,
   // shadowColor: AppColors.
   // canvasColor: AppColors.
-  // scaffoldBackgroundColor: AppColors.
   // bottomAppBarColor: AppColors.
   // cardColor: AppColors.
   dividerColor: AppColors.mainSeparatorAlpha,
@@ -83,7 +82,6 @@ final lightTheme = ThemeData(
   // unselectedWidgetColor: AppColors.
   // disabledColor: AppColors.
   // secondaryHeaderColor: AppColors.
-  // backgroundColor: AppColors.
   // dialogBackgroundColor: AppColors.
   // indicatorColor: AppColors.
   // hintColor: AppColors.

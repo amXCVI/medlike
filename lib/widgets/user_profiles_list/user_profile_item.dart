@@ -1,33 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
-import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/UserBirthdayAndAge/user_birthday_and_age.dart';
+import 'package:medlike/widgets/circre_user_avatar/circle_user_avatar.dart';
 
 class UserProfileItem extends StatelessWidget {
   const UserProfileItem({Key? key, required this.userProfileDate})
       : super(key: key);
 
   final UserProfile userProfileDate;
-
-  String _getAgeByBirthday(DateTime birthday) {
-    final DateTime currentDate = DateTime.now();
-    final differentYears = currentDate.year - birthday.year;
-    int lastDigit = differentYears;
-
-    lastDigit %= 100;
-    if (lastDigit >= 5 && lastDigit <= 20) {
-      return '$differentYears лет';
-    }
-    lastDigit %= 10;
-    if (lastDigit == 1) {
-      return '$differentYears год';
-    }
-    if (lastDigit >= 2 && lastDigit <= 4) {
-      return '$differentYears года';
-    }
-    return '$differentYears лет';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +20,11 @@ class UserProfileItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             userProfileDate.avatar != null
-                ? CircleAvatar(
+                ? CircleUserAvatar(
                     radius: 40.0,
-                    backgroundImage: NetworkImage(
-                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/${userProfileDate.id}/${userProfileDate.avatar}'),
+                    userAvatar: userProfileDate.avatar,
+                    userId: userProfileDate.id,
+                    userName: userProfileDate.firstName as String,
                   )
                 : Padding(
                     padding: const EdgeInsets.only(right: 16.0),
@@ -57,12 +39,8 @@ class UserProfileItem extends StatelessWidget {
                   '${userProfileDate.firstName.toString()} ${userProfileDate.lastName?[0]}.',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                Text(
-                  '${DateFormat('dd.MM.yyyy').format(userProfileDate.birthday as DateTime)} (${_getAgeByBirthday(userProfileDate.birthday as DateTime)})',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: Theme.of(context).highlightColor),
+                UserBirthdayAndAge(
+                  userBirthday: userProfileDate.birthday as DateTime,
                 ),
               ],
             )

@@ -2,10 +2,12 @@ part of 'user_cubit.dart';
 
 /// Статусы при авторизации. Для авторизации с номером-паролем
 enum UserAuthStatuses { unAuth, successAuth, failureAuth, loadingAuth }
+
 /// Экраны авторизации. Ввод номера, ввод пароля
 enum UserAuthScreens { inputPhone, inputPassword }
+
 /// Загрузка профилей из всех МО
-enum GetUserProfilesStatusesList { initial, loading, success, failure}
+enum GetUserProfilesStatusesList { initial, loading, success, failure }
 
 class UserState {
   final UserAuthStatuses authStatus;
@@ -15,6 +17,7 @@ class UserState {
   final String? refreshToken;
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
+  final String? selectedUserId;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -24,6 +27,7 @@ class UserState {
     this.refreshToken,
     this.getUserProfileStatus,
     this.userProfiles,
+    this.selectedUserId = '',
   });
 
   UserState copyWith({
@@ -34,6 +38,7 @@ class UserState {
     String? refreshToken,
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
+    String? selectedUserId,
   }) {
     return UserState(
       authStatus: authStatus,
@@ -43,8 +48,15 @@ class UserState {
       refreshToken: refreshToken,
       getUserProfileStatus: getUserProfileStatus,
       userProfiles: userProfiles,
+      selectedUserId: selectedUserId,
     );
   }
 
-  List<Object?> get props => [authStatus, authScreen, userProfiles];
+  List<Object?> get props => [
+        authStatus,
+        authScreen,
+        getUserProfileStatus,
+        userProfiles,
+        selectedUserId,
+      ];
 }

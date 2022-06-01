@@ -74,6 +74,7 @@ class UserCubit extends Cubit<UserState> {
         authScreen: state.authScreen,
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: state.userProfiles,
+        selectedUserId: state.selectedUserId,
       ));
       return;
     }
@@ -83,6 +84,8 @@ class UserCubit extends Cubit<UserState> {
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
     try {
+      final currentSelectedUserId =
+          await UserSecureStorage.getField(AppConstants().selectedUserId);
       final List<UserProfile> response;
       response = await userRepository.getProfiles();
       emit(state.copyWith(
@@ -90,13 +93,29 @@ class UserCubit extends Cubit<UserState> {
         authScreen: state.authScreen,
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
+        selectedUserId: currentSelectedUserId != null
+            ? currentSelectedUserId.toString()
+            : response[0].id.toString(),
       ));
     } catch (e) {
       emit(state.copyWith(
         authStatus: state.authStatus,
         authScreen: state.authScreen,
+        userProfiles: state.userProfiles,
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
     }
+  }
+
+  /// Сохраняет id выбранного профиля
+  void setSelectedUserId(String userId) {
+    emit(state.copyWith(
+      authStatus: state.authStatus,
+      authScreen: state.authScreen,
+      selectedUserId: userId,
+      userProfiles: state.userProfiles,
+      getUserProfileStatus: state.getUserProfileStatus,
+    ));
+    UserSecureStorage.setField(AppConstants().selectedUserId, userId);
   }
 }

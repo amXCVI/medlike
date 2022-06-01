@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors {
 // Primary первичный цвет
   static const Color mainBrandColor = Color(0xff3C94A8);
@@ -54,6 +56,7 @@ class AppColors {
 
 //
   static const Color mainText = Color(0xff151616);
+
 //
   static const Color mainDone = Color(0xff51E09F);
 
@@ -66,4 +69,17 @@ class AppColors {
   static const Color mainSeparatorAlpha = Color.fromRGBO(158, 157, 157, 0.4);
 
   static const Color lightText = Color.fromRGBO(158, 157, 157, 1);
+
+  static const Map<int, Color> mainBrand = {
+    50: Color.fromRGBO(60, 148, 168, .1),       // mainBgAlpha
+    100: Color.fromRGBO(60, 148, 168, .2),
+    200: Color.fromRGBO(60, 148, 168, .3),
+    300: Color.fromRGBO(60, 148, 168, .4),
+    400: Color.fromRGBO(60, 148, 168, .5),
+    500: Color.fromRGBO(60, 148, 168, .6),
+    600: Color.fromRGBO(60, 148, 168, .7),
+    700: Color.fromRGBO(60, 148, 168, .8),
+    800: Color.fromRGBO(60, 148, 168, .9),
+    900: Color.fromRGBO(60, 148, 168, 1),
+  };
 }
