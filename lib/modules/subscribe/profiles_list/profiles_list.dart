@@ -1,10 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/profiles_list/profile_item.dart';
+import 'package:medlike/navigation/router.gr.dart';
 
-class ProfilesList extends StatelessWidget {
+class ProfilesList extends StatefulWidget {
   const ProfilesList({
     Key? key,
     required this.profilesList,
@@ -15,17 +17,27 @@ class ProfilesList extends StatelessWidget {
   final String selectedUserId;
 
   @override
+  State<ProfilesList> createState() => _ProfilesListState();
+}
+
+class _ProfilesListState extends State<ProfilesList> {
+  void _handleTapOnUserProfile(userId) {
+    context.read<UserCubit>().setSelectedUserId(userId);
+    context.router.push(ClinicsListRoute(userId: userId));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListView(
         shrinkWrap: true,
-        children: profilesList
+        children: widget.profilesList
             .map((item) => MaterialButton(
                   onPressed: () {
-                    context.read<UserCubit>().setSelectedUserId(item.id);
+                    _handleTapOnUserProfile(item.id);
                   },
                   child: ProfileItem(
                     userProfile: item,
-                    isSelected: item.id == selectedUserId,
+                    isSelected: item.id == widget.selectedUserId,
                   ),
                 ))
             .toList());

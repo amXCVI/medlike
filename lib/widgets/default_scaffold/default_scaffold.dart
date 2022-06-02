@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
-import 'package:medlike/widgets/main_menu/main_menu.dart';
 
 class DefaultScaffold extends StatelessWidget {
-  const DefaultScaffold(
-      {Key? key, required this.child, required this.appBarTitle})
-      : super(key: key);
+  const DefaultScaffold({
+    Key? key,
+    required this.child,
+    required this.appBarTitle,
+    this.isChildrenPage = false,
+  }) : super(key: key);
   final Widget child;
   final String appBarTitle;
+  final bool isChildrenPage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AuthAppBar(title: appBarTitle),
+      appBar: AuthAppBar(title: appBarTitle, isChildrenPage: isChildrenPage),
       bottomNavigationBar: const BottomBar(),
       body: Stack(children: [
         Container(

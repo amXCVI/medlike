@@ -63,3 +63,5 @@ flutter:
     - assets/icons/menu_icons/
     - assets/icons/bottom_nav_bar/
     - assets/icons/profile/
+    - assets/icons/app_bar/
+    - assets/icons/subscribe/
