@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medlike/data/models/clinic_models/clinic_models.dart';
+import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/modules/subscribe/clinics_list/clinics_list.dart';
+import 'package:medlike/modules/subscribe/services_list/services_list.dart';
+import 'package:medlike/modules/subscribe/services_list/services_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
-import 'clinics_list_skeleton.dart';
+class ServicesListPage extends StatelessWidget {
+  const ServicesListPage({
+    Key? key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+  }) : super(key: key);
 
-class ClinicsListPage extends StatelessWidget {
-  const ClinicsListPage({Key? key, required this.userId}) : super(key: key);
   final String userId;
+  final String buildingId;
+  final String clinicId;
 
   @override
   Widget build(BuildContext context) {
-    context.read<SubscribeCubit>().getAvailableClinicsList(userId);
+    context
+        .read<SubscribeCubit>()
+        .getServicesList(userId, clinicId, buildingId);
     return DefaultScaffold(
-      appBarTitle: 'Клиника',
+      appBarTitle: 'Услуги',
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
@@ -24,13 +33,10 @@ class ClinicsListPage extends StatelessWidget {
             return const Text('');
           } else if (state.getAvailableClinicsStatus ==
               GetAvailableClinicsListStatuses.success) {
-            return ClinicsList(
-              availableClinicsList:
-                  state.availableClinicsList as List<AvailableClinic>,
-              userId: userId,
-            );
+            return ServicesList(
+                servicesList: state.servicesList as List<NavigationItem>);
           } else {
-            return const ClinicsListSkeleton();
+            return const ServicesListSkeleton();
           }
         },
       ),

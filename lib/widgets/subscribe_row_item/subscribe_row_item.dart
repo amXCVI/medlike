@@ -85,16 +85,19 @@ class SubscribeRowItem extends StatelessWidget {
                                 : AppColors.mainText),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        subtitle,
-                        overflow: TextOverflow.fade,
-                        maxLines: 2,
-                        softWrap: true,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Theme.of(context).highlightColor),
-                      ),
+                      subtitle.isNotEmpty
+                          ? Text(
+                              subtitle,
+                              overflow: TextOverflow.fade,
+                              maxLines: 2,
+                              softWrap: true,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: Theme.of(context).highlightColor),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),

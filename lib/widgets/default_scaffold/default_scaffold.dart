@@ -23,10 +23,10 @@ class DefaultScaffold extends StatelessWidget {
           padding: const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 0),
           child: Container(
             height: 100,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(28)),
-              boxShadow: [
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: const BorderRadius.all(Radius.circular(28)),
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black54,
                   blurRadius: 4,
@@ -41,12 +41,18 @@ class DefaultScaffold extends StatelessWidget {
                 const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 35),
             child: Container(
               padding: const EdgeInsets.all(17),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(28)),
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: const BorderRadius.all(Radius.circular(28)),
               ),
             )),
-        child
+        Container(
+            padding:
+                const EdgeInsets.only(left: 0, top: 7, right: 0, bottom: 0),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(28)),
+            ),
+            child: child),
       ]),
     );
   }
