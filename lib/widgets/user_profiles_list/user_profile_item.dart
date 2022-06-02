@@ -12,7 +12,7 @@ class UserProfileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 4.0),

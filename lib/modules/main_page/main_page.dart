@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
-import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 class MainPage extends StatelessWidget {
