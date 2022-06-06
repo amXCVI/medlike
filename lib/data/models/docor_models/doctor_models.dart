@@ -69,8 +69,8 @@ class Research with _$Research {
     required String id,
     required String name,
     required int price,
-    required String categoryType,
-    required String scheduleType,
+    required int categoryType,
+    required int scheduleType,
     required String buildingId,
   }) = _Research;
 

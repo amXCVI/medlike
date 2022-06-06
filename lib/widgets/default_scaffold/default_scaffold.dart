@@ -8,10 +8,12 @@ class DefaultScaffold extends StatelessWidget {
     required this.child,
     required this.appBarTitle,
     this.isChildrenPage = false,
+    this.actionButton,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
   final bool isChildrenPage;
+  final Widget? actionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,8 @@ class DefaultScaffold extends StatelessWidget {
             ),
             child: child),
       ]),
+      floatingActionButton: actionButton,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

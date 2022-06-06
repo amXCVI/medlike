@@ -34,4 +34,22 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  Future<List<Research>> getResearchesList({
+    required String userId,
+    required String clinicId,
+    required String buildingId,
+    required String categoryType,
+  }) async {
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType');
+      final List<Research> researches =
+          DoctorsResponseModel.fromJson(response.data).researches
+              as List<Research>;
+      return researches;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

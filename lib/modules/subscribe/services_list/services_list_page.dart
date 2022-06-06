@@ -34,7 +34,11 @@ class ServicesListPage extends StatelessWidget {
           } else if (state.getAvailableClinicsStatus ==
               GetAvailableClinicsListStatuses.success) {
             return ServicesList(
-                servicesList: state.servicesList as List<NavigationItem>);
+              servicesList: state.servicesList as List<NavigationItem>,
+              userId: userId,
+              buildingId: buildingId,
+              clinicId: clinicId,
+            );
           } else {
             return const ServicesListSkeleton();
           }

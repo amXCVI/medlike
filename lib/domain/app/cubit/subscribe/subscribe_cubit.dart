@@ -56,4 +56,50 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           getServicesListStatus: GetServicesListStatuses.failed));
     }
   }
+
+  /// Сохранить выбранную категорию услуг
+  void setSelectedService(NavigationItem service) {
+    emit(state.copyWith(
+      selectedService: service,
+    ));
+  }
+
+  /// Получает данные по конкретной услуге
+  void getResearchesList(userId, clinicId, buildingId, categoryType) async {
+    emit(state.copyWith(
+      getResearchesListStatus: GetResearchesListStatuses.loading,
+    ));
+    try {
+      final List<Research> response;
+      response = await subscribeRepository.getResearchesList(
+          userId: userId,
+          clinicId: clinicId,
+          buildingId: buildingId,
+          categoryType: categoryType);
+      emit(state.copyWith(
+        getResearchesListStatus: GetResearchesListStatuses.success,
+        researchesList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getResearchesListStatus: GetResearchesListStatuses.failed));
+    }
+  }
+
+  /// Добавление или удаление услуг в списке выбранных
+  void addOrRemoveSelectedResearchId(String researchId) {
+    List<String> selectedResearchesIds =
+        state.selectedResearchesIds as List<String>;
+    if (state.selectedResearchesIds!.contains(researchId)) {
+      selectedResearchesIds.remove(researchId);
+      emit(state.copyWith(
+        selectedResearchesIds: selectedResearchesIds,
+      ));
+    } else {
+      selectedResearchesIds.add(researchId);
+      emit(state.copyWith(
+        selectedResearchesIds: selectedResearchesIds,
+      ));
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:medlike/app_constants/app_constants.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class DioInterceptors extends Interceptor {
