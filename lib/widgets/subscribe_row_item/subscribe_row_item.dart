@@ -63,9 +63,8 @@ class SubscribeRowItem extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   )),
                             )
-                          : CircleAvatar(
-                              radius: radius,
-                            )),
+                          : customIcon
+                  ),
                 ),
                 const SizedBox(width: 24.0),
                 SizedBox(

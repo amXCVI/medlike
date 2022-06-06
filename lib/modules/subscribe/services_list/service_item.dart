@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/modules/subscribe/services_list/get_service_icon.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class ServiceItem extends StatelessWidget {
@@ -9,6 +11,13 @@ class ServiceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SubscribeRowItem(title: serviceItem.name.toString());
+    return SubscribeRowItem(
+      title: serviceItem.name.toString(),
+      isFirstSymbolForIcon: false,
+      customIcon: CircleAvatar(
+        backgroundColor: Colors.white,
+        child: SvgPicture.asset(getServiceIconById(serviceItem.id)),
+      ),
+    );
   }
 }
