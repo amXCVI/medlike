@@ -28,11 +28,11 @@ class ServicesListPage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
-          if (state.getAvailableClinicsStatus ==
-              GetAvailableClinicsListStatuses.failed) {
+          if (state.getServicesListStatus ==
+              GetServicesListStatuses.failed) {
             return const Text('');
-          } else if (state.getAvailableClinicsStatus ==
-              GetAvailableClinicsListStatuses.success) {
+          } else if (state.getServicesListStatus ==
+              GetServicesListStatuses.success) {
             return ServicesList(
               servicesList: state.servicesList as List<NavigationItem>,
               userId: userId,

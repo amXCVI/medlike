@@ -27,12 +27,22 @@ class ServicesList extends StatefulWidget {
 class _ServicesListState extends State<ServicesList> {
   void _handleTapOnService(NavigationItem service) {
     context.read<SubscribeCubit>().setSelectedService(service);
-    context.router.push(ResearchesListRoute(
-      userId: widget.userId,
-      categoryTypeId: service.categoryType as int,
-      clinicId: widget.clinicId,
-      buildingId: widget.buildingId,
-    ));
+    // В зависимости от категории услуг след.страница - Исследования или Специализации
+    if (service.categoryType != 0 && service.categoryType != 1) {
+      context.router.push(ResearchesListRoute(
+        userId: widget.userId,
+        categoryTypeId: service.categoryType as int,
+        clinicId: widget.clinicId,
+        buildingId: widget.buildingId,
+      ));
+    } else {
+      context.router.push(SpecialisationsListRoute(
+        userId: widget.userId,
+        categoryTypeId: service.categoryType as int,
+        clinicId: widget.clinicId,
+        buildingId: widget.buildingId,
+      ));
+    }
   }
 
   @override

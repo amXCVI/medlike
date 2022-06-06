@@ -52,4 +52,22 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  Future<List<NavigationItem>> getSpecialisationsList({
+    required String userId,
+    required String clinicId,
+    required String buildingId,
+    required String categoryType,
+  }) async {
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType');
+      final List<NavigationItem> navigationItems =
+          DoctorsResponseModel.fromJson(response.data).navigationItems
+              as List<NavigationItem>;
+      return navigationItems;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

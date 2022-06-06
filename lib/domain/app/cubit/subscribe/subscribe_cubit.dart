@@ -102,4 +102,33 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       ));
     }
   }
+
+  /// Получает список консультаций или телемед.
+  void getSpecialisationsList(userId, clinicId, buildingId, categoryType) async {
+    emit(state.copyWith(
+      getSpecialisationsListStatus: GetSpecialisationsListStatuses.loading,
+    ));
+    try {
+      final List<NavigationItem> response;
+      response = await subscribeRepository.getSpecialisationsList(
+          userId: userId,
+          clinicId: clinicId,
+          buildingId: buildingId,
+          categoryType: categoryType);
+      emit(state.copyWith(
+        getSpecialisationsListStatus: GetSpecialisationsListStatuses.success,
+        specialisationsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getSpecialisationsListStatus: GetSpecialisationsListStatuses.failed));
+    }
+  }
+
+  /// Сохранить выбранную категорию специализацию
+  void setSelectedSpecialisation(NavigationItem specialisation) {
+    emit(state.copyWith(
+      selectedSpecialisation: specialisation,
+    ));
+  }
 }
