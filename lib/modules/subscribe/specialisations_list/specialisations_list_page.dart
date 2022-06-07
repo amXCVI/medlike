@@ -21,19 +21,17 @@ class SpecialisationsListPage extends StatelessWidget {
   final String clinicId;
   final int categoryTypeId;
 
-
-
   @override
   Widget build(BuildContext context) {
-    void _onRefreshData () async {
+    void _onRefreshData() async {
       context.read<SubscribeCubit>().getSpecialisationsList(
-        userId,
-        clinicId,
-        buildingId,
-        CategoryTypes()
-            .getCategoryTypeByCategoryTypeId(categoryTypeId)
-            .categoryType,
-      );
+            userId,
+            clinicId,
+            buildingId,
+            CategoryTypes()
+                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+                .categoryType,
+          );
     }
 
     _onRefreshData();
@@ -53,7 +51,11 @@ class SpecialisationsListPage extends StatelessWidget {
             return SpecialisationsList(
               specialisationsList:
                   state.specialisationsList as List<NavigationItem>,
-                onRefreshData: _onRefreshData,
+              onRefreshData: _onRefreshData,
+              userId: userId,
+              clinicId: clinicId,
+              buildingId: buildingId,
+                categoryTypeId: categoryTypeId,
             );
           } else {
             return const SpecialisationsListSkeleton();

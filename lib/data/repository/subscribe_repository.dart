@@ -70,4 +70,23 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  Future<List<Doctor>> getDoctorsList({
+    required String userId,
+    required String clinicId,
+    required String buildingId,
+    required String categoryType,
+    String specialisationId = '',
+  }) async {
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType&SpecializationId=$specialisationId&OnlyPersonalSchedule=true');
+      final List<Doctor> doctors =
+          DoctorsResponseModel.fromJson(response.data).doctors
+              as List<Doctor>;
+      return doctors;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

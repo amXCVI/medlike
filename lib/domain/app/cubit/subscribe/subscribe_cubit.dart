@@ -26,7 +26,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     try {
       final List<AvailableClinic> response;
       response =
-      await subscribeRepository.getAvailableClinicsList(userId: userId);
+          await subscribeRepository.getAvailableClinicsList(userId: userId);
       emit(state.copyWith(
         getAvailableClinicsStatus: GetAvailableClinicsListStatuses.success,
         availableClinicsList: response,
@@ -96,7 +96,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   /// Добавление или удаление услуг в списке выбранных
   void addOrRemoveSelectedResearchId(String researchId) {
     List<String> selectedResearchesIds =
-    state.selectedResearchesIds as List<String>;
+        state.selectedResearchesIds as List<String>;
     if (state.selectedResearchesIds!.contains(researchId)) {
       selectedResearchesIds.remove(researchId);
       emit(state.copyWith(
@@ -111,8 +111,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   }
 
   /// Получает список консультаций или телемед.
-  void getSpecialisationsList(userId, clinicId, buildingId,
-      categoryType) async {
+  void getSpecialisationsList(
+      userId, clinicId, buildingId, categoryType) async {
     emit(state.copyWith(
       getSpecialisationsListStatus: GetSpecialisationsListStatuses.loading,
     ));
@@ -138,5 +138,34 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     emit(state.copyWith(
       selectedSpecialisation: specialisation,
     ));
+  }
+
+  /// Получает список докторов для записи.
+  void getDoctorsList(
+    userId,
+    clinicId,
+    buildingId,
+    categoryType,
+    specialisationId,
+  ) async {
+    emit(state.copyWith(
+      getDoctorsListStatus: GetDoctorsListStatuses.loading,
+    ));
+    try {
+      final List<Doctor> response;
+      response = await subscribeRepository.getDoctorsList(
+        userId: userId,
+        clinicId: clinicId,
+        buildingId: buildingId,
+        categoryType: categoryType,
+        specialisationId: specialisationId,
+      );
+      emit(state.copyWith(
+        getDoctorsListStatus: GetDoctorsListStatuses.success,
+        doctorsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(getDoctorsListStatus: GetDoctorsListStatuses.failed));
+    }
   }
 }

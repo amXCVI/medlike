@@ -8,6 +8,7 @@ class AppRoutes {
   static const subscribeServices = '/subscribe_services';
   static const subscribeResearches = '/subscribe_researches';
   static const subscribeSpecialisations = '/subscribe_specialisations';
+  static const subscribeDoctors = '/subscribe_doctors';
   static const myAppointments = '/my_appointments';
   static const medcard = '/medcard';
   static const health = '/health';

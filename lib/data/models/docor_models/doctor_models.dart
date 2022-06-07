@@ -55,8 +55,9 @@ class Doctor with _$Doctor {
     required String specializationId,
     required String specialization,
     required int price,
-    required String categoryType,
+    required int categoryType,
     required bool isFavorite,
+    required List<int> categories,
   }) = _Doctor;
 
   factory Doctor.fromJson(Map<String, Object?> json) =>

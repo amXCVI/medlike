@@ -8,6 +8,8 @@ enum GetResearchesListStatuses { initial, loading, success, failed }
 
 enum GetSpecialisationsListStatuses { initial, loading, success, failed }
 
+enum GetDoctorsListStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -28,6 +30,10 @@ class SubscribeState {
   final List<NavigationItem>? specialisationsList;
   final NavigationItem? selectedSpecialisation;
 
+  final GetDoctorsListStatuses? getDoctorsListStatus;
+  final List<Doctor>? doctorsList;
+  final Doctor? selectedDoctor;
+
   const SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.loading,
@@ -39,9 +45,12 @@ class SubscribeState {
     this.getResearchesListStatus = GetResearchesListStatuses.initial,
     this.researchesList,
     this.selectedResearchesIds,
-    this.getSpecialisationsListStatus,
+    this.getSpecialisationsListStatus = GetSpecialisationsListStatuses.initial,
     this.specialisationsList,
     this.selectedSpecialisation,
+    this.getDoctorsListStatus = GetDoctorsListStatuses.initial,
+    this.doctorsList,
+    this.selectedDoctor,
   });
 
   SubscribeState copyWith({
@@ -58,6 +67,9 @@ class SubscribeState {
     GetSpecialisationsListStatuses? getSpecialisationsListStatus,
     List<NavigationItem>? specialisationsList,
     NavigationItem? selectedSpecialisation,
+    GetDoctorsListStatuses? getDoctorsListStatus,
+    List<Doctor>? doctorsList,
+    Doctor? selectedDoctor,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -74,9 +86,14 @@ class SubscribeState {
       researchesList: researchesList ?? this.researchesList,
       selectedResearchesIds:
           selectedResearchesIds ?? this.selectedResearchesIds,
-      getSpecialisationsListStatus: getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
+      getSpecialisationsListStatus:
+          getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
       specialisationsList: specialisationsList ?? this.specialisationsList,
-      selectedSpecialisation: selectedSpecialisation ?? this.selectedSpecialisation,
+      selectedSpecialisation:
+          selectedSpecialisation ?? this.selectedSpecialisation,
+      getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
+      doctorsList: doctorsList ?? this.doctorsList,
+      selectedDoctor: selectedDoctor ?? this.selectedDoctor,
     );
   }
 
