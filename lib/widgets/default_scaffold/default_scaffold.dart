@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 
 class DefaultScaffold extends StatelessWidget {
   const DefaultScaffold({
@@ -54,7 +55,7 @@ class DefaultScaffold extends StatelessWidget {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(28)),
             ),
-            child: child),
+            child: DefaultClipRRect(child: child)),
       ]),
       floatingActionButton: actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

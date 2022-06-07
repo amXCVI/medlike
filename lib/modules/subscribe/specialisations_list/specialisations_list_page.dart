@@ -21,16 +21,22 @@ class SpecialisationsListPage extends StatelessWidget {
   final String clinicId;
   final int categoryTypeId;
 
+
+
   @override
   Widget build(BuildContext context) {
-    context.read<SubscribeCubit>().getSpecialisationsList(
-          userId,
-          clinicId,
-          buildingId,
-          CategoryTypes()
-              .getCategoryTypeByCategoryTypeId(categoryTypeId)
-              .categoryType,
-        );
+    void _onRefreshData () async {
+      context.read<SubscribeCubit>().getSpecialisationsList(
+        userId,
+        clinicId,
+        buildingId,
+        CategoryTypes()
+            .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            .categoryType,
+      );
+    }
+
+    _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: CategoryTypes()
@@ -47,6 +53,7 @@ class SpecialisationsListPage extends StatelessWidget {
             return SpecialisationsList(
               specialisationsList:
                   state.specialisationsList as List<NavigationItem>,
+                onRefreshData: _onRefreshData,
             );
           } else {
             return const SpecialisationsListSkeleton();

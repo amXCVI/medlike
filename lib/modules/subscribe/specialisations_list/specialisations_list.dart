@@ -5,10 +5,12 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/specialisations_list/specialisation_item.dart';
 
 class SpecialisationsList extends StatefulWidget {
-  const SpecialisationsList({Key? key, required this.specialisationsList})
+  const SpecialisationsList(
+      {Key? key, required this.specialisationsList, required this.onRefreshData})
       : super(key: key);
 
   final List<NavigationItem> specialisationsList;
+  final dynamic onRefreshData;
 
   @override
   State<SpecialisationsList> createState() => _SpecialisationsListState();
@@ -35,24 +37,27 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
       cabinets: [],
     );
 
-    return ListView(shrinkWrap: true, children: [
-      MaterialButton(
-        onPressed: () {
-          _handleTapOnSpecialisation(navigationItemForAllDoctors);
-        },
-        child: SpecialisationItem(
-            specialisationItem: navigationItemForAllDoctors),
-      ),
-      ...widget.specialisationsList
-          .map((item) => MaterialButton(
-                onPressed: () {
-                  _handleTapOnSpecialisation(item);
-                },
-                child: SpecialisationItem(
-                  specialisationItem: item,
-                ),
-              ))
-          .toList()
-    ]);
+    return RefreshIndicator(
+      onRefresh: () async => widget.onRefreshData(),
+      child: ListView(shrinkWrap: true, children: [
+        MaterialButton(
+          onPressed: () {
+            _handleTapOnSpecialisation(navigationItemForAllDoctors);
+          },
+          child: SpecialisationItem(
+              specialisationItem: navigationItemForAllDoctors),
+        ),
+        ...widget.specialisationsList
+            .map((item) => MaterialButton(
+                  onPressed: () {
+                    _handleTapOnSpecialisation(item);
+                  },
+                  child: SpecialisationItem(
+                    specialisationItem: item,
+                  ),
+                ))
+            .toList()
+      ]),
+    );
   }
 }
