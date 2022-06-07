@@ -68,7 +68,7 @@ class BottomBar extends StatelessWidget {
                 child: IconWithBottomLabel(
                   icon: SvgPicture.asset(
                       'assets/icons/bottom_nav_bar/ic_menu_outline.svg'),
-                  label: 'Menu',
+                  label: 'Меню',
                 ),
               ),
               // icon: SvgPicture.asset('assets/icons/bottom_nav_bar/ic_menu_outline.svg')),

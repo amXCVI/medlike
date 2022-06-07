@@ -17,7 +17,7 @@ class MainMenu extends StatelessWidget {
             return MainMenuItem(
                 svgIconPath: item.svgIconPath,
                 title: item.title,
-                isSelected: currentRoute.contains(item.link),
+                isSelected: currentRoute.contains(item.name),
                 svgFilledIconPath: item.svgFilledIconPath,
                 link: item.link);
           }).toList()),

@@ -25,25 +25,23 @@ class ResearchesListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     void _onRefreshData() {
       context.read<SubscribeCubit>().getResearchesList(
-        userId,
-        clinicId,
-        buildingId,
-        CategoryTypes()
-            .getCategoryTypeByCategoryTypeId(categoryTypeId)
-            .categoryType,
-      );
+            userId,
+            clinicId,
+            buildingId,
+            CategoryTypes()
+                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+                .categoryType,
+          );
     }
 
-    Widget _getScaffoldBody (state) {
-      if (state.getResearchesListStatus ==
-          GetResearchesListStatuses.failed) {
+    Widget _getScaffoldBody(state) {
+      if (state.getResearchesListStatus == GetResearchesListStatuses.failed) {
         return const Text('');
       } else if (state.getResearchesListStatus ==
           GetResearchesListStatuses.success) {
         return ResearchesList(
           researchesList: state.researchesList as List<Research>,
-          selectedResearchesIds:
-          state.selectedResearchesIds as List<String>,
+          selectedResearchesIds: state.selectedResearchesIds as List<String>,
           onRefreshData: _onRefreshData,
         );
       } else {
@@ -61,13 +59,15 @@ class ResearchesListPage extends StatelessWidget {
               .russianCategoryTypeName,
           isChildrenPage: true,
           actionButton: Visibility(
-            visible: state.selectedResearchesIds!.isNotEmpty ? true : false,
+            visible: state.getResearchesListStatus ==
+                        GetResearchesListStatuses.success &&
+                    state.selectedResearchesIds!.isNotEmpty
+                ? true
+                : false,
             child: FloatingActionButton.extended(
               onPressed: () {},
               label: const Text('Далее'),
-              backgroundColor: Theme
-                  .of(context)
-                  .primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
             ),
           ),
           child: _getScaffoldBody(state),
