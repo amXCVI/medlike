@@ -13,12 +13,14 @@ class ServicesList extends StatefulWidget {
     required this.userId,
     required this.buildingId,
     required this.clinicId,
+    this.onRefreshData,
   }) : super(key: key);
 
   final List<NavigationItem> servicesList;
   final String userId;
   final String buildingId;
   final String clinicId;
+  final dynamic onRefreshData;
 
   @override
   State<ServicesList> createState() => _ServicesListState();
@@ -47,17 +49,20 @@ class _ServicesListState extends State<ServicesList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        shrinkWrap: true,
-        children: widget.servicesList
-            .map((item) => MaterialButton(
-                  onPressed: () {
-                    _handleTapOnService(item);
-                  },
-                  child: ServiceItem(
-                    serviceItem: item,
-                  ),
-                ))
-            .toList());
+    return RefreshIndicator(
+      onRefresh: () => widget.onRefreshData(),
+      child: ListView(
+          shrinkWrap: true,
+          children: widget.servicesList
+              .map((item) => MaterialButton(
+                    onPressed: () {
+                      _handleTapOnService(item);
+                    },
+                    child: ServiceItem(
+                      serviceItem: item,
+                    ),
+                  ))
+              .toList()),
+    );
   }
 }

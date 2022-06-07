@@ -20,9 +20,14 @@ class ServicesListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context
-        .read<SubscribeCubit>()
-        .getServicesList(userId, clinicId, buildingId);
+    void _onRefreshData () {
+      context
+          .read<SubscribeCubit>()
+          .getServicesList(userId, clinicId, buildingId);
+    }
+
+    _onRefreshData();
+
     return DefaultScaffold(
       appBarTitle: 'Услуги',
       isChildrenPage: true,
@@ -38,6 +43,7 @@ class ServicesListPage extends StatelessWidget {
               userId: userId,
               buildingId: buildingId,
               clinicId: clinicId,
+              onRefreshData: _onRefreshData,
             );
           } else {
             return const ServicesListSkeleton();

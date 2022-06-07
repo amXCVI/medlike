@@ -5,14 +5,16 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/researches_list/research_item.dart';
 
 class ResearchesList extends StatefulWidget {
-  const ResearchesList(
-      {Key? key,
-      required this.researchesList,
-      required this.selectedResearchesIds})
-      : super(key: key);
+  const ResearchesList({
+    Key? key,
+    required this.researchesList,
+    required this.selectedResearchesIds,
+    this.onRefreshData,
+  }) : super(key: key);
 
   final List<Research> researchesList;
   final List<String> selectedResearchesIds;
+  final dynamic onRefreshData;
 
   @override
   State<ResearchesList> createState() => _ResearchesListState();
@@ -25,18 +27,22 @@ class _ResearchesListState extends State<ResearchesList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        shrinkWrap: true,
-        children: widget.researchesList
-            .map((item) => MaterialButton(
-                  onPressed: () {
-                    _handleTapOnResearch(item);
-                  },
-                  child: ResearchItem(
-                    researchItem: item,
-                    isSelected: widget.selectedResearchesIds.contains(item.id),
-                  ),
-                ))
-            .toList());
+    return RefreshIndicator(
+      onRefresh: () => widget.onRefreshData(),
+      child: ListView(
+          shrinkWrap: true,
+          children: widget.researchesList
+              .map((item) => MaterialButton(
+                    onPressed: () {
+                      _handleTapOnResearch(item);
+                    },
+                    child: ResearchItem(
+                      researchItem: item,
+                      isSelected:
+                          widget.selectedResearchesIds.contains(item.id),
+                    ),
+                  ))
+              .toList()),
+    );
   }
 }

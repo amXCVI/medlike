@@ -7,12 +7,16 @@ import 'package:medlike/modules/subscribe/clinics_list/clinic_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 
 class ClinicsList extends StatefulWidget {
-  const ClinicsList(
-      {Key? key, required this.availableClinicsList, required this.userId})
-      : super(key: key);
+  const ClinicsList({
+    Key? key,
+    required this.availableClinicsList,
+    required this.userId,
+    this.onRefreshData,
+  }) : super(key: key);
 
   final List<AvailableClinic> availableClinicsList;
   final String userId;
+  final dynamic onRefreshData;
 
   @override
   State<ClinicsList> createState() => _ClinicsListState();
@@ -30,17 +34,20 @@ class _ClinicsListState extends State<ClinicsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        shrinkWrap: true,
-        children: widget.availableClinicsList
-            .map((item) => MaterialButton(
-                  onPressed: () {
-                    _handleTapOnClinic(item);
-                  },
-                  child: ClinicItem(
-                    clinicItem: item,
-                  ),
-                ))
-            .toList());
+    return RefreshIndicator(
+      onRefresh: () => widget.onRefreshData(isRefresh: true),
+      child: ListView(
+          shrinkWrap: true,
+          children: widget.availableClinicsList
+              .map((item) => MaterialButton(
+                    onPressed: () {
+                      _handleTapOnClinic(item);
+                    },
+                    child: ClinicItem(
+                      clinicItem: item,
+                    ),
+                  ))
+              .toList()),
+    );
   }
 }

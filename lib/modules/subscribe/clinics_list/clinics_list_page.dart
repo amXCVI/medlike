@@ -13,7 +13,14 @@ class ClinicsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SubscribeCubit>().getAvailableClinicsList(userId);
+    void _onRefreshData({bool isRefresh = false}) {
+      context
+          .read<SubscribeCubit>()
+          .getAvailableClinicsList(userId, isRefresh);
+    }
+
+    _onRefreshData();
+
     return DefaultScaffold(
       appBarTitle: 'Клиника',
       isChildrenPage: true,
@@ -28,6 +35,7 @@ class ClinicsListPage extends StatelessWidget {
               availableClinicsList:
                   state.availableClinicsList as List<AvailableClinic>,
               userId: userId,
+              onRefreshData: _onRefreshData,
             );
           } else {
             return const ClinicsListSkeleton();

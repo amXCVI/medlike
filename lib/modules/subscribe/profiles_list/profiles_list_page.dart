@@ -15,6 +15,8 @@ class ProfilesListPage extends StatelessWidget {
       appBarTitle: 'Запись на прием',
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          context.read<UserCubit>().getUserProfiles();
+
           if (state.getUserProfileStatus ==
                   GetUserProfilesStatusesList.success &&
               state.userProfiles == null) {

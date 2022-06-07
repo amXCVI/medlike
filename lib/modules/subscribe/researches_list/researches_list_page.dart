@@ -23,14 +23,16 @@ class ResearchesListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<SubscribeCubit>().getResearchesList(
-      userId,
-      clinicId,
-      buildingId,
-      CategoryTypes()
-          .getCategoryTypeByCategoryTypeId(categoryTypeId)
-          .categoryType,
-    );
+    void _onRefreshData() {
+      context.read<SubscribeCubit>().getResearchesList(
+        userId,
+        clinicId,
+        buildingId,
+        CategoryTypes()
+            .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            .categoryType,
+      );
+    }
 
     Widget _getScaffoldBody (state) {
       if (state.getResearchesListStatus ==
@@ -42,11 +44,14 @@ class ResearchesListPage extends StatelessWidget {
           researchesList: state.researchesList as List<Research>,
           selectedResearchesIds:
           state.selectedResearchesIds as List<String>,
+          onRefreshData: _onRefreshData,
         );
       } else {
         return const ResearchesListSkeleton();
       }
     }
+
+    _onRefreshData();
 
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
