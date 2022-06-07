@@ -15,6 +15,7 @@ class SubscribeRowItem extends StatelessWidget {
     this.isOverflowHiddenSubtitle = false,
     this.isFirstSymbolForIcon = true,
     this.radius = 20,
+    this.onTap,
   }) : super(key: key);
 
   final String title;
@@ -27,89 +28,99 @@ class SubscribeRowItem extends StatelessWidget {
   final bool isOverflowHiddenTitle;
   final bool isOverflowHiddenSubtitle;
   final double radius;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Theme.of(context).dividerColor),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 21.0, bottom: 18.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: isSelected
-                      ? Theme.of(context).primaryColor
-                      : Theme.of(context).backgroundColor,
-                  radius: radius + 4,
-                  child: CircleAvatar(
-                      backgroundColor: Theme.of(context).backgroundColor,
-                      radius: radius + 2,
-                      child: isFirstSymbolForIcon
-                          ? CircleAvatar(
-                              radius: radius,
-                              backgroundColor: AppColors.mainBrand[100],
-                              child: Text(title[0],
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            )
-                          : customIcon
-                  ),
-                ),
-                const SizedBox(width: 24.0),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 32 - 44 - 16 - 44,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      child: InkWell(
+        highlightColor: Theme.of(context).splashColor,
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Theme.of(context).dividerColor),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 21.0, bottom: 18.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
-                      Text(
-                        title,
-                        overflow: TextOverflow.fade,
-                        maxLines: 2,
-                        softWrap: true,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: isSelected
-                                ? Theme.of(context).primaryColor
-                                : AppColors.mainText),
+                      CircleAvatar(
+                        backgroundColor: isSelected
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).backgroundColor,
+                        radius: radius + 4,
+                        child: CircleAvatar(
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            radius: radius + 2,
+                            child: isFirstSymbolForIcon
+                                ? CircleAvatar(
+                                    radius: radius,
+                                    backgroundColor: AppColors.mainBrand[100],
+                                    child: Text(title[0],
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 22.0,
+                                          fontWeight: FontWeight.w500,
+                                        )),
+                                  )
+                                : customIcon
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      subtitle.isNotEmpty
-                          ? Text(
-                              subtitle,
+                      const SizedBox(width: 24.0),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 32 - 44 - 16 - 44,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
                               overflow: TextOverflow.fade,
                               maxLines: 2,
                               softWrap: true,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                      color: Theme.of(context).highlightColor),
-                            )
-                          : const SizedBox(),
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                  color: isSelected
+                                      ? Theme.of(context).primaryColor
+                                      : AppColors.mainText),
+                            ),
+                            const SizedBox(height: 4),
+                            subtitle.isNotEmpty
+                                ? Text(
+                                    subtitle,
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            color: Theme.of(context).highlightColor),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  isRightArrow
+                      ? SvgPicture.asset(
+                          'assets/icons/subscribe/right_arrow_icon.svg')
+                      : const Text(''),
+                  isSelected
+                      ? SvgPicture.asset('assets/icons/profile/checked_icon.svg')
+                      : const Text(''),
+                ],
+              ),
             ),
-            isRightArrow
-                ? SvgPicture.asset(
-                    'assets/icons/subscribe/right_arrow_icon.svg')
-                : const Text(''),
-            isSelected
-                ? SvgPicture.asset('assets/icons/profile/checked_icon.svg')
-                : const Text(''),
-          ],
+          ),
         ),
       ),
     );

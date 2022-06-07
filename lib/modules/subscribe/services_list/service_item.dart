@@ -5,9 +5,11 @@ import 'package:medlike/modules/subscribe/services_list/get_service_icon.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class ServiceItem extends StatelessWidget {
-  const ServiceItem({Key? key, required this.serviceItem}) : super(key: key);
+  const ServiceItem({Key? key, required this.serviceItem, required this.onTap})
+      : super(key: key);
 
   final NavigationItem serviceItem;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class ServiceItem extends StatelessWidget {
         backgroundColor: Colors.white,
         child: SvgPicture.asset(getServiceIconById(serviceItem.id)),
       ),
+      onTap: onTap,
     );
   }
 }

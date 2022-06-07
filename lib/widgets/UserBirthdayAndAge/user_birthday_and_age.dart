@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+String getAgeByBirthday(DateTime birthday) {
+  final DateTime currentDate = DateTime.now();
+  final differentYears = currentDate.year - birthday.year;
+  int lastDigit = differentYears;
+
+  lastDigit %= 100;
+  if (lastDigit >= 5 && lastDigit <= 20) {
+    return '$differentYears лет';
+  }
+  lastDigit %= 10;
+  if (lastDigit == 1) {
+    return '$differentYears год';
+  }
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return '$differentYears года';
+  }
+  return '$differentYears лет';
+}
+
 class UserBirthdayAndAge extends StatelessWidget {
   const UserBirthdayAndAge({
     Key? key,
@@ -9,29 +28,10 @@ class UserBirthdayAndAge extends StatelessWidget {
 
   final DateTime userBirthday;
 
-  String _getAgeByBirthday(DateTime birthday) {
-    final DateTime currentDate = DateTime.now();
-    final differentYears = currentDate.year - birthday.year;
-    int lastDigit = differentYears;
-
-    lastDigit %= 100;
-    if (lastDigit >= 5 && lastDigit <= 20) {
-      return '$differentYears лет';
-    }
-    lastDigit %= 10;
-    if (lastDigit == 1) {
-      return '$differentYears год';
-    }
-    if (lastDigit >= 2 && lastDigit <= 4) {
-      return '$differentYears года';
-    }
-    return '$differentYears лет';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${DateFormat('dd.MM.yyyy').format(userBirthday)} (${_getAgeByBirthday(userBirthday)})',
+      '${DateFormat('dd.MM.yyyy').format(userBirthday)} (${getAgeByBirthday(userBirthday)})',
       style: Theme.of(context)
           .textTheme
           .bodySmall

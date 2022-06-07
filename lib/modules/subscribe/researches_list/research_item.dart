@@ -4,12 +4,16 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class ResearchItem extends StatelessWidget {
-  const ResearchItem(
-      {Key? key, required this.researchItem, required this.isSelected})
-      : super(key: key);
+  const ResearchItem({
+    Key? key,
+    required this.researchItem,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
   final Research researchItem;
   final bool isSelected;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,7 @@ class ResearchItem extends StatelessWidget {
       subtitle: 'от ${rublesFormat.format(researchItem.price / 100)}',
       isRightArrow: false,
       isSelected: isSelected,
+      onTap: onTap,
     );
   }
 }

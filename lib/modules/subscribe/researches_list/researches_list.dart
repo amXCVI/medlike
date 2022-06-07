@@ -32,15 +32,12 @@ class _ResearchesListState extends State<ResearchesList> {
       child: ListView(
           shrinkWrap: true,
           children: widget.researchesList
-              .map((item) => MaterialButton(
-                    onPressed: () {
+              .map((item) => ResearchItem(
+                    onTap: () {
                       _handleTapOnResearch(item);
                     },
-                    child: ResearchItem(
-                      researchItem: item,
-                      isSelected:
-                          widget.selectedResearchesIds.contains(item.id),
-                    ),
+                    researchItem: item,
+                    isSelected: widget.selectedResearchesIds.contains(item.id),
                   ))
               .toList()),
     );

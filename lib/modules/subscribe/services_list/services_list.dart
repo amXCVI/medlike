@@ -54,13 +54,11 @@ class _ServicesListState extends State<ServicesList> {
       child: ListView(
           shrinkWrap: true,
           children: widget.servicesList
-              .map((item) => MaterialButton(
-                    onPressed: () {
+              .map((item) => ServiceItem(
+                    serviceItem: item,
+                    onTap: () {
                       _handleTapOnService(item);
                     },
-                    child: ServiceItem(
-                      serviceItem: item,
-                    ),
                   ))
               .toList()),
     );

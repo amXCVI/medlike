@@ -39,13 +39,11 @@ class _ClinicsListState extends State<ClinicsList> {
       child: ListView(
           shrinkWrap: true,
           children: widget.availableClinicsList
-              .map((item) => MaterialButton(
-                    onPressed: () {
+              .map((item) => ClinicItem(
+                    clinicItem: item,
+                    onTap: () {
                       _handleTapOnClinic(item);
                     },
-                    child: ClinicItem(
-                      clinicItem: item,
-                    ),
                   ))
               .toList()),
     );

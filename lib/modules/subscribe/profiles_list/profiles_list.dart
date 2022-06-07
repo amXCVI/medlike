@@ -31,14 +31,12 @@ class _ProfilesListState extends State<ProfilesList> {
     return ListView(
         shrinkWrap: true,
         children: widget.profilesList
-            .map((item) => MaterialButton(
-                  onPressed: () {
+            .map((item) => ProfileItem(
+                  userProfile: item,
+                  isSelected: item.id == widget.selectedUserId,
+                  onTap: () {
                     _handleTapOnUserProfile(item.id);
                   },
-                  child: ProfileItem(
-                    userProfile: item,
-                    isSelected: item.id == widget.selectedUserId,
-                  ),
                 ))
             .toList());
   }

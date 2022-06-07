@@ -3,10 +3,12 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class SpecialisationItem extends StatelessWidget {
-  const SpecialisationItem({Key? key, required this.specialisationItem})
+  const SpecialisationItem(
+      {Key? key, required this.specialisationItem, required this.onTap})
       : super(key: key);
 
   final NavigationItem specialisationItem;
+  final void Function() onTap;
 
   String _getCountDoctors(int count) {
     int n = count;
@@ -30,6 +32,7 @@ class SpecialisationItem extends StatelessWidget {
     return SubscribeRowItem(
       title: specialisationItem.name.toString(),
       subtitle: _getCountDoctors(specialisationItem.count as int),
+      onTap: onTap,
     );
   }
 }

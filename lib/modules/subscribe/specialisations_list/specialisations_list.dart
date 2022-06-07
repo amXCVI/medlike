@@ -5,9 +5,11 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/specialisations_list/specialisation_item.dart';
 
 class SpecialisationsList extends StatefulWidget {
-  const SpecialisationsList(
-      {Key? key, required this.specialisationsList, required this.onRefreshData})
-      : super(key: key);
+  const SpecialisationsList({
+    Key? key,
+    required this.specialisationsList,
+    required this.onRefreshData,
+  }) : super(key: key);
 
   final List<NavigationItem> specialisationsList;
   final dynamic onRefreshData;
@@ -40,21 +42,18 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
       child: ListView(shrinkWrap: true, children: [
-        MaterialButton(
-          onPressed: () {
+        SpecialisationItem(
+          specialisationItem: navigationItemForAllDoctors,
+          onTap: () {
             _handleTapOnSpecialisation(navigationItemForAllDoctors);
           },
-          child: SpecialisationItem(
-              specialisationItem: navigationItemForAllDoctors),
         ),
         ...widget.specialisationsList
-            .map((item) => MaterialButton(
-                  onPressed: () {
+            .map((item) => SpecialisationItem(
+                  specialisationItem: item,
+                  onTap: () {
                     _handleTapOnSpecialisation(item);
                   },
-                  child: SpecialisationItem(
-                    specialisationItem: item,
-                  ),
                 ))
             .toList()
       ]),
