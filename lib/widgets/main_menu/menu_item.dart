@@ -21,20 +21,27 @@ class MainMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: SvgPicture.asset(isSelected ? svgFilledIconPath : svgIconPath),
-      title: Text(title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color:
-                  isSelected ? Theme.of(context).primaryColor : AppColors.mainText)),
-      selected: isSelected,
-      selectedTileColor: Theme.of(context).hoverColor,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4)),
-      onTap: () {
-        Navigator.pop(context);
-        context.router.navigateNamed(link);
-      },
+    return Material(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ListTile(
+          leading:
+              SvgPicture.asset(isSelected ? svgFilledIconPath : svgIconPath),
+          title: Text(title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
+                      : AppColors.mainText)),
+          selected: isSelected,
+          selectedTileColor: Theme.of(context).hoverColor,
+          tileColor: Theme.of(context).backgroundColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          onTap: () {
+            Navigator.pop(context);
+            context.router.navigateNamed(link);
+          },
+        ),
+      ),
     );
   }
 }
