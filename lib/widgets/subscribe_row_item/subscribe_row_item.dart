@@ -86,7 +86,7 @@ class SubscribeRowItem extends StatelessWidget {
                               overflow: TextOverflow.fade,
                               maxLines: 2,
                               softWrap: true,
-                              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                   color: isSelected
                                       ? Theme.of(context).primaryColor
                                       : AppColors.mainText),

@@ -37,7 +37,7 @@ class UserProfileItem extends StatelessWidget {
               children: [
                 Text(
                   '${userProfileDate.firstName.toString()} ${userProfileDate.lastName?[0]}.',
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 UserBirthdayAndAge(
                   userBirthday: userProfileDate.birthday as DateTime,

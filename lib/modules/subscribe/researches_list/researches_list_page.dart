@@ -76,7 +76,7 @@ class ResearchesListPage extends StatelessWidget {
                   researchIds: state.selectedResearchesIds as List<String>,
                 ));
               },
-              label: const Text('Далее'),
+              label: Text('Далее'.toUpperCase(), style: Theme.of(context).textTheme.titleSmall,),
               backgroundColor: Theme.of(context).primaryColor,
             ),
           ),
