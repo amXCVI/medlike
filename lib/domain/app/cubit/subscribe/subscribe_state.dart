@@ -12,6 +12,8 @@ enum GetDoctorsListStatuses { initial, loading, success, failed }
 
 enum GetCabinetsListStatuses { initial, loading, success, failed }
 
+enum GetFavoriteDoctorsListStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -41,6 +43,9 @@ class SubscribeState {
   final List<Cabinet>? cabinetsList;
   final Cabinet? selectedCabinet;
 
+  final GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus;
+  final List<FavoriteDoctor>? favoriteDoctorsList;
+
   const SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.initial,
@@ -62,6 +67,8 @@ class SubscribeState {
     this.getCabinetsListStatus = GetCabinetsListStatuses.initial,
     this.cabinetsList,
     this.selectedCabinet,
+    this.getFavoriteDoctorsListStatus,
+    this.favoriteDoctorsList,
   });
 
   SubscribeState copyWith({
@@ -85,6 +92,8 @@ class SubscribeState {
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
     Cabinet? selectedCabinet,
+    GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus,
+    List<FavoriteDoctor>? favoriteDoctorsList,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -114,6 +123,8 @@ class SubscribeState {
           getCabinetsListStatus ?? this.getCabinetsListStatus,
       cabinetsList: cabinetsList ?? this.cabinetsList,
       selectedCabinet: selectedCabinet ?? this.selectedCabinet,
+      getFavoriteDoctorsListStatus: getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
+      favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
     );
   }
 

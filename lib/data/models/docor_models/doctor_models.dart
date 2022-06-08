@@ -89,3 +89,19 @@ class Research with _$Research {
   factory Research.fromJson(Map<String, Object?> json) =>
       _$ResearchFromJson(json);
 }
+
+@freezed
+class FavoriteDoctor with _$FavoriteDoctor {
+  const factory FavoriteDoctor({
+    required String id,
+    required String lastName,
+    required String firstName,
+    required String middleName,
+    required String specializationId,
+    required String specialization,
+    required int categoryType,
+  }) = _FavoriteDoctor;
+
+  factory FavoriteDoctor.fromJson(Map<String, Object?> json) =>
+      _$FavoriteDoctorFromJson(json);
+}

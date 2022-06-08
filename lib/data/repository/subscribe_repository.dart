@@ -82,8 +82,7 @@ class SubscribeRepository {
       final response = await _dioClient.get(
           '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType&SpecializationId=$specialisationId&OnlyPersonalSchedule=true');
       final List<Doctor> doctors =
-          DoctorsResponseModel.fromJson(response.data).doctors
-              as List<Doctor>;
+          DoctorsResponseModel.fromJson(response.data).doctors as List<Doctor>;
       return doctors;
     } catch (err) {
       rethrow;
@@ -102,6 +101,20 @@ class SubscribeRepository {
       final response = await _dioClient.get(
           '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType&ResearchIds=$researchIdsStr');
       return DoctorsResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<List<FavoriteDoctor>> getFavoriteDoctorsList({
+    required String userId,
+    required String buildingId,
+  }) async {
+    try {
+      final response = await _dioClient
+          .get('/api/v1.0/doctors/favorites?UserId=$userId&BuildingId=$buildingId');
+      final List favoriteDoctors = response.data;
+      return favoriteDoctors.map((e) => FavoriteDoctor.fromJson(e)).toList();
     } catch (err) {
       rethrow;
     }

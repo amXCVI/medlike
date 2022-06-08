@@ -213,4 +213,26 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           getCabinetsListStatus: GetCabinetsListStatuses.failed));
     }
   }
+
+  void getFavoritesDoctorsList(
+      userId,
+      buildingId,
+      ) async {
+    emit(state.copyWith(
+      getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.loading,
+    ));
+    try {
+      final List<FavoriteDoctor> response;
+      response = await subscribeRepository.getFavoriteDoctorsList(
+        userId: userId,
+        buildingId: buildingId,
+      );
+      emit(state.copyWith(
+        getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.success,
+        favoriteDoctorsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
+    }
+  }
 }
