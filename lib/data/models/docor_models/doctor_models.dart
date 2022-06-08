@@ -21,8 +21,8 @@ class DoctorsResponseModel with _$DoctorsResponseModel {
 @freezed
 class Cabinet with _$Cabinet {
   const factory Cabinet({
-    required String oid,
-    @JsonKey(name: 'cabinet_name') required String cabinetName,
+    required String id,
+    @JsonKey(name: 'cabinet_name') String? cabinetName,
     int? price,
 }) = _Cabinet;
 

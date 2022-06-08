@@ -168,4 +168,35 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(getDoctorsListStatus: GetDoctorsListStatuses.failed));
     }
   }
+
+  /// Получает список кабинетов и список докторов для записи на услугу
+  void getResearchCabinetsList(
+    userId,
+    clinicId,
+    buildingId,
+    categoryType,
+    researchIds,
+  ) async {
+    emit(state.copyWith(
+      getCabinetsListStatus: GetCabinetsListStatuses.loading,
+    ));
+    try {
+      final DoctorsResponseModel response;
+      response = await subscribeRepository.getCabinetsList(
+        userId: userId,
+        clinicId: clinicId,
+        buildingId: buildingId,
+        categoryType: categoryType,
+        researchIds: researchIds,
+      );
+      emit(state.copyWith(
+        getCabinetsListStatus: GetCabinetsListStatuses.success,
+        doctorsList: response.doctors,
+        cabinetsList: response.cabinets,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getCabinetsListStatus: GetCabinetsListStatuses.failed));
+    }
+  }
 }

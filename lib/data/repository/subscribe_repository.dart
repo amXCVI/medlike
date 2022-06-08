@@ -89,4 +89,21 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  Future<DoctorsResponseModel> getCabinetsList({
+    required String userId,
+    required String clinicId,
+    required String buildingId,
+    required String categoryType,
+    required List<String> researchIds,
+  }) async {
+    try {
+      String researchIdsStr = researchIds.join('&ResearchIds=');
+      final response = await _dioClient.get(
+          '/api/v1.0/doctors?UserId=$userId&BuildingId=$buildingId&ClinicId=$clinicId&CategoryType=$categoryType&ResearchIds=$researchIdsStr');
+      return DoctorsResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

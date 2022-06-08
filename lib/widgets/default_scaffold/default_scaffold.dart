@@ -10,16 +10,21 @@ class DefaultScaffold extends StatelessWidget {
     required this.appBarTitle,
     this.isChildrenPage = false,
     this.actionButton,
+    this.appBarSubtitle = '',
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
+  final String appBarSubtitle;
   final bool isChildrenPage;
   final Widget? actionButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AuthAppBar(title: appBarTitle, isChildrenPage: isChildrenPage),
+      appBar: AuthAppBar(
+          title: appBarTitle,
+          subtitle: appBarSubtitle,
+          isChildrenPage: isChildrenPage),
       bottomNavigationBar: const BottomBar(),
       body: Stack(children: [
         Container(

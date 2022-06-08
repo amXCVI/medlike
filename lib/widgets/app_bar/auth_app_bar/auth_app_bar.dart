@@ -8,8 +8,10 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     this.isChildrenPage = false,
+    this.subtitle = '',
   }) : super(key: key);
   final String title;
+  final String subtitle;
   final bool isChildrenPage;
 
   @override
@@ -26,13 +28,24 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () {
                 RouteData.of(context).router.popTop();
               },
-              icon: SvgPicture.asset('assets/icons/app_bar/app_bar_back_icon.svg'))
+              icon: SvgPicture.asset(
+                  'assets/icons/app_bar/app_bar_back_icon.svg'))
           : IconButton(
               onPressed: () {
                 RouteData.of(context).router.navigateNamed(AppRoutes.main);
               },
               icon: Image.asset('assets/icons/ic_logo_launch.png')),
-      title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
+      title: Column(
+        children: [
+          Text(title, style: Theme.of(context).textTheme.headlineMedium),
+          subtitle.isNotEmpty
+              ? Text(
+                  subtitle,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                )
+              : const SizedBox(),
+        ],
+      ),
       centerTitle: true,
     );
   }

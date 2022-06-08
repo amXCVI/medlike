@@ -10,6 +10,8 @@ enum GetSpecialisationsListStatuses { initial, loading, success, failed }
 
 enum GetDoctorsListStatuses { initial, loading, success, failed }
 
+enum GetCabinetsListStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -34,12 +36,16 @@ class SubscribeState {
   final List<Doctor>? doctorsList;
   final Doctor? selectedDoctor;
 
+  final GetCabinetsListStatuses? getCabinetsListStatus;
+  final List<Cabinet>? cabinetsList;
+  final Cabinet? selectedCabinet;
+
   const SubscribeState({
     this.selectedUser,
-    this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.loading,
+    this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.initial,
     this.availableClinicsList,
     this.selectedBuilding,
-    this.getServicesListStatus = GetServicesListStatuses.loading,
+    this.getServicesListStatus = GetServicesListStatuses.initial,
     this.servicesList,
     this.selectedService,
     this.getResearchesListStatus = GetResearchesListStatuses.initial,
@@ -51,6 +57,9 @@ class SubscribeState {
     this.getDoctorsListStatus = GetDoctorsListStatuses.initial,
     this.doctorsList,
     this.selectedDoctor,
+    this.getCabinetsListStatus = GetCabinetsListStatuses.initial,
+    this.cabinetsList,
+    this.selectedCabinet,
   });
 
   SubscribeState copyWith({
@@ -70,6 +79,9 @@ class SubscribeState {
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
     Doctor? selectedDoctor,
+    GetCabinetsListStatuses? getCabinetsListStatus,
+    List<Cabinet>? cabinetsList,
+    Cabinet? selectedCabinet,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -94,6 +106,10 @@ class SubscribeState {
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+      getCabinetsListStatus:
+          getCabinetsListStatus ?? this.getCabinetsListStatus,
+      cabinetsList: cabinetsList ?? this.cabinetsList,
+      selectedCabinet: selectedCabinet ?? this.selectedCabinet,
     );
   }
 
