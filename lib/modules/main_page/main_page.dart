@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,6 +20,11 @@ class MainPage extends StatelessWidget {
                 onPressed: () => context.router.pushNamed(AppRoutes.login),
                 child: const Text('push to login'),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    AppToast.showAppToast(msg: 'msg');
+                  },
+                  child: Text('show toast'))
             ],
           ),
         ));

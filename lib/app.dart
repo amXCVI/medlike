@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -19,12 +20,15 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit(UserRepository())),
         BlocProvider(create: (context) => SubscribeCubit(SubscribeRepository())),
       ],
-      child: MaterialApp.router(
-        title: 'Medlike Base App',
-        theme: AppTheme.lightAppTheme,
-        routerDelegate: _router.delegate(),
-        routeInformationParser: _router.defaultRouteParser(),
-        debugShowCheckedModeBanner: false,
+      child: StyledToast(
+        locale: const Locale('ru', 'RU'),
+        child: MaterialApp.router(
+          title: 'Medlike Base App',
+          theme: AppTheme.lightAppTheme,
+          routerDelegate: _router.delegate(),
+          routeInformationParser: _router.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

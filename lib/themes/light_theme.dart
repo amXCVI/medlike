@@ -77,7 +77,14 @@ final lightTheme = ThemeData(
       letterSpacing: 0.139972,
       color: AppColors.mainText,
     ),
-    labelSmall: TextStyle(),
+    labelSmall: TextStyle(
+      /// Текст в тостах // не используется
+      fontFamily: 'Muller',
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      height: 1.42,
+      letterSpacing: 0.25,
+    ),
   ),
   /// Colors
   backgroundColor: AppColors.mainAppBackground,

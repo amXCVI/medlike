@@ -46,7 +46,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     setState(() {
       searchQuery = newQuery;
     });
-    if (newQuery.length > 2) {
+    if (newQuery.length > 2 || newQuery.isEmpty) {
       _handleSearch();
     }
   }
