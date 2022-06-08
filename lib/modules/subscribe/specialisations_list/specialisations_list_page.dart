@@ -34,12 +34,18 @@ class SpecialisationsListPage extends StatelessWidget {
           );
     }
 
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterSpecialisationsList(filterStr);
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: CategoryTypes()
           .getCategoryTypeByCategoryTypeId(categoryTypeId)
           .russianCategoryTypeName,
+      isSearch: true,
+      filteringFunction: _onFilterList,
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
@@ -50,12 +56,14 @@ class SpecialisationsListPage extends StatelessWidget {
               GetSpecialisationsListStatuses.success) {
             return SpecialisationsList(
               specialisationsList:
-                  state.specialisationsList as List<NavigationItem>,
+                  state.filteredSpecialisationsList as List<NavigationItem>,
               onRefreshData: _onRefreshData,
               userId: userId,
               clinicId: clinicId,
               buildingId: buildingId,
-                categoryTypeId: categoryTypeId,
+              categoryTypeId: categoryTypeId,
+              isFilteredList: state.filteredSpecialisationsList?.length !=
+                  state.specialisationsList?.length,
             );
           } else {
             return const SpecialisationsListSkeleton();

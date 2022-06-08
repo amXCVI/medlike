@@ -11,20 +11,28 @@ class DefaultScaffold extends StatelessWidget {
     this.isChildrenPage = false,
     this.actionButton,
     this.appBarSubtitle = '',
+    this.isSearch = false,
+    this.filteringFunction,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
   final String appBarSubtitle;
   final bool isChildrenPage;
   final Widget? actionButton;
+  final bool isSearch;
+  final void Function(String searchingStr)? filteringFunction;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AuthAppBar(
-          title: appBarTitle,
-          subtitle: appBarSubtitle,
-          isChildrenPage: isChildrenPage),
+      appBar: CustomAppBar(
+        title: appBarTitle,
+        subtitle: appBarSubtitle,
+        isChildrenPage: isChildrenPage,
+        isSearch: isSearch,
+        actions: const [],
+        filteringFunction: filteringFunction,
+      ),
       bottomNavigationBar: const BottomBar(),
       body: Stack(children: [
         Container(

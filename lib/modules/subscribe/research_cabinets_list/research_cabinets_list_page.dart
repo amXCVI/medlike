@@ -48,7 +48,7 @@ class ResearchCabinetsListPage extends StatelessWidget {
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getCabinetsListStatus == GetCabinetsListStatuses.failed) {
-            return const Text('fail');
+            return const Text('');
           } else if (state.getCabinetsListStatus ==
               GetCabinetsListStatuses.success) {
             return ResearchCabinetsList(

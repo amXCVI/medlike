@@ -31,6 +31,17 @@ class Cabinet with _$Cabinet {
 }
 
 @freezed
+class NavigationItemCabinet with _$NavigationItemCabinet {
+  const factory NavigationItemCabinet({
+    required String oid,
+    @JsonKey(name: 'cabinet_name') String? cabinetName,
+  }) = _NavigationItemCabinet;
+
+  factory NavigationItemCabinet.fromJson(Map<String, Object?> json) =>
+      _$NavigationItemCabinetFromJson(json);
+}
+
+@freezed
 class NavigationItem with _$NavigationItem {
   const factory NavigationItem({
     required String id,
@@ -38,7 +49,7 @@ class NavigationItem with _$NavigationItem {
     required int? count,
     required int? categoryType,
     required bool? personalSchedule,
-    required List<Cabinet>? cabinets,
+    required List<NavigationItemCabinet>? cabinets,
   }) = _NavigationItem;
 
   factory NavigationItem.fromJson(Map<String, Object?> json) =>

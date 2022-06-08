@@ -31,6 +31,7 @@ class SubscribeState {
   final GetSpecialisationsListStatuses? getSpecialisationsListStatus;
   final List<NavigationItem>? specialisationsList;
   final NavigationItem? selectedSpecialisation;
+  final List<NavigationItem>? filteredSpecialisationsList;
 
   final GetDoctorsListStatuses? getDoctorsListStatus;
   final List<Doctor>? doctorsList;
@@ -54,6 +55,7 @@ class SubscribeState {
     this.getSpecialisationsListStatus = GetSpecialisationsListStatuses.initial,
     this.specialisationsList,
     this.selectedSpecialisation,
+    this.filteredSpecialisationsList,
     this.getDoctorsListStatus = GetDoctorsListStatuses.initial,
     this.doctorsList,
     this.selectedDoctor,
@@ -76,6 +78,7 @@ class SubscribeState {
     GetSpecialisationsListStatuses? getSpecialisationsListStatus,
     List<NavigationItem>? specialisationsList,
     NavigationItem? selectedSpecialisation,
+    List<NavigationItem>? filteredSpecialisationsList,
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
     Doctor? selectedDoctor,
@@ -103,6 +106,7 @@ class SubscribeState {
       specialisationsList: specialisationsList ?? this.specialisationsList,
       selectedSpecialisation:
           selectedSpecialisation ?? this.selectedSpecialisation,
+      filteredSpecialisationsList: filteredSpecialisationsList ?? this.filteredSpecialisationsList,
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       selectedDoctor: selectedDoctor ?? this.selectedDoctor,

@@ -126,11 +126,25 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getSpecialisationsListStatus: GetSpecialisationsListStatuses.success,
         specialisationsList: response,
+        filteredSpecialisationsList: response,
       ));
     } catch (e) {
       emit(state.copyWith(
           getSpecialisationsListStatus: GetSpecialisationsListStatuses.failed));
     }
+  }
+
+  /// Фильтр специализаций врача в консультациях и телемед. По названию специализации
+  void filterSpecialisationsList(String filterStr) {
+    final List<NavigationItem> filteredList;
+    filteredList = state.specialisationsList!
+        .where((element) =>
+            element.name!.toLowerCase().contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredSpecialisationsList: filteredList,
+    ));
   }
 
   /// Сохранить выбранную категорию специализацию

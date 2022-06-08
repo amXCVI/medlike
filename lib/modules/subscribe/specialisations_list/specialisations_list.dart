@@ -17,6 +17,7 @@ class SpecialisationsList extends StatefulWidget {
     required this.buildingId,
     required this.clinicId,
     required this.categoryTypeId,
+    this.isFilteredList = false,
   }) : super(key: key);
 
   final List<NavigationItem> specialisationsList;
@@ -25,6 +26,7 @@ class SpecialisationsList extends StatefulWidget {
   final String clinicId;
   final int categoryTypeId;
   final dynamic onRefreshData;
+  final bool isFilteredList;
 
   @override
   State<SpecialisationsList> createState() => _SpecialisationsListState();
@@ -62,18 +64,22 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
       child: ListView(shrinkWrap: true, children: [
-        SubscribeRowItem(
-          title: navigationItemForAllDoctors.name.toString(),
-          subtitle: getCountDoctors(navigationItemForAllDoctors.count as int),
-          onTap: () {
-            _handleTapOnSpecialisation(navigationItemForAllDoctors);
-          },
-          customIcon: CircleAvatar(
-            backgroundColor: Colors.white,
-            child: SvgPicture.asset('assets/icons/subscribe/all_doctors.svg'),
-          ),
-          isFirstSymbolForIcon: false,
-        ),
+        !widget.isFilteredList
+            ? SubscribeRowItem(
+                title: navigationItemForAllDoctors.name.toString(),
+                subtitle:
+                    getCountDoctors(navigationItemForAllDoctors.count as int),
+                onTap: () {
+                  _handleTapOnSpecialisation(navigationItemForAllDoctors);
+                },
+                customIcon: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: SvgPicture.asset(
+                      'assets/icons/subscribe/all_doctors.svg'),
+                ),
+                isFirstSymbolForIcon: false,
+              )
+            : const SizedBox(),
         ...widget.specialisationsList
             .map((item) => SpecialisationItem(
                   specialisationItem: item,
