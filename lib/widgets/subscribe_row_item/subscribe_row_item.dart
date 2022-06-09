@@ -33,6 +33,7 @@ class SubscribeRowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).backgroundColor,
       child: InkWell(
         highlightColor: Theme.of(context).highlightColor,
         onTap: onTap,

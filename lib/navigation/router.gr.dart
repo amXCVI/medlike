@@ -10,12 +10,13 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:flutter/material.dart' as _i13;
+import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
 
 import '../modules/appointments/appointments_page.dart' as _i2;
-import '../modules/login_with_pass/login_page.dart' as _i11;
+import '../modules/login_with_pass/login_page.dart' as _i12;
 import '../modules/main_page/main_page.dart' as _i1;
+import '../modules/settings/settings_page.dart' as _i11;
 import '../modules/subscribe/clinics_list/clinics_list_page.dart' as _i4;
 import '../modules/subscribe/doctors_list/doctors_list_page.dart' as _i8;
 import '../modules/subscribe/favorite_doctors_list/favorite_doctors_list_page.dart'
@@ -28,33 +29,33 @@ import '../modules/subscribe/services_list/services_list_page.dart' as _i5;
 import '../modules/subscribe/specialisations_list/specialisations_list_page.dart'
     as _i7;
 
-class AppRouter extends _i12.RootStackRouter {
-  AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
+class AppRouter extends _i13.RootStackRouter {
+  AppRouter([_i14.GlobalKey<_i14.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i12.PageFactory> pagesMap = {
+  final Map<String, _i13.PageFactory> pagesMap = {
     MainRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.MainPage());
     },
     AppointmentsRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.AppointmentsPage());
     },
     ProfilesListRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i3.ProfilesListPage());
     },
     ClinicsListRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i4.ClinicsListPage(key: args.key, userId: args.userId));
     },
     ServicesListRoute.name: (routeData) {
       final args = routeData.argsAs<ServicesListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i5.ServicesListPage(
               key: args.key,
@@ -64,7 +65,7 @@ class AppRouter extends _i12.RootStackRouter {
     },
     ResearchesListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchesListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i6.ResearchesListPage(
               key: args.key,
@@ -75,7 +76,7 @@ class AppRouter extends _i12.RootStackRouter {
     },
     SpecialisationsListRoute.name: (routeData) {
       final args = routeData.argsAs<SpecialisationsListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i7.SpecialisationsListPage(
               key: args.key,
@@ -86,7 +87,7 @@ class AppRouter extends _i12.RootStackRouter {
     },
     DoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<DoctorsListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i8.DoctorsListPage(
               key: args.key,
@@ -99,7 +100,7 @@ class AppRouter extends _i12.RootStackRouter {
     },
     ResearchCabinetsListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchCabinetsListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i9.ResearchCabinetsListPage(
               key: args.key,
@@ -111,44 +112,49 @@ class AppRouter extends _i12.RootStackRouter {
     },
     FavoriteDoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<FavoriteDoctorsListRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i10.FavoriteDoctorsListPage(
               key: args.key, userId: args.userId, buildingId: args.buildingId));
     },
+    SettingsRoute.name: (routeData) {
+      return _i13.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i11.SettingsPage());
+    },
     LoginRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i11.LoginPage());
+      return _i13.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i12.LoginPage());
     }
   };
 
   @override
-  List<_i12.RouteConfig> get routes => [
-        _i12.RouteConfig('/#redirect',
+  List<_i13.RouteConfig> get routes => [
+        _i13.RouteConfig('/#redirect',
             path: '/', redirectTo: '/main', fullMatch: true),
-        _i12.RouteConfig(MainRoute.name, path: '/main'),
-        _i12.RouteConfig(AppointmentsRoute.name, path: '/my_appointments'),
-        _i12.RouteConfig(ProfilesListRoute.name, path: '/subscribe_profiles'),
-        _i12.RouteConfig(ClinicsListRoute.name, path: '/subscribe_clinics'),
-        _i12.RouteConfig(ServicesListRoute.name, path: '/subscribe_services'),
-        _i12.RouteConfig(ResearchesListRoute.name,
+        _i13.RouteConfig(MainRoute.name, path: '/main'),
+        _i13.RouteConfig(AppointmentsRoute.name, path: '/my_appointments'),
+        _i13.RouteConfig(ProfilesListRoute.name, path: '/subscribe_profiles'),
+        _i13.RouteConfig(ClinicsListRoute.name, path: '/subscribe_clinics'),
+        _i13.RouteConfig(ServicesListRoute.name, path: '/subscribe_services'),
+        _i13.RouteConfig(ResearchesListRoute.name,
             path: '/subscribe_researches'),
-        _i12.RouteConfig(SpecialisationsListRoute.name,
+        _i13.RouteConfig(SpecialisationsListRoute.name,
             path: '/subscribe_specialisations'),
-        _i12.RouteConfig(DoctorsListRoute.name, path: '/subscribe_doctors'),
-        _i12.RouteConfig(ResearchCabinetsListRoute.name,
+        _i13.RouteConfig(DoctorsListRoute.name, path: '/subscribe_doctors'),
+        _i13.RouteConfig(ResearchCabinetsListRoute.name,
             path: '/subscribe_research_cabinets'),
-        _i12.RouteConfig(FavoriteDoctorsListRoute.name,
+        _i13.RouteConfig(FavoriteDoctorsListRoute.name,
             path: '/subscribe_favorite_doctors'),
-        _i12.RouteConfig(LoginRoute.name, path: '/login'),
-        _i12.RouteConfig('*#redirect',
+        _i13.RouteConfig(SettingsRoute.name, path: '/settings'),
+        _i13.RouteConfig(LoginRoute.name, path: '/login'),
+        _i13.RouteConfig('*#redirect',
             path: '*', redirectTo: '/main', fullMatch: true)
       ];
 }
 
 /// generated route for
 /// [_i1.MainPage]
-class MainRoute extends _i12.PageRouteInfo<void> {
+class MainRoute extends _i13.PageRouteInfo<void> {
   const MainRoute() : super(MainRoute.name, path: '/main');
 
   static const String name = 'MainRoute';
@@ -156,7 +162,7 @@ class MainRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.AppointmentsPage]
-class AppointmentsRoute extends _i12.PageRouteInfo<void> {
+class AppointmentsRoute extends _i13.PageRouteInfo<void> {
   const AppointmentsRoute()
       : super(AppointmentsRoute.name, path: '/my_appointments');
 
@@ -165,7 +171,7 @@ class AppointmentsRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ProfilesListPage]
-class ProfilesListRoute extends _i12.PageRouteInfo<void> {
+class ProfilesListRoute extends _i13.PageRouteInfo<void> {
   const ProfilesListRoute()
       : super(ProfilesListRoute.name, path: '/subscribe_profiles');
 
@@ -174,8 +180,8 @@ class ProfilesListRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.ClinicsListPage]
-class ClinicsListRoute extends _i12.PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({_i13.Key? key, required String userId})
+class ClinicsListRoute extends _i13.PageRouteInfo<ClinicsListRouteArgs> {
+  ClinicsListRoute({_i14.Key? key, required String userId})
       : super(ClinicsListRoute.name,
             path: '/subscribe_clinics',
             args: ClinicsListRouteArgs(key: key, userId: userId));
@@ -186,7 +192,7 @@ class ClinicsListRoute extends _i12.PageRouteInfo<ClinicsListRouteArgs> {
 class ClinicsListRouteArgs {
   const ClinicsListRouteArgs({this.key, required this.userId});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -198,9 +204,9 @@ class ClinicsListRouteArgs {
 
 /// generated route for
 /// [_i5.ServicesListPage]
-class ServicesListRoute extends _i12.PageRouteInfo<ServicesListRouteArgs> {
+class ServicesListRoute extends _i13.PageRouteInfo<ServicesListRouteArgs> {
   ServicesListRoute(
-      {_i13.Key? key,
+      {_i14.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -222,7 +228,7 @@ class ServicesListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -238,9 +244,9 @@ class ServicesListRouteArgs {
 
 /// generated route for
 /// [_i6.ResearchesListPage]
-class ResearchesListRoute extends _i12.PageRouteInfo<ResearchesListRouteArgs> {
+class ResearchesListRoute extends _i13.PageRouteInfo<ResearchesListRouteArgs> {
   ResearchesListRoute(
-      {_i13.Key? key,
+      {_i14.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -265,7 +271,7 @@ class ResearchesListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -284,9 +290,9 @@ class ResearchesListRouteArgs {
 /// generated route for
 /// [_i7.SpecialisationsListPage]
 class SpecialisationsListRoute
-    extends _i12.PageRouteInfo<SpecialisationsListRouteArgs> {
+    extends _i13.PageRouteInfo<SpecialisationsListRouteArgs> {
   SpecialisationsListRoute(
-      {_i13.Key? key,
+      {_i14.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -311,7 +317,7 @@ class SpecialisationsListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -329,9 +335,9 @@ class SpecialisationsListRouteArgs {
 
 /// generated route for
 /// [_i8.DoctorsListPage]
-class DoctorsListRoute extends _i12.PageRouteInfo<DoctorsListRouteArgs> {
+class DoctorsListRoute extends _i13.PageRouteInfo<DoctorsListRouteArgs> {
   DoctorsListRoute(
-      {_i13.Key? key,
+      {_i14.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -362,7 +368,7 @@ class DoctorsListRouteArgs {
       required this.specialisationId,
       required this.specialisationName});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -385,9 +391,9 @@ class DoctorsListRouteArgs {
 /// generated route for
 /// [_i9.ResearchCabinetsListPage]
 class ResearchCabinetsListRoute
-    extends _i12.PageRouteInfo<ResearchCabinetsListRouteArgs> {
+    extends _i13.PageRouteInfo<ResearchCabinetsListRouteArgs> {
   ResearchCabinetsListRoute(
-      {_i13.Key? key,
+      {_i14.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -415,7 +421,7 @@ class ResearchCabinetsListRouteArgs {
       required this.categoryTypeId,
       required this.researchIds});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -436,9 +442,9 @@ class ResearchCabinetsListRouteArgs {
 /// generated route for
 /// [_i10.FavoriteDoctorsListPage]
 class FavoriteDoctorsListRoute
-    extends _i12.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
+    extends _i13.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
   FavoriteDoctorsListRoute(
-      {_i13.Key? key, required String userId, required String buildingId})
+      {_i14.Key? key, required String userId, required String buildingId})
       : super(FavoriteDoctorsListRoute.name,
             path: '/subscribe_favorite_doctors',
             args: FavoriteDoctorsListRouteArgs(
@@ -451,7 +457,7 @@ class FavoriteDoctorsListRouteArgs {
   const FavoriteDoctorsListRouteArgs(
       {this.key, required this.userId, required this.buildingId});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   final String userId;
 
@@ -464,8 +470,16 @@ class FavoriteDoctorsListRouteArgs {
 }
 
 /// generated route for
-/// [_i11.LoginPage]
-class LoginRoute extends _i12.PageRouteInfo<void> {
+/// [_i11.SettingsPage]
+class SettingsRoute extends _i13.PageRouteInfo<void> {
+  const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
+
+  static const String name = 'SettingsRoute';
+}
+
+/// generated route for
+/// [_i12.LoginPage]
+class LoginRoute extends _i13.PageRouteInfo<void> {
   const LoginRoute() : super(LoginRoute.name, path: '/login');
 
   static const String name = 'LoginRoute';

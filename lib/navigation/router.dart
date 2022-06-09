@@ -3,6 +3,7 @@ import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/login_with_pass/login_page.dart';
 
 import 'package:medlike/modules/main_page/main_page.dart';
+import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinics_list_page.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctors_list_page.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctors_list_page.dart';
@@ -28,6 +29,7 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.subscribeDoctors, page: DoctorsListPage),
     AutoRoute(path: AppRoutes.subscribeResearchCabinets, page: ResearchCabinetsListPage),
     AutoRoute(path: AppRoutes.subscribeFavoriteDoctors, page: FavoriteDoctorsListPage),
+    AutoRoute(path: AppRoutes.settings, page: SettingsPage),
     AutoRoute(path: AppRoutes.login, page: LoginPage),
     RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],
