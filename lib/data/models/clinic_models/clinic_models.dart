@@ -30,3 +30,32 @@ class AvailableClinicsList with _$AvailableClinicsList {
   factory AvailableClinicsList.fromJson(Map<String, Object?> json) =>
       _$AvailableClinicsListFromJson(json);
 }
+
+@freezed
+class ClinicModel with _$ClinicModel {
+  const factory ClinicModel({
+    required String id,
+    required String name,
+    required int? timeZoneOffset,
+    required List<BuildingModel> buildings,
+  }) = _ClinicModel;
+
+  factory ClinicModel.fromJson(Map<String, Object?> json) =>
+      _$ClinicModelFromJson(json);
+}
+
+@freezed
+class BuildingModel with _$BuildingModel {
+  const factory BuildingModel({
+    required String name,
+    required String? departmentName,
+    required String address,
+    required String id,
+    required String buildingId,
+    required List<String> phone,
+    required List<String> workTime,
+  }) = _BuildingModel;
+
+  factory BuildingModel.fromJson(Map<String, Object?> json) =>
+      _$BuildingModelFromJson(json);
+}

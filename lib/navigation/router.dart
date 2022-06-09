@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/login_with_pass/login_page.dart';
 
@@ -30,6 +31,7 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.subscribeResearchCabinets, page: ResearchCabinetsListPage),
     AutoRoute(path: AppRoutes.subscribeFavoriteDoctors, page: FavoriteDoctorsListPage),
     AutoRoute(path: AppRoutes.settings, page: SettingsPage),
+    AutoRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage),
     AutoRoute(path: AppRoutes.login, page: LoginPage),
     RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

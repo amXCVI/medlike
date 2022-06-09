@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -18,7 +20,9 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserCubit(UserRepository())),
-        BlocProvider(create: (context) => SubscribeCubit(SubscribeRepository())),
+        BlocProvider(
+            create: (context) => SubscribeCubit(SubscribeRepository())),
+        BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository())),
       ],
       child: StyledToast(
         locale: const Locale('ru', 'RU'),

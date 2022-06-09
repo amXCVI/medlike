@@ -93,9 +93,7 @@ class UserCubit extends Cubit<UserState> {
         authScreen: state.authScreen,
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
-        selectedUserId: currentSelectedUserId != null
-            ? currentSelectedUserId.toString()
-            : response[0].id.toString(),
+        selectedUserId: currentSelectedUserId?.toString(),
       ));
     } catch (e) {
       emit(state.copyWith(
