@@ -84,4 +84,9 @@ class AppColors {
     800: Color.fromRGBO(60, 148, 168, .9),
     900: Color.fromRGBO(60, 148, 168, 1),
   };
+
+  // Цвета для градиента карточек на главной
+  static const Color homeCategoriesGradientColor1 = Color.fromRGBO(225, 228, 236, 0.2);
+  static const Color homeCategoriesGradientColor2 = Color.fromRGBO(223, 235, 241, 1);
+  static const Color homeCategoriesGradientColor3 = Color.fromRGBO(255, 255, 255, 1);
 }

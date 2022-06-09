@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:medlike/themes/colors.dart';
 
 String getAgeByBirthday(DateTime birthday) {
   final DateTime currentDate = DateTime.now();
@@ -35,7 +36,7 @@ class UserBirthdayAndAge extends StatelessWidget {
       style: Theme.of(context)
           .textTheme
           .bodySmall
-          ?.copyWith(color: Theme.of(context).highlightColor),
+          ?.copyWith(color: AppColors.lightText),
     );
   }
 }

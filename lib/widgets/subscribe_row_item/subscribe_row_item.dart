@@ -34,7 +34,7 @@ class SubscribeRowItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        highlightColor: Theme.of(context).splashColor,
+        highlightColor: Theme.of(context).highlightColor,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -102,7 +102,7 @@ class SubscribeRowItem extends StatelessWidget {
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                            color: Theme.of(context).highlightColor),
+                                            color: AppColors.lightText),
                                   )
                                 : const SizedBox(),
                           ],

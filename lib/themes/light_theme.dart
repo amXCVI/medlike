@@ -99,8 +99,8 @@ final lightTheme = ThemeData(
   // bottomAppBarColor: AppColors.
   // cardColor: AppColors.
   dividerColor: AppColors.mainSeparatorAlpha,
-  highlightColor: AppColors.lightText, /// !
-  // splashColor: AppColors.
+  highlightColor: AppColors.circleBgFirst,
+  // splashColor: AppColors.mainBgAlpha,
   // selectedRowColor: AppColors.
   // unselectedWidgetColor: AppColors.
   // disabledColor: AppColors.
