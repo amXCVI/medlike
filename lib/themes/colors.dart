@@ -72,6 +72,8 @@ class AppColors {
 
   static const Color circleBgFirst = Color(0xffEEEEEE);
 
+  static const Color mainOther = Color.fromRGBO(59, 117, 184, 1);
+
   static const Map<int, Color> mainBrand = {
     50: Color.fromRGBO(60, 148, 168, .1),       // mainBgAlpha
     100: Color.fromRGBO(60, 148, 168, .2),

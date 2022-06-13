@@ -1,5 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart';
+import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart';
+import 'package:medlike/modules/about_clinic/price/price_page.dart';
+import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/login_with_pass/login_page.dart';
 
@@ -21,7 +24,9 @@ import 'router.gr.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(path: AppRoutes.main, page: MainPage, initial: true),
+
     AutoRoute(path: AppRoutes.myAppointments, page: AppointmentsPage),
+
     AutoRoute(path: AppRoutes.subscribeProfiles, page: ProfilesListPage),
     AutoRoute(path: AppRoutes.subscribeClinics, page: ClinicsListPage),
     AutoRoute(path: AppRoutes.subscribeServices, page: ServicesListPage),
@@ -30,9 +35,16 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.subscribeDoctors, page: DoctorsListPage),
     AutoRoute(path: AppRoutes.subscribeResearchCabinets, page: ResearchCabinetsListPage),
     AutoRoute(path: AppRoutes.subscribeFavoriteDoctors, page: FavoriteDoctorsListPage),
+
     AutoRoute(path: AppRoutes.settings, page: SettingsPage),
+
     AutoRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage),
+    AutoRoute(path: AppRoutes.clinicInfoDetails, page: DetailClinicPage),
+    AutoRoute(path: AppRoutes.clinicInfoPrice, page: PricePage),
+    AutoRoute(path: AppRoutes.clinicInfoSales, page: SalesPage),
+
     AutoRoute(path: AppRoutes.login, page: LoginPage),
+
     RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],
 )

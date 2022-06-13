@@ -31,4 +31,33 @@ class ClinicsCubit extends Cubit<ClinicsState> {
           getAllClinicsListStatus: GetAllClinicsListStatuses.failed));
     }
   }
+
+  void getPriceList(String clinicId) async {
+    emit(state.copyWith(
+      getPriceListStatus: GetPriceListStatuses.loading,
+    ));
+    try {
+      final List<PriceItemModel> response;
+      response = await clinicsRepository.getPriceList(clinicId);
+      emit(state.copyWith(
+        getPriceListStatus: GetPriceListStatuses.success,
+        priceList: response,
+        filteredPriceList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(getPriceListStatus: GetPriceListStatuses.failed));
+    }
+  }
+
+  void filterPriceList(String filterStr) {
+    final List<PriceItemModel> filteredList;
+    filteredList = state.priceList!
+        .where((element) =>
+            element.title.toLowerCase().contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredPriceList: filteredList,
+    ));
+  }
 }

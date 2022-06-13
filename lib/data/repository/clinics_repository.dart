@@ -13,4 +13,15 @@ class ClinicsRepository {
       rethrow;
     }
   }
+
+  Future<List<PriceItemModel>> getPriceList(clinicId) async {
+    try {
+      final response =
+          await _dioClient.get('/api/v1.0/clinics/$clinicId/prices');
+      final List priceList = response.data;
+      return priceList.map((e) => PriceItemModel.fromJson(e)).toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

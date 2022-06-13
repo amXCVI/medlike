@@ -59,3 +59,16 @@ class BuildingModel with _$BuildingModel {
   factory BuildingModel.fromJson(Map<String, Object?> json) =>
       _$BuildingModelFromJson(json);
 }
+
+@freezed
+class PriceItemModel with _$PriceItemModel {
+  const factory PriceItemModel({
+    required String title,
+    required int price,
+    required bool haveRecommendations,
+    required String serviceId,
+  }) = _PriceItemModel;
+
+  factory PriceItemModel.fromJson(Map<String, Object?> json) =>
+      _$PriceItemModelFromJson(json);
+}

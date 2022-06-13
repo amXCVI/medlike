@@ -12,11 +12,11 @@ class AllClinicsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _onLoadDada(bool isRefresh) {
-      context.read<ClinicsCubit>().getAllClinicsList(false);
+    void _onLoadDada({bool isRefresh = false}) {
+      context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
     }
 
-    _onLoadDada(false);
+    _onLoadDada();
 
 
     return DefaultScaffold(
@@ -25,15 +25,13 @@ class AllClinicsListPage extends StatelessWidget {
         builder: (context, state) {
           if (state.getAllClinicsListStatus ==
               GetAllClinicsListStatuses.failed) {
-            return const Text('fail');
+            return const Text('');
           } else if (state.getAllClinicsListStatus ==
               GetAllClinicsListStatuses.success) {
             return AllClinicsList(
               clinicsList:
               state.clinicsList as List<ClinicModel>,
-              onRefreshData: () {
-                _onLoadDada(true);
-              },
+              onRefreshData: _onLoadDada
             );
           } else {
             return const AllClinicsListSkeleton();

@@ -15,5 +15,8 @@ class AppRoutes {
   static const medcard = '/medcard';
   static const health = '/health';
   static const clinicInfo = '/clinic_info';
+  static const clinicInfoDetails = '/clinic_info_details';
+  static const clinicInfoPrice = '/clinic_info_price';
+  static const clinicInfoSales = '/clinic_info_sales';
   static const settings = '/settings';
 }
