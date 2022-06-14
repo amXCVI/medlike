@@ -14,7 +14,7 @@ class DioInterceptors extends Interceptor {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
       'Project': 'Medlike',
-      'Authorization': 'Bearer ${await UserSecureStorage.getField(AppConstants().accessToken)}',
+      'Authorization': 'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
 
     return super.onRequest(options, handler);

@@ -40,9 +40,9 @@ class UserCubit extends Cubit<UserState> {
     try {
       final response =
           await userRepository.signIn(phone: phone, password: password);
-      UserSecureStorage.setField(AppConstants().accessToken, response.token);
+      UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
-          AppConstants().refreshToken, response.refreshToken);
+          AppConstants.refreshToken, response.refreshToken);
       emit(state.copyWith(
           authStatus: UserAuthStatuses.successAuth,
           token: response.token,
@@ -85,7 +85,7 @@ class UserCubit extends Cubit<UserState> {
     ));
     try {
       final currentSelectedUserId =
-          await UserSecureStorage.getField(AppConstants().selectedUserId);
+          await UserSecureStorage.getField(AppConstants.selectedUserId);
       final List<UserProfile> response;
       response = await userRepository.getProfiles();
       emit(state.copyWith(
@@ -114,6 +114,6 @@ class UserCubit extends Cubit<UserState> {
       userProfiles: state.userProfiles,
       getUserProfileStatus: state.getUserProfileStatus,
     ));
-    UserSecureStorage.setField(AppConstants().selectedUserId, userId);
+    UserSecureStorage.setField(AppConstants.selectedUserId, userId);
   }
 }

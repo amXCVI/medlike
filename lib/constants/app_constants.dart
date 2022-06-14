@@ -1,7 +1,10 @@
 class AppConstants {
-  String accessToken = 'accessToken';
-  String refreshToken = 'refreshToken';
+  static const String accessToken = 'accessToken';
+  static const String refreshToken = 'refreshToken';
 
   // Ключ для сохранения последнего активного профиля в security storage
-  String selectedUserId = 'selectedUserId';
+  static const String selectedUserId = 'selectedUserId';
+
+  // Ключ Яндекс.карты
+  static const String yandexMapApiKey = '492944f6-afb1-4915-bebe-6a3639caf540';
 }
