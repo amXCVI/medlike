@@ -30,7 +30,7 @@ class ResearchCabinetsListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes()
+            CategoryTypes
                 .getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
             researchIds,
@@ -40,7 +40,7 @@ class ResearchCabinetsListPage extends StatelessWidget {
     _onRefreshData();
 
     return DefaultScaffold(
-      appBarTitle: CategoryTypes()
+      appBarTitle: CategoryTypes
           .getCategoryTypeByCategoryTypeId(categoryTypeId)
           .russianCategoryTypeName,
       appBarSubtitle: getCountResearches(researchIds.length),

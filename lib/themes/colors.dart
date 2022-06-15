@@ -74,6 +74,10 @@ class AppColors {
 
   static const Color mainOther = Color.fromRGBO(59, 117, 184, 1);
 
+  static const Color notDone = Color.fromRGBO(157, 157, 207, 1);
+
+  static const Color mainWaiting = Color.fromRGBO(255, 204, 0, 1);
+
   static const Map<int, Color> mainBrand = {
     50: Color.fromRGBO(60, 148, 168, .1),       // mainBgAlpha
     100: Color.fromRGBO(60, 148, 168, .2),

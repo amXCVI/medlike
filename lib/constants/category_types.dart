@@ -19,7 +19,7 @@ class CategoryTypes {
     CategoryType(15, 'Funcdiagnostics', 'Функциональная диагностика'),
   ];
 
-  CategoryType getCategoryTypeByCategoryTypeId(int categoryTypeId) {
+  static CategoryType getCategoryTypeByCategoryTypeId(int categoryTypeId) {
     CategoryType findCategoryType = categoryTypes.firstWhere(
         (categoryType) => categoryType.categoryTypeId == categoryTypeId);
     return findCategoryType;

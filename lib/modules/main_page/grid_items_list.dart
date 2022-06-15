@@ -15,22 +15,22 @@ class GridItemModel {
 List<GridItemModel> gridItemsList = [
   GridItemModel(
     actionLink: AppRoutes.subscribeProfiles,
-    imgSrc: 'assets/icons/main_page/ic_main_button_one@1x.png',
+    imgSrc: 'assets/icons/main_page/ic_main_button_one@2x.png',
     label: 'Запись на прием',
   ),
   GridItemModel(
     actionLink: AppRoutes.myAppointments,
-    imgSrc: 'assets/icons/main_page/ic_main_button_two@1x.png',
+    imgSrc: 'assets/icons/main_page/ic_main_button_two@2x.png',
     label: 'Мои приемы',
   ),
   GridItemModel(
     actionLink: AppRoutes.medcard,
-    imgSrc: 'assets/icons/main_page/ic_main_button_three@1x.png',
+    imgSrc: 'assets/icons/main_page/ic_main_button_three@2x.png',
     label: 'Медкарта',
   ),
   GridItemModel(
-    actionLink: AppRoutes.settings,
-    imgSrc: 'assets/icons/main_page/ic_main_button_four@1x.png',
+    actionLink: AppRoutes.clinicInfo,
+    imgSrc: 'assets/icons/main_page/ic_main_button_four@2x.png',
     label: 'Услуги и цены',
   ),
 ];

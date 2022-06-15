@@ -84,7 +84,7 @@ class SubscribeRowItem extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              overflow: TextOverflow.fade,
+                              overflow: TextOverflow.ellipsis ,
                               maxLines: 2,
                               softWrap: true,
                               style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -96,7 +96,7 @@ class SubscribeRowItem extends StatelessWidget {
                             subtitle.isNotEmpty
                                 ? Text(
                                     subtitle,
-                                    overflow: TextOverflow.fade,
+                                    overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     softWrap: true,
                                     style: Theme.of(context)

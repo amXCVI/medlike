@@ -30,8 +30,7 @@ class ResearchesListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes()
-                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
           );
     }
@@ -56,9 +55,9 @@ class ResearchesListPage extends StatelessWidget {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
         return DefaultScaffold(
-          appBarTitle: CategoryTypes()
-              .getCategoryTypeByCategoryTypeId(categoryTypeId)
-              .russianCategoryTypeName,
+          appBarTitle:
+              CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
+                  .russianCategoryTypeName,
           isChildrenPage: true,
           actionButton: Visibility(
             visible: state.getResearchesListStatus ==
@@ -76,7 +75,10 @@ class ResearchesListPage extends StatelessWidget {
                   researchIds: state.selectedResearchesIds as List<String>,
                 ));
               },
-              label: Text('Далее'.toUpperCase(), style: Theme.of(context).textTheme.titleSmall,),
+              label: Text(
+                'Далее'.toUpperCase(),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               backgroundColor: Theme.of(context).primaryColor,
             ),
           ),

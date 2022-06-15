@@ -10,7 +10,13 @@ final lightTheme = ThemeData(
     displayLarge: TextStyle(),
     displayMedium: TextStyle(),
     displaySmall: TextStyle(),
-    headlineLarge: TextStyle(),
+    headlineLarge: TextStyle(
+      fontFamily: 'Muller',
+      fontSize: 18.0,
+      height: 1.2,
+      color: AppColors.mainText,
+      fontWeight: FontWeight.w500,
+    ),
     headlineMedium: TextStyle(
       /// Заголовок вверху экрана
       fontFamily: 'Muller',

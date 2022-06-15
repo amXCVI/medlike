@@ -33,7 +33,7 @@ class DoctorsListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes()
+            CategoryTypes
                 .getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
             specialisationId,

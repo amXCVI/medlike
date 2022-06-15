@@ -28,8 +28,7 @@ class SpecialisationsListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes()
-                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
           );
     }
@@ -41,8 +40,7 @@ class SpecialisationsListPage extends StatelessWidget {
     _onRefreshData();
 
     return DefaultScaffold(
-      appBarTitle: CategoryTypes()
-          .getCategoryTypeByCategoryTypeId(categoryTypeId)
+      appBarTitle: CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
           .russianCategoryTypeName,
       isSearch: true,
       filteringFunction: _onFilterList,
