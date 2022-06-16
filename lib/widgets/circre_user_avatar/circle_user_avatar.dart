@@ -39,11 +39,11 @@ class CircleUserAvatar extends StatelessWidget {
                     radius: radius,
                     backgroundColor: AppColors.mainBrand[100],
                     child: Text(userName[0],
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.w500,
-                        )),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.w500,
+                            )),
                   )),
       ),
     );

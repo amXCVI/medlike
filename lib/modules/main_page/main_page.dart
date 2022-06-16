@@ -24,7 +24,6 @@ class MainPage extends StatelessWidget {
             'Записаться'.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          backgroundColor: Theme.of(context).primaryColor,
         ),
         child: Center(
           child: ListView(

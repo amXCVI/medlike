@@ -12,6 +12,7 @@ class MainMenu extends StatelessWidget {
 
     return Flexible(
       child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
           shrinkWrap: true,
           children: mainMenuItemsList.map((item) {
             return MainMenuItem(

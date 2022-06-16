@@ -5,6 +5,7 @@ const lightBackgroundColor = Color(0xFFECECEC);
 
 final lightTheme = ThemeData(
   typography: Typography.material2021(),
+
   /// Typography
   textTheme: const TextTheme(
     displayLarge: TextStyle(),
@@ -38,8 +39,7 @@ final lightTheme = ThemeData(
         fontSize: 17.0,
         height: 1.18,
         fontWeight: FontWeight.w500,
-        color: AppColors.mainText
-    ),
+        color: AppColors.mainText),
     titleMedium: TextStyle(
       /// Пункты меню
       fontFamily: 'Muller',
@@ -92,6 +92,7 @@ final lightTheme = ThemeData(
       letterSpacing: 0.25,
     ),
   ),
+
   /// Colors
   backgroundColor: AppColors.mainAppBackground,
   scaffoldBackgroundColor: AppColors.mainAppBackground,
@@ -105,8 +106,8 @@ final lightTheme = ThemeData(
   // bottomAppBarColor: AppColors.
   // cardColor: AppColors.
   dividerColor: AppColors.mainSeparatorAlpha,
-  highlightColor: AppColors.circleBgFirst,
-  // splashColor: AppColors.mainBgAlpha,
+  // highlightColor: AppColors.circleBgFirst,
+  splashColor: AppColors.mainBgAlpha,
   // selectedRowColor: AppColors.
   // unselectedWidgetColor: AppColors.
   // disabledColor: AppColors.
@@ -116,4 +117,10 @@ final lightTheme = ThemeData(
   // hintColor: AppColors.
   // errorColor: AppColors.
   // toggleableActiveColor: AppColors.
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: AppColors.mainBrandColor,
+    foregroundColor: Colors.white,
+    hoverColor: AppColors.darkGreenFirst,
+    splashColor: AppColors.darkGreenFirst,
+  ),
 );

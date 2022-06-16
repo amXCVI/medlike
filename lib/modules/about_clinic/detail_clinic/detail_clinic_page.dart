@@ -65,9 +65,6 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
                 .of(context)
                 .textTheme
                 .titleSmall,),
-            backgroundColor: Theme
-                .of(context)
-                .primaryColor,
           );
         },
       ),

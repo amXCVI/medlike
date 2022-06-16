@@ -79,7 +79,6 @@ class ResearchesListPage extends StatelessWidget {
                 'Далее'.toUpperCase(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              backgroundColor: Theme.of(context).primaryColor,
             ),
           ),
           child: _getScaffoldBody(state),

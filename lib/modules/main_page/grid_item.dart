@@ -16,7 +16,6 @@ class GridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void handleTapOnItem() {
       context.router.pushNamed(actionLink);
     }
@@ -53,6 +52,9 @@ class GridItem extends StatelessWidget {
             onTap: handleTapOnItem,
             child: Stack(
               children: [
+                Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: Image.asset(imgSrc, width: 100)),
                 Container(
                   padding: const EdgeInsets.all(16.0),
                   width: MediaQuery.of(context).size.width * 0.3,
@@ -64,9 +66,6 @@ class GridItem extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
-                Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: Image.asset(imgSrc)),
               ],
             ),
           ),
