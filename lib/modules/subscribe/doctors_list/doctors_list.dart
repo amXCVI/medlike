@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctor_item.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class DoctorsList extends StatefulWidget {
@@ -10,34 +12,57 @@ class DoctorsList extends StatefulWidget {
     required this.doctorsList,
     this.onRefreshData,
     required this.specialisationId,
+    required this.userId,
+    required this.clinicId,
+    required this.buildingId,
+    required this.specialisation,
+    required this.categoryTypeId,
   }) : super(key: key);
 
   final List<Doctor> doctorsList;
   final String specialisationId;
+  final String specialisation;
   final dynamic onRefreshData;
+  final String userId;
+  final String clinicId;
+  final String buildingId;
+  final int categoryTypeId;
 
   @override
   State<DoctorsList> createState() => _DoctorsListState();
 }
 
 class _DoctorsListState extends State<DoctorsList> {
-  void _handleTapOnDoctor(Doctor doctor) {}
+  void _handleTapOnDoctor({Doctor? doctor}) {
+    if (doctor != null) {
+      context.router.push(ScheduleRoute(
+        pageTitle:
+            '${doctor.lastName} ${doctor.firstName} ${doctor.middleName}',
+        pageSubtitle: doctor.specialization,
+        clinicId: widget.clinicId,
+        userId: widget.userId,
+        buildingId: widget.buildingId,
+        categoryTypeId: doctor.categoryType,
+        specialisationId: widget.specialisationId,
+        doctorId: doctor.id,
+        isAny: false,
+      ));
+    } else {
+      context.router.push(ScheduleRoute(
+        pageTitle: 'Любой',
+        pageSubtitle: widget.specialisation,
+        clinicId: widget.clinicId,
+        userId: widget.userId,
+        buildingId: widget.buildingId,
+        categoryTypeId: widget.categoryTypeId,
+        specialisationId: widget.specialisationId,
+        isAny: true,
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Doctor allDoctorsObject = const Doctor(
-      id: '',
-      lastName: 'Все',
-      firstName: '',
-      middleName: '',
-      specializationId: '',
-      specialization: '',
-      price: 0,
-      categoryType: -1,
-      isFavorite: false,
-      categories: <int>[],
-    );
-
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
       child: ListView(shrinkWrap: true, children: [
@@ -46,7 +71,7 @@ class _DoctorsListState extends State<DoctorsList> {
             ? SubscribeRowItem(
                 title: 'Любой',
                 onTap: () {
-                  _handleTapOnDoctor(allDoctorsObject);
+                  _handleTapOnDoctor();
                 },
                 customIcon: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -60,7 +85,7 @@ class _DoctorsListState extends State<DoctorsList> {
             .map((item) => DoctorItem(
                   doctorItem: item,
                   onTap: () {
-                    _handleTapOnDoctor(item);
+                    _handleTapOnDoctor(doctor: item);
                   },
                 ))
             .toList()

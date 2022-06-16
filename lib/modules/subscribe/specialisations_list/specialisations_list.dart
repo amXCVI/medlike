@@ -36,7 +36,15 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
   void _handleTapOnSpecialisation(NavigationItem specialisation) {
     context.read<SubscribeCubit>().setSelectedSpecialisation(specialisation);
     if (specialisation.cabinetSchedule!) {
-
+      context.router.push(ScheduleRoute(
+        pageTitle: specialisation.name!,
+        clinicId: widget.clinicId,
+        userId: widget.userId,
+        buildingId: widget.buildingId,
+        categoryTypeId: widget.categoryTypeId,
+        specialisationId: specialisation.id,
+        isAny: true,    // ! не уверен. Непонятно, как здесь правильно запросить расписание
+      ));
     } else {
       context.router.push(DoctorsListRoute(
         userId: widget.userId,
@@ -47,7 +55,6 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
         specialisationName: specialisation.name as String,
       ));
     }
-
   }
 
   @override

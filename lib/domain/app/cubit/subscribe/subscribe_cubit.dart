@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
@@ -8,7 +9,7 @@ import 'package:meta/meta.dart';
 part 'subscribe_state.dart';
 
 class SubscribeCubit extends Cubit<SubscribeState> {
-  SubscribeCubit(this.subscribeRepository) : super(const SubscribeState());
+  SubscribeCubit(this.subscribeRepository) : super(SubscribeState());
 
   final SubscribeRepository subscribeRepository;
 
@@ -189,9 +190,9 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     final List<Doctor> filteredDoctorsList;
     filteredDoctorsList = state.doctorsList!
         .where((element) =>
-        '${element.lastName} ${element.middleName} ${element.middleName} ${element.specialization}'
-            .toLowerCase()
-            .contains(filterStr.toLowerCase()))
+            '${element.lastName} ${element.middleName} ${element.middleName} ${element.specialization}'
+                .toLowerCase()
+                .contains(filterStr.toLowerCase()))
         .toList();
 
     emit(state.copyWith(
@@ -275,5 +276,69 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
           getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
     }
+  }
+
+  void getCalendarList({
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required String categoryType,
+    required bool isAny,
+    DateTime? endDate,
+    DateTime? startDate,
+
+    String? doctorId,
+    String? specialisationId,
+    List<String>? researchIds,
+    String? cabinet,
+  }) async {
+    String getDynamicParams() {
+      if(doctorId != null && specialisationId != null && !isAny) {
+        return '&doctorId=$doctorId';
+      }
+      if (researchIds!.isNotEmpty && cabinet == null && isAny) {
+        return '&ResearchIds=${researchIds.join('&ResearchIds=')}';
+      }
+      if (researchIds.isNotEmpty && cabinet != null) {
+        return '&ResearchIds=${researchIds.join('&ResearchIds=')}&Cabinet=$cabinet';
+      }
+      if (researchIds.isNotEmpty && doctorId != null && !isAny) {
+        return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
+      }
+      if (researchIds.isEmpty && cabinet == null && isAny) {
+        return '&SpecializationId=$specialisationId';
+      }
+      return '';
+    }
+
+    emit(state.copyWith(
+      getCalendarStatus: GetCalendarStatuses.loading,
+    ));
+    try {
+      final List<CalendarModel> response;
+      response = await subscribeRepository.getCalendarList(
+        userId: userId,
+        buildingId: buildingId,
+        clinicId: clinicId,
+        categoryType: categoryType,
+        endDate: endDate ?? state.endDate,
+        startDate: startDate ?? state.startDate,
+        dynamicParams: getDynamicParams(),
+      );
+      emit(state.copyWith(
+        getCalendarStatus: GetCalendarStatuses.success,
+        calendarList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(getCalendarStatus: GetCalendarStatuses.failed));
+    }
+  }
+
+  void setStartDate(DateTime startDate) {
+    emit(state.copyWith(startDate: startDate));
+  }
+
+  void setEndDate(DateTime endDate) {
+    emit(state.copyWith(endDate: endDate));
   }
 }

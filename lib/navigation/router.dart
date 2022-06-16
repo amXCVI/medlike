@@ -14,6 +14,7 @@ import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctors
 import 'package:medlike/modules/subscribe/profiles_list/profiles_list_page.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/research_cabinets_list_page.dart';
 import 'package:medlike/modules/subscribe/researches_list/researches_list_page.dart';
+import 'package:medlike/modules/subscribe/schedule/schedule_page.dart';
 import 'package:medlike/modules/subscribe/services_list/services_list_page.dart';
 import 'package:medlike/modules/subscribe/specialisations_list/specialisations_list_page.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -35,6 +36,7 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.subscribeDoctors, page: DoctorsListPage),
     AutoRoute(path: AppRoutes.subscribeResearchCabinets, page: ResearchCabinetsListPage),
     AutoRoute(path: AppRoutes.subscribeFavoriteDoctors, page: FavoriteDoctorsListPage),
+    AutoRoute(path: AppRoutes.subscribeSchedule, page: SchedulePage),
 
     AutoRoute(path: AppRoutes.settings, page: SettingsPage),
 

@@ -59,6 +59,15 @@ class ResearchCabinetsListPage extends StatelessWidget {
               doctorsList: state.filteredDoctorsList as List<Doctor>,
               onRefreshData: _onRefreshData,
               cabinetsList: state.filteredCabinetsList as List<Cabinet>,
+              nextPageTitle:
+                  CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
+                      .russianCategoryTypeName,
+              nextPageSubtitle: getCountResearches(researchIds.length),
+              userId: userId,
+              clinicId: clinicId,
+              buildingId: buildingId,
+              categoryTypeId: categoryTypeId,
+              researchIds: state.selectedResearchesIds as List<String>,
             );
           } else {
             return const ResearchCabinetsListSkeleton();

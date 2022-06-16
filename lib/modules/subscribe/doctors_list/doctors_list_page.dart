@@ -33,8 +33,7 @@ class DoctorsListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes
-                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
             specialisationId,
           );
@@ -54,13 +53,18 @@ class DoctorsListPage extends StatelessWidget {
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getDoctorsListStatus == GetDoctorsListStatuses.failed) {
-            return const Text('fail');
+            return const Text('');
           } else if (state.getDoctorsListStatus ==
               GetDoctorsListStatuses.success) {
             return DoctorsList(
               doctorsList: state.filteredDoctorsList as List<Doctor>,
               specialisationId: specialisationId,
               onRefreshData: _onRefreshData,
+              userId: userId,
+              clinicId: clinicId,
+              buildingId: buildingId,
+              specialisation: specialisationName,
+              categoryTypeId: categoryTypeId,
             );
           } else {
             return const DoctorsListSkeleton();

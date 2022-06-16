@@ -11,6 +11,7 @@ class AppRoutes {
   static const subscribeDoctors = '/subscribe_doctors';
   static const subscribeResearchCabinets = '/subscribe_research_cabinets';
   static const subscribeFavoriteDoctors = '/subscribe_favorite_doctors';
+  static const subscribeSchedule = '/subscribe_schedule';
   static const myAppointments = '/my_appointments';
   static const medcard = '/medcard';
   static const health = '/health';

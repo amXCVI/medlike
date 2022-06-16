@@ -14,6 +14,8 @@ enum GetCabinetsListStatuses { initial, loading, success, failed }
 
 enum GetFavoriteDoctorsListStatuses { initial, loading, success, failed }
 
+enum GetCalendarStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -48,7 +50,13 @@ class SubscribeState {
   final GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus;
   final List<FavoriteDoctor>? favoriteDoctorsList;
 
-  const SubscribeState({
+  final GetCalendarStatuses? getCalendarStatus;
+  final List<CalendarModel>? calendarList;
+
+  final DateTime startDate;
+  final DateTime endDate;
+
+  SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.initial,
     this.availableClinicsList,
@@ -73,7 +81,12 @@ class SubscribeState {
     this.selectedCabinet,
     this.getFavoriteDoctorsListStatus,
     this.favoriteDoctorsList,
-  });
+    this.getCalendarStatus,
+    this.calendarList,
+    DateTime? startDate,
+    DateTime? endDate,
+  })  : endDate = endDate ?? DateTime.now(),
+        startDate = startDate ?? DateTime.now().add(const Duration(days: -7));
 
   SubscribeState copyWith({
     UserProfile? selectedUser,
@@ -100,6 +113,10 @@ class SubscribeState {
     GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus,
     List<FavoriteDoctor>? favoriteDoctorsList,
     List<Cabinet>? filteredCabinetsList,
+    GetCalendarStatuses? getCalendarStatus,
+    List<CalendarModel>? calendarList,
+    DateTime? startDate,
+    DateTime? endDate,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -121,7 +138,8 @@ class SubscribeState {
       specialisationsList: specialisationsList ?? this.specialisationsList,
       selectedSpecialisation:
           selectedSpecialisation ?? this.selectedSpecialisation,
-      filteredSpecialisationsList: filteredSpecialisationsList ?? this.filteredSpecialisationsList,
+      filteredSpecialisationsList:
+          filteredSpecialisationsList ?? this.filteredSpecialisationsList,
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       selectedDoctor: selectedDoctor ?? this.selectedDoctor,
@@ -131,8 +149,13 @@ class SubscribeState {
       cabinetsList: cabinetsList ?? this.cabinetsList,
       selectedCabinet: selectedCabinet ?? this.selectedCabinet,
       filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
-      getFavoriteDoctorsListStatus: getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
+      getFavoriteDoctorsListStatus:
+          getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
       favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
+      getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
+      calendarList: calendarList ?? this.calendarList,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
     );
   }
 
