@@ -38,10 +38,12 @@ class SubscribeState {
   final GetDoctorsListStatuses? getDoctorsListStatus;
   final List<Doctor>? doctorsList;
   final Doctor? selectedDoctor;
+  final List<Doctor>? filteredDoctorsList;
 
   final GetCabinetsListStatuses? getCabinetsListStatus;
   final List<Cabinet>? cabinetsList;
   final Cabinet? selectedCabinet;
+  final List<Cabinet>? filteredCabinetsList;
 
   final GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus;
   final List<FavoriteDoctor>? favoriteDoctorsList;
@@ -64,8 +66,10 @@ class SubscribeState {
     this.getDoctorsListStatus = GetDoctorsListStatuses.initial,
     this.doctorsList,
     this.selectedDoctor,
+    this.filteredDoctorsList,
     this.getCabinetsListStatus = GetCabinetsListStatuses.initial,
     this.cabinetsList,
+    this.filteredCabinetsList,
     this.selectedCabinet,
     this.getFavoriteDoctorsListStatus,
     this.favoriteDoctorsList,
@@ -89,11 +93,13 @@ class SubscribeState {
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
     Doctor? selectedDoctor,
+    List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
     Cabinet? selectedCabinet,
     GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus,
     List<FavoriteDoctor>? favoriteDoctorsList,
+    List<Cabinet>? filteredCabinetsList,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -119,10 +125,12 @@ class SubscribeState {
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+      filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
       getCabinetsListStatus:
           getCabinetsListStatus ?? this.getCabinetsListStatus,
       cabinetsList: cabinetsList ?? this.cabinetsList,
       selectedCabinet: selectedCabinet ?? this.selectedCabinet,
+      filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
       getFavoriteDoctorsListStatus: getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
       favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
     );

@@ -30,21 +30,25 @@ class ResearchCabinetsListPage extends StatelessWidget {
             userId,
             clinicId,
             buildingId,
-            CategoryTypes
-                .getCategoryTypeByCategoryTypeId(categoryTypeId)
+            CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                 .categoryType,
             researchIds,
           );
     }
 
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterCabinetsList(filterStr);
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
-      appBarTitle: CategoryTypes
-          .getCategoryTypeByCategoryTypeId(categoryTypeId)
+      appBarTitle: CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
           .russianCategoryTypeName,
       appBarSubtitle: getCountResearches(researchIds.length),
       isChildrenPage: true,
+      isSearch: true,
+      filteringFunction: _onFilterList,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getCabinetsListStatus == GetCabinetsListStatuses.failed) {
@@ -52,9 +56,9 @@ class ResearchCabinetsListPage extends StatelessWidget {
           } else if (state.getCabinetsListStatus ==
               GetCabinetsListStatuses.success) {
             return ResearchCabinetsList(
-              doctorsList: state.doctorsList as List<Doctor>,
+              doctorsList: state.filteredDoctorsList as List<Doctor>,
               onRefreshData: _onRefreshData,
-              cabinetsList: state.cabinetsList as List<Cabinet>,
+              cabinetsList: state.filteredCabinetsList as List<Cabinet>,
             );
           } else {
             return const ResearchCabinetsListSkeleton();

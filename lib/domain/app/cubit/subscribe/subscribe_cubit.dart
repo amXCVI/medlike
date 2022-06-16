@@ -177,10 +177,26 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getDoctorsListStatus: GetDoctorsListStatuses.success,
         doctorsList: response,
+        filteredDoctorsList: response,
       ));
     } catch (e) {
       emit(state.copyWith(getDoctorsListStatus: GetDoctorsListStatuses.failed));
     }
+  }
+
+  /// Фильтр врачей
+  void filterDoctorsList(String filterStr) {
+    final List<Doctor> filteredDoctorsList;
+    filteredDoctorsList = state.doctorsList!
+        .where((element) =>
+        '${element.lastName} ${element.middleName} ${element.middleName} ${element.specialization}'
+            .toLowerCase()
+            .contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredDoctorsList: filteredDoctorsList,
+    ));
   }
 
   /// Получает список кабинетов и список докторов для записи на услугу
@@ -207,6 +223,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         getCabinetsListStatus: GetCabinetsListStatuses.success,
         doctorsList: response.doctors,
         cabinetsList: response.cabinets,
+        filteredDoctorsList: response.doctors,
+        filteredCabinetsList: response.cabinets,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -214,10 +232,32 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     }
   }
 
+  /// Фильтр кабинетов
+  void filterCabinetsList(String filterStr) {
+    final List<Doctor> filteredDoctorsList;
+    final List<Cabinet> filteredCabinetsList;
+    filteredDoctorsList = state.doctorsList!
+        .where((element) =>
+            '${element.lastName} ${element.middleName} ${element.middleName} ${element.specialization}'
+                .toLowerCase()
+                .contains(filterStr.toLowerCase()))
+        .toList();
+    filteredCabinetsList = state.cabinetsList!
+        .where((element) => element.cabinetName!
+            .toLowerCase()
+            .contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredDoctorsList: filteredDoctorsList,
+      filteredCabinetsList: filteredCabinetsList,
+    ));
+  }
+
   void getFavoritesDoctorsList(
-      userId,
-      buildingId,
-      ) async {
+    userId,
+    buildingId,
+  ) async {
     emit(state.copyWith(
       getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.loading,
     ));
@@ -232,7 +272,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         favoriteDoctorsList: response,
       ));
     } catch (e) {
-      emit(state.copyWith(getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
+      emit(state.copyWith(
+          getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
     }
   }
 }

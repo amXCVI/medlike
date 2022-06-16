@@ -35,14 +35,19 @@ class SpecialisationsList extends StatefulWidget {
 class _SpecialisationsListState extends State<SpecialisationsList> {
   void _handleTapOnSpecialisation(NavigationItem specialisation) {
     context.read<SubscribeCubit>().setSelectedSpecialisation(specialisation);
-    context.router.push(DoctorsListRoute(
-      userId: widget.userId,
-      categoryTypeId: widget.categoryTypeId,
-      clinicId: widget.clinicId,
-      buildingId: widget.buildingId,
-      specialisationId: specialisation.id,
-      specialisationName: specialisation.name as String,
-    ));
+    if (specialisation.cabinetSchedule!) {
+
+    } else {
+      context.router.push(DoctorsListRoute(
+        userId: widget.userId,
+        categoryTypeId: widget.categoryTypeId,
+        clinicId: widget.clinicId,
+        buildingId: widget.buildingId,
+        specialisationId: specialisation.id,
+        specialisationName: specialisation.name as String,
+      ));
+    }
+
   }
 
   @override
@@ -58,6 +63,7 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
       count: totalCountDoctors,
       categoryType: 1,
       personalSchedule: false,
+      cabinetSchedule: false,
       cabinets: [],
     );
 

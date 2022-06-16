@@ -40,11 +40,17 @@ class DoctorsListPage extends StatelessWidget {
           );
     }
 
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterDoctorsList(filterStr);
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: specialisationName,
       isChildrenPage: true,
+      isSearch: true,
+      filteringFunction: _onFilterList,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getDoctorsListStatus == GetDoctorsListStatuses.failed) {
@@ -52,7 +58,7 @@ class DoctorsListPage extends StatelessWidget {
           } else if (state.getDoctorsListStatus ==
               GetDoctorsListStatuses.success) {
             return DoctorsList(
-              doctorsList: state.doctorsList as List<Doctor>,
+              doctorsList: state.filteredDoctorsList as List<Doctor>,
               specialisationId: specialisationId,
               onRefreshData: _onRefreshData,
             );

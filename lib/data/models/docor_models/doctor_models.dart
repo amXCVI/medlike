@@ -49,6 +49,7 @@ class NavigationItem with _$NavigationItem {
     required int? count,
     required int? categoryType,
     required bool? personalSchedule,
+    required bool? cabinetSchedule,
     required List<NavigationItemCabinet>? cabinets,
   }) = _NavigationItem;
 
