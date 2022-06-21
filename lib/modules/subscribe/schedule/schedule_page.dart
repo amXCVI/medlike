@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
+import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/widgets/calendar/calendar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -51,21 +53,53 @@ class SchedulePage extends StatelessWidget {
           );
     }
 
+    void _setSelectedDate(DateTime selectedDate) {
+      context.read<SubscribeCubit>().setSelectedDate(selectedDate);
+    }
+
+    void _setStartDate(DateTime date) {
+      context.read<SubscribeCubit>().setStartDate(date);
+      _getCalendarList();
+    }
+
+    void _setEndDate(DateTime date) {
+      context.read<SubscribeCubit>().setEndDate(date);
+      _getCalendarList();
+    }
+
     _getCalendarList();
 
     return DefaultScaffold(
       appBarTitle: pageTitle,
       appBarSubtitle: pageSubtitle,
-      child: BlocBuilder<SubscribeCubit, SubscribeState>(
-        builder: (context, state) {
-          if (state.getCalendarStatus == GetCalendarStatuses.failed) {
-            return const Text('fail');
-          } else if (state.getCalendarStatus == GetCalendarStatuses.success) {
-            return Text('SUCCESS');
-          } else {
-            return const Text('loading');
-          }
-        },
+      isChildrenPage: true,
+      child: ListView(
+        children: [
+          BlocBuilder<SubscribeCubit, SubscribeState>(
+            builder: (context, state) {
+              if (state.getCalendarStatus == GetCalendarStatuses.failed) {
+                return const Text('');
+              } else {
+                return Calendar(
+                  isLoading:
+                      state.getCalendarStatus == GetCalendarStatuses.loading
+                          ? true
+                          : false,
+                  startDate: state.startDate,
+                  endDate: state.endDate,
+                  selectedDate: state.selectedDate,
+                  calendarList:
+                      state.getCalendarStatus == GetCalendarStatuses.success
+                          ? state.calendarList as List<CalendarModel>
+                          : [],
+                  onChangeSelectedDate: _setSelectedDate,
+                  onChangeStartDate: _setStartDate,
+                  onChangeEndDate: _setEndDate,
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }

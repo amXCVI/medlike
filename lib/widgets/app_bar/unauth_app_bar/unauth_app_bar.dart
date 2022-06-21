@@ -14,7 +14,7 @@ class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      leading: SvgPicture.asset('assets/icons/small_app_logo.svg'),
+      leading: Image.asset('assets/icons/ic_logo_launch.png', width: 28,),
       title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
       centerTitle: true,
       actions: [

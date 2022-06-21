@@ -8,8 +8,8 @@ class Api {
   static BaseOptions options = BaseOptions(
     baseUrl: ApiConstants.baseUrlEnv01,
     responseType: ResponseType.json,
-    connectTimeout: 50000,
-    receiveTimeout: 30000,
+    connectTimeout: 90000,
+    receiveTimeout: 60000,
   );
 
   final Dio _dio = Dio(options);

@@ -4,6 +4,7 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
@@ -286,26 +287,25 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     required bool isAny,
     DateTime? endDate,
     DateTime? startDate,
-
     String? doctorId,
     String? specialisationId,
     List<String>? researchIds,
     String? cabinet,
   }) async {
     String getDynamicParams() {
-      if(doctorId != null && specialisationId != null && !isAny) {
+      if (doctorId != null && specialisationId != null && !isAny) {
         return '&doctorId=$doctorId';
       }
-      if (researchIds!.isNotEmpty && cabinet == null && isAny) {
+      if (researchIds != null && researchIds.isNotEmpty && cabinet == null && isAny) {
         return '&ResearchIds=${researchIds.join('&ResearchIds=')}';
       }
-      if (researchIds.isNotEmpty && cabinet != null) {
+      if (researchIds != null && researchIds.isNotEmpty && cabinet != null) {
         return '&ResearchIds=${researchIds.join('&ResearchIds=')}&Cabinet=$cabinet';
       }
-      if (researchIds.isNotEmpty && doctorId != null && !isAny) {
+      if (researchIds != null && researchIds.isNotEmpty && doctorId != null && !isAny) {
         return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
       }
-      if (researchIds.isEmpty && cabinet == null && isAny) {
+      if (researchIds == null && cabinet == null && isAny) {
         return '&SpecializationId=$specialisationId';
       }
       return '';
@@ -340,5 +340,9 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
   void setEndDate(DateTime endDate) {
     emit(state.copyWith(endDate: endDate));
+  }
+
+  void setSelectedDate(DateTime selectedDate) {
+    emit(state.copyWith(selectedDate: selectedDate));
   }
 }

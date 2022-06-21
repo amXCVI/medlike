@@ -55,6 +55,7 @@ class SubscribeState {
 
   final DateTime startDate;
   final DateTime endDate;
+  final DateTime selectedDate;
 
   SubscribeState({
     this.selectedUser,
@@ -85,8 +86,10 @@ class SubscribeState {
     this.calendarList,
     DateTime? startDate,
     DateTime? endDate,
-  })  : endDate = endDate ?? DateTime.now(),
-        startDate = startDate ?? DateTime.now().add(const Duration(days: -7));
+    DateTime? selectedDate,
+  })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
+        startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
+        selectedDate = selectedDate ?? DateTime.now();
 
   SubscribeState copyWith({
     UserProfile? selectedUser,
@@ -117,46 +120,47 @@ class SubscribeState {
     List<CalendarModel>? calendarList,
     DateTime? startDate,
     DateTime? endDate,
+    DateTime? selectedDate,
   }) {
     return SubscribeState(
-      selectedUser: selectedUser ?? this.selectedUser,
-      getAvailableClinicsStatus:
-          getAvailableClinicsStatus ?? this.getAvailableClinicsStatus,
-      availableClinicsList: availableClinicsList ?? this.availableClinicsList,
-      selectedBuilding: selectedBuilding ?? this.selectedBuilding,
-      getServicesListStatus:
-          getServicesListStatus ?? this.getServicesListStatus,
-      servicesList: servicesList ?? this.servicesList,
-      selectedService: selectedService ?? this.selectedService,
-      getResearchesListStatus:
-          getResearchesListStatus ?? this.getResearchesListStatus,
-      researchesList: researchesList ?? this.researchesList,
-      selectedResearchesIds:
-          selectedResearchesIds ?? this.selectedResearchesIds,
-      getSpecialisationsListStatus:
-          getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
-      specialisationsList: specialisationsList ?? this.specialisationsList,
-      selectedSpecialisation:
-          selectedSpecialisation ?? this.selectedSpecialisation,
-      filteredSpecialisationsList:
-          filteredSpecialisationsList ?? this.filteredSpecialisationsList,
-      getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
-      doctorsList: doctorsList ?? this.doctorsList,
-      selectedDoctor: selectedDoctor ?? this.selectedDoctor,
-      filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
-      getCabinetsListStatus:
-          getCabinetsListStatus ?? this.getCabinetsListStatus,
-      cabinetsList: cabinetsList ?? this.cabinetsList,
-      selectedCabinet: selectedCabinet ?? this.selectedCabinet,
-      filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
-      getFavoriteDoctorsListStatus:
-          getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
-      favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
-      getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
-      calendarList: calendarList ?? this.calendarList,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
-    );
+        selectedUser: selectedUser ?? this.selectedUser,
+        getAvailableClinicsStatus:
+            getAvailableClinicsStatus ?? this.getAvailableClinicsStatus,
+        availableClinicsList: availableClinicsList ?? this.availableClinicsList,
+        selectedBuilding: selectedBuilding ?? this.selectedBuilding,
+        getServicesListStatus:
+            getServicesListStatus ?? this.getServicesListStatus,
+        servicesList: servicesList ?? this.servicesList,
+        selectedService: selectedService ?? this.selectedService,
+        getResearchesListStatus:
+            getResearchesListStatus ?? this.getResearchesListStatus,
+        researchesList: researchesList ?? this.researchesList,
+        selectedResearchesIds:
+            selectedResearchesIds ?? this.selectedResearchesIds,
+        getSpecialisationsListStatus:
+            getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
+        specialisationsList: specialisationsList ?? this.specialisationsList,
+        selectedSpecialisation:
+            selectedSpecialisation ?? this.selectedSpecialisation,
+        filteredSpecialisationsList:
+            filteredSpecialisationsList ?? this.filteredSpecialisationsList,
+        getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
+        doctorsList: doctorsList ?? this.doctorsList,
+        selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+        filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
+        getCabinetsListStatus:
+            getCabinetsListStatus ?? this.getCabinetsListStatus,
+        cabinetsList: cabinetsList ?? this.cabinetsList,
+        selectedCabinet: selectedCabinet ?? this.selectedCabinet,
+        filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
+        getFavoriteDoctorsListStatus:
+            getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
+        favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
+        getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
+        calendarList: calendarList ?? this.calendarList,
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        selectedDate: selectedDate ?? this.selectedDate);
   }
 
   List<Object?> get props => [];

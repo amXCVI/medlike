@@ -24,7 +24,9 @@ import 'router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(path: AppRoutes.main, page: MainPage, initial: true),
+    AutoRoute(path: AppRoutes.login, page: LoginPage, initial: true),
+
+    AutoRoute(path: AppRoutes.main, page: MainPage),
 
     AutoRoute(path: AppRoutes.myAppointments, page: AppointmentsPage),
 
@@ -44,8 +46,6 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.clinicInfoDetails, page: DetailClinicPage),
     AutoRoute(path: AppRoutes.clinicInfoPrice, page: PricePage),
     AutoRoute(path: AppRoutes.clinicInfoSales, page: SalesPage),
-
-    AutoRoute(path: AppRoutes.login, page: LoginPage),
 
     RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

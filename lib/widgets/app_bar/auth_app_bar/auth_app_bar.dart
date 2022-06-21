@@ -120,7 +120,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               onPressed: () {
                 RouteData.of(context).router.navigateNamed(AppRoutes.main);
               },
-              icon: Image.asset('assets/icons/small_app_logo.png'),
+              icon: Image.asset('assets/icons/ic_logo_launch.png', width: 28.0),
             ),
       actions: widget.isSearch
           ? [
