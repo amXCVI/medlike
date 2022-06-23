@@ -4,7 +4,6 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 
-
 class SubscribeRepository {
   final _dioClient = Api().dio;
 
@@ -132,9 +131,9 @@ class SubscribeRepository {
     required String categoryType,
     required String dynamicParams,
   }) async {
-
     // ! Добавить поддержку часовых поясов !!
-    String formatDate(DateTime date) => DateFormat("yyyy-MM-ddThh:mm:ss").format(date);
+    String formatDate(DateTime date) =>
+        DateFormat("yyyy-MM-ddThh:mm:ss").format(date);
     String startDateStr = formatDate(startDate);
     String endDateStr = formatDate(endDate);
 
@@ -143,6 +142,28 @@ class SubscribeRepository {
           '/api/v1.0/schedule/calendar?clinicId=$clinicId&buildingId=$buildingId&userId=$userId&startDate=$startDateStr&endDate=$endDateStr&categoryType=$categoryType&appointmentStatusesToShow=Scheduled&appointmentStatusesToShow=Completed&appointmentStatusesToShow=NotCompleted&appointmentStatusesToShow=Awaiting$dynamicParams');
       final List daysList = response.data;
       return daysList.map((e) => CalendarModel.fromJson(e)).toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<TimetableResponseModel> getScheduleCellsList({
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required String categoryType,
+    required String dynamicParams,
+    required DateTime selectedDate,
+  }) async {
+    // ! Добавить поддержку часовых поясов !!
+    String formatDate(DateTime date) =>
+        DateFormat("yyyy-MM-dd").format(date);
+    String selectedDateStr = formatDate(selectedDate);
+
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/timetable?clinicId=$clinicId&buildingId=$buildingId&userId=$userId&date=$selectedDateStr&categoryType=$categoryType$dynamicParams');
+      return TimetableResponseModel.fromJson(response.data);
     } catch (err) {
       rethrow;
     }

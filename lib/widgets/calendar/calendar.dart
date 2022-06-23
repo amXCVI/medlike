@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/calendar/calendar_header.dart';
@@ -27,7 +28,7 @@ class Calendar extends StatefulWidget {
   final DateTime endDate;
   final DateTime selectedDate;
   final List<CalendarModel> calendarList;
-  final void Function(DateTime date) onChangeSelectedDate;
+  final void Function(CalendarModel selectedDay) onChangeSelectedDate;
   final void Function(DateTime date) onChangeStartDate;
   final void Function(DateTime date) onChangeEndDate;
 
@@ -39,16 +40,6 @@ class _CalendarState extends State<Calendar> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
   late PageController _pageController;
   late ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
-
-  List<int> _getEventsForDay(DateTime day) {
-    if (widget.calendarList
-            .indexWhere((e) => e.hasLogs && isSameDay(e.date, day)) >=
-        0) {
-      return [1];
-    } else {
-      return [];
-    }
-  }
 
   void _hideOrShowFullCalendar() {
     if (_calendarFormat == CalendarFormat.month) {
@@ -90,77 +81,79 @@ class _CalendarState extends State<Calendar> {
           ),
           const DaysOfWeek(),
           TableCalendar(
-                  locale: 'ru_RU',
-                  firstDay: widget.selectedDate.add(const Duration(days: -365)),
-                  lastDay: widget.selectedDate.add(const Duration(days: 365)),
-                  focusedDay: _focusedDay.value,
-                  onCalendarCreated: (controller) =>
-                      _pageController = controller,
-                  onPageChanged: (focusedDay) {
-                    widget.onChangeStartDate(
-                        DateHelpers.DateUtils.firstDayOfMonth(focusedDay));
-                    widget.onChangeEndDate(
-                        DateHelpers.DateUtils.lastDayOfMonth(focusedDay));
-                    _focusedDay.value = focusedDay;
-                  },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      _focusedDay = ValueNotifier(selectedDay);
-                    });
-                    widget.onChangeSelectedDate(selectedDay);
-                  },
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  selectedDayPredicate: (day) {
-                    return widget.calendarList.indexWhere((e) =>
-                                e.hasAvailableCells &&
-                                isSameDay(e.date, day)) >=
-                            0
-                        ? true
-                        : false;
-                  },
-                  rangeStartDay: widget.selectedDate,
-                  rangeEndDay: widget.selectedDate,
-                  eventLoader: _getEventsForDay,
-                  availableCalendarFormats: const {
-                    CalendarFormat.month: 'Month',
-                    CalendarFormat.week: 'Week',
-                  },
-                  calendarFormat: _calendarFormat,
-                  headerVisible: false,
-                  daysOfWeekVisible: false,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
-                  calendarBuilders: calendarBuilder(
-                    isLoading: widget.isLoading,
-                    selectedDay: widget.selectedDate,
-                  ),
-                  calendarStyle: CalendarStyle(
-                    outsideDaysVisible: true,
-                    cellMargin: const EdgeInsets.all(4.0),
-                    cellPadding: const EdgeInsets.all(7.0),
-                    markersAlignment: Alignment.topRight,
-                    markersMaxCount: 1,
-                    markerSize: 6.0,
-                    markersAnchor: -2,
-                    weekendDecoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      shape: BoxShape.circle,
-                    ),
-                    weekendTextStyle: Theme.of(context)
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(color: AppColors.lightText) as TextStyle,
-                    markerDecoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
+            locale: 'ru_RU',
+            firstDay: widget.selectedDate.add(const Duration(days: -365)),
+            lastDay: widget.selectedDate.add(const Duration(days: 365)),
+            focusedDay: _focusedDay.value,
+            onCalendarCreated: (controller) => _pageController = controller,
+            onPageChanged: (focusedDay) {
+              widget.onChangeStartDate(
+                  DateHelpers.DateUtils.firstDayOfMonth(focusedDay));
+              widget.onChangeEndDate(
+                  DateHelpers.DateUtils.lastDayOfMonth(focusedDay));
+              _focusedDay.value = focusedDay;
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _focusedDay = ValueNotifier(selectedDay);
+              });
+              widget.onChangeSelectedDate(widget.calendarList.firstWhere(
+                                (element) => isSameDay(element.date, selectedDay),
+                                orElse: () => CalendarModel(
+                                    hasAvailableCells: false,
+                                    hasLogs: false,
+                                    date: selectedDay)));
+            },
+            onFormatChanged: (format) {
+              if (_calendarFormat != format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              }
+            },
+            rangeStartDay: widget.selectedDate,
+            rangeEndDay: widget.selectedDate,
+            // eventLoader: _getEventsForDay,
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Month',
+              CalendarFormat.week: 'Week',
+            },
+            calendarFormat: _calendarFormat,
+            headerVisible: false,
+            daysOfWeekVisible: false,
+            startingDayOfWeek: StartingDayOfWeek.monday,
+            calendarBuilders: calendarBuilder(
+              isLoading: widget.isLoading,
+              selectedDay: widget.selectedDate,
+              hasLogsDatesList: widget.calendarList
+                  .where((element) => element.hasLogs)
+                  .map((e) => DateFormat("yyyy-MM-dd")
+                      .format(e.date.add(const Duration(days: 1)))
+                      .toString())
+                  .toList(),
+              hasAvailableCellsDatesList: widget.calendarList
+                  .where((element) => element.hasAvailableCells)
+                  .map((e) => DateFormat("yyyy-MM-dd")
+                      .format(e.date.add(const Duration(days: 1)))
+                      .toString())
+                  .toList(),
+            ),
+            calendarStyle: CalendarStyle(
+              outsideDaysVisible: true,
+              cellMargin: const EdgeInsets.all(4.0),
+              cellPadding: const EdgeInsets.all(7.0),
+              markersAlignment: Alignment.topRight,
+              markersMaxCount: 1,
+              weekendDecoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                shape: BoxShape.circle,
+              ),
+              weekendTextStyle: Theme.of(context)
+                  .textTheme
+                  .labelSmall
+                  ?.copyWith(color: AppColors.lightText) as TextStyle,
+            ),
+          ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

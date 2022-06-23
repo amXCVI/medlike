@@ -292,25 +292,6 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     List<String>? researchIds,
     String? cabinet,
   }) async {
-    String getDynamicParams() {
-      if (doctorId != null && specialisationId != null && !isAny) {
-        return '&doctorId=$doctorId';
-      }
-      if (researchIds != null && researchIds.isNotEmpty && cabinet == null && isAny) {
-        return '&ResearchIds=${researchIds.join('&ResearchIds=')}';
-      }
-      if (researchIds != null && researchIds.isNotEmpty && cabinet != null) {
-        return '&ResearchIds=${researchIds.join('&ResearchIds=')}&Cabinet=$cabinet';
-      }
-      if (researchIds != null && researchIds.isNotEmpty && doctorId != null && !isAny) {
-        return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
-      }
-      if (researchIds == null && cabinet == null && isAny) {
-        return '&SpecializationId=$specialisationId';
-      }
-      return '';
-    }
-
     emit(state.copyWith(
       getCalendarStatus: GetCalendarStatuses.loading,
     ));
@@ -323,7 +304,13 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         categoryType: categoryType,
         endDate: endDate ?? state.endDate,
         startDate: startDate ?? state.startDate,
-        dynamicParams: getDynamicParams(),
+        dynamicParams: getDynamicParams(
+          isAny: isAny,
+          doctorId: doctorId,
+          specialisationId: specialisationId,
+          researchIds: researchIds,
+          cabinet: cabinet,
+        ),
       );
       emit(state.copyWith(
         getCalendarStatus: GetCalendarStatuses.success,
@@ -334,15 +321,106 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     }
   }
 
+  void getTimetableList({
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required String categoryType,
+    required bool isAny,
+    DateTime? selectedDate,
+    String? doctorId,
+    String? specialisationId,
+    List<String>? researchIds,
+    String? cabinet,
+  }) async {
+    emit(state.copyWith(
+      getTimetableCellsStatus: GetTimetableCellsStatuses.loading,
+    ));
+    try {
+      final TimetableResponseModel response;
+      response = await subscribeRepository.getScheduleCellsList(
+        userId: userId,
+        buildingId: buildingId,
+        clinicId: clinicId,
+        categoryType: categoryType,
+        selectedDate: selectedDate ?? state.selectedDate,
+        dynamicParams: getDynamicParams(
+          isAny: isAny,
+          doctorId: doctorId,
+          specialisationId: specialisationId,
+          researchIds: researchIds,
+          cabinet: cabinet,
+        ),
+      );
+      emit(state.copyWith(
+        getTimetableCellsStatus: GetTimetableCellsStatuses.success,
+        timetableCellsList: response.cells,
+        timetableLogsList: response.logs,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getTimetableCellsStatus: GetTimetableCellsStatuses.failed));
+    }
+  }
+
+  void setEmptyTimetableList() {
+    emit(state.copyWith(timetableCellsList: [], timetableLogsList: []));
+  }
+
+  void setSelectedTimetableCell(TimetableCellModel selectedCell) {
+    emit(state.copyWith(selectedTimetableCell: selectedCell));
+  }
+
   void setStartDate(DateTime startDate) {
+    // if (state.calendarList != null && state.calendarList!.map((e) => '${e.date.day}.${e.date.month}.${e.date.year}')
+    //     .contains('${startDate.day}.${startDate.month}.${startDate.year}')) {
+    //   return;
+    //   /// Если эта дата уже содержится в массиве календаря, ничего не делаем
+    // }
     emit(state.copyWith(startDate: startDate));
   }
 
   void setEndDate(DateTime endDate) {
+    // if (state.calendarList != null && state.calendarList!.map((e) => '${e.date.day}.${e.date.month}.${e.date.year}')
+    //     .contains('${endDate.day}.${endDate.month}.${endDate.year}')) {
+    //   return;
+    //   /// Если эта дата уже содержится в массиве календаря, ничего не делаем
+    // }
     emit(state.copyWith(endDate: endDate));
   }
 
   void setSelectedDate(DateTime selectedDate) {
     emit(state.copyWith(selectedDate: selectedDate));
   }
+}
+
+String getDynamicParams({
+  required bool isAny,
+  String? doctorId,
+  String? specialisationId,
+  List<String>? researchIds,
+  String? cabinet,
+}) {
+  if (doctorId != null && specialisationId != null && !isAny) {
+    return '&doctorId=$doctorId';
+  }
+  if (researchIds != null &&
+      researchIds.isNotEmpty &&
+      cabinet == null &&
+      isAny) {
+    return '&ResearchIds=${researchIds.join('&ResearchIds=')}';
+  }
+  if (researchIds != null && researchIds.isNotEmpty && cabinet != null) {
+    return '&ResearchIds=${researchIds.join('&ResearchIds=')}&Cabinet=$cabinet';
+  }
+  if (researchIds != null &&
+      researchIds.isNotEmpty &&
+      doctorId != null &&
+      !isAny) {
+    return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
+  }
+  if (researchIds == null && cabinet == null && isAny) {
+    return '&SpecializationId=$specialisationId';
+  }
+  return '';
 }

@@ -16,6 +16,8 @@ enum GetFavoriteDoctorsListStatuses { initial, loading, success, failed }
 
 enum GetCalendarStatuses { initial, loading, success, failed }
 
+enum GetTimetableCellsStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -53,6 +55,11 @@ class SubscribeState {
   final GetCalendarStatuses? getCalendarStatus;
   final List<CalendarModel>? calendarList;
 
+  final GetTimetableCellsStatuses? getTimetableCellsStatus;
+  final List<TimetableCellModel>? timetableCellsList;
+  final List<TimetableLogModel>? timetableLogsList;
+  final TimetableCellModel? selectedTimetableCell;
+
   final DateTime startDate;
   final DateTime endDate;
   final DateTime selectedDate;
@@ -84,6 +91,10 @@ class SubscribeState {
     this.favoriteDoctorsList,
     this.getCalendarStatus,
     this.calendarList,
+    this.getTimetableCellsStatus,
+    this.timetableCellsList,
+    this.timetableLogsList,
+    this.selectedTimetableCell,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -118,49 +129,60 @@ class SubscribeState {
     List<Cabinet>? filteredCabinetsList,
     GetCalendarStatuses? getCalendarStatus,
     List<CalendarModel>? calendarList,
+    GetTimetableCellsStatuses? getTimetableCellsStatus,
+    List<TimetableCellModel>? timetableCellsList,
+    List<TimetableLogModel>? timetableLogsList,
+    TimetableCellModel? selectedTimetableCell,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
   }) {
     return SubscribeState(
-        selectedUser: selectedUser ?? this.selectedUser,
-        getAvailableClinicsStatus:
-            getAvailableClinicsStatus ?? this.getAvailableClinicsStatus,
-        availableClinicsList: availableClinicsList ?? this.availableClinicsList,
-        selectedBuilding: selectedBuilding ?? this.selectedBuilding,
-        getServicesListStatus:
-            getServicesListStatus ?? this.getServicesListStatus,
-        servicesList: servicesList ?? this.servicesList,
-        selectedService: selectedService ?? this.selectedService,
-        getResearchesListStatus:
-            getResearchesListStatus ?? this.getResearchesListStatus,
-        researchesList: researchesList ?? this.researchesList,
-        selectedResearchesIds:
-            selectedResearchesIds ?? this.selectedResearchesIds,
-        getSpecialisationsListStatus:
-            getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
-        specialisationsList: specialisationsList ?? this.specialisationsList,
-        selectedSpecialisation:
-            selectedSpecialisation ?? this.selectedSpecialisation,
-        filteredSpecialisationsList:
-            filteredSpecialisationsList ?? this.filteredSpecialisationsList,
-        getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
-        doctorsList: doctorsList ?? this.doctorsList,
-        selectedDoctor: selectedDoctor ?? this.selectedDoctor,
-        filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
-        getCabinetsListStatus:
-            getCabinetsListStatus ?? this.getCabinetsListStatus,
-        cabinetsList: cabinetsList ?? this.cabinetsList,
-        selectedCabinet: selectedCabinet ?? this.selectedCabinet,
-        filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
-        getFavoriteDoctorsListStatus:
-            getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
-        favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
-        getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
-        calendarList: calendarList ?? this.calendarList,
-        startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate,
-        selectedDate: selectedDate ?? this.selectedDate);
+      selectedUser: selectedUser ?? this.selectedUser,
+      getAvailableClinicsStatus:
+          getAvailableClinicsStatus ?? this.getAvailableClinicsStatus,
+      availableClinicsList: availableClinicsList ?? this.availableClinicsList,
+      selectedBuilding: selectedBuilding ?? this.selectedBuilding,
+      getServicesListStatus:
+          getServicesListStatus ?? this.getServicesListStatus,
+      servicesList: servicesList ?? this.servicesList,
+      selectedService: selectedService ?? this.selectedService,
+      getResearchesListStatus:
+          getResearchesListStatus ?? this.getResearchesListStatus,
+      researchesList: researchesList ?? this.researchesList,
+      selectedResearchesIds:
+          selectedResearchesIds ?? this.selectedResearchesIds,
+      getSpecialisationsListStatus:
+          getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
+      specialisationsList: specialisationsList ?? this.specialisationsList,
+      selectedSpecialisation:
+          selectedSpecialisation ?? this.selectedSpecialisation,
+      filteredSpecialisationsList:
+          filteredSpecialisationsList ?? this.filteredSpecialisationsList,
+      getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
+      doctorsList: doctorsList ?? this.doctorsList,
+      selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+      filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
+      getCabinetsListStatus:
+          getCabinetsListStatus ?? this.getCabinetsListStatus,
+      cabinetsList: cabinetsList ?? this.cabinetsList,
+      selectedCabinet: selectedCabinet ?? this.selectedCabinet,
+      filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
+      getFavoriteDoctorsListStatus:
+          getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
+      favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
+      getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
+      calendarList: calendarList ?? this.calendarList,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      selectedDate: selectedDate ?? this.selectedDate,
+      getTimetableCellsStatus:
+          getTimetableCellsStatus ?? this.getTimetableCellsStatus,
+      timetableCellsList: timetableCellsList ?? this.timetableCellsList,
+      timetableLogsList: timetableLogsList ?? this.timetableLogsList,
+      selectedTimetableCell:
+          selectedTimetableCell ?? this.selectedTimetableCell,
+    );
   }
 
   List<Object?> get props => [];

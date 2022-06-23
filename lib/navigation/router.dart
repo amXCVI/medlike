@@ -24,9 +24,9 @@ import 'router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(path: AppRoutes.login, page: LoginPage, initial: true),
+    AutoRoute(path: AppRoutes.login, page: LoginPage),
 
-    AutoRoute(path: AppRoutes.main, page: MainPage),
+    AutoRoute(path: AppRoutes.main, page: MainPage, initial: true),
 
     AutoRoute(path: AppRoutes.myAppointments, page: AppointmentsPage),
 
