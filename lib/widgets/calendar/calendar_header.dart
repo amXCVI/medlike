@@ -19,7 +19,7 @@ class CalendarHeader extends StatelessWidget {
     final headerText = DateFormat.yMMM('ru_RU').format(focusedDay);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

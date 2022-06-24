@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/modules/subscribe/schedule/day_appointments_list.dart';
+import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list_skeleton.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
@@ -75,7 +77,8 @@ class SchedulePage extends StatelessWidget {
 
     void _setSelectedDate(CalendarModel selectedDay) {
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
-      if (selectedDay.hasAvailableCells) {
+      context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
+      if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
         _getCellsList();
       } else {
         context.read<SubscribeCubit>().setEmptyTimetableList();
@@ -138,9 +141,22 @@ class SchedulePage extends StatelessWidget {
                               : '',
                     )
                   : state.getTimetableCellsStatus ==
-                          GetTimetableCellsStatuses.failed
-                      ? const Text('')
-                      : const TimeCellsListSkeleton(),
+                              GetTimetableCellsStatuses.loading &&
+                          state.selectedCalendarItem != null &&
+                          state.selectedCalendarItem!.hasAvailableCells
+                      ? const TimeCellsListSkeleton()
+                      : const Text(''),
+              state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
+                  ? DayAppointmentsList(
+                      timetableLogsList:
+                          state.timetableLogsList as List<TimetableLogModel>,
+                    )
+                  : state.getTimetableCellsStatus ==
+                              GetTimetableCellsStatuses.loading &&
+                          state.selectedCalendarItem != null &&
+                          state.selectedCalendarItem!.hasLogs
+                      ? const DayAppointmentsSkeleton()
+                      : const Text(''),
             ],
           ),
         );

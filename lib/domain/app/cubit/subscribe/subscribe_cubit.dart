@@ -403,6 +403,10 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     emit(state.copyWith(selectedTimetableCell: selectedCell));
   }
 
+  void setSelectedCalendarItem(CalendarModel date) {
+    emit(state.copyWith(selectedCalendarItem: date));
+  }
+
   void setStartDate(DateTime startDate) {
     emit(state.copyWith(startDate: startDate));
   }

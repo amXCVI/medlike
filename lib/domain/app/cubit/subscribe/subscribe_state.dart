@@ -54,6 +54,7 @@ class SubscribeState {
 
   final GetCalendarStatuses? getCalendarStatus;
   final List<CalendarModel>? calendarList;
+  final CalendarModel? selectedCalendarItem;
 
   final GetTimetableCellsStatuses? getTimetableCellsStatus;
   final List<TimetableCellModel>? timetableCellsList;
@@ -91,6 +92,7 @@ class SubscribeState {
     this.favoriteDoctorsList,
     this.getCalendarStatus,
     this.calendarList,
+    this.selectedCalendarItem,
     this.getTimetableCellsStatus,
     this.timetableCellsList,
     this.timetableLogsList,
@@ -129,6 +131,7 @@ class SubscribeState {
     List<Cabinet>? filteredCabinetsList,
     GetCalendarStatuses? getCalendarStatus,
     List<CalendarModel>? calendarList,
+    CalendarModel? selectedCalendarItem,
     GetTimetableCellsStatuses? getTimetableCellsStatus,
     List<TimetableCellModel>? timetableCellsList,
     List<TimetableLogModel>? timetableLogsList,
@@ -173,6 +176,7 @@ class SubscribeState {
       favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
       getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
       calendarList: calendarList ?? this.calendarList,
+      selectedCalendarItem: selectedCalendarItem ?? this.selectedCalendarItem,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       selectedDate: selectedDate ?? this.selectedDate,

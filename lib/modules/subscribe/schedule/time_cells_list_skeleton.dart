@@ -6,17 +6,31 @@ class TimeCellsListSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SkeletonItem(
-        child: SkeletonParagraph(
-          style: SkeletonParagraphStyle(
-              lines: 1,
-              spacing: 14,
-              lineStyle: SkeletonLineStyle(
-                randomLength: false,
-                height: 24,
-                width: 50,
-                borderRadius: BorderRadius.circular(25),
-              )),
-        ));
+    return GridView(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        childAspectRatio: 2,
+      ),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        ...[0, 1, 2, 3, 4, 5, 6, 7]
+            .map((item) => Center(
+              child: SkeletonItem(
+                      child: SkeletonParagraph(
+                    style: SkeletonParagraphStyle(
+                        lines: 1,
+                        spacing: 0,
+                        lineStyle: SkeletonLineStyle(
+                          randomLength: false,
+                          height: 24,
+                          borderRadius: BorderRadius.circular(25),
+                        )),
+                  )),
+            ))
+            .toList(),
+        const SizedBox(height: 20),
+      ],
+    );
   }
 }
