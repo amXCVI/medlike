@@ -1,10 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
@@ -41,6 +44,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
   /// Сохранить выбранное здание (building)
   void setSelectedBuilding(AvailableClinic building) {
+    UserSecureStorage.setField(
+        AppConstants.timeZoneOffset, building.timeZoneOffset.toString());
     emit(state.copyWith(
       selectedBuilding: building,
     ));
@@ -280,6 +285,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   }
 
   void getCalendarList({
+    required bool isRefresh,
     required String userId,
     required String buildingId,
     required String clinicId,
@@ -292,6 +298,18 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     List<String>? researchIds,
     String? cabinet,
   }) async {
+    if (!isRefresh &&
+        state.calendarList != null &&
+        state.calendarList!.isNotEmpty &&
+        state.calendarList!
+            .map((e) => DateUtils.getDateStr(e.date))
+            .contains(DateUtils.getDateStr(startDate ?? state.startDate)) &&
+        state.calendarList!
+            .map((e) => DateUtils.getDateStr(e.date))
+            .contains(DateUtils.getDateStr(endDate ?? state.endDate))) {
+      /// Если этот период уже содержится в массиве календаря, ничего не делаем
+      return;
+    }
     emit(state.copyWith(
       getCalendarStatus: GetCalendarStatuses.loading,
     ));
@@ -314,7 +332,20 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       );
       emit(state.copyWith(
         getCalendarStatus: GetCalendarStatuses.success,
-        calendarList: response,
+
+        /// Здесь даты приводятся к внутреннему формату. Добавляется таймзона (часы)
+        /// Массив не перезаписывается, а конкатенируется. Чтобы при перелистывании не
+        /// загружать его каждый раз заново
+        calendarList: isRefresh
+            ? response.map((e) {
+                return e.copyWith(date: dateTimeToUTC(e.date));
+              }).toList()
+            : {
+                ...?state.calendarList,
+                ...response.map((e) {
+                  return e.copyWith(date: dateTimeToUTC(e.date));
+                }).toList()
+              }.toList(),
       ));
     } catch (e) {
       emit(state.copyWith(getCalendarStatus: GetCalendarStatuses.failed));
@@ -322,6 +353,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   }
 
   void getTimetableList({
+    required bool isRefresh,
     required String userId,
     required String buildingId,
     required String clinicId,
@@ -372,20 +404,10 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   }
 
   void setStartDate(DateTime startDate) {
-    // if (state.calendarList != null && state.calendarList!.map((e) => '${e.date.day}.${e.date.month}.${e.date.year}')
-    //     .contains('${startDate.day}.${startDate.month}.${startDate.year}')) {
-    //   return;
-    //   /// Если эта дата уже содержится в массиве календаря, ничего не делаем
-    // }
     emit(state.copyWith(startDate: startDate));
   }
 
   void setEndDate(DateTime endDate) {
-    // if (state.calendarList != null && state.calendarList!.map((e) => '${e.date.day}.${e.date.month}.${e.date.year}')
-    //     .contains('${endDate.day}.${endDate.month}.${endDate.year}')) {
-    //   return;
-    //   /// Если эта дата уже содержится в массиве календаря, ничего не делаем
-    // }
     emit(state.copyWith(endDate: endDate));
   }
 

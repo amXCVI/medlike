@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class DioInterceptors extends Interceptor {
   @override
@@ -32,6 +33,7 @@ class DioInterceptors extends Interceptor {
     if (kDebugMode) {
       print('ERROR[${err.message}] => PATH: ${err.requestOptions.path}');
     }
+    AppToast.showAppToast(msg: err.message);
     return super.onError(err, handler);
   }
 }

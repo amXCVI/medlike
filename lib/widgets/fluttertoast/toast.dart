@@ -17,7 +17,7 @@ class AppToast {
         color: Colors.white,
       ),
       fullWidth: true,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 10),
       animation: StyledToastAnimation.slideToBottom,
     );
   }

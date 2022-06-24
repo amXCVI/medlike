@@ -39,8 +39,9 @@ class SchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _getCalendarList() async {
+    void _getCalendarList({bool? isRefresh}) async {
       context.read<SubscribeCubit>().getCalendarList(
+            isRefresh: isRefresh ?? false,
             userId: userId,
             buildingId: buildingId,
             clinicId: clinicId,
@@ -55,8 +56,9 @@ class SchedulePage extends StatelessWidget {
           );
     }
 
-    void _getCellsList() async {
+    void _getCellsList({bool? isRefresh}) async {
       context.read<SubscribeCubit>().getTimetableList(
+            isRefresh: isRefresh ?? false,
             userId: userId,
             buildingId: buildingId,
             clinicId: clinicId,
@@ -90,8 +92,13 @@ class SchedulePage extends StatelessWidget {
       _getCalendarList();
     }
 
-    _getCalendarList();
-    _getCellsList();
+    dynamic _onRefreshData() {
+      _getCalendarList(isRefresh: true);
+      _getCellsList(isRefresh: true);
+      return Future(() => null);
+    }
+
+    _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: pageTitle,
@@ -99,39 +106,43 @@ class SchedulePage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
           builder: (context, state) {
-        return ListView(
-          children: [
-            state.getCalendarStatus == GetCalendarStatuses.failed
-                ? const Text('fail')
-                : Calendar(
-                    isLoading:
-                        state.getCalendarStatus == GetCalendarStatuses.loading
-                            ? true
-                            : false,
-                    startDate: state.startDate,
-                    endDate: state.endDate,
-                    selectedDate: state.selectedDate,
-                    calendarList:
-                        state.getCalendarStatus == GetCalendarStatuses.success
-                            ? state.calendarList as List<CalendarModel>
-                            : [],
-                    onChangeSelectedDate: _setSelectedDate,
-                    onChangeStartDate: _setStartDate,
-                    onChangeEndDate: _setEndDate,
-                  ),
-            state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
-                ? TimeCellsList(
-                    timetableCellsList:
-                        state.timetableCellsList as List<TimetableCellModel>,
-                    selectedTimetableCellId: state.selectedTimetableCell != null
-                        ? state.selectedTimetableCell!.scheduleId
-                        : '',
-                  )
-                : state.getTimetableCellsStatus ==
-                        GetTimetableCellsStatuses.failed
-                    ? const Text('ffail')
-                    : const TimeCellsListSkeleton(),
-          ],
+        return RefreshIndicator(
+          onRefresh: () => _onRefreshData(),
+          child: ListView(
+            children: [
+              state.getCalendarStatus == GetCalendarStatuses.failed
+                  ? const Text('')
+                  : Calendar(
+                      isLoading:
+                          state.getCalendarStatus == GetCalendarStatuses.loading
+                              ? true
+                              : false,
+                      startDate: state.startDate,
+                      endDate: state.endDate,
+                      selectedDate: state.selectedDate,
+                      calendarList:
+                          state.getCalendarStatus == GetCalendarStatuses.success
+                              ? state.calendarList as List<CalendarModel>
+                              : [],
+                      onChangeSelectedDate: _setSelectedDate,
+                      onChangeStartDate: _setStartDate,
+                      onChangeEndDate: _setEndDate,
+                    ),
+              state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
+                  ? TimeCellsList(
+                      timetableCellsList:
+                          state.timetableCellsList as List<TimetableCellModel>,
+                      selectedTimetableCellId:
+                          state.selectedTimetableCell != null
+                              ? state.selectedTimetableCell!.scheduleId
+                              : '',
+                    )
+                  : state.getTimetableCellsStatus ==
+                          GetTimetableCellsStatuses.failed
+                      ? const Text('')
+                      : const TimeCellsListSkeleton(),
+            ],
+          ),
         );
       }),
     );

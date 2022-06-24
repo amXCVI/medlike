@@ -128,13 +128,13 @@ class _CalendarState extends State<Calendar> {
               hasLogsDatesList: widget.calendarList
                   .where((element) => element.hasLogs)
                   .map((e) => DateFormat("yyyy-MM-dd")
-                      .format(e.date.add(const Duration(days: 1)))
+                      .format(e.date)
                       .toString())
                   .toList(),
               hasAvailableCellsDatesList: widget.calendarList
                   .where((element) => element.hasAvailableCells)
                   .map((e) => DateFormat("yyyy-MM-dd")
-                      .format(e.date.add(const Duration(days: 1)))
+                      .format(e.date)
                       .toString())
                   .toList(),
             ),

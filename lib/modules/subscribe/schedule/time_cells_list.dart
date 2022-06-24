@@ -31,6 +31,7 @@ class _TimeCellsListState extends State<TimeCellsList> {
         childAspectRatio: 2,
       ),
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: [
         ...widget.timetableCellsList
             .map((item) => InkWell(

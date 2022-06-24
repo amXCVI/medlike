@@ -162,6 +162,12 @@ class DateUtils {
     return DateTime(year, monthNum, 0).day;
   }
 
+  /// Возвращает строку даты без времени (число, месяц, год)
+  static String getDateStr(DateTime date) {
+    return '${date.day}.${date.month}.${date.year}';
+  }
+
+
   /// Получить следующий день.
   static DateTime nextDay(DateTime d) {
     return d.add(const Duration(days: 1));
