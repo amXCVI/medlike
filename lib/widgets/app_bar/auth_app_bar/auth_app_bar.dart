@@ -99,8 +99,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
             )
           : Column(
               children: [
-                Text(widget.title,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w500)),
+                Text(
+                  widget.title.characters
+                      .replaceAll(Characters(''), Characters('\u{200B}'))
+                      .toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                  overflow: TextOverflow.ellipsis,
+                ),
                 widget.subtitle.isNotEmpty
                     ? Text(
                         widget.subtitle,

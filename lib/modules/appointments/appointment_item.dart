@@ -109,7 +109,7 @@ class AppointmentItem extends StatelessWidget {
                           SvgPicture.asset(
                               'assets/icons/appointments/clock.svg'),
                           const SizedBox(width: 8.0),
-                          Text(DateFormat('hh:mm')
+                          Text(DateFormat('HH:mm')
                               .format(appointmentItem.appointmentDateTime)),
                         ],
                       ),

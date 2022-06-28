@@ -13,7 +13,7 @@ class CircleUserAvatar extends StatelessWidget {
   }) : super(key: key);
 
   final String userId;
-  final userAvatar;
+  final String? userAvatar;
   final String userName;
   final bool isSelected;
   final double radius;

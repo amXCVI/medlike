@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
@@ -35,6 +37,7 @@ class DoctorsList extends StatefulWidget {
 class _DoctorsListState extends State<DoctorsList> {
   void _handleTapOnDoctor({Doctor? doctor}) {
     if (doctor != null) {
+      context.read<SubscribeCubit>().setSelectedDoctor(doctor);
       context.router.push(ScheduleRoute(
         pageTitle:
             '${doctor.lastName} ${doctor.firstName} ${doctor.middleName}',

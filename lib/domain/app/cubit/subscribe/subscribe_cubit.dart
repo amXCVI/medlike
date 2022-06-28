@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
@@ -204,6 +206,11 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
     ));
+  }
+
+  /// Сохранить выбранного доктора
+  void setSelectedDoctor(Doctor selectedDoctor) {
+    emit(state.copyWith(selectedDoctor: selectedDoctor));
   }
 
   /// Получает список кабинетов и список докторов для записи на услугу
@@ -417,6 +424,187 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
   void setSelectedDate(DateTime selectedDate) {
     emit(state.copyWith(selectedDate: selectedDate));
+  }
+
+  void getAppointmentInfoData({
+    required String scheduleId,
+    required String userId,
+    required List<String> researchIds,
+    required DateTime appointmentDate,
+  }) async {
+    emit(state.copyWith(
+      getAppointmentInfoStatus: GetAppointmentInfoStatuses.loading,
+    ));
+    try {
+      final AppointmentInfoModel response;
+      response = (await subscribeRepository.getAppointmentInfo(
+        userId: userId,
+        scheduleId: scheduleId,
+        researchIds: researchIds,
+        appointmentDate: appointmentDate,
+      ));
+      emit(state.copyWith(
+        getAppointmentInfoStatus: GetAppointmentInfoStatuses.success,
+        appointmentInfoData: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getAppointmentInfoStatus: GetAppointmentInfoStatuses.failed));
+    }
+  }
+
+  void checkAndLockAvailableCell({
+    required String scheduleId,
+    required String userId,
+    required String clinicId,
+    required DateTime appointmentDate,
+  }) async {
+    emit(state.copyWith(
+      checkAndLockAvailableCellStatus:
+          CheckAndLockAvailableCellStatuses.loading,
+    ));
+    try {
+      await subscribeRepository.checkAndLockAvailableCell(
+        userId: userId,
+        scheduleId: scheduleId,
+        clinicId: clinicId,
+        appointmentDate: appointmentDate,
+      );
+      emit(state.copyWith(
+        checkAndLockAvailableCellStatus:
+            CheckAndLockAvailableCellStatuses.success,
+        timetableCellsList: state.timetableCellsList
+            ?.where((element) => element.scheduleId != scheduleId)
+            .toList(),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          checkAndLockAvailableCellStatus:
+              CheckAndLockAvailableCellStatuses.failed));
+    }
+  }
+
+
+  /// разблокируем ячейку
+  void unlockCell({
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      unlockCellStatus: UnlockCellStatuses.loading,
+    ));
+    try {
+      await subscribeRepository.unlockCell(
+        userId: userId,
+        scheduleId: state.selectedTimetableCell!.scheduleId,
+      );
+      emit(state.copyWith(
+        unlockCellStatus: UnlockCellStatuses.success,
+        /// обнуляю загруженные данные по текущему дню
+        /// актуально при возврате со страницы подтверждения приема
+        timetableCellsList: null,
+        getTimetableCellsStatus: GetTimetableCellsStatuses.refunded,
+        selectedTimetableCell: null,
+      ));
+    } catch (e) {
+      emit(state.copyWith(unlockCellStatus: UnlockCellStatuses.failed));
+    }
+  }
+
+  void createNewAppointment({
+    required String userId,
+    required String userName,
+  }) async {
+    if (state.creatingAppointmentStatus ==
+        CreatingAppointmentStatuses.success) {
+      return;
+    }
+    emit(state.copyWith(
+      creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
+    ));
+    try {
+      dynamic data = {
+        'AppointmentDateTime': DateFormat("yyyy-MM-ddTHH:mm:ss")
+            .format(state.selectedTimetableCell?.time as DateTime),
+        'ClinicInfo': {
+          'Id': state.selectedBuilding?.id,
+          'Name': state.selectedBuilding?.name,
+          'Address': state.selectedBuilding?.address
+        },
+        'PatientInfo': {'Id': userId, 'Name': userName},
+        'DoctorInfo': state.selectedDoctor != null
+            ? {
+                'Id': state.selectedDoctor?.id,
+                'FirstName': state.selectedDoctor?.firstName,
+                'MiddleName': state.selectedDoctor?.middleName,
+                'LastName': state.selectedDoctor?.lastName,
+                'SpecializationId': state.selectedDoctor?.specializationId,
+                'Specialization': state.selectedDoctor?.specialization,
+                'CabinetName': state.selectedTimetableCell?.cabinetName
+              }
+            : {},
+        'Researches': state.selectedResearchesIds != null
+            ? state.selectedResearchesIds
+                ?.map((e) => {
+                      'Id': state.researchesList
+                          ?.firstWhere((element) => element.id == e)
+                          .id,
+                      'Name': state.researchesList
+                          ?.firstWhere((element) => element.id == e)
+                          .name
+                    })
+                .toList()
+            : [],
+        'CategoryType': state.selectedService?.id,
+        'Price': state.appointmentInfoData?.price,
+        'PayType': 'Cash',
+        'ScheduleId': state.selectedTimetableCell?.scheduleId,
+        'isDraft': false
+      };
+
+      await subscribeRepository.createNewAppointment(data: data);
+      emit(state.copyWith(
+        creatingAppointmentStatus: CreatingAppointmentStatuses.success,
+        selectedDoctor: null,
+        selectedBuilding: null,
+        selectedCabinet: null,
+        selectedCalendarItem: null,
+        selectedResearchesIds: null,
+        selectedService: null,
+        selectedSpecialisation: null,
+        selectedTimetableCell: null,
+        selectedDate: DateTime.now(),
+      ));
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(state.copyWith(
+            creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
+      });
+    } catch (e) {
+      emit(state.copyWith(
+          creatingAppointmentStatus: CreatingAppointmentStatuses.failed));
+    }
+  }
+
+  void getAvailableDoctor({
+    required String scheduleId,
+    required String clinicId,
+  }) async {
+    emit(state.copyWith(
+      getAvailableDoctorStatus: GetAvailableDoctorStatuses.loading,
+    ));
+    try {
+      final Doctor response;
+      response = await subscribeRepository.getAvailableDoctor(
+        scheduleId: scheduleId,
+        clinicId: clinicId,
+      );
+      emit(state.copyWith(
+        getAvailableDoctorStatus: GetAvailableDoctorStatuses.success,
+        selectedDoctor: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getAvailableDoctorStatus: GetAvailableDoctorStatuses.failed));
+    }
   }
 }
 

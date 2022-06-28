@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
@@ -7,6 +8,8 @@ import 'package:medlike/modules/subscribe/schedule/day_appointments_list.dart';
 import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list_skeleton.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
@@ -101,6 +104,31 @@ class SchedulePage extends StatelessWidget {
       return Future(() => null);
     }
 
+    void _handleTapOnCell(TimetableCellModel selectedCell) {
+      context.read<SubscribeCubit>().setSelectedTimetableCell(selectedCell);
+      context.read<SubscribeCubit>().getAppointmentInfoData(
+            scheduleId: selectedCell.scheduleId,
+            userId: userId,
+            researchIds: researchIds != null ? researchIds as List<String> : [],
+            appointmentDate: selectedCell.time,
+          );
+      context.read<SubscribeCubit>().checkAndLockAvailableCell(
+            scheduleId: selectedCell.scheduleId,
+            userId: userId,
+            clinicId: clinicId,
+            appointmentDate: selectedCell.time,
+          );
+      if (selectedCell.doctorAvailable) {
+        context.read<SubscribeCubit>().getAvailableDoctor(
+              scheduleId: selectedCell.scheduleId,
+              clinicId: clinicId,
+            );
+      }
+      context.router.push(ConfirmationSubscribeRoute(
+        userId: userId,
+      ));
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
@@ -109,6 +137,11 @@ class SchedulePage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
           builder: (context, state) {
+        /// при возврате со страницы подтверждения приема нужно заново подгрузить ячейки
+        if (state.getTimetableCellsStatus ==
+                GetTimetableCellsStatuses.refunded) {
+          _getCellsList(isRefresh: true);
+        }
         return RefreshIndicator(
           onRefresh: () => _onRefreshData(),
           child: ListView(
@@ -131,6 +164,21 @@ class SchedulePage extends StatelessWidget {
                       onChangeStartDate: _setStartDate,
                       onChangeEndDate: _setEndDate,
                     ),
+              state.getTimetableCellsStatus ==
+                          GetTimetableCellsStatuses.success &&
+                      state.timetableCellsList!.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                      child: Center(
+                          child: Text(
+                        'Нет свободного времени',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(color: AppColors.lightText),
+                      )),
+                    )
+                  : const SizedBox(),
               state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
                   ? TimeCellsList(
                       timetableCellsList:
@@ -139,13 +187,21 @@ class SchedulePage extends StatelessWidget {
                           state.selectedTimetableCell != null
                               ? state.selectedTimetableCell!.scheduleId
                               : '',
+                      handleTapOnCell: _handleTapOnCell,
                     )
                   : state.getTimetableCellsStatus ==
                               GetTimetableCellsStatuses.loading &&
                           state.selectedCalendarItem != null &&
                           state.selectedCalendarItem!.hasAvailableCells
                       ? const TimeCellsListSkeleton()
-                      : const Text(''),
+                      : Center(
+                          child: Text(
+                          'Нет свободного времени',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(color: AppColors.lightText),
+                        )),
               state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
                   ? DayAppointmentsList(
                       timetableLogsList:

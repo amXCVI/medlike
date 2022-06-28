@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnAuthAppBar({Key? key, required this.title}) : super(key: key);

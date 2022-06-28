@@ -52,3 +52,25 @@ class TimetableResponseModel with _$TimetableResponseModel {
   factory TimetableResponseModel.fromJson(Map<String, Object?> json) =>
       _$TimetableResponseModelFromJson(json);
 }
+
+@freezed
+class CheckAndLockCellModel with _$CheckAndLockCellModel {
+  const factory CheckAndLockCellModel({
+    required int duration,
+    required String? information,
+  }) = _CheckAndLockCellModel;
+
+  factory CheckAndLockCellModel.fromJson(Map<String, Object?> json) =>
+      _$CheckAndLockCellModelFromJson(json);
+}
+
+@freezed
+class UnlockCellModel with _$UnlockCellModel {
+  const factory UnlockCellModel({
+    required bool result,
+    required String? information,
+  }) = _UnlockCellModel;
+
+  factory UnlockCellModel.fromJson(Map<String, Object?> json) =>
+      _$UnlockCellModelFromJson(json);
+}

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login_with_pass/password_input.dart';
 import 'package:medlike/modules/login_with_pass/phone_number_input.dart';
@@ -15,13 +14,11 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
-      appBar: const UnAuthAppBar(title: 'Заполярье'),
-      body: BlocProvider(
-          create: (context) => UserCubit(UserRepository()),
-          child: const LoginPageWidget()),
-      bottomNavigationBar: const LoginPageBottomNavigationBar(),
+      appBar: UnAuthAppBar(title: 'Заполярье'),
+      body: LoginPageWidget(),
+      bottomNavigationBar: LoginPageBottomNavigationBar(),
     );
   }
 }
@@ -105,7 +102,7 @@ class LoginPageWidget extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : const Text(''),
               MaterialButton(onPressed: () => {
-                context.read<UserCubit>().signIn('79400000011', 'Qwerty11@')
+                context.read<UserCubit>().signIn('79090000011', '?8)w1z-N')
               },
                 child: const Text('Default login'),
               )

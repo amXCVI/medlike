@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
-import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cell_item.dart';
 
 class TimeCellsList extends StatefulWidget {
@@ -9,19 +7,18 @@ class TimeCellsList extends StatefulWidget {
     Key? key,
     required this.timetableCellsList,
     this.selectedTimetableCellId = '',
+    required this.handleTapOnCell,
   }) : super(key: key);
 
   final List<TimetableCellModel> timetableCellsList;
   final String selectedTimetableCellId;
+  final void Function(TimetableCellModel selectedCell) handleTapOnCell;
 
   @override
   State<TimeCellsList> createState() => _TimeCellsListState();
 }
 
 class _TimeCellsListState extends State<TimeCellsList> {
-  void _handleTapOnCell(TimetableCellModel selectedCell) {
-    context.read<SubscribeCubit>().setSelectedTimetableCell(selectedCell);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class _TimeCellsListState extends State<TimeCellsList> {
                 children: [
                   ...widget.timetableCellsList
                       .map((item) => InkWell(
-                            onTap: () => {_handleTapOnCell(item)},
+                            onTap: () => {widget.handleTapOnCell(item)},
                             child: TimeCellItem(
                               isSelected: item.scheduleId ==
                                   widget.selectedTimetableCellId,

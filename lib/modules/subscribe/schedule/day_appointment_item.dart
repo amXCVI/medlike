@@ -17,7 +17,7 @@ class DayAppointmentItem extends StatelessWidget {
           SvgPicture.asset('assets/icons/subscribe/time_clock.svg'),
           const SizedBox(width: 15),
           Text(
-            DateFormat("hh:mm").format(item.date),
+            DateFormat("HH:mm").format(item.date),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(width: 15),

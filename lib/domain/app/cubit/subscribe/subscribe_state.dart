@@ -16,7 +16,17 @@ enum GetFavoriteDoctorsListStatuses { initial, loading, success, failed }
 
 enum GetCalendarStatuses { initial, loading, success, failed }
 
-enum GetTimetableCellsStatuses { initial, loading, success, failed }
+enum GetTimetableCellsStatuses { initial, loading, success, failed, refunded }
+
+enum GetAppointmentInfoStatuses { initial, loading, success, failed }
+
+enum CheckAndLockAvailableCellStatuses { initial, loading, success, failed }
+
+enum CreatingAppointmentStatuses { initial, loading, success, failed }
+
+enum GetAvailableDoctorStatuses { initial, loading, success, failed }
+
+enum UnlockCellStatuses { initial, loading, success, failed }
 
 @immutable
 class SubscribeState {
@@ -65,6 +75,17 @@ class SubscribeState {
   final DateTime endDate;
   final DateTime selectedDate;
 
+  final GetAppointmentInfoStatuses? getAppointmentInfoStatus;
+  final AppointmentInfoModel? appointmentInfoData;
+
+  final CheckAndLockAvailableCellStatuses? checkAndLockAvailableCellStatus;
+
+  final UnlockCellStatuses? unlockCellStatus;
+
+  final CreatingAppointmentStatuses? creatingAppointmentStatus;
+
+  final GetAvailableDoctorStatuses? getAvailableDoctorStatus;
+
   SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.initial,
@@ -100,6 +121,12 @@ class SubscribeState {
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
+    this.getAppointmentInfoStatus,
+    this.appointmentInfoData,
+    this.checkAndLockAvailableCellStatus,
+    this.unlockCellStatus,
+    this.creatingAppointmentStatus,
+    this.getAvailableDoctorStatus,
   })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
         startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
@@ -139,6 +166,12 @@ class SubscribeState {
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
+    GetAppointmentInfoStatuses? getAppointmentInfoStatus,
+    AppointmentInfoModel? appointmentInfoData,
+    CheckAndLockAvailableCellStatuses? checkAndLockAvailableCellStatus,
+    CreatingAppointmentStatuses? creatingAppointmentStatus,
+    GetAvailableDoctorStatuses? getAvailableDoctorStatus,
+    UnlockCellStatuses? unlockCellStatus,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -186,6 +219,16 @@ class SubscribeState {
       timetableLogsList: timetableLogsList ?? this.timetableLogsList,
       selectedTimetableCell:
           selectedTimetableCell ?? this.selectedTimetableCell,
+      getAppointmentInfoStatus:
+          getAppointmentInfoStatus ?? this.getAppointmentInfoStatus,
+      appointmentInfoData: appointmentInfoData ?? this.appointmentInfoData,
+      checkAndLockAvailableCellStatus: checkAndLockAvailableCellStatus ??
+          this.checkAndLockAvailableCellStatus,
+      creatingAppointmentStatus:
+          creatingAppointmentStatus ?? this.creatingAppointmentStatus,
+      getAvailableDoctorStatus:
+          getAvailableDoctorStatus ?? this.getAvailableDoctorStatus,
+      unlockCellStatus: unlockCellStatus ?? this.unlockCellStatus,
     );
   }
 

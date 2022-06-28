@@ -80,3 +80,40 @@ class ResearchesModel with _$ResearchesModel {
   factory ResearchesModel.fromJson(Map<String, Object?> json) =>
       _$ResearchesModelFromJson(json);
 }
+
+@freezed
+class AppointmentInfoModel with _$AppointmentInfoModel {
+  const factory AppointmentInfoModel({
+    required int price,
+    required bool noPayment,
+    required String serviceName,
+    required String payType,
+    required List<RecommendationItemModel> recommendations,
+  }) = _AppointmentInfoModel;
+
+  factory AppointmentInfoModel.fromJson(Map<String, Object?> json) =>
+      _$AppointmentInfoModelFromJson(json);
+}
+
+@freezed
+class RecommendationItemModel with _$RecommendationItemModel {
+  const factory RecommendationItemModel({
+    required String serviceId,
+    required String serviceName,
+    required String recommendation,
+  }) = _RecommendationItemModel;
+
+  factory RecommendationItemModel.fromJson(Map<String, Object?> json) =>
+      _$RecommendationItemModelFromJson(json);
+}
+
+@freezed
+class CreateNewAppointmentResponseModel with _$CreateNewAppointmentResponseModel {
+  const factory CreateNewAppointmentResponseModel({
+    required String result,
+    required String information,
+  }) = _CreateNewAppointmentResponseModel;
+
+  factory CreateNewAppointmentResponseModel.fromJson(Map<String, Object?> json) =>
+      _$CreateNewAppointmentResponseModelFromJson(json);
+}

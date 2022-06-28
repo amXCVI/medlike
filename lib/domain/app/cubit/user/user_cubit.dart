@@ -116,4 +116,10 @@ class UserCubit extends Cubit<UserState> {
     ));
     UserSecureStorage.setField(AppConstants.selectedUserId, userId);
   }
+
+  String getShortUserName(String userId) {
+    UserProfile userProfile =
+    state.userProfiles!.firstWhere((element) => element.id == userId);
+    return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
+  }
 }

@@ -31,7 +31,7 @@ class TimeCellItem extends StatelessWidget {
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 6.0, horizontal: 15.0),
-              child: Text(DateFormat("hh:mm").format(time),
+              child: Text(DateFormat("HH:mm").format(time),
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: isSelected ? Colors.white : AppColors.mainText)),
             ),

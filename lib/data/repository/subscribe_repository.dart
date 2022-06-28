@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
@@ -156,14 +157,83 @@ class SubscribeRepository {
     required DateTime selectedDate,
   }) async {
     // ! Добавить поддержку часовых поясов !!
-    String formatDate(DateTime date) =>
-        DateFormat("yyyy-MM-dd").format(date);
+    String formatDate(DateTime date) => DateFormat("yyyy-MM-dd").format(date);
     String selectedDateStr = formatDate(selectedDate);
 
     try {
       final response = await _dioClient.get(
           '/api/v1.0/schedule/timetable?clinicId=$clinicId&buildingId=$buildingId&userId=$userId&date=$selectedDateStr&categoryType=$categoryType$dynamicParams');
       return TimetableResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<AppointmentInfoModel> getAppointmentInfo({
+    required String userId,
+    required String scheduleId,
+    required DateTime appointmentDate,
+    required List<String> researchIds,
+  }) async {
+    try {
+      String researchIdsStr = researchIds.join('&ResearchIds=');
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/appointments/info?userId=$userId&scheduleId=$scheduleId${researchIds.isNotEmpty ? '&researchIds=$researchIdsStr' : ''}');
+      return AppointmentInfoModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<CheckAndLockCellModel> checkAndLockAvailableCell({
+    required String userId,
+    required String scheduleId,
+    required DateTime appointmentDate,
+    required String clinicId,
+  }) async {
+    try {
+      String appointmentDateStr =
+          DateFormat("yyyy-MM-ddTHH:mm:ss").format(appointmentDate);
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/timetable/check-and-lock-cell?scheduleId=$scheduleId&appointmentDate=$appointmentDateStr&userId=$userId&clinicId=$clinicId');
+      return CheckAndLockCellModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<UnlockCellModel> unlockCell({
+    required String userId,
+    required String scheduleId,
+  }) async {
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/timetable/unlock-cell?scheduleId=$scheduleId&userId=$userId');
+      return UnlockCellModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<CreateNewAppointmentResponseModel> createNewAppointment(
+      {required dynamic data}) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/schedule/appointments',
+        data: data,
+      );
+      return CreateNewAppointmentResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<Doctor> getAvailableDoctor(
+      {required String scheduleId, required String clinicId}) async {
+    try {
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/available-doctor?scheduleId=$scheduleId&clinicId=$clinicId');
+      return Doctor.fromJson(response.data);
     } catch (err) {
       rethrow;
     }
