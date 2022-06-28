@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+
+// import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
@@ -11,6 +12,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -28,15 +30,19 @@ class App extends StatelessWidget {
         BlocProvider(
             create: (context) => AppointmentsCubit(AppointmentsRepository())),
       ],
-      child: StyledToast(
-        locale: const Locale('ru', 'RU'),
-        child: MaterialApp.router(
-          title: 'Medlike Base App',
-          theme: AppTheme.lightAppTheme,
-          routerDelegate: _router.delegate(),
-          routeInformationParser: _router.defaultRouteParser(),
-          debugShowCheckedModeBanner: false,
-        ),
+      child: MaterialApp.router(
+        title: 'Medlike Base App',
+        theme: AppTheme.lightAppTheme,
+        routerDelegate: _router.delegate(),
+        routeInformationParser: _router.defaultRouteParser(),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ru'),
+        ],
       ),
     );
   }

@@ -4,7 +4,7 @@ import 'package:medlike/themes/colors.dart';
 const lightBackgroundColor = Color(0xFFECECEC);
 
 final lightTheme = ThemeData(
-  typography: Typography.material2021(),
+  // typography: Typography.material2021(),
 
   /// Typography
   textTheme: const TextTheme(

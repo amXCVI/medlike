@@ -81,7 +81,7 @@ class _CalendarState extends State<Calendar> {
           ),
           const DaysOfWeek(),
           TableCalendar(
-            locale: 'ru_RU',
+            locale: Localizations.localeOf(context).languageCode,
             firstDay: widget.selectedDate.add(const Duration(days: -365)),
             lastDay: widget.selectedDate.add(const Duration(days: 365)),
             focusedDay: _focusedDay.value,

@@ -8,7 +8,7 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentRoute = context.router.currentPath;
+    final String currentRoute = context.router.current.name;
 
     return Flexible(
       child: ListView(
