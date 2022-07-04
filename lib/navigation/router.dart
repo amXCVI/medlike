@@ -4,7 +4,8 @@ import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.da
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
-import 'package:medlike/modules/login_with_pass/login_page.dart';
+import 'package:medlike/modules/login/password_page/password_page.dart';
+import 'package:medlike/modules/login/phone_number_page/phone_number_page.dart';
 
 import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
@@ -25,9 +26,10 @@ import 'router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(path: AppRoutes.login, page: LoginPage),
+    AutoRoute(path: AppRoutes.loginPhone, page: PhoneNumberPage, initial: true),
+    AutoRoute(path: AppRoutes.loginPhone, page: PasswordPage),
 
-    AutoRoute(path: AppRoutes.main, page: MainPage, initial: true),
+    AutoRoute(path: AppRoutes.main, page: MainPage),
 
     AutoRoute(path: AppRoutes.myAppointments, page: AppointmentsPage),
 

@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 
@@ -48,6 +50,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     RegExp exp = RegExp(r"[^0-9]+");
     String phoneString = phone.replaceAll(exp, '');
     context.read<UserCubit>().savePhoneNumber(phoneString);
+    context.router.push(PasswordRoute(phoneNumber: phoneString));
   }
 
   @override

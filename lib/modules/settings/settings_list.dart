@@ -13,7 +13,7 @@ class SettingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     void handleSignOut() {
       context.read<UserCubit>().signOut();
-      context.router.pushNamed(AppRoutes.login);
+      context.router.pushNamed(AppRoutes.loginPhone);
     }
 
     return ListView(

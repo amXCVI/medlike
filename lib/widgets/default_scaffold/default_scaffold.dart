@@ -13,12 +13,14 @@ class DefaultScaffold extends StatelessWidget {
     this.appBarSubtitle = '',
     this.isSearch = false,
     this.filteringFunction,
+    this.bottomNavigationBar,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
   final String appBarSubtitle;
   final bool isChildrenPage;
   final Widget? actionButton;
+  final Widget? bottomNavigationBar;
   final bool isSearch;
   final void Function(String searchingStr)? filteringFunction;
 
@@ -33,7 +35,7 @@ class DefaultScaffold extends StatelessWidget {
         actions: const [],
         filteringFunction: filteringFunction,
       ),
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: bottomNavigationBar ?? const BottomBar(),
       body: Stack(children: [
         Container(
           padding: const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 0),

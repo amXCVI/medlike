@@ -15,6 +15,7 @@ class _PasswordInputState extends State<PasswordInput> {
   final FocusNode _focus = FocusNode();
   late final TextEditingController _controller = TextEditingController()
     ..text = '';
+  bool _isObscure = false;
 
   @override
   void initState() {
@@ -52,13 +53,24 @@ class _PasswordInputState extends State<PasswordInput> {
               focusNode: _focus,
               autofocus: true,
               decoration: InputDecoration(
-                hintText: '******',
+                hintText: '********',
                 hintStyle: Theme.of(context)
                     .textTheme
                     .labelLarge
                     ?.copyWith(color: AppColors.lightText),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                ),
               ),
-              obscureText: true,
+              obscureText: _isObscure,
               enableSuggestions: false,
               autocorrect: false,
               textInputAction: TextInputAction.next,

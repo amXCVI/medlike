@@ -117,10 +117,17 @@ final lightTheme = ThemeData(
   // hintColor: AppColors.
   // errorColor: AppColors.
   // toggleableActiveColor: AppColors.
+
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: AppColors.mainBrandColor,
     foregroundColor: Colors.white,
     hoverColor: AppColors.darkGreenFirst,
     splashColor: AppColors.darkGreenFirst,
+  ),
+
+  inputDecorationTheme: const InputDecorationTheme(
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: AppColors.mainBrandColor),
+    ),
   ),
 );
