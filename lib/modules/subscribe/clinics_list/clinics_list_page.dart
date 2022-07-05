@@ -14,9 +14,7 @@ class ClinicsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _onRefreshData({bool isRefresh = false}) {
-      context
-          .read<SubscribeCubit>()
-          .getAvailableClinicsList(userId, isRefresh);
+      context.read<SubscribeCubit>().getAvailableClinicsList(userId, isRefresh);
     }
 
     _onRefreshData();
@@ -26,6 +24,11 @@ class ClinicsListPage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
+          if (state.getAvailableClinicsStatus !=
+                  GetAvailableClinicsListStatuses.success &&
+              state.availableClinicsList != null) {
+            _onRefreshData();
+          }
           if (state.getAvailableClinicsStatus ==
               GetAvailableClinicsListStatuses.failed) {
             return const Text('');

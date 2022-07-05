@@ -10,4 +10,10 @@ class AppConstants {
 
   // Ключ для сохранения часового пояса выбранной клиники
   static const String timeZoneOffset = 'timeZoneOffset';
+
+  // Ключ для входа по пин-коду или по паролю
+  static const String isSavedPinCodeForAuth = 'isSavedPinCodeForAuth';
+
+  // Ключ для хранения хэша пин-кода
+  static const String authPinCode = 'authPinCode';
 }

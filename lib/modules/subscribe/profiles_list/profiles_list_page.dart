@@ -24,6 +24,7 @@ class ProfilesListPage extends StatelessWidget {
           }
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
+
             return ProfilesList(
               profilesList: state.userProfiles as List<UserProfile>,
               selectedUserId: state.selectedUserId.toString(),

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
@@ -121,5 +122,10 @@ class UserCubit extends Cubit<UserState> {
     UserProfile userProfile =
     state.userProfiles!.firstWhere((element) => element.id == userId);
     return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
+  }
+
+  /// Сохраняет хэш созданного при авторизации пин-кода
+  void setPinCodeToStorage(List<int> pinCode) {
+    UserSecureStorage.setField(AppConstants.authPinCode, sha256.convert(pinCode));
   }
 }

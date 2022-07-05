@@ -35,7 +35,7 @@ class LoginPageWidget extends StatelessWidget {
               // ]),
               const PhoneNumberInput(),
               MaterialButton(onPressed: () => {
-                context.read<UserCubit>().signIn('79090000011', '?8)w1z-N')
+                context.read<UserCubit>().signIn('79090000011', 'Qwerty11@')
               },
                 child: const Text('Default login'),
               )

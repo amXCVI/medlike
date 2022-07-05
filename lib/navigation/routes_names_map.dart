@@ -2,6 +2,7 @@ class AppRoutes {
   static const home = '/';
   static const loginPhone = '/login_phone';
   static const loginPassword = '/login_password';
+  static const loginPinCode = '/login_pin_code';
   static const main = '/main';
   static const subscribe = '/subscribe';
   static const subscribeProfiles = '/subscribe_profiles';
