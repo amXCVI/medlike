@@ -77,3 +77,14 @@ class UserProfilesList with _$UserProfilesList {
   factory UserProfilesList.fromJson(Map<String, Object?> json) =>
       _$UserProfilesListFromJson(json);
 }
+
+@freezed
+class CheckUserAccountResponse with _$CheckUserAccountResponse {
+  const factory CheckUserAccountResponse({
+    required bool found,
+    required String? message,
+  }) = _CheckUserAccountResponse;
+
+  factory CheckUserAccountResponse.fromJson(Map<String, Object?> json) =>
+      _$CheckUserAccountResponseFromJson(json);
+}

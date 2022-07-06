@@ -43,4 +43,64 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future<void> getNewSmsCodeRecoverPassword(
+      {required String phoneNumber}) async {
+    try {
+      await _dioClient.get('/api/v1.0/auth/password/forgot/$phoneNumber');
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> sendResetPasswordCode(
+      {required String smsToken, required String phoneNumber}) async {
+    try {
+      final response = await _dioClient.post('/api/v1.0/auth/sms/check',
+          data: {'Token': smsToken, 'UserName': phoneNumber});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> resetPassword({
+    required String smsToken,
+    required String phoneNumber,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/auth/password/reset', data: {
+        'Token': smsToken,
+        'UserName': phoneNumber,
+        'Password': password,
+        'ConfirmPassword': confirmPassword,
+      });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<CheckUserAccountResponse> checkUserAccount({
+    required String phoneNumber,
+  }) async {
+    try {
+      final response =
+          await _dioClient.get('/api/v1.0/auth/check/$phoneNumber');
+      return CheckUserAccountResponse.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

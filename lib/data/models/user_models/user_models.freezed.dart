@@ -1120,3 +1120,160 @@ abstract class _UserProfilesList implements UserProfilesList {
   _$$_UserProfilesListCopyWith<_$_UserProfilesList> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+CheckUserAccountResponse _$CheckUserAccountResponseFromJson(
+    Map<String, dynamic> json) {
+  return _CheckUserAccountResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CheckUserAccountResponse {
+  bool get found => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CheckUserAccountResponseCopyWith<CheckUserAccountResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CheckUserAccountResponseCopyWith<$Res> {
+  factory $CheckUserAccountResponseCopyWith(CheckUserAccountResponse value,
+          $Res Function(CheckUserAccountResponse) then) =
+      _$CheckUserAccountResponseCopyWithImpl<$Res>;
+  $Res call({bool found, String? message});
+}
+
+/// @nodoc
+class _$CheckUserAccountResponseCopyWithImpl<$Res>
+    implements $CheckUserAccountResponseCopyWith<$Res> {
+  _$CheckUserAccountResponseCopyWithImpl(this._value, this._then);
+
+  final CheckUserAccountResponse _value;
+  // ignore: unused_field
+  final $Res Function(CheckUserAccountResponse) _then;
+
+  @override
+  $Res call({
+    Object? found = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_value.copyWith(
+      found: found == freezed
+          ? _value.found
+          : found // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_CheckUserAccountResponseCopyWith<$Res>
+    implements $CheckUserAccountResponseCopyWith<$Res> {
+  factory _$$_CheckUserAccountResponseCopyWith(
+          _$_CheckUserAccountResponse value,
+          $Res Function(_$_CheckUserAccountResponse) then) =
+      __$$_CheckUserAccountResponseCopyWithImpl<$Res>;
+  @override
+  $Res call({bool found, String? message});
+}
+
+/// @nodoc
+class __$$_CheckUserAccountResponseCopyWithImpl<$Res>
+    extends _$CheckUserAccountResponseCopyWithImpl<$Res>
+    implements _$$_CheckUserAccountResponseCopyWith<$Res> {
+  __$$_CheckUserAccountResponseCopyWithImpl(_$_CheckUserAccountResponse _value,
+      $Res Function(_$_CheckUserAccountResponse) _then)
+      : super(_value, (v) => _then(v as _$_CheckUserAccountResponse));
+
+  @override
+  _$_CheckUserAccountResponse get _value =>
+      super._value as _$_CheckUserAccountResponse;
+
+  @override
+  $Res call({
+    Object? found = freezed,
+    Object? message = freezed,
+  }) {
+    return _then(_$_CheckUserAccountResponse(
+      found: found == freezed
+          ? _value.found
+          : found // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CheckUserAccountResponse implements _CheckUserAccountResponse {
+  const _$_CheckUserAccountResponse(
+      {required this.found, required this.message});
+
+  factory _$_CheckUserAccountResponse.fromJson(Map<String, dynamic> json) =>
+      _$$_CheckUserAccountResponseFromJson(json);
+
+  @override
+  final bool found;
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'CheckUserAccountResponse(found: $found, message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CheckUserAccountResponse &&
+            const DeepCollectionEquality().equals(other.found, found) &&
+            const DeepCollectionEquality().equals(other.message, message));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(found),
+      const DeepCollectionEquality().hash(message));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_CheckUserAccountResponseCopyWith<_$_CheckUserAccountResponse>
+      get copyWith => __$$_CheckUserAccountResponseCopyWithImpl<
+          _$_CheckUserAccountResponse>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CheckUserAccountResponseToJson(this);
+  }
+}
+
+abstract class _CheckUserAccountResponse implements CheckUserAccountResponse {
+  const factory _CheckUserAccountResponse(
+      {required final bool found,
+      required final String? message}) = _$_CheckUserAccountResponse;
+
+  factory _CheckUserAccountResponse.fromJson(Map<String, dynamic> json) =
+      _$_CheckUserAccountResponse.fromJson;
+
+  @override
+  bool get found => throw _privateConstructorUsedError;
+  @override
+  String? get message => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CheckUserAccountResponseCopyWith<_$_CheckUserAccountResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}

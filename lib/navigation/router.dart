@@ -8,6 +8,8 @@ import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.da
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/phone_number_page/phone_number_page.dart';
+import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
+import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinics_list_page.dart';
@@ -32,6 +34,8 @@ import 'router.gr.dart';
     AutoRoute(path: AppRoutes.loginPhone, page: PasswordPage),
     AutoRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
     AutoRoute(path: AppRoutes.loginPinCodeCheck, page: CheckPinCodePage, guards: [CheckIsSavedPinCode]),
+    AutoRoute(path: AppRoutes.loginRecoverPasswordSms, page: RecoverPasswordSmsPage),
+    AutoRoute(path: AppRoutes.loginRecoverPasswordNew, page: RecoverPasswordNewPage),
 
     AutoRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser], initial: true),
 

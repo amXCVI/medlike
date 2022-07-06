@@ -4,7 +4,9 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 
 class PasswordInput extends StatefulWidget {
-  const PasswordInput({Key? key}) : super(key: key);
+  const PasswordInput({Key? key, required this.phoneNumber}) : super(key: key);
+
+  final String phoneNumber;
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -51,7 +53,7 @@ class _PasswordInputState extends State<PasswordInput> {
               controller: _controller,
               onChanged: (text) => _onChangePassword(text),
               focusNode: _focus,
-              autofocus: true,
+              autofocus: false,
               decoration: InputDecoration(
                 hintText: '********',
                 hintStyle: Theme.of(context)
@@ -69,11 +71,12 @@ class _PasswordInputState extends State<PasswordInput> {
                     });
                   },
                 ),
+                prefixIcon: const SizedBox(width: 40),
               ),
               obscureText: _isObscure,
               enableSuggestions: false,
               autocorrect: false,
-              textInputAction: TextInputAction.next,
+              textInputAction: TextInputAction.done,
               onSubmitted: (value) {
                 _authenticateWithPhoneAndPassword();
               },

@@ -4,6 +4,8 @@ class AppRoutes {
   static const loginPassword = '/login_password';
   static const loginPinCodeCreate = '/login_pin_code';
   static const loginPinCodeCheck = '/login_pin_code_check';
+  static const loginRecoverPasswordSms = '/login_recover_password_sms';
+  static const loginRecoverPasswordNew = '/login_recover_password_new';
   static const main = '/main';
   static const subscribe = '/subscribe';
   static const subscribeProfiles = '/subscribe_profiles';

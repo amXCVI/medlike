@@ -105,3 +105,17 @@ Map<String, dynamic> _$$_UserProfilesListToJson(_$_UserProfilesList instance) =>
     <String, dynamic>{
       'userProfilesList': instance.userProfilesList,
     };
+
+_$_CheckUserAccountResponse _$$_CheckUserAccountResponseFromJson(
+        Map<String, dynamic> json) =>
+    _$_CheckUserAccountResponse(
+      found: json['found'] as bool,
+      message: json['message'] as String?,
+    );
+
+Map<String, dynamic> _$$_CheckUserAccountResponseToJson(
+        _$_CheckUserAccountResponse instance) =>
+    <String, dynamic>{
+      'found': instance.found,
+      'message': instance.message,
+    };

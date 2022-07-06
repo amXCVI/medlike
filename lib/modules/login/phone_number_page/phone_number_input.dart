@@ -81,6 +81,9 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               textAlign: TextAlign.center,
               showCursor:
                   _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
+              onSubmitted: (value) {
+                _savePhoneNumber(value);
+              },
             ),
           ),
         ),

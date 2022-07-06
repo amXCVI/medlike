@@ -9,6 +9,14 @@ enum UserAuthScreens { inputPhone, inputPassword }
 /// Загрузка профилей из всех МО
 enum GetUserProfilesStatusesList { initial, loading, success, failure }
 
+enum GetNewSmsCodeStatuses { initial, loading, success, failed }
+
+enum SendingResetPasswordCodeStatuses { initial, loading, success, failed }
+
+enum ResetPasswordStatuses { initial, loading, success, failed }
+
+enum CheckUserAccountStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -18,6 +26,10 @@ class UserState {
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
   final String? selectedUserId;
+  final GetNewSmsCodeStatuses? getNewSmsCodeStatus;
+  final SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus;
+  final ResetPasswordStatuses? resetPasswordStatus;
+  final CheckUserAccountStatuses? checkUserAccountStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -28,6 +40,11 @@ class UserState {
     this.getUserProfileStatus,
     this.userProfiles,
     this.selectedUserId = '',
+    this.getNewSmsCodeStatus = GetNewSmsCodeStatuses.initial,
+    this.sendingResetPasswordCodeStatus =
+        SendingResetPasswordCodeStatuses.initial,
+    this.resetPasswordStatus,
+    this.checkUserAccountStatus,
   });
 
   UserState copyWith({
@@ -39,6 +56,10 @@ class UserState {
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
     String? selectedUserId,
+    GetNewSmsCodeStatuses? getNewSmsCodeStatus,
+    SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus,
+    ResetPasswordStatuses? resetPasswordStatus,
+    CheckUserAccountStatuses? checkUserAccountStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -49,6 +70,12 @@ class UserState {
       getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       userProfiles: userProfiles ?? this.userProfiles,
       selectedUserId: selectedUserId ?? this.selectedUserId,
+      getNewSmsCodeStatus: getNewSmsCodeStatus ?? this.getNewSmsCodeStatus,
+      sendingResetPasswordCodeStatus:
+          sendingResetPasswordCodeStatus ?? this.sendingResetPasswordCodeStatus,
+      resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
+      checkUserAccountStatus:
+          checkUserAccountStatus ?? this.checkUserAccountStatus,
     );
   }
 

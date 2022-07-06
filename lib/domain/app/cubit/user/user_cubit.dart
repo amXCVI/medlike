@@ -120,4 +120,118 @@ class UserCubit extends Cubit<UserState> {
       return false;
     }
   }
+
+  /// Запрашивает смс для сброса пароля
+  void getNewSmsForRecoverPassword({required String phoneNumber}) async {
+    CheckUserAccountResponse checkUser =
+        await checkUserAccount(phoneNumber: phoneNumber);
+    if (!checkUser.found) {
+      AppToast.showAppToast(
+          msg: 'Не найден пользователь с введенным номером телефона');
+      return;
+    }
+    emit(state.copyWith(
+      getNewSmsCodeStatus: GetNewSmsCodeStatuses.loading,
+    ));
+    try {
+      await userRepository.getNewSmsCodeRecoverPassword(
+          phoneNumber: phoneNumber.isNotEmpty
+              ? phoneNumber
+              : state.userPhoneNumber as String);
+      emit(state.copyWith(
+        getNewSmsCodeStatus: GetNewSmsCodeStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getNewSmsCodeStatus: GetNewSmsCodeStatuses.failed,
+      ));
+    }
+  }
+
+  /// Проверяет код из смс для сброса пароля
+  Future<bool> sendResetPasswordCode(
+      {required String phoneNumber, required String smsToken}) async {
+    emit(state.copyWith(
+      sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.loading,
+    ));
+    try {
+      await userRepository.sendResetPasswordCode(
+        phoneNumber: phoneNumber,
+        smsToken: smsToken,
+      );
+      emit(state.copyWith(
+        sendingResetPasswordCodeStatus:
+            SendingResetPasswordCodeStatuses.success,
+      ));
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Сбрасывает старый пароль и задает новый
+  Future<bool> resetPassword({
+    required String phoneNumber,
+    required String smsToken,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    if (password != confirmPassword) {
+      AppToast.showAppToast(msg: 'Введенные пароли не совпадают');
+      return false;
+    }
+    emit(state.copyWith(
+      resetPasswordStatus: ResetPasswordStatuses.loading,
+    ));
+    try {
+      await userRepository.resetPassword(
+        phoneNumber: phoneNumber,
+        smsToken: smsToken,
+        password: password,
+        confirmPassword: confirmPassword,
+      );
+      emit(state.copyWith(
+        resetPasswordStatus: ResetPasswordStatuses.success,
+      ));
+
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(
+          state.copyWith(
+            resetPasswordStatus: ResetPasswordStatuses.initial,
+          ),
+        );
+      });
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        resetPasswordStatus: ResetPasswordStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Проверяет, есть ли пользователь с таким номером телефона
+  Future<CheckUserAccountResponse> checkUserAccount(
+      {required String phoneNumber}) async {
+    emit(state.copyWith(
+      checkUserAccountStatus: CheckUserAccountStatuses.loading,
+    ));
+    try {
+      CheckUserAccountResponse response = await userRepository.checkUserAccount(
+        phoneNumber: phoneNumber,
+      );
+      emit(state.copyWith(
+        checkUserAccountStatus: CheckUserAccountStatuses.success,
+      ));
+      return response;
+    } catch (e) {
+      emit(state.copyWith(
+        checkUserAccountStatus: CheckUserAccountStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
 }

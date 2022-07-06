@@ -10,10 +10,11 @@ class PasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultScaffold(
-      child: PasswordPageWidget(),
+    return DefaultScaffold(
+      child: PasswordPageWidget(phoneNumber: phoneNumber),
       appBarTitle: 'Заполярье',
-      bottomNavigationBar: PasswordPageBottomNavigationBar(),
+      bottomNavigationBar:
+          PasswordPageBottomNavigationBar(phoneNumber: phoneNumber),
     );
   }
 }
