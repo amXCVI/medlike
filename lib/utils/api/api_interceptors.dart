@@ -35,12 +35,16 @@ class DioInterceptors extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioError err, ErrorInterceptorHandler handler) async {
     if (kDebugMode) {
       print('ERROR[${err.message}] => PATH: ${err.requestOptions.path}');
     }
-    if(err.response!.statusCode == 401) {
-      AppToast.showAppToast(msg: 'Пожалуйста, авторизуйтесь в приложении заново');
+    if (err.response!.statusCode == 401) {
+      //! Здесь нужно добавить рефреш токена !//
+      AppToast.showAppToast(
+          msg: 'Пожалуйста, авторизуйтесь в приложении заново');
+      UserSecureStorage.deleteField(AppConstants.accessToken);
+      await UserSecureStorage.setField(AppConstants.isAuth, 'false');
     }
     String errStr = DefaultErrorModel.fromJson(err.response!.data).message;
     AppToast.showAppToast(msg: errStr.isNotEmpty ? errStr : err.message);

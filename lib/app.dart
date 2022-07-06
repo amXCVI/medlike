@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
@@ -10,6 +9,7 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +17,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
-  final _router = AppRouter();
+  final _router = AppRouter(
+    checkIsAuthUser: CheckIsAuthUser(),
+    checkIsSavedPinCode: CheckIsSavedPinCode(),
+  );
 
   @override
   Widget build(BuildContext context) {

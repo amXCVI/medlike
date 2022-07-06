@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'user_state.dart';
 
@@ -16,9 +16,7 @@ class UserCubit extends Cubit<UserState> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-        authStatus: state.authStatus,
-        userPhoneNumber: phone,
-        authScreen: UserAuthScreens.inputPassword));
+        userPhoneNumber: phone, authScreen: UserAuthScreens.inputPassword));
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
@@ -27,9 +25,7 @@ class UserCubit extends Cubit<UserState> {
         state.userPhoneNumber.toString().length == 11) {
       signIn(state.userPhoneNumber.toString(), password);
     } else {
-      emit(state.copyWith(
-          authStatus: state.authStatus,
-          authScreen: UserAuthScreens.inputPhone));
+      emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
     }
   }
 
@@ -45,43 +41,32 @@ class UserCubit extends Cubit<UserState> {
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
       emit(state.copyWith(
-          authStatus: UserAuthStatuses.successAuth,
-          token: response.token,
-          refreshToken: response.refreshToken,
-          authScreen: state.authScreen));
+        authStatus: UserAuthStatuses.successAuth,
+        token: response.token,
+        refreshToken: response.refreshToken,
+      ));
     } catch (e) {
       emit(state.copyWith(
-          authStatus: UserAuthStatuses.failureAuth,
-          authScreen: state.authScreen));
+        authStatus: UserAuthStatuses.failureAuth,
+      ));
     }
   }
 
   void signOut() async {
-    const storage = FlutterSecureStorage();
-
-    await storage.delete(key: 'accessToken');
-    await storage.delete(key: 'refreshToken');
+    UserSecureStorage.setField(AppConstants.isAuth, 'false');
     emit(state.copyWith(
-        authStatus: UserAuthStatuses.unAuth,
-        authScreen: UserAuthScreens.inputPhone));
+      authStatus: UserAuthStatuses.unAuth,
+      authScreen: UserAuthScreens.inputPhone,
+    ));
   }
 
   /// Получает список профилей из всех МО
   void getUserProfiles() async {
     if (state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
-      emit(state.copyWith(
-        authStatus: state.authStatus,
-        authScreen: state.authScreen,
-        getUserProfileStatus: GetUserProfilesStatusesList.success,
-        userProfiles: state.userProfiles,
-        selectedUserId: state.selectedUserId,
-      ));
       return;
     }
     emit(state.copyWith(
-      authStatus: state.authStatus,
-      authScreen: state.authScreen,
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
     try {
@@ -90,17 +75,12 @@ class UserCubit extends Cubit<UserState> {
       final List<UserProfile> response;
       response = await userRepository.getProfiles();
       emit(state.copyWith(
-        authStatus: state.authStatus,
-        authScreen: state.authScreen,
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
         selectedUserId: currentSelectedUserId?.toString(),
       ));
     } catch (e) {
       emit(state.copyWith(
-        authStatus: state.authStatus,
-        authScreen: state.authScreen,
-        userProfiles: state.userProfiles,
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
     }
@@ -109,23 +89,35 @@ class UserCubit extends Cubit<UserState> {
   /// Сохраняет id выбранного профиля
   void setSelectedUserId(String userId) {
     emit(state.copyWith(
-      authStatus: state.authStatus,
-      authScreen: state.authScreen,
       selectedUserId: userId,
-      userProfiles: state.userProfiles,
-      getUserProfileStatus: state.getUserProfileStatus,
     ));
     UserSecureStorage.setField(AppConstants.selectedUserId, userId);
   }
 
   String getShortUserName(String userId) {
     UserProfile userProfile =
-    state.userProfiles!.firstWhere((element) => element.id == userId);
+        state.userProfiles!.firstWhere((element) => element.id == userId);
     return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
   }
 
   /// Сохраняет хэш созданного при авторизации пин-кода
   void setPinCodeToStorage(List<int> pinCode) {
-    UserSecureStorage.setField(AppConstants.authPinCode, sha256.convert(pinCode));
+    UserSecureStorage.setField(
+        AppConstants.authPinCode, sha256.convert(pinCode).toString());
+    UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true');
+    UserSecureStorage.setField(AppConstants.isAuth, 'true');
+  }
+
+  /// Сравнить хэш введенного кода с ъэшем сохраненного
+  Future<bool> checkPinCodeToStorage(List<int> pinCode) async {
+    String sha256savedCode =
+        '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
+    if (sha256savedCode == sha256.convert(pinCode).toString()) {
+      UserSecureStorage.setField(AppConstants.isAuth, 'true');
+      return true;
+    } else {
+      AppToast.showAppToast(msg: 'Неверный пин-код');
+      return false;
+    }
   }
 }

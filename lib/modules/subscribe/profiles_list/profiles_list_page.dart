@@ -9,22 +9,18 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 class ProfilesListPage extends StatelessWidget {
   const ProfilesListPage({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+    context.read<UserCubit>().getUserProfiles();
+
     return DefaultScaffold(
       appBarTitle: 'Запись на прием',
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          context.read<UserCubit>().getUserProfiles();
-
-          if (state.getUserProfileStatus ==
-                  GetUserProfilesStatusesList.success &&
-              state.userProfiles == null) {
-            context.read<UserCubit>().getUserProfiles();
-          }
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
-
             return ProfilesList(
               profilesList: state.userProfiles as List<UserProfile>,
               selectedUserId: state.selectedUserId.toString(),

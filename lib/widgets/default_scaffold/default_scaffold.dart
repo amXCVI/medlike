@@ -14,6 +14,7 @@ class DefaultScaffold extends StatelessWidget {
     this.isSearch = false,
     this.filteringFunction,
     this.bottomNavigationBar,
+    this.onPressedAppLogo,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
@@ -23,6 +24,7 @@ class DefaultScaffold extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final bool isSearch;
   final void Function(String searchingStr)? filteringFunction;
+  final void Function()? onPressedAppLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class DefaultScaffold extends StatelessWidget {
         isSearch: isSearch,
         actions: const [],
         filteringFunction: filteringFunction,
+        onPressedAppLogo: onPressedAppLogo,
       ),
       bottomNavigationBar: bottomNavigationBar ?? const BottomBar(),
       body: Stack(children: [

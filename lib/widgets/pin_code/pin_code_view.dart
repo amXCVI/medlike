@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medlike/modules/login/pin_code_page/pin_code_keyboard.dart';
+import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
 
 class PinCodeView extends StatefulWidget {
@@ -21,6 +22,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   }
 
   void onChangePointsArray(PinCodeKeyboardItem e) {
+    HapticFeedback.vibrate();
     int firstEmptyIndex = pointsArray.indexOf(-1);
 
     if (e.buttonType == PinCodeKeyboardTypes.number) {

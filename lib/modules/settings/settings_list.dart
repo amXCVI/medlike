@@ -13,7 +13,11 @@ class SettingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     void handleSignOut() {
       context.read<UserCubit>().signOut();
-      context.router.pushNamed(AppRoutes.loginPhone);
+      context.router.pushNamed(AppRoutes.loginPinCodeCheck);
+    }
+
+    void handleChangePinCode() {
+      context.router.pushNamed(AppRoutes.loginPinCodeCreate);
     }
 
     return ListView(
@@ -27,7 +31,7 @@ class SettingsList extends StatelessWidget {
         SettingsListItem(
           title: 'Сменить пин-код',
           iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
-          onTap: () {},
+          onTap: handleChangePinCode,
         ),
         SettingsListItem(
           title: 'Тех. поддержка',

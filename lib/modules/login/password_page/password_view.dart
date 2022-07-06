@@ -14,7 +14,7 @@ class PasswordPageWidget extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state.authStatus == UserAuthStatuses.successAuth) {
-          RouteData.of(context).router.navigateNamed(AppRoutes.loginPinCode);
+          RouteData.of(context).router.navigateNamed(AppRoutes.loginPinCodeCreate);
         }
 
         return SingleChildScrollView(

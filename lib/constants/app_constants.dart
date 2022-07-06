@@ -2,6 +2,10 @@ class AppConstants {
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
 
+  // Ключ для проверки авторизации
+  //! нужно бы переделать на какой-то сервис, по-хорошему
+  static const String isAuth = 'isAuth';
+
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 

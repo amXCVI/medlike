@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
@@ -13,6 +14,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.isSearch = false,
     required this.actions,
     this.filteringFunction,
+    this.onPressedAppLogo,
   })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
   @override
@@ -23,6 +25,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool isSearch;
   final List<Widget> actions;
   final void Function(String searchingStr)? filteringFunction;
+  final void Function()? onPressedAppLogo;
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -121,12 +124,18 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ? IconButton(
               onPressed: () {
                 RouteData.of(context).router.popTop();
+                HapticFeedback.vibrate();
               },
               icon: SvgPicture.asset(
                   'assets/icons/app_bar/app_bar_back_icon.svg'))
           : IconButton(
               onPressed: () {
-                RouteData.of(context).router.navigateNamed(AppRoutes.main);
+                widget.onPressedAppLogo != null
+                    ? widget.onPressedAppLogo!()
+                    : RouteData.of(context)
+                        .router
+                        .navigateNamed(AppRoutes.main);
+                HapticFeedback.vibrate();
               },
               icon: Image.asset('assets/icons/ic_logo_launch.png', width: 28.0),
             ),
