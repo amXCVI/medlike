@@ -66,7 +66,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                           decoration: BoxDecoration(
                             color: e == -1
                                 ? AppColors.circleBgFirst
-                                : Theme.of(context).colorScheme.primary,
+                                : AppColors.mainBrandColor,
                             shape: BoxShape.circle,
                           ),
                         ),

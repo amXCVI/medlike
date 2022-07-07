@@ -13,7 +13,11 @@ class ProfilesListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserCubit>().getUserProfiles();
+    void _onRefreshData({bool isRefresh = false}) {
+      context.read<UserCubit>().getUserProfiles(isRefresh);
+    }
+
+    _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: 'Запись на прием',
@@ -24,6 +28,7 @@ class ProfilesListPage extends StatelessWidget {
             return ProfilesList(
               profilesList: state.userProfiles as List<UserProfile>,
               selectedUserId: state.selectedUserId.toString(),
+              onRefreshData: _onRefreshData,
             );
           } else if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.failure) {

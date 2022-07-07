@@ -11,10 +11,12 @@ class ProfilesList extends StatefulWidget {
     Key? key,
     required this.profilesList,
     required this.selectedUserId,
+    this.onRefreshData,
   }) : super(key: key);
 
   final List<UserProfile> profilesList;
   final String selectedUserId;
+  final dynamic onRefreshData;
 
   @override
   State<ProfilesList> createState() => _ProfilesListState();
@@ -28,16 +30,19 @@ class _ProfilesListState extends State<ProfilesList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        shrinkWrap: true,
-        children: widget.profilesList
-            .map((item) => ProfileItem(
-                  userProfile: item,
-                  isSelected: item.id == widget.selectedUserId,
-                  onTap: () {
-                    _handleTapOnUserProfile(item.id);
-                  },
-                ))
-            .toList());
+    return RefreshIndicator(
+      onRefresh: () => widget.onRefreshData(isRefresh: true),
+      child: ListView(
+          shrinkWrap: true,
+          children: widget.profilesList
+              .map((item) => ProfileItem(
+                    userProfile: item,
+                    isSelected: item.id == widget.selectedUserId,
+                    onTap: () {
+                      _handleTapOnUserProfile(item.id);
+                    },
+                  ))
+              .toList()),
+    );
   }
 }

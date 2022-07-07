@@ -34,7 +34,7 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     void _checkRepeatPinCode(List<int> repeatPinCode) {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
-        context.router.push(const MainRoute());
+        context.router.replaceAll([const MainRoute()]);
       } else {
         AppToast.showAppToast(msg: 'Неверный пин-код');
       }

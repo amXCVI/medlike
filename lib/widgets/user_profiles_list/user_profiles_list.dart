@@ -9,7 +9,7 @@ class UserProfilesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserCubit>().getUserProfiles();
+    context.read<UserCubit>().getUserProfiles(false);
 
     return Container(
       decoration: BoxDecoration(

@@ -32,15 +32,15 @@ enum UnlockCellStatuses { initial, loading, success, failed }
 class SubscribeState {
   final UserProfile? selectedUser;
 
-  final GetAvailableClinicsListStatuses getAvailableClinicsStatus;
+  final GetAvailableClinicsListStatuses? getAvailableClinicsStatus;
   final List<AvailableClinic>? availableClinicsList;
   final AvailableClinic? selectedBuilding;
 
-  final GetServicesListStatuses getServicesListStatus;
+  final GetServicesListStatuses? getServicesListStatus;
   final List<NavigationItem>? servicesList;
   final NavigationItem? selectedService;
 
-  final GetResearchesListStatuses getResearchesListStatus;
+  final GetResearchesListStatuses? getResearchesListStatus;
   final List<Research>? researchesList;
   final List<String>? selectedResearchesIds;
 
@@ -88,24 +88,24 @@ class SubscribeState {
 
   SubscribeState({
     this.selectedUser,
-    this.getAvailableClinicsStatus = GetAvailableClinicsListStatuses.initial,
+    this.getAvailableClinicsStatus,
     this.availableClinicsList,
     this.selectedBuilding,
-    this.getServicesListStatus = GetServicesListStatuses.initial,
+    this.getServicesListStatus,
     this.servicesList,
     this.selectedService,
-    this.getResearchesListStatus = GetResearchesListStatuses.initial,
+    this.getResearchesListStatus,
     this.researchesList,
     this.selectedResearchesIds,
-    this.getSpecialisationsListStatus = GetSpecialisationsListStatuses.initial,
+    this.getSpecialisationsListStatus,
     this.specialisationsList,
     this.selectedSpecialisation,
     this.filteredSpecialisationsList,
-    this.getDoctorsListStatus = GetDoctorsListStatuses.initial,
+    this.getDoctorsListStatus,
     this.doctorsList,
     this.selectedDoctor,
     this.filteredDoctorsList,
-    this.getCabinetsListStatus = GetCabinetsListStatuses.initial,
+    this.getCabinetsListStatus,
     this.cabinetsList,
     this.filteredCabinetsList,
     this.selectedCabinet,

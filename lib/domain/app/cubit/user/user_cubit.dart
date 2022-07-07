@@ -57,15 +57,19 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
+      userPhoneNumber: null,
+      userProfiles: null,
+
     ));
   }
 
   /// Получает список профилей из всех МО
-  void getUserProfiles() async {
-    if (state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
-        state.userProfiles != null) {
-      return;
-    }
+  void getUserProfiles(bool isRefresh) async {
+    // if (!isRefresh &&
+    //     state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
+    //     state.userProfiles != null) {
+    //   return;
+    // }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
