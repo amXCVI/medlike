@@ -65,11 +65,11 @@ class UserCubit extends Cubit<UserState> {
 
   /// Получает список профилей из всех МО
   void getUserProfiles(bool isRefresh) async {
-    // if (!isRefresh &&
-    //     state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
-    //     state.userProfiles != null) {
-    //   return;
-    // }
+    if (!isRefresh &&
+        state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
+        state.userProfiles != null) {
+      return;
+    }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));

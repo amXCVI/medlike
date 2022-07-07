@@ -24,6 +24,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     if (!isRefresh &&
         state.getAvailableClinicsStatus ==
             GetAvailableClinicsListStatuses.success &&
+        state.availableClinicsList != null &&
         state.availableClinicsList!.isNotEmpty) {
       return;
     }
@@ -337,6 +338,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           cabinet: cabinet,
         ),
       );
+
+      int timeZoneOffset = await getTimeZoneOffset();
       emit(state.copyWith(
         getCalendarStatus: GetCalendarStatuses.success,
 
@@ -345,12 +348,14 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         /// загружать его каждый раз заново
         calendarList: isRefresh
             ? response.map((e) {
-                return e.copyWith(date: dateTimeToUTC(e.date));
+                DateTime date = dateTimeToUTC(e.date, timeZoneOffset);
+                return e.copyWith(date: date);
               }).toList()
             : {
                 ...?state.calendarList,
                 ...response.map((e) {
-                  return e.copyWith(date: dateTimeToUTC(e.date));
+                  return e.copyWith(
+                      date: dateTimeToUTC(e.date, timeZoneOffset));
                 }).toList()
               }.toList(),
       ));
@@ -391,9 +396,15 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           cabinet: cabinet,
         ),
       );
+
+      /// Здесь ячейки приводятся к внутреннему формату. Добавляется таймзона (часы)
+      int timeZoneOffset = await getTimeZoneOffset();
       emit(state.copyWith(
         getTimetableCellsStatus: GetTimetableCellsStatuses.success,
-        timetableCellsList: response.cells,
+        timetableCellsList: response.cells.map((e) {
+          DateTime time = dateTimeToUTC(e.time, timeZoneOffset);
+          return e.copyWith(time: time);
+        }).toList(),
         timetableLogsList: response.logs,
       ));
     } catch (e) {
@@ -484,7 +495,6 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     }
   }
 
-
   /// разблокируем ячейку
   void unlockCell({
     required String userId,
@@ -499,6 +509,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       );
       emit(state.copyWith(
         unlockCellStatus: UnlockCellStatuses.success,
+
         /// обнуляю загруженные данные по текущему дню
         /// актуально при возврате со страницы подтверждения приема
         timetableCellsList: null,

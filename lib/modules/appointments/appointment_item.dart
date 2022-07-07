@@ -6,6 +6,7 @@ import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentItem extends StatelessWidget {
   const AppointmentItem({Key? key, required this.appointmentItem})
@@ -44,25 +45,19 @@ class AppointmentItem extends StatelessWidget {
                     WidgetSpan(
                         child: Text(
                             '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium)),
+                            style: Theme.of(context).textTheme.titleMedium)),
                     ...appointmentItem.researches.map((e) => WidgetSpan(
                         child: Text(e.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium)))
+                            style: Theme.of(context).textTheme.titleMedium)))
                   ])),
             appointmentItem.doctorInfo.id != null
                 ? Padding(
-                    padding:
-                        const EdgeInsets.only(top: 4.0, bottom: 15.0),
+                    padding: const EdgeInsets.only(top: 4.0, bottom: 15.0),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: 15,
-                          child: Text(
-                              appointmentItem.doctorInfo.lastName![0]),
+                          child: Text(appointmentItem.doctorInfo.lastName![0]),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
@@ -109,8 +104,12 @@ class AppointmentItem extends StatelessWidget {
                           SvgPicture.asset(
                               'assets/icons/appointments/clock.svg'),
                           const SizedBox(width: 8.0),
-                          Text(DateFormat('HH:mm')
-                              .format(appointmentItem.appointmentDateTime)),
+                          Text(DateFormat('HH:mm').format(dateTimeToUTC(
+                              appointmentItem.appointmentDateTime,
+                              int.parse(DateTime.now()
+                                  .timeZoneOffset
+                                  .inHours
+                                  .toString())))),
                         ],
                       ),
                     ),
@@ -136,6 +135,8 @@ class AppointmentItem extends StatelessWidget {
                     ),
                   ),
                 ),
+                Text(
+                    ' (${DateFormat('dd.MMMM').format(dateTimeToUTC(appointmentItem.appointmentDateTime, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))})'),
               ],
             )
           ],
