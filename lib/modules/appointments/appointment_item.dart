@@ -135,8 +135,6 @@ class AppointmentItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                    ' (${DateFormat('dd.MMMM').format(dateTimeToUTC(appointmentItem.appointmentDateTime, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))})'),
               ],
             )
           ],

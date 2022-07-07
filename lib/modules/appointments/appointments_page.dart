@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/modules/appointments/appointments_calendar.dart';
 import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -26,21 +27,30 @@ class AppointmentsPage extends StatelessWidget {
       },
       child: DefaultScaffold(
         appBarTitle: 'Мои приемы',
-        child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
-          builder: (context, state) {
-            if (state.getAppointmentsStatus ==
-                GetAppointmentsStatuses.failed) {
-              return const Text('');
-            } else if (state.getAppointmentsStatus ==
-                GetAppointmentsStatuses.success) {
-              return AppointmentsList(
-                appointmentsList: state.appointmentsList as List<AppointmentModel>,
-                onRefreshData: _onLoadDada,
-              );
-            } else {
-              return const AppointmentsListSkeleton();
-            }
-          },
+        child: Column(
+          children: [
+            const AppointmentsCalendar(),
+            const SizedBox(height: 16),
+            Expanded(
+              child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
+                builder: (context, state) {
+                  if (state.getAppointmentsStatus ==
+                      GetAppointmentsStatuses.failed) {
+                    return const Text('');
+                  } else if (state.getAppointmentsStatus ==
+                      GetAppointmentsStatuses.success) {
+                    return AppointmentsList(
+                      appointmentsList:
+                          state.filteredAppointmentsList as List<AppointmentModel>,
+                      onRefreshData: _onLoadDada,
+                    );
+                  } else {
+                    return const AppointmentsListSkeleton();
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
