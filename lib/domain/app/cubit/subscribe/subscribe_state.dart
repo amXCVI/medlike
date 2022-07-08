@@ -28,6 +28,10 @@ enum GetAvailableDoctorStatuses { initial, loading, success, failed }
 
 enum UnlockCellStatuses { initial, loading, success, failed }
 
+enum SetDoctorToFavoritesStatuses { initial, loading, success, failed }
+
+enum DeleteDoctorFromFavoritesStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -86,6 +90,10 @@ class SubscribeState {
 
   final GetAvailableDoctorStatuses? getAvailableDoctorStatus;
 
+  final SetDoctorToFavoritesStatuses? setDoctorToFavoritesStatus;
+
+  final DeleteDoctorFromFavoritesStatuses? deleteDoctorFromFavoritesStatus;
+
   SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus,
@@ -127,6 +135,8 @@ class SubscribeState {
     this.unlockCellStatus,
     this.creatingAppointmentStatus,
     this.getAvailableDoctorStatus,
+    this.setDoctorToFavoritesStatus,
+    this.deleteDoctorFromFavoritesStatus,
   })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
         startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
@@ -172,6 +182,8 @@ class SubscribeState {
     CreatingAppointmentStatuses? creatingAppointmentStatus,
     GetAvailableDoctorStatuses? getAvailableDoctorStatus,
     UnlockCellStatuses? unlockCellStatus,
+    SetDoctorToFavoritesStatuses? setDoctorToFavoritesStatus,
+    DeleteDoctorFromFavoritesStatuses? deleteDoctorFromFavoritesStatus,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -229,6 +241,10 @@ class SubscribeState {
       getAvailableDoctorStatus:
           getAvailableDoctorStatus ?? this.getAvailableDoctorStatus,
       unlockCellStatus: unlockCellStatus ?? this.unlockCellStatus,
+      setDoctorToFavoritesStatus:
+          setDoctorToFavoritesStatus ?? this.setDoctorToFavoritesStatus,
+      deleteDoctorFromFavoritesStatus: deleteDoctorFromFavoritesStatus ??
+          this.deleteDoctorFromFavoritesStatus,
     );
   }
 

@@ -30,9 +30,10 @@ class FavoriteDoctorsList extends StatefulWidget {
 
 class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
   void _handleTapOnDoctor(FavoriteDoctor doctor) {
-    int categoryTypeId = CategoryTypes.categoryTypes
-        .firstWhere((element) => element.categoryType == doctor.categoryType)
-        .categoryTypeId;
+    int categoryTypeId = doctor.categoryType;
+        // CategoryTypes.categoryTypes
+        // .firstWhere((element) => element.categoryType == doctor.categoryType)
+        // .categoryTypeId;
     Doctor favoriteDoctor = Doctor(
       id: doctor.id,
       lastName: doctor.lastName,
@@ -40,7 +41,8 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
       middleName: doctor.middleName,
       specializationId: doctor.specializationId,
       specialization: doctor.specialization,
-      price: 0,     //? price. Может, здесь нужно что-то другое?????
+      price: 0,
+      //? price. Может, здесь нужно что-то другое?????
       categoryType: categoryTypeId,
       isFavorite: true,
       categories: [],
@@ -48,11 +50,14 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
     context.read<SubscribeCubit>().setSelectedDoctor(favoriteDoctor);
     if (CategoryTypes.serviceCategoryTypeIds.contains(categoryTypeId)) {
       context.router.push(ScheduleRoute(
-        pageTitle: 'pageTitle',
+        pageTitle:
+            '${favoriteDoctor.lastName} ${favoriteDoctor.firstName} ${favoriteDoctor.middleName}',
+        pageSubtitle: favoriteDoctor.specialization,
         userId: widget.userId,
         buildingId: widget.buildingId,
         clinicId: widget.clinicId,
         categoryTypeId: categoryTypeId,
+        doctorId: favoriteDoctor.id,
         isAny: false,
       ));
     } else {

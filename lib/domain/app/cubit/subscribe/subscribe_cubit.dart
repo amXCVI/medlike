@@ -617,6 +617,60 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           getAvailableDoctorStatus: GetAvailableDoctorStatuses.failed));
     }
   }
+
+  /// Добавляет доктора в избранных
+  void setDoctorToFavoritesList({
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required String doctorId,
+    required String categoryType,
+  }) async {
+    emit(state.copyWith(
+      setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.loading,
+    ));
+    try {
+      await subscribeRepository.setDoctorToFavorites(
+        userId: userId,
+        clinicId: clinicId,
+        buildingId: buildingId,
+        doctorId: doctorId,
+        categoryType: categoryType,
+      );
+      emit(state.copyWith(
+        setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.success,
+        selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: true),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
+    }
+  }
+
+  /// Добавляет доктора в избранных
+  void deleteDoctorFromFavoritesList({
+    required String userId,
+    required String doctorId,
+    required String categoryType,
+  }) async {
+    emit(state.copyWith(
+      deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.loading,
+    ));
+    try {
+      await subscribeRepository.deleteDoctorFromFavorites(
+        userId: userId,
+        doctorId: doctorId,
+        categoryType: categoryType,
+      );
+      emit(state.copyWith(
+        deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.success,
+        selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: false),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.failed));
+    }
+  }
 }
 
 String getDynamicParams({

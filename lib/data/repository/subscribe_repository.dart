@@ -238,4 +238,44 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  /// Добавить доктора в список избранных
+  Future<bool> setDoctorToFavorites({
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required String doctorId,
+    required String categoryType,
+  }) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/profile/favorite-doctor',
+        data: {
+          'doctorId': doctorId,
+          'categoryType': categoryType,
+          'userId': userId,
+          'clinicId': clinicId,
+          'buildingId': buildingId,
+        },
+      );
+      return response.statusCode == 200 ? true : false;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  /// Удалить доктора из избранного
+  Future<bool> deleteDoctorFromFavorites({
+    required String userId,
+    required String doctorId,
+    required String categoryType,
+  }) async {
+    try {
+      final response = await _dioClient.delete(
+        '/api/v1.0/profile/favorite-doctor/$doctorId?userId=$userId&categoryType=$categoryType');
+      return response.statusCode == 200 ? true : false;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }
