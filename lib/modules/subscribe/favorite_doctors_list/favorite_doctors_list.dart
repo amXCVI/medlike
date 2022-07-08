@@ -31,9 +31,6 @@ class FavoriteDoctorsList extends StatefulWidget {
 class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
   void _handleTapOnDoctor(FavoriteDoctor doctor) {
     int categoryTypeId = doctor.categoryType;
-        // CategoryTypes.categoryTypes
-        // .firstWhere((element) => element.categoryType == doctor.categoryType)
-        // .categoryTypeId;
     Doctor favoriteDoctor = Doctor(
       id: doctor.id,
       lastName: doctor.lastName,

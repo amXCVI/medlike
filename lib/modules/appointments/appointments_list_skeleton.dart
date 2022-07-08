@@ -8,29 +8,41 @@ class AppointmentsListSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       itemCount: 3,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
-            border: Border(
-              bottom: BorderSide(color: Theme.of(context).dividerColor),
-            ),
+            border:
+                Border.all(color: Theme.of(context).dividerColor, width: 0.5),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
           ),
           child: SkeletonItem(
-              child: Row(
+              child: Column(
+            children: [
+              SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 1,
+                    lineStyle: SkeletonLineStyle(
+                      randomLength: true,
+                      height: 14,
+                      borderRadius: BorderRadius.circular(8),
+                    )),
+              ),
+              Row(
                 children: [
                   const SkeletonAvatar(
                     style: SkeletonAvatarStyle(
-                        shape: BoxShape.circle, width: 50, height: 50),
+                        shape: BoxShape.circle, width: 30, height: 30),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: SkeletonParagraph(
                       style: SkeletonParagraphStyle(
-                          lines: 2,
+                          lines: 1,
                           spacing: 14,
                           lineStyle: SkeletonLineStyle(
                             randomLength: true,
@@ -38,9 +50,20 @@ class AppointmentsListSkeleton extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           )),
                     ),
-                  )
+                  ),
                 ],
-              )),
+              ),
+              SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 3,
+                    lineStyle: SkeletonLineStyle(
+                      randomLength: true,
+                      height: 10,
+                      borderRadius: BorderRadius.circular(8),
+                    )),
+              ),
+            ],
+          )),
         ),
       ),
     );

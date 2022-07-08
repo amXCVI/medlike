@@ -115,7 +115,7 @@ final lightTheme = ThemeData(
   // dialogBackgroundColor: AppColors.
   // indicatorColor: AppColors.
   // hintColor: AppColors.
-  // errorColor: AppColors.
+  errorColor: AppColors.mainError,
   // toggleableActiveColor: AppColors.
 
   floatingActionButtonTheme: const FloatingActionButtonThemeData(

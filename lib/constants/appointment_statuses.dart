@@ -41,6 +41,8 @@ class AppointmentStatuses {
         .firstWhere((categoryType) => categoryType.statusId == statusId);
     return findStatus;
   }
+
+  static List<int> cancellableStatusIds = [0, 1];
 }
 
 class StatusItem {

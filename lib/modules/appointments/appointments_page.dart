@@ -40,8 +40,8 @@ class AppointmentsPage extends StatelessWidget {
                   } else if (state.getAppointmentsStatus ==
                       GetAppointmentsStatuses.success) {
                     return AppointmentsList(
-                      appointmentsList:
-                          state.filteredAppointmentsList as List<AppointmentModel>,
+                      appointmentsList: state.filteredAppointmentsList
+                          as List<AppointmentModel>,
                       onRefreshData: _onLoadDada,
                     );
                   } else {

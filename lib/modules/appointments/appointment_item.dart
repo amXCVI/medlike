@@ -17,7 +17,7 @@ class AppointmentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(14.0),

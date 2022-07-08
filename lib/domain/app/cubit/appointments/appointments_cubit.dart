@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -24,6 +26,7 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     try {
       final List<AppointmentModel> response;
       response = await appointmentsRepository.getAppointmentsList();
+
       /// когда открывается страница Мои приемы —
       /// по умолчанию выбрана ближайшая дата с приемом,
       /// который требует подтверждения
@@ -66,5 +69,34 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     emit(state.copyWith(
       filteredAppointmentsList: filteredAppointmentsList,
     ));
+  }
+
+  /// Отменить прием
+  void deleteAppointment({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
+    ));
+    try {
+      final bool response;
+      response = await appointmentsRepository.deleteAppointment(
+          appointmentId: appointmentId, userId: userId);
+
+      emit(state.copyWith(
+        deleteAppointmentStatus: DeleteAppointmentStatuses.success,
+        appointmentsList: state.appointmentsList
+            ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+            .toList(),
+      ));
+      if (response) {
+        AppToast.showAppToast(msg: 'Прием успешно отменен');
+      }
+      filterAppointmentsList(state.selectedDate);
+    } catch (e) {
+      emit(state.copyWith(
+          deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
+    }
   }
 }
