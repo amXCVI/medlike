@@ -13,7 +13,6 @@ class PasswordInput extends StatefulWidget {
 }
 
 class _PasswordInputState extends State<PasswordInput> {
-  final GlobalKey<FormState> _loginFormPasswordKey = GlobalKey<FormState>();
   final FocusNode _focus = FocusNode();
   late final TextEditingController _controller = TextEditingController()
     ..text = '';
@@ -48,7 +47,6 @@ class _PasswordInputState extends State<PasswordInput> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
-            key: _loginFormPasswordKey,
             child: TextField(
               controller: _controller,
               onChanged: (text) => _onChangePassword(text),

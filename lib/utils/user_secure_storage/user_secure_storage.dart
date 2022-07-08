@@ -14,4 +14,8 @@ class UserSecureStorage {
   static void deleteField(String key) async {
     return await _storage.delete(key: key);
   }
+
+  static void cleanStorage() async {
+    await _storage.deleteAll();
+  }
 }

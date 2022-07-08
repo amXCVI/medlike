@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/about_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class SettingsList extends StatelessWidget {
   const SettingsList({Key? key}) : super(key: key);
@@ -48,13 +49,22 @@ class SettingsList extends StatelessWidget {
           title: 'О приложении',
           iconSrc: 'assets/icons/settings/ic_about_outline.svg',
           onTap: () {
-            showDialog<void>(context: context, builder: (context) => const AboutAppDialog());
+            showDialog<void>(
+                context: context, builder: (context) => const AboutAppDialog());
           },
         ),
         SettingsListItem(
           title: 'Выйти из приложения',
           iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
           onTap: handleSignOut,
+        ),
+        SettingsListItem(
+          title: 'Выйти навсегда',
+          iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
+          onTap: () {
+            UserSecureStorage.cleanStorage();
+            handleSignOut();
+          },
         )
       ],
     );

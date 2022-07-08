@@ -23,6 +23,7 @@ class PasswordPageWidget extends StatelessWidget {
         }
 
         return SingleChildScrollView(
+          reverse: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

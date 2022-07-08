@@ -37,8 +37,8 @@ class AppointmentsCalendar extends StatelessWidget {
                   ? state.appointmentsList!
                       .map((e) => CalendarModel(
                             date: e.appointmentDateTime,
-                            hasAvailableCells: true,
-                            hasLogs: false,
+                            hasAvailableCells: false,
+                            hasLogs: true,
                           ))
                       .toList()
                   : [],

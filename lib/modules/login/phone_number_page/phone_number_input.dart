@@ -14,22 +14,21 @@ class PhoneNumberInput extends StatefulWidget {
 }
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
-  final GlobalKey<FormState> _loginFormPhoneKey = GlobalKey<FormState>();
   final FocusNode _focus = FocusNode();
-  late final TextEditingController _controller = TextEditingController()
-    ..text = '';
+  late final TextEditingController _controller;
 
   @override
   void initState() {
-    super.initState();
     _focus.addListener(_onFocusChange);
+    _controller = TextEditingController(text: '');
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _focus.removeListener(_onFocusChange);
     _focus.dispose();
+    super.dispose();
   }
 
   void _onFocusChange() {
@@ -61,30 +60,29 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
             style: Theme.of(context).textTheme.labelMedium),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Form(
-            key: _loginFormPhoneKey,
-            child: TextField(
-              controller: _controller,
-              onChanged: (text) => _onChangePhone(text),
-              focusNode: _focus,
-              autofocus: false,
-              keyboardType: TextInputType.phone,
-              inputFormatters: [phoneMaskFormatter],
-              decoration: InputDecoration(
-                hintText: '+7 (###) ###-##-##',
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.lightText),
-              ),
-              style: Theme.of(context).textTheme.labelLarge,
-              textAlign: TextAlign.center,
-              showCursor:
-                  _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
-              onSubmitted: (value) {
-                _savePhoneNumber(value);
-              },
+          child: TextField(
+            controller: _controller,
+            onChanged: (text) => _onChangePhone(text),
+            focusNode: _focus,
+            autofocus: false,
+            keyboardType: TextInputType.phone,
+            inputFormatters: [phoneMaskFormatter],
+            decoration: InputDecoration(
+              hintText: '+7 (###) ###-##-##',
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(color: AppColors.lightText),
             ),
+            style: Theme.of(context).textTheme.labelLarge,
+            textAlign: TextAlign.center,
+            showCursor:
+                _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
+            onSubmitted: (value) {
+              _savePhoneNumber(value);
+            },
+            enableSuggestions: false,
+            autocorrect: false,
           ),
         ),
       ],
