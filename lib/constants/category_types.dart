@@ -19,6 +19,9 @@ class CategoryTypes {
     CategoryType(15, 'Funcdiagnostics', 'Функциональная диагностика'),
   ];
 
+  /// Список ID категорий, которые не услуги.
+  static List<int> serviceCategoryTypeIds = [0, 1];
+
   static CategoryType getCategoryTypeByCategoryTypeId(int categoryTypeId) {
     CategoryType findCategoryType = categoryTypes.firstWhere(
         (categoryType) => categoryType.categoryTypeId == categoryTypeId);

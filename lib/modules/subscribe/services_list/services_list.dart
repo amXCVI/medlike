@@ -53,6 +53,7 @@ class _ServicesListState extends State<ServicesList> {
     context.router.push(FavoriteDoctorsListRoute(
       userId: widget.userId,
       buildingId: widget.buildingId,
+      clinicId: widget.clinicId,
     ));
   }
 

@@ -8,12 +8,16 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'favorites_doctors_list_skeleton.dart';
 
 class FavoriteDoctorsListPage extends StatelessWidget {
-  const FavoriteDoctorsListPage(
-      {Key? key, required this.userId, required this.buildingId})
-      : super(key: key);
+  const FavoriteDoctorsListPage({
+    Key? key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+  }) : super(key: key);
 
   final String userId;
   final String buildingId;
+  final String clinicId;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +35,17 @@ class FavoriteDoctorsListPage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
-          if (state.getFavoriteDoctorsListStatus == GetFavoriteDoctorsListStatuses.failed) {
+          if (state.getFavoriteDoctorsListStatus ==
+              GetFavoriteDoctorsListStatuses.failed) {
             return const Text('fail');
           } else if (state.getFavoriteDoctorsListStatus ==
               GetFavoriteDoctorsListStatuses.success) {
             return FavoriteDoctorsList(
               doctorsList: state.favoriteDoctorsList as List<FavoriteDoctor>,
               onRefreshData: _onRefreshData,
+              userId: userId,
+              buildingId: buildingId,
+              clinicId: clinicId,
             );
           } else {
             return const FavoritesDoctorsListSkeleton();
