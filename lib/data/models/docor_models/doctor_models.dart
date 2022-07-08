@@ -100,7 +100,7 @@ class FavoriteDoctor with _$FavoriteDoctor {
     required String middleName,
     required String specializationId,
     required String specialization,
-    required int categoryType,
+    required String categoryType,
   }) = _FavoriteDoctor;
 
   factory FavoriteDoctor.fromJson(Map<String, Object?> json) =>

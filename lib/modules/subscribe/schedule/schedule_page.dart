@@ -12,6 +12,7 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({
@@ -139,7 +140,7 @@ class SchedulePage extends StatelessWidget {
           builder: (context, state) {
         /// при возврате со страницы подтверждения приема нужно заново подгрузить ячейки
         if (state.getTimetableCellsStatus ==
-                GetTimetableCellsStatuses.refunded) {
+            GetTimetableCellsStatuses.refunded) {
           _getCellsList(isRefresh: true);
         }
         return RefreshIndicator(
@@ -167,17 +168,7 @@ class SchedulePage extends StatelessWidget {
               state.getTimetableCellsStatus ==
                           GetTimetableCellsStatuses.success &&
                       state.timetableCellsList!.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 50),
-                      child: Center(
-                          child: Text(
-                        'Нет свободного времени',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(color: AppColors.lightText),
-                      )),
-                    )
+                  ? const SubscribeNotFoundData(text: 'Нет свободного времени')
                   : const SizedBox(),
               state.getTimetableCellsStatus == GetTimetableCellsStatuses.success
                   ? TimeCellsList(

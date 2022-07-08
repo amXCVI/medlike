@@ -6,6 +6,7 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class DoctorsList extends StatefulWidget {
@@ -68,31 +69,33 @@ class _DoctorsListState extends State<DoctorsList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
-      child: ListView(shrinkWrap: true, children: [
-        // Не показывать вариант "Любой", если всего один врач или если уже отображаются "Все" врачи
-        widget.doctorsList.length > 1 && widget.specialisationId != '0'
-            ? SubscribeRowItem(
-                title: 'Любой',
-                onTap: () {
-                  _handleTapOnDoctor();
-                },
-                customIcon: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child:
-                      SvgPicture.asset('assets/icons/subscribe/any_doctor.svg'),
-                ),
-                isFirstSymbolForIcon: false,
-              )
-            : const SizedBox(),
-        ...widget.doctorsList
-            .map((item) => DoctorItem(
-                  doctorItem: item,
-                  onTap: () {
-                    _handleTapOnDoctor(doctor: item);
-                  },
-                ))
-            .toList()
-      ]),
+      child: widget.doctorsList.isNotEmpty
+          ? ListView(shrinkWrap: true, children: [
+              // Не показывать вариант "Любой", если всего один врач или если уже отображаются "Все" врачи
+              widget.doctorsList.length > 1 && widget.specialisationId != '0'
+                  ? SubscribeRowItem(
+                      title: 'Любой',
+                      onTap: () {
+                        _handleTapOnDoctor();
+                      },
+                      customIcon: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: SvgPicture.asset(
+                            'assets/icons/subscribe/any_doctor.svg'),
+                      ),
+                      isFirstSymbolForIcon: false,
+                    )
+                  : const SizedBox(),
+              ...widget.doctorsList
+                  .map((item) => DoctorItem(
+                        doctorItem: item,
+                        onTap: () {
+                          _handleTapOnDoctor(doctor: item);
+                        },
+                      ))
+                  .toList()
+            ])
+          : const SubscribeNotFoundData(text: 'Нет свободного специалиста'),
     );
   }
 }

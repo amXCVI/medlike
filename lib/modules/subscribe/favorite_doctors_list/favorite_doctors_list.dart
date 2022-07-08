@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctor_item.dart';
+import 'package:medlike/modules/subscribe/favorite_doctors_list/not_found_favorite_doctors.dart';
 
 class FavoriteDoctorsList extends StatefulWidget {
   const FavoriteDoctorsList({
@@ -23,16 +24,18 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
-      child: ListView(shrinkWrap: true, children: [
-        ...widget.doctorsList
-            .map((item) => FavoriteDoctorItem(
-                  doctorItem: item,
-                  onTap: () {
-                    _handleTapOnDoctor(item);
-                  },
-                ))
-            .toList()
-      ]),
+      child: widget.doctorsList.isNotEmpty
+          ? ListView(shrinkWrap: true, children: [
+              ...widget.doctorsList
+                  .map((item) => FavoriteDoctorItem(
+                        doctorItem: item,
+                        onTap: () {
+                          _handleTapOnDoctor(item);
+                        },
+                      ))
+                  .toList()
+            ])
+          : const NotFoundFavoriteDoctors(),
     );
   }
 }
