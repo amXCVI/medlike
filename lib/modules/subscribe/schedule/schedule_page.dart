@@ -155,7 +155,9 @@ class SchedulePage extends StatelessWidget {
                     clinicId: clinicId,
                     doctorId: doctorId as String,
                     categoryTypeId: categoryTypeId,
-                    isFavorite: state.selectedDoctor!.isFavorite,
+                    isFavorite: state.selectedDoctor != null
+                        ? state.selectedDoctor!.isFavorite
+                        : false,
                   )
                 ]
               : [],

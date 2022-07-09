@@ -42,7 +42,7 @@ class AppointmentStatuses {
     return findStatus;
   }
 
-  static List<int> cancellableStatusIds = [0, 1];
+  static List<int> cancellableStatusIds = [0, 4];
 }
 
 class StatusItem {

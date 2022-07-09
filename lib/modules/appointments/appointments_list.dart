@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/modules/appointments/appointments_paragraph.dart';
+import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
 
 class AppointmentsList extends StatelessWidget {
   const AppointmentsList({
@@ -24,8 +25,13 @@ class AppointmentsList extends StatelessWidget {
                   appointmentsList: appointmentsList
                       .where((element) => element.status == paragraph.statusId)
                       .toList(),
+                  onRefreshData: onRefreshData,
                 ))
             .toList(),
+        appointmentsList.isEmpty
+            ? const SubscribeNotFoundData(
+                text: 'Здесь будет список ваших приемов')
+            : const SizedBox()
       ]),
     );
   }

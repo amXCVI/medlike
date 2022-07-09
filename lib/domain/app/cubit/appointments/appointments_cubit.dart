@@ -30,16 +30,29 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
       /// когда открывается страница Мои приемы —
       /// по умолчанию выбрана ближайшая дата с приемом,
       /// который требует подтверждения
-      DateTime firstSelectedDate = response
-          .firstWhere((element) => element.status == 0)
-          .appointmentDateTime;
+      //! не получилось сделать с первого раза.
+      //! Вроде работает, но не факт. Если приемы пропали - проблема здесь )
+      DateTime firstSelectedDate = DateTime.now();
+      try {
+        List<AppointmentModel>? myListFiltered = state.appointmentsList
+            ?.where((e) => e.status == 4 || e.status == 0)
+            .toList();
+        if (myListFiltered != null) {
+          firstSelectedDate = myListFiltered[0].appointmentDateTime;
+        }
+      } catch (e) {}
+
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.success,
         appointmentsList: response,
         filteredAppointmentsList: response,
         selectedDate: firstSelectedDate,
+        //     ? firstSelectedDate
+        //     : DateTime.now(),
       ));
-      filterAppointmentsList(firstSelectedDate);
+      // filterAppointmentsList(firstSelectedDate != null
+      //     ? firstSelectedDate
+      //     : DateTime.now());
     } catch (e) {
       emit(state.copyWith(
           getAppointmentsStatus: GetAppointmentsStatuses.failed));
@@ -62,6 +75,7 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
   /// Отбираем приемы по выделенному дню
   void filterAppointmentsList(DateTime selectedDate) {
     final List<AppointmentModel> filteredAppointmentsList;
+    if (state.appointmentsList == null) return;
     filteredAppointmentsList = state.appointmentsList!
         .where((element) =>
             isSameDay(element.appointmentDateTime, state.selectedDate))

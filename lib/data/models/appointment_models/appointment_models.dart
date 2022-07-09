@@ -25,7 +25,7 @@ class AppointmentModel with _$AppointmentModel {
     required String? orderId,
     required String scheduleId,
     required int paymentStatus,
-    required String recommendations,
+    required String? recommendations,
   }) = _AppointmentModel;
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
@@ -47,8 +47,8 @@ class PatientInfoModel with _$PatientInfoModel {
 class ClinicInfoModel with _$ClinicInfoModel {
   const factory ClinicInfoModel({
     required String id,
-    required String name,
-    required String address,
+    required String? name,
+    required String? address,
   }) = _ClinicInfoModel;
 
   factory ClinicInfoModel.fromJson(Map<String, Object?> json) =>

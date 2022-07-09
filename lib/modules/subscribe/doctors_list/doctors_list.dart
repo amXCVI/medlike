@@ -50,6 +50,7 @@ class _DoctorsListState extends State<DoctorsList> {
         specialisationId: widget.specialisationId,
         doctorId: doctor.id,
         isAny: false,
+        isFavorite: doctor.isFavorite,
       ));
     } else {
       context.router.push(ScheduleRoute(

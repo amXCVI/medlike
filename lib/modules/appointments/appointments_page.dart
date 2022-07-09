@@ -10,7 +10,11 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 class AppointmentsPage extends StatelessWidget {
-  const AppointmentsPage({Key? key}) : super(key: key);
+  const AppointmentsPage({Key? key, this.isRefresh = false}) : super(key: key);
+
+  /// Используется для принудительной подгрузки данных.
+  /// При переходе в мои приемы со страницы записи, например
+  final bool? isRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class AppointmentsPage extends StatelessWidget {
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }
 
-    _onLoadDada();
+    _onLoadDada(isRefresh: isRefresh as bool);
 
     return WillPopScope(
       onWillPop: () async {

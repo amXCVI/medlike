@@ -13,10 +13,12 @@ class AppointmentsParagraph extends StatelessWidget {
     Key? key,
     required this.statusItem,
     required this.appointmentsList,
+    required this.onRefreshData,
   }) : super(key: key);
 
   final StatusItem statusItem;
   final List<AppointmentModel> appointmentsList;
+  final Function onRefreshData;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,11 @@ class AppointmentsParagraph extends StatelessWidget {
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
+      /// Сделал принудительную загрузку новоро списка с сервера после отмены
+      /// Не удалось быстро разобраться, почему безе этой подгрузки не
+      /// отрисовываются приемы с измененным статусом
+      /// Хотя в кубите все для этого сделано
+      onRefreshData(isRefresh: true);
     }
 
     return Padding(

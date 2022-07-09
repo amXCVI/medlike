@@ -20,7 +20,7 @@ class AppointmentsRepository {
   }) async {
     try {
       final response = await _dioClient
-          .get('/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
+          .delete('/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
       return response.statusCode == 200 ? true : false;
     } catch (err) {
       rethrow;

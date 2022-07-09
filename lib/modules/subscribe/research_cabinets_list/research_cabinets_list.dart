@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/cabinet_item.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -42,6 +44,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
   @override
   Widget build(BuildContext context) {
     void _handleTapOnDoctor(Doctor doctor) {
+      context.read<SubscribeCubit>().setSelectedDoctor(doctor);
       context.router.push(ScheduleRoute(
         pageTitle: widget.nextPageTitle,
         pageSubtitle: widget.nextPageSubtitle,
@@ -53,6 +56,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
         doctorId: doctor.id,
         specialisationId: doctor.specializationId,
         isAny: false,
+        isFavorite: doctor.isFavorite,
       ));
     }
 

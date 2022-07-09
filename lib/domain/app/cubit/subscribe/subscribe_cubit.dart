@@ -591,7 +591,12 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       });
     } catch (e) {
       emit(state.copyWith(
-          creatingAppointmentStatus: CreatingAppointmentStatuses.failed));
+        creatingAppointmentStatus: CreatingAppointmentStatuses.failed,
+      ));
+      Future.delayed(const Duration(seconds: 8), () {
+        emit(state.copyWith(
+            creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
+      });
     }
   }
 
@@ -654,7 +659,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     required String categoryType,
   }) async {
     emit(state.copyWith(
-      deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.loading,
+      deleteDoctorFromFavoritesStatus:
+          DeleteDoctorFromFavoritesStatuses.loading,
     ));
     try {
       await subscribeRepository.deleteDoctorFromFavorites(
@@ -663,12 +669,14 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         categoryType: categoryType,
       );
       emit(state.copyWith(
-        deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.success,
+        deleteDoctorFromFavoritesStatus:
+            DeleteDoctorFromFavoritesStatuses.success,
         selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: false),
       ));
     } catch (e) {
       emit(state.copyWith(
-          deleteDoctorFromFavoritesStatus: DeleteDoctorFromFavoritesStatuses.failed));
+          deleteDoctorFromFavoritesStatus:
+              DeleteDoctorFromFavoritesStatuses.failed));
     }
   }
 }

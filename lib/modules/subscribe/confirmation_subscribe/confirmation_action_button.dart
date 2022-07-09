@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/navigation/router.gr.dart';
 
 class ConfirmationActionButtonLabel extends StatelessWidget {
   const ConfirmationActionButtonLabel({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
         if (state.creatingAppointmentStatus ==
             CreatingAppointmentStatuses.success) {
           Future.delayed(const Duration(seconds: 1), () {
-            context.router.navigateNamed(AppRoutes.myAppointments);
+            context.router.replaceAll([AppointmentsRoute(isRefresh: true)]);
           });
         }
 

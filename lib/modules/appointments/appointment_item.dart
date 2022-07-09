@@ -78,7 +78,7 @@ class AppointmentItem extends StatelessWidget {
                   width: MediaQuery.of(context).size.width - 100,
                   child: Text(
                       ClinicAddressHelper.getShortAddress(
-                          appointmentItem.clinicInfo.address),
+                          appointmentItem.clinicInfo.address!),
                       overflow: TextOverflow.fade,
                       maxLines: 2,
                       softWrap: true,
@@ -87,7 +87,7 @@ class AppointmentItem extends StatelessWidget {
               ],
             ),
             AppointmentItemRecommendations(
-                recommendations: appointmentItem.recommendations),
+                recommendations: appointmentItem.recommendations!),
             const SizedBox(height: 8.0),
             Row(
               children: [
