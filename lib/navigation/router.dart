@@ -11,6 +11,7 @@ import 'package:medlike/modules/login/phone_number_page/phone_number_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
+import 'package:medlike/modules/medcard/medcard_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinics_list_page.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_subscribe_page.dart';
@@ -51,6 +52,8 @@ import 'router.gr.dart';
     AdaptiveRoute(path: AppRoutes.subscribeFavoriteDoctors, page: FavoriteDoctorsListPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeSchedule, page: SchedulePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeConfirmation, page: ConfirmationSubscribePage, guards: [CheckIsAuthUser]),
+
+    AdaptiveRoute(path: AppRoutes.medcard, page: MedcardPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.settings, page: SettingsPage, guards: [CheckIsAuthUser]),
 
