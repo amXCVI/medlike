@@ -36,7 +36,8 @@ class ConfirmationSubscribePage extends StatelessWidget {
             label: const ConfirmationActionButtonLabel()),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
-          child: Column(
+          child: ListView(
+            shrinkWrap: true,
             children: [
               UserInfo(userId: userId),
               const SizedBox(height: 19),

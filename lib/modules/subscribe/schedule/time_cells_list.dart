@@ -19,7 +19,6 @@ class TimeCellsList extends StatefulWidget {
 }
 
 class _TimeCellsListState extends State<TimeCellsList> {
-
   @override
   Widget build(BuildContext context) {
     return widget.timetableCellsList.isNotEmpty
@@ -34,11 +33,12 @@ class _TimeCellsListState extends State<TimeCellsList> {
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  childAspectRatio: 2,
+                  childAspectRatio: 2.2,
                 ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 11.0),
                 children: [
                   ...widget.timetableCellsList
                       .map((item) => InkWell(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/widgets/UserBirthdayAndAge/user_birthday_and_age.dart';
 import 'package:medlike/widgets/circre_user_avatar/circle_user_avatar.dart';
@@ -27,7 +28,8 @@ class ProfileItem extends StatelessWidget {
         isSelected: isSelected,
       ),
       isFirstSymbolForIcon: false,
-      subtitle: getAgeByBirthday(userProfile.birthday as DateTime),
+      subtitle:
+          '${DateFormat('dd.MM.yyyy').format(userProfile.birthday as DateTime)} (${getAgeByBirthday(userProfile.birthday as DateTime)})',
       isRightArrow: false,
       isSelected: isSelected,
       onTap: onTap,

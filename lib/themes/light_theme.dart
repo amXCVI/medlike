@@ -12,7 +12,7 @@ final lightTheme = ThemeData(
     displayMedium: TextStyle(),
     displaySmall: TextStyle(),
     headlineLarge: TextStyle(
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 18.0,
       height: 1.2,
       color: AppColors.mainText,
@@ -20,14 +20,14 @@ final lightTheme = ThemeData(
     ),
     headlineMedium: TextStyle(
       /// Заголовок вверху экрана
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 20.0,
       height: 1.1,
       color: AppColors.mainText,
     ),
     headlineSmall: TextStyle(
       /// Подзаголовок вверху экрана
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 16.0,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.250795,
@@ -35,14 +35,14 @@ final lightTheme = ThemeData(
       height: 1.125,
     ),
     titleLarge: TextStyle(
-        fontFamily: 'Muller',
+        fontFamily: 'AquawaxPro',
         fontSize: 17.0,
         height: 1.18,
         fontWeight: FontWeight.w500,
         color: AppColors.mainText),
     titleMedium: TextStyle(
       /// Пункты меню
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 16.0,
       height: 1.25,
       fontWeight: FontWeight.w500,
@@ -51,7 +51,7 @@ final lightTheme = ThemeData(
     ),
     titleSmall: TextStyle(
       /// Текст в кнопках
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 14.0,
       height: 1.18,
       fontWeight: FontWeight.w700,
@@ -62,21 +62,21 @@ final lightTheme = ThemeData(
     bodyMedium: TextStyle(),
     bodySmall: TextStyle(
       /// Мелкий текст на экранах
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 14.0,
       height: 1.14,
       color: AppColors.mainText,
     ),
     labelLarge: TextStyle(
       /// Тексе в инпутах
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 17.0,
       height: 1.18,
       letterSpacing: 0.14872,
       color: AppColors.mainText,
     ),
     labelMedium: TextStyle(
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 16,
       height: 1.5,
       fontWeight: FontWeight.w300,
@@ -85,7 +85,7 @@ final lightTheme = ThemeData(
     ),
     labelSmall: TextStyle(
       /// Текст в тостах // не используется
-      fontFamily: 'Muller',
+      fontFamily: 'AquawaxPro',
       fontSize: 14.0,
       fontWeight: FontWeight.w400,
       height: 1.42,
@@ -127,7 +127,7 @@ final lightTheme = ThemeData(
 
   inputDecorationTheme: const InputDecorationTheme(
     focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: AppColors.mainBrandColor),
+      borderSide: BorderSide(color: AppColors.mainText),
     ),
   ),
 );

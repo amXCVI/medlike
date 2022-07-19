@@ -14,7 +14,7 @@ class SettingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     void handleSignOut() {
       context.read<UserCubit>().signOut();
-      context.router.pushNamed(AppRoutes.loginPinCodeCheck);
+      context.router.pushNamed(AppRoutes.loginPhone);
     }
 
     void handleChangePinCode() {

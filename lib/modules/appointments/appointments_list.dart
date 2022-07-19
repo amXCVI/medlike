@@ -16,23 +16,20 @@ class AppointmentsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => onRefreshData(isRefresh: true),
-      child: ListView(shrinkWrap: true, children: [
-        ...AppointmentStatuses.statusesList
-            .map((paragraph) => AppointmentsParagraph(
-                  statusItem: paragraph,
-                  appointmentsList: appointmentsList
-                      .where((element) => element.status == paragraph.statusId)
-                      .toList(),
-                  onRefreshData: onRefreshData,
-                ))
-            .toList(),
-        appointmentsList.isEmpty
-            ? const SubscribeNotFoundData(
-                text: 'Здесь будет список ваших приемов')
-            : const SizedBox()
-      ]),
-    );
+    return Column(children: [
+      ...AppointmentStatuses.statusesList
+          .map((paragraph) => AppointmentsParagraph(
+                statusItem: paragraph,
+                appointmentsList: appointmentsList
+                    .where((element) => element.status == paragraph.statusId)
+                    .toList(),
+                onRefreshData: onRefreshData,
+              ))
+          .toList(),
+      appointmentsList.isEmpty
+          ? const SubscribeNotFoundData(
+              text: 'Здесь будет список ваших приемов')
+          : const SizedBox()
+    ]);
   }
 }

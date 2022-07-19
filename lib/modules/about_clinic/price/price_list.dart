@@ -11,6 +11,7 @@ class PriceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
         shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
         children: priceList
             .map((item) => PriceListItem(
                   priceItem: item,

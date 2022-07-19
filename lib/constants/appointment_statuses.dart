@@ -9,7 +9,7 @@ class AppointmentStatuses {
         id: 0,
         statusName: 'Ожидает',
         color: AppColors.lightText,
-        paragraphName: 'Ожидают подтверждения'),
+        paragraphName: 'Предстоящие'),
     StatusItem(
         statusId: 0,
         id: 1,

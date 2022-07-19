@@ -18,7 +18,7 @@ class AppointmentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _onLoadDada({bool isRefresh = true}) {
+    Future<void> _onLoadDada({bool isRefresh = true}) async {
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }
 
@@ -31,12 +31,16 @@ class AppointmentsPage extends StatelessWidget {
       },
       child: DefaultScaffold(
         appBarTitle: 'Мои приемы',
-        child: Column(
-          children: [
-            const AppointmentsCalendar(),
-            const SizedBox(height: 16),
-            Expanded(
-              child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
+        child: RefreshIndicator(
+          onRefresh: () {
+            return _onLoadDada(isRefresh: true);
+          },
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              const AppointmentsCalendar(),
+              const SizedBox(height: 16),
+              BlocBuilder<AppointmentsCubit, AppointmentsState>(
                 builder: (context, state) {
                   if (state.getAppointmentsStatus ==
                       GetAppointmentsStatuses.failed) {
@@ -53,8 +57,8 @@ class AppointmentsPage extends StatelessWidget {
                   }
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

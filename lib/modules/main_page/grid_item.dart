@@ -20,53 +20,56 @@ class GridItem extends StatelessWidget {
       context.router.pushNamed(actionLink);
     }
 
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              AppColors.homeCategoriesGradientColor1,
-              // AppColors.homeCategoriesGradientColor2,
-              AppColors.homeCategoriesGradientColor3,
-            ],
-            stops: [
-              0,
-              // 0.5,
-              1,
-            ]),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 20,
-            offset: Offset(0, 8),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-        child: Material(
-          child: InkWell(
-            highlightColor: Theme.of(context).highlightColor,
-            onTap: handleTapOnItem,
-            child: Stack(
-              children: [
-                Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: Image.asset(imgSrc, width: 100)),
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: Text(
-                    label,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                AppColors.homeCategoriesGradientColor1,
+                // AppColors.homeCategoriesGradientColor2,
+                AppColors.homeCategoriesGradientColor3,
               ],
+              stops: [
+                0,
+                // 0.5,
+                1,
+              ]),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 20,
+              offset: Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+          child: Material(
+            child: InkWell(
+              highlightColor: Theme.of(context).highlightColor,
+              onTap: handleTapOnItem,
+              child: Stack(
+                children: [
+                  Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: Image.asset(imgSrc, width: 100)),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Text(
+                      label,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

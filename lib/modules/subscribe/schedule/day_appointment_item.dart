@@ -11,14 +11,18 @@ class DayAppointmentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.asset('assets/icons/subscribe/time_clock.svg'),
           const SizedBox(width: 15),
-          Text(
-            DateFormat("HH:mm").format(item.date),
-            style: Theme.of(context).textTheme.headlineSmall,
+          SizedBox(
+            width: 50,
+            child: Text(
+              DateFormat("HH:mm").format(item.date),
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
           ),
           const SizedBox(width: 15),
           Flexible(

@@ -8,8 +8,7 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentRoute = context.router.current.name;
-
+    final String currentRoute = context.router.current.path;
     return Flexible(
       child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 12.0),

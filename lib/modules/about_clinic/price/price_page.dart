@@ -23,6 +23,7 @@ class PricePage extends StatelessWidget {
       appBarTitle: 'Прейскурант',
       isSearch: true,
       filteringFunction: _onFilterList,
+      isChildrenPage: true,
       child: BlocBuilder<ClinicsCubit, ClinicsState>(
         builder: (context, state) {
           if (state.getPriceListStatus ==

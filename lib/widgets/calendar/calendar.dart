@@ -160,6 +160,8 @@ class _CalendarState extends State<Calendar> {
             children: [
               const Flexible(child: Divider(indent: 8.0, endIndent: 16.0)),
               Container(
+                width: 30,
+                height: 30,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(30)),
                   color: Theme.of(context).backgroundColor,

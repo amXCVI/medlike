@@ -31,37 +31,23 @@ class MainPage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
-          child: Center(
-            child: ListView(
-              children: [
-                CustomScrollView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  slivers: <Widget>[
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: SliverGrid.count(
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        crossAxisCount: 2,
-                        childAspectRatio: 164 / 101,
-                        children: [
-                          ...gridItemsList
-                              .map((item) => GridItem(
-                                  label: item.label,
-                                  imgSrc: item.imgSrc,
-                                  actionLink: item.actionLink))
-                              .toList(),
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.7,
             ),
+            padding: const EdgeInsets.only(
+                top: 8.0, right: 8.0, bottom: 24.0, left: 8.0),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              ...gridItemsList
+                  .map((item) => GridItem(
+                      label: item.label,
+                      imgSrc: item.imgSrc,
+                      actionLink: item.actionLink))
+                  .toList(),
+            ],
           )),
     );
   }

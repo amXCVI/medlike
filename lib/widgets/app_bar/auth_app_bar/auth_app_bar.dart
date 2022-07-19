@@ -88,6 +88,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               decoration: InputDecoration(
                 hintText: "Поиск...",
                 border: InputBorder.none,
+                focusedBorder: InputBorder.none,
                 hintStyle: Theme.of(context)
                     .textTheme
                     .labelLarge

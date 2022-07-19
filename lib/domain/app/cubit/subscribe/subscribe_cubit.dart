@@ -575,6 +575,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
+        selectedUser: null,
         selectedDoctor: null,
         selectedBuilding: null,
         selectedCabinet: null,

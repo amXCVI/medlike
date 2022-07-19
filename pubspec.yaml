@@ -64,6 +64,20 @@ flutter:
         - asset: assets/fonts/muller/Fontfabric-Muller-Regular.ttf
           style: normal
           weight: 400
+    - family: AquawaxPro
+      fonts:
+        - asset: assets/fonts/aquawax_pro/AquawaxPro-Bold.otf
+          style:  normal
+          weight: 700
+        - asset: assets/fonts/aquawax_pro/AquawaxPro-Light.otf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/aquawax_pro/AquawaxPro-Medium.otf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/aquawax_pro/AquawaxPro-Regular.otf
+          style: normal
+          weight: 400
   assets:
     - assets/icons/
     - assets/images/

@@ -34,9 +34,12 @@ class AppointmentInfo extends StatelessWidget {
                 AppointmentInfoItem(
                     title: 'Клиника', value: state.selectedBuilding!.name),
                 const SizedBox(width: 24),
-                AppointmentInfoItem(
-                    title: 'Кабинет',
-                    value: state.selectedTimetableCell!.cabinetName)
+                SizedBox(
+                  width: 150,
+                  child: AppointmentInfoItem(
+                      title: 'Кабинет',
+                      value: state.selectedTimetableCell!.cabinetName),
+                )
               ],
             ),
             AppointmentInfoItem(
@@ -65,10 +68,13 @@ class AppointmentInfo extends StatelessWidget {
                     value: DateFormat("dd.MM.yyyy")
                         .format(state.selectedTimetableCell!.time)),
                 const SizedBox(width: 24),
-                AppointmentInfoItem(
-                    title: 'Время',
-                    value: DateFormat("HH:mm")
-                        .format(state.selectedTimetableCell!.time))
+                SizedBox(
+                  width: 140,
+                  child: AppointmentInfoItem(
+                      title: 'Время',
+                      value: DateFormat("HH:mm")
+                          .format(state.selectedTimetableCell!.time)),
+                )
               ],
             ),
           ],
