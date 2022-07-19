@@ -7,6 +7,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/address.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/phones_list.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/work_times_list.dart';
+import 'package:medlike/modules/about_clinic/detail_clinic/yandex_map.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
@@ -44,7 +45,8 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
 
     void _handleTapSubscribe(int profilesCount, String userId) {
       if (profilesCount == 1) {
-        context.router.push(ServicesListRoute(userId: userId,
+        context.router.push(ServicesListRoute(
+            userId: userId,
             buildingId: selectedBuilding.id,
             clinicId: widget.selectedClinic.id));
       } else {
@@ -59,29 +61,33 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
         builder: (context, state) {
           return FloatingActionButton.extended(
             onPressed: () {
-              _handleTapSubscribe(state.userProfiles!.length, state.selectedUserId as String);
+              _handleTapSubscribe(
+                  state.userProfiles!.length, state.selectedUserId as String);
             },
-            label: Text('Записаться'.toUpperCase(), style: Theme
-                .of(context)
-                .textTheme
-                .titleSmall,),
+            label: Text(
+              'Записаться'.toUpperCase(),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
           );
         },
       ),
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
         children: [
-          const SizedBox(
-            height: 200,
+          YandexMapWidget(
+            addressesList:
+                widget.selectedClinic.buildings.map((e) => e.address).toList(),
           ),
+          // const SizedBox(
+          //   height: 200,
+          // ),
           WorkTimesList(workTimes: selectedBuilding.workTime),
           PhonesList(phonesList: selectedBuilding.phone),
           ClinicAddress(address: selectedBuilding.address),
           Divider(
             indent: 16,
             endIndent: 16,
-            color: Theme
-                .of(context)
-                .dividerColor,
+            color: Theme.of(context).dividerColor,
           ),
           SubscribeRowItem(
             title: 'Прейскурант',
@@ -97,8 +103,7 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
             title: 'Акции и скидки',
             customIcon: CircleAvatar(
               backgroundColor: Colors.white,
-              child: SvgPicture.asset(
-                  'assets/icons/clinics/ic_stok_star.svg'),
+              child: SvgPicture.asset('assets/icons/clinics/ic_percent.svg'),
             ),
             isFirstSymbolForIcon: false,
             onTap: _handleTapSales,

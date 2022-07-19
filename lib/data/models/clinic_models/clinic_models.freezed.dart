@@ -1,0 +1,1134 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+
+part of 'clinic_models.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+AvailableClinic _$AvailableClinicFromJson(Map<String, dynamic> json) {
+  return _AvailableClinic.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailableClinic {
+  String get name => throw _privateConstructorUsedError;
+  String? get departmentName => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get buildingId => throw _privateConstructorUsedError;
+  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get workTime => throw _privateConstructorUsedError;
+  int get timeZoneOffset => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailableClinicCopyWith<AvailableClinic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailableClinicCopyWith<$Res> {
+  factory $AvailableClinicCopyWith(
+          AvailableClinic value, $Res Function(AvailableClinic) then) =
+      _$AvailableClinicCopyWithImpl<$Res>;
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime,
+      int timeZoneOffset});
+}
+
+/// @nodoc
+class _$AvailableClinicCopyWithImpl<$Res>
+    implements $AvailableClinicCopyWith<$Res> {
+  _$AvailableClinicCopyWithImpl(this._value, this._then);
+
+  final AvailableClinic _value;
+  // ignore: unused_field
+  final $Res Function(AvailableClinic) _then;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+    Object? timeZoneOffset = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value.workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AvailableClinicCopyWith<$Res>
+    implements $AvailableClinicCopyWith<$Res> {
+  factory _$$_AvailableClinicCopyWith(
+          _$_AvailableClinic value, $Res Function(_$_AvailableClinic) then) =
+      __$$_AvailableClinicCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime,
+      int timeZoneOffset});
+}
+
+/// @nodoc
+class __$$_AvailableClinicCopyWithImpl<$Res>
+    extends _$AvailableClinicCopyWithImpl<$Res>
+    implements _$$_AvailableClinicCopyWith<$Res> {
+  __$$_AvailableClinicCopyWithImpl(
+      _$_AvailableClinic _value, $Res Function(_$_AvailableClinic) _then)
+      : super(_value, (v) => _then(v as _$_AvailableClinic));
+
+  @override
+  _$_AvailableClinic get _value => super._value as _$_AvailableClinic;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+    Object? timeZoneOffset = freezed,
+  }) {
+    return _then(_$_AvailableClinic(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value._phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value._workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AvailableClinic implements _AvailableClinic {
+  const _$_AvailableClinic(
+      {required this.name,
+      required this.departmentName,
+      required this.address,
+      required this.id,
+      required this.buildingId,
+      required final List<String> phone,
+      required final List<String> workTime,
+      required this.timeZoneOffset})
+      : _phone = phone,
+        _workTime = workTime;
+
+  factory _$_AvailableClinic.fromJson(Map<String, dynamic> json) =>
+      _$$_AvailableClinicFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? departmentName;
+  @override
+  final String address;
+  @override
+  final String id;
+  @override
+  final String buildingId;
+  final List<String> _phone;
+  @override
+  List<String> get phone {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_phone);
+  }
+
+  final List<String> _workTime;
+  @override
+  List<String> get workTime {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_workTime);
+  }
+
+  @override
+  final int timeZoneOffset;
+
+  @override
+  String toString() {
+    return 'AvailableClinic(name: $name, departmentName: $departmentName, address: $address, id: $id, buildingId: $buildingId, phone: $phone, workTime: $workTime, timeZoneOffset: $timeZoneOffset)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AvailableClinic &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.departmentName, departmentName) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.buildingId, buildingId) &&
+            const DeepCollectionEquality().equals(other._phone, _phone) &&
+            const DeepCollectionEquality().equals(other._workTime, _workTime) &&
+            const DeepCollectionEquality()
+                .equals(other.timeZoneOffset, timeZoneOffset));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(departmentName),
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(buildingId),
+      const DeepCollectionEquality().hash(_phone),
+      const DeepCollectionEquality().hash(_workTime),
+      const DeepCollectionEquality().hash(timeZoneOffset));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AvailableClinicCopyWith<_$_AvailableClinic> get copyWith =>
+      __$$_AvailableClinicCopyWithImpl<_$_AvailableClinic>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AvailableClinicToJson(this);
+  }
+}
+
+abstract class _AvailableClinic implements AvailableClinic {
+  const factory _AvailableClinic(
+      {required final String name,
+      required final String? departmentName,
+      required final String address,
+      required final String id,
+      required final String buildingId,
+      required final List<String> phone,
+      required final List<String> workTime,
+      required final int timeZoneOffset}) = _$_AvailableClinic;
+
+  factory _AvailableClinic.fromJson(Map<String, dynamic> json) =
+      _$_AvailableClinic.fromJson;
+
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String? get departmentName => throw _privateConstructorUsedError;
+  @override
+  String get address => throw _privateConstructorUsedError;
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get buildingId => throw _privateConstructorUsedError;
+  @override
+  List<String> get phone => throw _privateConstructorUsedError;
+  @override
+  List<String> get workTime => throw _privateConstructorUsedError;
+  @override
+  int get timeZoneOffset => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AvailableClinicCopyWith<_$_AvailableClinic> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AvailableClinicsList _$AvailableClinicsListFromJson(Map<String, dynamic> json) {
+  return _AvailableClinicsList.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailableClinicsList {
+  List<AvailableClinic> get availableClinicsList =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailableClinicsListCopyWith<AvailableClinicsList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailableClinicsListCopyWith<$Res> {
+  factory $AvailableClinicsListCopyWith(AvailableClinicsList value,
+          $Res Function(AvailableClinicsList) then) =
+      _$AvailableClinicsListCopyWithImpl<$Res>;
+  $Res call({List<AvailableClinic> availableClinicsList});
+}
+
+/// @nodoc
+class _$AvailableClinicsListCopyWithImpl<$Res>
+    implements $AvailableClinicsListCopyWith<$Res> {
+  _$AvailableClinicsListCopyWithImpl(this._value, this._then);
+
+  final AvailableClinicsList _value;
+  // ignore: unused_field
+  final $Res Function(AvailableClinicsList) _then;
+
+  @override
+  $Res call({
+    Object? availableClinicsList = freezed,
+  }) {
+    return _then(_value.copyWith(
+      availableClinicsList: availableClinicsList == freezed
+          ? _value.availableClinicsList
+          : availableClinicsList // ignore: cast_nullable_to_non_nullable
+              as List<AvailableClinic>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AvailableClinicsListCopyWith<$Res>
+    implements $AvailableClinicsListCopyWith<$Res> {
+  factory _$$_AvailableClinicsListCopyWith(_$_AvailableClinicsList value,
+          $Res Function(_$_AvailableClinicsList) then) =
+      __$$_AvailableClinicsListCopyWithImpl<$Res>;
+  @override
+  $Res call({List<AvailableClinic> availableClinicsList});
+}
+
+/// @nodoc
+class __$$_AvailableClinicsListCopyWithImpl<$Res>
+    extends _$AvailableClinicsListCopyWithImpl<$Res>
+    implements _$$_AvailableClinicsListCopyWith<$Res> {
+  __$$_AvailableClinicsListCopyWithImpl(_$_AvailableClinicsList _value,
+      $Res Function(_$_AvailableClinicsList) _then)
+      : super(_value, (v) => _then(v as _$_AvailableClinicsList));
+
+  @override
+  _$_AvailableClinicsList get _value => super._value as _$_AvailableClinicsList;
+
+  @override
+  $Res call({
+    Object? availableClinicsList = freezed,
+  }) {
+    return _then(_$_AvailableClinicsList(
+      availableClinicsList: availableClinicsList == freezed
+          ? _value._availableClinicsList
+          : availableClinicsList // ignore: cast_nullable_to_non_nullable
+              as List<AvailableClinic>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AvailableClinicsList implements _AvailableClinicsList {
+  const _$_AvailableClinicsList(
+      {required final List<AvailableClinic> availableClinicsList})
+      : _availableClinicsList = availableClinicsList;
+
+  factory _$_AvailableClinicsList.fromJson(Map<String, dynamic> json) =>
+      _$$_AvailableClinicsListFromJson(json);
+
+  final List<AvailableClinic> _availableClinicsList;
+  @override
+  List<AvailableClinic> get availableClinicsList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_availableClinicsList);
+  }
+
+  @override
+  String toString() {
+    return 'AvailableClinicsList(availableClinicsList: $availableClinicsList)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AvailableClinicsList &&
+            const DeepCollectionEquality()
+                .equals(other._availableClinicsList, _availableClinicsList));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_availableClinicsList));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AvailableClinicsListCopyWith<_$_AvailableClinicsList> get copyWith =>
+      __$$_AvailableClinicsListCopyWithImpl<_$_AvailableClinicsList>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AvailableClinicsListToJson(this);
+  }
+}
+
+abstract class _AvailableClinicsList implements AvailableClinicsList {
+  const factory _AvailableClinicsList(
+          {required final List<AvailableClinic> availableClinicsList}) =
+      _$_AvailableClinicsList;
+
+  factory _AvailableClinicsList.fromJson(Map<String, dynamic> json) =
+      _$_AvailableClinicsList.fromJson;
+
+  @override
+  List<AvailableClinic> get availableClinicsList =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AvailableClinicsListCopyWith<_$_AvailableClinicsList> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ClinicModel _$ClinicModelFromJson(Map<String, dynamic> json) {
+  return _ClinicModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ClinicModel {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  int? get timeZoneOffset => throw _privateConstructorUsedError;
+  List<BuildingModel> get buildings => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ClinicModelCopyWith<ClinicModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ClinicModelCopyWith<$Res> {
+  factory $ClinicModelCopyWith(
+          ClinicModel value, $Res Function(ClinicModel) then) =
+      _$ClinicModelCopyWithImpl<$Res>;
+  $Res call(
+      {String id,
+      String name,
+      int? timeZoneOffset,
+      List<BuildingModel> buildings});
+}
+
+/// @nodoc
+class _$ClinicModelCopyWithImpl<$Res> implements $ClinicModelCopyWith<$Res> {
+  _$ClinicModelCopyWithImpl(this._value, this._then);
+
+  final ClinicModel _value;
+  // ignore: unused_field
+  final $Res Function(ClinicModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? timeZoneOffset = freezed,
+    Object? buildings = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int?,
+      buildings: buildings == freezed
+          ? _value.buildings
+          : buildings // ignore: cast_nullable_to_non_nullable
+              as List<BuildingModel>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_ClinicModelCopyWith<$Res>
+    implements $ClinicModelCopyWith<$Res> {
+  factory _$$_ClinicModelCopyWith(
+          _$_ClinicModel value, $Res Function(_$_ClinicModel) then) =
+      __$$_ClinicModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      String name,
+      int? timeZoneOffset,
+      List<BuildingModel> buildings});
+}
+
+/// @nodoc
+class __$$_ClinicModelCopyWithImpl<$Res> extends _$ClinicModelCopyWithImpl<$Res>
+    implements _$$_ClinicModelCopyWith<$Res> {
+  __$$_ClinicModelCopyWithImpl(
+      _$_ClinicModel _value, $Res Function(_$_ClinicModel) _then)
+      : super(_value, (v) => _then(v as _$_ClinicModel));
+
+  @override
+  _$_ClinicModel get _value => super._value as _$_ClinicModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? timeZoneOffset = freezed,
+    Object? buildings = freezed,
+  }) {
+    return _then(_$_ClinicModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int?,
+      buildings: buildings == freezed
+          ? _value._buildings
+          : buildings // ignore: cast_nullable_to_non_nullable
+              as List<BuildingModel>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ClinicModel implements _ClinicModel {
+  const _$_ClinicModel(
+      {required this.id,
+      required this.name,
+      required this.timeZoneOffset,
+      required final List<BuildingModel> buildings})
+      : _buildings = buildings;
+
+  factory _$_ClinicModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ClinicModelFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final int? timeZoneOffset;
+  final List<BuildingModel> _buildings;
+  @override
+  List<BuildingModel> get buildings {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_buildings);
+  }
+
+  @override
+  String toString() {
+    return 'ClinicModel(id: $id, name: $name, timeZoneOffset: $timeZoneOffset, buildings: $buildings)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ClinicModel &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.timeZoneOffset, timeZoneOffset) &&
+            const DeepCollectionEquality()
+                .equals(other._buildings, _buildings));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(timeZoneOffset),
+      const DeepCollectionEquality().hash(_buildings));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ClinicModelCopyWith<_$_ClinicModel> get copyWith =>
+      __$$_ClinicModelCopyWithImpl<_$_ClinicModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ClinicModelToJson(this);
+  }
+}
+
+abstract class _ClinicModel implements ClinicModel {
+  const factory _ClinicModel(
+      {required final String id,
+      required final String name,
+      required final int? timeZoneOffset,
+      required final List<BuildingModel> buildings}) = _$_ClinicModel;
+
+  factory _ClinicModel.fromJson(Map<String, dynamic> json) =
+      _$_ClinicModel.fromJson;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  int? get timeZoneOffset => throw _privateConstructorUsedError;
+  @override
+  List<BuildingModel> get buildings => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ClinicModelCopyWith<_$_ClinicModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+BuildingModel _$BuildingModelFromJson(Map<String, dynamic> json) {
+  return _BuildingModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BuildingModel {
+  String get name => throw _privateConstructorUsedError;
+  String? get departmentName => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get buildingId => throw _privateConstructorUsedError;
+  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get workTime => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BuildingModelCopyWith<BuildingModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BuildingModelCopyWith<$Res> {
+  factory $BuildingModelCopyWith(
+          BuildingModel value, $Res Function(BuildingModel) then) =
+      _$BuildingModelCopyWithImpl<$Res>;
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime});
+}
+
+/// @nodoc
+class _$BuildingModelCopyWithImpl<$Res>
+    implements $BuildingModelCopyWith<$Res> {
+  _$BuildingModelCopyWithImpl(this._value, this._then);
+
+  final BuildingModel _value;
+  // ignore: unused_field
+  final $Res Function(BuildingModel) _then;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value.workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_BuildingModelCopyWith<$Res>
+    implements $BuildingModelCopyWith<$Res> {
+  factory _$$_BuildingModelCopyWith(
+          _$_BuildingModel value, $Res Function(_$_BuildingModel) then) =
+      __$$_BuildingModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime});
+}
+
+/// @nodoc
+class __$$_BuildingModelCopyWithImpl<$Res>
+    extends _$BuildingModelCopyWithImpl<$Res>
+    implements _$$_BuildingModelCopyWith<$Res> {
+  __$$_BuildingModelCopyWithImpl(
+      _$_BuildingModel _value, $Res Function(_$_BuildingModel) _then)
+      : super(_value, (v) => _then(v as _$_BuildingModel));
+
+  @override
+  _$_BuildingModel get _value => super._value as _$_BuildingModel;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+  }) {
+    return _then(_$_BuildingModel(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value._phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value._workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_BuildingModel implements _BuildingModel {
+  const _$_BuildingModel(
+      {required this.name,
+      required this.departmentName,
+      required this.address,
+      required this.id,
+      required this.buildingId,
+      required final List<String> phone,
+      required final List<String> workTime})
+      : _phone = phone,
+        _workTime = workTime;
+
+  factory _$_BuildingModel.fromJson(Map<String, dynamic> json) =>
+      _$$_BuildingModelFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? departmentName;
+  @override
+  final String address;
+  @override
+  final String id;
+  @override
+  final String buildingId;
+  final List<String> _phone;
+  @override
+  List<String> get phone {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_phone);
+  }
+
+  final List<String> _workTime;
+  @override
+  List<String> get workTime {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_workTime);
+  }
+
+  @override
+  String toString() {
+    return 'BuildingModel(name: $name, departmentName: $departmentName, address: $address, id: $id, buildingId: $buildingId, phone: $phone, workTime: $workTime)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BuildingModel &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.departmentName, departmentName) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.buildingId, buildingId) &&
+            const DeepCollectionEquality().equals(other._phone, _phone) &&
+            const DeepCollectionEquality().equals(other._workTime, _workTime));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(departmentName),
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(buildingId),
+      const DeepCollectionEquality().hash(_phone),
+      const DeepCollectionEquality().hash(_workTime));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_BuildingModelCopyWith<_$_BuildingModel> get copyWith =>
+      __$$_BuildingModelCopyWithImpl<_$_BuildingModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BuildingModelToJson(this);
+  }
+}
+
+abstract class _BuildingModel implements BuildingModel {
+  const factory _BuildingModel(
+      {required final String name,
+      required final String? departmentName,
+      required final String address,
+      required final String id,
+      required final String buildingId,
+      required final List<String> phone,
+      required final List<String> workTime}) = _$_BuildingModel;
+
+  factory _BuildingModel.fromJson(Map<String, dynamic> json) =
+      _$_BuildingModel.fromJson;
+
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String? get departmentName => throw _privateConstructorUsedError;
+  @override
+  String get address => throw _privateConstructorUsedError;
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get buildingId => throw _privateConstructorUsedError;
+  @override
+  List<String> get phone => throw _privateConstructorUsedError;
+  @override
+  List<String> get workTime => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BuildingModelCopyWith<_$_BuildingModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PriceItemModel _$PriceItemModelFromJson(Map<String, dynamic> json) {
+  return _PriceItemModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PriceItemModel {
+  String get title => throw _privateConstructorUsedError;
+  int get price => throw _privateConstructorUsedError;
+  bool get haveRecommendations => throw _privateConstructorUsedError;
+  String get serviceId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PriceItemModelCopyWith<PriceItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PriceItemModelCopyWith<$Res> {
+  factory $PriceItemModelCopyWith(
+          PriceItemModel value, $Res Function(PriceItemModel) then) =
+      _$PriceItemModelCopyWithImpl<$Res>;
+  $Res call(
+      {String title, int price, bool haveRecommendations, String serviceId});
+}
+
+/// @nodoc
+class _$PriceItemModelCopyWithImpl<$Res>
+    implements $PriceItemModelCopyWith<$Res> {
+  _$PriceItemModelCopyWithImpl(this._value, this._then);
+
+  final PriceItemModel _value;
+  // ignore: unused_field
+  final $Res Function(PriceItemModel) _then;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? price = freezed,
+    Object? haveRecommendations = freezed,
+    Object? serviceId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      haveRecommendations: haveRecommendations == freezed
+          ? _value.haveRecommendations
+          : haveRecommendations // ignore: cast_nullable_to_non_nullable
+              as bool,
+      serviceId: serviceId == freezed
+          ? _value.serviceId
+          : serviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_PriceItemModelCopyWith<$Res>
+    implements $PriceItemModelCopyWith<$Res> {
+  factory _$$_PriceItemModelCopyWith(
+          _$_PriceItemModel value, $Res Function(_$_PriceItemModel) then) =
+      __$$_PriceItemModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String title, int price, bool haveRecommendations, String serviceId});
+}
+
+/// @nodoc
+class __$$_PriceItemModelCopyWithImpl<$Res>
+    extends _$PriceItemModelCopyWithImpl<$Res>
+    implements _$$_PriceItemModelCopyWith<$Res> {
+  __$$_PriceItemModelCopyWithImpl(
+      _$_PriceItemModel _value, $Res Function(_$_PriceItemModel) _then)
+      : super(_value, (v) => _then(v as _$_PriceItemModel));
+
+  @override
+  _$_PriceItemModel get _value => super._value as _$_PriceItemModel;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? price = freezed,
+    Object? haveRecommendations = freezed,
+    Object? serviceId = freezed,
+  }) {
+    return _then(_$_PriceItemModel(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      haveRecommendations: haveRecommendations == freezed
+          ? _value.haveRecommendations
+          : haveRecommendations // ignore: cast_nullable_to_non_nullable
+              as bool,
+      serviceId: serviceId == freezed
+          ? _value.serviceId
+          : serviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PriceItemModel implements _PriceItemModel {
+  const _$_PriceItemModel(
+      {required this.title,
+      required this.price,
+      required this.haveRecommendations,
+      required this.serviceId});
+
+  factory _$_PriceItemModel.fromJson(Map<String, dynamic> json) =>
+      _$$_PriceItemModelFromJson(json);
+
+  @override
+  final String title;
+  @override
+  final int price;
+  @override
+  final bool haveRecommendations;
+  @override
+  final String serviceId;
+
+  @override
+  String toString() {
+    return 'PriceItemModel(title: $title, price: $price, haveRecommendations: $haveRecommendations, serviceId: $serviceId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PriceItemModel &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality()
+                .equals(other.haveRecommendations, haveRecommendations) &&
+            const DeepCollectionEquality().equals(other.serviceId, serviceId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(haveRecommendations),
+      const DeepCollectionEquality().hash(serviceId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_PriceItemModelCopyWith<_$_PriceItemModel> get copyWith =>
+      __$$_PriceItemModelCopyWithImpl<_$_PriceItemModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PriceItemModelToJson(this);
+  }
+}
+
+abstract class _PriceItemModel implements PriceItemModel {
+  const factory _PriceItemModel(
+      {required final String title,
+      required final int price,
+      required final bool haveRecommendations,
+      required final String serviceId}) = _$_PriceItemModel;
+
+  factory _PriceItemModel.fromJson(Map<String, dynamic> json) =
+      _$_PriceItemModel.fromJson;
+
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  int get price => throw _privateConstructorUsedError;
+  @override
+  bool get haveRecommendations => throw _privateConstructorUsedError;
+  @override
+  String get serviceId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PriceItemModelCopyWith<_$_PriceItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -33,6 +33,8 @@ dependencies:
   table_calendar: ^3.0.6
   crypto: ^3.0.2
   flutter_slidable: ^1.3.0
+  yandex_mapkit: ^3.0.2
+  yandex_geocoder: ^2.0.1
 
   cupertino_icons: ^1.0.2
 

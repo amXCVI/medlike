@@ -2,6 +2,8 @@ class AppConstants {
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
 
+  static const yandexApiKey = '492944f6-afb1-4915-bebe-6a3639caf540';
+
   // Ключ для проверки авторизации
   //! нужно бы переделать на какой-то сервис, по-хорошему
   static const String isAuth = 'isAuth';
