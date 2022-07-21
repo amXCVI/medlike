@@ -24,4 +24,16 @@ class ClinicsRepository {
       rethrow;
     }
   }
+
+  Future<List<ClinicPromotionModel>> getPromotionsList(
+      {required String clinicId}) async {
+    try {
+      final response =
+          await _dioClient.get('/api/v1.0/promotions?clinicId=$clinicId');
+      final List priceList = response.data;
+      return priceList.map((e) => ClinicPromotionModel.fromJson(e)).toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

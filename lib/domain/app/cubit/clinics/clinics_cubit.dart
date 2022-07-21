@@ -60,4 +60,22 @@ class ClinicsCubit extends Cubit<ClinicsState> {
       filteredPriceList: filteredList,
     ));
   }
+
+  /// Получить список промоакций для клиники
+  void getPromotionsList({required String clinicId}) async {
+    emit(state.copyWith(
+      getPromotionsListStatus: GetPromotionsListStatuses.loading,
+    ));
+    try {
+      final List<ClinicPromotionModel> response;
+      response = await clinicsRepository.getPromotionsList(clinicId: clinicId);
+      emit(state.copyWith(
+        getPromotionsListStatus: GetPromotionsListStatuses.success,
+        promotionsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getPromotionsListStatus: GetPromotionsListStatuses.failed));
+    }
+  }
 }

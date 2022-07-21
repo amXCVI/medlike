@@ -72,3 +72,19 @@ class PriceItemModel with _$PriceItemModel {
   factory PriceItemModel.fromJson(Map<String, Object?> json) =>
       _$PriceItemModelFromJson(json);
 }
+
+@freezed
+class ClinicPromotionModel with _$ClinicPromotionModel {
+  const factory ClinicPromotionModel({
+  required String id,
+  required String name,
+  required String description,
+  required DateTime dateFrom,
+  required DateTime dateTo,
+  required int defaultPrice,
+  required int promoPrice,
+  }) = _ClinicPromotionModel;
+
+  factory ClinicPromotionModel.fromJson(Map<String, Object?> json) =>
+      _$ClinicPromotionModelFromJson(json);
+}
