@@ -93,6 +93,7 @@ flutter:
     - assets/icons/clinics/
     - assets/icons/appointments/
     - assets/icons/login/
+    - assets/icons/medcard/
 
 flutter_intl:
   main_locale: ru_RU

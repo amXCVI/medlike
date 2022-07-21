@@ -17,6 +17,7 @@ class DefaultScaffold extends StatelessWidget {
     this.onPressedAppLogo,
     this.actions,
     this.appBar,
+    this.rightBottomWidget,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
@@ -29,6 +30,7 @@ class DefaultScaffold extends StatelessWidget {
   final void Function(String searchingStr)? filteringFunction;
   final void Function()? onPressedAppLogo;
   final PreferredSizeWidget? appBar;
+  final Widget? rightBottomWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,8 @@ class DefaultScaffold extends StatelessWidget {
             filteringFunction: filteringFunction,
             onPressedAppLogo: onPressedAppLogo,
           ),
-      bottomNavigationBar: bottomNavigationBar ?? const BottomBar(),
+      bottomNavigationBar: bottomNavigationBar ??
+          BottomBar(rightBottomWidget: rightBottomWidget),
       body: Stack(children: [
         Container(
           padding: const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 0),

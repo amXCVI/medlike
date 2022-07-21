@@ -21,6 +21,7 @@ class AppRoutes {
   static const myAppointments = '/my_appointments';
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
+  static const medcardUserFilesList = '/medcard_user_files_list';
   static const health = '/health';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoDetails = '/clinic_info_details';

@@ -4,11 +4,24 @@ import 'package:medlike/utils/api/dio_client.dart';
 class MedcardRepository {
   final _dioClient = Api().dio;
 
-  Future<List<MedcardDocsModel>> getMedcardDocsList({required String userId}) async {
+  Future<List<MedcardDocsModel>> getMedcardDocsList(
+      {required String userId}) async {
     try {
       final response = await _dioClient.get('/api/v1.0/profile/$userId/mdocs');
       final List clinicsList = response.data;
       return clinicsList.map((e) => MedcardDocsModel.fromJson(e)).toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<List<MedcardUserFileModel>> getUserFilesList(
+      {required String userId}) async {
+    try {
+      final response =
+          await _dioClient.get('/api/v1.0/profile/files?userId=$userId');
+      final List clinicsList = response.data;
+      return clinicsList.map((e) => MedcardUserFileModel.fromJson(e)).toList();
     } catch (err) {
       rethrow;
     }

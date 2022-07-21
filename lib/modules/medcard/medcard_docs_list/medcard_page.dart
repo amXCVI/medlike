@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
+import 'package:medlike/modules/medcard/medcard_docs_list/files_button.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/filters_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_list.dart';
@@ -37,6 +38,7 @@ class MedcardPage extends StatelessWidget {
           filteringFunction: _onFilterList,
           isChildrenPage: isChildrenPage,
         ),
+        rightBottomWidget: FilesButton(userId: userId),
         child: BlocBuilder<MedcardCubit, MedcardState>(
           builder: (context, state) {
             if (state.getMedcardDocsListStatus ==

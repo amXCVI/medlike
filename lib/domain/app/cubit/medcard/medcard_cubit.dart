@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:meta/meta.dart';
@@ -10,6 +11,8 @@ class MedcardCubit extends Cubit<MedcardState> {
 
   final MedcardRepository medcardRepository;
 
+  /// Получает список мед.документов пользователя
+  //! Нужно будет добавить фильтры, сеййчас загружаются просто все документы
   void getMedcardDocsList(
       {required bool isRefresh, required String userId}) async {
     emit(state.copyWith(
@@ -38,6 +41,39 @@ class MedcardCubit extends Cubit<MedcardState> {
 
     emit(state.copyWith(
       filteredMedcardDocsList: filteredList,
+    ));
+  }
+
+  /// Получает файлы, загруженные пользователем в систему
+  void getUserFilesList(
+      {required bool isRefresh, required String userId}) async {
+    emit(state.copyWith(
+      getMedcardUserFilesListStatus: GetMedcardUserFilesListStatuses.loading,
+    ));
+    try {
+      final List<MedcardUserFileModel> response;
+      response = await medcardRepository.getUserFilesList(userId: userId);
+      emit(state.copyWith(
+        getMedcardUserFilesListStatus: GetMedcardUserFilesListStatuses.success,
+        medcardUserFilesList: response,
+        filteredMedcardUserFilesList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getMedcardUserFilesListStatus:
+              GetMedcardUserFilesListStatuses.failed));
+    }
+  }
+
+  void filterUserFilesList(String filterStr) {
+    final List<MedcardUserFileModel> filteredList;
+    filteredList = state.medcardUserFilesList!
+        .where((element) =>
+            element.filename.toLowerCase().contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredMedcardUserFilesList: filteredList,
     ));
   }
 }

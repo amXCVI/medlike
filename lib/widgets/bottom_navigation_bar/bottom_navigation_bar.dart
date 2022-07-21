@@ -5,7 +5,9 @@ import 'package:medlike/widgets/main_menu/main_menu.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profiles_list.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({Key? key}) : super(key: key);
+  const BottomBar({Key? key, this.rightBottomWidget}) : super(key: key);
+
+  final Widget? rightBottomWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class BottomBar extends StatelessWidget {
                 ),
               ),
               // icon: SvgPicture.asset('assets/icons/bottom_nav_bar/ic_menu_outline.svg')),
+              rightBottomWidget ?? const SizedBox(),
             ],
           ),
         ),
