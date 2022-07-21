@@ -27,12 +27,6 @@ class AppointmentsParagraph extends StatelessWidget {
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
-
-      /// Сделал принудительную загрузку новоро списка с сервера после отмены
-      /// Не удалось быстро разобраться, почему безе этой подгрузки не
-      /// отрисовываются приемы с измененным статусом
-      /// Хотя в кубите все для этого сделано
-      // onRefreshData(isRefresh: true);
     }
 
     return Padding(
@@ -57,7 +51,6 @@ class AppointmentsParagraph extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(14.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
@@ -74,7 +67,7 @@ class AppointmentsParagraph extends StatelessWidget {
                           ? Slidable(
                               key: UniqueKey(),
                               endActionPane: ActionPane(
-                                motion: const StretchMotion(),
+                                motion: const BehindMotion(),
                                 dismissible: DismissiblePane(
                                   onDismissed: () {
                                     _deleteAppointment(
@@ -83,35 +76,41 @@ class AppointmentsParagraph extends StatelessWidget {
                                 ),
                                 children: [
                                   Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          _deleteAppointment(item.id,
-                                              item.patientInfo.id as String);
-                                        },
-                                        child: Container(
-                                          // width: 100,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 34.0),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(12),
-                                                    bottomRight:
-                                                        Radius.circular(12)),
-                                            color: Theme.of(context).errorColor,
-                                          ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        _deleteAppointment(item.id,
+                                            item.patientInfo.id as String);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 34.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              const BorderRadius.only(
+                                                  topRight:
+                                                      Radius.circular(12),
+                                                  bottomRight:
+                                                      Radius.circular(12)),
+                                          color: Theme.of(context).errorColor,
+                                        ),
+                                        child: Expanded(
                                           child: Center(
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               children: [
+                                                const SizedBox(width: 20.0),
                                                 SvgPicture.asset(
                                                     'assets/icons/appointments/ic_delete_appointment.svg'),
-                                                const SizedBox(width: 20),
+                                                const SizedBox(width: 20.0),
+                                                // Text(
+                                                //   'Отменить прием',
+                                                //   style: Theme.of(context)
+                                                //       .textTheme
+                                                //       .labelSmall
+                                                //       ?.copyWith(
+                                                //           color: Colors.white),
+                                                // ),
                                               ],
                                             ),
                                           ),

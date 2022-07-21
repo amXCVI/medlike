@@ -78,8 +78,10 @@ class AppColors {
 
   static const Color mainWaiting = Color.fromRGBO(255, 204, 0, 1);
 
+  static const Color secondBackground = Color.fromRGBO(250, 250, 250, 1);
+
   static const Map<int, Color> mainBrand = {
-    50: Color.fromRGBO(60, 148, 168, .1),       // mainBgAlpha
+    50: Color.fromRGBO(60, 148, 168, .1), // mainBgAlpha
     100: Color.fromRGBO(60, 148, 168, .2),
     200: Color.fromRGBO(60, 148, 168, .3),
     300: Color.fromRGBO(60, 148, 168, .4),
@@ -92,7 +94,10 @@ class AppColors {
   };
 
   // Цвета для градиента карточек на главной
-  static const Color homeCategoriesGradientColor1 = Color.fromRGBO(225, 228, 236, 0.2);
-  static const Color homeCategoriesGradientColor2 = Color.fromRGBO(223, 235, 241, 1);
-  static const Color homeCategoriesGradientColor3 = Color.fromRGBO(255, 255, 255, 1);
+  static const Color homeCategoriesGradientColor1 =
+      Color.fromRGBO(225, 228, 236, 0.2);
+  static const Color homeCategoriesGradientColor2 =
+      Color.fromRGBO(223, 235, 241, 1);
+  static const Color homeCategoriesGradientColor3 =
+      Color.fromRGBO(255, 255, 255, 1);
 }
