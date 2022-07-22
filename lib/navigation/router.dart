@@ -14,6 +14,7 @@ import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
 import 'package:medlike/modules/medcard/profiles_list/profiles_list_page.dart';
+import 'package:medlike/modules/settings/agreements/agreements_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinics_list_page.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_subscribe_page.dart';
@@ -60,6 +61,7 @@ import 'router.gr.dart';
     AdaptiveRoute(path: AppRoutes.medcardUserFilesList, page: FilesPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.settings, page: SettingsPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.settingsAgreements, page: AgreementsPage),
 
     AdaptiveRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoDetails, page: DetailClinicPage, guards: [CheckIsAuthUser]),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/about_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
@@ -19,6 +20,10 @@ class SettingsList extends StatelessWidget {
 
     void handleChangePinCode() {
       context.router.pushNamed(AppRoutes.loginPinCodeCreate);
+    }
+
+    void handleTapAgreements() {
+      context.router.push(const AgreementsRoute());
     }
 
     return ListView(
@@ -43,7 +48,7 @@ class SettingsList extends StatelessWidget {
         SettingsListItem(
           title: 'Пользовательское соглашение',
           iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
-          onTap: () {},
+          onTap: handleTapAgreements,
         ),
         SettingsListItem(
           title: 'О приложении',
