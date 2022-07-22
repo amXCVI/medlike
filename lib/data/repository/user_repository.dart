@@ -103,4 +103,29 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future<List<UserAgreementsModel>> getUserAgreements() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/profile/agreement/all');
+      final List agreementsList = response.data;
+      return agreementsList
+          .map((e) => UserAgreementsModel.fromJson(e))
+          .toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<UserAgreementDocumentModel> getUserAgreementDocument({
+    required int idFile,
+    String? typeAgreement,
+  }) async {
+    try {
+      final response = await _dioClient
+          .get('/api/v1.0/profile/agreement-document?idFile=$idFile');
+      return UserAgreementDocumentModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

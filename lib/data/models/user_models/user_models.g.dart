@@ -119,3 +119,33 @@ Map<String, dynamic> _$$_CheckUserAccountResponseToJson(
       'found': instance.found,
       'message': instance.message,
     };
+
+_$_UserAgreementsModel _$$_UserAgreementsModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_UserAgreementsModel(
+      id: json['id'] as int,
+      type: json['type'] as String,
+      version: json['version'] as int,
+      accepted: json['accepted'] as bool,
+    );
+
+Map<String, dynamic> _$$_UserAgreementsModelToJson(
+        _$_UserAgreementsModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'version': instance.version,
+      'accepted': instance.accepted,
+    };
+
+_$_UserAgreementDocumentModel _$$_UserAgreementDocumentModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_UserAgreementDocumentModel(
+      body: json['body'] as String,
+    );
+
+Map<String, dynamic> _$$_UserAgreementDocumentModelToJson(
+        _$_UserAgreementDocumentModel instance) =>
+    <String, dynamic>{
+      'body': instance.body,
+    };

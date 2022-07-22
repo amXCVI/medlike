@@ -17,6 +17,10 @@ enum ResetPasswordStatuses { initial, loading, success, failed }
 
 enum CheckUserAccountStatuses { initial, loading, success, failed }
 
+enum GetUserAgreementsStatuses { initial, loading, success, failed }
+
+enum GetUserAgreementDocumentStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -30,6 +34,10 @@ class UserState {
   final SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus;
   final ResetPasswordStatuses? resetPasswordStatus;
   final CheckUserAccountStatuses? checkUserAccountStatus;
+  final GetUserAgreementsStatuses? getUserAgreementsStatus;
+  final List<UserAgreementsModel>? userAgreementsList;
+  final GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus;
+  final UserAgreementDocumentModel? userAgreementDocument;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -45,6 +53,11 @@ class UserState {
         SendingResetPasswordCodeStatuses.initial,
     this.resetPasswordStatus,
     this.checkUserAccountStatus,
+    this.getUserAgreementsStatus,
+    this.userAgreementsList,
+    this.getUserAgreementDocumentStatus =
+        GetUserAgreementDocumentStatuses.initial,
+    this.userAgreementDocument,
   });
 
   UserState copyWith({
@@ -60,6 +73,10 @@ class UserState {
     SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus,
     ResetPasswordStatuses? resetPasswordStatus,
     CheckUserAccountStatuses? checkUserAccountStatus,
+    GetUserAgreementsStatuses? getUserAgreementsStatus,
+    List<UserAgreementsModel>? userAgreementsList,
+    GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus,
+    UserAgreementDocumentModel? userAgreementDocument,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -76,6 +93,13 @@ class UserState {
       resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
       checkUserAccountStatus:
           checkUserAccountStatus ?? this.checkUserAccountStatus,
+      getUserAgreementsStatus:
+          getUserAgreementsStatus ?? this.getUserAgreementsStatus,
+      userAgreementsList: userAgreementsList ?? userAgreementsList,
+      getUserAgreementDocumentStatus:
+          getUserAgreementDocumentStatus ?? this.getUserAgreementDocumentStatus,
+      userAgreementDocument:
+          userAgreementDocument ?? this.userAgreementDocument,
     );
   }
 

@@ -59,7 +59,6 @@ class UserCubit extends Cubit<UserState> {
       authScreen: UserAuthScreens.inputPhone,
       userPhoneNumber: null,
       userProfiles: null,
-
     ));
   }
 
@@ -234,6 +233,55 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получает список всех пользовательских соглашений.
+  /// подписанные и неподписанные
+  void getUserAgreements() async {
+    emit(state.copyWith(
+      getUserAgreementsStatus: GetUserAgreementsStatuses.loading,
+    ));
+    try {
+      List<UserAgreementsModel> response =
+          await userRepository.getUserAgreements();
+      emit(state.copyWith(
+        getUserAgreementsStatus: GetUserAgreementsStatuses.success,
+        userAgreementsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getUserAgreementsStatus: GetUserAgreementsStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получает список всех пользовательских соглашений.
+  /// Или конкретный файлик с соглашениями
+  void getUserAgreementDocument({
+    required int idFile,
+  }) async {
+    if (state.getUserAgreementDocumentStatus !=
+        GetUserAgreementDocumentStatuses.initial) {
+      return;
+    }
+    emit(state.copyWith(
+      getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.loading,
+    ));
+    try {
+      UserAgreementDocumentModel response =
+          await userRepository.getUserAgreementDocument(idFile: idFile);
+      emit(state.copyWith(
+        getUserAgreementDocumentStatus:
+            GetUserAgreementDocumentStatuses.success,
+        userAgreementDocument: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.failed,
       ));
       rethrow;
     }

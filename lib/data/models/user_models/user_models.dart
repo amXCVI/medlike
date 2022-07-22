@@ -88,3 +88,26 @@ class CheckUserAccountResponse with _$CheckUserAccountResponse {
   factory CheckUserAccountResponse.fromJson(Map<String, Object?> json) =>
       _$CheckUserAccountResponseFromJson(json);
 }
+
+@freezed
+class UserAgreementsModel with _$UserAgreementsModel {
+  const factory UserAgreementsModel({
+  required int id,
+  required String type,
+  required int version,
+  required bool accepted,
+  }) = _UserAgreementsModel;
+
+  factory UserAgreementsModel.fromJson(Map<String, Object?> json) =>
+      _$UserAgreementsModelFromJson(json);
+}
+
+@freezed
+class UserAgreementDocumentModel with _$UserAgreementDocumentModel {
+  const factory UserAgreementDocumentModel({
+    required String body,
+  }) = _UserAgreementDocumentModel;
+
+  factory UserAgreementDocumentModel.fromJson(Map<String, Object?> json) =>
+      _$UserAgreementDocumentModelFromJson(json);
+}
