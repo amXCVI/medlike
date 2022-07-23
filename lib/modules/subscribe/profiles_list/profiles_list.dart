@@ -23,18 +23,13 @@ class ProfilesList extends StatefulWidget {
 }
 
 class _ProfilesListState extends State<ProfilesList> {
-  void _handleTapOnUserProfile(String userId, bool isChildren) {
+  void _handleTapOnUserProfile(userId) {
     context.read<UserCubit>().setSelectedUserId(userId);
-    context.router
-        .push(MedcardRoute(userId: userId, isChildrenPage: isChildren));
+    context.router.push(ClinicsListRoute(userId: userId));
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.profilesList.length == 1) {
-      _handleTapOnUserProfile(widget.profilesList[0].id, false);
-    }
-
     return RefreshIndicator(
       onRefresh: () => widget.onRefreshData(isRefresh: true),
       child: ListView(
@@ -44,7 +39,7 @@ class _ProfilesListState extends State<ProfilesList> {
                     userProfile: item,
                     isSelected: item.id == widget.selectedUserId,
                     onTap: () {
-                      _handleTapOnUserProfile(item.id, true);
+                      _handleTapOnUserProfile(item.id);
                     },
                   ))
               .toList()),

@@ -81,6 +81,7 @@ class UserCubit extends Cubit<UserState> {
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
         selectedUserId: currentSelectedUserId?.toString(),
+        token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
     } catch (e) {
       emit(state.copyWith(

@@ -15,6 +15,9 @@ class MedcardCubit extends Cubit<MedcardState> {
   //! Нужно будет добавить фильтры, сеййчас загружаются просто все документы
   void getMedcardDocsList(
       {required bool isRefresh, required String userId}) async {
+    if (state.getMedcardDocsListStatus == GetMedcardDocsListStatuses.loading) {
+      return;
+    }
     emit(state.copyWith(
       getMedcardDocsListStatus: GetMedcardDocsListStatuses.loading,
     ));

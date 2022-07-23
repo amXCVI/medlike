@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/files_button.dart';
-import 'package:medlike/modules/medcard/medcard_docs_list/filters_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_list.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
@@ -46,15 +45,10 @@ class MedcardPage extends StatelessWidget {
               return const Text('');
             } else if (state.getMedcardDocsListStatus ==
                 GetMedcardDocsListStatuses.success) {
-              return Column(
-                children: [
-                  const MedcardFiltersList(),
-                  MedcardList(
-                      medcardDocsList: state.filteredMedcardDocsList
-                          as List<MedcardDocsModel>,
-                      onRefreshData: _onLoadDada),
-                ],
-              );
+              return MedcardList(
+                  medcardDocsList:
+                      state.filteredMedcardDocsList as List<MedcardDocsModel>,
+                  onRefreshData: _onLoadDada);
             } else {
               return const MedcardDocsListSkeleton();
             }
