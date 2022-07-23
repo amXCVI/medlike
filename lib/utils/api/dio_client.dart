@@ -6,7 +6,7 @@ import 'package:medlike/utils/api/api_interceptors.dart';
 
 class Api {
   static BaseOptions options = BaseOptions(
-    baseUrl: ApiConstants.baseUrlEnv05,
+    baseUrl: ApiConstants.baseUrl,
     responseType: ResponseType.json,
     connectTimeout: 90000,
     receiveTimeout: 60000,

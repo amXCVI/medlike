@@ -80,6 +80,8 @@ class AppColors {
 
   static const Color secondBackground = Color.fromRGBO(250, 250, 250, 1);
 
+  static const Color lightBgAlpha = Color.fromRGBO(255, 255, 255, 0.5);
+
   static const Map<int, Color> mainBrand = {
     50: Color.fromRGBO(60, 148, 168, .1), // mainBgAlpha
     100: Color.fromRGBO(60, 148, 168, .2),
@@ -100,4 +102,9 @@ class AppColors {
       Color.fromRGBO(223, 235, 241, 1);
   static const Color homeCategoriesGradientColor3 =
       Color.fromRGBO(255, 255, 255, 1);
+  // Цвета для градиента под слайдером
+  static const Color homeSliderGradientColor1 =
+  Color.fromRGBO(21, 22, 22, 0.2);
+  static const Color homeSliderGradientColor2 =
+  Color.fromRGBO(21, 22, 22, 0.9);
 }

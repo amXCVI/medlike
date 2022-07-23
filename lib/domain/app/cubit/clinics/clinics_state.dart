@@ -3,6 +3,7 @@ part of 'clinics_cubit.dart';
 enum GetAllClinicsListStatuses { initial, loading, success, failed }
 enum GetPriceListStatuses { initial, loading, success, failed }
 enum GetPromotionsListStatuses { initial, loading, success, failed }
+enum GetMainscreenPromotionsListStatuses { initial, loading, success, failed }
 
 @immutable
 class ClinicsState {
@@ -13,6 +14,8 @@ class ClinicsState {
   final List<PriceItemModel>? filteredPriceList;
   final GetPromotionsListStatuses? getPromotionsListStatus;
   final List<ClinicPromotionModel>? promotionsList;
+  final GetMainscreenPromotionsListStatuses? getMainscreenPromotionsListStatus;
+  final List<MainscreenPromotionModel>? mainscreenPromotionsList;
 
   const ClinicsState({
     this.getAllClinicsListStatus = GetAllClinicsListStatuses.initial,
@@ -22,6 +25,8 @@ class ClinicsState {
     this.filteredPriceList,
     this.getPromotionsListStatus,
     this.promotionsList,
+    this.getMainscreenPromotionsListStatus,
+    this.mainscreenPromotionsList,
   });
 
   ClinicsState copyWith({
@@ -32,6 +37,8 @@ class ClinicsState {
     List<PriceItemModel>? filteredPriceList,
     GetPromotionsListStatuses? getPromotionsListStatus,
     List<ClinicPromotionModel>? promotionsList,
+    GetMainscreenPromotionsListStatuses? getMainscreenPromotionsListStatus,
+    List<MainscreenPromotionModel>? mainscreenPromotionsList,
   }) {
     return ClinicsState(
       getAllClinicsListStatus:
@@ -43,6 +50,10 @@ class ClinicsState {
       getPromotionsListStatus:
           getPromotionsListStatus ?? this.getPromotionsListStatus,
       promotionsList: promotionsList ?? this.promotionsList,
+      getMainscreenPromotionsListStatus: getMainscreenPromotionsListStatus ??
+          this.getMainscreenPromotionsListStatus,
+      mainscreenPromotionsList:
+          mainscreenPromotionsList ?? this.mainscreenPromotionsList,
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/main_page/grid_item.dart';
 import 'package:medlike/modules/main_page/grid_items_list.dart';
+import 'package:medlike/modules/main_page/slider/slider_widget.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
@@ -31,22 +32,27 @@ class MainPage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
-          child: GridView(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.7,
-            ),
-            padding: const EdgeInsets.only(
-                top: 8.0, right: 8.0, bottom: 24.0, left: 8.0),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+          child: Column(
             children: [
-              ...gridItemsList
-                  .map((item) => GridItem(
-                      label: item.label,
-                      imgSrc: item.imgSrc,
-                      actionLink: item.actionLink))
-                  .toList(),
+              const SliderWidget(),
+              GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.7,
+                ),
+                padding: const EdgeInsets.only(
+                    top: 8.0, right: 8.0, bottom: 24.0, left: 8.0),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ...gridItemsList
+                      .map((item) => GridItem(
+                          label: item.label,
+                          imgSrc: item.imgSrc,
+                          actionLink: item.actionLink))
+                      .toList(),
+                ],
+              ),
             ],
           )),
     );

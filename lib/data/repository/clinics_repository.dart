@@ -17,7 +17,7 @@ class ClinicsRepository {
   Future<List<PriceItemModel>> getPriceList(clinicId) async {
     try {
       final response =
-          await _dioClient.get('/api/v1.0/clinics/$clinicId/prices');
+      await _dioClient.get('/api/v1.0/clinics/$clinicId/prices');
       final List priceList = response.data;
       return priceList.map((e) => PriceItemModel.fromJson(e)).toList();
     } catch (err) {
@@ -29,11 +29,24 @@ class ClinicsRepository {
       {required String clinicId}) async {
     try {
       final response =
-          await _dioClient.get('/api/v1.0/promotions?clinicId=$clinicId');
+      await _dioClient.get('/api/v1.0/promotions?clinicId=$clinicId');
       final List priceList = response.data;
       return priceList.map((e) => ClinicPromotionModel.fromJson(e)).toList();
     } catch (err) {
       rethrow;
     }
   }
+
+  Future<List<MainscreenPromotionModel>> getMainscreenPromotionsList() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/promotions/mainscreen');
+      final List priceList = response.data;
+      return priceList
+          .map((e) => MainscreenPromotionModel.fromJson(e))
+          .toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
+
 }

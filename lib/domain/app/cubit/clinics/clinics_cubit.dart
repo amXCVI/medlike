@@ -78,4 +78,31 @@ class ClinicsCubit extends Cubit<ClinicsState> {
           getPromotionsListStatus: GetPromotionsListStatuses.failed));
     }
   }
+
+  /// Получить список промоакций для баннера на стартовой странице
+  void getMainscreenPromotionsList({bool isRefresh = false}) async {
+    if (!isRefresh &&
+        state.getMainscreenPromotionsListStatus ==
+            GetMainscreenPromotionsListStatuses.success &&
+        state.mainscreenPromotionsList!.isNotEmpty) {
+      return;
+    }
+    emit(state.copyWith(
+      getMainscreenPromotionsListStatus:
+          GetMainscreenPromotionsListStatuses.loading,
+    ));
+    try {
+      final List<MainscreenPromotionModel> response;
+      response = await clinicsRepository.getMainscreenPromotionsList();
+      emit(state.copyWith(
+        getMainscreenPromotionsListStatus:
+            GetMainscreenPromotionsListStatuses.success,
+        mainscreenPromotionsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getMainscreenPromotionsListStatus:
+              GetMainscreenPromotionsListStatuses.failed));
+    }
+  }
 }
