@@ -92,6 +92,26 @@ class UserRepository {
     }
   }
 
+  Future<bool> changePassword({
+    required String userName,
+    required String newPassword,
+  }) async {
+    try {
+      final response =
+      await _dioClient.post('/api/v1.0/auth/password/change', data: {
+        'userName': userName,
+        'newPassword': newPassword,
+      });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<CheckUserAccountResponse> checkUserAccount({
     required String phoneNumber,
   }) async {

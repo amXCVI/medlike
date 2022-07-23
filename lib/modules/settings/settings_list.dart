@@ -26,13 +26,17 @@ class SettingsList extends StatelessWidget {
       context.router.push(const AgreementsRoute());
     }
 
+    void handleTapOnChangePassword() {
+      context.router.push(RecoverPasswordNewRoute(smsToken: ''));
+    }
+
     return ListView(
       shrinkWrap: true,
       children: [
         SettingsListItem(
           title: 'Сменить пароль',
           iconSrc: 'assets/icons/settings/ic_password_outline.svg',
-          onTap: () {},
+          onTap: handleTapOnChangePassword,
         ),
         SettingsListItem(
           title: 'Сменить пин-код',

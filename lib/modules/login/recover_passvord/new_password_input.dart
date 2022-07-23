@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class NewPasswordInput extends StatefulWidget {
   const NewPasswordInput({Key? key, required this.token}) : super(key: key);
@@ -40,12 +41,24 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
       });
       RegExp exp = RegExp(r"[^0-9]+");
       String phoneString = _phoneInputController.text.replaceAll(exp, '');
-      context.read<UserCubit>().resetPassword(
-            phoneNumber: phoneString,
-            smsToken: widget.token,
-            password: _password,
-            confirmPassword: _confirmPassword,
-          );
+      if (phoneString.isEmpty) {
+        AppToast.showAppToast(
+            msg:
+                'Мы потеряли ваш номер телефона :(\nПожалуйста, авторизуйтесь в приложении заново');
+      }
+      if (widget.token.isEmpty) {
+        context.read<UserCubit>().changePassword(
+              userName: phoneString,
+              newPassword: _password,
+            );
+      } else {
+        context.read<UserCubit>().resetPassword(
+              phoneNumber: phoneString,
+              smsToken: widget.token,
+              password: _password,
+              confirmPassword: _confirmPassword,
+            );
+      }
     }
   }
 

@@ -216,6 +216,40 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  /// Сбрасывает старый пароль и задает новый через приложение
+  /// (с авторизацией)
+  Future<bool> changePassword({
+    required String userName,
+    required String newPassword,
+  }) async {
+    emit(state.copyWith(
+      changePasswordStatus: ChangePasswordStatuses.loading,
+    ));
+    try {
+      await userRepository.changePassword(
+        userName: userName,
+        newPassword: newPassword,
+      );
+      emit(state.copyWith(
+        changePasswordStatus: ChangePasswordStatuses.success,
+      ));
+
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(
+          state.copyWith(
+            changePasswordStatus: ChangePasswordStatuses.initial,
+          ),
+        );
+      });
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        changePasswordStatus: ChangePasswordStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
   /// Проверяет, есть ли пользователь с таким номером телефона
   Future<CheckUserAccountResponse> checkUserAccount(
       {required String phoneNumber}) async {
