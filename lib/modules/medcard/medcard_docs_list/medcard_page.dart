@@ -46,9 +46,11 @@ class MedcardPage extends StatelessWidget {
             } else if (state.getMedcardDocsListStatus ==
                 GetMedcardDocsListStatuses.success) {
               return MedcardList(
-                  medcardDocsList:
-                      state.filteredMedcardDocsList as List<MedcardDocsModel>,
-                  onRefreshData: _onLoadDada);
+                medcardDocsList:
+                    state.filteredMedcardDocsList as List<MedcardDocsModel>,
+                onRefreshData: _onLoadDada,
+                downloadingFileId: state.downloadingFileId as String,
+              );
             } else {
               return const MedcardDocsListSkeleton();
             }

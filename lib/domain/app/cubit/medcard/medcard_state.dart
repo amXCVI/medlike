@@ -13,6 +13,7 @@ class MedcardState {
   final List<MedcardUserFileModel>? medcardUserFilesList;
   final List<MedcardUserFileModel>? filteredMedcardUserFilesList;
   final DownloadMedcardDocumentStatuses? downloadMedcardDocumentStatus;
+  final String? downloadingFileId;
 
   const MedcardState({
     this.getMedcardDocsListStatus = GetMedcardDocsListStatuses.initial,
@@ -22,6 +23,7 @@ class MedcardState {
     this.medcardUserFilesList,
     this.filteredMedcardUserFilesList,
     this.downloadMedcardDocumentStatus,
+    this.downloadingFileId,
   });
 
   MedcardState copyWith({
@@ -32,6 +34,7 @@ class MedcardState {
     List<MedcardUserFileModel>? medcardUserFilesList,
     List<MedcardUserFileModel>? filteredMedcardUserFilesList,
     DownloadMedcardDocumentStatuses? downloadMedcardDocumentStatus,
+    String? downloadingFileId,
   }) {
     return MedcardState(
       getMedcardDocsListStatus:
@@ -46,6 +49,7 @@ class MedcardState {
           filteredMedcardUserFilesList ?? this.filteredMedcardUserFilesList,
       downloadMedcardDocumentStatus:
           downloadMedcardDocumentStatus ?? this.downloadMedcardDocumentStatus,
+      downloadingFileId: downloadingFileId ?? this.downloadingFileId,
     );
   }
 

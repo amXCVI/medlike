@@ -90,12 +90,14 @@ class MedcardCubit extends Cubit<MedcardState> {
   Future<File> downloadAndOpenPdfFileByUrl({
     required String fileUrl,
     required String fileName,
+    required String fileId,
   }) async {
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.loading));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.loading,
+        downloadingFileId: fileId,
+      ));
       var response = await medcardRepository.downloadFile(url: fileUrl);
       var bytes = await consolidateHttpClientResponseBytes(response);
       var dir = await getApplicationDocumentsDirectory();
@@ -107,15 +109,47 @@ class MedcardCubit extends Cubit<MedcardState> {
         "${dir.path}/$fileName.pdf",
       );
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.success));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.success,
+        downloadingFileId: '',
+      ));
     } catch (e) {
       AppToast.showAppToast(
           msg:
               'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.failed));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.failed,
+        downloadingFileId: '',
+      ));
+      rethrow;
+    }
+    return completer.future;
+  }
+
+  /// Загрузка и открытие пользовательских файлов
+  Future<File> downloadAndOpenUserFileByUrl({
+    required String fileUrl,
+    required String fileName,
+    required String fileId,
+  }) async {
+    Completer<File> completer = Completer();
+    try {
+      emit(state.copyWith(downloadingFileId: fileId));
+      var response = await medcardRepository.downloadFile(url: fileUrl);
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$fileName");
+
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+      OpenFile.open(
+        "${dir.path}/$fileName",
+      );
+      emit(state.copyWith(downloadingFileId: ''));
+    } catch (e) {
+      AppToast.showAppToast(
+          msg:
+              'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
+      emit(state.copyWith(downloadingFileId: ''));
       rethrow;
     }
 

@@ -43,6 +43,8 @@ class FilesPage extends StatelessWidget {
               userFilesList: state.filteredMedcardUserFilesList
                   as List<MedcardUserFileModel>,
               onRefreshData: _onLoadDada,
+              userId: userId,
+              downloadingFileId: state.downloadingFileId as String,
             );
           } else {
             return const MedcardDocsListSkeleton();
