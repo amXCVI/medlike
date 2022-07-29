@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class MedcardRepository {
   final _dioClient = Api().dio;
@@ -23,6 +26,18 @@ class MedcardRepository {
       final List clinicsList = response.data;
       return clinicsList.map((e) => MedcardUserFileModel.fromJson(e)).toList();
     } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> downloadFile({required String url}) async {
+    try {
+      var request = await HttpClient().getUrl(Uri.parse(url));
+      request.headers.add('Authorization',
+          'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}');
+      var response = await request.close();
+      return response;
+    } catch (error) {
       rethrow;
     }
   }

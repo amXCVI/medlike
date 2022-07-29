@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
-import 'package:meta/meta.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'medcard_state.dart';
 
@@ -78,5 +83,42 @@ class MedcardCubit extends Cubit<MedcardState> {
     emit(state.copyWith(
       filteredMedcardUserFilesList: filteredList,
     ));
+  }
+
+  /// Загрузка и открытие файлов из медкарты
+  /// Работает только для .pdf файлов
+  Future<File> downloadAndOpenPdfFileByUrl({
+    required String fileUrl,
+    required String fileName,
+  }) async {
+    Completer<File> completer = Completer();
+    try {
+      emit(state.copyWith(
+          downloadMedcardDocumentStatus:
+              DownloadMedcardDocumentStatuses.loading));
+      var response = await medcardRepository.downloadFile(url: fileUrl);
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$fileName.pdf");
+
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+      OpenFile.open(
+        "${dir.path}/$fileName.pdf",
+      );
+      emit(state.copyWith(
+          downloadMedcardDocumentStatus:
+              DownloadMedcardDocumentStatuses.success));
+    } catch (e) {
+      AppToast.showAppToast(
+          msg:
+              'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
+      emit(state.copyWith(
+          downloadMedcardDocumentStatus:
+              DownloadMedcardDocumentStatuses.failed));
+      rethrow;
+    }
+
+    return completer.future;
   }
 }
