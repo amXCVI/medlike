@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
@@ -36,6 +37,19 @@ class MedcardRepository {
       request.headers.add('Authorization',
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}');
       var response = await request.close();
+      return response;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> uploadFile(
+      {required String userId, required FormData formData}) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/profile/$userId/files',
+        data: formData,
+      );
       return response;
     } catch (error) {
       rethrow;

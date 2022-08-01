@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
@@ -152,7 +153,30 @@ class MedcardCubit extends Cubit<MedcardState> {
       emit(state.copyWith(downloadingFileId: ''));
       rethrow;
     }
-
     return completer.future;
+  }
+
+  uploadFileFromDio(
+      {required File file,
+      required String userId,
+      required String fileName}) async {
+    // formData.add("user_id", userProfile.userId);
+    // formData.add("name", userProfile.name);
+    // formData.add("email", userProfile.email);
+
+    // if (file != null &&
+    //     file.path != null &&
+    //     file.path.isNotEmpty) {
+    // Create a FormData
+    // String fileName = basename(photoFile.path);
+    Map<String, dynamic> requestFormDataBody = <String, dynamic>{
+      'field1': file,
+    };
+    FormData formData = FormData.fromMap(requestFormDataBody);
+
+    // }
+    var response =
+        await medcardRepository.uploadFile(userId: userId, formData: formData);
+    print("Response status: ${response.statusCode}");
   }
 }
