@@ -23,7 +23,11 @@ class MedcardFileItem extends StatelessWidget {
       isRightArrow: isDownloading ? false : true,
       onTap: onTap,
       customRightAction: isDownloading
-          ? const CircularProgressIndicator.adaptive()
+          ? const SizedBox(
+              child: CircularProgressIndicator.adaptive(),
+              width: 20,
+              height: 20,
+            )
           : const SizedBox(),
     );
   }

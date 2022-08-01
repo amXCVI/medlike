@@ -49,7 +49,7 @@ class MedcardPage extends StatelessWidget {
                 medcardDocsList:
                     state.filteredMedcardDocsList as List<MedcardDocsModel>,
                 onRefreshData: _onLoadDada,
-                downloadingFileId: state.downloadingFileId as String,
+                downloadingFileId: state.downloadingFileId ?? '',
               );
             } else {
               return const MedcardDocsListSkeleton();

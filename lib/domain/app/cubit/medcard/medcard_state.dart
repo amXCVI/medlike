@@ -23,7 +23,7 @@ class MedcardState {
     this.medcardUserFilesList,
     this.filteredMedcardUserFilesList,
     this.downloadMedcardDocumentStatus,
-    this.downloadingFileId,
+    this.downloadingFileId = '',
   });
 
   MedcardState copyWith({

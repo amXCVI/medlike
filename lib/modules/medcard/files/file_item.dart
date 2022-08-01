@@ -25,7 +25,11 @@ class FileItem extends StatelessWidget {
       onTap: onTap,
       isRightArrow: false,
       customRightAction: isDownloading
-          ? const CircularProgressIndicator.adaptive()
+          ? const SizedBox(
+              child: CircularProgressIndicator.adaptive(),
+              width: 20,
+              height: 20,
+            )
           : const SizedBox(),
     );
   }
