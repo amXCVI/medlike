@@ -4,7 +4,9 @@ import 'package:medlike/modules/medcard/files/attach_files_functions_list.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
 
 class AttachFileButton extends StatelessWidget {
-  const AttachFileButton({Key? key}) : super(key: key);
+  const AttachFileButton({Key? key, required this.userId}) : super(key: key);
+
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class AttachFileButton extends StatelessWidget {
                         topLeft: Radius.circular(12)),
                     color: Theme.of(context).backgroundColor,
                   ),
-                  child: const AttachFilesFunctionsList(),
+                  child: AttachFilesFunctionsList(userId: userId),
                 ));
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),

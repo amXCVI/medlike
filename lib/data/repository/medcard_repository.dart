@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
@@ -43,14 +44,33 @@ class MedcardRepository {
     }
   }
 
-  Future<dynamic> uploadFile(
-      {required String userId, required FormData formData}) async {
+  Future<MedcardUserFileModel> uploadFile({
+    required String userId,
+    PlatformFile? file,
+    File? photoFile,
+  }) async {
+    var multipartFile = await MultipartFile.fromFile(
+      file != null
+          ? file.path as String
+          : photoFile != null
+              ? photoFile.path
+              : '',
+    );
+    FormData formData = FormData.fromMap({
+      "file": multipartFile, //define your json data here
+    });
+
     try {
-      final response = await _dioClient.post(
-        '/api/v1.0/profile/$userId/files',
-        data: formData,
-      );
-      return response;
+      var response = await _dioClient.post('/api/v1.0/profile/$userId/files',
+          data: formData,
+          options: Options(
+            contentType: 'multipart/form-data',
+            headers: {
+              'Authorization':
+                  'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+            },
+          ));
+      return MedcardUserFileModel.fromJson(response.data);
     } catch (error) {
       rethrow;
     }
