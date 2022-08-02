@@ -105,3 +105,17 @@ Map<String, dynamic> _$$_MedcardUserFileModelToJson(
       'length': instance.length,
       'hasPreview': instance.hasPreview,
     };
+
+_$_DeleteUserFileResponseModel _$$_DeleteUserFileResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DeleteUserFileResponseModel(
+      result: json['result'] as bool,
+      information: json['information'] as String?,
+    );
+
+Map<String, dynamic> _$$_DeleteUserFileResponseModelToJson(
+        _$_DeleteUserFileResponseModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'information': instance.information,
+    };

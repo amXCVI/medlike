@@ -1080,3 +1080,164 @@ abstract class _MedcardUserFileModel implements MedcardUserFileModel {
   _$$_MedcardUserFileModelCopyWith<_$_MedcardUserFileModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+DeleteUserFileResponseModel _$DeleteUserFileResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _DeleteUserFileResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DeleteUserFileResponseModel {
+  bool get result => throw _privateConstructorUsedError;
+  String? get information => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DeleteUserFileResponseModelCopyWith<DeleteUserFileResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DeleteUserFileResponseModelCopyWith<$Res> {
+  factory $DeleteUserFileResponseModelCopyWith(
+          DeleteUserFileResponseModel value,
+          $Res Function(DeleteUserFileResponseModel) then) =
+      _$DeleteUserFileResponseModelCopyWithImpl<$Res>;
+  $Res call({bool result, String? information});
+}
+
+/// @nodoc
+class _$DeleteUserFileResponseModelCopyWithImpl<$Res>
+    implements $DeleteUserFileResponseModelCopyWith<$Res> {
+  _$DeleteUserFileResponseModelCopyWithImpl(this._value, this._then);
+
+  final DeleteUserFileResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(DeleteUserFileResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? information = freezed,
+  }) {
+    return _then(_value.copyWith(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      information: information == freezed
+          ? _value.information
+          : information // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_DeleteUserFileResponseModelCopyWith<$Res>
+    implements $DeleteUserFileResponseModelCopyWith<$Res> {
+  factory _$$_DeleteUserFileResponseModelCopyWith(
+          _$_DeleteUserFileResponseModel value,
+          $Res Function(_$_DeleteUserFileResponseModel) then) =
+      __$$_DeleteUserFileResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call({bool result, String? information});
+}
+
+/// @nodoc
+class __$$_DeleteUserFileResponseModelCopyWithImpl<$Res>
+    extends _$DeleteUserFileResponseModelCopyWithImpl<$Res>
+    implements _$$_DeleteUserFileResponseModelCopyWith<$Res> {
+  __$$_DeleteUserFileResponseModelCopyWithImpl(
+      _$_DeleteUserFileResponseModel _value,
+      $Res Function(_$_DeleteUserFileResponseModel) _then)
+      : super(_value, (v) => _then(v as _$_DeleteUserFileResponseModel));
+
+  @override
+  _$_DeleteUserFileResponseModel get _value =>
+      super._value as _$_DeleteUserFileResponseModel;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? information = freezed,
+  }) {
+    return _then(_$_DeleteUserFileResponseModel(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      information: information == freezed
+          ? _value.information
+          : information // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DeleteUserFileResponseModel implements _DeleteUserFileResponseModel {
+  const _$_DeleteUserFileResponseModel(
+      {required this.result, required this.information});
+
+  factory _$_DeleteUserFileResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DeleteUserFileResponseModelFromJson(json);
+
+  @override
+  final bool result;
+  @override
+  final String? information;
+
+  @override
+  String toString() {
+    return 'DeleteUserFileResponseModel(result: $result, information: $information)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DeleteUserFileResponseModel &&
+            const DeepCollectionEquality().equals(other.result, result) &&
+            const DeepCollectionEquality()
+                .equals(other.information, information));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(result),
+      const DeepCollectionEquality().hash(information));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
+      get copyWith => __$$_DeleteUserFileResponseModelCopyWithImpl<
+          _$_DeleteUserFileResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DeleteUserFileResponseModelToJson(this);
+  }
+}
+
+abstract class _DeleteUserFileResponseModel
+    implements DeleteUserFileResponseModel {
+  const factory _DeleteUserFileResponseModel(
+      {required final bool result,
+      required final String? information}) = _$_DeleteUserFileResponseModel;
+
+  factory _DeleteUserFileResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_DeleteUserFileResponseModel.fromJson;
+
+  @override
+  bool get result => throw _privateConstructorUsedError;
+  @override
+  String? get information => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

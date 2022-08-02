@@ -182,4 +182,32 @@ class MedcardCubit extends Cubit<MedcardState> {
       rethrow;
     }
   }
+
+  /// Удалить файл
+  void deleteUserFile({
+    required String fileId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      deletingUserFile: fileId,
+      filteredMedcardUserFilesList: state.filteredMedcardUserFilesList
+          ?.where((e) => e.id != fileId)
+          .toList(),
+    ));
+    try {
+      final DeleteUserFileResponseModel response;
+      response = await medcardRepository.deleteUserFile(
+          fileId: fileId, userId: userId);
+
+      emit(state.copyWith(
+        deletingUserFile: '',
+        medcardUserFilesList: state.medcardUserFilesList
+            ?.where((e) => e.id != fileId)
+            .toList(),
+      ));
+      AppToast.showAppToast(msg: response.information ?? 'Файл успешно удален');
+    } catch (e) {
+      emit(state.copyWith(deletingUserFile: ''));
+    }
+  }
 }

@@ -75,4 +75,15 @@ class MedcardRepository {
       rethrow;
     }
   }
+
+  Future<DeleteUserFileResponseModel> deleteUserFile(
+      {required String userId, required String fileId}) async {
+    try {
+      final response = await _dioClient
+          .delete('/api/v1.0/profile/files/$fileId?userId=$userId');
+      return DeleteUserFileResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }
