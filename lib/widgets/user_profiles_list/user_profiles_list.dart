@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -18,6 +19,28 @@ class UserProfilesList extends StatelessWidget {
 
     void handleTapOnUserProfile(String userId) {
       context.read<UserCubit>().setSelectedUserId(userId);
+    }
+
+    void handleLoadAvatar(String userId) async {
+      if (selectableItems) {
+        return;
+      }
+      try {
+        FilePickerResult? filePickerResult =
+            (await FilePicker.platform.pickFiles(
+          type: FileType.image,
+          allowMultiple: false,
+          onFileLoading: (FilePickerStatus status) => {},
+        ));
+
+        context.read<UserCubit>().uploadUserAvatar(
+              file: filePickerResult?.files.first,
+              userId: userId,
+              fileName: filePickerResult!.files.first.name,
+            );
+      } catch (e) {
+        rethrow;
+      }
     }
 
     return Container(
@@ -50,6 +73,10 @@ class UserProfilesList extends StatelessWidget {
                                       state.selectedUserId == item.id
                                   ? true
                                   : false,
+                              onLoadAvatar: () {
+                                handleLoadAvatar(
+                                    state.selectedUserId as String);
+                              },
                             ),
                           ))
                       .toList());

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
@@ -317,6 +318,35 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Загрузить аватар пользователя
+  Future<void> uploadUserAvatar({
+    PlatformFile? file,
+    required String userId,
+    required String fileName,
+  }) async {
+    emit(state.copyWith(
+      uploadUserAvatarStatus: UploadUserAvatarStatuses.loading,
+    ));
+    try {
+      UserUploadAvatarResponseModel response =
+          await userRepository.uploadUserAvatar(
+        userId: userId,
+        file: file,
+      );
+      emit(state.copyWith(
+          uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
+          userProfiles: state.userProfiles
+              ?.map((e) =>
+                  e.id == userId ? e.copyWith(avatar: response.result) : e)
+              .toList()));
+    } catch (e) {
+      emit(state.copyWith(
+        uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
       ));
       rethrow;
     }

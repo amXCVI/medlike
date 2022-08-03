@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/main_page/barcode_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/barcode_helper.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
@@ -30,33 +31,41 @@ class BarcodeButton extends StatelessWidget {
                         ),
                         child: BlocBuilder<UserCubit, UserState>(
                           builder: (context, state) {
-                            return Column(
-                              children: [
-                                const UserProfilesList(selectableItems: true),
-                                const Divider(),
-                                const SizedBox(height: 24),
-                                SvgPicture.string(buildBarcode(
-                                  Barcode.gs128(),
-                                  state.selectedUserId as String,
-                                  filename: '',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height: 90,
-                                )),
-                                const SizedBox(height: 16),
-                                Text(
-                                  '${state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName}, покажите данный штрих-код\nмедицинскому сотруднику',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall
-                                      ?.copyWith(
-                                        color: AppColors.lightText,
+                            return state.userProfiles != null
+                                ? Column(
+                                    children: [
+                                      const UserProfilesList(
+                                          selectableItems: true),
+                                      const Divider(),
+                                      const SizedBox(height: 24),
+                                      SvgPicture.string(buildBarcode(
+                                        Barcode.gs128(),
+                                        state.userProfiles
+                                            ?.firstWhere((element) =>
+                                                element.id ==
+                                                state.selectedUserId)
+                                            .barCode as String,
+                                        filename: '',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
+                                        height: 90,
+                                      )),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        '${state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName}, покажите данный штрих-код\nмедицинскому сотруднику',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            ?.copyWith(
+                                              color: AppColors.lightText,
+                                            ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            );
+                                      const SizedBox(height: 16),
+                                    ],
+                                  )
+                                : const BarcodeSkeleton();
                           },
                         )),
                   ]),
