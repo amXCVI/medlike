@@ -30,7 +30,6 @@ import 'package:medlike/modules/subscribe/specialisations_list/specialisations_l
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 
-import 'router.gr.dart';
 
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',

@@ -31,7 +31,7 @@ class FilesPage extends StatelessWidget {
       isSearch: true,
       filteringFunction: _onFilterList,
       appBarTitle: 'Файлы',
-      rightBottomWidget: const AttachFileButton(),
+      rightBottomWidget: AttachFileButton(userId: userId),
       child: BlocBuilder<MedcardCubit, MedcardState>(
         builder: (context, state) {
           if (state.getMedcardUserFilesListStatus ==
@@ -43,6 +43,8 @@ class FilesPage extends StatelessWidget {
               userFilesList: state.filteredMedcardUserFilesList
                   as List<MedcardUserFileModel>,
               onRefreshData: _onLoadDada,
+              userId: userId,
+              downloadingFileId: state.downloadingFileId as String,
             );
           } else {
             return const MedcardDocsListSkeleton();

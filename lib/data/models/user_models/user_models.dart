@@ -111,3 +111,14 @@ class UserAgreementDocumentModel with _$UserAgreementDocumentModel {
   factory UserAgreementDocumentModel.fromJson(Map<String, Object?> json) =>
       _$UserAgreementDocumentModelFromJson(json);
 }
+
+@freezed
+class UserUploadAvatarResponseModel with _$UserUploadAvatarResponseModel {
+  const factory UserUploadAvatarResponseModel({
+    required String result,
+    required String? information,
+  }) = _UserUploadAvatarResponseModel;
+
+  factory UserUploadAvatarResponseModel.fromJson(Map<String, Object?> json) =>
+      _$UserUploadAvatarResponseModelFromJson(json);
+}

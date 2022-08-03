@@ -16,6 +16,7 @@ class SubscribeRowItem extends StatelessWidget {
     this.isFirstSymbolForIcon = true,
     this.radius = 20,
     this.onTap,
+    this.customRightAction,
   }) : super(key: key);
 
   final String title;
@@ -29,6 +30,7 @@ class SubscribeRowItem extends StatelessWidget {
   final bool isOverflowHiddenSubtitle;
   final double radius;
   final void Function()? onTap;
+  final Widget? customRightAction;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +120,7 @@ class SubscribeRowItem extends StatelessWidget {
                   isSelected
                       ? SvgPicture.asset('assets/icons/profile/checked_icon.svg')
                       : const Text(''),
+                  customRightAction ?? const SizedBox(),
                 ],
               ),
             ),

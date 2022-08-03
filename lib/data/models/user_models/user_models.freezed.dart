@@ -1609,3 +1609,166 @@ abstract class _UserAgreementDocumentModel
   _$$_UserAgreementDocumentModelCopyWith<_$_UserAgreementDocumentModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+UserUploadAvatarResponseModel _$UserUploadAvatarResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _UserUploadAvatarResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserUploadAvatarResponseModel {
+  String get result => throw _privateConstructorUsedError;
+  String? get information => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserUploadAvatarResponseModelCopyWith<UserUploadAvatarResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserUploadAvatarResponseModelCopyWith<$Res> {
+  factory $UserUploadAvatarResponseModelCopyWith(
+          UserUploadAvatarResponseModel value,
+          $Res Function(UserUploadAvatarResponseModel) then) =
+      _$UserUploadAvatarResponseModelCopyWithImpl<$Res>;
+  $Res call({String result, String? information});
+}
+
+/// @nodoc
+class _$UserUploadAvatarResponseModelCopyWithImpl<$Res>
+    implements $UserUploadAvatarResponseModelCopyWith<$Res> {
+  _$UserUploadAvatarResponseModelCopyWithImpl(this._value, this._then);
+
+  final UserUploadAvatarResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(UserUploadAvatarResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? information = freezed,
+  }) {
+    return _then(_value.copyWith(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as String,
+      information: information == freezed
+          ? _value.information
+          : information // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_UserUploadAvatarResponseModelCopyWith<$Res>
+    implements $UserUploadAvatarResponseModelCopyWith<$Res> {
+  factory _$$_UserUploadAvatarResponseModelCopyWith(
+          _$_UserUploadAvatarResponseModel value,
+          $Res Function(_$_UserUploadAvatarResponseModel) then) =
+      __$$_UserUploadAvatarResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String result, String? information});
+}
+
+/// @nodoc
+class __$$_UserUploadAvatarResponseModelCopyWithImpl<$Res>
+    extends _$UserUploadAvatarResponseModelCopyWithImpl<$Res>
+    implements _$$_UserUploadAvatarResponseModelCopyWith<$Res> {
+  __$$_UserUploadAvatarResponseModelCopyWithImpl(
+      _$_UserUploadAvatarResponseModel _value,
+      $Res Function(_$_UserUploadAvatarResponseModel) _then)
+      : super(_value, (v) => _then(v as _$_UserUploadAvatarResponseModel));
+
+  @override
+  _$_UserUploadAvatarResponseModel get _value =>
+      super._value as _$_UserUploadAvatarResponseModel;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? information = freezed,
+  }) {
+    return _then(_$_UserUploadAvatarResponseModel(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as String,
+      information: information == freezed
+          ? _value.information
+          : information // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_UserUploadAvatarResponseModel
+    implements _UserUploadAvatarResponseModel {
+  const _$_UserUploadAvatarResponseModel(
+      {required this.result, required this.information});
+
+  factory _$_UserUploadAvatarResponseModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_UserUploadAvatarResponseModelFromJson(json);
+
+  @override
+  final String result;
+  @override
+  final String? information;
+
+  @override
+  String toString() {
+    return 'UserUploadAvatarResponseModel(result: $result, information: $information)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_UserUploadAvatarResponseModel &&
+            const DeepCollectionEquality().equals(other.result, result) &&
+            const DeepCollectionEquality()
+                .equals(other.information, information));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(result),
+      const DeepCollectionEquality().hash(information));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_UserUploadAvatarResponseModelCopyWith<_$_UserUploadAvatarResponseModel>
+      get copyWith => __$$_UserUploadAvatarResponseModelCopyWithImpl<
+          _$_UserUploadAvatarResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserUploadAvatarResponseModelToJson(this);
+  }
+}
+
+abstract class _UserUploadAvatarResponseModel
+    implements UserUploadAvatarResponseModel {
+  const factory _UserUploadAvatarResponseModel(
+      {required final String result,
+      required final String? information}) = _$_UserUploadAvatarResponseModel;
+
+  factory _UserUploadAvatarResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_UserUploadAvatarResponseModel.fromJson;
+
+  @override
+  String get result => throw _privateConstructorUsedError;
+  @override
+  String? get information => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_UserUploadAvatarResponseModelCopyWith<_$_UserUploadAvatarResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

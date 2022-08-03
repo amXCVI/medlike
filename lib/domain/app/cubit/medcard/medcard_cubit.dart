@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
@@ -90,12 +91,14 @@ class MedcardCubit extends Cubit<MedcardState> {
   Future<File> downloadAndOpenPdfFileByUrl({
     required String fileUrl,
     required String fileName,
+    required String fileId,
   }) async {
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.loading));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.loading,
+        downloadingFileId: fileId,
+      ));
       var response = await medcardRepository.downloadFile(url: fileUrl);
       var bytes = await consolidateHttpClientResponseBytes(response);
       var dir = await getApplicationDocumentsDirectory();
@@ -107,18 +110,104 @@ class MedcardCubit extends Cubit<MedcardState> {
         "${dir.path}/$fileName.pdf",
       );
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.success));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.success,
+        downloadingFileId: '',
+      ));
     } catch (e) {
       AppToast.showAppToast(
           msg:
               'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
       emit(state.copyWith(
-          downloadMedcardDocumentStatus:
-              DownloadMedcardDocumentStatuses.failed));
+        downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.failed,
+        downloadingFileId: '',
+      ));
       rethrow;
     }
-
     return completer.future;
+  }
+
+  /// Загрузка и открытие пользовательских файлов
+  Future<File> downloadAndOpenUserFileByUrl({
+    required String fileUrl,
+    required String fileName,
+    required String fileId,
+  }) async {
+    Completer<File> completer = Completer();
+    try {
+      emit(state.copyWith(downloadingFileId: fileId));
+      var response = await medcardRepository.downloadFile(url: fileUrl);
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$fileName");
+
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+      OpenFile.open(
+        "${dir.path}/$fileName",
+      );
+      emit(state.copyWith(downloadingFileId: ''));
+    } catch (e) {
+      AppToast.showAppToast(
+          msg:
+              'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
+      emit(state.copyWith(downloadingFileId: ''));
+      rethrow;
+    }
+    return completer.future;
+  }
+
+  Future<void> uploadFileFromDio({
+    PlatformFile? file,
+    File? photoFile,
+    required String userId,
+    required String fileName,
+  }) async {
+    emit(state.copyWith(
+      uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.loading,
+    ));
+    try {
+      MedcardUserFileModel response = await medcardRepository.uploadFile(
+          userId: userId, file: file, photoFile: photoFile);
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
+        medcardUserFilesList:
+            [...?state.medcardUserFilesList, response].toList(),
+        filteredMedcardUserFilesList:
+            [...?state.filteredMedcardUserFilesList, response].toList(),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Удалить файл
+  void deleteUserFile({
+    required String fileId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      deletingUserFile: fileId,
+      filteredMedcardUserFilesList: state.filteredMedcardUserFilesList
+          ?.where((e) => e.id != fileId)
+          .toList(),
+    ));
+    try {
+      final DeleteUserFileResponseModel response;
+      response = await medcardRepository.deleteUserFile(
+          fileId: fileId, userId: userId);
+
+      emit(state.copyWith(
+        deletingUserFile: '',
+        medcardUserFilesList: state.medcardUserFilesList
+            ?.where((e) => e.id != fileId)
+            .toList(),
+      ));
+      AppToast.showAppToast(msg: response.information ?? 'Файл успешно удален');
+    } catch (e) {
+      emit(state.copyWith(deletingUserFile: ''));
+    }
   }
 }
