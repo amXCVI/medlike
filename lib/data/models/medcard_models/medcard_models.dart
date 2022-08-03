@@ -72,3 +72,14 @@ class MedcardUserFileModel with _$MedcardUserFileModel {
   factory MedcardUserFileModel.fromJson(Map<String, Object?> json) =>
       _$MedcardUserFileModelFromJson(json);
 }
+
+@freezed
+class DeleteUserFileResponseModel with _$DeleteUserFileResponseModel {
+  const factory DeleteUserFileResponseModel({
+  required bool result,
+  required String? information,
+  }) = _DeleteUserFileResponseModel;
+
+  factory DeleteUserFileResponseModel.fromJson(Map<String, Object?> json) =>
+      _$DeleteUserFileResponseModelFromJson(json);
+}

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
@@ -156,27 +156,58 @@ class MedcardCubit extends Cubit<MedcardState> {
     return completer.future;
   }
 
-  uploadFileFromDio(
-      {required File file,
-      required String userId,
-      required String fileName}) async {
-    // formData.add("user_id", userProfile.userId);
-    // formData.add("name", userProfile.name);
-    // formData.add("email", userProfile.email);
+  Future<void> uploadFileFromDio({
+    PlatformFile? file,
+    File? photoFile,
+    required String userId,
+    required String fileName,
+  }) async {
+    emit(state.copyWith(
+      uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.loading,
+    ));
+    try {
+      MedcardUserFileModel response = await medcardRepository.uploadFile(
+          userId: userId, file: file, photoFile: photoFile);
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
+        medcardUserFilesList:
+            [...?state.medcardUserFilesList, response].toList(),
+        filteredMedcardUserFilesList:
+            [...?state.filteredMedcardUserFilesList, response].toList(),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
 
-    // if (file != null &&
-    //     file.path != null &&
-    //     file.path.isNotEmpty) {
-    // Create a FormData
-    // String fileName = basename(photoFile.path);
-    Map<String, dynamic> requestFormDataBody = <String, dynamic>{
-      'field1': file,
-    };
-    FormData formData = FormData.fromMap(requestFormDataBody);
+  /// Удалить файл
+  void deleteUserFile({
+    required String fileId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      deletingUserFile: fileId,
+      filteredMedcardUserFilesList: state.filteredMedcardUserFilesList
+          ?.where((e) => e.id != fileId)
+          .toList(),
+    ));
+    try {
+      final DeleteUserFileResponseModel response;
+      response = await medcardRepository.deleteUserFile(
+          fileId: fileId, userId: userId);
 
-    // }
-    var response =
-        await medcardRepository.uploadFile(userId: userId, formData: formData);
-    print("Response status: ${response.statusCode}");
+      emit(state.copyWith(
+        deletingUserFile: '',
+        medcardUserFilesList: state.medcardUserFilesList
+            ?.where((e) => e.id != fileId)
+            .toList(),
+      ));
+      AppToast.showAppToast(msg: response.information ?? 'Файл успешно удален');
+    } catch (e) {
+      emit(state.copyWith(deletingUserFile: ''));
+    }
   }
 }

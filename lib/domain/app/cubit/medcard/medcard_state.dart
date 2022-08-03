@@ -1,8 +1,12 @@
 part of 'medcard_cubit.dart';
 
 enum GetMedcardDocsListStatuses { initial, loading, success, failed }
+
 enum GetMedcardUserFilesListStatuses { initial, loading, success, failed }
+
 enum DownloadMedcardDocumentStatuses { initial, loading, success, failed }
+
+enum UploadMedcardDocumentStatuses { initial, loading, success, failed }
 
 @immutable
 class MedcardState {
@@ -14,6 +18,8 @@ class MedcardState {
   final List<MedcardUserFileModel>? filteredMedcardUserFilesList;
   final DownloadMedcardDocumentStatuses? downloadMedcardDocumentStatus;
   final String? downloadingFileId;
+  final UploadMedcardDocumentStatuses? uploadMedcardDocumentStatus;
+  final String? deletingUserFile;
 
   const MedcardState({
     this.getMedcardDocsListStatus = GetMedcardDocsListStatuses.initial,
@@ -24,6 +30,8 @@ class MedcardState {
     this.filteredMedcardUserFilesList,
     this.downloadMedcardDocumentStatus,
     this.downloadingFileId = '',
+    this.uploadMedcardDocumentStatus,
+    this.deletingUserFile = '',
   });
 
   MedcardState copyWith({
@@ -35,6 +43,8 @@ class MedcardState {
     List<MedcardUserFileModel>? filteredMedcardUserFilesList,
     DownloadMedcardDocumentStatuses? downloadMedcardDocumentStatus,
     String? downloadingFileId,
+    UploadMedcardDocumentStatuses? uploadMedcardDocumentStatus,
+    String? deletingUserFile,
   }) {
     return MedcardState(
       getMedcardDocsListStatus:
@@ -50,6 +60,9 @@ class MedcardState {
       downloadMedcardDocumentStatus:
           downloadMedcardDocumentStatus ?? this.downloadMedcardDocumentStatus,
       downloadingFileId: downloadingFileId ?? this.downloadingFileId,
+      uploadMedcardDocumentStatus:
+          uploadMedcardDocumentStatus ?? this.uploadMedcardDocumentStatus,
+      deletingUserFile: deletingUserFile ?? this.deletingUserFile,
     );
   }
 

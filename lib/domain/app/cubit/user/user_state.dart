@@ -23,6 +23,8 @@ enum GetUserAgreementDocumentStatuses { initial, loading, success, failed }
 
 enum ChangePasswordStatuses { initial, loading, success, failed }
 
+enum UploadUserAvatarStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -41,6 +43,7 @@ class UserState {
   final GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus;
   final UserAgreementDocumentModel? userAgreementDocument;
   final ChangePasswordStatuses? changePasswordStatus;
+  final UploadUserAvatarStatuses? uploadUserAvatarStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -62,6 +65,7 @@ class UserState {
         GetUserAgreementDocumentStatuses.initial,
     this.userAgreementDocument,
     this.changePasswordStatus,
+    this.uploadUserAvatarStatus,
   });
 
   UserState copyWith({
@@ -82,6 +86,7 @@ class UserState {
     GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus,
     UserAgreementDocumentModel? userAgreementDocument,
     ChangePasswordStatuses? changePasswordStatus,
+    UploadUserAvatarStatuses? uploadUserAvatarStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -106,6 +111,8 @@ class UserState {
       userAgreementDocument:
           userAgreementDocument ?? this.userAgreementDocument,
       changePasswordStatus: changePasswordStatus ?? this.changePasswordStatus,
+      uploadUserAvatarStatus:
+          uploadUserAvatarStatus ?? this.uploadUserAvatarStatus,
     );
   }
 

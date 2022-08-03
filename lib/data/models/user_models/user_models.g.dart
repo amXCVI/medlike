@@ -149,3 +149,17 @@ Map<String, dynamic> _$$_UserAgreementDocumentModelToJson(
     <String, dynamic>{
       'body': instance.body,
     };
+
+_$_UserUploadAvatarResponseModel _$$_UserUploadAvatarResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_UserUploadAvatarResponseModel(
+      result: json['result'] as String,
+      information: json['information'] as String?,
+    );
+
+Map<String, dynamic> _$$_UserUploadAvatarResponseModelToJson(
+        _$_UserUploadAvatarResponseModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'information': instance.information,
+    };
