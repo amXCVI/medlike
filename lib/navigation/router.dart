@@ -69,7 +69,7 @@ import 'router.gr.dart';
     AdaptiveRoute(path: AppRoutes.clinicInfoPrice, page: PricePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
-    //AdaptiveRoute(path: AppRoutes.health, page: HealthPage(phoneNumber: phoneNumber), guards: [CheckIsAuthUser])
+    AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser])
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

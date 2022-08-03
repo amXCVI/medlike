@@ -7,18 +7,18 @@ class DiaryRepository {
   final _dioClient = Api().dio;
 
   Future<List<DiaryCategoryModel>> getDiaryCategories({
-    required String phone,
     required String project,
     required String platform,
   }) async {
     try {
       final response = await _dioClient.get(
-        '/api/v1.0/DiaryModelModel/category-list?Phone=$phone&Project=$project&Platform=$platform'
+        '/api/v1.0/diary/category-list?Project=$project&Platform=$platform'
       );
+
+      final List list = response.data;
       
       final List<DiaryCategoryModel> diaryCategories =
-        DiaryCategoryModel.fromJson(response.data)
-          as List<DiaryCategoryModel>;
+        list.map((e) => DiaryCategoryModel.fromJson(e)).toList();
       
       return diaryCategories;
     } catch (err) {
@@ -27,7 +27,6 @@ class DiaryRepository {
   }
 
   Future<List<DiaryModel>> getDiaries({
-    required String phone,
     required String project,
     required String platform,
     DateTime? dateFrom,
@@ -35,13 +34,14 @@ class DiaryRepository {
   }) async {
     try {
       final response = await _dioClient.get(
-        '/api/v1.0/DiaryModelModel?Phone=$phone&Project=$project&Platform=$platform&DateFrom=$dateFrom&DateTo=$dateTo');
+        '/api/v1.0/diary?Project=$project&Platform=$platform&DateFrom=$dateFrom&DateTo=$dateTo');
       
-      final List<DiaryModel> diaryCategories =
-        DiaryModel.fromJson(response.data)
-          as List<DiaryModel>;
+      final List list = response.data;
       
-      return diaryCategories;
+      final List<DiaryModel> diaries =
+        list.map((e) => DiaryModel.fromJson(e)).toList();
+      
+      return diaries;
     } catch (err) {
       rethrow;
     }

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/modules/health_page/health_graph.dart';
+import 'package:medlike/modules/health_page/health_value.dart';
+import 'package:medlike/utils/api/api_constants.dart';
+
 
 class HealthItem extends StatelessWidget {
   const HealthItem({
     Key? key,
     required this.iconPath,
-    required this.title
+    required this.title,
+    required this.data
   }) : super(key: key);
 
   final String iconPath;
   final String title;
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class HealthItem extends StatelessWidget {
                     width: 200,
                     child: Row(
                       children: [
-                        SvgPicture.asset(iconPath),
+                        Image.network('${ApiConstants.baseUrl}$iconPath'),
                         const SizedBox(width: 6),
                         Text(
                           title,
@@ -43,8 +49,12 @@ class HealthItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Column(),
-                  Column()
+                  HealthValue(
+                    data: data
+                  ),
+                  HealthGraph(
+                    data: data
+                  )
                 ],
               ),
             ],

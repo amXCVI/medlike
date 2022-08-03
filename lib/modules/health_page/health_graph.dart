@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HealthValue extends StatelessWidget {
-  const HealthValue({
+class HealthGraph extends StatelessWidget {
+  const HealthGraph({
     Key? key,
     required this.data
   }) : super(key: key);

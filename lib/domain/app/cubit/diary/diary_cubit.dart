@@ -12,7 +12,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Получить список дневников
   void getDiaryCategoriesList({
-    required String phone,
     required String project,
     required String platform
   }) async {
@@ -22,7 +21,6 @@ class DiaryCubit extends Cubit<DiaryState> {
     try {
       final List<DiaryCategoryModel> response;
       response = await diaryRepository.getDiaryCategories(
-        phone: phone,
         project: project,
         platform: platform
       );
@@ -39,7 +37,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Получить список дневников
   void getDiariesList({
-    required String phone,
     required String project,
     required String platform
   }) async {
@@ -49,7 +46,6 @@ class DiaryCubit extends Cubit<DiaryState> {
     try {
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
-        phone: phone,
         project: project,
         platform: platform
       );
