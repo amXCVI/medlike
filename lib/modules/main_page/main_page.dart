@@ -8,6 +8,7 @@ import 'package:medlike/modules/main_page/grid_items_list.dart';
 import 'package:medlike/modules/main_page/slider/slider_widget.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/modules/main_page/barcode_button.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class MainPage extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
+          rightBottomWidget: const BarcodeButton(),
           child: Column(
             children: [
               const SliderWidget(),

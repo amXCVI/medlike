@@ -72,14 +72,14 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
         children: [
           //! Не работает. Не понятны причины. Разобраться
-          // AttachFileItem(
-          //   label: 'Сделать фото',
-          //   iconPath: 'assets/icons/bottom_nav_bar/ic_camera_files_outline.svg',
-          //   fileType: FileType.media,
-          //   onTap: () {
-          //     _pickFiles(FileType.media);
-          //   },
-          // ),
+          AttachFileItem(
+            label: 'Сделать фото',
+            iconPath: 'assets/icons/bottom_nav_bar/ic_camera_files_outline.svg',
+            fileType: FileType.media,
+            onTap: () {
+              _pickFiles(FileType.media);
+            },
+          ),
           AttachFileItem(
             label: 'Галерея',
             iconPath: 'assets/icons/bottom_nav_bar/ic_image_outline.svg',
