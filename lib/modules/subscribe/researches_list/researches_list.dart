@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/researches_list/research_item.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ResearchesList extends StatefulWidget {
   const ResearchesList({
@@ -29,17 +30,20 @@ class _ResearchesListState extends State<ResearchesList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => widget.onRefreshData(),
-      child: ListView(
-          shrinkWrap: true,
-          children: widget.researchesList
-              .map((item) => ResearchItem(
-                    onTap: () {
-                      _handleTapOnResearch(item);
-                    },
-                    researchItem: item,
-                    isSelected: widget.selectedResearchesIds.contains(item.id),
-                  ))
-              .toList()),
+      child: DefaultScrollbar(
+        child: ListView(
+            shrinkWrap: true,
+            children: widget.researchesList
+                .map((item) => ResearchItem(
+                      onTap: () {
+                        _handleTapOnResearch(item);
+                      },
+                      researchItem: item,
+                      isSelected:
+                          widget.selectedResearchesIds.contains(item.id),
+                    ))
+                .toList()),
+      ),
     );
   }
 }

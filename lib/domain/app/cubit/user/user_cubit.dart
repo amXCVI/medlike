@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 part 'user_state.dart';
 
@@ -65,6 +69,7 @@ class UserCubit extends Cubit<UserState> {
 
   /// Получает список профилей из всех МО
   void getUserProfiles(bool isRefresh) async {
+    cleanSelectedUserId();
     if (!isRefresh &&
         state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
@@ -99,10 +104,20 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.setField(AppConstants.selectedUserId, userId);
   }
 
+  /// Возвращает короткое имя пользователя по id
   String getShortUserName(String userId) {
     UserProfile userProfile =
         state.userProfiles!.firstWhere((element) => element.id == userId);
     return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
+  }
+
+  /// Сбрасывает id выбранного профиля
+  //? Опасная штука, чел может сбросить id, а новый не выбрать. И будем мы страдать
+  //? и искать, где бы взять id для кучи запросов
+  void cleanSelectedUserId() {
+    emit(state.copyWith(
+      selectedUserId: '',
+    ));
   }
 
   /// Сохраняет хэш созданного при авторизации пин-кода
@@ -347,6 +362,54 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Удалить профиль пользователя
+  Future<void> deleteUserAccount({
+    String? userId,
+    String techInfo = '',
+  }) async {
+    emit(state.copyWith(
+      deletingUserAccountStatus: DeletingUserAccountStatuses.loading,
+    ));
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String techInfo = '';
+    UserProfile? selectedUser = state.userProfiles
+        ?.firstWhere((element) => element.id == state.selectedUserId);
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version}\n'
+          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
+          'Телефон пользователя: ${state.userPhoneNumber}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n'
+          'Клиника: \n'
+          'Идентификация бэка: \n';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      techInfo = 'Устройство: ${iosInfo.name}\n'
+          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
+          'Телефон пользователя: ${state.userPhoneNumber}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n'
+          'Клиника: \n'
+          'Идентификация бэка: \n';
+    }
+
+    try {
+      await userRepository.deleteAccount(
+        userId: userId,
+        techInfo: techInfo + '\n',
+      );
+      emit(state.copyWith(
+        deletingUserAccountStatus: DeletingUserAccountStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        deletingUserAccountStatus: DeletingUserAccountStatuses.failed,
       ));
       rethrow;
     }

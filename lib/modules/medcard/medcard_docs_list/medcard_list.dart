@@ -4,6 +4,7 @@ import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_file_item.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class MedcardList extends StatelessWidget {
   const MedcardList({
@@ -30,17 +31,19 @@ class MedcardList extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () => onRefreshData(isRefresh: true),
-      child: ListView(
-          shrinkWrap: true,
-          children: medcardDocsList
-              .map((item) => MedcardFileItem(
-                    medcardFileItem: item,
-                    onTap: () {
-                      _handleTapOnMedcardFile(item);
-                    },
-                    isDownloading: item.prescId == downloadingFileId,
-                  ))
-              .toList()),
+      child: DefaultScrollbar(
+        child: ListView(
+            shrinkWrap: true,
+            children: medcardDocsList
+                .map((item) => MedcardFileItem(
+                      medcardFileItem: item,
+                      onTap: () {
+                        _handleTapOnMedcardFile(item);
+                      },
+                      isDownloading: item.prescId == downloadingFileId,
+                    ))
+                .toList()),
+      ),
     );
   }
 }

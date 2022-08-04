@@ -38,7 +38,7 @@ class MainMenuItem extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           onTap: () {
             Navigator.pop(context);
-            context.router.navigateNamed(link);
+            context.router.pushNamed(link);
           },
         ),
       ),

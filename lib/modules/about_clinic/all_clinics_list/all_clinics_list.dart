@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 import 'clinic_item.dart';
 
@@ -22,16 +23,18 @@ class AllClinicsList extends StatelessWidget {
 
     return RefreshIndicator(
       onRefresh: () => onRefreshData(isRefresh: true),
-      child: ListView(
-          shrinkWrap: true,
-          children: clinicsList
-              .map((item) => ClinicItem(
-                    clinicItem: item,
-                    onTap: () {
-                      _handleTapOnClinic(item);
-                    },
-                  ))
-              .toList()),
+      child: DefaultScrollbar(
+        child: ListView(
+            shrinkWrap: true,
+            children: clinicsList
+                .map((item) => ClinicItem(
+                      clinicItem: item,
+                      onTap: () {
+                        _handleTapOnClinic(item);
+                      },
+                    ))
+                .toList()),
+      ),
     );
   }
 }

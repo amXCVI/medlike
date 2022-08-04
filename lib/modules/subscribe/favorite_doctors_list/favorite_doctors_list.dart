@@ -7,6 +7,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctor_item.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/not_found_favorite_doctors.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class FavoriteDoctorsList extends StatefulWidget {
   const FavoriteDoctorsList({
@@ -72,16 +73,18 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
       child: widget.doctorsList.isNotEmpty
-          ? ListView(shrinkWrap: true, children: [
-              ...widget.doctorsList
-                  .map((item) => FavoriteDoctorItem(
-                        doctorItem: item,
-                        onTap: () {
-                          _handleTapOnDoctor(item);
-                        },
-                      ))
-                  .toList()
-            ])
+          ? DefaultScrollbar(
+        child: ListView(shrinkWrap: true, children: [
+                ...widget.doctorsList
+                    .map((item) => FavoriteDoctorItem(
+                          doctorItem: item,
+                          onTap: () {
+                            _handleTapOnDoctor(item);
+                          },
+                        ))
+                    .toList()
+              ]),
+          )
           : const NotFoundFavoriteDoctors(),
     );
   }

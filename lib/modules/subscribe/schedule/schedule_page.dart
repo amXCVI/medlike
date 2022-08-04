@@ -13,6 +13,7 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -163,69 +164,71 @@ class SchedulePage extends StatelessWidget {
               : [],
           child: RefreshIndicator(
             onRefresh: () => _onRefreshData(),
-            child: ListView(
-              children: [
-                state.getCalendarStatus == GetCalendarStatuses.failed
-                    ? const Text('')
-                    : Calendar(
-                        isLoading: state.getCalendarStatus ==
-                                GetCalendarStatuses.loading
-                            ? true
-                            : false,
-                        startDate: state.startDate,
-                        endDate: state.endDate,
-                        selectedDate: state.selectedDate,
-                        calendarList: state.getCalendarStatus ==
-                                GetCalendarStatuses.success
-                            ? state.calendarList as List<CalendarModel>
-                            : [],
-                        onChangeSelectedDate: _setSelectedDate,
-                        onChangeStartDate: _setStartDate,
-                        onChangeEndDate: _setEndDate,
-                      ),
-                state.getTimetableCellsStatus ==
-                            GetTimetableCellsStatuses.success &&
-                        state.timetableCellsList!.isEmpty
-                    ? const SubscribeNotFoundData(
-                        text: 'Нет свободного времени')
-                    : const SizedBox(),
-                state.getTimetableCellsStatus ==
-                        GetTimetableCellsStatuses.success
-                    ? TimeCellsList(
-                        timetableCellsList: state.timetableCellsList
-                            as List<TimetableCellModel>,
-                        selectedTimetableCellId:
-                            state.selectedTimetableCell != null
-                                ? state.selectedTimetableCell!.scheduleId
-                                : '',
-                        handleTapOnCell: _handleTapOnCell,
-                      )
-                    : state.getTimetableCellsStatus ==
-                                GetTimetableCellsStatuses.loading &&
-                            state.selectedCalendarItem != null &&
-                            state.selectedCalendarItem!.hasAvailableCells
-                        ? const TimeCellsListSkeleton()
-                        : Center(
-                            child: Text(
-                            'Нет свободного времени',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(color: AppColors.lightText),
-                          )),
-                state.getTimetableCellsStatus ==
-                        GetTimetableCellsStatuses.success
-                    ? DayAppointmentsList(
-                        timetableLogsList:
-                            state.timetableLogsList as List<TimetableLogModel>,
-                      )
-                    : state.getTimetableCellsStatus ==
-                                GetTimetableCellsStatuses.loading &&
-                            state.selectedCalendarItem != null &&
-                            state.selectedCalendarItem!.hasLogs
-                        ? const DayAppointmentsSkeleton()
-                        : const Text(''),
-              ],
+            child: DefaultScrollbar(
+              child: ListView(
+                children: [
+                  state.getCalendarStatus == GetCalendarStatuses.failed
+                      ? const Text('')
+                      : Calendar(
+                          isLoading: state.getCalendarStatus ==
+                                  GetCalendarStatuses.loading
+                              ? true
+                              : false,
+                          startDate: state.startDate,
+                          endDate: state.endDate,
+                          selectedDate: state.selectedDate,
+                          calendarList: state.getCalendarStatus ==
+                                  GetCalendarStatuses.success
+                              ? state.calendarList as List<CalendarModel>
+                              : [],
+                          onChangeSelectedDate: _setSelectedDate,
+                          onChangeStartDate: _setStartDate,
+                          onChangeEndDate: _setEndDate,
+                        ),
+                  state.getTimetableCellsStatus ==
+                              GetTimetableCellsStatuses.success &&
+                          state.timetableCellsList!.isEmpty
+                      ? const SubscribeNotFoundData(
+                          text: 'Нет свободного времени')
+                      : const SizedBox(),
+                  state.getTimetableCellsStatus ==
+                          GetTimetableCellsStatuses.success
+                      ? TimeCellsList(
+                          timetableCellsList: state.timetableCellsList
+                              as List<TimetableCellModel>,
+                          selectedTimetableCellId:
+                              state.selectedTimetableCell != null
+                                  ? state.selectedTimetableCell!.scheduleId
+                                  : '',
+                          handleTapOnCell: _handleTapOnCell,
+                        )
+                      : state.getTimetableCellsStatus ==
+                                  GetTimetableCellsStatuses.loading &&
+                              state.selectedCalendarItem != null &&
+                              state.selectedCalendarItem!.hasAvailableCells
+                          ? const TimeCellsListSkeleton()
+                          : Center(
+                              child: Text(
+                              'Нет свободного времени',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(color: AppColors.lightText),
+                            )),
+                  state.getTimetableCellsStatus ==
+                          GetTimetableCellsStatuses.success
+                      ? DayAppointmentsList(
+                          timetableLogsList: state.timetableLogsList
+                              as List<TimetableLogModel>,
+                        )
+                      : state.getTimetableCellsStatus ==
+                                  GetTimetableCellsStatuses.loading &&
+                              state.selectedCalendarItem != null &&
+                              state.selectedCalendarItem!.hasLogs
+                          ? const DayAppointmentsSkeleton()
+                          : const Text(''),
+                ],
+              ),
             ),
           ),
         );

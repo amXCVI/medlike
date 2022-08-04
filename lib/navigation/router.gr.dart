@@ -75,8 +75,12 @@ class AppRouter extends _i28.RootStackRouter {
   @override
   final Map<String, _i28.PageFactory> pagesMap = {
     PhoneNumberRoute.name: (routeData) {
+      final args = routeData.argsAs<PhoneNumberRouteArgs>(
+          orElse: () => const PhoneNumberRouteArgs());
       return _i28.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i1.PhoneNumberPage());
+          routeData: routeData,
+          child: _i1.PhoneNumberPage(
+              key: args.key, isDeletingProfile: args.isDeletingProfile));
     },
     PasswordRoute.name: (routeData) {
       final args = routeData.argsAs<PasswordRouteArgs>();
@@ -333,10 +337,27 @@ class AppRouter extends _i28.RootStackRouter {
 
 /// generated route for
 /// [_i1.PhoneNumberPage]
-class PhoneNumberRoute extends _i28.PageRouteInfo<void> {
-  const PhoneNumberRoute() : super(PhoneNumberRoute.name, path: '/login_phone');
+class PhoneNumberRoute extends _i28.PageRouteInfo<PhoneNumberRouteArgs> {
+  PhoneNumberRoute({_i29.Key? key, bool isDeletingProfile = false})
+      : super(PhoneNumberRoute.name,
+            path: '/login_phone',
+            args: PhoneNumberRouteArgs(
+                key: key, isDeletingProfile: isDeletingProfile));
 
   static const String name = 'PhoneNumberRoute';
+}
+
+class PhoneNumberRouteArgs {
+  const PhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
+
+  final _i29.Key? key;
+
+  final bool isDeletingProfile;
+
+  @override
+  String toString() {
+    return 'PhoneNumberRouteArgs{key: $key, isDeletingProfile: $isDeletingProfile}';
+  }
 }
 
 /// generated route for
