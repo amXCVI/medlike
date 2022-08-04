@@ -182,4 +182,23 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future<bool> deleteAccount({
+    String? userId,
+    required String techInfo,
+  }) async {
+    try {
+      final response =
+      await _dioClient.delete('/api/v1.0/auth/delete-account', data: {
+        'techInfo': techInfo,
+      });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

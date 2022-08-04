@@ -9,11 +9,13 @@ class SettingsListItem extends StatelessWidget {
     this.subtitle = '',
     required this.iconSrc,
     required this.onTap,
+    this.color,
   }) : super(key: key);
 
   final String title;
   final String subtitle;
   final String iconSrc;
+  final Color? color;
   final void Function() onTap;
 
   @override
@@ -53,8 +55,7 @@ class SettingsListItem extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
-                                ?.copyWith(
-                                    color: AppColors.mainText),
+                                ?.copyWith(color: color ?? AppColors.mainText),
                           ),
                           const SizedBox(height: 4),
                           subtitle.isNotEmpty
