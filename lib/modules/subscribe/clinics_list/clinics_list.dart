@@ -5,6 +5,7 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinic_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ClinicsList extends StatefulWidget {
   const ClinicsList({
@@ -36,16 +37,18 @@ class _ClinicsListState extends State<ClinicsList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => widget.onRefreshData(isRefresh: true),
-      child: ListView(
-          shrinkWrap: true,
-          children: widget.availableClinicsList
-              .map((item) => ClinicItem(
-                    clinicItem: item,
-                    onTap: () {
-                      _handleTapOnClinic(item);
-                    },
-                  ))
-              .toList()),
+      child: DefaultScrollbar(
+        child: ListView(
+            shrinkWrap: true,
+            children: widget.availableClinicsList
+                .map((item) => ClinicItem(
+                      clinicItem: item,
+                      onTap: () {
+                        _handleTapOnClinic(item);
+                      },
+                    ))
+                .toList()),
+      ),
     );
   }
 }

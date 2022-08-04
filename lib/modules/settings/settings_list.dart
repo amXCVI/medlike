@@ -7,6 +7,7 @@ import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class SettingsList extends StatelessWidget {
   const SettingsList({Key? key}) : super(key: key);
@@ -30,52 +31,54 @@ class SettingsList extends StatelessWidget {
       context.router.push(RecoverPasswordNewRoute(smsToken: ''));
     }
 
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        SettingsListItem(
-          title: 'Сменить пароль',
-          iconSrc: 'assets/icons/settings/ic_password_outline.svg',
-          onTap: handleTapOnChangePassword,
-        ),
-        SettingsListItem(
-          title: 'Сменить пин-код',
-          iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
-          onTap: handleChangePinCode,
-        ),
-        SettingsListItem(
-          title: 'Тех. поддержка',
-          subtitle: 'Обратная связь',
-          iconSrc: 'assets/icons/settings/ic_feedback_outline.svg',
-          onTap: () {},
-        ),
-        SettingsListItem(
-          title: 'Пользовательское соглашение',
-          iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
-          onTap: handleTapAgreements,
-        ),
-        SettingsListItem(
-          title: 'О приложении',
-          iconSrc: 'assets/icons/settings/ic_about_outline.svg',
-          onTap: () {
-            showDialog<void>(
-                context: context, builder: (context) => const AboutAppDialog());
-          },
-        ),
-        SettingsListItem(
-          title: 'Выйти из приложения',
-          iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
-          onTap: handleSignOut,
-        ),
-        SettingsListItem(
-          title: 'Выйти навсегда',
-          iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
-          onTap: () {
-            UserSecureStorage.cleanStorage();
-            handleSignOut();
-          },
-        )
-      ],
+    return DefaultScrollbar(
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          SettingsListItem(
+            title: 'Сменить пароль',
+            iconSrc: 'assets/icons/settings/ic_password_outline.svg',
+            onTap: handleTapOnChangePassword,
+          ),
+          SettingsListItem(
+            title: 'Сменить пин-код',
+            iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
+            onTap: handleChangePinCode,
+          ),
+          SettingsListItem(
+            title: 'Тех. поддержка',
+            subtitle: 'Обратная связь',
+            iconSrc: 'assets/icons/settings/ic_feedback_outline.svg',
+            onTap: () {},
+          ),
+          SettingsListItem(
+            title: 'Пользовательское соглашение',
+            iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
+            onTap: handleTapAgreements,
+          ),
+          SettingsListItem(
+            title: 'О приложении',
+            iconSrc: 'assets/icons/settings/ic_about_outline.svg',
+            onTap: () {
+              showDialog<void>(
+                  context: context, builder: (context) => const AboutAppDialog());
+            },
+          ),
+          SettingsListItem(
+            title: 'Выйти из приложения',
+            iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
+            onTap: handleSignOut,
+          ),
+          SettingsListItem(
+            title: 'Выйти навсегда',
+            iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
+            onTap: () {
+              UserSecureStorage.cleanStorage();
+              handleSignOut();
+            },
+          )
+        ],
+      ),
     );
   }
 }

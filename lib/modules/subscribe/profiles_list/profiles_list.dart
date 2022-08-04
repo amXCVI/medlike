@@ -5,6 +5,7 @@ import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/profiles_list/profile_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ProfilesList extends StatefulWidget {
   const ProfilesList({
@@ -32,17 +33,19 @@ class _ProfilesListState extends State<ProfilesList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () => widget.onRefreshData(isRefresh: true),
-      child: ListView(
-          shrinkWrap: true,
-          children: widget.profilesList
-              .map((item) => ProfileItem(
-                    userProfile: item,
-                    isSelected: item.id == widget.selectedUserId,
-                    onTap: () {
-                      _handleTapOnUserProfile(item.id);
-                    },
-                  ))
-              .toList()),
+      child: DefaultScrollbar(
+        child: ListView(
+            shrinkWrap: true,
+            children: widget.profilesList
+                .map((item) => ProfileItem(
+                      userProfile: item,
+                      isSelected: item.id == widget.selectedUserId,
+                      onTap: () {
+                        _handleTapOnUserProfile(item.id);
+                      },
+                    ))
+                .toList()),
+      ),
     );
   }
 }

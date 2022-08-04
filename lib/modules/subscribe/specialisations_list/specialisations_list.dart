@@ -6,6 +6,7 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/specialisations_list/specialisation_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class SpecialisationsList extends StatefulWidget {
@@ -76,32 +77,34 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
 
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
-      child: ListView(shrinkWrap: true, children: [
-        !widget.isFilteredList
-            ? SubscribeRowItem(
-                title: navigationItemForAllDoctors.name.toString(),
-                subtitle:
-                    getCountDoctors(navigationItemForAllDoctors.count as int),
-                onTap: () {
-                  _handleTapOnSpecialisation(navigationItemForAllDoctors);
-                },
-                customIcon: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: SvgPicture.asset(
-                      'assets/icons/subscribe/all_doctors.svg'),
-                ),
-                isFirstSymbolForIcon: false,
-              )
-            : const SizedBox(),
-        ...widget.specialisationsList
-            .map((item) => SpecialisationItem(
-                  specialisationItem: item,
+      child: DefaultScrollbar(
+        child: ListView(shrinkWrap: true, children: [
+          !widget.isFilteredList
+              ? SubscribeRowItem(
+                  title: navigationItemForAllDoctors.name.toString(),
+                  subtitle:
+                      getCountDoctors(navigationItemForAllDoctors.count as int),
                   onTap: () {
-                    _handleTapOnSpecialisation(item);
+                    _handleTapOnSpecialisation(navigationItemForAllDoctors);
                   },
-                ))
-            .toList()
-      ]),
+                  customIcon: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: SvgPicture.asset(
+                        'assets/icons/subscribe/all_doctors.svg'),
+                  ),
+                  isFirstSymbolForIcon: false,
+                )
+              : const SizedBox(),
+          ...widget.specialisationsList
+              .map((item) => SpecialisationItem(
+                    specialisationItem: item,
+                    onTap: () {
+                      _handleTapOnSpecialisation(item);
+                    },
+                  ))
+              .toList()
+        ]),
+      ),
     );
   }
 }
