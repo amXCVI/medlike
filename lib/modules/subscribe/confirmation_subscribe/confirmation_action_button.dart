@@ -25,16 +25,23 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
                 'assets/icons/subscribe/success_creating_appointment_icon.svg')
             : state.creatingAppointmentStatus ==
                     CreatingAppointmentStatuses.loading
-                ? const CircularProgressIndicator(color: Colors.white)
+                ? const SizedBox(
+                    width: 150,
+                    child: Center(
+                        child: CircularProgressIndicator(color: Colors.white)))
                 : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.failed
                     ? Text(
                         'Ошибочка вышла'.toUpperCase(),
                         style: Theme.of(context).textTheme.titleSmall,
                       )
-                    : Text(
-                        'Записаться'.toUpperCase(),
-                        style: Theme.of(context).textTheme.titleSmall,
+                    : SizedBox(
+                        width: 150,
+                        child: Text(
+                          'Записаться'.toUpperCase(),
+                          style: Theme.of(context).textTheme.titleSmall,
+                          textAlign: TextAlign.center,
+                        ),
                       );
       },
     );
