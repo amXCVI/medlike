@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/about_app/about_app_dialog.dart';
 import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.dart';
+import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -14,11 +13,6 @@ class SettingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleSignOut() {
-      context.read<UserCubit>().signOut();
-      context.router.pushNamed(AppRoutes.loginPhone);
-    }
-
     void handleChangePinCode() {
       context.router.pushNamed(AppRoutes.loginPinCodeCreate);
     }
@@ -68,7 +62,11 @@ class SettingsList extends StatelessWidget {
           SettingsListItem(
             title: 'Выйти из приложения',
             iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
-            onTap: handleSignOut,
+            onTap: () {
+              showDialog<void>(
+                  context: context,
+                  builder: (context) => const ExitAppDialog());
+            },
           ),
           SettingsListItem(
             title: 'Удалить учетную запись',
