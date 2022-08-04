@@ -69,6 +69,7 @@ class UserCubit extends Cubit<UserState> {
 
   /// Получает список профилей из всех МО
   void getUserProfiles(bool isRefresh) async {
+    cleanSelectedUserId();
     if (!isRefresh &&
         state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
@@ -103,10 +104,20 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.setField(AppConstants.selectedUserId, userId);
   }
 
+  /// Возвращает короткое имя пользователя по id
   String getShortUserName(String userId) {
     UserProfile userProfile =
         state.userProfiles!.firstWhere((element) => element.id == userId);
     return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
+  }
+
+  /// Сбрасывает id выбранного профиля
+  //? Опасная штука, чел может сбросить id, а новый не выбрать. И будем мы страдать
+  //? и искать, где бы взять id для кучи запросов
+  void cleanSelectedUserId() {
+    emit(state.copyWith(
+      selectedUserId: '',
+    ));
   }
 
   /// Сохраняет хэш созданного при авторизации пин-кода
