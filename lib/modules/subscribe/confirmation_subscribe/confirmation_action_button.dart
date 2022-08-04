@@ -15,7 +15,7 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
         if (state.creatingAppointmentStatus ==
             CreatingAppointmentStatuses.success) {
           Future.delayed(const Duration(seconds: 1), () {
-            context.router.replaceAll([AppointmentsRoute(isRefresh: true)]);
+            context.router.push(AppointmentsRoute(isRefresh: true));
           });
         }
 
