@@ -14,22 +14,51 @@ class SplineChart extends StatelessWidget {
     required this.value
   }) : super(key: key);
 
-  final List<DataValue> value;
+  final List<DiaryItem> value;
 
   @override
   Widget build(BuildContext context) {
-    const names = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    const names = ['П', 'В', 'С', 'Ч', 'П ', 'С ', 'В '];
 
-    // TODO: сделать норм генерацию по дням недели
-    final List<ChartData> chartData = names.map(
-      (e) => ChartData(e, 10) 
+    double? mostRecentWeekday(int weekday) {
+      for(int i = 0; i < value.length; i++) {
+        if(value[i].date.weekday == weekday) {
+          return value[i].value.innerData[0];
+        }
+      }
+
+      return null;
+    }
+
+    final chartData = names.map(
+      (e) => ChartData(e, mostRecentWeekday(
+        names.indexOf(e)
+      )) 
     ).toList();
 
     return SfCartesianChart(
-      primaryXAxis: CategoryAxis(),
+      plotAreaBorderWidth: 0,
+      primaryXAxis: CategoryAxis(
+        interval: 1,
+        majorGridLines: const MajorGridLines(
+          width: 0
+        ),
+        majorTickLines: const MajorTickLines(
+          width: 0,
+        ),
+        axisLine: const AxisLine(
+          width: 0,
+        )
+      ),
+      primaryYAxis: NumericAxis(
+        isVisible: false
+      ),
       series: <ChartSeries>[
         SplineSeries<ChartData, String>(
           dataSource: chartData,
+          markerSettings: const MarkerSettings(
+            isVisible: true
+          ),
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y
         )

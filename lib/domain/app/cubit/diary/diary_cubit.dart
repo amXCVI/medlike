@@ -38,7 +38,10 @@ class DiaryCubit extends Cubit<DiaryState> {
   /// Получить список дневников
   void getDiariesList({
     required String project,
-    required String platform
+    required String platform,
+    required String grouping,
+    DateTime? dateFrom,
+    DateTime? dateTo, 
   }) async {
     emit(state.copyWith(
       getDiaryStatuses: GetDiaryStatuses.loading,
@@ -47,7 +50,10 @@ class DiaryCubit extends Cubit<DiaryState> {
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
         project: project,
-        platform: platform
+        platform: platform,
+        grouping: grouping,
+        dateFrom: dateFrom,
+        dateTo: dateTo
       );
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.success,

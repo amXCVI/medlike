@@ -13,7 +13,7 @@ class HealthGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplineChart(
-      value: data == null ? [] : data!.map((e) => e.value).toList(),
+      value: data == null ? [] : data!
     );
   }
 }

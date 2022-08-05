@@ -12,15 +12,25 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
+
     void _onLoadDada() {
       context.read<DiaryCubit>().getDiaryCategoriesList(
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS'
       );
 
+      final date = DateTime.now();
+
+      final dateFrom = getDate(date.subtract(Duration(days: date.weekday - 1)));
+      final dateTo = getDate(date.add(Duration(days: DateTime.daysPerWeek - date.weekday)));
+
       context.read<DiaryCubit>().getDiariesList(
         project: 'Zapolyarye', 
-        platform: Platform.isAndroid ? 'Android' : 'IOS'
+        platform: Platform.isAndroid ? 'Android' : 'IOS',
+        grouping: 'Day',
+        dateFrom: dateFrom,
+        dateTo: dateTo
       );
     }
 

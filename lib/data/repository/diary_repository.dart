@@ -29,13 +29,21 @@ class DiaryRepository {
   Future<List<DiaryModel>> getDiaries({
     required String project,
     required String platform,
+    required String grouping, 
     DateTime? dateFrom,
     DateTime? dateTo, 
   }) async {
     try {
-      final response = await _dioClient.get(
-        //'/api/v1.0/diary?Project=$project&Platform=$platform&DateFrom=$dateFrom&DateTo=$dateTo');
-      '/api/v1.0/diary?Project=$project&Platform=$platform');
+      String url = '/api/v1.0/diary?Project=$project&Platform=$platform&Groping=$grouping';
+
+      if(dateFrom != null) {
+        url += '&dateFrom=$dateFrom';
+      }
+      if(dateTo != null) {
+        url += '&dateTo=$dateTo';
+      }
+      
+      final response = await _dioClient.get(url);
 
       final List list = response.data;
       
