@@ -8,6 +8,7 @@ import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class AppointmentsPage extends StatelessWidget {
   const AppointmentsPage({Key? key, this.isRefresh = false}) : super(key: key);
@@ -35,29 +36,31 @@ class AppointmentsPage extends StatelessWidget {
           onRefresh: () {
             return _onLoadDada(isRefresh: true);
           },
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const AppointmentsCalendar(),
-              const SizedBox(height: 16),
-              BlocBuilder<AppointmentsCubit, AppointmentsState>(
-                builder: (context, state) {
-                  if (state.getAppointmentsStatus ==
-                      GetAppointmentsStatuses.failed) {
-                    return const Text('');
-                  } else if (state.getAppointmentsStatus ==
-                      GetAppointmentsStatuses.success) {
-                    return AppointmentsList(
-                      appointmentsList: state.filteredAppointmentsList
-                          as List<AppointmentModel>,
-                      onRefreshData: _onLoadDada,
-                    );
-                  } else {
-                    return const AppointmentsListSkeleton();
-                  }
-                },
-              ),
-            ],
+          child: DefaultScrollbar(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                const AppointmentsCalendar(),
+                const SizedBox(height: 16),
+                BlocBuilder<AppointmentsCubit, AppointmentsState>(
+                  builder: (context, state) {
+                    if (state.getAppointmentsStatus ==
+                        GetAppointmentsStatuses.failed) {
+                      return const Text('');
+                    } else if (state.getAppointmentsStatus ==
+                        GetAppointmentsStatuses.success) {
+                      return AppointmentsList(
+                        appointmentsList: state.filteredAppointmentsList
+                            as List<AppointmentModel>,
+                        onRefreshData: _onLoadDada,
+                      );
+                    } else {
+                      return const AppointmentsListSkeleton();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

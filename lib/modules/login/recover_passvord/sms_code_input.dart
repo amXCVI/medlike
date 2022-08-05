@@ -52,7 +52,7 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
           _phoneInputController.text = phoneMaskFormatter
               .maskText(state.userPhoneNumber!.replaceAll(RegExp("[+7]"), ''));
         } else {
-          context.router.push(const PhoneNumberRoute());
+          context.router.push(PhoneNumberRoute());
         }
 
         return Column(

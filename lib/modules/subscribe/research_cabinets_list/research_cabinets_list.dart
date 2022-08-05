@@ -7,6 +7,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/cabinet_item.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
@@ -76,42 +77,44 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
 
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
-      child: ListView(shrinkWrap: true, children: [
-        // Не показывать вариант "Любой", если меньше двух вариантов
-        widget.doctorsList.length + widget.cabinetsList.length > 1
-            ? SubscribeRowItem(
-                title: 'Любой',
-                onTap: () {
-                  // _handleTapOnDoctor(allDoctorsObject);
-                },
-                customIcon: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child:
-                      SvgPicture.asset('assets/icons/subscribe/any_doctor.svg'),
-                ),
-                isFirstSymbolForIcon: false,
-              )
-            : const SizedBox(),
-        ...widget.doctorsList
-            .map((item) => DoctorItem(
-                  doctorItem: item,
+      child: DefaultScrollbar(
+        child: ListView(shrinkWrap: true, children: [
+          // Не показывать вариант "Любой", если меньше двух вариантов
+          widget.doctorsList.length + widget.cabinetsList.length > 1
+              ? SubscribeRowItem(
+                  title: 'Любой',
                   onTap: () {
-                    _handleTapOnDoctor(item);
+                    // _handleTapOnDoctor(allDoctorsObject);
                   },
-                ))
-            .toList(),
-        ...widget.cabinetsList
-            .map((item) => CabinetItem(
-                  cabinetItem: item,
-                  onTap: () {
-                    _handleTapOnCabinet(item);
-                  },
-                ))
-            .toList(),
-        widget.doctorsList.isEmpty && widget.cabinetsList.isEmpty
-            ? const SubscribeNotFoundData(text: 'Нет свободного специалиста')
-            : const SizedBox()
-      ]),
+                  customIcon: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: SvgPicture.asset(
+                        'assets/icons/subscribe/any_doctor.svg'),
+                  ),
+                  isFirstSymbolForIcon: false,
+                )
+              : const SizedBox(),
+          ...widget.doctorsList
+              .map((item) => DoctorItem(
+                    doctorItem: item,
+                    onTap: () {
+                      _handleTapOnDoctor(item);
+                    },
+                  ))
+              .toList(),
+          ...widget.cabinetsList
+              .map((item) => CabinetItem(
+                    cabinetItem: item,
+                    onTap: () {
+                      _handleTapOnCabinet(item);
+                    },
+                  ))
+              .toList(),
+          widget.doctorsList.isEmpty && widget.cabinetsList.isEmpty
+              ? const SubscribeNotFoundData(text: 'Нет свободного специалиста')
+              : const SizedBox()
+        ]),
+      ),
     );
   }
 }

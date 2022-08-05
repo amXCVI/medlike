@@ -7,6 +7,7 @@ import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_ac
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
+import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ConfirmationSubscribePage extends StatelessWidget {
   const ConfirmationSubscribePage({Key? key, required this.userId})
@@ -36,15 +37,17 @@ class ConfirmationSubscribePage extends StatelessWidget {
             label: const ConfirmationActionButtonLabel()),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              UserInfo(userId: userId),
-              const SizedBox(height: 19),
-              const DashDivider(),
-              const SizedBox(height: 24),
-              const AppointmentInfo(),
-            ],
+          child: DefaultScrollbar(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                UserInfo(userId: userId),
+                const SizedBox(height: 19),
+                const DashDivider(),
+                const SizedBox(height: 24),
+                const AppointmentInfo(),
+              ],
+            ),
           ),
         ),
       ),

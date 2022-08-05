@@ -19,7 +19,7 @@ class PasswordPageBottomNavigationBar extends StatelessWidget {
             context.router
                 .push(RecoverPasswordSmsRoute(phoneNumber: phoneNumber!));
           } else {
-            context.router.push(const PhoneNumberRoute());
+            context.router.push(PhoneNumberRoute());
           }
         },
         child: RichText(

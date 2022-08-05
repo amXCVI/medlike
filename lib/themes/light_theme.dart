@@ -1,3 +1,4 @@
+import 'package:cupertino_will_pop_scope/cupertino_will_pop_scope.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/themes/colors.dart';
 
@@ -129,5 +130,12 @@ final lightTheme = ThemeData(
     focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: AppColors.mainText),
     ),
+  ),
+
+  pageTransitionsTheme: const PageTransitionsTheme(
+    builders: {
+      TargetPlatform.android: ZoomPageTransitionsBuilder(),
+      TargetPlatform.iOS: CupertinoWillPopScopePageTransionsBuilder(),
+    },
   ),
 );
