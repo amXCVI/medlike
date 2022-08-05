@@ -17,6 +17,11 @@ class HealthPage extends StatelessWidget {
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS'
       );
+
+      context.read<DiaryCubit>().getDiariesList(
+        project: 'Zapolyarye', 
+        platform: Platform.isAndroid ? 'Android' : 'IOS'
+      );
     }
 
     _onLoadDada();
@@ -24,12 +29,16 @@ class HealthPage extends StatelessWidget {
     return DefaultScaffold(
       child: BlocBuilder<DiaryCubit, DiaryState>(
         builder: (context, state) {
-          if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.failed) {
-            return const Text('Error');
-          } else if (state.getDiaryCategoriesStatuses ==
-              GetDiaryCategoriesStatuses.success) {
+          if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.failed
+            || state.getDiaryStatuses == GetDiaryStatuses.failed
+          ) {
+            return const Text('');
+          } else if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.success 
+              && state.getDiaryStatuses == GetDiaryStatuses.success
+          ) {
             return HealthList(
-              diariesCategoriesList: state.diariesCategoriesList!
+              diariesCategoriesList: state.diariesCategoriesList!,
+              diariesItems: state.diariesList!,
             );
           } else {
             return const HealthListSkeleton();

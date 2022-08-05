@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
+import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
+import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -35,6 +37,7 @@ class App extends StatelessWidget {
         BlocProvider(
             create: (context) => AppointmentsCubit(AppointmentsRepository())),
         BlocProvider(create: (context) => MedcardCubit(MedcardRepository())),
+        BlocProvider(create: (context) => DiaryCubit(DiaryRepository())),
       ],
       child: MaterialApp.router(
         title: 'Medlike Base App',

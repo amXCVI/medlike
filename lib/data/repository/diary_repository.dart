@@ -34,8 +34,9 @@ class DiaryRepository {
   }) async {
     try {
       final response = await _dioClient.get(
-        '/api/v1.0/diary?Project=$project&Platform=$platform&DateFrom=$dateFrom&DateTo=$dateTo');
-      
+        //'/api/v1.0/diary?Project=$project&Platform=$platform&DateFrom=$dateFrom&DateTo=$dateTo');
+      '/api/v1.0/diary?Project=$project&Platform=$platform');
+
       final List list = response.data;
       
       final List<DiaryModel> diaries =
