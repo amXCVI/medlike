@@ -21,5 +21,5 @@ class AppConstants {
   // Ключ для хранения хэша пин-кода
   static const String authPinCode = 'authPinCode';
 
-  static const int timeoutDurationMinutes = 5;
+  static const int timeoutDurationMinutes = 50;
 }

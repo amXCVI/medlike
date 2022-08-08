@@ -28,6 +28,17 @@ class AuthTokenResponse with _$AuthTokenResponse {
 }
 
 @freezed
+class RefreshTokenResponseModel with _$RefreshTokenResponseModel {
+  const factory RefreshTokenResponseModel({
+    required String token,
+    required String refreshToken,
+  }) = _RefreshTokenResponseModel;
+
+  factory RefreshTokenResponseModel.fromJson(Map<String, Object?> json) =>
+      _$RefreshTokenResponseModelFromJson(json);
+}
+
+@freezed
 class UserProfileClinicBuilding with _$UserProfileClinicBuilding {
   const factory UserProfileClinicBuilding({
     required String id,

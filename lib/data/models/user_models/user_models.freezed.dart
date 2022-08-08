@@ -320,6 +320,165 @@ abstract class _AuthTokenResponse implements AuthTokenResponse {
       throw _privateConstructorUsedError;
 }
 
+RefreshTokenResponseModel _$RefreshTokenResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _RefreshTokenResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RefreshTokenResponseModel {
+  String get token => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RefreshTokenResponseModelCopyWith<RefreshTokenResponseModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RefreshTokenResponseModelCopyWith<$Res> {
+  factory $RefreshTokenResponseModelCopyWith(RefreshTokenResponseModel value,
+          $Res Function(RefreshTokenResponseModel) then) =
+      _$RefreshTokenResponseModelCopyWithImpl<$Res>;
+  $Res call({String token, String refreshToken});
+}
+
+/// @nodoc
+class _$RefreshTokenResponseModelCopyWithImpl<$Res>
+    implements $RefreshTokenResponseModelCopyWith<$Res> {
+  _$RefreshTokenResponseModelCopyWithImpl(this._value, this._then);
+
+  final RefreshTokenResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(RefreshTokenResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? refreshToken = freezed,
+  }) {
+    return _then(_value.copyWith(
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: refreshToken == freezed
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_RefreshTokenResponseModelCopyWith<$Res>
+    implements $RefreshTokenResponseModelCopyWith<$Res> {
+  factory _$$_RefreshTokenResponseModelCopyWith(
+          _$_RefreshTokenResponseModel value,
+          $Res Function(_$_RefreshTokenResponseModel) then) =
+      __$$_RefreshTokenResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String token, String refreshToken});
+}
+
+/// @nodoc
+class __$$_RefreshTokenResponseModelCopyWithImpl<$Res>
+    extends _$RefreshTokenResponseModelCopyWithImpl<$Res>
+    implements _$$_RefreshTokenResponseModelCopyWith<$Res> {
+  __$$_RefreshTokenResponseModelCopyWithImpl(
+      _$_RefreshTokenResponseModel _value,
+      $Res Function(_$_RefreshTokenResponseModel) _then)
+      : super(_value, (v) => _then(v as _$_RefreshTokenResponseModel));
+
+  @override
+  _$_RefreshTokenResponseModel get _value =>
+      super._value as _$_RefreshTokenResponseModel;
+
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? refreshToken = freezed,
+  }) {
+    return _then(_$_RefreshTokenResponseModel(
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: refreshToken == freezed
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_RefreshTokenResponseModel implements _RefreshTokenResponseModel {
+  const _$_RefreshTokenResponseModel(
+      {required this.token, required this.refreshToken});
+
+  factory _$_RefreshTokenResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_RefreshTokenResponseModelFromJson(json);
+
+  @override
+  final String token;
+  @override
+  final String refreshToken;
+
+  @override
+  String toString() {
+    return 'RefreshTokenResponseModel(token: $token, refreshToken: $refreshToken)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RefreshTokenResponseModel &&
+            const DeepCollectionEquality().equals(other.token, token) &&
+            const DeepCollectionEquality()
+                .equals(other.refreshToken, refreshToken));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(token),
+      const DeepCollectionEquality().hash(refreshToken));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RefreshTokenResponseModelCopyWith<_$_RefreshTokenResponseModel>
+      get copyWith => __$$_RefreshTokenResponseModelCopyWithImpl<
+          _$_RefreshTokenResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RefreshTokenResponseModelToJson(this);
+  }
+}
+
+abstract class _RefreshTokenResponseModel implements RefreshTokenResponseModel {
+  const factory _RefreshTokenResponseModel(
+      {required final String token,
+      required final String refreshToken}) = _$_RefreshTokenResponseModel;
+
+  factory _RefreshTokenResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_RefreshTokenResponseModel.fromJson;
+
+  @override
+  String get token => throw _privateConstructorUsedError;
+  @override
+  String get refreshToken => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RefreshTokenResponseModelCopyWith<_$_RefreshTokenResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 UserProfileClinicBuilding _$UserProfileClinicBuildingFromJson(
     Map<String, dynamic> json) {
   return _UserProfileClinicBuilding.fromJson(json);
