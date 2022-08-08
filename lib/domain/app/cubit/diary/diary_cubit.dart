@@ -42,6 +42,7 @@ class DiaryCubit extends Cubit<DiaryState> {
     required String grouping,
     DateTime? dateFrom,
     DateTime? dateTo, 
+    String? syn
   }) async {
     emit(state.copyWith(
       getDiaryStatuses: GetDiaryStatuses.loading,
@@ -55,10 +56,22 @@ class DiaryCubit extends Cubit<DiaryState> {
         dateFrom: dateFrom,
         dateTo: dateTo
       );
-      emit(state.copyWith(
-        getDiaryStatuses: GetDiaryStatuses.success,
-        diariesList: response,
-      ));
+      if(syn != null) {
+        final selectedDiary = response.firstWhere((element) =>
+          element.syn == syn
+        );
+
+        emit(state.copyWith(
+          getDiaryStatuses: GetDiaryStatuses.success,
+          diariesList: response,
+          selectedDiary: selectedDiary
+        ));
+      } else {
+        emit(state.copyWith(
+          getDiaryStatuses: GetDiaryStatuses.success,
+          diariesList: response,
+        ));
+      }
     } catch (e) {
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.failed)

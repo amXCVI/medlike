@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/modules/health/health_page/health_graph.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 
 
@@ -13,6 +15,7 @@ class HealthItem extends StatelessWidget {
     required this.title,
     required this.measureItem,
     required this.decimalDigits,
+    required this.onLoadDada,
     this.data
   }) : super(key: key);
 
@@ -21,6 +24,7 @@ class HealthItem extends StatelessWidget {
   final String measureItem;
   final int decimalDigits;
   final DiaryModel? data;
+  final Function onLoadDada;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +77,15 @@ class HealthItem extends StatelessWidget {
                           ),
                           IconButton(
                             icon: SvgPicture.asset('assets/icons/ic_arrow_right_calendar.svg'),
-                            onPressed: () {},
+                            onPressed: () {
+                              onLoadDada('Hour', syn: data!.syn);
+
+                              context.router.push(
+                                DiaryRoute(
+                                  title: title
+                                )
+                              );
+                            },
                           ),
                         ],
                       ),

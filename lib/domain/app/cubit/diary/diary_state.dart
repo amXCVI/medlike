@@ -8,6 +8,7 @@ class DiaryState {
   final GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses;
   final List<DiaryModel>? diariesList;
   final List<DiaryCategoryModel>? diariesCategoriesList;
+  final DiaryModel? selectedDiary;
   final DateTime dateFrom;
   final DateTime dateTo;
 
@@ -16,6 +17,7 @@ class DiaryState {
     this.getDiaryCategoriesStatuses,
     this.diariesList,
     this.diariesCategoriesList,
+    this.selectedDiary,
     DateTime? dateFrom,
     DateTime? dateTo,
   }) : dateFrom = dateFrom ?? date_utils.DateUtils.lastDayOfMonth(DateTime.now()),
@@ -26,6 +28,8 @@ class DiaryState {
     GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses,
     List<DiaryModel>? diariesList,
     List<DiaryCategoryModel>? diariesCategoriesList,
+    DiaryModel? selectedDiary,
+    String? selectedDiaryTitle,
     DateTime? dateFrom,
     DateTime? dateTo,
   }) {
@@ -34,6 +38,7 @@ class DiaryState {
       getDiaryCategoriesStatuses: getDiaryCategoriesStatuses ?? this.getDiaryCategoriesStatuses,
       diariesList: diariesList ?? this.diariesList,
       diariesCategoriesList: diariesCategoriesList ?? this.diariesCategoriesList,
+      selectedDiary: selectedDiary ?? this.selectedDiary,
       dateFrom: dateFrom ?? this.dateFrom,
       dateTo: dateTo ?? this.dateTo
     );

@@ -23,6 +23,7 @@ class AppRoutes {
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
   static const health = '/health';
+  static const diary = '/diary';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoDetails = '/clinic_info_details';
   static const clinicInfoPrice = '/clinic_info_price';

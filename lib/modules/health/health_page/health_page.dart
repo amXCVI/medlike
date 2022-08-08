@@ -14,7 +14,9 @@ class HealthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
-    void _onLoadDada() {
+    void _onLoadDada(String grouping, {
+      String? syn
+    }) {
       context.read<DiaryCubit>().getDiaryCategoriesList(
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS'
@@ -28,13 +30,14 @@ class HealthPage extends StatelessWidget {
       context.read<DiaryCubit>().getDiariesList(
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS',
-        grouping: 'Day',
+        grouping: grouping,
         dateFrom: dateFrom,
-        dateTo: dateTo
+        dateTo: dateTo,
+        syn: syn
       );
     }
 
-    _onLoadDada();
+    _onLoadDada('Day');
 
     return DefaultScaffold(
       child: BlocBuilder<DiaryCubit, DiaryState>(
@@ -49,6 +52,7 @@ class HealthPage extends StatelessWidget {
             return HealthList(
               diariesCategoriesList: state.diariesCategoriesList!,
               diariesItems: state.diariesList!,
+              onLoadDada: _onLoadDada
             );
           } else {
             return const HealthListSkeleton();

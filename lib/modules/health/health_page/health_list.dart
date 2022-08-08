@@ -6,11 +6,13 @@ class HealthList extends StatelessWidget {
   const HealthList({
     Key? key,
     required this.diariesCategoriesList,
-    required this.diariesItems
+    required this.diariesItems,
+    required this.onLoadDada
   }) : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryModel> diariesItems;
+  final Function onLoadDada;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,8 @@ class HealthList extends StatelessWidget {
             title: diariesCategoriesList[index].name,
             measureItem: diariesCategoriesList[index].measureItem,
             decimalDigits: diariesCategoriesList[index].decimalDigits,
-            data: getDiaryEntries(index)
+            data: getDiaryEntries(index),
+            onLoadDada: onLoadDada,
           );
         }
       ),

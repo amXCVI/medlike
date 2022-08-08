@@ -4,6 +4,7 @@ import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.da
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
+import 'package:medlike/modules/health/diary_page/diary_page.dart';
 import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
@@ -68,7 +69,8 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.clinicInfoPrice, page: PricePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
-    AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser])
+    AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser])
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],
