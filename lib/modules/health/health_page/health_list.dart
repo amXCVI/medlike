@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health_page/health_item.dart';
+import 'package:medlike/modules/health/health_page/health_item.dart';
 
 class HealthList extends StatelessWidget {
   const HealthList({

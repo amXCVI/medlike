@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:medlike/modules/health_page/health_list.dart';
-import 'package:medlike/modules/health_page/health_list_skeleton.dart';
+import 'package:medlike/modules/health/health_page/health_list.dart';
+import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';

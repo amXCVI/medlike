@@ -20,7 +20,7 @@ import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.da
 import 'package:medlike/modules/about_clinic/price/price_page.dart' as _i26;
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart' as _i27;
 import 'package:medlike/modules/appointments/appointments_page.dart' as _i8;
-import 'package:medlike/modules/health_page/health_page.dart' as _i28;
+import 'package:medlike/modules/health/health_page/health_page.dart' as _i28;
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart'
     as _i4;
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart'

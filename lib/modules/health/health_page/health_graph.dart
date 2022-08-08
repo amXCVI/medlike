@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health_page/spline_chart.dart';
+import 'package:medlike/modules/health/health_page/spline_chart.dart';
 
 class HealthGraph extends StatelessWidget {
   const HealthGraph({

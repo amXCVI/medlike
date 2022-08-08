@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health_page/health_graph.dart';
-import 'package:medlike/modules/health_page/health_value.dart';
+import 'package:medlike/modules/health/health_page/health_graph.dart';
+import 'package:medlike/modules/health/health_page/health_value.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 
 
