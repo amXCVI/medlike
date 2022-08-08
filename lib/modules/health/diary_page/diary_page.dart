@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/modules/health/diary_page/diary_chips.dart';
 import 'package:medlike/modules/health/diary_page/diary_skeleton.dart';
 import 'package:medlike/modules/health/diary_page/diary_view.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -27,7 +28,12 @@ class DiaryPage extends StatelessWidget {
           page = DiaryView(diaryModel: state.selectedDiary!);
         }
         return DefaultScaffold(
-          child: page,
+          child: Column(
+            children: [
+              DiaryChips(syn: state.selectedDiary!.syn),
+              page,
+            ],
+          ),
           appBarTitle: title,
         );
       },
