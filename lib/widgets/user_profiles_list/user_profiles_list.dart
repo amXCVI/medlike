@@ -70,9 +70,17 @@ class UserProfilesList extends StatelessWidget {
                             child: UserProfileItem(
                               userProfileDate: item,
                               isSelectedItem: selectableItems &&
-                                      state.selectedUserId == item.id
-                                  ? true
-                                  : false,
+                                          state.selectedUserId == null ||
+                                      state.selectedUserId!.isEmpty
+                                  ? state.userProfiles![0].id == item.id
+                                  : state.userProfiles
+                                              ?.firstWhere((element) =>
+                                                  element.id ==
+                                                  state.selectedUserId)
+                                              .id as String ==
+                                          item.id
+                                      ? true
+                                      : false,
                               onLoadAvatar: () {
                                 handleLoadAvatar(
                                     state.selectedUserId as String);
