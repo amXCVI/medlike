@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'diary_state.dart';
 
@@ -48,13 +50,18 @@ class DiaryCubit extends Cubit<DiaryState> {
       getDiaryStatuses: GetDiaryStatuses.loading,
     ));
     try {
+      final currentSelectedUserId =
+        await UserSecureStorage.getField(AppConstants.selectedUserId);
+
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
         project: project,
         platform: platform,
         grouping: grouping,
         dateFrom: dateFrom,
-        dateTo: dateTo
+        dateTo: dateTo,
+        userId: currentSelectedUserId,
+        synFilter: syn
       );
       if(syn != null) {
         final selectedDiary = response.firstWhere((element) =>

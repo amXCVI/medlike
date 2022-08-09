@@ -2,9 +2,10 @@
 
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart';
 
 class DiaryChips extends StatefulWidget {
   const DiaryChips({
@@ -23,21 +24,36 @@ class _DiaryChipsState extends State<DiaryChips> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
 
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String grouping) {
           final date = DateTime.now();
+          DateTime dateFrom;
+          DateTime dateTo = DateTime.now();
 
-          // TODO: расчёт времени
-          final dateFrom = getDate(date.subtract(Duration(days: date.weekday - 1)));
-          final dateTo = getDate(date.add(Duration(days: DateTime.daysPerWeek - date.weekday)));
+          switch(grouping) {
+            case 'Hour':
+              dateFrom = DateUtils.firstDayOfWeek(date);
+              //dateTo = DateUtils.lastDayOfWeek(date);
+              break;
+            case 'Day':
+              dateFrom = DateUtils.firstDayOfWeek(date);
+              //dateTo = DateUtils.lastDayOfWeek(date);
+              break;
+            case 'Week':
+              dateFrom = DateUtils.firstDayOfMonth(date);
+              //dateTo = DateUtils.lastDayOfMonth(date);
+              break;
+            default:
+              dateFrom = DateUtils.firstDayOfMonth(date);
+              //dateTo = DateUtils.lastDayOfMonth(date);
+          }
 
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: grouping,
+            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
             dateFrom: dateFrom,
             dateTo: dateTo,
             syn: widget.syn

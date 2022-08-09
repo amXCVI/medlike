@@ -1,5 +1,6 @@
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 // TODO: добавить доп поля и методы кроме GET
 
@@ -30,17 +31,26 @@ class DiaryRepository {
     required String project,
     required String platform,
     required String grouping, 
+    String? synFilter,
+    String? userId,
     DateTime? dateFrom,
     DateTime? dateTo, 
   }) async {
     try {
       String url = '/api/v1.0/diary?Project=$project&Platform=$platform&Groping=$grouping';
 
+      /// TODO: получать таймзону в параметре
       if(dateFrom != null) {
-        url += '&dateFrom=$dateFrom';
+        url += '&dateFrom=${dateTimeToDate(dateFrom)}';
       }
       if(dateTo != null) {
-        url += '&dateTo=$dateTo';
+        url += '&dateFrom=${dateTimeToDate(dateTo)}';
+      }
+      if(synFilter != null) {
+        url += '&SynFilter=$synFilter';
+      }
+      if(userId != null) {
+        url += '&UserId=$userId';
       }
       
       final response = await _dioClient.get(url);
