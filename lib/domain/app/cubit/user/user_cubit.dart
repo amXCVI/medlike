@@ -66,11 +66,13 @@ class UserCubit extends Cubit<UserState> {
 
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
+    UserSecureStorage.deleteField(AppConstants.selectedUserId);
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
       userPhoneNumber: null,
       userProfiles: null,
+      selectedUserId: null,
     ));
   }
 
