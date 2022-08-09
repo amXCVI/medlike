@@ -79,7 +79,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
           _phoneInputController.text = phoneMaskFormatter
               .maskText(state.userPhoneNumber!.replaceAll(RegExp("[+7]"), ''));
         } else {
-          context.router.push(PhoneNumberRoute());
+          context.router.push(StartPhoneNumberRoute());
         }
 
         if (state.resetPasswordStatus == ResetPasswordStatuses.success) {

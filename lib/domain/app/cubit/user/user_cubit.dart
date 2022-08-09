@@ -18,6 +18,13 @@ class UserCubit extends Cubit<UserState> {
 
   final UserRepository userRepository;
 
+  /// Сохраняет в кубит токен из UserStorage
+  void saveAccessToken() async {
+    String? accessToken =
+        await UserSecureStorage.getField(AppConstants.accessToken);
+    emit(state.copyWith(token: accessToken));
+  }
+
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(

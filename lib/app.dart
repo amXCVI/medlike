@@ -17,6 +17,7 @@ import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -39,19 +40,21 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => MedcardCubit(MedcardRepository())),
         BlocProvider(create: (context) => DiaryCubit(DiaryRepository())),
       ],
-      child: MaterialApp.router(
-        title: 'Medlike Base App',
-        theme: AppTheme.lightAppTheme,
-        routerDelegate: _router.delegate(),
-        routeInformationParser: _router.defaultRouteParser(),
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          // Locale('ru'),
-        ],
+      child: InactivityManager(
+        child: MaterialApp.router(
+          title: 'Medlike',
+          theme: AppTheme.lightAppTheme,
+          routerDelegate: _router.delegate(),
+          routeInformationParser: _router.defaultRouteParser(),
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            // Locale('ru'),
+          ],
+        ),
       ),
     );
   }

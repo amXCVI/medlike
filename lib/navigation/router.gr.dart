@@ -29,12 +29,12 @@ import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.da
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart'
     as _i3;
 import 'package:medlike/modules/login/password_page/password_page.dart' as _i2;
-import 'package:medlike/modules/login/phone_number_page/phone_number_page.dart'
-    as _i1;
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart'
     as _i6;
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart'
     as _i5;
+import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_page.dart'
+    as _i1;
 import 'package:medlike/modules/main_page/main_page.dart' as _i7;
 import 'package:medlike/modules/medcard/files/files_page.dart' as _i21;
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart'
@@ -78,12 +78,12 @@ class AppRouter extends _i30.RootStackRouter {
 
   @override
   final Map<String, _i30.PageFactory> pagesMap = {
-    PhoneNumberRoute.name: (routeData) {
-      final args = routeData.argsAs<PhoneNumberRouteArgs>(
-          orElse: () => const PhoneNumberRouteArgs());
+    StartPhoneNumberRoute.name: (routeData) {
+      final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
+          orElse: () => const StartPhoneNumberRouteArgs());
       return _i30.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i1.PhoneNumberPage(
+          child: _i1.StartPhoneNumberPage(
               key: args.key, isDeletingProfile: args.isDeletingProfile));
     },
     PasswordRoute.name: (routeData) {
@@ -299,7 +299,7 @@ class AppRouter extends _i30.RootStackRouter {
   List<_i30.RouteConfig> get routes => [
         _i30.RouteConfig('/#redirect',
             path: '/', redirectTo: '/main', fullMatch: true),
-        _i30.RouteConfig(PhoneNumberRoute.name, path: '/login_phone'),
+        _i30.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
         _i30.RouteConfig(PasswordRoute.name, path: '/login_password'),
         _i30.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
         _i30.RouteConfig(CheckPinCodeRoute.name,
@@ -357,19 +357,20 @@ class AppRouter extends _i30.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.PhoneNumberPage]
-class PhoneNumberRoute extends _i30.PageRouteInfo<PhoneNumberRouteArgs> {
-  PhoneNumberRoute({_i33.Key? key, bool isDeletingProfile = false})
-      : super(PhoneNumberRoute.name,
+/// [_i1.StartPhoneNumberPage]
+class StartPhoneNumberRoute
+    extends _i30.PageRouteInfo<StartPhoneNumberRouteArgs> {
+  StartPhoneNumberRoute({_i33.Key? key, bool isDeletingProfile = false})
+      : super(StartPhoneNumberRoute.name,
             path: '/login_phone',
-            args: PhoneNumberRouteArgs(
+            args: StartPhoneNumberRouteArgs(
                 key: key, isDeletingProfile: isDeletingProfile));
 
-  static const String name = 'PhoneNumberRoute';
+  static const String name = 'StartPhoneNumberRoute';
 }
 
-class PhoneNumberRouteArgs {
-  const PhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
+class StartPhoneNumberRouteArgs {
+  const StartPhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
 
   final _i33.Key? key;
 
@@ -377,7 +378,7 @@ class PhoneNumberRouteArgs {
 
   @override
   String toString() {
-    return 'PhoneNumberRouteArgs{key: $key, isDeletingProfile: $isDeletingProfile}';
+    return 'StartPhoneNumberRouteArgs{key: $key, isDeletingProfile: $isDeletingProfile}';
   }
 }
 
