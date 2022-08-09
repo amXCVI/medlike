@@ -45,6 +45,9 @@ class _PinCodeViewState extends State<PinCodeView> {
 
     if (firstEmptyIndex == pointsArray.length - 1) {
       widget.setPinCode(pointsArray);
+      setState(() {
+        pointsArray = [];
+      });
       return;
     }
   }

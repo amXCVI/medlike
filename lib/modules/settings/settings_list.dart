@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/about_app/about_app_dialog.dart';
 import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class SettingsList extends StatelessWidget {
@@ -66,6 +69,15 @@ class SettingsList extends StatelessWidget {
               showDialog<void>(
                   context: context,
                   builder: (context) => const ExitAppDialog());
+            },
+          ),
+          SettingsListItem(
+            title: 'Очистить все и выйти',
+            iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
+            onTap: () {
+              context.read<UserCubit>().signOut();
+              UserSecureStorage.cleanStorage();
+              context.router.replaceAll([StartPhoneNumberRoute()]);
             },
           ),
           SettingsListItem(

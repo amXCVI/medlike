@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.dart';
-import 'package:medlike/modules/login/phone_number_page/login_view.dart';
-import 'package:medlike/modules/login/phone_number_page/phone_number_bottom_navigator.dart';
+import 'package:medlike/modules/login/start_phone_number_page/phone_number_bottom_navigator.dart';
+import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_view.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
-class PhoneNumberPage extends StatefulWidget {
-  const PhoneNumberPage({Key? key, this.isDeletingProfile = false})
+class StartPhoneNumberPage extends StatefulWidget {
+  const StartPhoneNumberPage({Key? key, this.isDeletingProfile = false})
       : super(key: key);
 
   final bool isDeletingProfile;
 
   @override
-  State<PhoneNumberPage> createState() => _PhoneNumberPageState();
+  State<StartPhoneNumberPage> createState() => _StartPhoneNumberPageState();
 }
 
-class _PhoneNumberPageState extends State<PhoneNumberPage> {
+class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
   late bool isShowingDeleteProfileAlert;
 
   @override
@@ -25,7 +25,6 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
 
   @override
   Widget build(BuildContext context) {
-
     void _showModal() {
       showModalBottomSheet(
           shape:
@@ -43,10 +42,11 @@ class _PhoneNumberPageState extends State<PhoneNumberPage> {
       }
     });
 
-    return const DefaultScaffold(
-      child: LoginPageWidget(),
+    return DefaultScaffold(
+      child: const StartPhoneNumberView(),
       appBarTitle: 'Заполярье',
-      bottomNavigationBar: LoginPageBottomNavigationBar(),
+      onPressedAppLogo: () {},
+      bottomNavigationBar: const LoginPageBottomNavigationBar(),
     );
   }
 }

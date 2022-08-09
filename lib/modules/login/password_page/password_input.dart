@@ -16,7 +16,7 @@ class _PasswordInputState extends State<PasswordInput> {
   final FocusNode _focus = FocusNode();
   late final TextEditingController _controller = TextEditingController()
     ..text = '';
-  bool _isObscure = false;
+  bool _isObscure = true;
 
   @override
   void initState() {

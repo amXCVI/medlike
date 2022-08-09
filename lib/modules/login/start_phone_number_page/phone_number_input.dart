@@ -15,33 +15,16 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final FocusNode _focus = FocusNode();
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    _focus.addListener(_onFocusChange);
-    _controller = TextEditingController(text: '');
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _focus.removeListener(_onFocusChange);
-    _focus.dispose();
-    super.dispose();
-  }
-
-  void _onFocusChange() {
-    if (_focus.hasFocus && _controller.text.isEmpty) {
-      _controller.text = '+7';
-    }
-  }
+  late final TextEditingController _controller = TextEditingController(text: '');
 
   void _onChangePhone(String text) {
     RegExp exp = RegExp(r"[^0-9]+");
     if (_controller.text.replaceAll(exp, '').length >= 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
+      setState(() {
+        _controller.text = '';
+      });
     }
   }
 
@@ -63,7 +46,6 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
           child: TextField(
             controller: _controller,
             onChanged: (text) => _onChangePhone(text),
-            focusNode: _focus,
             autofocus: false,
             keyboardType: TextInputType.phone,
             inputFormatters: [phoneMaskFormatter],
