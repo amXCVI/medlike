@@ -44,8 +44,10 @@ class SlideItem extends StatelessWidget {
                   },
                   height: MediaQuery.of(context).size.width / 16 * 9,
                   fit: BoxFit.cover,
-                  // height: MediaQuery.of(context).size.width / 16 * 9 - 32,
-                  // width: MediaQuery.of(context).size.width,
+                  errorBuilder: (context, error, stackTrace) {
+                    context.read<UserCubit>().saveAccessToken();
+                    return Container();
+                  },
                 ),
               );
             },

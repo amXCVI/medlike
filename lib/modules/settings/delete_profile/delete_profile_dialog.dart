@@ -18,7 +18,7 @@ class DeleteProfileDialog extends StatelessWidget {
           .then((value) {
         UserSecureStorage.cleanStorage();
         context.read<UserCubit>().signOut();
-        context.router.replaceAll([PhoneNumberRoute(isDeletingProfile: true)]);
+        context.router.replaceAll([StartPhoneNumberRoute(isDeletingProfile: true)]);
       });
     }
 

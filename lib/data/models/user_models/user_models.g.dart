@@ -31,6 +31,20 @@ Map<String, dynamic> _$$_AuthTokenResponseToJson(
       'refreshToken': instance.refreshToken,
     };
 
+_$_RefreshTokenResponseModel _$$_RefreshTokenResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_RefreshTokenResponseModel(
+      token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+
+Map<String, dynamic> _$$_RefreshTokenResponseModelToJson(
+        _$_RefreshTokenResponseModel instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'refreshToken': instance.refreshToken,
+    };
+
 _$_UserProfileClinicBuilding _$$_UserProfileClinicBuildingFromJson(
         Map<String, dynamic> json) =>
     _$_UserProfileClinicBuilding(
