@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/modules/health/health_page/health_item.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:medlike/navigation/router.gr.dart';
 
 class HealthList extends StatelessWidget {
   const HealthList({
@@ -38,6 +40,14 @@ class HealthList extends StatelessWidget {
             decimalDigits: diariesCategoriesList[index].decimalDigits,
             data: getDiaryEntries(index),
             onLoadDada: onLoadDada,
+            onNavigate: (String title) {
+              context.router.push(
+                DiaryRoute(
+                  title: title,
+                  categoryModel: diariesCategoriesList[index]
+                )
+              );
+            },
           );
         }
       ),
