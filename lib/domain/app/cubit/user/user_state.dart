@@ -27,6 +27,10 @@ enum UploadUserAvatarStatuses { initial, loading, success, failed }
 
 enum DeletingUserAccountStatuses { initial, loading, success, failed }
 
+enum GetAllUserAgreementsStatuses { initial, loading, success, failed }
+
+enum AcceptedAgreementsStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -47,6 +51,8 @@ class UserState {
   final ChangePasswordStatuses? changePasswordStatus;
   final UploadUserAvatarStatuses? uploadUserAvatarStatus;
   final DeletingUserAccountStatuses? deletingUserAccountStatus;
+  final GetAllUserAgreementsStatuses? getAllUserAgreementsStatus;
+  final AcceptedAgreementsStatuses? acceptedAgreementsStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -70,6 +76,8 @@ class UserState {
     this.changePasswordStatus,
     this.uploadUserAvatarStatus,
     this.deletingUserAccountStatus,
+    this.getAllUserAgreementsStatus,
+    this.acceptedAgreementsStatus,
   });
 
   UserState copyWith({
@@ -92,6 +100,8 @@ class UserState {
     ChangePasswordStatuses? changePasswordStatus,
     UploadUserAvatarStatuses? uploadUserAvatarStatus,
     DeletingUserAccountStatuses? deletingUserAccountStatus,
+    GetAllUserAgreementsStatuses? getAllUserAgreementsStatus,
+    AcceptedAgreementsStatuses? acceptedAgreementsStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -120,6 +130,10 @@ class UserState {
           uploadUserAvatarStatus ?? this.uploadUserAvatarStatus,
       deletingUserAccountStatus:
           deletingUserAccountStatus ?? this.deletingUserAccountStatus,
+      getAllUserAgreementsStatus:
+          getAllUserAgreementsStatus ?? this.getAllUserAgreementsStatus,
+      acceptedAgreementsStatus:
+          acceptedAgreementsStatus ?? this.acceptedAgreementsStatus,
     );
   }
 
