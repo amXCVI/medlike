@@ -71,12 +71,16 @@ class DiaryCubit extends Cubit<DiaryState> {
         emit(state.copyWith(
           getDiaryStatuses: GetDiaryStatuses.success,
           diariesList: response,
-          selectedDiary: selectedDiary
+          selectedDiary: selectedDiary,
+          dateFrom: dateFrom,
+          dateTo: dateTo,
         ));
       } else {
         emit(state.copyWith(
           getDiaryStatuses: GetDiaryStatuses.success,
           diariesList: response,
+          dateFrom: dateFrom,
+          dateTo: dateTo,
         ));
       }
     } catch (e) {

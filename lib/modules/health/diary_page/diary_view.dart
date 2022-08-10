@@ -9,19 +9,27 @@ class DiaryView extends StatelessWidget {
     Key? key,
     required this.diaryModel,
     required this.decimalDigits,
-    required this.measureItem
+    required this.measureItem,
+    required this.firstDate,
+    required this.lastDate
   }) : super(key: key);
   
   final DiaryModel diaryModel;
   final String measureItem;
   final int decimalDigits;
+  final DateTime firstDate;
+  final DateTime lastDate; 
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         DiaryValue(currentValue: diaryModel.getCurrentValue),
-        DiaryGraph(items: diaryModel.values),
+        DiaryGraph(
+          items: diaryModel.values,
+          firstDate: firstDate,
+          lastDate: lastDate,
+        ),
         DiaryList(
           items: diaryModel.values,
           decimalDigits: decimalDigits,

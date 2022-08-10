@@ -17,12 +17,13 @@ class DiaryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.builder(
       shrinkWrap: true,
       itemCount: items.length,
       itemBuilder: (
         (context, index) {
-          DateFormat dateFormat = DateFormat("EE, d M, h/m", 'ru_RU');
+          DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
           final val = ValueHelper.getStringFromValues(
             items[index].value.innerData, 
             decimalDigits

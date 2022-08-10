@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
@@ -6,6 +8,7 @@ import 'package:medlike/modules/health/diary_page/diary_chips.dart';
 import 'package:medlike/modules/health/diary_page/diary_skeleton.dart';
 import 'package:medlike/modules/health/diary_page/diary_view.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart';
 
 class DiaryPage extends StatelessWidget {
   const DiaryPage({
@@ -21,6 +24,40 @@ class DiaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
+        void onTap(String grouping, String syn) {
+          final date = DateTime.now();
+          DateTime dateFrom;
+          DateTime dateTo = DateTime.now();
+
+          switch(grouping) {
+            case 'Hour':
+              dateFrom = DateUtils.firstDayOfWeek(date);
+              //dateTo = DateUtils.lastDayOfWeek(date);
+              break;
+            case 'Day':
+              dateFrom = DateUtils.firstDayOfWeek(date);
+              //dateTo = DateUtils.lastDayOfWeek(date);
+              break;
+            case 'Week':
+              dateFrom = DateUtils.firstDayOfMonth(date);
+              //dateTo = DateUtils.lastDayOfMonth(date);
+              break;
+            default:
+              dateFrom = DateUtils.firstDayOfMonth(date);
+              //dateTo = DateUtils.lastDayOfMonth(date);
+          }
+
+          context.read<DiaryCubit>().getDiariesList(
+            project: 'Zapolyarye', 
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            syn: syn
+          );
+
+        }
+
         Widget page; 
 
         if(state.getDiaryStatuses == GetDiaryStatuses.failed) {
@@ -33,6 +70,8 @@ class DiaryPage extends StatelessWidget {
             diaryModel: state.selectedDiary!,
             decimalDigits: categoryModel.decimalDigits,
             measureItem: categoryModel.measureItem,
+            firstDate: state.dateFrom,
+            lastDate: state.dateTo,
           );
         }
         return DefaultScaffold(
@@ -40,7 +79,11 @@ class DiaryPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                if(state.selectedDiary != null) DiaryChips(syn: state.selectedDiary!.syn),
+                if(state.selectedDiary != null) 
+                  DiaryChips(
+                    syn: state.selectedDiary!.syn,
+                    onTap: onTap,
+                  ),
                 page,
               ],
             ),

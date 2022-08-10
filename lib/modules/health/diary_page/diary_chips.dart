@@ -1,19 +1,16 @@
-
-
-import 'dart:io';
-
-import 'package:flutter/material.dart' hide DateUtils;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart';
 
 class DiaryChips extends StatefulWidget {
   const DiaryChips({
     Key? key,
-    required this.syn
+    required this.syn,
+    required this.onTap
   }) : super(key: key);
 
   final String syn;
+  final Function onTap;
 
   @override
   State<DiaryChips> createState() => _DiaryChipsState();
@@ -28,36 +25,7 @@ class _DiaryChipsState extends State<DiaryChips> {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String grouping) {
-          final date = DateTime.now();
-          DateTime dateFrom;
-          DateTime dateTo = DateTime.now();
-
-          switch(grouping) {
-            case 'Hour':
-              dateFrom = DateUtils.firstDayOfWeek(date);
-              //dateTo = DateUtils.lastDayOfWeek(date);
-              break;
-            case 'Day':
-              dateFrom = DateUtils.firstDayOfWeek(date);
-              //dateTo = DateUtils.lastDayOfWeek(date);
-              break;
-            case 'Week':
-              dateFrom = DateUtils.firstDayOfMonth(date);
-              //dateTo = DateUtils.lastDayOfMonth(date);
-              break;
-            default:
-              dateFrom = DateUtils.firstDayOfMonth(date);
-              //dateTo = DateUtils.lastDayOfMonth(date);
-          }
-
-          context.read<DiaryCubit>().getDiariesList(
-            project: 'Zapolyarye', 
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            syn: widget.syn
-          );
+          widget.onTap(grouping, widget.syn);
 
           setState(() {
             selectedGroup = grouping;
