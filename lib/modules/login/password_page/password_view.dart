@@ -28,25 +28,42 @@ class PasswordPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<bool> checkIsAcceptedUserAgreements() async {
+      bool res = await context.read<UserCubit>().checkUserAgreements();
+      return res;
+    }
+
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state.authStatus == UserAuthStatuses.successAuth) {
-          getIsSavedPinCode().then((res) => {
-                if (res == true)
+          checkIsAcceptedUserAgreements().then((res) => {
+                if (!res)
                   {
-                    UserSecureStorage.setField(AppConstants.isAuth, 'true'),
-                    context.router.replaceAll([const MainRoute()])
+                    context.router.replaceAll([const AuthUserAgreementsRoute()])
                   }
                 else
                   {
-                    context.router.navigateNamed(AppRoutes.loginPinCodeCreate),
+                    getIsSavedPinCode().then((res) => {
+                          if (res == true)
+                            {
+                              UserSecureStorage.setField(
+                                  AppConstants.isAuth, 'true'),
+                              context.router.replaceAll([const MainRoute()])
+                            }
+                          else
+                            {
+                              context.router
+                                  .navigateNamed(AppRoutes.loginPinCodeCreate),
+                            }
+                        })
                   }
               });
-          RouteData.of(context)
-              .router
-              .navigateNamed(AppRoutes.loginPinCodeCreate);
-          return const DefaultAuthSkeleton();
-        } else if (state.authStatus == UserAuthStatuses.loadingAuth) {
+        }
+
+        if (state.authStatus == UserAuthStatuses.loadingAuth ||
+            state.authStatus == UserAuthStatuses.successAuth ||
+            state.getAllUserAgreementsStatus ==
+                GetAllUserAgreementsStatuses.loading) {
           return const DefaultAuthSkeleton();
         } else {
           return SingleChildScrollView(

@@ -323,11 +323,8 @@ class UserCubit extends Cubit<UserState> {
   /// Или конкретный файлик с соглашениями
   void getUserAgreementDocument({
     required int idFile,
+    String? typeAgreement,
   }) async {
-    if (state.getUserAgreementDocumentStatus !=
-        GetUserAgreementDocumentStatuses.initial) {
-      return;
-    }
     emit(state.copyWith(
       getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.loading,
     ));
@@ -419,6 +416,75 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         deletingUserAccountStatus: DeletingUserAccountStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получить список всех соглашений пользователя (с которыми он согласился и не согласился)
+  /// После успешной авторизации
+  Future<List<UserAgreementItemModel>> getAllUserAgreements() async {
+    emit(state.copyWith(
+      getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.loading,
+    ));
+    try {
+      List<UserAgreementItemModel> response =
+          await userRepository.getUserAllAgreements();
+      emit(state.copyWith(
+        getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.success,
+      ));
+      return response;
+    } catch (e) {
+      emit(state.copyWith(
+        getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Проверить согласие пользователя
+  /// После успешной авторизации
+  Future<bool> checkUserAgreements() async {
+    emit(state.copyWith(
+      getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.loading,
+    ));
+    try {
+      List<UserAgreementItemModel> response =
+          await userRepository.getUserAllAgreements();
+      UserAgreementItemModel actualUserAgreement = response.firstWhere(
+          (element) => element.id == AppConstants.actualUserAgreement);
+      emit(state.copyWith(
+        getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.success,
+      ));
+
+      if (actualUserAgreement != null && actualUserAgreement.accepted) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Подтвердить согласие пользователя
+  Future<void> acceptedAgreements({
+  required int agreementId,
+}) async {
+    emit(state.copyWith(
+      acceptedAgreementsStatus: AcceptedAgreementsStatuses.loading,
+    ));
+    try {
+      await userRepository.acceptedAgreement(agreementId: agreementId);
+      emit(state.copyWith(
+        acceptedAgreementsStatus: AcceptedAgreementsStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        acceptedAgreementsStatus: AcceptedAgreementsStatuses.failed,
       ));
       rethrow;
     }

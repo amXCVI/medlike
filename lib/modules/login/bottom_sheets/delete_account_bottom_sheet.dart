@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/widgets/buttons/primary_button.dart';
 
 class DeleteAccountBottomSheet extends StatelessWidget {
-  const DeleteAccountBottomSheet({Key? key})
-      : super(key: key);
+  const DeleteAccountBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +35,8 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                 const Text(
                     'Если Вам потребуется снова зарегистрироваться - обратитесь в клинику'),
                 const SizedBox(height: 32),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(32)),
-                      color: Theme.of(context).primaryColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).primaryColor,
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Text(
+                PrimaryButton(
+                    label: Text(
                       'Понятно'.toUpperCase(),
                       style: Theme.of(context)
                           .textTheme
@@ -61,8 +44,9 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                           ?.copyWith(color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                )
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
               ],
             ),
           )
