@@ -29,7 +29,7 @@ class AppointmentsList extends StatelessWidget {
       appointmentsList.isEmpty
           ? const SubscribeNotFoundData(
               text: 'Здесь будет список ваших приемов')
-          : const SizedBox()
+          : const SizedBox(height: 20)
     ]);
   }
 }
