@@ -67,7 +67,7 @@ class SubscribeRowItem extends StatelessWidget {
                                 ? CircleAvatar(
                                     radius: radius,
                                     backgroundColor: AppColors.mainBrand[50],
-                                    child: Text(title[0],
+                                    child: Text(title[0].toUpperCase(),
                                         style: TextStyle(
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 22.0,
