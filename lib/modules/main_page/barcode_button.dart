@@ -40,11 +40,15 @@ class BarcodeButton extends StatelessWidget {
                                       const SizedBox(height: 24),
                                       SvgPicture.string(buildBarcode(
                                         Barcode.gs128(),
-                                        state.userProfiles
-                                            ?.firstWhere((element) =>
-                                                element.id ==
-                                                state.selectedUserId)
-                                            .barCode as String,
+                                        state.selectedUserId == null ||
+                                                state.selectedUserId!.isEmpty
+                                            ? state.userProfiles![0].barCode
+                                                as String
+                                            : state.userProfiles
+                                                ?.firstWhere((element) =>
+                                                    element.id ==
+                                                    state.selectedUserId)
+                                                .barCode as String,
                                         filename: '',
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -53,7 +57,7 @@ class BarcodeButton extends StatelessWidget {
                                       )),
                                       const SizedBox(height: 16),
                                       Text(
-                                        '${state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName}, покажите данный штрих-код\nмедицинскому сотруднику',
+                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрих-код\nмедицинскому сотруднику',
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall

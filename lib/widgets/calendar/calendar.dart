@@ -155,34 +155,37 @@ class _CalendarState extends State<Calendar> {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Flexible(child: Divider(indent: 8.0, endIndent: 16.0)),
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  color: Theme.of(context).backgroundColor,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20,
-                      offset: Offset(0, 8),
-                    ),
-                  ],
+          InkWell(
+            onTap: _hideOrShowFullCalendar,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Flexible(child: Divider(indent: 8.0, endIndent: 16.0)),
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    color: Theme.of(context).backgroundColor,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 20,
+                        offset: Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: IconButton(
+                      onPressed: _hideOrShowFullCalendar,
+                      icon: SvgPicture.asset(
+                          _calendarFormat == CalendarFormat.week
+                              ? 'assets/icons/calendar_show_button.svg'
+                              : 'assets/icons/calendar_hidden_button.svg',
+                          width: 15)),
                 ),
-                child: IconButton(
-                    onPressed: _hideOrShowFullCalendar,
-                    icon: SvgPicture.asset(
-                        _calendarFormat == CalendarFormat.week
-                            ? 'assets/icons/calendar_show_button.svg'
-                            : 'assets/icons/calendar_hidden_button.svg',
-                        width: 15)),
-              ),
-              const Flexible(child: Divider(indent: 16.0, endIndent: 8.0)),
-            ],
+                const Flexible(child: Divider(indent: 16.0, endIndent: 8.0)),
+              ],
+            ),
           )
         ],
       ),

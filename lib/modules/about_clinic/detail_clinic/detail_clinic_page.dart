@@ -71,7 +71,8 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
           );
         },
       ),
-      child: Column(
+      child: ListView(
+        padding: const EdgeInsets.only(bottom: 24),
         children: [
           const SizedBox(
             height: 200,
