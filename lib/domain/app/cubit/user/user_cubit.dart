@@ -64,6 +64,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  /// logout
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
@@ -143,6 +144,7 @@ class UserCubit extends Cubit<UserState> {
         '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
+      emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -472,8 +474,8 @@ class UserCubit extends Cubit<UserState> {
 
   /// Подтвердить согласие пользователя
   Future<void> acceptedAgreements({
-  required int agreementId,
-}) async {
+    required int agreementId,
+  }) async {
     emit(state.copyWith(
       acceptedAgreementsStatus: AcceptedAgreementsStatuses.loading,
     ));
