@@ -1931,3 +1931,198 @@ abstract class _UserUploadAvatarResponseModel
   _$$_UserUploadAvatarResponseModelCopyWith<_$_UserUploadAvatarResponseModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+UserAgreementItemModel _$UserAgreementItemModelFromJson(
+    Map<String, dynamic> json) {
+  return _UserAgreementItemModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserAgreementItemModel {
+  int get id => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  int get version => throw _privateConstructorUsedError;
+  bool get accepted => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserAgreementItemModelCopyWith<UserAgreementItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserAgreementItemModelCopyWith<$Res> {
+  factory $UserAgreementItemModelCopyWith(UserAgreementItemModel value,
+          $Res Function(UserAgreementItemModel) then) =
+      _$UserAgreementItemModelCopyWithImpl<$Res>;
+  $Res call({int id, String type, int version, bool accepted});
+}
+
+/// @nodoc
+class _$UserAgreementItemModelCopyWithImpl<$Res>
+    implements $UserAgreementItemModelCopyWith<$Res> {
+  _$UserAgreementItemModelCopyWithImpl(this._value, this._then);
+
+  final UserAgreementItemModel _value;
+  // ignore: unused_field
+  final $Res Function(UserAgreementItemModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? type = freezed,
+    Object? version = freezed,
+    Object? accepted = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      version: version == freezed
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      accepted: accepted == freezed
+          ? _value.accepted
+          : accepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_UserAgreementItemModelCopyWith<$Res>
+    implements $UserAgreementItemModelCopyWith<$Res> {
+  factory _$$_UserAgreementItemModelCopyWith(_$_UserAgreementItemModel value,
+          $Res Function(_$_UserAgreementItemModel) then) =
+      __$$_UserAgreementItemModelCopyWithImpl<$Res>;
+  @override
+  $Res call({int id, String type, int version, bool accepted});
+}
+
+/// @nodoc
+class __$$_UserAgreementItemModelCopyWithImpl<$Res>
+    extends _$UserAgreementItemModelCopyWithImpl<$Res>
+    implements _$$_UserAgreementItemModelCopyWith<$Res> {
+  __$$_UserAgreementItemModelCopyWithImpl(_$_UserAgreementItemModel _value,
+      $Res Function(_$_UserAgreementItemModel) _then)
+      : super(_value, (v) => _then(v as _$_UserAgreementItemModel));
+
+  @override
+  _$_UserAgreementItemModel get _value =>
+      super._value as _$_UserAgreementItemModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? type = freezed,
+    Object? version = freezed,
+    Object? accepted = freezed,
+  }) {
+    return _then(_$_UserAgreementItemModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      version: version == freezed
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      accepted: accepted == freezed
+          ? _value.accepted
+          : accepted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_UserAgreementItemModel implements _UserAgreementItemModel {
+  const _$_UserAgreementItemModel(
+      {required this.id,
+      required this.type,
+      required this.version,
+      required this.accepted});
+
+  factory _$_UserAgreementItemModel.fromJson(Map<String, dynamic> json) =>
+      _$$_UserAgreementItemModelFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String type;
+  @override
+  final int version;
+  @override
+  final bool accepted;
+
+  @override
+  String toString() {
+    return 'UserAgreementItemModel(id: $id, type: $type, version: $version, accepted: $accepted)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_UserAgreementItemModel &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.accepted, accepted));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(version),
+      const DeepCollectionEquality().hash(accepted));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_UserAgreementItemModelCopyWith<_$_UserAgreementItemModel> get copyWith =>
+      __$$_UserAgreementItemModelCopyWithImpl<_$_UserAgreementItemModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_UserAgreementItemModelToJson(this);
+  }
+}
+
+abstract class _UserAgreementItemModel implements UserAgreementItemModel {
+  const factory _UserAgreementItemModel(
+      {required final int id,
+      required final String type,
+      required final int version,
+      required final bool accepted}) = _$_UserAgreementItemModel;
+
+  factory _UserAgreementItemModel.fromJson(Map<String, dynamic> json) =
+      _$_UserAgreementItemModel.fromJson;
+
+  @override
+  int get id => throw _privateConstructorUsedError;
+  @override
+  String get type => throw _privateConstructorUsedError;
+  @override
+  int get version => throw _privateConstructorUsedError;
+  @override
+  bool get accepted => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_UserAgreementItemModelCopyWith<_$_UserAgreementItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

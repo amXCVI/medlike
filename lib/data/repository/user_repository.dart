@@ -147,8 +147,8 @@ class UserRepository {
     String? typeAgreement,
   }) async {
     try {
-      final response = await _dioClient
-          .get('/api/v1.0/profile/agreement-document?idFile=$idFile');
+      final response = await _dioClient.get(
+          '/api/v1.0/profile/agreement-document?idFile=$idFile${typeAgreement != null ? '&typeAgreement=$typeAgreement' : ''}');
       return UserAgreementDocumentModel.fromJson(response.data);
     } catch (err) {
       rethrow;
@@ -189,8 +189,38 @@ class UserRepository {
   }) async {
     try {
       final response =
-      await _dioClient.delete('/api/v1.0/auth/delete-account', data: {
+          await _dioClient.delete('/api/v1.0/auth/delete-account', data: {
         'techInfo': techInfo,
+      });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<List<UserAgreementItemModel>> getUserAllAgreements() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/profile/agreement/all');
+      final List agreementsList = response.data;
+      return agreementsList
+          .map((e) => UserAgreementItemModel.fromJson(e))
+          .toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> acceptedAgreement({
+    required int agreementId,
+  }) async {
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/profile/agreement', data: {
+        'AgreementId': agreementId,
       });
       if (response.statusCode == 200) {
         return true;

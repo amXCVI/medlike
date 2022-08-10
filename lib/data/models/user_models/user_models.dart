@@ -133,3 +133,16 @@ class UserUploadAvatarResponseModel with _$UserUploadAvatarResponseModel {
   factory UserUploadAvatarResponseModel.fromJson(Map<String, Object?> json) =>
       _$UserUploadAvatarResponseModelFromJson(json);
 }
+
+@freezed
+class UserAgreementItemModel with _$UserAgreementItemModel {
+  const factory UserAgreementItemModel({
+  required int id,
+  required String type,
+  required int version,
+  required bool accepted,
+  }) = _UserAgreementItemModel;
+
+  factory UserAgreementItemModel.fromJson(Map<String, Object?> json) =>
+      _$UserAgreementItemModelFromJson(json);
+}

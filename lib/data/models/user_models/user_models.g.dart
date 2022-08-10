@@ -177,3 +177,21 @@ Map<String, dynamic> _$$_UserUploadAvatarResponseModelToJson(
       'result': instance.result,
       'information': instance.information,
     };
+
+_$_UserAgreementItemModel _$$_UserAgreementItemModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_UserAgreementItemModel(
+      id: json['id'] as int,
+      type: json['type'] as String,
+      version: json['version'] as int,
+      accepted: json['accepted'] as bool,
+    );
+
+Map<String, dynamic> _$$_UserAgreementItemModelToJson(
+        _$_UserAgreementItemModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'version': instance.version,
+      'accepted': instance.accepted,
+    };

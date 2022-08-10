@@ -5,6 +5,7 @@ import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/health_page/health_page.dart';
+import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
@@ -40,6 +41,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.loginPinCodeCheck, page: CheckPinCodePage, guards: [CheckIsSavedPinCode]),
     AdaptiveRoute(path: AppRoutes.loginRecoverPasswordSms, page: RecoverPasswordSmsPage),
     AdaptiveRoute(path: AppRoutes.loginRecoverPasswordNew, page: RecoverPasswordNewPage),
+    AdaptiveRoute(path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
 
     AdaptiveRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser], initial: true),
 

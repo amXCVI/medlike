@@ -21,5 +21,9 @@ class AppConstants {
   // Ключ для хранения хэша пин-кода
   static const String authPinCode = 'authPinCode';
 
-  static const int timeoutDurationMinutes = 50;
+  // Время таймаута. Приложение автоматически выкидывает пользователя после буздействия
+  static const int timeoutDurationMinutes = 5;
+
+  // Id документа, который проверяется и подтверждается при первой авторизации
+  static const int actualUserAgreement = 4;
 }
