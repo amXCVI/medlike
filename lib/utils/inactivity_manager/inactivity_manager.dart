@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -27,7 +28,8 @@ class _InactivityManagerState extends State<InactivityManager> {
 
   void _initializeTimer() {
     _timer = Timer.periodic(
-        const Duration(minutes: AppConstants.timeoutDurationMinutes),
+        const Duration(
+            minutes: kDebugMode ? 60 : AppConstants.timeoutDurationMinutes),
         (_) => {_logOutUser()});
   }
 
@@ -51,7 +53,6 @@ class _InactivityManagerState extends State<InactivityManager> {
   Widget build(BuildContext context) {
     if (isLogoutApp) {
       print('LOGOUT');
-      //! Не представляю, как здесь сделать редирект на страницу с пин-кодом
       context.read<UserCubit>().signOut();
       _initializeTimer();
     }

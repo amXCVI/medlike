@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
@@ -48,21 +47,13 @@ class MedcardRepository {
 
   Future<MedcardUserFileModel> uploadFile({
     required String userId,
-    PlatformFile? file,
-    File? photoFile,
+    required File file,
+    required String fileName,
   }) async {
-    // var multipartFile = await MultipartFile.fromFile(
-    //   file != null
-    //       ? file.path as String
-    //       : photoFile != null
-    //           ? photoFile.path
-    //           : '',
-    // );
     FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(file?.path ?? '',
-          filename: file?.name ?? '',
-          contentType:
-              MediaType.parse(lookupMimeType(file?.path as String) as String)),
+      "file": await MultipartFile.fromFile(file.path,
+          filename: fileName,
+          contentType: MediaType.parse(lookupMimeType(file.path) as String)),
     });
 
     try {
