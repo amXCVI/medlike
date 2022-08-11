@@ -18,27 +18,30 @@ class DiaryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: items.length,
-      itemBuilder: (
-        (context, index) {
-          DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
-          final val = ValueHelper.getStringFromValues(
-            items[index].value.innerData, 
-            decimalDigits
-          );
-
-          return ListTile(
-            title: Text(
-              '$val $measureItem'
-            ),
-            subtitle: Text(
-              dateFormat.format(items[index].date)
-            ),
-          );
-        } 
-      )
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: items.length,
+        itemBuilder: (
+          (context, index) {
+            DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
+            final val = ValueHelper.getStringFromValues(
+              items[index].value.innerData, 
+              decimalDigits
+            );
+      
+            return ListTile(
+              title: Text(
+                '$val $measureItem'
+              ),
+              subtitle: Text(
+                dateFormat.format(items[index].date)
+              ),
+            );
+          } 
+        )
+      ),
     );
   }
 }

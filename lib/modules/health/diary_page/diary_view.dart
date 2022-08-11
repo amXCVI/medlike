@@ -11,33 +11,43 @@ class DiaryView extends StatelessWidget {
     required this.decimalDigits,
     required this.measureItem,
     required this.firstDate,
-    required this.lastDate
+    required this.lastDate,
+    required this.grouping
   }) : super(key: key);
   
   final DiaryModel diaryModel;
   final String measureItem;
   final int decimalDigits;
   final DateTime firstDate;
-  final DateTime lastDate; 
+  final DateTime lastDate;
+  final String grouping; 
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DiaryValue(currentValue: diaryModel.getCurrentValue),
-        DiaryGraph(
-          items: diaryModel.values,
-          firstDate: firstDate,
-          lastDate: lastDate,
-          measureItem: measureItem,
-          decimalDigits: decimalDigits,
-        ),
-        DiaryList(
-          items: diaryModel.values,
-          decimalDigits: decimalDigits,
-          measureItem: measureItem,
-        )
-      ],
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          DiaryValue(
+            currentValue: diaryModel.getCurrentValue,
+            measureItem: measureItem,
+            decimalDigits: decimalDigits,
+            grouping: grouping,
+          ),
+          DiaryGraph(
+            items: diaryModel.values,
+            firstDate: firstDate,
+            lastDate: lastDate,
+            measureItem: measureItem,
+            decimalDigits: decimalDigits,
+          ),
+          DiaryList(
+            items: diaryModel.values,
+            decimalDigits: decimalDigits,
+            measureItem: measureItem,
+          )
+        ],
+      ),
     );
   }
 }

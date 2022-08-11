@@ -2,34 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 
-class DiaryChips extends StatefulWidget {
+class DiaryChips extends StatelessWidget {
   const DiaryChips({
     Key? key,
     required this.syn,
-    required this.onTap
+    required this.onTap,
+    required this.selectedGroup
   }) : super(key: key);
 
   final String syn;
+  final String selectedGroup;
   final Function onTap;
 
   @override
-  State<DiaryChips> createState() => _DiaryChipsState();
-}
-
-class _DiaryChipsState extends State<DiaryChips> {
-  String selectedGroup = 'Hour';
-
-  @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
 
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
-        void onTap(String grouping) {
-          widget.onTap(grouping, widget.syn);
-
-          setState(() {
-            selectedGroup = grouping;
-          });
+        void tap(String grouping) {
+          onTap(grouping, syn);
         }
 
         return SizedBox(
@@ -38,10 +29,10 @@ class _DiaryChipsState extends State<DiaryChips> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              DiaryChip(grouping: 'Hour', title: 'Час', onTap: onTap, selected: selectedGroup),
-              DiaryChip(grouping: 'Day', title: 'День', onTap: onTap, selected: selectedGroup),
-              DiaryChip(grouping: 'Week', title: 'Неделя', onTap: onTap, selected: selectedGroup),
-              DiaryChip(grouping: 'Month', title: 'Месяц', onTap: onTap, selected: selectedGroup),
+              DiaryChip(grouping: 'Hour', title: 'Час', onTap: tap, selected: selectedGroup),
+              DiaryChip(grouping: 'Day', title: 'День', onTap: tap, selected: selectedGroup),
+              DiaryChip(grouping: 'Week', title: 'Неделя', onTap: tap, selected: selectedGroup),
+              DiaryChip(grouping: 'Month', title: 'Месяц', onTap: tap, selected: selectedGroup),
             ],
           ),
         );

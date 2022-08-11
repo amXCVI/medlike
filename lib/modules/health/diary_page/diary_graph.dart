@@ -103,58 +103,63 @@ class _DiaryGraphState extends State<DiaryGraph> {
   @override
   Widget build(BuildContext context) {
 
-    return SfCartesianChart(
-      primaryXAxis: DateTimeAxis(),
-      trackballBehavior: _trackballBehavior,
-      enableAxisAnimation: true,
-      series: <CartesianSeries>[
-        if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
-          RangeColumnSeries<ChartData, DateTime>(
-            dataSource: chartData,
-            width: 0.23,
-            color: const Color.fromRGBO(237, 245, 247, 1),
-            markerSettings: const MarkerSettings(
-              isVisible: true,
-              color: Color.fromRGBO(60, 148, 168, 1),
-              height: 8
+    return SizedBox(
+      height: 200,
+      width: MediaQuery.of(context).size.width, /// Использование фиксированной ширины тут находится за гранью моего понимания,
+      /// Но без этого не работает 
+      child: SfCartesianChart(
+        primaryXAxis: DateTimeAxis(),
+        trackballBehavior: _trackballBehavior,
+        enableAxisAnimation: true,
+        series: <CartesianSeries>[
+          if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+            RangeColumnSeries<ChartData, DateTime>(
+              dataSource: chartData,
+              width: 0.23,
+              color: const Color.fromRGBO(237, 245, 247, 1),
+              markerSettings: const MarkerSettings(
+                isVisible: true,
+                color: Color.fromRGBO(60, 148, 168, 1),
+                height: 8
+              ),
+              xValueMapper: (ChartData data, _) => data.x,
+              highValueMapper: (ChartData data, _) => data.y,
+              lowValueMapper: (ChartData data, _) => data.y1,
             ),
-            xValueMapper: (ChartData data, _) => data.x,
-            highValueMapper: (ChartData data, _) => data.y,
-            lowValueMapper: (ChartData data, _) => data.y1,
-          ),
-        SplineSeries<ChartData, DateTime>(
-          dataSource: chartData,
-          color: const Color.fromRGBO(60, 148, 168, 1),
-          markerSettings: const MarkerSettings(
-            color: Color.fromRGBO(60, 148, 168, 1),
-            borderColor: Color.fromRGBO(237, 245, 247, 1),
-            borderWidth: 2,
-            isVisible: true
-          ),
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y,
-        ),
-        if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1) 
           SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
+            color: const Color.fromRGBO(60, 148, 168, 1),
             markerSettings: const MarkerSettings(
               color: Color.fromRGBO(60, 148, 168, 1),
               borderColor: Color.fromRGBO(237, 245, 247, 1),
               borderWidth: 2,
               isVisible: true
             ),
-            color: const Color.fromRGBO(60, 148, 168, 1),
             xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y1
-        ),
-      ],
-      onMarkerRender: (args) {
-        if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
-          args.borderWidth = 0;
-          args.markerHeight = 6;
-          args.markerWidth = 6;
-        }
-      },
+            yValueMapper: (ChartData data, _) => data.y,
+          ),
+          if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1) 
+            SplineSeries<ChartData, DateTime>(
+              dataSource: chartData,
+              markerSettings: const MarkerSettings(
+                color: Color.fromRGBO(60, 148, 168, 1),
+                borderColor: Color.fromRGBO(237, 245, 247, 1),
+                borderWidth: 2,
+                isVisible: true
+              ),
+              color: const Color.fromRGBO(60, 148, 168, 1),
+              xValueMapper: (ChartData data, _) => data.x,
+              yValueMapper: (ChartData data, _) => data.y1
+          ),
+        ],
+        onMarkerRender: (args) {
+          if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
+            args.borderWidth = 0;
+            args.markerHeight = 6;
+            args.markerWidth = 6;
+          }
+        },
+      ),
     );
   }
 }

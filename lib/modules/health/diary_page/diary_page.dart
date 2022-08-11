@@ -10,7 +10,7 @@ import 'package:medlike/modules/health/diary_page/diary_view.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 
-class DiaryPage extends StatelessWidget {
+class DiaryPage extends StatefulWidget {
   const DiaryPage({
     Key? key,
     required this.title,
@@ -21,15 +21,22 @@ class DiaryPage extends StatelessWidget {
   final DiaryCategoryModel categoryModel;
 
   @override
+  State<DiaryPage> createState() => _DiaryPageState();
+}
+
+class _DiaryPageState extends State<DiaryPage> {
+  String grouping = 'Hour';
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
-        void onTap(String grouping, String syn) {
+        void onTap(String selectedGroup, String syn) {
           final date = DateTime.now();
           DateTime dateFrom;
           DateTime dateTo = DateTime.now();
 
-          switch(grouping) {
+          switch(selectedGroup) {
             case 'Hour':
               dateFrom = DateUtils.firstDayOfWeek(date);
               //dateTo = DateUtils.lastDayOfWeek(date);
@@ -50,11 +57,15 @@ class DiaryPage extends StatelessWidget {
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            grouping: selectedGroup == 'Hour' ? 'Hour' : 'Day',
             dateFrom: dateFrom,
             dateTo: dateTo,
             syn: syn
           );
+
+          setState(() {
+            grouping = selectedGroup;
+          });
 
         }
 
@@ -68,14 +79,15 @@ class DiaryPage extends StatelessWidget {
         } else  {
           page = DiaryView(
             diaryModel: state.selectedDiary!,
-            decimalDigits: categoryModel.decimalDigits,
-            measureItem: categoryModel.measureItem,
+            decimalDigits: widget.categoryModel.decimalDigits,
+            measureItem: widget.categoryModel.measureItem,
             firstDate: state.dateFrom,
             lastDate: state.dateTo,
+            grouping: grouping,
           );
         }
         return DefaultScaffold(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
@@ -83,12 +95,13 @@ class DiaryPage extends StatelessWidget {
                   DiaryChips(
                     syn: state.selectedDiary!.syn,
                     onTap: onTap,
+                    selectedGroup: grouping,
                   ),
                 page,
               ],
             ),
           ),
-          appBarTitle: title,
+          appBarTitle: widget.title,
         );
       },
     );
