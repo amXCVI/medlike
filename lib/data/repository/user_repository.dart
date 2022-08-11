@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http_parser/http_parser.dart';
@@ -222,6 +224,53 @@ class UserRepository {
           await _dioClient.post('/api/v1.0/profile/agreement', data: {
         'AgreementId': agreementId,
       });
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> sendEmail({
+    required String email,
+    required String subject,
+    required String message,
+    required String techInfo,
+    required String personFio,
+    required String personPhone,
+    List<File>? files,
+  }) async {
+    List uploadFilesList = [];
+    if (files != null) {
+      for (var file in files) {
+        var multipartFile = await MultipartFile.fromFile(file.path);
+        uploadFilesList.add(multipartFile);
+      }
+    }
+
+    FormData formData = FormData.fromMap({
+      "Files": uploadFilesList,
+      'Email': email,
+      'Subject': subject,
+      'Message': message,
+      'TechInfo': techInfo,
+      'PersonFio': personFio,
+      'PersonPhone': personPhone,
+    });
+
+    try {
+      final response = await _dioClient.post('/api/v1.0/support/email',
+          data: formData,
+          options: Options(
+            contentType: 'multipart/form-data',
+            headers: {
+              'Authorization':
+                  'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+            },
+          ));
       if (response.statusCode == 200) {
         return true;
       } else {

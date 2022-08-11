@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
@@ -157,8 +156,7 @@ class MedcardCubit extends Cubit<MedcardState> {
   }
 
   Future<void> uploadFileFromDio({
-    PlatformFile? file,
-    File? photoFile,
+    required File file,
     required String userId,
     required String fileName,
   }) async {
@@ -167,7 +165,7 @@ class MedcardCubit extends Cubit<MedcardState> {
     ));
     try {
       MedcardUserFileModel response = await medcardRepository.uploadFile(
-          userId: userId, file: file, photoFile: photoFile);
+          userId: userId, file: file, fileName: fileName);
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
         medcardUserFilesList:

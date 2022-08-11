@@ -34,6 +34,7 @@ class ConfirmationSubscribePage extends StatelessWidget {
                         context.read<UserCubit>().getShortUserName(userId),
                   );
             },
+            extendedPadding: const EdgeInsets.all(15),
             label: const ConfirmationActionButtonLabel()),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),

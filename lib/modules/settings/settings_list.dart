@@ -46,7 +46,9 @@ class SettingsList extends StatelessWidget {
             title: 'Тех. поддержка',
             subtitle: 'Обратная связь',
             iconSrc: 'assets/icons/settings/ic_feedback_outline.svg',
-            onTap: () {},
+            onTap: () {
+              context.router.push(const SupportRoute());
+            },
           ),
           SettingsListItem(
             title: 'Пользовательское соглашение',
