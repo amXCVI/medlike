@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -9,21 +11,33 @@ class ChartData {
   final double? y1;
 }
 
-class DiaryGraph extends StatelessWidget {
+class DiaryGraph extends StatefulWidget {
   const DiaryGraph({
     Key? key,
     required this.items,
     required this.firstDate,
-    required this.lastDate
+    required this.lastDate,
+    required this.measureItem,
+    required this.decimalDigits
   }) : super(key: key);
 
   final List<DiaryItem> items;
   final DateTime firstDate;
-  final DateTime lastDate; 
+  final DateTime lastDate;
+  final String measureItem;
+  final int decimalDigits;
 
   @override
-  Widget build(BuildContext context) {
-    final chart = items.map((e) => 
+  State<DiaryGraph> createState() => _DiaryGraphState();
+}
+
+class _DiaryGraphState extends State<DiaryGraph> {
+  late TrackballBehavior _trackballBehavior;
+  late List<ChartData> chartData;
+
+  @override
+  void initState(){
+    final chart = widget.items.map((e) => 
       ChartData(
         e.date, 
         e.value.innerData[0], 
@@ -31,16 +45,70 @@ class DiaryGraph extends StatelessWidget {
       )
     ).toList();
 
-    final chartData = [
-      ChartData(firstDate, null, null), 
+    chartData = [
+      ChartData(widget.firstDate, null, null), 
       ...chart,
-      ChartData(lastDate, null, null),
+      ChartData(widget.lastDate, null, null),
     ];
+
+    _trackballBehavior = TrackballBehavior(
+      enable: true,
+      tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
+      activationMode: ActivationMode.singleTap,
+      builder: (context, details) {
+
+        if(details.pointIndex == null) {
+          return Container();
+        }
+
+        final index = details.pointIndex! - 1;
+
+        if(index >= widget.items.length) {
+          return Container();
+        }
+
+        DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
+        final val = ValueHelper.getStringFromValues(
+          widget.items[index].value.innerData, 
+          widget.decimalDigits
+        );
+
+        return Container(
+          height: 50,
+          width: 150,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: const Color.fromRGBO(238, 238, 238, 1)
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(val),
+                  Text(widget.measureItem)
+                ],
+              ),
+              Text(
+                dateFormat.format(widget.items[index].date)
+              )
+            ]
+          ),
+        );
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(),
+      trackballBehavior: _trackballBehavior,
+      enableAxisAnimation: true,
       series: <CartesianSeries>[
-        if(items.isNotEmpty && items[0].value.innerData.length > 1)
+        if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
           RangeColumnSeries<ChartData, DateTime>(
             dataSource: chartData,
             width: 0.23,
@@ -66,7 +134,7 @@ class DiaryGraph extends StatelessWidget {
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
         ),
-        if(items.isNotEmpty && items[0].value.innerData.length > 1) 
+        if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1) 
           SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
             markerSettings: const MarkerSettings(

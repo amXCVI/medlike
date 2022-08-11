@@ -29,6 +29,8 @@ class DiaryView extends StatelessWidget {
           items: diaryModel.values,
           firstDate: firstDate,
           lastDate: lastDate,
+          measureItem: measureItem,
+          decimalDigits: decimalDigits,
         ),
         DiaryList(
           items: diaryModel.values,
