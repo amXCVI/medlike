@@ -90,4 +90,34 @@ class DiaryCubit extends Cubit<DiaryState> {
     }
   }
 
+  /// Отправить запись
+  void postDiaryEntry({
+    required String date,
+    required String syn,
+    required List<double> values
+  }) async {
+    emit(state.copyWith(
+      updateDiaryStatuses: UpdateDiaryStatuses.loading,
+    ));
+
+    try {
+      final currentSelectedUserId =
+        await UserSecureStorage.getField(AppConstants.selectedUserId);
+
+      await diaryRepository.postDiaryEntry(
+        date: date, 
+        syn: syn,
+        userId: currentSelectedUserId, 
+        values: values
+      );
+
+      emit(state.copyWith(
+        getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.failed,
+      ));
+    }
+  }
 }

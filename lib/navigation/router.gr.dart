@@ -295,8 +295,14 @@ class AppRouter extends _i31.RootStackRouter {
               categoryModel: args.categoryModel));
     },
     DiaryAddRoute.name: (routeData) {
+      final args = routeData.argsAs<DiaryAddRouteArgs>();
       return _i31.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i30.DiaryAddPage());
+          routeData: routeData,
+          child: _i30.DiaryAddPage(
+              key: args.key,
+              title: args.title,
+              measureItem: args.measureItem,
+              paramName: args.paramName));
     }
   };
 
@@ -1137,8 +1143,40 @@ class DiaryRouteArgs {
 
 /// generated route for
 /// [_i30.DiaryAddPage]
-class DiaryAddRoute extends _i31.PageRouteInfo<void> {
-  const DiaryAddRoute() : super(DiaryAddRoute.name, path: '/diary_add');
+class DiaryAddRoute extends _i31.PageRouteInfo<DiaryAddRouteArgs> {
+  DiaryAddRoute(
+      {_i32.Key? key,
+      required String title,
+      required String measureItem,
+      required List<String> paramName})
+      : super(DiaryAddRoute.name,
+            path: '/diary_add',
+            args: DiaryAddRouteArgs(
+                key: key,
+                title: title,
+                measureItem: measureItem,
+                paramName: paramName));
 
   static const String name = 'DiaryAddRoute';
+}
+
+class DiaryAddRouteArgs {
+  const DiaryAddRouteArgs(
+      {this.key,
+      required this.title,
+      required this.measureItem,
+      required this.paramName});
+
+  final _i32.Key? key;
+
+  final String title;
+
+  final String measureItem;
+
+  final List<String> paramName;
+
+  @override
+  String toString() {
+    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, paramName: $paramName}';
+  }
 }

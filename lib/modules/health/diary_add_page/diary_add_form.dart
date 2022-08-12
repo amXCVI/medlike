@@ -1,90 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/modules/health/diary_add_page/diary_date_field.dart';
 
-class DiaryAddForm extends StatefulWidget {
+class DiaryAddForm extends StatelessWidget {
   const DiaryAddForm({
     Key? key,
-    required this.title,
-    this.secondTitle,
-    required this.measureItem
+    required this.formKey,
+    required this.children,
+    required this.onDateChange,
+    required this.onTimeChange
   }) : super(key: key);
 
-  final String title;
-  final String? secondTitle;
-  final String measureItem;
-
-  @override
-  State<DiaryAddForm> createState() => _DiaryAddFormState();
-}
-
-class _DiaryAddFormState extends State<DiaryAddForm> {
-  final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _controller = TextEditingController();
-  late final TextEditingController _dateController = TextEditingController();
-  late final TextEditingController _timeController = TextEditingController();
+  final GlobalKey formKey;
+  final List<Widget> children;
+  final Function(DateTime) onDateChange;
+  final Function(DateTime) onTimeChange;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         children: [
-          FormField(
-            labelText: widget.title, 
-            controller: _controller, 
-            onChange: () {}
-          ),
-          if (widget.secondTitle != null) FormField(
-            labelText: widget.secondTitle!, 
-            controller: _controller, 
-            onChange: () {}
-          ),
-          FormField(
+          ...children,
+          DiaryDateField(
             labelText: 'Дата', 
-            controller: _dateController, 
-            onChange: () {}
+            type:  DiaryDateFieldType.date, 
+            onChange: onDateChange
           ),
-          FormField(
+          DiaryDateField(
             labelText: 'Время', 
-            controller: _timeController, 
-            onChange: () {}
+            type:  DiaryDateFieldType.time, 
+            onChange: onTimeChange
           ),
         ],
       ),
-    );
-  }
-}
-
-class FormField extends StatelessWidget {
-  const FormField({
-    Key? key,
-    required this.labelText,
-    required this.controller,
-    required this.onChange
-  }) : super(key: key);
-
-  final String labelText;
-  final TextEditingController controller;
-  final Function onChange;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Введите пароль', style: Theme.of(context).textTheme.labelMedium),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: TextField(
-            controller: controller,
-            onChanged: (text) => onChange(text),
-            autofocus: false,
-            enableSuggestions: false,
-            autocorrect: false,
-            textInputAction: TextInputAction.done,
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
     );
   }
 }

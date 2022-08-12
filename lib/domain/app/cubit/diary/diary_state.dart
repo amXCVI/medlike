@@ -2,10 +2,13 @@ part of 'diary_cubit.dart';
 
 enum GetDiaryStatuses { initial, loading, success, failed }
 enum GetDiaryCategoriesStatuses { initial, loading, success, failed }
+enum UpdateDiaryStatuses { initial, loading, success, failed }
 
 class DiaryState {
   final GetDiaryStatuses? getDiaryStatuses;
   final GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses;
+  final UpdateDiaryStatuses? updateDiaryStatuses;
+
   final List<DiaryModel>? diariesList;
   final List<DiaryCategoryModel>? diariesCategoriesList;
   final DiaryModel? selectedDiary;
@@ -18,6 +21,7 @@ class DiaryState {
     this.diariesList,
     this.diariesCategoriesList,
     this.selectedDiary,
+    this.updateDiaryStatuses,
     DateTime? dateFrom,
     DateTime? dateTo,
   }) : dateFrom = dateFrom ?? date_utils.DateUtils.lastDayOfMonth(DateTime.now()),
@@ -26,6 +30,7 @@ class DiaryState {
   DiaryState copyWith({
     GetDiaryStatuses? getDiaryStatuses,
     GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses,
+    UpdateDiaryStatuses? updateDiaryStatuses,
     List<DiaryModel>? diariesList,
     List<DiaryCategoryModel>? diariesCategoriesList,
     DiaryModel? selectedDiary,
