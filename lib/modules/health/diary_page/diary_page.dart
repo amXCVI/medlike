@@ -7,8 +7,10 @@ import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_page/diary_chips.dart';
 import 'package:medlike/modules/health/diary_page/diary_skeleton.dart';
 import 'package:medlike/modules/health/diary_page/diary_view.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
+import 'package:auto_route/auto_route.dart';
 
 class DiaryPage extends StatefulWidget {
   const DiaryPage({
@@ -102,6 +104,15 @@ class _DiaryPageState extends State<DiaryPage> {
             ),
           ),
           appBarTitle: widget.title,
+          actionButton: FloatingActionButton.extended(
+            onPressed: () {
+              context.router.navigateNamed(AppRoutes.diaryAdd);
+            },
+            label: Text(
+              'Добавить'.toUpperCase(),
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
         );
       },
     );

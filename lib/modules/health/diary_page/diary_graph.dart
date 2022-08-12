@@ -56,7 +56,6 @@ class _DiaryGraphState extends State<DiaryGraph> {
       tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
       activationMode: ActivationMode.singleTap,
       builder: (context, details) {
-
         if(details.pointIndex == null) {
           return Container();
         }
@@ -67,32 +66,65 @@ class _DiaryGraphState extends State<DiaryGraph> {
           return Container();
         }
 
-        DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
+        DateFormat dateFormat = DateFormat("d MMMM y", 'ru_RU');
         final val = ValueHelper.getStringFromValues(
           widget.items[index].value.innerData, 
           widget.decimalDigits
         );
 
         return Container(
-          height: 50,
-          width: 150,
+          height: 60,
+          width: 110,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: const Color.fromRGBO(238, 238, 238, 1)
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(val),
-                  Text(widget.measureItem)
-                ],
-              ),
-              Text(
-                dateFormat.format(widget.items[index].date)
-              )
-            ]
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      val,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 28,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 2,
+                        bottom: 5
+                      ),
+                      child: Text(
+                        widget.measureItem,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Text(
+                    dateFormat.format(
+                      widget.items[index].date,
+                    ),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Color.fromRGBO(158, 157, 157, 1)
+                    ),
+                  ),
+                )
+              ]
+            ),
           ),
         );
       },
@@ -105,8 +137,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
     return SizedBox(
       height: 200,
-      width: MediaQuery.of(context).size.width, /// Использование фиксированной ширины тут находится за гранью моего понимания,
-      /// Но без этого не работает 
+      width: MediaQuery.of(context).size.width,
       child: SfCartesianChart(
         primaryXAxis: DateTimeAxis(),
         trackballBehavior: _trackballBehavior,

@@ -34,25 +34,36 @@ class DiaryValue extends StatelessWidget {
             fontSize: 14,
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              val,
-              textAlign: TextAlign.end,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 28,
-              ),
-            ), 
-            Text(
-              measureItem,
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-              ),
-            )
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 6
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                val,
+                textAlign: TextAlign.end,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28,
+                ),
+              ), 
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 4,
+                  bottom: 5
+                ),
+                child: Text(
+                  measureItem,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         Text(
           ValueHelper.getPeriodString(currentValue.date, grouping),

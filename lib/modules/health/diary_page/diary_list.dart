@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 
 class DiaryList extends StatelessWidget {
@@ -18,26 +18,52 @@ class DiaryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.3,
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const Divider(
+          color: Color.fromRGBO(158, 157, 157, 0.4),
+        ),
         shrinkWrap: true,
         itemCount: items.length,
         itemBuilder: (
           (context, index) {
-            DateFormat dateFormat = DateFormat("EE, d MM, h/m", 'ru_RU');
             final val = ValueHelper.getStringFromValues(
               items[index].value.innerData, 
               decimalDigits
             );
-      
-            return ListTile(
-              title: Text(
-                '$val $measureItem'
-              ),
-              subtitle: Text(
-                dateFormat.format(items[index].date)
-              ),
+
+            return Slidable(
+              key: const ValueKey(0),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      flex: 2,
+                      onPressed: (ctx) {},
+                      backgroundColor: const Color(0xFFFE4A49),
+                      icon: Icons.delete,
+                      label: 'Delete',
+                    ),
+                  ],
+                ),
+
+              child: ListTile(
+                title: Text(
+                  '$val $measureItem',
+                  style: const TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+                subtitle: Text(
+                  ValueHelper.getDateInDiaryItem(items[index].date),
+                  style: const TextStyle(
+                    color: Color.fromRGBO(158, 157, 157, 1),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
+              )
             );
           } 
         )

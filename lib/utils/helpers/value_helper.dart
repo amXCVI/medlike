@@ -35,7 +35,7 @@ class ValueHelper {
           microseconds: -date.microsecond
         ));
 
-        return 'Сегодня, ${dateFormat.format(fromHour)}-${dateFormat.format(toHour)}';
+        return 'Сегодня, ${dateFormat.format(fromHour)} - ${dateFormat.format(toHour)}';
       case 'Day':
         return 'Сегодня';
       case 'Week':
@@ -52,5 +52,9 @@ class ValueHelper {
       default:
         return '';
     }
+  }
+
+  static getDateInDiaryItem(DateTime date) {
+    return DateFormat('EEEE, d MMM, hh:mm').format(date); /// e.g Thursday
   }
 }

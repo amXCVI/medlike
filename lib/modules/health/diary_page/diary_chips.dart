@@ -26,8 +26,8 @@ class DiaryChips extends StatelessWidget {
         return SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 100,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DiaryChip(grouping: 'Hour', title: 'Час', onTap: tap, selected: selectedGroup),
               DiaryChip(grouping: 'Day', title: 'День', onTap: tap, selected: selectedGroup),
@@ -61,7 +61,17 @@ class DiaryChip extends StatelessWidget {
       onTap: () => onTap(grouping),
       child: Chip(
         backgroundColor: selected == grouping ? const Color.fromRGBO(60, 148, 168, 1) : Colors.white,
-        label: Text(title),
+        label: SizedBox(
+          width: MediaQuery.of(context).size.width / 7,
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: selected == grouping ? Colors.white : Colors.black,
+            ),
+          )
+        ),
+        elevation: 3,
       ),
     );
   }
