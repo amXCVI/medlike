@@ -10,10 +10,10 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i31;
-import 'package:flutter/material.dart' as _i32;
-import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i34;
-import 'package:medlike/data/models/diary_models/diary_models.dart' as _i35;
+import 'package:auto_route/auto_route.dart' as _i32;
+import 'package:flutter/material.dart' as _i33;
+import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i35;
+import 'package:medlike/data/models/diary_models/diary_models.dart' as _i36;
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart'
     as _i24;
 import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart'
@@ -24,6 +24,7 @@ import 'package:medlike/modules/appointments/appointments_page.dart' as _i8;
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart'
     as _i30;
 import 'package:medlike/modules/health/diary_page/diary_page.dart' as _i29;
+import 'package:medlike/modules/health/filters_page/filters_page.dart' as _i31;
 import 'package:medlike/modules/health/health_page/health_page.dart' as _i28;
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart'
     as _i4;
@@ -64,83 +65,83 @@ import 'package:medlike/modules/subscribe/services_list/services_list_page.dart'
     as _i11;
 import 'package:medlike/modules/subscribe/specialisations_list/specialisations_list_page.dart'
     as _i13;
-import 'package:medlike/navigation/guards.dart' as _i33;
+import 'package:medlike/navigation/guards.dart' as _i34;
 
-class AppRouter extends _i31.RootStackRouter {
+class AppRouter extends _i32.RootStackRouter {
   AppRouter(
-      {_i32.GlobalKey<_i32.NavigatorState>? navigatorKey,
+      {_i33.GlobalKey<_i33.NavigatorState>? navigatorKey,
       required this.checkIsSavedPinCode,
       required this.checkIsAuthUser})
       : super(navigatorKey);
 
-  final _i33.CheckIsSavedPinCode checkIsSavedPinCode;
+  final _i34.CheckIsSavedPinCode checkIsSavedPinCode;
 
-  final _i33.CheckIsAuthUser checkIsAuthUser;
+  final _i34.CheckIsAuthUser checkIsAuthUser;
 
   @override
-  final Map<String, _i31.PageFactory> pagesMap = {
+  final Map<String, _i32.PageFactory> pagesMap = {
     StartPhoneNumberRoute.name: (routeData) {
       final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
           orElse: () => const StartPhoneNumberRouteArgs());
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i1.StartPhoneNumberPage(
               key: args.key, isDeletingProfile: args.isDeletingProfile));
     },
     PasswordRoute.name: (routeData) {
       final args = routeData.argsAs<PasswordRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child:
               _i2.PasswordPage(key: args.key, phoneNumber: args.phoneNumber));
     },
     CreatePinCodeRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i3.CreatePinCodePage());
     },
     CheckPinCodeRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i4.CheckPinCodePage());
     },
     RecoverPasswordSmsRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordSmsRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i5.RecoverPasswordSmsPage(
               key: args.key, phoneNumber: args.phoneNumber));
     },
     RecoverPasswordNewRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordNewRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i6.RecoverPasswordNewPage(
               key: args.key, smsToken: args.smsToken));
     },
     MainRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i7.MainPage());
     },
     AppointmentsRoute.name: (routeData) {
       final args = routeData.argsAs<AppointmentsRouteArgs>(
           orElse: () => const AppointmentsRouteArgs());
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child:
               _i8.AppointmentsPage(key: args.key, isRefresh: args.isRefresh));
     },
     ProfilesListRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i9.ProfilesListPage());
     },
     ClinicsListRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i10.ClinicsListPage(key: args.key, userId: args.userId));
     },
     ServicesListRoute.name: (routeData) {
       final args = routeData.argsAs<ServicesListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i11.ServicesListPage(
               key: args.key,
@@ -150,7 +151,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     ResearchesListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchesListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i12.ResearchesListPage(
               key: args.key,
@@ -161,7 +162,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     SpecialisationsListRoute.name: (routeData) {
       final args = routeData.argsAs<SpecialisationsListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i13.SpecialisationsListPage(
               key: args.key,
@@ -172,7 +173,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     DoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<DoctorsListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i14.DoctorsListPage(
               key: args.key,
@@ -185,7 +186,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     ResearchCabinetsListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchCabinetsListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i15.ResearchCabinetsListPage(
               key: args.key,
@@ -197,7 +198,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     FavoriteDoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<FavoriteDoctorsListRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i16.FavoriteDoctorsListPage(
               key: args.key,
@@ -207,7 +208,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     ScheduleRoute.name: (routeData) {
       final args = routeData.argsAs<ScheduleRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i17.SchedulePage(
               key: args.key,
@@ -226,18 +227,18 @@ class AppRouter extends _i31.RootStackRouter {
     },
     ConfirmationSubscribeRoute.name: (routeData) {
       final args = routeData.argsAs<ConfirmationSubscribeRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i18.ConfirmationSubscribePage(
               key: args.key, userId: args.userId));
     },
     MedcardProfilesListRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i19.MedcardProfilesListPage());
     },
     MedcardRoute.name: (routeData) {
       final args = routeData.argsAs<MedcardRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i20.MedcardPage(
               key: args.key,
@@ -246,48 +247,48 @@ class AppRouter extends _i31.RootStackRouter {
     },
     FilesRoute.name: (routeData) {
       final args = routeData.argsAs<FilesRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i21.FilesPage(key: args.key, userId: args.userId));
     },
     SettingsRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i22.SettingsPage());
     },
     AgreementsRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i23.AgreementsPage());
     },
     AllClinicsListRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i24.AllClinicsListPage());
     },
     DetailClinicRoute.name: (routeData) {
       final args = routeData.argsAs<DetailClinicRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i25.DetailClinicPage(
               key: args.key, selectedClinic: args.selectedClinic));
     },
     PriceRoute.name: (routeData) {
       final args = routeData.argsAs<PriceRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i26.PricePage(key: args.key, clinicId: args.clinicId));
     },
     SalesRoute.name: (routeData) {
       final args = routeData.argsAs<SalesRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i27.SalesPage(key: args.key, clinicId: args.clinicId));
     },
     HealthRoute.name: (routeData) {
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i28.HealthPage());
     },
     DiaryRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i29.DiaryPage(
               key: args.key,
@@ -296,84 +297,95 @@ class AppRouter extends _i31.RootStackRouter {
     },
     DiaryAddRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryAddRouteArgs>();
-      return _i31.AdaptivePage<dynamic>(
+      return _i32.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i30.DiaryAddPage(
               key: args.key,
               title: args.title,
               measureItem: args.measureItem,
               paramName: args.paramName));
+    },
+    FiltersRoute.name: (routeData) {
+      return _i32.CustomPage<dynamic>(
+          routeData: routeData,
+          child: const _i31.FiltersPage(),
+          transitionsBuilder: _i32.TransitionsBuilders.slideBottom,
+          durationInMilliseconds: 400,
+          opaque: true,
+          barrierDismissible: false);
     }
   };
 
   @override
-  List<_i31.RouteConfig> get routes => [
-        _i31.RouteConfig('/#redirect',
+  List<_i32.RouteConfig> get routes => [
+        _i32.RouteConfig('/#redirect',
             path: '/', redirectTo: '/main', fullMatch: true),
-        _i31.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
-        _i31.RouteConfig(PasswordRoute.name, path: '/login_password'),
-        _i31.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
-        _i31.RouteConfig(CheckPinCodeRoute.name,
+        _i32.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
+        _i32.RouteConfig(PasswordRoute.name, path: '/login_password'),
+        _i32.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
+        _i32.RouteConfig(CheckPinCodeRoute.name,
             path: '/login_pin_code_check', guards: [checkIsSavedPinCode]),
-        _i31.RouteConfig(RecoverPasswordSmsRoute.name,
+        _i32.RouteConfig(RecoverPasswordSmsRoute.name,
             path: '/login_recover_password_sms'),
-        _i31.RouteConfig(RecoverPasswordNewRoute.name,
+        _i32.RouteConfig(RecoverPasswordNewRoute.name,
             path: '/login_recover_password_new'),
-        _i31.RouteConfig(MainRoute.name,
+        _i32.RouteConfig(MainRoute.name,
             path: '/main', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(AppointmentsRoute.name,
+        _i32.RouteConfig(AppointmentsRoute.name,
             path: '/my_appointments', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ProfilesListRoute.name,
+        _i32.RouteConfig(ProfilesListRoute.name,
             path: '/subscribe_profiles', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ClinicsListRoute.name,
+        _i32.RouteConfig(ClinicsListRoute.name,
             path: '/subscribe_clinics', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ServicesListRoute.name,
+        _i32.RouteConfig(ServicesListRoute.name,
             path: '/subscribe_services', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ResearchesListRoute.name,
+        _i32.RouteConfig(ResearchesListRoute.name,
             path: '/subscribe_researches', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(SpecialisationsListRoute.name,
+        _i32.RouteConfig(SpecialisationsListRoute.name,
             path: '/subscribe_specialisations', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(DoctorsListRoute.name,
+        _i32.RouteConfig(DoctorsListRoute.name,
             path: '/subscribe_doctors', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ResearchCabinetsListRoute.name,
+        _i32.RouteConfig(ResearchCabinetsListRoute.name,
             path: '/subscribe_research_cabinets', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(FavoriteDoctorsListRoute.name,
+        _i32.RouteConfig(FavoriteDoctorsListRoute.name,
             path: '/subscribe_favorite_doctors', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ScheduleRoute.name,
+        _i32.RouteConfig(ScheduleRoute.name,
             path: '/subscribe_schedule', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(ConfirmationSubscribeRoute.name,
+        _i32.RouteConfig(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(MedcardProfilesListRoute.name,
+        _i32.RouteConfig(MedcardProfilesListRoute.name,
             path: '/medcard', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(MedcardRoute.name,
+        _i32.RouteConfig(MedcardRoute.name,
             path: '/medcard_files_list', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(FilesRoute.name,
+        _i32.RouteConfig(FilesRoute.name,
             path: '/medcard_user_files_list', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(SettingsRoute.name,
+        _i32.RouteConfig(SettingsRoute.name,
             path: '/settings', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(AgreementsRoute.name, path: '/settings_agreements'),
-        _i31.RouteConfig(AllClinicsListRoute.name,
+        _i32.RouteConfig(AgreementsRoute.name, path: '/settings_agreements'),
+        _i32.RouteConfig(AllClinicsListRoute.name,
             path: '/clinic_info', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(DetailClinicRoute.name,
+        _i32.RouteConfig(DetailClinicRoute.name,
             path: '/clinic_info_details', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(PriceRoute.name,
+        _i32.RouteConfig(PriceRoute.name,
             path: '/clinic_info_price', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(SalesRoute.name,
+        _i32.RouteConfig(SalesRoute.name,
             path: '/clinic_info_sales', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(HealthRoute.name,
+        _i32.RouteConfig(HealthRoute.name,
             path: '/health', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(DiaryRoute.name,
+        _i32.RouteConfig(DiaryRoute.name,
             path: '/diary', guards: [checkIsAuthUser]),
-        _i31.RouteConfig(DiaryAddRoute.name,
-            path: '/diary_add', guards: [checkIsAuthUser])
+        _i32.RouteConfig(DiaryAddRoute.name,
+            path: '/diary_add', guards: [checkIsAuthUser]),
+        _i32.RouteConfig(FiltersRoute.name,
+            path: '/health_filters', guards: [checkIsAuthUser])
       ];
 }
 
 /// generated route for
 /// [_i1.StartPhoneNumberPage]
 class StartPhoneNumberRoute
-    extends _i31.PageRouteInfo<StartPhoneNumberRouteArgs> {
-  StartPhoneNumberRoute({_i32.Key? key, bool isDeletingProfile = false})
+    extends _i32.PageRouteInfo<StartPhoneNumberRouteArgs> {
+  StartPhoneNumberRoute({_i33.Key? key, bool isDeletingProfile = false})
       : super(StartPhoneNumberRoute.name,
             path: '/login_phone',
             args: StartPhoneNumberRouteArgs(
@@ -385,7 +397,7 @@ class StartPhoneNumberRoute
 class StartPhoneNumberRouteArgs {
   const StartPhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final bool isDeletingProfile;
 
@@ -397,8 +409,8 @@ class StartPhoneNumberRouteArgs {
 
 /// generated route for
 /// [_i2.PasswordPage]
-class PasswordRoute extends _i31.PageRouteInfo<PasswordRouteArgs> {
-  PasswordRoute({_i32.Key? key, required String phoneNumber})
+class PasswordRoute extends _i32.PageRouteInfo<PasswordRouteArgs> {
+  PasswordRoute({_i33.Key? key, required String phoneNumber})
       : super(PasswordRoute.name,
             path: '/login_password',
             args: PasswordRouteArgs(key: key, phoneNumber: phoneNumber));
@@ -409,7 +421,7 @@ class PasswordRoute extends _i31.PageRouteInfo<PasswordRouteArgs> {
 class PasswordRouteArgs {
   const PasswordRouteArgs({this.key, required this.phoneNumber});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String phoneNumber;
 
@@ -421,7 +433,7 @@ class PasswordRouteArgs {
 
 /// generated route for
 /// [_i3.CreatePinCodePage]
-class CreatePinCodeRoute extends _i31.PageRouteInfo<void> {
+class CreatePinCodeRoute extends _i32.PageRouteInfo<void> {
   const CreatePinCodeRoute()
       : super(CreatePinCodeRoute.name, path: '/login_pin_code');
 
@@ -430,7 +442,7 @@ class CreatePinCodeRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.CheckPinCodePage]
-class CheckPinCodeRoute extends _i31.PageRouteInfo<void> {
+class CheckPinCodeRoute extends _i32.PageRouteInfo<void> {
   const CheckPinCodeRoute()
       : super(CheckPinCodeRoute.name, path: '/login_pin_code_check');
 
@@ -440,8 +452,8 @@ class CheckPinCodeRoute extends _i31.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.RecoverPasswordSmsPage]
 class RecoverPasswordSmsRoute
-    extends _i31.PageRouteInfo<RecoverPasswordSmsRouteArgs> {
-  RecoverPasswordSmsRoute({_i32.Key? key, required String phoneNumber})
+    extends _i32.PageRouteInfo<RecoverPasswordSmsRouteArgs> {
+  RecoverPasswordSmsRoute({_i33.Key? key, required String phoneNumber})
       : super(RecoverPasswordSmsRoute.name,
             path: '/login_recover_password_sms',
             args: RecoverPasswordSmsRouteArgs(
@@ -453,7 +465,7 @@ class RecoverPasswordSmsRoute
 class RecoverPasswordSmsRouteArgs {
   const RecoverPasswordSmsRouteArgs({this.key, required this.phoneNumber});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String phoneNumber;
 
@@ -466,8 +478,8 @@ class RecoverPasswordSmsRouteArgs {
 /// generated route for
 /// [_i6.RecoverPasswordNewPage]
 class RecoverPasswordNewRoute
-    extends _i31.PageRouteInfo<RecoverPasswordNewRouteArgs> {
-  RecoverPasswordNewRoute({_i32.Key? key, required String smsToken})
+    extends _i32.PageRouteInfo<RecoverPasswordNewRouteArgs> {
+  RecoverPasswordNewRoute({_i33.Key? key, required String smsToken})
       : super(RecoverPasswordNewRoute.name,
             path: '/login_recover_password_new',
             args: RecoverPasswordNewRouteArgs(key: key, smsToken: smsToken));
@@ -478,7 +490,7 @@ class RecoverPasswordNewRoute
 class RecoverPasswordNewRouteArgs {
   const RecoverPasswordNewRouteArgs({this.key, required this.smsToken});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String smsToken;
 
@@ -490,7 +502,7 @@ class RecoverPasswordNewRouteArgs {
 
 /// generated route for
 /// [_i7.MainPage]
-class MainRoute extends _i31.PageRouteInfo<void> {
+class MainRoute extends _i32.PageRouteInfo<void> {
   const MainRoute() : super(MainRoute.name, path: '/main');
 
   static const String name = 'MainRoute';
@@ -498,8 +510,8 @@ class MainRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.AppointmentsPage]
-class AppointmentsRoute extends _i31.PageRouteInfo<AppointmentsRouteArgs> {
-  AppointmentsRoute({_i32.Key? key, bool? isRefresh = false})
+class AppointmentsRoute extends _i32.PageRouteInfo<AppointmentsRouteArgs> {
+  AppointmentsRoute({_i33.Key? key, bool? isRefresh = false})
       : super(AppointmentsRoute.name,
             path: '/my_appointments',
             args: AppointmentsRouteArgs(key: key, isRefresh: isRefresh));
@@ -510,7 +522,7 @@ class AppointmentsRoute extends _i31.PageRouteInfo<AppointmentsRouteArgs> {
 class AppointmentsRouteArgs {
   const AppointmentsRouteArgs({this.key, this.isRefresh = false});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final bool? isRefresh;
 
@@ -522,7 +534,7 @@ class AppointmentsRouteArgs {
 
 /// generated route for
 /// [_i9.ProfilesListPage]
-class ProfilesListRoute extends _i31.PageRouteInfo<void> {
+class ProfilesListRoute extends _i32.PageRouteInfo<void> {
   const ProfilesListRoute()
       : super(ProfilesListRoute.name, path: '/subscribe_profiles');
 
@@ -531,8 +543,8 @@ class ProfilesListRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.ClinicsListPage]
-class ClinicsListRoute extends _i31.PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({_i32.Key? key, required String userId})
+class ClinicsListRoute extends _i32.PageRouteInfo<ClinicsListRouteArgs> {
+  ClinicsListRoute({_i33.Key? key, required String userId})
       : super(ClinicsListRoute.name,
             path: '/subscribe_clinics',
             args: ClinicsListRouteArgs(key: key, userId: userId));
@@ -543,7 +555,7 @@ class ClinicsListRoute extends _i31.PageRouteInfo<ClinicsListRouteArgs> {
 class ClinicsListRouteArgs {
   const ClinicsListRouteArgs({this.key, required this.userId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -555,9 +567,9 @@ class ClinicsListRouteArgs {
 
 /// generated route for
 /// [_i11.ServicesListPage]
-class ServicesListRoute extends _i31.PageRouteInfo<ServicesListRouteArgs> {
+class ServicesListRoute extends _i32.PageRouteInfo<ServicesListRouteArgs> {
   ServicesListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -579,7 +591,7 @@ class ServicesListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -595,9 +607,9 @@ class ServicesListRouteArgs {
 
 /// generated route for
 /// [_i12.ResearchesListPage]
-class ResearchesListRoute extends _i31.PageRouteInfo<ResearchesListRouteArgs> {
+class ResearchesListRoute extends _i32.PageRouteInfo<ResearchesListRouteArgs> {
   ResearchesListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -622,7 +634,7 @@ class ResearchesListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -641,9 +653,9 @@ class ResearchesListRouteArgs {
 /// generated route for
 /// [_i13.SpecialisationsListPage]
 class SpecialisationsListRoute
-    extends _i31.PageRouteInfo<SpecialisationsListRouteArgs> {
+    extends _i32.PageRouteInfo<SpecialisationsListRouteArgs> {
   SpecialisationsListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -668,7 +680,7 @@ class SpecialisationsListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -686,9 +698,9 @@ class SpecialisationsListRouteArgs {
 
 /// generated route for
 /// [_i14.DoctorsListPage]
-class DoctorsListRoute extends _i31.PageRouteInfo<DoctorsListRouteArgs> {
+class DoctorsListRoute extends _i32.PageRouteInfo<DoctorsListRouteArgs> {
   DoctorsListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -719,7 +731,7 @@ class DoctorsListRouteArgs {
       required this.specialisationId,
       required this.specialisationName});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -742,9 +754,9 @@ class DoctorsListRouteArgs {
 /// generated route for
 /// [_i15.ResearchCabinetsListPage]
 class ResearchCabinetsListRoute
-    extends _i31.PageRouteInfo<ResearchCabinetsListRouteArgs> {
+    extends _i32.PageRouteInfo<ResearchCabinetsListRouteArgs> {
   ResearchCabinetsListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -772,7 +784,7 @@ class ResearchCabinetsListRouteArgs {
       required this.categoryTypeId,
       required this.researchIds});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -793,9 +805,9 @@ class ResearchCabinetsListRouteArgs {
 /// generated route for
 /// [_i16.FavoriteDoctorsListPage]
 class FavoriteDoctorsListRoute
-    extends _i31.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
+    extends _i32.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
   FavoriteDoctorsListRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -817,7 +829,7 @@ class FavoriteDoctorsListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -833,9 +845,9 @@ class FavoriteDoctorsListRouteArgs {
 
 /// generated route for
 /// [_i17.SchedulePage]
-class ScheduleRoute extends _i31.PageRouteInfo<ScheduleRouteArgs> {
+class ScheduleRoute extends _i32.PageRouteInfo<ScheduleRouteArgs> {
   ScheduleRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String pageTitle,
       String pageSubtitle = '',
       required String userId,
@@ -884,7 +896,7 @@ class ScheduleRouteArgs {
       required this.isAny,
       this.isFavorite = false});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String pageTitle;
 
@@ -919,8 +931,8 @@ class ScheduleRouteArgs {
 /// generated route for
 /// [_i18.ConfirmationSubscribePage]
 class ConfirmationSubscribeRoute
-    extends _i31.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
-  ConfirmationSubscribeRoute({_i32.Key? key, required String userId})
+    extends _i32.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
+  ConfirmationSubscribeRoute({_i33.Key? key, required String userId})
       : super(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm',
             args: ConfirmationSubscribeRouteArgs(key: key, userId: userId));
@@ -931,7 +943,7 @@ class ConfirmationSubscribeRoute
 class ConfirmationSubscribeRouteArgs {
   const ConfirmationSubscribeRouteArgs({this.key, required this.userId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -943,7 +955,7 @@ class ConfirmationSubscribeRouteArgs {
 
 /// generated route for
 /// [_i19.MedcardProfilesListPage]
-class MedcardProfilesListRoute extends _i31.PageRouteInfo<void> {
+class MedcardProfilesListRoute extends _i32.PageRouteInfo<void> {
   const MedcardProfilesListRoute()
       : super(MedcardProfilesListRoute.name, path: '/medcard');
 
@@ -952,9 +964,9 @@ class MedcardProfilesListRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i20.MedcardPage]
-class MedcardRoute extends _i31.PageRouteInfo<MedcardRouteArgs> {
+class MedcardRoute extends _i32.PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute(
-      {_i32.Key? key, required String userId, required bool isChildrenPage})
+      {_i33.Key? key, required String userId, required bool isChildrenPage})
       : super(MedcardRoute.name,
             path: '/medcard_files_list',
             args: MedcardRouteArgs(
@@ -967,7 +979,7 @@ class MedcardRouteArgs {
   const MedcardRouteArgs(
       {this.key, required this.userId, required this.isChildrenPage});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -981,8 +993,8 @@ class MedcardRouteArgs {
 
 /// generated route for
 /// [_i21.FilesPage]
-class FilesRoute extends _i31.PageRouteInfo<FilesRouteArgs> {
-  FilesRoute({_i32.Key? key, required String userId})
+class FilesRoute extends _i32.PageRouteInfo<FilesRouteArgs> {
+  FilesRoute({_i33.Key? key, required String userId})
       : super(FilesRoute.name,
             path: '/medcard_user_files_list',
             args: FilesRouteArgs(key: key, userId: userId));
@@ -993,7 +1005,7 @@ class FilesRoute extends _i31.PageRouteInfo<FilesRouteArgs> {
 class FilesRouteArgs {
   const FilesRouteArgs({this.key, required this.userId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String userId;
 
@@ -1005,7 +1017,7 @@ class FilesRouteArgs {
 
 /// generated route for
 /// [_i22.SettingsPage]
-class SettingsRoute extends _i31.PageRouteInfo<void> {
+class SettingsRoute extends _i32.PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
 
   static const String name = 'SettingsRoute';
@@ -1013,7 +1025,7 @@ class SettingsRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i23.AgreementsPage]
-class AgreementsRoute extends _i31.PageRouteInfo<void> {
+class AgreementsRoute extends _i32.PageRouteInfo<void> {
   const AgreementsRoute()
       : super(AgreementsRoute.name, path: '/settings_agreements');
 
@@ -1022,7 +1034,7 @@ class AgreementsRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i24.AllClinicsListPage]
-class AllClinicsListRoute extends _i31.PageRouteInfo<void> {
+class AllClinicsListRoute extends _i32.PageRouteInfo<void> {
   const AllClinicsListRoute()
       : super(AllClinicsListRoute.name, path: '/clinic_info');
 
@@ -1031,8 +1043,8 @@ class AllClinicsListRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i25.DetailClinicPage]
-class DetailClinicRoute extends _i31.PageRouteInfo<DetailClinicRouteArgs> {
-  DetailClinicRoute({_i32.Key? key, required _i34.ClinicModel selectedClinic})
+class DetailClinicRoute extends _i32.PageRouteInfo<DetailClinicRouteArgs> {
+  DetailClinicRoute({_i33.Key? key, required _i35.ClinicModel selectedClinic})
       : super(DetailClinicRoute.name,
             path: '/clinic_info_details',
             args: DetailClinicRouteArgs(
@@ -1044,9 +1056,9 @@ class DetailClinicRoute extends _i31.PageRouteInfo<DetailClinicRouteArgs> {
 class DetailClinicRouteArgs {
   const DetailClinicRouteArgs({this.key, required this.selectedClinic});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
-  final _i34.ClinicModel selectedClinic;
+  final _i35.ClinicModel selectedClinic;
 
   @override
   String toString() {
@@ -1056,8 +1068,8 @@ class DetailClinicRouteArgs {
 
 /// generated route for
 /// [_i26.PricePage]
-class PriceRoute extends _i31.PageRouteInfo<PriceRouteArgs> {
-  PriceRoute({_i32.Key? key, required String clinicId})
+class PriceRoute extends _i32.PageRouteInfo<PriceRouteArgs> {
+  PriceRoute({_i33.Key? key, required String clinicId})
       : super(PriceRoute.name,
             path: '/clinic_info_price',
             args: PriceRouteArgs(key: key, clinicId: clinicId));
@@ -1068,7 +1080,7 @@ class PriceRoute extends _i31.PageRouteInfo<PriceRouteArgs> {
 class PriceRouteArgs {
   const PriceRouteArgs({this.key, required this.clinicId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String clinicId;
 
@@ -1080,8 +1092,8 @@ class PriceRouteArgs {
 
 /// generated route for
 /// [_i27.SalesPage]
-class SalesRoute extends _i31.PageRouteInfo<SalesRouteArgs> {
-  SalesRoute({_i32.Key? key, required String clinicId})
+class SalesRoute extends _i32.PageRouteInfo<SalesRouteArgs> {
+  SalesRoute({_i33.Key? key, required String clinicId})
       : super(SalesRoute.name,
             path: '/clinic_info_sales',
             args: SalesRouteArgs(key: key, clinicId: clinicId));
@@ -1092,7 +1104,7 @@ class SalesRoute extends _i31.PageRouteInfo<SalesRouteArgs> {
 class SalesRouteArgs {
   const SalesRouteArgs({this.key, required this.clinicId});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String clinicId;
 
@@ -1104,7 +1116,7 @@ class SalesRouteArgs {
 
 /// generated route for
 /// [_i28.HealthPage]
-class HealthRoute extends _i31.PageRouteInfo<void> {
+class HealthRoute extends _i32.PageRouteInfo<void> {
   const HealthRoute() : super(HealthRoute.name, path: '/health');
 
   static const String name = 'HealthRoute';
@@ -1112,11 +1124,11 @@ class HealthRoute extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i29.DiaryPage]
-class DiaryRoute extends _i31.PageRouteInfo<DiaryRouteArgs> {
+class DiaryRoute extends _i32.PageRouteInfo<DiaryRouteArgs> {
   DiaryRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String title,
-      required _i35.DiaryCategoryModel categoryModel})
+      required _i36.DiaryCategoryModel categoryModel})
       : super(DiaryRoute.name,
             path: '/diary',
             args: DiaryRouteArgs(
@@ -1129,11 +1141,11 @@ class DiaryRouteArgs {
   const DiaryRouteArgs(
       {this.key, required this.title, required this.categoryModel});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String title;
 
-  final _i35.DiaryCategoryModel categoryModel;
+  final _i36.DiaryCategoryModel categoryModel;
 
   @override
   String toString() {
@@ -1143,9 +1155,9 @@ class DiaryRouteArgs {
 
 /// generated route for
 /// [_i30.DiaryAddPage]
-class DiaryAddRoute extends _i31.PageRouteInfo<DiaryAddRouteArgs> {
+class DiaryAddRoute extends _i32.PageRouteInfo<DiaryAddRouteArgs> {
   DiaryAddRoute(
-      {_i32.Key? key,
+      {_i33.Key? key,
       required String title,
       required String measureItem,
       required List<String> paramName})
@@ -1167,7 +1179,7 @@ class DiaryAddRouteArgs {
       required this.measureItem,
       required this.paramName});
 
-  final _i32.Key? key;
+  final _i33.Key? key;
 
   final String title;
 
@@ -1179,4 +1191,12 @@ class DiaryAddRouteArgs {
   String toString() {
     return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, paramName: $paramName}';
   }
+}
+
+/// generated route for
+/// [_i31.FiltersPage]
+class FiltersRoute extends _i32.PageRouteInfo<void> {
+  const FiltersRoute() : super(FiltersRoute.name, path: '/health_filters');
+
+  static const String name = 'FiltersRoute';
 }

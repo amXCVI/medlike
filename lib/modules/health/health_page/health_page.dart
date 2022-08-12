@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/modules/health/health_page/health_list.dart';
 import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
@@ -59,6 +62,16 @@ class HealthPage extends StatelessWidget {
           }
         },
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            context.router.push(
+              FiltersRoute()
+            );
+          },
+          icon: SvgPicture.asset('assets/icons/app_bar/filters_icon.svg')
+        )
+      ],
       appBarTitle: 'Заполярье',
     );
   }
