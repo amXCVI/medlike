@@ -26,4 +26,8 @@ class AppConstants {
 
   // Id документа, который проверяется и подтверждается при первой авторизации
   static const int actualUserAgreement = 4;
+
+  // Ключ для хранения предпочитаемого метода авторизации
+  static const String useBiometricMethodAuthentication =
+      'useBiometricMethodAuthentication';
 }

@@ -1,24 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class PinCodeView extends StatefulWidget {
-  const PinCodeView({Key? key, required this.setPinCode}) : super(key: key);
+  const PinCodeView(
+      {Key? key, required this.setPinCode, required this.handleBiometricMethod})
+      : super(key: key);
   final void Function(List<int> pin) setPinCode;
+  final void Function() handleBiometricMethod;
 
   @override
   State<PinCodeView> createState() => _PinCodeViewState();
 }
 
 class _PinCodeViewState extends State<PinCodeView> {
-  late final List<int> pointsArray;
+  late List<int> pointsArray;
+  final List<int> initPointsArray = [-1, -1, -1, -1, -1];
+  late bool isSupportedAndEnabledBiometric = true;
 
   @override
   void initState() {
+    Future.delayed(Duration.zero, () async {
+      String authMethod =
+          '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
+      bool isSupportedBiometric = await AuthService.canCheckBiometrics();
+      if (authMethod == 'false' || !isSupportedBiometric) {
+        isSupportedAndEnabledBiometric = false;
+      } else {
+        isSupportedAndEnabledBiometric = true;
+      }
+    });
+    pointsArray = initPointsArray;
     super.initState();
-    pointsArray = [-1, -1, -1, -1, -1];
   }
 
   void onChangePointsArray(PinCodeKeyboardItem e) {
@@ -31,6 +49,11 @@ class _PinCodeViewState extends State<PinCodeView> {
           pointsArray[firstEmptyIndex] = e.label;
         });
       }
+    } else if (e.buttonType == PinCodeKeyboardTypes.biometric) {
+      widget.handleBiometricMethod();
+      setState(() {
+        pointsArray = initPointsArray;
+      });
     } else {
       if (firstEmptyIndex != -1 && firstEmptyIndex != 0) {
         setState(() {
@@ -46,7 +69,7 @@ class _PinCodeViewState extends State<PinCodeView> {
     if (firstEmptyIndex == pointsArray.length - 1) {
       widget.setPinCode(pointsArray);
       setState(() {
-        pointsArray = [];
+        pointsArray = initPointsArray;
       });
       return;
     }
@@ -90,43 +113,49 @@ class _PinCodeViewState extends State<PinCodeView> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             children: [
               ...keyboardList
-                  .map((item) => item.buttonType == PinCodeKeyboardTypes.empty
-                      ? const SizedBox()
-                      : InkWell(
-                          onTap: () => {onChangePointsArray(item)},
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: item.buttonType ==
-                                    PinCodeKeyboardTypes.svgPicture
-                                ? Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(
+                  .map((item) => InkWell(
+                        onTap: () => {onChangePointsArray(item)},
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: item.buttonType ==
+                                  PinCodeKeyboardTypes.svgPicture
+                              ? Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SvgPicture.asset(item.imgSrc as String,
+                                      width: 34),
+                                )
+                              : item.buttonType ==
+                                          PinCodeKeyboardTypes.biometric
+                                  ? isSupportedAndEnabledBiometric ? Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: SvgPicture.asset(
                                         item.imgSrc as String,
-                                        width: 34),
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border:
-                                          Border.all(color: AppColors.mainText),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        item.label.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineLarge
-                                            ?.copyWith(
-                                                color: AppColors.mainText,
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.w400),
+                                        width: 34,
+                                      ),
+                                    ) : const SizedBox()
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: AppColors.mainText),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          item.label.toString(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineLarge
+                                              ?.copyWith(
+                                                  color: AppColors.mainText,
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.w400),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                          ),
-                        ))
+                        ),
+                      ))
                   .toList(),
             ],
           ),
