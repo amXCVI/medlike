@@ -18,13 +18,15 @@ class DiaryGraph extends StatefulWidget {
     required this.firstDate,
     required this.lastDate,
     required this.measureItem,
-    required this.decimalDigits
+    required this.decimalDigits,
+    required this.grouping
   }) : super(key: key);
 
   final List<DiaryItem> items;
   final DateTime firstDate;
   final DateTime lastDate;
   final String measureItem;
+  final String grouping;
   final int decimalDigits;
 
   @override
@@ -134,12 +136,57 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   @override
   Widget build(BuildContext context) {
+    DateTimeIntervalType type;
+    double interval;
+
+    switch(widget.grouping) {
+      case 'Hour':
+        type = DateTimeIntervalType.minutes;
+        interval = 15;
+        break;
+      case 'Day':
+        type = DateTimeIntervalType.hours;
+        interval = 6;
+        break;
+      case 'Week':
+        type = DateTimeIntervalType.days;
+        interval = 1;
+        break;
+      default:
+        type = DateTimeIntervalType.days;
+        interval = 7;
+    }
 
     return SizedBox(
       height: 200,
       width: MediaQuery.of(context).size.width,
       child: SfCartesianChart(
-        primaryXAxis: DateTimeAxis(),
+        primaryXAxis: DateTimeAxis(
+          interval: interval,
+          intervalType: type,
+          axisLabelFormatter: (args) {
+            String text = args.text;
+            final val = args.value as int;
+            final date = DateTime.fromMillisecondsSinceEpoch(val);
+
+            switch(widget.grouping) {
+              case 'Week':
+                final DateFormat formatter = DateFormat('E','ru_RU');
+                text = formatter.format(date).toUpperCase();
+                break;
+            }
+
+            return ChartAxisLabel(text, args.textStyle);
+          },
+          majorGridLines: const MajorGridLines(
+            dashArray: <double>[5,3]
+          )
+        ),
+        primaryYAxis: NumericAxis(
+          majorGridLines: const MajorGridLines(
+            dashArray: <double>[5,3]
+          )
+        ),
         trackballBehavior: _trackballBehavior,
         enableAxisAnimation: true,
         series: <CartesianSeries>[

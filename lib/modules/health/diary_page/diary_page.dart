@@ -8,8 +8,8 @@ import 'package:medlike/modules/health/diary_page/diary_chips.dart';
 import 'package:medlike/modules/health/diary_page/diary_skeleton.dart';
 import 'package:medlike/modules/health/diary_page/diary_view.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:auto_route/auto_route.dart';
 
 class DiaryPage extends StatefulWidget {
@@ -35,33 +35,14 @@ class _DiaryPageState extends State<DiaryPage> {
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
           final date = DateTime.now();
-          DateTime dateFrom;
-          DateTime dateTo = DateTime.now();
-
-          switch(selectedGroup) {
-            case 'Hour':
-              dateFrom = DateUtils.firstDayOfWeek(date);
-              //dateTo = DateUtils.lastDayOfWeek(date);
-              break;
-            case 'Day':
-              dateFrom = DateUtils.firstDayOfWeek(date);
-              //dateTo = DateUtils.lastDayOfWeek(date);
-              break;
-            case 'Week':
-              dateFrom = DateUtils.firstDayOfMonth(date);
-              //dateTo = DateUtils.lastDayOfMonth(date);
-              break;
-            default:
-              dateFrom = DateUtils.firstDayOfMonth(date);
-              //dateTo = DateUtils.lastDayOfMonth(date);
-          }
+          final dates = ValueHelper.getPeriodTiming(date, grouping);
 
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
             grouping: selectedGroup == 'Hour' ? 'Hour' : 'Day',
-            dateFrom: dateFrom,
-            dateTo: dateTo,
+            dateFrom: dates[0],
+            dateTo: dates[1],
             syn: syn
           );
 

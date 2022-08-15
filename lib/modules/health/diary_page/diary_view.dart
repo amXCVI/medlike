@@ -40,6 +40,7 @@ class DiaryView extends StatelessWidget {
             lastDate: lastDate,
             measureItem: measureItem,
             decimalDigits: decimalDigits,
+            grouping: grouping,
           ),
           DiaryList(
             items: diaryModel.values,

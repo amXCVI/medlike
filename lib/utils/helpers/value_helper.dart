@@ -13,6 +13,58 @@ class ValueHelper {
     }
   }
 
+  static List<DateTime> getPeriodTiming(DateTime date, String grouping) {
+    switch (grouping) {
+      case 'Hour':
+        final fromHour = date.subtract(Duration(
+          minutes: date.minute,
+          seconds: date.second,
+          milliseconds: date.millisecond,
+          microseconds: date.microsecond
+        ));
+
+        final toHour = date.add(Duration(
+          hours: 1,
+          minutes: -date.minute,
+          seconds: -date.second,
+          milliseconds: -date.millisecond,
+          microseconds: -date.microsecond
+        ));
+        return [fromHour, toHour];
+      case 'Day':
+        final firstHour = date.subtract(Duration(
+          hours: date.hour,
+          minutes: date.minute,
+          seconds: date.second,
+          milliseconds: date.millisecond,
+          microseconds: date.microsecond
+        ));
+
+        final lastHour = date.add(Duration(
+          days: date.day + 1,
+          hours: -date.hour,
+          minutes: -date.minute,
+          seconds: -date.second,
+          milliseconds: -date.millisecond,
+          microseconds: -date.microsecond
+        ));
+
+        return [firstHour, lastHour];
+      case 'Week':
+        final monday = DateUtils.firstDayOfWeek(date);
+        final sunday =  DateUtils.lastDayOfWeek(date);
+
+        return [monday, sunday];
+      case 'Month':
+        final first = DateUtils.firstDayOfMonth(date);
+        final last =  DateUtils.lastDayOfMonth(date);
+
+        return [first, last];
+      default:
+        return [];
+    }
+  }
+
   /// Возвращает текстовое представления периода
   /// среднего замера
   static String getPeriodString(DateTime date, String grouping) {

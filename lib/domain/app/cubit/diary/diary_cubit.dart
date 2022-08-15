@@ -28,6 +28,8 @@ class DiaryCubit extends Cubit<DiaryState> {
       );
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
+        filteredDiariesCategoriesList: response.where((element) 
+          => !state.filteredSyns.contains(element.synonim)).toList(),
         diariesCategoriesList: response,
       ));
     } catch (e) {
@@ -89,6 +91,17 @@ class DiaryCubit extends Cubit<DiaryState> {
       );
     }
   }
+
+  /// Фильтровать дневники
+  void setFiltered(
+    List<String> filteredSyns
+  ) {
+    emit(state.copyWith(
+      filteredDiariesCategoriesList: state.diariesCategoriesList!.where((element) 
+        => !filteredSyns.contains(element.synonim)).toList(),
+      filteredSyns: filteredSyns
+    ));
+  } 
 
   /// Отправить запись
   void postDiaryEntry({

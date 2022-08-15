@@ -38,23 +38,39 @@ class DiaryRepository {
     DateTime? dateTo, 
   }) async {
     try {
-      String url = '/api/v1.0/diary?Project=$project&Platform=$platform&Groping=$grouping';
+      String url = '/api/v1.0/diary';
+      var queryParams = {
+        'Project': project,
+        'Platform': platform,
+        'Grouping': grouping
+      };
 
-      /// TODO: получать таймзону в параметре
-      if(dateFrom != null) {
-        url += '&dateFrom=${dateTimeToDate(dateFrom)}';
-      }
-      if(dateTo != null) {
-        url += '&dateFrom=${dateTimeToDate(dateTo)}';
-      }
       if(synFilter != null) {
-        url += '&SynFilter=$synFilter';
+        queryParams.addAll({
+          'SynFilter': synFilter
+        });
       }
+
       if(userId != null) {
-        url += '&UserId=$userId';
+        queryParams.addAll({
+          'UserId': userId
+        });
+      }
+
+      if(dateFrom != null) {
+        queryParams.addAll({
+          'DateFrom': dateTimeToServerFormat(dateFrom, 3),
+        });
+      }
+
+      if(dateTo != null) {
+        queryParams.addAll({
+          'DateTo': dateTimeToServerFormat(dateTo, 3)
+        });
       }
       
-      final response = await _dioClient.get(url);
+      final response = await _dioClient.get(url, 
+        queryParameters: queryParams);
 
       final List list = response.data;
       
