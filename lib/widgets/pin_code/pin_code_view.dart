@@ -77,90 +77,93 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...pointsArray
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: e == -1
-                                ? AppColors.circleBgFirst
-                                : AppColors.mainBrandColor,
-                            shape: BoxShape.circle,
+    return Flexible(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...pointsArray
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: e == -1
+                                  ? AppColors.circleBgFirst
+                                  : AppColors.mainBrandColor,
+                              shape: BoxShape.circle,
+                            ),
                           ),
-                        ),
-                      ))
-                  .toList(),
-            ],
-          ),
-        ),
-        const SizedBox(height: 44),
-        Material(
-          color: Theme.of(context).backgroundColor,
-          child: GridView(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+                        ))
+                    .toList(),
+              ],
             ),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            children: [
-              ...keyboardList
-                  .map((item) => InkWell(
-                        onTap: () => {onChangePointsArray(item)},
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: item.buttonType ==
-                                  PinCodeKeyboardTypes.svgPicture
-                              ? Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: SvgPicture.asset(item.imgSrc as String,
-                                      width: 34),
-                                )
-                              : item.buttonType ==
-                                          PinCodeKeyboardTypes.biometric
-                                  ? isSupportedAndEnabledBiometric ? Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: SvgPicture.asset(
-                                        item.imgSrc as String,
-                                        width: 34,
-                                      ),
-                                    ) : const SizedBox()
-                                  : Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: AppColors.mainText),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          item.label.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineLarge
-                                              ?.copyWith(
-                                                  color: AppColors.mainText,
-                                                  fontSize: 28,
-                                                  fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(height: 12),
+          Material(
+            color: Theme.of(context).backgroundColor,
+            child: GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                ...keyboardList
+                    .map((item) => InkWell(
+                          onTap: () => {onChangePointsArray(item)},
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(100)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: item.buttonType ==
+                                    PinCodeKeyboardTypes.svgPicture
+                                ? Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: SvgPicture.asset(item.imgSrc as String,
+                                        width: 34),
+                                  )
+                                : item.buttonType ==
+                                            PinCodeKeyboardTypes.biometric
+                                    ? isSupportedAndEnabledBiometric ? Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: SvgPicture.asset(
+                                          item.imgSrc as String,
+                                          width: 34,
+                                        ),
+                                      ) : const SizedBox()
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color: AppColors.mainText),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            item.label.toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineLarge
+                                                ?.copyWith(
+                                                    color: AppColors.mainText,
+                                                    fontSize: 28,
+                                                    fontWeight: FontWeight.w400),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                        ),
-                      ))
-                  .toList(),
-            ],
+                          ),
+                        ))
+                    .toList(),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
