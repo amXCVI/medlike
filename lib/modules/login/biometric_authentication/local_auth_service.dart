@@ -41,4 +41,13 @@ class AuthService {
 
     return canCheckBiometrics && isBiometricSupported;
   }
+
+  static Future<List<BiometricType>> getAvailableBiometrics() async {
+    final LocalAuthentication _localAuthentication = LocalAuthentication();
+
+    List<BiometricType> availableBiometrics =
+        await _localAuthentication.getAvailableBiometrics();
+
+    return availableBiometrics;
+  }
 }

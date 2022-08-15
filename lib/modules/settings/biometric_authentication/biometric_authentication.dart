@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
@@ -17,6 +18,7 @@ class BiometricAuthentication extends StatefulWidget {
 class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   late bool isEnabled = false;
   late bool isBiometricAuthenticate = true;
+  late bool isFaceId = false;
 
   @override
   void initState() {
@@ -28,11 +30,20 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
     String authMethod =
         '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
     bool isSupportedBiometric = await AuthService.canCheckBiometrics();
-    if (authMethod == 'false' || !isSupportedBiometric) {
+    List<BiometricType> supportedBiometricTypesList =
+        await AuthService.getAvailableBiometrics();
+
+    if (!isSupportedBiometric) {
       isBiometricAuthenticate = false;
     } else {
       isBiometricAuthenticate = true;
+      if (supportedBiometricTypesList.contains(BiometricType.face)) {
+        setState(() {
+          isFaceId = true;
+        });
+      }
     }
+
     if (authMethod == 'true') {
       setState(() {
         isEnabled = true;
@@ -57,9 +68,13 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   Widget build(BuildContext context) {
     return isBiometricAuthenticate
         ? SettingsListItem(
-            title: 'Вход по Face ID',
-            iconSrc: 'assets/icons/settings/ic_faceid_setting_outline.svg',
-            subtitle: 'Авторизация в приложении с помощью распознавания лица',
+            title: isFaceId ? 'Вход по Face ID' : 'Вход по Touch ID',
+            iconSrc: isFaceId
+                ? 'assets/icons/settings/ic_faceid_setting_outline.svg'
+                : 'assets/icons/settings/ic_fingerprint_setting_outline.svg',
+            subtitle: isFaceId
+                ? 'Авторизация в приложении с помощью распознавания лица'
+                : 'Авторизация в приложении по отпечатку пальца',
             onTap: () {
               _onChanged(!isEnabled);
             },
