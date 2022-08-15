@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 
@@ -59,10 +60,9 @@ class _PasswordInputState extends State<PasswordInput> {
                     .labelLarge
                     ?.copyWith(color: AppColors.lightText),
                 suffixIcon: IconButton(
-                  icon: Icon(
-                    _isObscure ? Icons.visibility : Icons.visibility_off,
-                    color: Theme.of(context).dividerColor,
-                  ),
+                  icon: SvgPicture.asset(_isObscure
+                      ? 'assets/icons/login/show_password_symbols.svg'
+                      : 'assets/icons/login/not_show_password_symbols.svg'),
                   onPressed: () {
                     setState(() {
                       _isObscure = !_isObscure;
