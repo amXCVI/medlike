@@ -71,9 +71,17 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
-      userPhoneNumber: null,
       userProfiles: null,
       selectedUserId: null,
+    ));
+  }
+
+  /// Авторизация по биометрии
+  /// Просто ставим флаг в кубите и UserStorage
+  void signInBiometric() async {
+    UserSecureStorage.setField(AppConstants.isAuth, 'true');
+    emit(state.copyWith(
+      authStatus: UserAuthStatuses.successAuth,
     ));
   }
 
