@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/about_app/about_app_dialog.dart';
+import 'package:medlike/modules/settings/biometric_authentication/biometric_authentication.dart';
 import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
@@ -32,26 +34,33 @@ class SettingsList extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
+          const BiometricAuthentication(),
           SettingsListItem(
             title: 'Сменить пароль',
             iconSrc: 'assets/icons/settings/ic_password_outline.svg',
             onTap: handleTapOnChangePassword,
+            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'Сменить пин-код',
             iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
             onTap: handleChangePinCode,
+            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'Тех. поддержка',
             subtitle: 'Обратная связь',
             iconSrc: 'assets/icons/settings/ic_feedback_outline.svg',
-            onTap: () {},
+            onTap: () {
+              context.router.push(const SupportRoute());
+            },
+            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
-            title: 'Пользовательское соглашение',
+            title: 'Документы',
             iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
             onTap: handleTapAgreements,
+            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'О приложении',

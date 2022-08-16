@@ -71,9 +71,17 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
-      userPhoneNumber: null,
       userProfiles: null,
       selectedUserId: null,
+    ));
+  }
+
+  /// Авторизация по биометрии
+  /// Просто ставим флаг в кубите и UserStorage
+  void signInBiometric() async {
+    UserSecureStorage.setField(AppConstants.isAuth, 'true');
+    emit(state.copyWith(
+      authStatus: UserAuthStatuses.successAuth,
     ));
   }
 
@@ -385,8 +393,11 @@ class UserCubit extends Cubit<UserState> {
     ));
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-    UserProfile? selectedUser = state.userProfiles
-        ?.firstWhere((element) => element.id == state.selectedUserId);
+    UserProfile? selectedUser =
+        state.selectedUserId == null || state.selectedUserId!.isEmpty
+            ? state.userProfiles![0]
+            : state.userProfiles
+                ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
@@ -487,6 +498,67 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  Future<void> sendEmailToSupport({
+    required String email,
+    required String subject,
+    required String message,
+    List<File>? files,
+  }) async {
+    emit(state.copyWith(
+      sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
+    ));
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String techInfo = '';
+    UserProfile? selectedUser =
+        state.selectedUserId == null || state.selectedUserId!.isEmpty
+            ? state.userProfiles![0]
+            : state.userProfiles
+                ?.firstWhere((element) => element.id == state.selectedUserId);
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version}\n'
+          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
+          'Телефон пользователя: ${state.userPhoneNumber}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n'
+          'Клиника: \n'
+          'Идентификация бэка: \n';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      techInfo = 'Устройство: ${iosInfo.name}\n'
+          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+          'ФИО пользователя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
+          'Телефон пользователя: ${state.userPhoneNumber}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n'
+          'Клиника: \n'
+          'Идентификация бэка: \n';
+    }
+
+    try {
+      await userRepository.sendEmail(
+        email: email,
+        subject: subject,
+        message: message,
+        techInfo: techInfo,
+        personFio:
+            '${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}',
+        personPhone: '${state.userPhoneNumber}',
+        files: files,
+      );
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,
+      ));
+      AppToast.showAppToast(
+          msg: 'Ваше обращение успешно доставлено. Ожидайте ответ');
+    } catch (e) {
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
       ));
       rethrow;
     }

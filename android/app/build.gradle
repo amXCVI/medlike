@@ -57,13 +57,13 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lint {
+        checkReleaseBuilds false
+        disable 'InvalidPackage'
+    }
 
     /// Без этого правила не получается собрать под Андроид
     /// Появилось после обновления до flutter 3.0.5
-    lintOptions {
-        disable 'InvalidPackage'
-        checkReleaseBuilds false
-    }
 }
 
 allprojects {

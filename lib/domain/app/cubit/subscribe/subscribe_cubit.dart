@@ -643,17 +643,22 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         doctorId: doctorId,
         categoryType: categoryType,
       );
-      emit(state.copyWith(
-        setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.success,
-        selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: true),
-      ));
+      emit(
+        state.copyWith(
+          setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.success,
+          selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: true),
+          filteredDoctorsList: state.filteredDoctorsList
+              ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: true))
+              .toList(),
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
     }
   }
 
-  /// Добавляет доктора в избранных
+  /// Удаляет доктора из избранных
   void deleteDoctorFromFavoritesList({
     required String userId,
     required String doctorId,
@@ -673,6 +678,11 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         deleteDoctorFromFavoritesStatus:
             DeleteDoctorFromFavoritesStatuses.success,
         selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: false),
+        filteredDoctorsList: state.filteredDoctorsList
+            ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: false))
+            .toList(),
+        favoriteDoctorsList:
+            state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -706,6 +716,10 @@ String getDynamicParams({
       doctorId != null &&
       !isAny) {
     return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
+  }
+  // Избранные
+  if (doctorId != null && specialisationId == null && !isAny) {
+    return '&doctorId=$doctorId';
   }
   if (researchIds == null && cabinet == null && isAny) {
     return '&SpecializationId=$specialisationId';

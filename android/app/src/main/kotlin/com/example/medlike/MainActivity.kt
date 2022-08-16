@@ -1,6 +1,12 @@
 package com.example.medlike
 
-import io.flutter.embedding.android.FlutterActivity
+import android.os.Bundle
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugins.GeneratedPluginRegistrant
 
-class MainActivity: FlutterActivity() {
+class MainActivity: io.flutter.embedding.android.FlutterFragmentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        GeneratedPluginRegistrant.registerWith(FlutterEngine(this))
+    }
 }

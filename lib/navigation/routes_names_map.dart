@@ -30,4 +30,5 @@ class AppRoutes {
   static const clinicInfoSales = '/clinic_info_sales';
   static const settings = '/settings';
   static const settingsAgreements = '/settings_agreements';
+  static const settingsSupport = '/settings_support';
 }

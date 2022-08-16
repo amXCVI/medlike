@@ -31,6 +31,8 @@ enum GetAllUserAgreementsStatuses { initial, loading, success, failed }
 
 enum AcceptedAgreementsStatuses { initial, loading, success, failed }
 
+enum SendingEmailToSupportStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -53,6 +55,7 @@ class UserState {
   final DeletingUserAccountStatuses? deletingUserAccountStatus;
   final GetAllUserAgreementsStatuses? getAllUserAgreementsStatus;
   final AcceptedAgreementsStatuses? acceptedAgreementsStatus;
+  final SendingEmailToSupportStatuses? sendingEmailToSupportStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -78,6 +81,7 @@ class UserState {
     this.deletingUserAccountStatus,
     this.getAllUserAgreementsStatus,
     this.acceptedAgreementsStatus,
+    this.sendingEmailToSupportStatus,
   });
 
   UserState copyWith({
@@ -102,6 +106,7 @@ class UserState {
     DeletingUserAccountStatuses? deletingUserAccountStatus,
     GetAllUserAgreementsStatuses? getAllUserAgreementsStatus,
     AcceptedAgreementsStatuses? acceptedAgreementsStatus,
+    SendingEmailToSupportStatuses? sendingEmailToSupportStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -134,6 +139,8 @@ class UserState {
           getAllUserAgreementsStatus ?? this.getAllUserAgreementsStatus,
       acceptedAgreementsStatus:
           acceptedAgreementsStatus ?? this.acceptedAgreementsStatus,
+      sendingEmailToSupportStatus:
+          sendingEmailToSupportStatus ?? this.sendingEmailToSupportStatus,
     );
   }
 

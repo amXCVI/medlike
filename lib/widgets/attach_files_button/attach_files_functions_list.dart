@@ -1,17 +1,17 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 
 class AttachFilesFunctionsList extends StatefulWidget {
-  const AttachFilesFunctionsList({Key? key, required this.userId})
-      : super(key: key);
-
-  final String userId;
+  const AttachFilesFunctionsList({
+    Key? key,
+    required this.attachPickedFile,
+    required this.attachFilePickerResult,
+  }) : super(key: key);
+  final void Function({required PickedFile pickedFile}) attachPickedFile;
+  final void Function({required FilePickerResult filePickerResult})
+      attachFilePickerResult;
 
   @override
   State<AttachFilesFunctionsList> createState() =>
@@ -19,6 +19,8 @@ class AttachFilesFunctionsList extends StatefulWidget {
 }
 
 class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -34,33 +36,24 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
   Widget build(BuildContext context) {
     void _pickFiles(FileType fileType) async {
       _resetState();
-      ImagePicker _picker = ImagePicker();
       try {
-        XFile? xFile;
         FilePickerResult? filePickerResult;
         if (fileType == FileType.media) {
-          xFile = await _picker.pickImage(
-            source: ImageSource.camera,
-          );
+          var image = await _picker.getImage(source: ImageSource.camera);
+          if (image != null) {
+            widget.attachPickedFile(pickedFile: image);
+          }
         } else {
           filePickerResult = (await FilePicker.platform.pickFiles(
             type: fileType,
             allowMultiple: false,
             onFileLoading: (FilePickerStatus status) => {},
           ));
+          if (filePickerResult != null) {
+            widget.attachFilePickerResult(filePickerResult: filePickerResult);
+          }
         }
-
-        context
-            .read<MedcardCubit>()
-            .uploadFileFromDio(
-              file: filePickerResult != null
-                  ? filePickerResult.files.first
-                  : null,
-              photoFile: xFile != null ? File(xFile.path) : null,
-              userId: widget.userId,
-              fileName: filePickerResult!.files.first.name,
-            )
-            .then((value) => {Navigator.pop(context)});
+        Navigator.pop(context);
       } catch (e) {
         rethrow;
       }
@@ -71,7 +64,6 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
         shrinkWrap: false,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
         children: [
-          //! Не работает. Не понятны причины. Разобраться
           AttachFileItem(
             label: 'Сделать фото',
             iconPath: 'assets/icons/bottom_nav_bar/ic_camera_files_outline.svg',

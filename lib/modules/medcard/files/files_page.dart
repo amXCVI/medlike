@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
-import 'package:medlike/modules/medcard/files/attach_file_button.dart';
+import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/modules/medcard/files/files_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -24,6 +28,21 @@ class FilesPage extends StatelessWidget {
       context.read<MedcardCubit>().filterUserFilesList(filterStr);
     }
 
+    void uploadFile(File file) {
+      context.read<MedcardCubit>().uploadFileFromDio(
+          userId: userId, fileName: file.path.split('/').last, file: file);
+    }
+
+    void attachPickedFile({required PickedFile pickedFile}) {
+      File attachedFile = File(pickedFile.path);
+      uploadFile(attachedFile);
+    }
+
+    void attachFilePickerResult({required FilePickerResult filePickerResult}) {
+      File attachedFile = File(filePickerResult.files.first.path as String);
+      uploadFile(attachedFile);
+    }
+
     _onLoadDada();
 
     return DefaultScaffold(
@@ -31,7 +50,10 @@ class FilesPage extends StatelessWidget {
       isSearch: true,
       filteringFunction: _onFilterList,
       appBarTitle: 'Файлы',
-      rightBottomWidget: AttachFileButton(userId: userId),
+      rightBottomWidget: AttachFileButton(
+        attachPickedFile: attachPickedFile,
+        attachFilePickerResult: attachFilePickerResult,
+      ),
       child: BlocBuilder<MedcardCubit, MedcardState>(
         builder: (context, state) {
           if (state.getMedcardUserFilesListStatus ==
