@@ -11,17 +11,24 @@ import 'package:medlike/modules/medcard/files/files_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
-class FilesPage extends StatelessWidget {
+class FilesPage extends StatefulWidget {
   const FilesPage({Key? key, required this.userId}) : super(key: key);
 
   final String userId;
+
+  @override
+  State<FilesPage> createState() => _FilesPageState();
+}
+
+class _FilesPageState extends State<FilesPage> {
+  final _listController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     void _onLoadDada({bool isRefresh = false}) {
       context
           .read<MedcardCubit>()
-          .getUserFilesList(isRefresh: isRefresh, userId: userId);
+          .getUserFilesList(isRefresh: isRefresh, userId: widget.userId);
     }
 
     void _onFilterList(String filterStr) {
@@ -29,8 +36,15 @@ class FilesPage extends StatelessWidget {
     }
 
     void uploadFile(File file) {
-      context.read<MedcardCubit>().uploadFileFromDio(
-          userId: userId, fileName: file.path.split('/').last, file: file);
+      context
+          .read<MedcardCubit>()
+          .uploadFileFromDio(
+              userId: widget.userId,
+              fileName: file.path.split('/').last,
+              file: file)
+          .then((value) => {
+                _listController.jumpTo(_listController.position.maxScrollExtent)
+              });
     }
 
     void attachPickedFile({required PickedFile pickedFile}) {
@@ -39,6 +53,7 @@ class FilesPage extends StatelessWidget {
     }
 
     void attachFilePickerResult({required FilePickerResult filePickerResult}) {
+      _listController.jumpTo(_listController.position.maxScrollExtent);
       File attachedFile = File(filePickerResult.files.first.path as String);
       uploadFile(attachedFile);
     }
@@ -62,10 +77,11 @@ class FilesPage extends StatelessWidget {
           } else if (state.getMedcardUserFilesListStatus ==
               GetMedcardUserFilesListStatuses.success) {
             return FilesList(
+              listController: _listController,
               userFilesList: state.filteredMedcardUserFilesList
                   as List<MedcardUserFileModel>,
               onRefreshData: _onLoadDada,
-              userId: userId,
+              userId: widget.userId,
               downloadingFileId: state.downloadingFileId as String,
             );
           } else {

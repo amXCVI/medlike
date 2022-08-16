@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class MedcardFileItem extends StatelessWidget {
@@ -22,13 +23,8 @@ class MedcardFileItem extends StatelessWidget {
       subtitle: DateFormat('dd.MM.yyyy').format(medcardFileItem.dateSign),
       isRightArrow: isDownloading ? false : true,
       onTap: onTap,
-      customRightAction: isDownloading
-          ? const SizedBox(
-              child: CircularProgressIndicator.adaptive(),
-              width: 20,
-              height: 20,
-            )
-          : const SizedBox(),
+      customRightAction:
+          isDownloading ? const CircularLoader(radius: 15) : const SizedBox(),
     );
   }
 }

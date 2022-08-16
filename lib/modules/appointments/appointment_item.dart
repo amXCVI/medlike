@@ -43,6 +43,7 @@ class AppointmentItem extends StatelessWidget {
                       CircleAvatar(
                         radius: 15,
                         child: Text(appointmentItem.doctorInfo.lastName![0]),
+                        backgroundColor: AppColors.mainBrand[100],
                       ),
                       const SizedBox(width: 8.0),
                       Text(

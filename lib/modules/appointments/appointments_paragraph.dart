@@ -85,12 +85,9 @@ class AppointmentsParagraph extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 34.0),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              const BorderRadius.only(
-                                                  topRight:
-                                                      Radius.circular(12),
-                                                  bottomRight:
-                                                      Radius.circular(12)),
+                                          borderRadius: const BorderRadius.only(
+                                              topRight: Radius.circular(12),
+                                              bottomRight: Radius.circular(12)),
                                           color: Theme.of(context).errorColor,
                                         ),
                                         child: Expanded(

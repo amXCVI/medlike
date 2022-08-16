@@ -69,7 +69,7 @@ class UserProfilesList extends StatelessWidget {
                             },
                             child: UserProfileItem(
                               userProfileDate: item,
-                              isSelectedItem: selectableItems &&
+                              isSelectedItem: selectableItems ?
                                           state.selectedUserId == null ||
                                       state.selectedUserId!.isEmpty
                                   ? state.userProfiles![0].id == item.id
@@ -80,7 +80,7 @@ class UserProfilesList extends StatelessWidget {
                                               .id as String ==
                                           item.id
                                       ? true
-                                      : false,
+                                      : false : false,
                               onLoadAvatar: () {
                                 handleLoadAvatar(
                                     state.selectedUserId as String);

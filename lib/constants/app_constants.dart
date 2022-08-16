@@ -30,4 +30,7 @@ class AppConstants {
   // Ключ для хранения предпочитаемого метода авторизации
   static const String useBiometricMethodAuthentication =
       'useBiometricMethodAuthentication';
+
+  // временный ID для загружаемых файлов (для лоадера)
+  static const String uploadingFileId = 'loadingFile';
 }
