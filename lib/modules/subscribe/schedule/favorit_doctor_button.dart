@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 
-class FavoriteDoctorButton extends StatelessWidget {
+class FavoriteDoctorButton extends StatefulWidget {
   const FavoriteDoctorButton({
     Key? key,
     required this.userId,
@@ -23,30 +23,57 @@ class FavoriteDoctorButton extends StatelessWidget {
   final bool isFavorite;
 
   @override
+  State<FavoriteDoctorButton> createState() => _FavoriteDoctorButtonState();
+}
+
+class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
+    with TickerProviderStateMixin {
+  late final AnimationController _lottieAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _lottieAnimationController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    if (widget.isFavorite) {
+      _lottieAnimationController.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     void _handleTapOnFavoriteDoctor() {
       String categoryType =
-          CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
+          CategoryTypes.getCategoryTypeByCategoryTypeId(widget.categoryTypeId)
               .categoryType;
 
-      if (isFavorite) {
+      if (widget.isFavorite) {
         context.read<SubscribeCubit>().deleteDoctorFromFavoritesList(
-            userId: userId, doctorId: doctorId, categoryType: categoryType);
+            userId: widget.userId,
+            doctorId: widget.doctorId,
+            categoryType: categoryType);
+        _lottieAnimationController.reverse();
       } else {
         context.read<SubscribeCubit>().setDoctorToFavoritesList(
-              userId: userId,
-              buildingId: buildingId,
-              clinicId: clinicId,
-              doctorId: doctorId,
+              userId: widget.userId,
+              buildingId: widget.buildingId,
+              clinicId: widget.clinicId,
+              doctorId: widget.doctorId,
               categoryType: categoryType,
             );
+        _lottieAnimationController.forward();
       }
     }
 
     return IconButton(
-        onPressed: _handleTapOnFavoriteDoctor,
-        icon: SvgPicture.asset(isFavorite
-            ? 'assets/icons/app_bar/ic_heart_favorite_filled.svg'
-            : 'assets/icons/app_bar/ic_heart_favorite_outlined.svg'));
+      onPressed: _handleTapOnFavoriteDoctor,
+      icon: Lottie.asset(
+        'assets/animations/favorite_doctor_button.json',
+        controller: _lottieAnimationController,
+        alignment: Alignment.center,
+        repeat: false,
+      ),
+      tooltip: widget.isFavorite.toString(),
+    );
   }
 }
