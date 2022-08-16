@@ -79,7 +79,6 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     }
 
     return ListView(
-      shrinkWrap: true,
       children: [
         Padding(
           padding: const EdgeInsets.all(32),
