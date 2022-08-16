@@ -16,8 +16,10 @@ class FilesList extends StatelessWidget {
     this.onRefreshData,
     required this.userId,
     required this.downloadingFileId,
+    required this.listController,
   }) : super(key: key);
 
+  final ScrollController listController;
   final List<MedcardUserFileModel> userFilesList;
   final String userId;
   final String downloadingFileId;
@@ -43,57 +45,62 @@ class FilesList extends StatelessWidget {
     return RefreshIndicator(
         onRefresh: () => onRefreshData(isRefresh: true),
         child: DefaultScrollbar(
-          child: ListView(shrinkWrap: true, children: [
-            ...userFilesList
-                .map((item) => Slidable(
-                      key: UniqueKey(),
-                      endActionPane: ActionPane(
-                        motion: const BehindMotion(),
-                        dismissible: DismissiblePane(
-                          onDismissed: () {
-                            handleDeleteFile(item.id);
-                          },
-                        ),
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                handleDeleteFile(item.id);
-                              },
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 34.0),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).errorColor,
-                                ),
-                                child: Expanded(
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        const SizedBox(width: 20.0),
-                                        SvgPicture.asset(
-                                            'assets/icons/appointments/ic_delete_appointment.svg'),
-                                        const SizedBox(width: 20.0),
-                                      ],
+          child: ListView(
+            controller: listController,
+            shrinkWrap: true,
+            children: [
+              ...userFilesList
+                  .map((item) => Slidable(
+                        key: UniqueKey(),
+                        endActionPane: ActionPane(
+                          motion: const BehindMotion(),
+                          dismissible: DismissiblePane(
+                            onDismissed: () {
+                              handleDeleteFile(item.id);
+                            },
+                          ),
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  handleDeleteFile(item.id);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 34.0),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).errorColor,
+                                  ),
+                                  child: Expanded(
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const SizedBox(width: 20.0),
+                                          SvgPicture.asset(
+                                              'assets/icons/appointments/ic_delete_appointment.svg'),
+                                          const SizedBox(width: 20.0),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      child: FileItem(
-                        fileItem: item,
-                        onTap: () {
-                          handleTapOnUserFile(item);
-                        },
-                        isDownloading: item.id == downloadingFileId,
-                      ),
-                    ))
-                .toList()
-          ]),
+                          ],
+                        ),
+                        child: FileItem(
+                          fileItem: item,
+                          onTap: () {
+                            handleTapOnUserFile(item);
+                          },
+                          isDownloading: item.id == downloadingFileId,
+                        ),
+                      ))
+                  .toList()
+            ],
+          ),
         ));
   }
 }

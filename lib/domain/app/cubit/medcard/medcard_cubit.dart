@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -162,6 +165,18 @@ class MedcardCubit extends Cubit<MedcardState> {
   }) async {
     emit(state.copyWith(
       uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.loading,
+      filteredMedcardUserFilesList: [
+        ...?state.medcardUserFilesList,
+        MedcardUserFileModel(
+          type: MediaType.parse(lookupMimeType(file.path) as String).type,
+          hasPreview: false,
+          id: AppConstants.uploadingFileId,
+          length: file.lengthSync(),
+          uploadDate: DateTime.now(),
+          filename: fileName,
+        )
+      ].toList(),
+      downloadingFileId: AppConstants.uploadingFileId,
     ));
     try {
       MedcardUserFileModel response = await medcardRepository.uploadFile(
@@ -170,12 +185,17 @@ class MedcardCubit extends Cubit<MedcardState> {
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
         medcardUserFilesList:
             [...?state.medcardUserFilesList, response].toList(),
-        filteredMedcardUserFilesList:
-            [...?state.filteredMedcardUserFilesList, response].toList(),
+        filteredMedcardUserFilesList: [
+          ...?state.filteredMedcardUserFilesList
+              ?.where((e) => e.id != AppConstants.uploadingFileId),
+          response
+        ].toList(),
+        downloadingFileId: '',
       ));
     } catch (e) {
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
+        downloadingFileId: '',
       ));
       rethrow;
     }
@@ -199,9 +219,8 @@ class MedcardCubit extends Cubit<MedcardState> {
 
       emit(state.copyWith(
         deletingUserFile: '',
-        medcardUserFilesList: state.medcardUserFilesList
-            ?.where((e) => e.id != fileId)
-            .toList(),
+        medcardUserFilesList:
+            state.medcardUserFilesList?.where((e) => e.id != fileId).toList(),
       ));
       AppToast.showAppToast(msg: response.information ?? 'Файл успешно удален');
     } catch (e) {
