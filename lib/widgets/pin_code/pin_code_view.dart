@@ -21,7 +21,7 @@ class PinCodeView extends StatefulWidget {
 class _PinCodeViewState extends State<PinCodeView> {
   late List<int> pointsArray;
   final List<int> initPointsArray = [-1, -1, -1, -1, -1];
-  late bool isSupportedAndEnabledBiometric = true;
+  late bool isSupportedAndEnabledBiometric = false;
 
   @override
   void initState() {
@@ -77,7 +77,9 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return SizedBox(
+      width: 300,
+      height: MediaQuery.of(context).size.height - 280,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -103,63 +105,71 @@ class _PinCodeViewState extends State<PinCodeView> {
               ],
             ),
           ),
-          const SizedBox(height: 12),
           Material(
             color: Theme.of(context).backgroundColor,
-            child: GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-              ),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              children: [
-                ...keyboardList
-                    .map((item) => InkWell(
-                          onTap: () => {onChangePointsArray(item)},
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: item.buttonType ==
-                                    PinCodeKeyboardTypes.svgPicture
-                                ? Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(item.imgSrc as String,
-                                        width: 34),
-                                  )
-                                : item.buttonType ==
-                                            PinCodeKeyboardTypes.biometric
-                                    ? isSupportedAndEnabledBiometric ? Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: SvgPicture.asset(
+            child: SizedBox(
+              width: 300,
+              child: GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  ...keyboardList
+                      .map((item) => InkWell(
+                            onTap: () => {onChangePointsArray(item)},
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(100)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: item.buttonType ==
+                                      PinCodeKeyboardTypes.svgPicture
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: SvgPicture.asset(
                                           item.imgSrc as String,
-                                          width: 34,
-                                        ),
-                                      ) : const SizedBox()
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: AppColors.mainText),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            item.label.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineLarge
-                                                ?.copyWith(
-                                                    color: AppColors.mainText,
-                                                    fontSize: 28,
-                                                    fontWeight: FontWeight.w400),
+                                          width: 34),
+                                    )
+                                  : item.buttonType ==
+                                          PinCodeKeyboardTypes.biometric
+                                      ? isSupportedAndEnabledBiometric
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: SvgPicture.asset(
+                                                item.imgSrc as String,
+                                                width: 34,
+                                              ),
+                                            )
+                                          : const SizedBox()
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                color: AppColors.mainText),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              item.label.toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge
+                                                  ?.copyWith(
+                                                      color: AppColors.mainText,
+                                                      fontSize: 28,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                          ),
-                        ))
-                    .toList(),
-              ],
+                            ),
+                          ))
+                      .toList(),
+                ],
+              ),
             ),
           ),
         ],
