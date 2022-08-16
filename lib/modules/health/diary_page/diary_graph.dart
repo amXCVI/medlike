@@ -176,7 +176,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         break;
       default:
         type = DateTimeIntervalType.days;
-        interval = 7;
+        interval = 1;
     }
 
     final data = <CartesianSeries>[

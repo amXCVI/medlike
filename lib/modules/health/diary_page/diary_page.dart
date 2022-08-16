@@ -35,7 +35,8 @@ class _DiaryPageState extends State<DiaryPage> {
     return BlocConsumer<DiaryCubit, DiaryState>(
       listener: (context, state) {
         if(state.selectedDiary != null 
-          && state.selectedDiary!.values.isNotEmpty && grouping == '') {
+          && state.selectedDiary!.values.isNotEmpty && grouping == ''
+        ) {
             final last = state.selectedDiary!.values.last;
             final dates = ValueHelper.getPeriodTiming(last.date, 'Week');
 
@@ -47,6 +48,10 @@ class _DiaryPageState extends State<DiaryPage> {
               dateTo: dates[1],
               syn: state.selectedDiary!.syn
             );
+
+            setState(() {
+              grouping = 'Load';
+            });
         }
       },
       builder: (context, state) {
