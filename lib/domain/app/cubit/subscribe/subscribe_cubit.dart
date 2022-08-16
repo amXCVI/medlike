@@ -689,6 +689,11 @@ String getDynamicParams({
   List<String>? researchIds,
   String? cabinet,
 }) {
+  print('$isAny'
+      '$doctorId'
+      '$specialisationId'
+      '$researchIds'
+      '$cabinet');
   if (doctorId != null && specialisationId != null && !isAny) {
     return '&doctorId=$doctorId';
   }
@@ -706,6 +711,10 @@ String getDynamicParams({
       doctorId != null &&
       !isAny) {
     return '&ResearchIds=${researchIds.join('&ResearchIds=')}&DoctorId=$doctorId';
+  }
+  // Избранные
+  if (doctorId != null && specialisationId == null && !isAny) {
+    return '&doctorId=$doctorId';
   }
   if (researchIds == null && cabinet == null && isAny) {
     return '&SpecializationId=$specialisationId';
