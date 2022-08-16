@@ -1,8 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:medlike/modules/health_page/health_list.dart';
-import 'package:medlike/modules/health_page/health_list_skeleton.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart' hide DateUtils;
+import 'package:flutter_svg/svg.dart';
+import 'package:medlike/modules/health/health_page/health_list.dart';
+import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
@@ -12,29 +16,29 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
+    final date = DateTime.now();
+    final dateFrom = DateUtils.firstDayOfWeek(date);
+    final dateTo = DateUtils.lastDayOfWeek(date);
 
-    void _onLoadDada() {
+    void _onLoadDada(String grouping, {
+      String? syn
+    }) {
       context.read<DiaryCubit>().getDiaryCategoriesList(
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS'
       );
 
-      final date = DateTime.now();
-
-      final dateFrom = getDate(date.subtract(Duration(days: date.weekday - 1)));
-      final dateTo = getDate(date.add(Duration(days: DateTime.daysPerWeek - date.weekday)));
-
       context.read<DiaryCubit>().getDiariesList(
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS',
-        grouping: 'Day',
-        dateFrom: dateFrom,
-        dateTo: dateTo
+        grouping: grouping,
+        //dateFrom: dateFrom,
+        //dateTo: dateTo,
+        syn: syn
       );
     }
 
-    _onLoadDada();
+    _onLoadDada('Hour');
 
     return DefaultScaffold(
       child: BlocBuilder<DiaryCubit, DiaryState>(
@@ -44,17 +48,30 @@ class HealthPage extends StatelessWidget {
           ) {
             return const Text('');
           } else if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.success 
-              && state.getDiaryStatuses == GetDiaryStatuses.success
+            && state.getDiaryStatuses == GetDiaryStatuses.success
           ) {
             return HealthList(
-              diariesCategoriesList: state.diariesCategoriesList!,
-              diariesItems: state.diariesList!,
+              diariesCategoriesList: state.filteredDiariesCategoriesList!,
+              diariesItems: state.diariesList ?? [],
+              firstDate: dateFrom,
+              lastDate: dateTo,
+              onLoadDada: _onLoadDada
             );
           } else {
             return const HealthListSkeleton();
           }
         },
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            context.router.push(
+              const FiltersRoute()
+            );
+          },
+          icon: SvgPicture.asset('assets/icons/app_bar/filters_icon.svg')
+        )
+      ],
       appBarTitle: 'Заполярье',
     );
   }

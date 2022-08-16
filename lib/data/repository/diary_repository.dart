@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
-
-// TODO: добавить доп поля и методы кроме GET
+import 'package:medlike/utils/helpers/date_time_helper.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class DiaryRepository {
   final _dioClient = Api().dio;
@@ -30,20 +32,45 @@ class DiaryRepository {
     required String project,
     required String platform,
     required String grouping, 
+    String? synFilter,
+    String? userId,
     DateTime? dateFrom,
     DateTime? dateTo, 
   }) async {
     try {
-      String url = '/api/v1.0/diary?Project=$project&Platform=$platform&Groping=$grouping';
+      String url = '/api/v1.0/diary';
+      var queryParams = {
+        'Project': project,
+        'Platform': platform,
+        'Grouping': grouping
+      };
+
+      if(synFilter != null) {
+        queryParams.addAll({
+          'SynFilter': synFilter
+        });
+      }
+
+      if(userId != null) {
+        queryParams.addAll({
+          'UserId': userId
+        });
+      }
 
       if(dateFrom != null) {
-        url += '&dateFrom=$dateFrom';
+        queryParams.addAll({
+          'DateFrom': dateTimeToServerFormat(dateFrom, 3),
+        });
       }
+
       if(dateTo != null) {
-        url += '&dateTo=$dateTo';
+        queryParams.addAll({
+          'DateTo': dateTimeToServerFormat(dateTo, 3)
+        });
       }
       
-      final response = await _dioClient.get(url);
+      final response = await _dioClient.get(url, 
+        queryParameters: queryParams);
 
       final List list = response.data;
       
@@ -52,6 +79,32 @@ class DiaryRepository {
       
       return diaries;
     } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> postDiaryEntry({
+    required String date,
+    required String syn,
+    String? userId,
+    required List<double> values
+  }) async {
+    try {
+      await _dioClient.post('/api/v1.0/diary',
+        data: {
+          'DateTime': date,
+          'Synonim': syn,
+          'UserID' : userId,
+          'Values': values
+        },
+        options: Options(
+          headers: {
+            'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+          },
+        )
+      );
+    } catch (error) {
       rethrow;
     }
   }

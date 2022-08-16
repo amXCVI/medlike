@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 
 class HealthValue extends StatelessWidget {
   const HealthValue({
@@ -72,19 +73,11 @@ class RowData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String num;
-    
-    if(innerData.length > 1) {
-      num = '${innerData[0].toStringAsFixed(decimalDigits)}/${innerData[1].toStringAsFixed(decimalDigits)}';
-    } else {
-      num = innerData[0].toStringAsFixed(decimalDigits);
-    }
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          num,
+          ValueHelper.getStringFromValues(innerData, decimalDigits),
           style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w700,

@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health_page/health_item.dart';
+import 'package:medlike/modules/health/health_page/health_item.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:medlike/navigation/router.gr.dart';
 
 class HealthList extends StatelessWidget {
   const HealthList({
     Key? key,
     required this.diariesCategoriesList,
-    required this.diariesItems
+    required this.diariesItems,
+    required this.firstDate,
+    required this.lastDate,
+    required this.onLoadDada
   }) : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryModel> diariesItems;
+  final Function onLoadDada;
+  final DateTime firstDate;
+  final DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,18 @@ class HealthList extends StatelessWidget {
             title: diariesCategoriesList[index].name,
             measureItem: diariesCategoriesList[index].measureItem,
             decimalDigits: diariesCategoriesList[index].decimalDigits,
-            data: getDiaryEntries(index)
+            data: getDiaryEntries(index),
+            firstDate: firstDate,
+            lastDate: lastDate,
+            onLoadDada: onLoadDada,
+            onNavigate: (String title) {
+              context.router.push(
+                DiaryRoute(
+                  title: title,
+                  categoryModel: diariesCategoriesList[index]
+                )
+              );
+            },
           );
         }
       ),

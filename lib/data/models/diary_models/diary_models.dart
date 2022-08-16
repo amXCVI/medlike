@@ -14,7 +14,7 @@ class DataValue {
 
   bool isChangeable;
   bool isAbnormal;
-  int secondsSinceMidnight;
+  double secondsSinceMidnight;
   List<double> innerData;
 }
 
@@ -98,10 +98,12 @@ abstract class DiaryItem with _$DiaryItem {
 
   DataValue get value {
     return DataValue(
-      isAbnormal: data[1][1] == 1, 
-      isChangeable: data[1][0] == 1, 
-      secondsSinceMidnight: data[0] as int, 
-      innerData: data[2] as List<double>
+      isAbnormal: data[0][1][1] == 1, 
+      isChangeable: data[0][1][0] == 1, 
+      secondsSinceMidnight: data[0][0] as double, 
+      /// Костыль чтобы пофиксить 
+      ///_CastError (type 'List<dynamic>' is not a subtype of type 'List<double>' in type cast)
+      innerData: List<double>.from(data[0][2].map((e) => e as double))
     );
   }
 
