@@ -57,6 +57,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         return DefaultScaffold(
+          isChildrenPage: true,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: DiaryAddForm(

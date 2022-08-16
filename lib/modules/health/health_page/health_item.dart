@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health/health_page/health_graph.dart';
+import 'package:medlike/modules/health/diary_page/diary_graph.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 
@@ -15,6 +15,8 @@ class HealthItem extends StatelessWidget {
     required this.decimalDigits,
     required this.onLoadDada,
     required this.onNavigate,
+    required this.firstDate,
+    required this.lastDate,
     this.data
   }) : super(key: key);
 
@@ -23,6 +25,8 @@ class HealthItem extends StatelessWidget {
   final String measureItem;
   final int decimalDigits;
   final DiaryModel? data;
+  final DateTime firstDate;
+  final DateTime lastDate;
   final Function onLoadDada;
   final Function onNavigate;
 
@@ -96,9 +100,15 @@ class HealthItem extends StatelessWidget {
                             decimalDigits: decimalDigits
                           ),
                           Expanded(
-                            child: HealthGraph(
-                              data: data == null ? null : data!.values
-                            ),
+                            child: DiaryGraph(
+                              items: data?.values ?? [], 
+                              firstDate: firstDate, 
+                              lastDate: lastDate, 
+                              measureItem: measureItem, 
+                              decimalDigits: decimalDigits, 
+                              grouping: 'Week',
+                              isClean: true,
+                            )
                           )
                         ],
                       ),

@@ -9,12 +9,16 @@ class HealthList extends StatelessWidget {
     Key? key,
     required this.diariesCategoriesList,
     required this.diariesItems,
+    required this.firstDate,
+    required this.lastDate,
     required this.onLoadDada
   }) : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryModel> diariesItems;
   final Function onLoadDada;
+  final DateTime firstDate;
+  final DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,8 @@ class HealthList extends StatelessWidget {
             measureItem: diariesCategoriesList[index].measureItem,
             decimalDigits: diariesCategoriesList[index].decimalDigits,
             data: getDiaryEntries(index),
+            firstDate: firstDate,
+            lastDate: lastDate,
             onLoadDada: onLoadDada,
             onNavigate: (String title) {
               context.router.push(

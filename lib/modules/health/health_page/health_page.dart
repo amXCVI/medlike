@@ -16,6 +16,9 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final date = DateTime.now();
+    final dateFrom = DateUtils.firstDayOfWeek(date);
+    final dateTo = DateUtils.lastDayOfWeek(date);
 
     void _onLoadDada(String grouping, {
       String? syn
@@ -24,11 +27,6 @@ class HealthPage extends StatelessWidget {
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS'
       );
-
-      final date = DateTime.now();
-
-      final dateFrom = DateUtils.firstDayOfWeek(date);
-      final dateTo = DateUtils.lastDayOfWeek(date);
 
       context.read<DiaryCubit>().getDiariesList(
         project: 'Zapolyarye', 
@@ -46,15 +44,17 @@ class HealthPage extends StatelessWidget {
       child: BlocBuilder<DiaryCubit, DiaryState>(
         builder: (context, state) {
           if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.failed
-            // || state.getDiaryStatuses == GetDiaryStatuses.failed
+            || state.getDiaryStatuses == GetDiaryStatuses.failed
           ) {
             return const Text('');
           } else if (state.getDiaryCategoriesStatuses == GetDiaryCategoriesStatuses.success 
-            //  && state.getDiaryStatuses == GetDiaryStatuses.success
+            && state.getDiaryStatuses == GetDiaryStatuses.success
           ) {
             return HealthList(
               diariesCategoriesList: state.filteredDiariesCategoriesList!,
               diariesItems: state.diariesList ?? [],
+              firstDate: dateFrom,
+              lastDate: dateTo,
               onLoadDada: _onLoadDada
             );
           } else {

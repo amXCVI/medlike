@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_page/diary_chips.dart';
+import 'package:medlike/modules/health/diary_page/diary_nodata.dart';
 import 'package:medlike/modules/health/diary_page/diary_skeleton.dart';
 import 'package:medlike/modules/health/diary_page/diary_view.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -27,15 +28,31 @@ class DiaryPage extends StatefulWidget {
 }
 
 class _DiaryPageState extends State<DiaryPage> {
-  String grouping = 'Hour';
+  String grouping = '';
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DiaryCubit, DiaryState>(
+    return BlocConsumer<DiaryCubit, DiaryState>(
+      listener: (context, state) {
+        if(state.selectedDiary != null 
+          && state.selectedDiary!.values.isNotEmpty && grouping == '') {
+            final last = state.selectedDiary!.values.last;
+            final dates = ValueHelper.getPeriodTiming(last.date, 'Week');
+
+            context.read<DiaryCubit>().getDiariesList(
+              project: 'Zapolyarye', 
+              platform: Platform.isAndroid ? 'Android' : 'IOS',
+              grouping: 'Day',
+              dateFrom: dates[0],
+              dateTo: dates[1],
+              syn: state.selectedDiary!.syn
+            );
+        }
+      },
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
           final date = DateTime.now();
-          final dates = ValueHelper.getPeriodTiming(date, grouping);
+          final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
@@ -59,7 +76,9 @@ class _DiaryPageState extends State<DiaryPage> {
         } else if(state.getDiaryStatuses == GetDiaryStatuses.loading 
           || state.selectedDiary == null) {
           page = const DiarySkeleton();
-        } else  {
+        } else if(state.selectedDiary!.values.isEmpty && grouping == '') {
+          page = const DiaryNodata();
+        } else {
           page = DiaryView(
             diaryModel: state.selectedDiary!,
             decimalDigits: widget.categoryModel.decimalDigits,
@@ -70,11 +89,14 @@ class _DiaryPageState extends State<DiaryPage> {
           );
         }
         return DefaultScaffold(
+          isChildrenPage: true,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                if(state.selectedDiary != null) 
+                if(state.selectedDiary != null
+                  && state.selectedDiary!.values.isNotEmpty 
+                ) 
                   DiaryChips(
                     syn: state.selectedDiary!.syn,
                     onTap: onTap,

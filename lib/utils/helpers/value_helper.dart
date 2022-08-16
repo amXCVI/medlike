@@ -41,7 +41,7 @@ class ValueHelper {
         ));
 
         final lastHour = date.add(Duration(
-          days: date.day + 1,
+          days: 1,
           hours: -date.hour,
           minutes: -date.minute,
           seconds: -date.second,
@@ -61,7 +61,11 @@ class ValueHelper {
 
         return [first, last];
       default:
-        return [];
+        /// Дублирует неделю, но отдельно на всякий случай
+        final monday = DateUtils.firstDayOfWeek(date);
+        final sunday =  DateUtils.lastDayOfWeek(date);
+
+        return [monday, sunday];
     }
   }
 
@@ -102,7 +106,13 @@ class ValueHelper {
 
         return dateFormat.format(date);
       default:
-        return '';
+        /// Дублирует неделю, но отдельно на всякий случай
+        DateFormat dateFormat = DateFormat("d MMMM", 'ru_RU');
+
+        final monday = DateUtils.firstDayOfWeek(date);
+        final sunday =  DateUtils.lastDayOfWeek(date);
+
+        return '${dateFormat.format(monday)}-${dateFormat.format(sunday)}';
     }
   }
 

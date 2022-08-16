@@ -19,7 +19,8 @@ class DiaryGraph extends StatefulWidget {
     required this.lastDate,
     required this.measureItem,
     required this.decimalDigits,
-    required this.grouping
+    required this.grouping,
+    this.isClean = false
   }) : super(key: key);
 
   final List<DiaryItem> items;
@@ -28,6 +29,7 @@ class DiaryGraph extends StatefulWidget {
   final String measureItem;
   final String grouping;
   final int decimalDigits;
+  final bool isClean;
 
   @override
   State<DiaryGraph> createState() => _DiaryGraphState();
@@ -39,19 +41,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   @override
   void initState(){
-    final chart = widget.items.map((e) => 
+    chartData = widget.items.map((e) => 
       ChartData(
         e.date, 
         e.value.innerData[0], 
         e.value.innerData.length > 1 ? e.value.innerData[1] : null
       )
     ).toList();
-
-    chartData = [
-      ChartData(widget.firstDate, null, null), 
-      ...chart,
-      ChartData(widget.lastDate, null, null),
-    ];
 
     _trackballBehavior = TrackballBehavior(
       enable: true,
@@ -136,8 +132,33 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   @override
   Widget build(BuildContext context) {
+    ChartAxisLabel labelFormatter(args) {
+      String text = args.text;
+      final val = args.value as int;
+      final date = DateTime.fromMillisecondsSinceEpoch(val);
+
+      switch(widget.grouping) {
+        case 'Week':
+          final DateFormat formatter = DateFormat('E','ru_RU');
+          text = formatter.format(date).toUpperCase();
+          if(widget.isClean) {
+            text = text[0];
+          }
+
+          break;
+        case 'Month':
+          final DateFormat formatter = DateFormat('dd','ru_RU');
+          text = formatter.format(date).toUpperCase();
+          break;
+        }
+
+      return ChartAxisLabel(text, args.textStyle);
+    }
+
+
     DateTimeIntervalType type;
     double interval;
+    double width = 0.23;
 
     switch(widget.grouping) {
       case 'Hour':
@@ -147,6 +168,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Day':
         type = DateTimeIntervalType.hours;
         interval = 6;
+        width = 0.02;
         break;
       case 'Week':
         type = DateTimeIntervalType.days;
@@ -157,87 +179,115 @@ class _DiaryGraphState extends State<DiaryGraph> {
         interval = 7;
     }
 
+    final data = <CartesianSeries>[
+      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+        RangeColumnSeries<ChartData, DateTime>(
+          dataSource: chartData,
+          width: width,
+          color: const Color.fromRGBO(237, 245, 247, 1),
+          markerSettings: const MarkerSettings(
+              isVisible: true,
+              color: Color.fromRGBO(60, 148, 168, 1),
+              height: 8),
+          xValueMapper: (ChartData data, _) => data.x,
+          highValueMapper: (ChartData data, _) => data.y,
+          lowValueMapper: (ChartData data, _) => data.y1,
+        ),
+      SplineSeries<ChartData, DateTime>(
+        dataSource: chartData,
+        color: const Color.fromRGBO(60, 148, 168, 1),
+        markerSettings: const MarkerSettings(
+            color: Color.fromRGBO(60, 148, 168, 1),
+            borderColor: Color.fromRGBO(237, 245, 247, 1),
+            borderWidth: 2,
+            isVisible: true),
+        xValueMapper: (ChartData data, _) => data.x,
+        yValueMapper: (ChartData data, _) => data.y,
+      ),
+      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+        SplineSeries<ChartData, DateTime>(
+            dataSource: chartData,
+            markerSettings: const MarkerSettings(
+                color: Color.fromRGBO(60, 148, 168, 1),
+                borderColor: Color.fromRGBO(237, 245, 247, 1),
+                borderWidth: 2,
+                isVisible: true),
+            color: const Color.fromRGBO(60, 148, 168, 1),
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y1),
+    ];
+
+    if(widget.isClean) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: SfCartesianChart(
+          plotAreaBorderWidth: 0,
+          primaryXAxis: DateTimeAxis(
+            interval: interval,
+            intervalType: type,
+            minimum: widget.firstDate,
+            maximum: widget.lastDate,
+            axisLabelFormatter: labelFormatter,
+            majorGridLines: const MajorGridLines(
+              width: 0
+            ),
+            majorTickLines: const MajorTickLines(
+              width: 0,
+            ),
+            axisLine: const AxisLine(
+              width: 0,
+            )
+          ),
+          primaryYAxis: NumericAxis(
+            isVisible: false
+          ),
+          series: data
+        ),
+      );
+    }
+
     return SizedBox(
       height: 200,
       width: MediaQuery.of(context).size.width,
       child: SfCartesianChart(
+        plotAreaBorderWidth: 1,
+        plotAreaBorderColor: const Color.fromRGBO(158, 157, 157, 0.4),
         primaryXAxis: DateTimeAxis(
           interval: interval,
           intervalType: type,
-          axisLabelFormatter: (args) {
-            String text = args.text;
-            final val = args.value as int;
-            final date = DateTime.fromMillisecondsSinceEpoch(val);
-
-            switch(widget.grouping) {
-              case 'Week':
-                final DateFormat formatter = DateFormat('E','ru_RU');
-                text = formatter.format(date).toUpperCase();
-                break;
-            }
-
-            return ChartAxisLabel(text, args.textStyle);
-          },
+          minimum: widget.firstDate,
+          maximum: widget.lastDate,
+          axisLine: const AxisLine(
+            width: 1,
+            color: Color.fromRGBO(158, 157, 157, 0.4)
+          ),
+          axisLabelFormatter: labelFormatter,
           majorGridLines: const MajorGridLines(
             dashArray: <double>[5,3]
           )
         ),
         primaryYAxis: NumericAxis(
+          opposedPosition: true,
+          axisLine: const AxisLine(
+            width: 1,
+            color: Color.fromRGBO(158, 157, 157, 0.4)
+          ),
           majorGridLines: const MajorGridLines(
             dashArray: <double>[5,3]
           )
         ),
         trackballBehavior: _trackballBehavior,
         enableAxisAnimation: true,
-        series: <CartesianSeries>[
-          if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
-            RangeColumnSeries<ChartData, DateTime>(
-              dataSource: chartData,
-              width: 0.23,
-              color: const Color.fromRGBO(237, 245, 247, 1),
-              markerSettings: const MarkerSettings(
-                isVisible: true,
-                color: Color.fromRGBO(60, 148, 168, 1),
-                height: 8
-              ),
-              xValueMapper: (ChartData data, _) => data.x,
-              highValueMapper: (ChartData data, _) => data.y,
-              lowValueMapper: (ChartData data, _) => data.y1,
-            ),
-          SplineSeries<ChartData, DateTime>(
-            dataSource: chartData,
-            color: const Color.fromRGBO(60, 148, 168, 1),
-            markerSettings: const MarkerSettings(
-              color: Color.fromRGBO(60, 148, 168, 1),
-              borderColor: Color.fromRGBO(237, 245, 247, 1),
-              borderWidth: 2,
-              isVisible: true
-            ),
-            xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y,
-          ),
-          if(widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1) 
-            SplineSeries<ChartData, DateTime>(
-              dataSource: chartData,
-              markerSettings: const MarkerSettings(
-                color: Color.fromRGBO(60, 148, 168, 1),
-                borderColor: Color.fromRGBO(237, 245, 247, 1),
-                borderWidth: 2,
-                isVisible: true
-              ),
-              color: const Color.fromRGBO(60, 148, 168, 1),
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y1
-          ),
-        ],
+        series: data,
+        
         onMarkerRender: (args) {
           if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
             args.borderWidth = 0;
             args.markerHeight = 6;
             args.markerWidth = 6;
           }
-        },
-      ),
+        }, 
+      )
     );
   }
 }
