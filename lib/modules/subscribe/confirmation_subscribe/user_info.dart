@@ -13,49 +13,52 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        UserProfile userProfile =
-            state.userProfiles!.firstWhere((element) => element.id == userId);
-        return Row(
-          children: [
-            CircleUserAvatar(
-              userAvatar: userProfile.avatar,
-              userId: userProfile.id,
-              userName: userProfile.firstName.toString(),
-              isSelected: false,
-            ),
-            const SizedBox(width: 24),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${userProfile.firstName} ${userProfile.lastName?[0]}.',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(color: AppColors.mainText),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  getAgeByBirthday(userProfile.birthday as DateTime),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.lightText),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: BlocBuilder<UserCubit, UserState>(
+        builder: (context, state) {
+          UserProfile userProfile =
+              state.userProfiles!.firstWhere((element) => element.id == userId);
+          return Row(
+            children: [
+              CircleUserAvatar(
+                userAvatar: userProfile.avatar,
+                userId: userProfile.id,
+                userName: userProfile.firstName.toString(),
+                isSelected: false,
+              ),
+              const SizedBox(width: 24),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${userProfile.firstName} ${userProfile.lastName?[0]}.',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: AppColors.mainText),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    getAgeByBirthday(userProfile.birthday as DateTime),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: AppColors.lightText),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

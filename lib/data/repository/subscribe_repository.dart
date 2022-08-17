@@ -228,6 +228,26 @@ class SubscribeRepository {
     }
   }
 
+  Future<RegisterOrderResponseModel> registerOrder({
+    required String userId,
+    required List<String> appointmentIds,
+  }) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/order',
+        data: {
+          'userId': userId,
+          'items': [
+            ...appointmentIds.map((e) => {'appointmentId': e})
+          ]
+        },
+      );
+      return RegisterOrderResponseModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<Doctor> getAvailableDoctor(
       {required String scheduleId, required String clinicId}) async {
     try {
@@ -272,7 +292,7 @@ class SubscribeRepository {
   }) async {
     try {
       final response = await _dioClient.delete(
-        '/api/v1.0/profile/favorite-doctor/$doctorId?userId=$userId&categoryType=$categoryType');
+          '/api/v1.0/profile/favorite-doctor/$doctorId?userId=$userId&categoryType=$categoryType');
       return response.statusCode == 200 ? true : false;
     } catch (err) {
       rethrow;

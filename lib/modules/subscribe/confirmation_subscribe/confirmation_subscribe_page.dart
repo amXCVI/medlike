@@ -4,6 +4,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_action_button.dart';
+import 'package:medlike/modules/subscribe/confirmation_subscribe/payment_widget.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
@@ -37,15 +38,19 @@ class ConfirmationSubscribePage extends StatelessWidget {
             extendedPadding: const EdgeInsets.all(15),
             label: const ConfirmationActionButtonLabel()),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: DefaultScrollbar(
             child: ListView(
               shrinkWrap: true,
               children: [
                 UserInfo(userId: userId),
                 const SizedBox(height: 19),
-                const DashDivider(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: DashDivider(),
+                ),
                 const SizedBox(height: 24),
+                const PaymentWidget(),
                 const AppointmentInfo(),
               ],
             ),

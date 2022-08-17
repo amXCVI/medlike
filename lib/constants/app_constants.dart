@@ -33,4 +33,10 @@ class AppConstants {
 
   // временный ID для загружаемых файлов (для лоадера)
   static const String uploadingFileId = 'loadingFile';
+
+  // Тип оплаты, по которому не отображать способы оплаты, только нал
+  static const String noPayedPayType = 'budget';
+
+  // Тип оплаты, картой
+  static const String cardPayType = 'cash';
 }
