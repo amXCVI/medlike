@@ -25,8 +25,12 @@ class DiaryAddPage extends StatefulWidget {
 
 class _DiaryAddPageState extends State<DiaryAddPage> {
   final _formKey = GlobalKey<FormState>();
+  
   late final List<TextEditingController> _controllers = widget.paramName.map(
     (e) => TextEditingController()
+  ).toList();
+  late List<bool> isEmpties = widget.paramName.map(
+    (e) => true
   ).toList();
 
   DateTime? date;
@@ -38,7 +42,19 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       return FormField(
         labelText: e, 
         controller: _controllers[widget.paramName.indexOf(e)], 
-        onChange: () {},
+        isEmpty: isEmpties[widget.paramName.indexOf(e)],
+        validator: (str) {
+          final num = double.tryParse(str ?? '');
+          if(num == null) {
+            return 'Введите число';
+          }
+          return null;
+        },
+        onChange: (text) {
+          setState(() {
+            isEmpties[widget.paramName.indexOf(e)] = text == '';
+          });
+        },
       );
     }).toList();
 

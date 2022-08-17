@@ -1,6 +1,7 @@
-import 'package:date_field/date_field.dart';
+
 import 'package:flutter/material.dart';
 import 'package:medlike/modules/health/diary_add_page/field_wrapper.dart';
+import 'package:medlike/widgets/datetime_picker/datetime_picker.dart';
 
 enum DiaryDateFieldType {
   date,
@@ -23,12 +24,20 @@ class DiaryDateField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FieldWrapper(
       labelText: labelText,
-      child: DateTimeFormField(
-        mode: type == DiaryDateFieldType.date 
-          ? DateTimeFieldPickerMode.date : DateTimeFieldPickerMode.time,
-        autovalidateMode: AutovalidateMode.always,
-        onDateSelected: onChange,
-      ),
+      onTap: () {
+        showDialog(
+          context: context, builder: (ctx) {
+            return DateTimePicker(
+              type: type == DiaryDateFieldType.date ?
+                PickerType.date 
+                : PickerType.time,
+              onPressed: (date) => {},
+              onCancel: () => {},
+            );
+          });
+      },
+      onChange: () {},
+      isEmpty: true,
     );
   }
 }
