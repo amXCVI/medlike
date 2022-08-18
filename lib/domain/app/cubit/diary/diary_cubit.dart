@@ -4,6 +4,7 @@ import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'diary_state.dart';
 
@@ -73,6 +74,9 @@ class DiaryCubit extends Cubit<DiaryState> {
         emit(state.copyWith(
           getDiaryStatuses: GetDiaryStatuses.success,
           //diariesList: response,
+          /// Здесь и далее сбрасываем состояние апдейти записей
+          /// Чтобы не вызвать повторения их загрузки (см. DiaryPage)
+          updateDiaryStatuses: UpdateDiaryStatuses.initial,
           selectedDiary: selectedDiary,
           dateFrom: dateFrom,
           dateTo: dateTo,
@@ -80,6 +84,7 @@ class DiaryCubit extends Cubit<DiaryState> {
       } else {
         emit(state.copyWith(
           getDiaryStatuses: GetDiaryStatuses.success,
+          updateDiaryStatuses: UpdateDiaryStatuses.initial,
           diariesList: response,
           dateFrom: dateFrom,
           dateTo: dateTo,
@@ -87,7 +92,8 @@ class DiaryCubit extends Cubit<DiaryState> {
       }
     } catch (e) {
       emit(state.copyWith(
-        getDiaryStatuses: GetDiaryStatuses.failed)
+        getDiaryStatuses: GetDiaryStatuses.failed,
+        updateDiaryStatuses: UpdateDiaryStatuses.failed)
       );
     }
   }
@@ -105,7 +111,7 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Отправить запись
   void postDiaryEntry({
-    required String date,
+    required DateTime date,
     required String syn,
     required List<double> values
   }) async {
@@ -117,15 +123,87 @@ class DiaryCubit extends Cubit<DiaryState> {
       final currentSelectedUserId =
         await UserSecureStorage.getField(AppConstants.selectedUserId);
 
-      await diaryRepository.postDiaryEntry(
+      final response = await diaryRepository.postDiaryEntry(
         date: date, 
         syn: syn,
         userId: currentSelectedUserId, 
         values: values
       );
 
+      if(response) {
+        AppToast.showAppToast(msg: 'Запись добавлена');
+      }
+
       emit(state.copyWith(
-        getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
+        updateDiaryStatuses: UpdateDiaryStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.failed,
+      ));
+    }
+  }
+
+  /// Редактировать запись
+  void putDiaryEntry({
+    required DateTime date,
+    required String syn,
+    required List<double> values
+  }) async {
+    emit(state.copyWith(
+      updateDiaryStatuses: UpdateDiaryStatuses.loading,
+    ));
+
+    try {
+      final currentSelectedUserId =
+        await UserSecureStorage.getField(AppConstants.selectedUserId);
+
+      final response = await diaryRepository.putDiaryEntry(
+        date: date, 
+        syn: syn,
+        userId: currentSelectedUserId, 
+        values: values
+      );
+
+      if(response) {
+        AppToast.showAppToast(msg: 'Запись обновлена');
+      }
+
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.failed,
+      ));
+    }
+  }
+
+  /// Удалить запись
+  void deleteDiaryEntry({
+    required DateTime date,
+    required String syn,
+  }) async {
+    emit(state.copyWith(
+      updateDiaryStatuses: UpdateDiaryStatuses.loading,
+    ));
+
+    try {
+      final currentSelectedUserId =
+        await UserSecureStorage.getField(AppConstants.selectedUserId);
+
+      final response = await diaryRepository.deleteDiaryEntry(
+        date: date, 
+        syn: syn,
+        userId: currentSelectedUserId, 
+      );
+
+      if(response) {
+        AppToast.showAppToast(msg: 'Запись удалена');
+      }
+
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(

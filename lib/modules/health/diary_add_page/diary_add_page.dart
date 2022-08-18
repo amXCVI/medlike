@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_form.dart';
 import 'package:medlike/modules/health/diary_add_page/form_field.dart';
-import 'package:medlike/utils/helpers/date_time_helper.dart';
+
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -12,12 +12,18 @@ class DiaryAddPage extends StatefulWidget {
     Key? key, 
     required this.title,
     required this.measureItem,
-    required this.paramName
+    required this.decimalDigits,
+    required this.paramName,
+    this.initialValues,
+    this.initialDate
   }) : super(key: key);
 
   final String title;
   final String measureItem;
+  final int decimalDigits;
   final List<String> paramName;
+  final DateTime? initialDate;
+  final List<double>? initialValues;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -32,9 +38,29 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   late List<bool> isEmpties = widget.paramName.map(
     (e) => true
   ).toList();
+  late List<String?> initialValues = widget.paramName.map(
+    (e) => null
+  ).toList();
 
   DateTime? date;
   DateTime? time;
+
+  @override
+  void initState() {
+    if(widget.initialDate != null) {
+      date = widget.initialDate;
+      time = widget.initialDate;
+    }
+
+    if(widget.initialValues != null) {
+      for(int i = 0; i < widget.paramName.length; i++) {
+        initialValues[i] = 
+          widget.initialValues![i].toStringAsFixed(widget.decimalDigits);
+      }
+    }
+    
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +69,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         labelText: e, 
         controller: _controllers[widget.paramName.indexOf(e)], 
         isEmpty: isEmpties[widget.paramName.indexOf(e)],
+        initialValue: initialValues[widget.paramName.indexOf(e)],
         validator: (str) {
           final num = double.tryParse(str ?? '');
           if(num == null) {
@@ -79,6 +106,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             child: DiaryAddForm(
               children: fields,
               formKey: _formKey,
+              initialDate: widget.initialDate,
               onDateChange: onDateChange,
               onTimeChange: onTimeChange,
             ),
@@ -92,14 +120,23 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 seconds: time!.second
               ));
 
-              context.read<DiaryCubit>().postDiaryEntry(
-                date: dateTimeToServerFormat(newDate, 0),
-                syn: state.selectedDiary!.syn,
-                values: _controllers.map((e) => 
-                  double.parse(e.text) 
-                ).toList()
-              );
-
+              if(widget.initialDate != null || widget.initialValues != null) {
+                context.read<DiaryCubit>().putDiaryEntry(
+                  date: newDate,
+                  syn: state.selectedDiary!.syn,
+                  values: _controllers.map((e) => 
+                    double.parse(e.text) 
+                  ).toList()
+                );
+              } else {
+                context.read<DiaryCubit>().postDiaryEntry(
+                  date: newDate,
+                  syn: state.selectedDiary!.syn,
+                  values: _controllers.map((e) => 
+                    double.parse(e.text) 
+                  ).toList()
+                );
+              }
               context.router.pop();
             },
             label: Text(

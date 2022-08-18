@@ -314,7 +314,10 @@ class AppRouter extends _i34.RootStackRouter {
               key: args.key,
               title: args.title,
               measureItem: args.measureItem,
-              paramName: args.paramName));
+              decimalDigits: args.decimalDigits,
+              paramName: args.paramName,
+              initialValues: args.initialValues,
+              initialDate: args.initialDate));
     },
     FiltersRoute.name: (routeData) {
       return _i34.CustomPage<dynamic>(
@@ -1193,14 +1196,20 @@ class DiaryAddRoute extends _i34.PageRouteInfo<DiaryAddRouteArgs> {
       {_i35.Key? key,
       required String title,
       required String measureItem,
-      required List<String> paramName})
+      required int decimalDigits,
+      required List<String> paramName,
+      List<double>? initialValues,
+      DateTime? initialDate})
       : super(DiaryAddRoute.name,
             path: '/diary_add',
             args: DiaryAddRouteArgs(
                 key: key,
                 title: title,
                 measureItem: measureItem,
-                paramName: paramName));
+                decimalDigits: decimalDigits,
+                paramName: paramName,
+                initialValues: initialValues,
+                initialDate: initialDate));
 
   static const String name = 'DiaryAddRoute';
 }
@@ -1210,7 +1219,10 @@ class DiaryAddRouteArgs {
       {this.key,
       required this.title,
       required this.measureItem,
-      required this.paramName});
+      required this.decimalDigits,
+      required this.paramName,
+      this.initialValues,
+      this.initialDate});
 
   final _i35.Key? key;
 
@@ -1218,11 +1230,17 @@ class DiaryAddRouteArgs {
 
   final String measureItem;
 
+  final int decimalDigits;
+
   final List<String> paramName;
+
+  final List<double>? initialValues;
+
+  final DateTime? initialDate;
 
   @override
   String toString() {
-    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, paramName: $paramName}';
+    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, initialValues: $initialValues, initialDate: $initialDate}';
   }
 }
 

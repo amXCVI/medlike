@@ -83,19 +83,19 @@ class DiaryRepository {
     }
   }
 
-  Future<void> postDiaryEntry({
-    required String date,
+  Future<bool> postDiaryEntry({
+    required DateTime date,
     required String syn,
     String? userId,
     required List<double> values
   }) async {
     try {
-      await _dioClient.post('/api/v1.0/diary',
+      final response = await _dioClient.post('/api/v1.0/diary',
         data: {
-          'DateTime': date,
-          'Synonim': syn,
-          'UserID' : userId,
-          'Values': values
+          'dateTime': dateTimeToServerFormat(date, 3),
+          'synonim': syn,
+          'userID' : userId,
+          'values': values
         },
         options: Options(
           headers: {
@@ -104,6 +104,74 @@ class DiaryRepository {
           },
         )
       );
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> putDiaryEntry({
+    required DateTime date,
+    required String syn,
+    String? userId,
+    required List<double> values
+  }) async {
+    try {
+      final response = await _dioClient.put('/api/v1.0/diary',
+        data: {
+          'dateTime': dateTimeToServerFormat(date, 3),
+          'synonim': syn,
+          'userID' : userId,
+          'values': values
+        },
+        options: Options(
+          headers: {
+            'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+          },
+        )
+      );
+
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteDiaryEntry({
+    required DateTime date,
+    required String syn,
+    String? userId,
+  }) async {
+    try {
+      var queryParams = {
+        'DateTime': dateTimeToServerFormat(date, 3),
+        'Synonim': syn
+      };
+
+      if(userId != null) {
+        queryParams.addAll({
+          'UserId': userId
+        });
+      }
+
+      final response = await _dioClient.delete('/api/v1.0/diary',
+        queryParameters: queryParams,
+        options: Options(
+          headers: {
+            'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+          },
+        )
+      );
+
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
     } catch (error) {
       rethrow;
     }

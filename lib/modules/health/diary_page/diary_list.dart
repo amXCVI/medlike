@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
+import 'package:auto_route/auto_route.dart';
 
 class DiaryList extends StatelessWidget {
   const DiaryList({
     Key? key,
+    required this.title,
     required this.items,
     required this.decimalDigits,
-    required this.measureItem
+    required this.measureItem,
+    required this.syn,
+    required this.paramName
   }) : super(key: key);
 
+  final String title;
   final List<DiaryItem> items;
   final int decimalDigits;
   final String measureItem;
+  final List<String> paramName;
+  final String syn;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +44,18 @@ class DiaryList extends StatelessWidget {
             );
 
             return Slidable(
-              key: const ValueKey(0),
+              key: ValueKey(index),
                 endActionPane: ActionPane(
                   motion: const ScrollMotion(),
                   children: [
                     SlidableAction(
                       flex: 2,
-                      onPressed: (ctx) {},
+                      onPressed: (ctx) {
+                        context.read<DiaryCubit>().deleteDiaryEntry(
+                          date: items[index].date, 
+                          syn: syn
+                        );
+                      },
                       backgroundColor: const Color(0xFFFE4A49),
                       icon: Icons.delete,
                       label: 'Delete',
@@ -63,6 +78,18 @@ class DiaryList extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
+                onTap: () {
+                  context.router.push(
+                    DiaryAddRoute(
+                      title: title, 
+                      measureItem: measureItem,
+                      decimalDigits: decimalDigits, 
+                      paramName: paramName,
+                      initialValues: items[index].value.innerData,
+                      initialDate: items[index].date
+                    )
+                  );
+                },
               )
             );
           } 

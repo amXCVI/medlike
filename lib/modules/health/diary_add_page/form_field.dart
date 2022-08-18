@@ -8,6 +8,7 @@ class FormField extends StatelessWidget {
     required this.controller,
     required this.onChange,
     required this.isEmpty,
+    this.initialValue,
     required this.validator
   }) : super(key: key);
 
@@ -15,6 +16,7 @@ class FormField extends StatelessWidget {
   final TextEditingController controller;
   final Function onChange;
   final bool isEmpty;
+  final String? initialValue;
   final String? Function(String?) validator;
 
   @override
@@ -24,6 +26,7 @@ class FormField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         onChanged: (text) => onChange(text),
+        initialValue: initialValue,
         keyboardType: TextInputType.number,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(

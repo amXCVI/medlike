@@ -53,6 +53,20 @@ class _DiaryPageState extends State<DiaryPage> {
               grouping = 'Load';
             });
         }
+
+        if(state.updateDiaryStatuses == UpdateDiaryStatuses.success) {
+          final date = DateTime.now();
+          final dates = ValueHelper.getPeriodTiming(date, grouping);
+
+          context.read<DiaryCubit>().getDiariesList(
+            project: 'Zapolyarye', 
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            dateFrom: dates[0],
+            dateTo: dates[1],
+            syn: state.selectedDiary!.syn
+          );
+        }
       },
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
@@ -85,12 +99,14 @@ class _DiaryPageState extends State<DiaryPage> {
           page = const DiaryNodata();
         } else {
           page = DiaryView(
+            title: widget.title,
             diaryModel: state.selectedDiary!,
             decimalDigits: widget.categoryModel.decimalDigits,
             measureItem: widget.categoryModel.measureItem,
             firstDate: state.dateFrom,
             lastDate: state.dateTo,
             grouping: grouping,
+            paramName: widget.categoryModel.paramName,
           );
         }
         return DefaultScaffold(
@@ -117,7 +133,8 @@ class _DiaryPageState extends State<DiaryPage> {
               context.router.push(
                 DiaryAddRoute(
                   title: widget.title, 
-                  measureItem: widget.categoryModel.measureItem, 
+                  measureItem: widget.categoryModel.measureItem,
+                  decimalDigits: widget.categoryModel.decimalDigits, 
                   paramName: widget.categoryModel.paramName
                 )
               );

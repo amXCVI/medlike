@@ -7,13 +7,15 @@ class DiaryAddForm extends StatelessWidget {
     required this.formKey,
     required this.children,
     required this.onDateChange,
-    required this.onTimeChange
+    required this.onTimeChange,
+    this.initialDate
   }) : super(key: key);
 
   final GlobalKey formKey;
   final List<Widget> children;
   final Function(DateTime) onDateChange;
   final Function(DateTime) onTimeChange;
+  final DateTime? initialDate;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +27,14 @@ class DiaryAddForm extends StatelessWidget {
           DiaryDateField(
             labelText: 'Дата', 
             type:  DiaryDateFieldType.date, 
-            onChange: onDateChange
+            onChange: onDateChange,
+            initialDate: initialDate
           ),
           DiaryDateField(
             labelText: 'Время', 
             type:  DiaryDateFieldType.time, 
-            onChange: onTimeChange
+            onChange: onTimeChange,
+            initialDate: initialDate,
           ),
         ],
       ),
