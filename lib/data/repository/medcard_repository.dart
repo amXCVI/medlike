@@ -11,9 +11,9 @@ class MedcardRepository {
   final _dioClient = Api().dio;
 
   Future<List<MedcardDocsModel>> getMedcardDocsList(
-      {required String userId}) async {
+      {required String userId, required String filters}) async {
     try {
-      final response = await _dioClient.get('/api/v1.0/profile/$userId/mdocs');
+      final response = await _dioClient.get('/api/v1.0/profile/$userId/mdocs?$filters');
       final List clinicsList = response.data;
       return clinicsList.map((e) => MedcardDocsModel.fromJson(e)).toList();
     } catch (err) {
