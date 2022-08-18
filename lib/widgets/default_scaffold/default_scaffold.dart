@@ -67,7 +67,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
     const Duration _bodyTopPaddingAnimatedDuration =
-        Duration(milliseconds: 500);
+        Duration(milliseconds: 250);
 
     return Scaffold(
       appBar: widget.appBar ??
