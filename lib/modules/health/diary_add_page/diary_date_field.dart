@@ -32,7 +32,9 @@ class DiaryDateField extends StatelessWidget {
                 PickerType.date 
                 : PickerType.time,
               onPressed: (date) => {},
-              onCancel: () => {},
+              onCancel: () => {
+                Navigator.pop(context)
+              },
             );
           });
       },
