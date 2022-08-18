@@ -20,7 +20,6 @@ class MedcardCubit extends Cubit<MedcardState> {
   final MedcardRepository medcardRepository;
 
   /// Получает список мед.документов пользователя
-  //! Нужно будет добавить фильтры, сеййчас загружаются просто все документы
   void getMedcardDocsList(
       {required bool isRefresh, required String userId}) async {
     if (state.getMedcardDocsListStatus == GetMedcardDocsListStatuses.loading) {
@@ -30,8 +29,16 @@ class MedcardCubit extends Cubit<MedcardState> {
       getMedcardDocsListStatus: GetMedcardDocsListStatuses.loading,
     ));
     try {
+      String? filtersStr = state.medcardSelectedFilters != null
+          ? state.medcardSelectedFilters?.entries
+              .map((e) => e.value.value)
+              .join('&')
+              .toString()
+          : '';
+
       final List<MedcardDocsModel> response;
-      response = await medcardRepository.getMedcardDocsList(userId: userId);
+      response = await medcardRepository.getMedcardDocsList(
+          userId: userId, filters: filtersStr as String);
       emit(state.copyWith(
         getMedcardDocsListStatus: GetMedcardDocsListStatuses.success,
         medcardDocsList: response,
@@ -199,6 +206,29 @@ class MedcardCubit extends Cubit<MedcardState> {
       ));
       rethrow;
     }
+  }
+
+  /// Изменить фильтры в медкарте
+  void changeMedcardFilters({
+    required MedcardFilterItemModel filterItem,
+    required String categoryValue,
+  }) {
+    Map<String, MedcardFilterItemModel> medcardFilters =
+        state.medcardSelectedFilters ?? <String, MedcardFilterItemModel>{};
+    medcardFilters.remove(categoryValue);
+    medcardFilters[categoryValue] = filterItem;
+
+    emit(state.copyWith(
+      medcardSelectedFilters: medcardFilters,
+    ));
+  }
+
+  /// Сбросить фильтры в медкарте
+  void resetMedcardFilters({required String userId}) {
+    emit(state.copyWith(
+      medcardSelectedFilters: <String, MedcardFilterItemModel>{},
+    ));
+    getMedcardDocsList(userId: userId, isRefresh: true);
   }
 
   /// Удалить файл

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 import 'package:medlike/widgets/default_scaffold/unauth_checker.dart';
 
-class DefaultScaffold extends StatelessWidget {
+class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({
     Key? key,
     required this.child,
@@ -19,6 +20,8 @@ class DefaultScaffold extends StatelessWidget {
     this.actions,
     this.appBar,
     this.rightBottomWidget,
+    this.widgetOverBody,
+    this.widgetOverBodyGlobalKey,
   }) : super(key: key);
   final Widget child;
   final String appBarTitle;
@@ -32,25 +35,60 @@ class DefaultScaffold extends StatelessWidget {
   final void Function()? onPressedAppLogo;
   final PreferredSizeWidget? appBar;
   final Widget? rightBottomWidget;
+  final Widget? widgetOverBody;
+  final GlobalKey? widgetOverBodyGlobalKey;
+
+  @override
+  State<DefaultScaffold> createState() => _DefaultScaffoldState();
+}
+
+class _DefaultScaffoldState extends State<DefaultScaffold> {
+  double widgetOverBodyHeight = 0;
+
+  void postFrameCallback(_) {
+    if (widget.widgetOverBodyGlobalKey == null) {
+      setState(() {
+        widgetOverBodyHeight = 0;
+      });
+      return;
+    }
+    var context = widget.widgetOverBodyGlobalKey!.currentContext;
+    if (context == null) return;
+
+    Size? newSize = context.size;
+
+    if (widgetOverBodyHeight == newSize?.height) return;
+    setState(() {
+      widgetOverBodyHeight = (newSize?.height ?? 20) - 20;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    const Duration _bodyTopPaddingAnimatedDuration =
+        Duration(milliseconds: 500);
+
     return Scaffold(
-      appBar: appBar ??
+      appBar: widget.appBar ??
           CustomAppBar(
-            title: appBarTitle,
-            subtitle: appBarSubtitle,
-            isChildrenPage: isChildrenPage,
-            isSearch: isSearch,
-            actions: actions != null ? actions as List<Widget> : [],
-            filteringFunction: filteringFunction,
-            onPressedAppLogo: onPressedAppLogo,
+            title: widget.appBarTitle,
+            subtitle: widget.appBarSubtitle,
+            isChildrenPage: widget.isChildrenPage,
+            isSearch: widget.isSearch,
+            actions:
+                widget.actions != null ? widget.actions as List<Widget> : [],
+            filteringFunction: widget.filteringFunction,
+            onPressedAppLogo: widget.onPressedAppLogo,
           ),
-      bottomNavigationBar: bottomNavigationBar ??
-          BottomBar(rightBottomWidget: rightBottomWidget),
+      bottomNavigationBar: widget.bottomNavigationBar ??
+          BottomBar(rightBottomWidget: widget.rightBottomWidget),
       body: Stack(children: [
-        Container(
-          padding: const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 0),
+        widget.widgetOverBody ?? const SizedBox(),
+        AnimatedPadding(
+          padding: EdgeInsets.only(
+              left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 0),
+          duration: _bodyTopPaddingAnimatedDuration,
           child: Container(
             height: 100,
             decoration: BoxDecoration(
@@ -66,9 +104,10 @@ class DefaultScaffold extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-            padding:
-                const EdgeInsets.only(left: 0, top: 6, right: 0, bottom: 35),
+        AnimatedPadding(
+            padding: EdgeInsets.only(
+                left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 35),
+            duration: _bodyTopPaddingAnimatedDuration,
             child: Container(
               padding: const EdgeInsets.all(17),
               decoration: BoxDecoration(
@@ -76,16 +115,19 @@ class DefaultScaffold extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(28)),
               ),
             )),
-        Container(
-            padding:
-                const EdgeInsets.only(left: 0, top: 7, right: 0, bottom: 0),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(28)),
-            ),
-            child: DefaultClipRRect(child: child)),
+        AnimatedPadding(
+          padding: EdgeInsets.only(
+              left: 0, top: widgetOverBodyHeight + 7, right: 0, bottom: 0),
+          duration: _bodyTopPaddingAnimatedDuration,
+          child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(28)),
+              ),
+              child: DefaultClipRRect(child: widget.child)),
+        ),
         const UnAuthChecker(),
       ]),
-      floatingActionButton: actionButton,
+      floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

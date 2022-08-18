@@ -20,7 +20,7 @@ DefaultErrorModel _$DefaultErrorModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DefaultErrorModel {
-  String get message => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $DefaultErrorModelCopyWith<$Res> {
   factory $DefaultErrorModelCopyWith(
           DefaultErrorModel value, $Res Function(DefaultErrorModel) then) =
       _$DefaultErrorModelCopyWithImpl<$Res>;
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$DefaultErrorModelCopyWithImpl<$Res>
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -65,7 +65,7 @@ abstract class _$$_DefaultErrorModelCopyWith<$Res>
           $Res Function(_$_DefaultErrorModel) then) =
       __$$_DefaultErrorModelCopyWithImpl<$Res>;
   @override
-  $Res call({String message});
+  $Res call({String? message});
 }
 
 /// @nodoc
@@ -87,7 +87,7 @@ class __$$_DefaultErrorModelCopyWithImpl<$Res>
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -101,7 +101,7 @@ class _$_DefaultErrorModel implements _DefaultErrorModel {
       _$$_DefaultErrorModelFromJson(json);
 
   @override
-  final String message;
+  final String? message;
 
   @override
   String toString() {
@@ -134,14 +134,14 @@ class _$_DefaultErrorModel implements _DefaultErrorModel {
 }
 
 abstract class _DefaultErrorModel implements DefaultErrorModel {
-  const factory _DefaultErrorModel({required final String message}) =
+  const factory _DefaultErrorModel({required final String? message}) =
       _$_DefaultErrorModel;
 
   factory _DefaultErrorModel.fromJson(Map<String, dynamic> json) =
       _$_DefaultErrorModel.fromJson;
 
   @override
-  String get message => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DefaultErrorModelCopyWith<_$_DefaultErrorModel> get copyWith =>
