@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/modules/medcard/files/file_item.dart';
+import 'package:medlike/modules/medcard/files/not_found_user_files.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
@@ -44,7 +45,7 @@ class FilesList extends StatelessWidget {
 
     return RefreshIndicator(
         onRefresh: () => onRefreshData(isRefresh: true),
-        child: DefaultScrollbar(
+        child: userFilesList.isNotEmpty ? DefaultScrollbar(
           child: ListView(
             controller: listController,
             shrinkWrap: true,
@@ -101,6 +102,6 @@ class FilesList extends StatelessWidget {
                   .toList()
             ],
           ),
-        ));
+        ) : const NotFoundUserFiles());
   }
 }
