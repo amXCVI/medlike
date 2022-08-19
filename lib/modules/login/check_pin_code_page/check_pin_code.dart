@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -70,11 +69,14 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
   @override
   Widget build(BuildContext context) {
-    void _checkPinCode(List<int> pinCode) async {
+    Future<bool> _checkPinCode(List<int> pinCode) async {
       bool isSuccess =
           await context.read<UserCubit>().checkPinCodeToStorage(pinCode);
       if (isSuccess) {
         context.router.replaceAll([const MainRoute()]);
+        return true;
+      } else {
+        return false;
       }
     }
 
@@ -96,14 +98,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
         PinCodeView(
           setPinCode: _checkPinCode,
           key: const Key('2'),
-          handleBiometricMethod: handleBiometricMethod,
+          handleBiometricMethod: onSuccessBiometricAuthenticate,
         ),
-        isBiometricAuthenticate
-            ? BiometricAuthenticationWidget(
-                onSuccess: onSuccessBiometricAuthenticate,
-                onCancel: onCancelBiometricAuthenticate,
-              )
-            : const SizedBox(),
       ],
     );
   }

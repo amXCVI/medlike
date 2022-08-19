@@ -34,3 +34,6 @@ class AppConstants {
   // временный ID для загружаемых файлов (для лоадера)
   static const String uploadingFileId = 'loadingFile';
 }
+
+  // Способы авторизации 
+enum SelectedAuthMethods { faceId, touchId, undefined, pinCode }

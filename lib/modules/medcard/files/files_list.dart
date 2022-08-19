@@ -36,7 +36,7 @@ class FilesList extends StatelessWidget {
     }
 
     void handleDeleteFile(String fileId) {
-      HapticFeedback.vibrate();
+      HapticFeedback.lightImpact();
       context
           .read<MedcardCubit>()
           .deleteUserFile(fileId: fileId, userId: userId);

@@ -44,7 +44,8 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
       }
     }
 
-    if (authMethod == 'true') {
+    if (authMethod == SelectedAuthMethods.faceId.toString() ||
+        authMethod == SelectedAuthMethods.touchId.toString()) {
       setState(() {
         isEnabled = true;
       });
@@ -52,12 +53,15 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   }
 
   void _onChanged(bool value) {
-    if (value) {
-      UserSecureStorage.setField(
-          AppConstants.useBiometricMethodAuthentication, 'true');
+    if (value && isFaceId) {
+      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+          SelectedAuthMethods.faceId.toString());
+    } else if (value && !isFaceId) {
+      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+          SelectedAuthMethods.touchId.toString());
     } else {
-      UserSecureStorage.setField(
-          AppConstants.useBiometricMethodAuthentication, 'false');
+      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+          SelectedAuthMethods.pinCode.toString());
     }
     setState(() {
       isEnabled = value;

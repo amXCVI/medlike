@@ -23,7 +23,7 @@ class AppointmentsParagraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _deleteAppointment(String appointmentId, String userId) {
-      HapticFeedback.vibrate();
+      HapticFeedback.lightImpact();
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);

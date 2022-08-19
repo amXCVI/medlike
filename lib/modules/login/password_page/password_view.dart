@@ -35,7 +35,9 @@ class PasswordPageWidget extends StatelessWidget {
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        if (state.authStatus == UserAuthStatuses.successAuth) {
+        if (state.authStatus == UserAuthStatuses.successAuth &&
+            state.getAllUserAgreementsStatus ==
+                GetAllUserAgreementsStatuses.initial) {
           checkIsAcceptedUserAgreements().then((res) => {
                 if (!res)
                   {
