@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 
 class ExitAppDialog extends StatelessWidget {
@@ -28,9 +29,10 @@ class ExitAppDialog extends StatelessWidget {
       actionsAlignment: MainAxisAlignment.spaceAround,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-      title: const Text(
+      title: Text(
         'Вы уверены, что хотите выйти из приложения?',
         textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,6 +49,10 @@ class ExitAppDialog extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             child: Text(
               'Отмена'.toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: AppColors.mainText),
             ),
           ),
         ),
@@ -59,6 +65,10 @@ class ExitAppDialog extends StatelessWidget {
                     vertical: 16.0, horizontal: 20.0),
                 child: Text(
                   'Выйти'.toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(color: AppColors.mainText),
                 ),
               ),
             );
