@@ -369,12 +369,14 @@ class UserCubit extends Cubit<UserState> {
         userId: userId,
         file: file,
       );
-      emit(state.copyWith(
-          uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
-          userProfiles: state.userProfiles
-              ?.map((e) =>
-                  e.id == userId ? e.copyWith(avatar: response.result) : e)
-              .toList()));
+      Future.delayed(const Duration(milliseconds: 500), () {
+        emit(state.copyWith(
+            uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
+            userProfiles: state.userProfiles
+                ?.map((e) =>
+            e.id == userId ? e.copyWith(avatar: response.result) : e)
+                .toList()));
+      });
     } catch (e) {
       emit(state.copyWith(
         uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
