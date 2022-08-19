@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
@@ -11,7 +12,7 @@ class PinCodeView extends StatefulWidget {
   const PinCodeView(
       {Key? key, required this.setPinCode, required this.handleBiometricMethod})
       : super(key: key);
-  final void Function(List<int> pin) setPinCode;
+  final Future<bool> Function(List<int> pin) setPinCode;
   final void Function() handleBiometricMethod;
 
   @override
@@ -22,24 +23,44 @@ class _PinCodeViewState extends State<PinCodeView> {
   late List<int> pointsArray;
   final List<int> initPointsArray = [-1, -1, -1, -1, -1];
   late bool isSupportedAndEnabledBiometric = false;
+  late bool isShowingBiometricModal = true;
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
-      String authMethod =
-          '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
-      bool isSupportedBiometric = await AuthService.canCheckBiometrics();
-      if (authMethod == 'false' || !isSupportedBiometric) {
-        isSupportedAndEnabledBiometric = false;
-      } else {
-        isSupportedAndEnabledBiometric = true;
-      }
-    });
+    initBiometricValue();
     pointsArray = initPointsArray;
     super.initState();
   }
 
-  void onChangePointsArray(PinCodeKeyboardItem e) {
+  void initBiometricValue() async {
+    String authMethod =
+        '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
+    bool isSupportedBiometric = await AuthService.canCheckBiometrics();
+    if (authMethod == 'false' ||
+        authMethod == 'null' ||
+        !isSupportedBiometric) {
+      setState(() {
+        isSupportedAndEnabledBiometric = false;
+      });
+    } else {
+      isSupportedAndEnabledBiometric = true;
+    }
+  }
+
+  void onCancelBiometricAuthMethod() {
+    setState(() {
+      isShowingBiometricModal = false;
+    });
+  }
+
+  void onSuccessAuthBiometric() {
+    setState(() {
+      isShowingBiometricModal = false;
+    });
+    widget.handleBiometricMethod();
+  }
+
+  void onChangePointsArray(PinCodeKeyboardItem e) async {
     HapticFeedback.vibrate();
     int firstEmptyIndex = pointsArray.indexOf(-1);
 
@@ -49,8 +70,11 @@ class _PinCodeViewState extends State<PinCodeView> {
           pointsArray[firstEmptyIndex] = e.label;
         });
       }
-    } else if (e.buttonType == PinCodeKeyboardTypes.biometric) {
-      widget.handleBiometricMethod();
+    } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
+        isSupportedAndEnabledBiometric) {
+      setState(() {
+        isShowingBiometricModal = true;
+      });
       setState(() {
         pointsArray = initPointsArray;
       });
@@ -67,10 +91,18 @@ class _PinCodeViewState extends State<PinCodeView> {
     }
 
     if (firstEmptyIndex == pointsArray.length - 1) {
-      widget.setPinCode(pointsArray);
-      setState(() {
-        pointsArray = initPointsArray;
-      });
+      // Сам знаю, что дичь, но мне плохо
+      bool res = await widget.setPinCode(pointsArray);
+      if (!res) {
+        for(int i=0; i < pointsArray.length; i++){
+          setState(() {
+            pointsArray[i] = -1;
+          });
+        }
+        setState(() {
+          firstEmptyIndex = 0;
+        });
+      }
       return;
     }
   }
@@ -172,6 +204,12 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
+          isSupportedAndEnabledBiometric && isShowingBiometricModal
+              ? BiometricAuthenticationWidget(
+                  onSuccess: onSuccessAuthBiometric,
+                  onCancel: onCancelBiometricAuthMethod,
+                )
+              : const SizedBox(),
         ],
       ),
     );
