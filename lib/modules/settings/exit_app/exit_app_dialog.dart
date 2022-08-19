@@ -1,18 +1,26 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 
 class ExitAppDialog extends StatelessWidget {
-  const ExitAppDialog({Key? key}) : super(key: key);
+  const ExitAppDialog({Key? key, this.goToLoginPage = true}) : super(key: key);
+
+  /// Определяет, выходить из приложения на страницу лигина или закрывать приложение
+  final bool goToLoginPage;
 
   @override
   Widget build(BuildContext context) {
     void confirmSignOut() {
       context.read<UserCubit>().signOut();
-      context.router.pushNamed(AppRoutes.loginPhone);
+      if (goToLoginPage) {
+        context.router.pushNamed(AppRoutes.loginPhone);
+      } else {
+        SystemNavigator.pop();
+      }
     }
 
     return AlertDialog(
@@ -36,7 +44,7 @@ class ExitAppDialog extends StatelessWidget {
           onTap: () => Navigator.pop(context),
           child: Padding(
             padding:
-            const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             child: Text(
               'Отмена'.toUpperCase(),
             ),
