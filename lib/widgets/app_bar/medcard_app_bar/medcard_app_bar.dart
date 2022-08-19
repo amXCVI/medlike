@@ -135,14 +135,14 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
             ? IconButton(
                 onPressed: () {
                   RouteData.of(context).router.popTop();
-                  HapticFeedback.vibrate();
+                  HapticFeedback.lightImpact();
                 },
                 icon: SvgPicture.asset('assets/icons/app_bar/close_search.svg'))
             : widget.isChildrenPage
                 ? IconButton(
                     onPressed: () {
                       RouteData.of(context).router.popTop();
-                      HapticFeedback.vibrate();
+                      HapticFeedback.lightImpact();
                     },
                     icon: SvgPicture.asset(
                         'assets/icons/app_bar/app_bar_back_icon.svg'))
@@ -151,7 +151,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                       RouteData.of(context)
                           .router
                           .navigateNamed(AppRoutes.main);
-                      HapticFeedback.vibrate();
+                      HapticFeedback.lightImpact();
                     },
                     icon: Image.asset('assets/icons/ic_logo_launch.png',
                         width: 28.0),

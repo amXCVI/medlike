@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
@@ -26,6 +28,11 @@ class _InitialPinCodeState extends State<InitialPinCode> {
   void onSuccessBiometricAuthenticate() {
     context.read<UserCubit>().signInBiometric();
     context.router.replaceAll([const MainRoute()]);
+  }
+
+  void onSuccessBiometricDataSaved() {
+    UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+        SelectedAuthMethods.touchId.toString());
   }
 
   @override
@@ -80,7 +87,10 @@ class _InitialPinCodeState extends State<InitialPinCode> {
             : PinCodeView(
                 setPinCode: _checkRepeatPinCode,
                 key: UniqueKey(),
-                handleBiometricMethod: () {}),
+                handleBiometricMethod: onSuccessBiometricDataSaved,
+                isForcedShowingBiometricModal: true,
+                signInTitle:
+                    'Сохраните свои биометрические данные для упрощенного входа в приолжение'),
       ],
     );
   }

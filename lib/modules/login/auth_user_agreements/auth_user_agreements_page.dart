@@ -23,7 +23,7 @@ class _AuthUserAgreementsPageState extends State<AuthUserAgreementsPage> {
   @override
   Widget build(BuildContext context) {
     void closePage() {
-      HapticFeedback.vibrate();
+      HapticFeedback.lightImpact();
       context.router.replaceAll([StartPhoneNumberRoute()]);
     }
 
