@@ -32,17 +32,18 @@ class UserCubit extends Cubit<UserState> {
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
-  void handleSubmitPassword(String password) {
+  Future<bool> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
         state.userPhoneNumber.toString().length == 11) {
-      signIn(state.userPhoneNumber.toString(), password);
+      return signIn(state.userPhoneNumber.toString(), password);
     } else {
       emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
+      return Future(() => false);
     }
   }
 
   /// Авторизация по номеру телефона и паролю
-  void signIn(String phone, String password) async {
+  Future<bool> signIn(String phone, String password) async {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -57,10 +58,12 @@ class UserCubit extends Cubit<UserState> {
         token: response.token,
         refreshToken: response.refreshToken,
       ));
+      return true;
     } catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
+      return false;
     }
   }
 

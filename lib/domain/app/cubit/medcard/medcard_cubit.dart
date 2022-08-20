@@ -214,7 +214,7 @@ class MedcardCubit extends Cubit<MedcardState> {
     required String categoryValue,
   }) {
     Map<String, MedcardFilterItemModel> medcardFilters =
-        state.medcardSelectedFilters ?? <String, MedcardFilterItemModel>{};
+        state.medcardSelectedFilters as Map<String, MedcardFilterItemModel>;
     medcardFilters.remove(categoryValue);
     medcardFilters[categoryValue] = filterItem;
 

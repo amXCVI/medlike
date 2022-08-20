@@ -19,20 +19,28 @@ class InitialPinCode extends StatefulWidget {
 class _InitialPinCodeState extends State<InitialPinCode> {
   late List<int> initialPinCode;
   late int step = 0;
+  late bool isForcedShowingBiometricModal = false;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void onSuccessBiometricAuthenticate() {
+  void onSuccessBiometricAuthenticate(bool result) {
     context.read<UserCubit>().signInBiometric();
     context.router.replaceAll([const MainRoute()]);
   }
 
-  void onSuccessBiometricDataSaved() {
-    UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
-        SelectedAuthMethods.touchId.toString());
+  void onSuccessBiometricDataSaved(bool result) {
+    if (result) {
+      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+          SelectedAuthMethods.touchId.toString());
+    }
+
+    setState(() {
+      isForcedShowingBiometricModal = false;
+    });
+    context.router.replaceAll([const MainRoute()]);
   }
 
   @override
@@ -52,7 +60,9 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     Future<bool> _checkRepeatPinCode(List<int> repeatPinCode) async {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
-        context.router.replaceAll([const MainRoute()]);
+        setState(() {
+          isForcedShowingBiometricModal = true;
+        });
         return true;
       } else {
         AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -88,7 +98,7 @@ class _InitialPinCodeState extends State<InitialPinCode> {
                 setPinCode: _checkRepeatPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricDataSaved,
-                isForcedShowingBiometricModal: true,
+                isForcedShowingBiometricModal: isForcedShowingBiometricModal,
                 signInTitle:
                     'Сохраните свои биометрические данные для упрощенного входа в приолжение'),
       ],

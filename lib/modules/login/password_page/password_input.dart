@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 
 class PasswordInput extends StatefulWidget {
-  const PasswordInput({Key? key, required this.phoneNumber}) : super(key: key);
+  const PasswordInput(
+      {Key? key, required this.phoneNumber, required this.onAuth})
+      : super(key: key);
 
   final String phoneNumber;
+  final void Function({required String password}) onAuth;
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -37,7 +38,7 @@ class _PasswordInputState extends State<PasswordInput> {
   void _onChangePassword(String text) {}
 
   void _authenticateWithPhoneAndPassword() {
-    context.read<UserCubit>().handleSubmitPassword(_controller.text);
+    widget.onAuth(password: _controller.text);
   }
 
   @override
