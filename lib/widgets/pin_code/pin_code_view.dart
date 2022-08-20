@@ -18,7 +18,7 @@ class PinCodeView extends StatefulWidget {
     this.signInTitle,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
-  final void Function() handleBiometricMethod;
+  final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
   final String? signInTitle;
 
@@ -67,10 +67,11 @@ class _PinCodeViewState extends State<PinCodeView> {
     setState(() {
       isShowingBiometricModal = false;
     });
+    widget.handleBiometricMethod(false);
   }
 
   void onSuccessAuthBiometric() {
-    widget.handleBiometricMethod();
+    widget.handleBiometricMethod(true);
     setState(() {
       isShowingBiometricModal = false;
     });
@@ -88,7 +89,8 @@ class _PinCodeViewState extends State<PinCodeView> {
         });
       }
     } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
-        isSupportedAndEnabledBiometric) {
+        isSupportedAndEnabledBiometric &&
+        !widget.isForcedShowingBiometricModal) {
       setState(() {
         isShowingBiometricModal = true;
       });
@@ -119,13 +121,6 @@ class _PinCodeViewState extends State<PinCodeView> {
         }
         setState(() {
           firstEmptyIndex = 0;
-        });
-      }
-
-      if (res && widget.isForcedShowingBiometricModal) {
-        setState(() {
-          isSupportedAndEnabledBiometric = true;
-          isShowingBiometricModal = true;
         });
       }
 
@@ -234,7 +229,8 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
-          isSupportedAndEnabledBiometric && isShowingBiometricModal
+          isSupportedAndEnabledBiometric && isShowingBiometricModal ||
+                  widget.isForcedShowingBiometricModal
               ? BiometricAuthenticationWidget(
                   onSuccess: onSuccessAuthBiometric,
                   onCancel: onCancelBiometricAuthMethod,

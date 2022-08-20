@@ -47,7 +47,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             });
   }
 
-  void onSuccessBiometricAuthenticate() {
+  void onSuccessBiometricAuthenticate(bool result) {
     setState(() {
       isBiometricAuthenticate = false;
     });
