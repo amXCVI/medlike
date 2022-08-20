@@ -44,7 +44,7 @@ class PasswordPageWidget extends StatelessWidget {
                           if (!res)
                             {
                               context.router
-                                  .replaceAll([const AuthUserAgreementsRoute()])
+                                  .replaceAll([AuthUserAgreementsRoute()])
                             }
                           else
                             {

@@ -121,8 +121,12 @@ class AppRouter extends _i34.RootStackRouter {
               key: args.key, smsToken: args.smsToken));
     },
     AuthUserAgreementsRoute.name: (routeData) {
+      final args = routeData.argsAs<AuthUserAgreementsRouteArgs>(
+          orElse: () => const AuthUserAgreementsRouteArgs());
       return _i34.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i7.AuthUserAgreementsPage());
+          routeData: routeData,
+          child: _i7.AuthUserAgreementsPage(
+              key: args.key, isFullScreen: args.isFullScreen));
     },
     MainRoute.name: (routeData) {
       return _i34.AdaptivePage<dynamic>(
@@ -517,12 +521,28 @@ class RecoverPasswordNewRouteArgs {
 
 /// generated route for
 /// [_i7.AuthUserAgreementsPage]
-class AuthUserAgreementsRoute extends _i34.PageRouteInfo<void> {
-  const AuthUserAgreementsRoute()
+class AuthUserAgreementsRoute
+    extends _i34.PageRouteInfo<AuthUserAgreementsRouteArgs> {
+  AuthUserAgreementsRoute({_i35.Key? key, bool isFullScreen = false})
       : super(AuthUserAgreementsRoute.name,
-            path: '/login_auth_user_agreements');
+            path: '/login_auth_user_agreements',
+            args: AuthUserAgreementsRouteArgs(
+                key: key, isFullScreen: isFullScreen));
 
   static const String name = 'AuthUserAgreementsRoute';
+}
+
+class AuthUserAgreementsRouteArgs {
+  const AuthUserAgreementsRouteArgs({this.key, this.isFullScreen = false});
+
+  final _i35.Key? key;
+
+  final bool isFullScreen;
+
+  @override
+  String toString() {
+    return 'AuthUserAgreementsRouteArgs{key: $key, isFullScreen: $isFullScreen}';
+  }
 }
 
 /// generated route for

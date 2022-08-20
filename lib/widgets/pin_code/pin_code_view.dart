@@ -67,7 +67,9 @@ class _PinCodeViewState extends State<PinCodeView> {
     setState(() {
       isShowingBiometricModal = false;
     });
-    widget.handleBiometricMethod(false);
+    if (widget.isForcedShowingBiometricModal) {
+      widget.handleBiometricMethod(false);
+    }
   }
 
   void onSuccessAuthBiometric() {
