@@ -406,8 +406,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -528,8 +528,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -556,6 +556,56 @@ class UserCubit extends Cubit<UserState> {
             '${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}',
         personPhone: '${state.userPhoneNumber}',
         files: files,
+      );
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,
+      ));
+      AppToast.showAppToast(
+          msg: 'Ваше обращение успешно доставлено. Ожидайте ответ');
+    } catch (e) {
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Отправить сообщение в техподдержку от неавторизованного пользователя
+  Future<void> sendUnauthEmailToSupport({
+    required String email,
+    required String message,
+  }) async {
+    emit(state.copyWith(
+      sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
+    ));
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String techInfo = '';
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      techInfo = 'Устройство: ${iosInfo.name}\n'
+          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    }
+
+    try {
+      await userRepository.sendUnauthEmail(
+        email: email,
+        message: message,
+        subject: '',
+        techInfo: techInfo,
+        personFio: 'Пользователь не авторизован',
+        personPhone: '${state.userPhoneNumber}',
       );
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,

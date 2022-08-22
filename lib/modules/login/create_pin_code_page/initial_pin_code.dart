@@ -6,7 +6,6 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class InitialPinCode extends StatefulWidget {
@@ -73,28 +72,16 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     return ListView(
       shrinkWrap: true,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Center(
-              child: Text(
-            step == 0
-                ? 'Придумайте пин-код\nдля быстрого входа в приложение'
-                : 'Повторите пин-код',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(color: AppColors.mainText),
-            textAlign: TextAlign.center,
-          )),
-        ),
-        const SizedBox(height: 4),
         step == 0
             ? PinCodeView(
+                pinCodeTitle:
+                    'Придумайте пин-код\nдля быстрого входа в приложение',
                 setPinCode: _saveInitialPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricAuthenticate,
               )
             : PinCodeView(
+                pinCodeTitle: 'Повторите пин-код',
                 setPinCode: _checkRepeatPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricDataSaved,
