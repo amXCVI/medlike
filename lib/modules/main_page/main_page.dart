@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/main_page/grid_item.dart';
 import 'package:medlike/modules/main_page/grid_items_list.dart';
 import 'package:medlike/modules/main_page/slider/slider_widget.dart';
+import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode_button.dart';
@@ -19,7 +19,11 @@ class MainPage extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        SystemNavigator.pop();
+        showDialog<void>(
+            context: context,
+            builder: (context) => const ExitAppDialog(
+                  goToLoginPage: false,
+                ));
         return false;
       },
       child: DefaultScaffold(

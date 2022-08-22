@@ -6,11 +6,15 @@ import 'package:local_auth_ios/local_auth_ios.dart';
 
 class BiometricAuthenticationWidget extends StatelessWidget {
   BiometricAuthenticationWidget(
-      {Key? key, required this.onSuccess, required this.onCancel})
+      {Key? key,
+      required this.onSuccess,
+      required this.onCancel,
+      this.signInTitle})
       : super(key: key);
 
   final void Function() onSuccess;
   final void Function() onCancel;
+  final String? signInTitle;
 
   final LocalAuthentication auth = LocalAuthentication();
 
@@ -26,10 +30,10 @@ class BiometricAuthenticationWidget extends StatelessWidget {
           biometricOnly: true,
         ),
         authMessages: <AuthMessages>[
-          const AndroidAuthMessages(
+          AndroidAuthMessages(
             biometricRequiredTitle: 'Прикоснитесь к сенсору устройства',
             cancelButton: 'Отмена',
-            signInTitle: 'Авторизация',
+            signInTitle: signInTitle ?? 'Авторизация',
             biometricHint: '',
           ),
           const IOSAuthMessages(

@@ -83,3 +83,27 @@ class DeleteUserFileResponseModel with _$DeleteUserFileResponseModel {
   factory DeleteUserFileResponseModel.fromJson(Map<String, Object?> json) =>
       _$DeleteUserFileResponseModelFromJson(json);
 }
+
+@freezed
+class MedcardFilterItemModel with _$MedcardFilterItemModel {
+  const factory MedcardFilterItemModel({
+    required String label,
+    required String value,
+    required String categoryLabel,
+  }) = _MedcardFilterItemModel;
+
+  factory MedcardFilterItemModel.fromJson(Map<String, Object?> json) =>
+      _$MedcardFilterItemModelFromJson(json);
+}
+
+@freezed
+class MedcardFilterModel with _$MedcardFilterModel {
+  const factory MedcardFilterModel({
+    required String title,
+    required String value,
+    required List<MedcardFilterItemModel> filters,
+  }) = _MedcardFilterModel;
+
+  factory MedcardFilterModel.fromJson(Map<String, Object?> json) =>
+      _$MedcardFilterModelFromJson(json);
+}

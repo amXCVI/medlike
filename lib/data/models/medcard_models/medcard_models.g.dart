@@ -119,3 +119,38 @@ Map<String, dynamic> _$$_DeleteUserFileResponseModelToJson(
       'result': instance.result,
       'information': instance.information,
     };
+
+_$_MedcardFilterItemModel _$$_MedcardFilterItemModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_MedcardFilterItemModel(
+      label: json['label'] as String,
+      value: json['value'] as String,
+      categoryLabel: json['categoryLabel'] as String,
+    );
+
+Map<String, dynamic> _$$_MedcardFilterItemModelToJson(
+        _$_MedcardFilterItemModel instance) =>
+    <String, dynamic>{
+      'label': instance.label,
+      'value': instance.value,
+      'categoryLabel': instance.categoryLabel,
+    };
+
+_$_MedcardFilterModel _$$_MedcardFilterModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_MedcardFilterModel(
+      title: json['title'] as String,
+      value: json['value'] as String,
+      filters: (json['filters'] as List<dynamic>)
+          .map(
+              (e) => MedcardFilterItemModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_MedcardFilterModelToJson(
+        _$_MedcardFilterModel instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'value': instance.value,
+      'filters': instance.filters,
+    };

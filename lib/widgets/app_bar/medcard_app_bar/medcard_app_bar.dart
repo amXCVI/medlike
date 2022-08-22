@@ -10,7 +10,8 @@ class MedcardAppBar extends StatefulWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     required this.filteringFunction,
-    this.isChildrenPage = false,
+    this.isChildrenPage = false, required this.handleTapOnFiltersButton,
+    required this.handleResetFilters,
   })  : preferredSize = const Size.fromHeight(56),
         super(key: key);
   @override
@@ -18,6 +19,8 @@ class MedcardAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool isChildrenPage;
   final void Function(String searchingStr) filteringFunction;
+  final void Function() handleTapOnFiltersButton;
+  final void Function() handleResetFilters;
 
   @override
   _MedcardAppBarState createState() => _MedcardAppBarState();
@@ -72,6 +75,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
     ModalRoute.of(context)
         ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopFiltering));
 
+    widget.handleTapOnFiltersButton();
     setState(() {
       _isFiltersMode = true;
     });
@@ -84,6 +88,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
   }
 
   void _handleFiltering() {
+    widget.handleTapOnFiltersButton();
     Navigator.pop(context);
     _stopFiltering();
   }
@@ -134,15 +139,16 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
         leading: _isFiltersMode
             ? IconButton(
                 onPressed: () {
+                  widget.handleResetFilters();
                   RouteData.of(context).router.popTop();
-                  HapticFeedback.vibrate();
+                  HapticFeedback.lightImpact();
                 },
                 icon: SvgPicture.asset('assets/icons/app_bar/close_search.svg'))
             : widget.isChildrenPage
                 ? IconButton(
                     onPressed: () {
                       RouteData.of(context).router.popTop();
-                      HapticFeedback.vibrate();
+                      HapticFeedback.lightImpact();
                     },
                     icon: SvgPicture.asset(
                         'assets/icons/app_bar/app_bar_back_icon.svg'))
@@ -151,7 +157,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                       RouteData.of(context)
                           .router
                           .navigateNamed(AppRoutes.main);
-                      HapticFeedback.vibrate();
+                      HapticFeedback.lightImpact();
                     },
                     icon: Image.asset('assets/icons/ic_logo_launch.png',
                         width: 28.0),

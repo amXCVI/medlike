@@ -8,7 +8,7 @@ part of 'error_models.dart';
 
 _$_DefaultErrorModel _$$_DefaultErrorModelFromJson(Map<String, dynamic> json) =>
     _$_DefaultErrorModel(
-      message: json['message'] as String,
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$$_DefaultErrorModelToJson(
