@@ -79,7 +79,7 @@ class UserState {
     this.changePasswordStatus,
     this.uploadUserAvatarStatus,
     this.deletingUserAccountStatus,
-    this.getAllUserAgreementsStatus,
+    this.getAllUserAgreementsStatus = GetAllUserAgreementsStatuses.initial,
     this.acceptedAgreementsStatus,
     this.sendingEmailToSupportStatus,
   });

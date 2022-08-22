@@ -27,6 +27,12 @@ String dateTimeToServerFormat(DateTime date, int timeZoneOffset) {
   }
 }
 
+/// Ф-я приводит даты к формату, принятому на сервере
+/// но без времени и часового пояса
+String dateTimeToDate(DateTime date) {
+  return DateFormat("yyyy-MM-dd").format(date);
+}
+
 /// Ф-я возвращает численное значение текущей таймзоны
 /// Костыль на костыль
 /// Сделал так из-за того, что не получается прямо в хелпере асинхронно получать эти значения

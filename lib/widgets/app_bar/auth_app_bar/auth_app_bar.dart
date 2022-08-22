@@ -125,7 +125,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ? IconButton(
               onPressed: () {
                 RouteData.of(context).router.popTop();
-                HapticFeedback.vibrate();
+                HapticFeedback.lightImpact();
               },
               icon: SvgPicture.asset(
                   'assets/icons/app_bar/app_bar_back_icon.svg'))
@@ -136,9 +136,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     : RouteData.of(context)
                         .router
                         .navigateNamed(AppRoutes.main);
-                HapticFeedback.vibrate();
+                HapticFeedback.lightImpact();
               },
-              icon: Image.asset('assets/icons/ic_logo_launch.png', width: 28.0),
+              icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
+                  width: 28.0),
             ),
       actions: widget.isSearch
           ? [

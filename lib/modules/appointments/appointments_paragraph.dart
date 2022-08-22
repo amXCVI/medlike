@@ -23,7 +23,7 @@ class AppointmentsParagraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _deleteAppointment(String appointmentId, String userId) {
-      HapticFeedback.vibrate();
+      HapticFeedback.lightImpact();
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
@@ -90,26 +90,24 @@ class AppointmentsParagraph extends StatelessWidget {
                                               bottomRight: Radius.circular(12)),
                                           color: Theme.of(context).errorColor,
                                         ),
-                                        child: Expanded(
-                                          child: Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                const SizedBox(width: 20.0),
-                                                SvgPicture.asset(
-                                                    'assets/icons/appointments/ic_delete_appointment.svg'),
-                                                const SizedBox(width: 20.0),
-                                                // Text(
-                                                //   'Отменить прием',
-                                                //   style: Theme.of(context)
-                                                //       .textTheme
-                                                //       .labelSmall
-                                                //       ?.copyWith(
-                                                //           color: Colors.white),
-                                                // ),
-                                              ],
-                                            ),
+                                        child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              const SizedBox(width: 20.0),
+                                              SvgPicture.asset(
+                                                  'assets/icons/appointments/ic_delete_appointment.svg'),
+                                              const SizedBox(width: 20.0),
+                                              // Text(
+                                              //   'Отменить прием',
+                                              //   style: Theme.of(context)
+                                              //       .textTheme
+                                              //       .labelSmall
+                                              //       ?.copyWith(
+                                              //           color: Colors.white),
+                                              // ),
+                                            ],
                                           ),
                                         ),
                                       ),

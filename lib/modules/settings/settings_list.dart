@@ -39,13 +39,15 @@ class SettingsList extends StatelessWidget {
             title: 'Сменить пароль',
             iconSrc: 'assets/icons/settings/ic_password_outline.svg',
             onTap: handleTapOnChangePassword,
-            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
+            rightActionWidget:
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'Сменить пин-код',
             iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
             onTap: handleChangePinCode,
-            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
+            rightActionWidget:
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'Тех. поддержка',
@@ -54,13 +56,15 @@ class SettingsList extends StatelessWidget {
             onTap: () {
               context.router.push(const SupportRoute());
             },
-            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
+            rightActionWidget:
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'Документы',
             iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
             onTap: handleTapAgreements,
-            rightActionWidget: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
+            rightActionWidget:
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
             title: 'О приложении',
@@ -69,6 +73,14 @@ class SettingsList extends StatelessWidget {
               showDialog<void>(
                   context: context,
                   builder: (context) => const AboutAppDialog());
+            },
+          ),
+          SettingsListItem(
+            title: 'logout',
+            iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
+            onTap: () {
+              context.read<UserCubit>().signOut();
+              context.router.replaceAll([const CheckPinCodeRoute()]);
             },
           ),
           SettingsListItem(

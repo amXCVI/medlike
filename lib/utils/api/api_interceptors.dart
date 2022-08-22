@@ -101,7 +101,10 @@ class DioInterceptors extends Interceptor {
         return e;
       });
     } else {
-      String errStr = DefaultErrorModel.fromJson(err.response!.data).message;
+      String? errStr = DefaultErrorModel.fromJson(err.response!.data).message;
+      if (errStr == null) {
+        return super.onError(err, handler);
+      }
       AppToast.showAppToast(msg: errStr.isNotEmpty ? errStr : err.message);
       return super.onError(err, handler);
     }

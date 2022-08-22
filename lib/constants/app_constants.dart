@@ -6,6 +6,9 @@ class AppConstants {
   //! нужно бы переделать на какой-то сервис, по-хорошему
   static const String isAuth = 'isAuth';
 
+  // Ключ для сохранения номера телефона пользователя
+  static const String userPhoneNumber = 'userPhoneNumber';
+
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 
@@ -40,3 +43,6 @@ class AppConstants {
   // Тип оплаты, картой
   static const String cardPayType = 'cash';
 }
+
+// Способы авторизации
+enum SelectedAuthMethods { faceId, touchId, undefined, pinCode }

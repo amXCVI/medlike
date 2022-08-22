@@ -1241,3 +1241,360 @@ abstract class _DeleteUserFileResponseModel
   _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+MedcardFilterItemModel _$MedcardFilterItemModelFromJson(
+    Map<String, dynamic> json) {
+  return _MedcardFilterItemModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MedcardFilterItemModel {
+  String get label => throw _privateConstructorUsedError;
+  String get value => throw _privateConstructorUsedError;
+  String get categoryLabel => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MedcardFilterItemModelCopyWith<MedcardFilterItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MedcardFilterItemModelCopyWith<$Res> {
+  factory $MedcardFilterItemModelCopyWith(MedcardFilterItemModel value,
+          $Res Function(MedcardFilterItemModel) then) =
+      _$MedcardFilterItemModelCopyWithImpl<$Res>;
+  $Res call({String label, String value, String categoryLabel});
+}
+
+/// @nodoc
+class _$MedcardFilterItemModelCopyWithImpl<$Res>
+    implements $MedcardFilterItemModelCopyWith<$Res> {
+  _$MedcardFilterItemModelCopyWithImpl(this._value, this._then);
+
+  final MedcardFilterItemModel _value;
+  // ignore: unused_field
+  final $Res Function(MedcardFilterItemModel) _then;
+
+  @override
+  $Res call({
+    Object? label = freezed,
+    Object? value = freezed,
+    Object? categoryLabel = freezed,
+  }) {
+    return _then(_value.copyWith(
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryLabel: categoryLabel == freezed
+          ? _value.categoryLabel
+          : categoryLabel // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_MedcardFilterItemModelCopyWith<$Res>
+    implements $MedcardFilterItemModelCopyWith<$Res> {
+  factory _$$_MedcardFilterItemModelCopyWith(_$_MedcardFilterItemModel value,
+          $Res Function(_$_MedcardFilterItemModel) then) =
+      __$$_MedcardFilterItemModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String label, String value, String categoryLabel});
+}
+
+/// @nodoc
+class __$$_MedcardFilterItemModelCopyWithImpl<$Res>
+    extends _$MedcardFilterItemModelCopyWithImpl<$Res>
+    implements _$$_MedcardFilterItemModelCopyWith<$Res> {
+  __$$_MedcardFilterItemModelCopyWithImpl(_$_MedcardFilterItemModel _value,
+      $Res Function(_$_MedcardFilterItemModel) _then)
+      : super(_value, (v) => _then(v as _$_MedcardFilterItemModel));
+
+  @override
+  _$_MedcardFilterItemModel get _value =>
+      super._value as _$_MedcardFilterItemModel;
+
+  @override
+  $Res call({
+    Object? label = freezed,
+    Object? value = freezed,
+    Object? categoryLabel = freezed,
+  }) {
+    return _then(_$_MedcardFilterItemModel(
+      label: label == freezed
+          ? _value.label
+          : label // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryLabel: categoryLabel == freezed
+          ? _value.categoryLabel
+          : categoryLabel // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MedcardFilterItemModel implements _MedcardFilterItemModel {
+  const _$_MedcardFilterItemModel(
+      {required this.label, required this.value, required this.categoryLabel});
+
+  factory _$_MedcardFilterItemModel.fromJson(Map<String, dynamic> json) =>
+      _$$_MedcardFilterItemModelFromJson(json);
+
+  @override
+  final String label;
+  @override
+  final String value;
+  @override
+  final String categoryLabel;
+
+  @override
+  String toString() {
+    return 'MedcardFilterItemModel(label: $label, value: $value, categoryLabel: $categoryLabel)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MedcardFilterItemModel &&
+            const DeepCollectionEquality().equals(other.label, label) &&
+            const DeepCollectionEquality().equals(other.value, value) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryLabel, categoryLabel));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(label),
+      const DeepCollectionEquality().hash(value),
+      const DeepCollectionEquality().hash(categoryLabel));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_MedcardFilterItemModelCopyWith<_$_MedcardFilterItemModel> get copyWith =>
+      __$$_MedcardFilterItemModelCopyWithImpl<_$_MedcardFilterItemModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MedcardFilterItemModelToJson(this);
+  }
+}
+
+abstract class _MedcardFilterItemModel implements MedcardFilterItemModel {
+  const factory _MedcardFilterItemModel(
+      {required final String label,
+      required final String value,
+      required final String categoryLabel}) = _$_MedcardFilterItemModel;
+
+  factory _MedcardFilterItemModel.fromJson(Map<String, dynamic> json) =
+      _$_MedcardFilterItemModel.fromJson;
+
+  @override
+  String get label => throw _privateConstructorUsedError;
+  @override
+  String get value => throw _privateConstructorUsedError;
+  @override
+  String get categoryLabel => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_MedcardFilterItemModelCopyWith<_$_MedcardFilterItemModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MedcardFilterModel _$MedcardFilterModelFromJson(Map<String, dynamic> json) {
+  return _MedcardFilterModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MedcardFilterModel {
+  String get title => throw _privateConstructorUsedError;
+  String get value => throw _privateConstructorUsedError;
+  List<MedcardFilterItemModel> get filters =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MedcardFilterModelCopyWith<MedcardFilterModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MedcardFilterModelCopyWith<$Res> {
+  factory $MedcardFilterModelCopyWith(
+          MedcardFilterModel value, $Res Function(MedcardFilterModel) then) =
+      _$MedcardFilterModelCopyWithImpl<$Res>;
+  $Res call({String title, String value, List<MedcardFilterItemModel> filters});
+}
+
+/// @nodoc
+class _$MedcardFilterModelCopyWithImpl<$Res>
+    implements $MedcardFilterModelCopyWith<$Res> {
+  _$MedcardFilterModelCopyWithImpl(this._value, this._then);
+
+  final MedcardFilterModel _value;
+  // ignore: unused_field
+  final $Res Function(MedcardFilterModel) _then;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? value = freezed,
+    Object? filters = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      filters: filters == freezed
+          ? _value.filters
+          : filters // ignore: cast_nullable_to_non_nullable
+              as List<MedcardFilterItemModel>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_MedcardFilterModelCopyWith<$Res>
+    implements $MedcardFilterModelCopyWith<$Res> {
+  factory _$$_MedcardFilterModelCopyWith(_$_MedcardFilterModel value,
+          $Res Function(_$_MedcardFilterModel) then) =
+      __$$_MedcardFilterModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String title, String value, List<MedcardFilterItemModel> filters});
+}
+
+/// @nodoc
+class __$$_MedcardFilterModelCopyWithImpl<$Res>
+    extends _$MedcardFilterModelCopyWithImpl<$Res>
+    implements _$$_MedcardFilterModelCopyWith<$Res> {
+  __$$_MedcardFilterModelCopyWithImpl(
+      _$_MedcardFilterModel _value, $Res Function(_$_MedcardFilterModel) _then)
+      : super(_value, (v) => _then(v as _$_MedcardFilterModel));
+
+  @override
+  _$_MedcardFilterModel get _value => super._value as _$_MedcardFilterModel;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? value = freezed,
+    Object? filters = freezed,
+  }) {
+    return _then(_$_MedcardFilterModel(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      filters: filters == freezed
+          ? _value._filters
+          : filters // ignore: cast_nullable_to_non_nullable
+              as List<MedcardFilterItemModel>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_MedcardFilterModel implements _MedcardFilterModel {
+  const _$_MedcardFilterModel(
+      {required this.title,
+      required this.value,
+      required final List<MedcardFilterItemModel> filters})
+      : _filters = filters;
+
+  factory _$_MedcardFilterModel.fromJson(Map<String, dynamic> json) =>
+      _$$_MedcardFilterModelFromJson(json);
+
+  @override
+  final String title;
+  @override
+  final String value;
+  final List<MedcardFilterItemModel> _filters;
+  @override
+  List<MedcardFilterItemModel> get filters {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filters);
+  }
+
+  @override
+  String toString() {
+    return 'MedcardFilterModel(title: $title, value: $value, filters: $filters)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_MedcardFilterModel &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.value, value) &&
+            const DeepCollectionEquality().equals(other._filters, _filters));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(value),
+      const DeepCollectionEquality().hash(_filters));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_MedcardFilterModelCopyWith<_$_MedcardFilterModel> get copyWith =>
+      __$$_MedcardFilterModelCopyWithImpl<_$_MedcardFilterModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_MedcardFilterModelToJson(this);
+  }
+}
+
+abstract class _MedcardFilterModel implements MedcardFilterModel {
+  const factory _MedcardFilterModel(
+          {required final String title,
+          required final String value,
+          required final List<MedcardFilterItemModel> filters}) =
+      _$_MedcardFilterModel;
+
+  factory _MedcardFilterModel.fromJson(Map<String, dynamic> json) =
+      _$_MedcardFilterModel.fromJson;
+
+  @override
+  String get title => throw _privateConstructorUsedError;
+  @override
+  String get value => throw _privateConstructorUsedError;
+  @override
+  List<MedcardFilterItemModel> get filters =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_MedcardFilterModelCopyWith<_$_MedcardFilterModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

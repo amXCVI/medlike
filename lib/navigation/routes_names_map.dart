@@ -7,6 +7,7 @@ class AppRoutes {
   static const loginRecoverPasswordSms = '/login_recover_password_sms';
   static const loginRecoverPasswordNew = '/login_recover_password_new';
   static const loginAuthUserAgreements = '/login_auth_user_agreements';
+  static const loginUnauthSupport = '/login_unauth_support';
   static const main = '/main';
   static const subscribe = '/subscribe';
   static const subscribeProfiles = '/subscribe_profiles';
@@ -24,6 +25,9 @@ class AppRoutes {
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
   static const health = '/health';
+  static const diary = '/diary';
+  static const diaryAdd = '/diary_add';
+  static const healthFilters = '/health_filters';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoDetails = '/clinic_info_details';
   static const clinicInfoPrice = '/clinic_info_price';

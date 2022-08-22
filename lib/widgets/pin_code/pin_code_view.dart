@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class PinCodeView extends StatefulWidget {
-  const PinCodeView(
-      {Key? key, required this.setPinCode, required this.handleBiometricMethod})
-      : super(key: key);
-  final void Function(List<int> pin) setPinCode;
-  final void Function() handleBiometricMethod;
+  const PinCodeView({
+    Key? key,
+    required this.setPinCode,
+    required this.handleBiometricMethod,
+    this.isForcedShowingBiometricModal = false,
+    this.signInTitle,
+    required this.pinCodeTitle,
+  }) : super(key: key);
+  final Future<bool> Function(List<int> pin) setPinCode;
+  final void Function(bool) handleBiometricMethod;
+  final bool isForcedShowingBiometricModal;
+  final String? signInTitle;
+  final String pinCodeTitle;
 
   @override
   State<PinCodeView> createState() => _PinCodeViewState();
@@ -22,25 +32,58 @@ class _PinCodeViewState extends State<PinCodeView> {
   late List<int> pointsArray;
   final List<int> initPointsArray = [-1, -1, -1, -1, -1];
   late bool isSupportedAndEnabledBiometric = false;
+  late bool isShowingBiometricModal = true;
+  late bool isFaceId = false;
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
-      String authMethod =
-          '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
-      bool isSupportedBiometric = await AuthService.canCheckBiometrics();
-      if (authMethod == 'false' || !isSupportedBiometric) {
-        isSupportedAndEnabledBiometric = false;
-      } else {
-        isSupportedAndEnabledBiometric = true;
-      }
-    });
+    initBiometricValue();
     pointsArray = initPointsArray;
     super.initState();
   }
 
-  void onChangePointsArray(PinCodeKeyboardItem e) {
-    HapticFeedback.vibrate();
+  void initBiometricValue() async {
+    String authMethod =
+        '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
+    bool isSupportedBiometric = await AuthService.canCheckBiometrics();
+    if (authMethod == SelectedAuthMethods.pinCode.toString() ||
+        authMethod == 'null' ||
+        !isSupportedBiometric) {
+      setState(() {
+        isSupportedAndEnabledBiometric = false;
+      });
+    } else {
+      isSupportedAndEnabledBiometric = true;
+    }
+
+    List<BiometricType> supportedBiometricTypesList =
+        await AuthService.getAvailableBiometrics();
+    if (supportedBiometricTypesList.contains(BiometricType.face)) {
+      setState(() {
+        isFaceId = true;
+      });
+    }
+  }
+
+  void onCancelBiometricAuthMethod() {
+    setState(() {
+      isShowingBiometricModal = false;
+    });
+    if (widget.isForcedShowingBiometricModal) {
+      widget.handleBiometricMethod(false);
+    }
+  }
+
+  void onSuccessAuthBiometric() {
+    widget.handleBiometricMethod(true);
+    setState(() {
+      isShowingBiometricModal = false;
+    });
+  }
+
+  void onChangePointsArray(PinCodeKeyboardItem e) async {
+    SystemSound.play(SystemSoundType.click);
+    HapticFeedback.lightImpact();
     int firstEmptyIndex = pointsArray.indexOf(-1);
 
     if (e.buttonType == PinCodeKeyboardTypes.number) {
@@ -49,8 +92,12 @@ class _PinCodeViewState extends State<PinCodeView> {
           pointsArray[firstEmptyIndex] = e.label;
         });
       }
-    } else if (e.buttonType == PinCodeKeyboardTypes.biometric) {
-      widget.handleBiometricMethod();
+    } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
+        isSupportedAndEnabledBiometric &&
+        !widget.isForcedShowingBiometricModal) {
+      setState(() {
+        isShowingBiometricModal = true;
+      });
       setState(() {
         pointsArray = initPointsArray;
       });
@@ -67,10 +114,20 @@ class _PinCodeViewState extends State<PinCodeView> {
     }
 
     if (firstEmptyIndex == pointsArray.length - 1) {
-      widget.setPinCode(pointsArray);
-      setState(() {
-        pointsArray = initPointsArray;
-      });
+      // Сам знаю, что дичь, но мне плохо
+      bool res = await widget.setPinCode(pointsArray);
+      if (!res) {
+        HapticFeedback.vibrate();
+        for (int i = 0; i < pointsArray.length; i++) {
+          setState(() {
+            pointsArray[i] = -1;
+          });
+        }
+        setState(() {
+          firstEmptyIndex = 0;
+        });
+      }
+
       return;
     }
   }
@@ -79,30 +136,48 @@ class _PinCodeViewState extends State<PinCodeView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.height - 280,
+      height: MediaQuery.of(context).size.height - 160,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...pointsArray
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: e == -1
-                                  ? AppColors.circleBgFirst
-                                  : AppColors.mainBrandColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ],
+          const Expanded(child: SizedBox()),
+          Expanded(
+            child: Center(
+              child: Column(
+                children: [
+                  Center(
+                      child: Text(
+                    widget.pinCodeTitle,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: AppColors.mainText),
+                    textAlign: TextAlign.center,
+                  )),
+                  const SizedBox(height: 28),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...pointsArray
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10),
+                                child: Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: e == -1
+                                        ? AppColors.circleBgFirst
+                                        : AppColors.mainBrandColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Material(
@@ -140,7 +215,11 @@ class _PinCodeViewState extends State<PinCodeView> {
                                               padding:
                                                   const EdgeInsets.all(12.0),
                                               child: SvgPicture.asset(
-                                                item.imgSrc as String,
+                                                isFaceId
+                                                    ? item.imgSrcFaceId
+                                                        as String
+                                                    : item.imgSrcTouchId
+                                                        as String,
                                                 width: 34,
                                               ),
                                             )
@@ -158,7 +237,8 @@ class _PinCodeViewState extends State<PinCodeView> {
                                                   .textTheme
                                                   .headlineLarge
                                                   ?.copyWith(
-                                                      color: AppColors.mainText,
+                                                      color:
+                                                          AppColors.mainText,
                                                       fontSize: 28,
                                                       fontWeight:
                                                           FontWeight.w400),
@@ -172,6 +252,14 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
+          isSupportedAndEnabledBiometric && isShowingBiometricModal ||
+                  widget.isForcedShowingBiometricModal
+              ? BiometricAuthenticationWidget(
+                  onSuccess: onSuccessAuthBiometric,
+                  onCancel: onCancelBiometricAuthMethod,
+                  signInTitle: widget.signInTitle,
+                )
+              : const SizedBox(),
         ],
       ),
     );

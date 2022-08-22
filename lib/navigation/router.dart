@@ -1,17 +1,21 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart';
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
-import 'package:medlike/modules/health_page/health_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
+import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';
+import 'package:medlike/modules/health/diary_page/diary_page.dart';
+import 'package:medlike/modules/health/filters_page/filters_page.dart';
+import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_page.dart';
+import 'package:medlike/modules/login/unauth_support/unauth_support_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
@@ -43,6 +47,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.loginRecoverPasswordSms, page: RecoverPasswordSmsPage),
     AdaptiveRoute(path: AppRoutes.loginRecoverPasswordNew, page: RecoverPasswordNewPage),
     AdaptiveRoute(path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
+    AdaptiveRoute(path: AppRoutes.loginUnauthSupport, page: UnauthSupportPage),
 
     AdaptiveRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser], initial: true),
 
@@ -72,7 +77,16 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.clinicInfoPrice, page: PricePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
-    AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser])
+    AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
+    CustomRoute(
+      path: AppRoutes.healthFilters, 
+      page: FiltersPage, 
+      guards: [CheckIsAuthUser],
+      transitionsBuilder: TransitionsBuilders.slideBottom,          
+      durationInMilliseconds: 400
+    )
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

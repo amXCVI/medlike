@@ -32,17 +32,18 @@ class UserCubit extends Cubit<UserState> {
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
-  void handleSubmitPassword(String password) {
+  Future<bool> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
         state.userPhoneNumber.toString().length == 11) {
-      signIn(state.userPhoneNumber.toString(), password);
+      return signIn(state.userPhoneNumber.toString(), password);
     } else {
       emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
+      return Future(() => false);
     }
   }
 
   /// Авторизация по номеру телефона и паролю
-  void signIn(String phone, String password) async {
+  Future<bool> signIn(String phone, String password) async {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -52,15 +53,18 @@ class UserCubit extends Cubit<UserState> {
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
+      UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
       emit(state.copyWith(
         authStatus: UserAuthStatuses.successAuth,
         token: response.token,
         refreshToken: response.refreshToken,
       ));
+      return true;
     } catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
+      return false;
     }
   }
 
@@ -369,12 +373,14 @@ class UserCubit extends Cubit<UserState> {
         userId: userId,
         file: file,
       );
-      emit(state.copyWith(
-          uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
-          userProfiles: state.userProfiles
-              ?.map((e) =>
-                  e.id == userId ? e.copyWith(avatar: response.result) : e)
-              .toList()));
+      Future.delayed(const Duration(milliseconds: 500), () {
+        emit(state.copyWith(
+            uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
+            userProfiles: state.userProfiles
+                ?.map((e) =>
+                    e.id == userId ? e.copyWith(avatar: response.result) : e)
+                .toList()));
+      });
     } catch (e) {
       emit(state.copyWith(
         uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
@@ -400,8 +406,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -522,8 +528,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -550,6 +556,56 @@ class UserCubit extends Cubit<UserState> {
             '${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}',
         personPhone: '${state.userPhoneNumber}',
         files: files,
+      );
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,
+      ));
+      AppToast.showAppToast(
+          msg: 'Ваше обращение успешно доставлено. Ожидайте ответ');
+    } catch (e) {
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Отправить сообщение в техподдержку от неавторизованного пользователя
+  Future<void> sendUnauthEmailToSupport({
+    required String email,
+    required String message,
+  }) async {
+    emit(state.copyWith(
+      sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
+    ));
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String techInfo = '';
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      techInfo = 'Устройство: ${iosInfo.name}\n'
+          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    }
+
+    try {
+      await userRepository.sendUnauthEmail(
+        email: email,
+        message: message,
+        subject: '',
+        techInfo: techInfo,
+        personFio: 'Пользователь не авторизован',
+        personPhone: '${state.userPhoneNumber}',
       );
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,

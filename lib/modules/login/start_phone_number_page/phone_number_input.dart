@@ -15,7 +15,8 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final FocusNode _focus = FocusNode();
-  late final TextEditingController _controller = TextEditingController(text: '');
+  late final TextEditingController _controller =
+      TextEditingController(text: '');
 
   void _onChangePhone(String text) {
     RegExp exp = RegExp(r"[^0-9]+");
@@ -58,8 +59,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
             ),
             style: Theme.of(context).textTheme.labelLarge,
             textAlign: TextAlign.center,
-            showCursor:
-                _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
+            cursorColor: AppColors.mainText,
             onSubmitted: (value) {
               _savePhoneNumber(value);
             },
