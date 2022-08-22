@@ -53,6 +53,7 @@ class UserCubit extends Cubit<UserState> {
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
+      UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
       emit(state.copyWith(
         authStatus: UserAuthStatuses.successAuth,
         token: response.token,
@@ -377,7 +378,7 @@ class UserCubit extends Cubit<UserState> {
             uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
             userProfiles: state.userProfiles
                 ?.map((e) =>
-            e.id == userId ? e.copyWith(avatar: response.result) : e)
+                    e.id == userId ? e.copyWith(avatar: response.result) : e)
                 .toList()));
       });
     } catch (e) {

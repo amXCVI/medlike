@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -27,6 +29,21 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   late int _step = 0;
   late String _password = '';
   late String _confirmPassword = '';
+  late String _userPhoneNumber = '';
+
+  @override
+  void initState() {
+    getUserPhoneNumber();
+    super.initState();
+  }
+
+  void getUserPhoneNumber() async {
+    String? phoneNumber =
+        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    setState(() {
+      _userPhoneNumber = phoneNumber!;
+    });
+  }
 
   void _handleSubmittedPassword(String value) {
     if (_step == 0) {
@@ -74,12 +91,14 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        if (state.userPhoneNumber != null &&
-            state.userPhoneNumber!.isNotEmpty) {
+        if (_userPhoneNumber != 'null') {
           _phoneInputController.text = phoneMaskFormatter
-              .maskText(state.userPhoneNumber!.replaceAll(RegExp("[+7]"), ''));
+              .maskText(_userPhoneNumber.replaceAll(RegExp("[+7]"), ''));
         } else {
-          context.router.push(StartPhoneNumberRoute());
+          AppToast.showAppToast(
+              msg:
+                  'Мы потеряли ваш номер телефона :(\nПожалуйста, авторизуйтесь в приложении заново');
+          context.router.replaceAll([StartPhoneNumberRoute()]);
         }
 
         if (state.resetPasswordStatus == ResetPasswordStatuses.success) {
