@@ -32,6 +32,8 @@ enum SetDoctorToFavoritesStatuses { initial, loading, success, failed }
 
 enum DeleteDoctorFromFavoritesStatuses { initial, loading, success, failed }
 
+enum RegisterOrderStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -94,6 +96,12 @@ class SubscribeState {
 
   final DeleteDoctorFromFavoritesStatuses? deleteDoctorFromFavoritesStatus;
 
+  final String? selectedPayType;
+
+  final RegisterOrderStatuses? registerOrderStatus;
+
+  final String? paymentUrl;
+
   SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus,
@@ -137,6 +145,9 @@ class SubscribeState {
     this.getAvailableDoctorStatus,
     this.setDoctorToFavoritesStatus,
     this.deleteDoctorFromFavoritesStatus,
+    this.selectedPayType = AppConstants.noPayedPayType,
+    this.registerOrderStatus,
+    this.paymentUrl,
   })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
         startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
@@ -184,6 +195,9 @@ class SubscribeState {
     UnlockCellStatuses? unlockCellStatus,
     SetDoctorToFavoritesStatuses? setDoctorToFavoritesStatus,
     DeleteDoctorFromFavoritesStatuses? deleteDoctorFromFavoritesStatus,
+    String? selectedPayType,
+    RegisterOrderStatuses? registerOrderStatus,
+    String? paymentUrl,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -245,6 +259,9 @@ class SubscribeState {
           setDoctorToFavoritesStatus ?? this.setDoctorToFavoritesStatus,
       deleteDoctorFromFavoritesStatus: deleteDoctorFromFavoritesStatus ??
           this.deleteDoctorFromFavoritesStatus,
+      selectedPayType: selectedPayType ?? this.selectedPayType,
+      registerOrderStatus: registerOrderStatus ?? this.registerOrderStatus,
+      paymentUrl: paymentUrl ?? this.paymentUrl,
     );
   }
 

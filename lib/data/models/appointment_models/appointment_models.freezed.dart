@@ -1853,3 +1853,181 @@ abstract class _CreateNewAppointmentResponseModel
           _$_CreateNewAppointmentResponseModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+RegisterOrderResponseModel _$RegisterOrderResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _RegisterOrderResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RegisterOrderResponseModel {
+  bool get result => throw _privateConstructorUsedError;
+  String get paymentUrl => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RegisterOrderResponseModelCopyWith<RegisterOrderResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RegisterOrderResponseModelCopyWith<$Res> {
+  factory $RegisterOrderResponseModelCopyWith(RegisterOrderResponseModel value,
+          $Res Function(RegisterOrderResponseModel) then) =
+      _$RegisterOrderResponseModelCopyWithImpl<$Res>;
+  $Res call({bool result, String paymentUrl, String? error});
+}
+
+/// @nodoc
+class _$RegisterOrderResponseModelCopyWithImpl<$Res>
+    implements $RegisterOrderResponseModelCopyWith<$Res> {
+  _$RegisterOrderResponseModelCopyWithImpl(this._value, this._then);
+
+  final RegisterOrderResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(RegisterOrderResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? paymentUrl = freezed,
+    Object? error = freezed,
+  }) {
+    return _then(_value.copyWith(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paymentUrl: paymentUrl == freezed
+          ? _value.paymentUrl
+          : paymentUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_RegisterOrderResponseModelCopyWith<$Res>
+    implements $RegisterOrderResponseModelCopyWith<$Res> {
+  factory _$$_RegisterOrderResponseModelCopyWith(
+          _$_RegisterOrderResponseModel value,
+          $Res Function(_$_RegisterOrderResponseModel) then) =
+      __$$_RegisterOrderResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call({bool result, String paymentUrl, String? error});
+}
+
+/// @nodoc
+class __$$_RegisterOrderResponseModelCopyWithImpl<$Res>
+    extends _$RegisterOrderResponseModelCopyWithImpl<$Res>
+    implements _$$_RegisterOrderResponseModelCopyWith<$Res> {
+  __$$_RegisterOrderResponseModelCopyWithImpl(
+      _$_RegisterOrderResponseModel _value,
+      $Res Function(_$_RegisterOrderResponseModel) _then)
+      : super(_value, (v) => _then(v as _$_RegisterOrderResponseModel));
+
+  @override
+  _$_RegisterOrderResponseModel get _value =>
+      super._value as _$_RegisterOrderResponseModel;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? paymentUrl = freezed,
+    Object? error = freezed,
+  }) {
+    return _then(_$_RegisterOrderResponseModel(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      paymentUrl: paymentUrl == freezed
+          ? _value.paymentUrl
+          : paymentUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_RegisterOrderResponseModel implements _RegisterOrderResponseModel {
+  const _$_RegisterOrderResponseModel(
+      {required this.result, required this.paymentUrl, required this.error});
+
+  factory _$_RegisterOrderResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_RegisterOrderResponseModelFromJson(json);
+
+  @override
+  final bool result;
+  @override
+  final String paymentUrl;
+  @override
+  final String? error;
+
+  @override
+  String toString() {
+    return 'RegisterOrderResponseModel(result: $result, paymentUrl: $paymentUrl, error: $error)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RegisterOrderResponseModel &&
+            const DeepCollectionEquality().equals(other.result, result) &&
+            const DeepCollectionEquality()
+                .equals(other.paymentUrl, paymentUrl) &&
+            const DeepCollectionEquality().equals(other.error, error));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(result),
+      const DeepCollectionEquality().hash(paymentUrl),
+      const DeepCollectionEquality().hash(error));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RegisterOrderResponseModelCopyWith<_$_RegisterOrderResponseModel>
+      get copyWith => __$$_RegisterOrderResponseModelCopyWithImpl<
+          _$_RegisterOrderResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RegisterOrderResponseModelToJson(this);
+  }
+}
+
+abstract class _RegisterOrderResponseModel
+    implements RegisterOrderResponseModel {
+  const factory _RegisterOrderResponseModel(
+      {required final bool result,
+      required final String paymentUrl,
+      required final String? error}) = _$_RegisterOrderResponseModel;
+
+  factory _RegisterOrderResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_RegisterOrderResponseModel.fromJson;
+
+  @override
+  bool get result => throw _privateConstructorUsedError;
+  @override
+  String get paymentUrl => throw _privateConstructorUsedError;
+  @override
+  String? get error => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RegisterOrderResponseModelCopyWith<_$_RegisterOrderResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

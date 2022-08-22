@@ -166,3 +166,19 @@ Map<String, dynamic> _$$_CreateNewAppointmentResponseModelToJson(
       'result': instance.result,
       'information': instance.information,
     };
+
+_$_RegisterOrderResponseModel _$$_RegisterOrderResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_RegisterOrderResponseModel(
+      result: json['result'] as bool,
+      paymentUrl: json['paymentUrl'] as String,
+      error: json['error'] as String?,
+    );
+
+Map<String, dynamic> _$$_RegisterOrderResponseModelToJson(
+        _$_RegisterOrderResponseModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'paymentUrl': instance.paymentUrl,
+      'error': instance.error,
+    };

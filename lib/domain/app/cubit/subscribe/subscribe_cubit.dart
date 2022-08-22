@@ -457,6 +457,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getAppointmentInfoStatus: GetAppointmentInfoStatuses.success,
         appointmentInfoData: response,
+        selectedPayType: response.payType,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -567,12 +568,13 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             : [],
         'CategoryType': state.selectedService?.id,
         'Price': state.appointmentInfoData?.price,
-        'PayType': 'Cash',
+        'PayType': state.selectedPayType,
         'ScheduleId': state.selectedTimetableCell?.scheduleId,
         'isDraft': false
       };
 
-      await subscribeRepository.createNewAppointment(data: data);
+      CreateNewAppointmentResponseModel response =
+          await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
         selectedUser: null,
@@ -586,6 +588,10 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         selectedTimetableCell: null,
         selectedDate: DateTime.now(),
       ));
+      if (state.selectedPayType == AppConstants.cardPayType) {
+        registerOrder(
+            userId: userId, appointmentIds: [response.result].toList());
+      }
       Future.delayed(const Duration(seconds: 2), () {
         emit(state.copyWith(
             creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
@@ -598,6 +604,33 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         emit(state.copyWith(
             creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
       });
+    }
+  }
+
+  /// Регистрация заказа (в сбере???)
+  Future<void> registerOrder({
+    required String userId,
+    required List<String> appointmentIds,
+  }) async {
+    emit(state.copyWith(
+      registerOrderStatus: RegisterOrderStatuses.loading,
+    ));
+    try {
+      final RegisterOrderResponseModel response;
+      response = await subscribeRepository.registerOrder(
+        userId: userId,
+        appointmentIds: appointmentIds,
+      );
+      emit(state.copyWith(
+        registerOrderStatus: RegisterOrderStatuses.success,
+        paymentUrl: response.paymentUrl,
+      ));
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(state.copyWith(
+            registerOrderStatus: RegisterOrderStatuses.initial));
+      });
+    } catch (e) {
+      emit(state.copyWith(registerOrderStatus: RegisterOrderStatuses.failed));
     }
   }
 
@@ -689,6 +722,15 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           deleteDoctorFromFavoritesStatus:
               DeleteDoctorFromFavoritesStatuses.failed));
     }
+  }
+
+  /// Задать новое значение PayType. Способ оплаты
+  void setPayType({
+    required String payType,
+  }) async {
+    emit(state.copyWith(
+      selectedPayType: payType,
+    ));
   }
 }
 

@@ -117,3 +117,15 @@ class CreateNewAppointmentResponseModel with _$CreateNewAppointmentResponseModel
   factory CreateNewAppointmentResponseModel.fromJson(Map<String, Object?> json) =>
       _$CreateNewAppointmentResponseModelFromJson(json);
 }
+
+@freezed
+class RegisterOrderResponseModel with _$RegisterOrderResponseModel {
+  const factory RegisterOrderResponseModel({
+    required bool result,
+    required String paymentUrl,
+    required String? error,
+  }) = _RegisterOrderResponseModel;
+
+  factory RegisterOrderResponseModel.fromJson(Map<String, Object?> json) =>
+      _$RegisterOrderResponseModelFromJson(json);
+}
