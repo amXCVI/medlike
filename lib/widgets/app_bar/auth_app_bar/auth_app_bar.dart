@@ -138,7 +138,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         .navigateNamed(AppRoutes.main);
                 HapticFeedback.lightImpact();
               },
-              icon: Image.asset('assets/icons/ic_logo_launch.png', width: 28.0),
+              icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
+                  width: 28.0),
             ),
       actions: widget.isSearch
           ? [

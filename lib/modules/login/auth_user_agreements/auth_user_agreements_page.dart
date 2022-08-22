@@ -1,24 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/login/auth_user_agreements/agreements_list.dart';
+import 'package:medlike/modules/login/auth_user_agreements/checker_screen_user_agreements.dart';
+import 'package:medlike/modules/login/auth_user_agreements/full_screen_user_agreements.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/themes/colors.dart';
-import 'package:medlike/widgets/buttons/primary_button.dart';
 
-class AuthUserAgreementsPage extends StatefulWidget {
-  const AuthUserAgreementsPage({Key? key}) : super(key: key);
+class AuthUserAgreementsPage extends StatelessWidget {
+  const AuthUserAgreementsPage({Key? key, this.isFullScreen = false})
+      : super(key: key);
 
-  @override
-  State<AuthUserAgreementsPage> createState() => _AuthUserAgreementsPageState();
-}
-
-class _AuthUserAgreementsPageState extends State<AuthUserAgreementsPage> {
-  late bool isChecked = false;
+  /// Показать документы на весь экран?
+  /// Если переход со страницы логина, а не для подписи
+  final bool isFullScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -27,116 +20,13 @@ class _AuthUserAgreementsPageState extends State<AuthUserAgreementsPage> {
       context.router.replaceAll([StartPhoneNumberRoute()]);
     }
 
-    void acceptedAgreements() async {
-      await context
-          .read<UserCubit>()
-          .acceptedAgreements(agreementId: AppConstants.actualUserAgreement)
-          .then((value) => {
-                context.router.replaceAll([const MainRoute()])
-              });
-    }
-
     return WillPopScope(
-      onWillPop: () async {
-        closePage();
-        return false;
-      },
-      child: Scaffold(
-        body: ListView(
-          children: [
-            const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: closePage,
-                  icon:
-                      SvgPicture.asset('assets/icons/app_bar/close_search.svg'),
-                ),
-                Text(
-                  'Согласие с условиями',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(width: 15),
-              ],
-            ),
-            const SizedBox(height: 27),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                color: AppColors.circleBgFirst,
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
-              child: Text(
-                'Для использования приложения ознакомьтесь с документами и примите условия',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-            SizedBox(
-                height: MediaQuery.of(context).size.height - 400,
-                child: const AgreementsList()),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-              child: Row(
-                children: [
-                  Checkbox(
-                    checkColor: Theme.of(context).primaryColor,
-                    fillColor: MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return Theme.of(context).backgroundColor;
-                      }
-                      return AppColors.lightText;
-                    }),
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Text('Я согласен с условиями'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: PrimaryButton(
-                label: Text(
-                  'Согласен'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-                onTap: acceptedAgreements,
-                disabled: isChecked ? false : true,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: MaterialButton(
-                onPressed: closePage,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                height: 48,
-                child: const Text('Назад'),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        onWillPop: () async {
+          closePage();
+          return false;
+        },
+        child: isFullScreen
+            ? const FullScreenUserAgreements()
+            : const CheckerScreenUserAgreements());
   }
 }
