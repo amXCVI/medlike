@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
@@ -16,16 +17,19 @@ class DiaryCubit extends Cubit<DiaryState> {
   /// Получить список дневников
   void getDiaryCategoriesList({
     required String project,
-    required String platform
+    required String platform,
+    DateTime? updateSince,
   }) async {
     emit(state.copyWith(
       getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.loading,
+      getDiaryStatuses: GetDiaryStatuses.loading,
     ));
     try {
       final List<DiaryCategoryModel> response;
       response = await diaryRepository.getDiaryCategories(
         project: project,
-        platform: platform
+        platform: platform,
+        updateSince: updateSince
       );
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
@@ -67,6 +71,12 @@ class DiaryCubit extends Cubit<DiaryState> {
         synFilter: syn
       );
       if(syn != null) {
+        if(syn != state.selectedDiary?.syn) {
+          emit(state.copyWith(
+            pageUpdateStatuses: PageUpdateStatuses.loading,
+          ));
+        }
+
         final selectedDiary = response.firstWhere((element) =>
           element.syn == syn
         );
@@ -80,6 +90,7 @@ class DiaryCubit extends Cubit<DiaryState> {
           selectedDiary: selectedDiary,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          pageUpdateStatuses: PageUpdateStatuses.initial
         ));
       } else {
         emit(state.copyWith(
@@ -88,6 +99,7 @@ class DiaryCubit extends Cubit<DiaryState> {
           diariesList: response,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          pageUpdateStatuses: PageUpdateStatuses.initial
         ));
       }
     } catch (e) {
@@ -147,6 +159,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   /// Редактировать запись
   void putDiaryEntry({
     required DateTime date,
+    required DateTime oldDate,
     required String syn,
     required List<double> values
   }) async {
@@ -160,6 +173,7 @@ class DiaryCubit extends Cubit<DiaryState> {
 
       final response = await diaryRepository.putDiaryEntry(
         date: date, 
+        oldDate: oldDate,
         syn: syn,
         userId: currentSelectedUserId, 
         values: values

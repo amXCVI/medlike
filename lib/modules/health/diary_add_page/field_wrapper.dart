@@ -3,22 +3,21 @@ import 'package:medlike/themes/colors.dart';
 
 /// TODO: слить с form field
 class FieldWrapper extends StatelessWidget {
-  FieldWrapper({
+  const FieldWrapper({
     Key? key,
     required this.labelText,
     required this.onTap,
     required this.onChange,
     required this.isEmpty,
-    this.initialValue
+    required this.controller,
     //required this.validator
   }) : super(key: key);
 
   final String labelText;
   final VoidCallback onTap;
   final Function onChange;
-  final String? initialValue;
   final bool isEmpty;
-  final TextEditingController dateTimeController = TextEditingController();
+  final TextEditingController controller;
   //final String? Function(String?) validator;
 
   @override
@@ -27,12 +26,11 @@ class FieldWrapper extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 35),
       child: TextFormField(
         onChanged: (text) {
-          dateTimeController.text = text; 
+          controller.text = text; 
           onChange(text);
         },
         keyboardType: TextInputType.number,
-        initialValue: initialValue,
-        controller: dateTimeController,
+        controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: const TextStyle(

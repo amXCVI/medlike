@@ -32,8 +32,8 @@ class HealthPage extends StatelessWidget {
         project: 'Zapolyarye', 
         platform: Platform.isAndroid ? 'Android' : 'IOS',
         grouping: grouping,
-        //dateFrom: dateFrom,
-        //dateTo: dateTo,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
         syn: syn
       );
     }

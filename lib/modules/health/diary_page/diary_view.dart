@@ -14,7 +14,8 @@ class DiaryView extends StatelessWidget {
     required this.firstDate,
     required this.lastDate,
     required this.grouping,
-    required this.paramName
+    required this.paramName,
+    required this.onLoadDate
   }) : super(key: key);
   
   final String title;
@@ -23,7 +24,8 @@ class DiaryView extends StatelessWidget {
   final int decimalDigits;
   final DateTime firstDate;
   final DateTime lastDate;
-  final String grouping; 
+  final String grouping;
+  final Function(bool) onLoadDate;
   final List<String> paramName;
 
   @override
@@ -33,6 +35,7 @@ class DiaryView extends StatelessWidget {
       child: Column(
         children: [
           DiaryValue(
+            date: firstDate,
             currentValue: diaryModel.getCurrentValue,
             measureItem: measureItem,
             decimalDigits: decimalDigits,
@@ -45,6 +48,7 @@ class DiaryView extends StatelessWidget {
             measureItem: measureItem,
             decimalDigits: decimalDigits,
             grouping: grouping,
+            onLoadDate: onLoadDate,
           ),
           DiaryList(
             title: title,

@@ -3,11 +3,13 @@ part of 'diary_cubit.dart';
 enum GetDiaryStatuses { initial, loading, success, failed }
 enum GetDiaryCategoriesStatuses { initial, loading, success, failed }
 enum UpdateDiaryStatuses { initial, loading, success, failed }
+enum PageUpdateStatuses { initial, loading }
 
 class DiaryState {
   final GetDiaryStatuses? getDiaryStatuses;
   final GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses;
   final UpdateDiaryStatuses? updateDiaryStatuses;
+  final PageUpdateStatuses? pageUpdateStatuses;
 
   final List<DiaryModel>? diariesList;
   final List<DiaryCategoryModel>? diariesCategoriesList;
@@ -24,6 +26,7 @@ class DiaryState {
     this.diariesCategoriesList,
     this.selectedDiary,
     this.updateDiaryStatuses,
+    this.pageUpdateStatuses,
     this.filteredDiariesCategoriesList,
     List<String>? filteredSyns,
     DateTime? dateFrom,
@@ -36,6 +39,7 @@ class DiaryState {
     GetDiaryStatuses? getDiaryStatuses,
     GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses,
     UpdateDiaryStatuses? updateDiaryStatuses,
+    PageUpdateStatuses? pageUpdateStatuses,
     List<DiaryModel>? diariesList,
     List<DiaryCategoryModel>? diariesCategoriesList,
     List<DiaryCategoryModel>? filteredDiariesCategoriesList,
@@ -48,6 +52,7 @@ class DiaryState {
     return DiaryState(
       getDiaryStatuses: getDiaryStatuses ?? this.getDiaryStatuses,
       getDiaryCategoriesStatuses: getDiaryCategoriesStatuses ?? this.getDiaryCategoriesStatuses,
+      pageUpdateStatuses: pageUpdateStatuses ?? this.pageUpdateStatuses,
       diariesList: diariesList ?? this.diariesList,
       diariesCategoriesList: diariesCategoriesList ?? this.diariesCategoriesList,
       filteredDiariesCategoriesList: filteredDiariesCategoriesList ?? this.filteredDiariesCategoriesList,

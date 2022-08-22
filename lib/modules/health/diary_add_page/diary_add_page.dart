@@ -7,6 +7,8 @@ import 'package:medlike/modules/health/diary_add_page/form_field.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:auto_route/auto_route.dart';
 
+import '../../../utils/helpers/value_helper.dart';
+
 class DiaryAddPage extends StatefulWidget {
   const DiaryAddPage({
     Key? key, 
@@ -38,9 +40,12 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   late List<bool> isEmpties = widget.paramName.map(
     (e) => true
   ).toList();
-  late List<String?> initialValues = widget.paramName.map(
-    (e) => null
+  late List<String> initialValues = widget.paramName.map(
+    (e) => ''
   ).toList();
+
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
 
   DateTime? date;
   DateTime? time;
@@ -56,8 +61,17 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       for(int i = 0; i < widget.paramName.length; i++) {
         initialValues[i] = 
           widget.initialValues![i].toStringAsFixed(widget.decimalDigits);
+        _controllers[i].text = initialValues[i];
       }
     }
+
+    final initDate = widget.initialDate ?? DateTime.now();
+
+    dateController.text = ValueHelper.getDatepickerString(initDate, true)!;
+    timeController.text = ValueHelper.getDatepickerString(initDate, false)!;
+
+    date = initDate;
+    time = initDate;
     
     super.initState();
   }
@@ -69,7 +83,6 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         labelText: e, 
         controller: _controllers[widget.paramName.indexOf(e)], 
         isEmpty: isEmpties[widget.paramName.indexOf(e)],
-        initialValue: initialValues[widget.paramName.indexOf(e)],
         validator: (str) {
           final num = double.tryParse(str ?? '');
           if(num == null) {
@@ -85,14 +98,16 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       );
     }).toList();
 
-    void onDateChange(DateTime date) {
+    void onDateChange(DateTime date, String text) {
       setState(() {
+        dateController.text = text;
         this.date = date;
       });
     }
 
-    void onTimeChange(DateTime time) {
+    void onTimeChange(DateTime time, String text) {
       setState(() {
+        timeController.text = text;
         this.time = time;
       });
     }
@@ -109,6 +124,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               initialDate: widget.initialDate,
               onDateChange: onDateChange,
               onTimeChange: onTimeChange,
+              dateController: dateController,
+              timeController: timeController,
             ),
           ),
           appBarTitle: widget.title,
@@ -119,10 +136,10 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 minutes: time!.minute,
                 seconds: time!.second
               ));
-
               if(widget.initialDate != null || widget.initialValues != null) {
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,
+                  oldDate: widget.initialDate!,
                   syn: state.selectedDiary!.syn,
                   values: _controllers.map((e) => 
                     double.parse(e.text) 

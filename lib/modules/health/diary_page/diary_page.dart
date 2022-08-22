@@ -54,6 +54,12 @@ class _DiaryPageState extends State<DiaryPage> {
             });
         }
 
+        if(state.pageUpdateStatuses == PageUpdateStatuses.loading) {
+          setState(() {
+            grouping = '';
+          });
+        }
+
         if(state.updateDiaryStatuses == UpdateDiaryStatuses.success) {
           final date = DateTime.now();
           final dates = ValueHelper.getPeriodTiming(date, grouping);
@@ -88,6 +94,19 @@ class _DiaryPageState extends State<DiaryPage> {
 
         }
 
+        void onLoadDate(bool isRight) {
+          final dates = ValueHelper.getAnotherPeriodTiming(state.dateFrom, grouping, isRight);
+
+          context.read<DiaryCubit>().getDiariesList(
+            project: 'Zapolyarye', 
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            dateFrom: dates[0],
+            dateTo: dates[1],
+            syn: state.selectedDiary!.syn
+          );
+        }
+
         Widget page; 
 
         if(state.getDiaryStatuses == GetDiaryStatuses.failed) {
@@ -107,6 +126,7 @@ class _DiaryPageState extends State<DiaryPage> {
             lastDate: state.dateTo,
             grouping: grouping,
             paramName: widget.categoryModel.paramName,
+            onLoadDate: onLoadDate
           );
         }
         return DefaultScaffold(
@@ -116,7 +136,7 @@ class _DiaryPageState extends State<DiaryPage> {
             child: Column(
               children: [
                 if(state.selectedDiary != null
-                  && state.selectedDiary!.values.isNotEmpty 
+                  && !(state.selectedDiary!.values.isEmpty && grouping == '')
                 ) 
                   DiaryChips(
                     syn: state.selectedDiary!.syn,

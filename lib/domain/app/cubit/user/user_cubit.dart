@@ -101,10 +101,16 @@ class UserCubit extends Cubit<UserState> {
           await UserSecureStorage.getField(AppConstants.selectedUserId);
       final List<UserProfile> response;
       response = await userRepository.getProfiles();
+
+      final defaultUserId = response[0].id;
+      if(currentSelectedUserId == null) {
+        await UserSecureStorage.setField(AppConstants.selectedUserId, defaultUserId);
+      }
+
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
-        selectedUserId: currentSelectedUserId?.toString(),
+        selectedUserId: (currentSelectedUserId ?? defaultUserId).toString(),
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
     } catch (e) {

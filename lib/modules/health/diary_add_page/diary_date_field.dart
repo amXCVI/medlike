@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/modules/health/diary_add_page/field_wrapper.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/datetime_picker/datetime_picker.dart';
 
 enum DiaryDateFieldType {
@@ -15,31 +16,21 @@ class DiaryDateField extends StatelessWidget {
     required this.labelText,
     required this.type,
     required this.initialDate,
-    required this.onChange
+    required this.onChange,
+    required this.controller
   }) : super(key: key);
 
   final String labelText;
   final DiaryDateFieldType type;
   final DateTime? initialDate;
-  final void Function(DateTime) onChange;
-
-  String? getInitialValue(DateTime? date) {
-    if(date == null) {
-      return null;
-    }
-
-    if(type == DiaryDateFieldType.date) {
-      return DateFormat('yyyy/MM/dd').format(date);
-    } else {
-      return DateFormat('kk:mm').format(date);
-    }
-  }
+  final TextEditingController controller;
+  final void Function(DateTime, String) onChange;
 
   @override
   Widget build(BuildContext context) {
     return FieldWrapper(
       labelText: labelText,
-      initialValue: getInitialValue(initialDate),
+      //initialValue: getInitialValue(initialDate),
       onTap: () {
         showDialog(
           context: context, builder: (ctx) {
@@ -47,16 +38,18 @@ class DiaryDateField extends StatelessWidget {
               type: type == DiaryDateFieldType.date ?
                 PickerType.date 
                 : PickerType.time,
+              initialDate: initialDate,  
               onPressed: (date) => {
-                onChange(date)
+                onChange(date, ValueHelper.getDatepickerString(
+                  date, type == DiaryDateFieldType.date)!
+                )
               },
-              onCancel: () => {
-                Navigator.pop(context)
-              },
+              onCancel: () => {},
             );
           });
       },
       onChange: () {},
+      controller: controller,
       isEmpty: true,
     );
   }

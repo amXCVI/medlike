@@ -50,44 +50,39 @@ class HealthItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Ink(
-              child: SizedBox(
-                //padding: const EdgeInsets.only(bottom: 15),
-                height: 170,
+            child: InkWell(
+              onTap: ()  {
+                onLoadDada('Hour', syn: data!.syn);
+                onNavigate(title);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                height: 130,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 200,
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  '${ApiConstants.baseUrl}$iconPath',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  title,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                )
-                              ]
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: Row(
+                            children: [
+                              Image.network(
+                                '${ApiConstants.baseUrl}$iconPath',
+                                width: 20,
+                                height: 20,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                title,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              )
+                            ]
                           ),
-                          IconButton(
-                            icon: SvgPicture.asset('assets/icons/ic_arrow_right_calendar.svg'),
-                            onPressed: () {
-                              onLoadDada('Hour', syn: data!.syn);
-                              onNavigate(title);
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                        SvgPicture.asset('assets/icons/ic_arrow_right_calendar.svg')
+                      ],
                     ),
                     Expanded(
                       child: Row(

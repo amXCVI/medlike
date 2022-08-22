@@ -20,6 +20,7 @@ class DiaryGraph extends StatefulWidget {
     required this.measureItem,
     required this.decimalDigits,
     required this.grouping,
+    this.onLoadDate,
     this.isClean = false
   }) : super(key: key);
 
@@ -30,6 +31,7 @@ class DiaryGraph extends StatefulWidget {
   final String grouping;
   final int decimalDigits;
   final bool isClean;
+  final Function(bool)? onLoadDate;
 
   @override
   State<DiaryGraph> createState() => _DiaryGraphState();
@@ -37,6 +39,7 @@ class DiaryGraph extends StatefulWidget {
 
 class _DiaryGraphState extends State<DiaryGraph> {
   late TrackballBehavior _trackballBehavior;
+  ChartSeriesController? seriesController;
   late List<ChartData> chartData;
 
   @override
@@ -50,7 +53,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
     ).toList();
 
     _trackballBehavior = TrackballBehavior(
-      enable: true,
+      enable: false,
       tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
       activationMode: ActivationMode.singleTap,
       builder: (context, details) {
@@ -60,7 +63,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
         final index = details.pointIndex! - 1;
 
-        if(index >= widget.items.length) {
+        if(index < 0 || index >= widget.items.length) {
           return Container();
         }
 
@@ -72,7 +75,6 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
         return Container(
           height: 60,
-          width: 110,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             color: const Color.fromRGBO(238, 238, 238, 1)
@@ -130,8 +132,18 @@ class _DiaryGraphState extends State<DiaryGraph> {
     super.initState();
   }
 
+  void performSwipe(ChartSwipeDirection direction) {
+    widget.onLoadDate!(direction == ChartSwipeDirection.end);
+
+    if (seriesController != null) {
+      seriesController!
+        .updateDataSource(addedDataIndexes: []);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     ChartAxisLabel labelFormatter(args) {
       String text = args.text;
       final val = args.value as int;
@@ -192,6 +204,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
           xValueMapper: (ChartData data, _) => data.x,
           highValueMapper: (ChartData data, _) => data.y,
           lowValueMapper: (ChartData data, _) => data.y1,
+          onRendererCreated: (ChartSeriesController controller) {
+            seriesController = controller;
+          },
         ),
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
@@ -203,6 +218,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
             isVisible: true),
         xValueMapper: (ChartData data, _) => data.x,
         yValueMapper: (ChartData data, _) => data.y,
+        onRendererCreated: (ChartSeriesController controller) {
+          seriesController = controller;
+        },
       ),
       if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
@@ -214,35 +232,42 @@ class _DiaryGraphState extends State<DiaryGraph> {
                 isVisible: true),
             color: const Color.fromRGBO(60, 148, 168, 1),
             xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y1),
+            yValueMapper: (ChartData data, _) => data.y1,
+            onRendererCreated: (ChartSeriesController controller) {
+              seriesController = controller;
+            },
+            onPointTap: (ChartPointDetails? details) {
+              /// TODO: trackball
+            }
+          ),
     ];
 
     if(widget.isClean) {
-      return Padding(
-        padding: const EdgeInsets.only(right: 15.0),
-        child: SfCartesianChart(
-          plotAreaBorderWidth: 0,
-          primaryXAxis: DateTimeAxis(
-            interval: interval,
-            intervalType: type,
-            minimum: widget.firstDate,
-            maximum: widget.lastDate,
-            axisLabelFormatter: labelFormatter,
-            majorGridLines: const MajorGridLines(
-              width: 0
-            ),
-            majorTickLines: const MajorTickLines(
-              width: 0,
-            ),
-            axisLine: const AxisLine(
-              width: 0,
-            )
+      return SfCartesianChart(
+        plotAreaBorderWidth: 0,
+        primaryXAxis: DateTimeAxis(
+          interval: interval,
+          intervalType: type,
+          minimum: widget.firstDate,
+          maximum: widget.lastDate,
+          axisLabelFormatter: labelFormatter,
+          rangePadding: ChartRangePadding.none,
+          majorGridLines: const MajorGridLines(
+            width: 0
           ),
-          primaryYAxis: NumericAxis(
-            isVisible: false
+          majorTickLines: const MajorTickLines(
+            width: 0,
           ),
-          series: data
+          axisLine: const AxisLine(
+            width: 0,
+          )
         ),
+        primaryYAxis: NumericAxis(
+          isVisible: false
+        ),
+        series: data,
+
+        margin: EdgeInsets.zero
       );
     }
 
@@ -250,6 +275,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
       height: 200,
       width: MediaQuery.of(context).size.width,
       child: SfCartesianChart(
+        onPlotAreaSwipe: (ChartSwipeDirection direction) =>
+          performSwipe(direction),
         plotAreaBorderWidth: 1,
         plotAreaBorderColor: const Color.fromRGBO(158, 157, 157, 0.4),
         primaryXAxis: DateTimeAxis(

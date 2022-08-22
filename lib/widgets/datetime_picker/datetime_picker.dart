@@ -11,6 +11,7 @@ String getTime(int time, ColumnType type) {
   switch (type) {
     case ColumnType.minute:
     case ColumnType.hour:
+      return time < 9 ? "0$time" : "$time";
     case ColumnType.day:
       return time < 9 ? "0${time + 1}" : "${time + 1}";
     case ColumnType.month:
@@ -24,13 +25,30 @@ String getTime(int time, ColumnType type) {
   }
 }
 
+int getInitialValue(ColumnType type, DateTime? initialDate) {
+  final date = initialDate ?? DateTime.now();
+
+  switch (type) {
+    case ColumnType.minute:
+      return date.minute;
+    case ColumnType.hour:
+      return date.hour;
+    case ColumnType.day:
+      return date.day - 1;
+    case ColumnType.month:
+      return date.month - 1;
+    case ColumnType.year:
+      return 0;
+  }
+}
+
 DateTime getDateTime(List<int> values, PickerType type) {
   switch (type) {
     case PickerType.date:
       return DateTime(getYear(values[2]), values[1] + 1, values[0]);
     case PickerType.time:
       return DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day, values[0], values[1]);
+          DateTime.now().day, values[0] + 1, values[1] + 1);
   }
 }
 
@@ -47,12 +65,14 @@ class DateTimePicker extends StatefulWidget {
       {Key? key,
       required this.type,
       required this.onPressed,
-      required this.onCancel})
+      required this.onCancel,
+      this.initialDate})
       : super(key: key);
 
   final PickerType type;
   final void Function(DateTime) onPressed;
   final VoidCallback onCancel;
+  final DateTime? initialDate;
 
   @override
   State<DateTimePicker> createState() => _DateTimePickerState();
@@ -64,7 +84,14 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   @override
   void initState() {
-    values = widget.type == PickerType.date ? [0, 0, 0] : [0, 0];
+    values = widget.type == PickerType.date ? [
+      getInitialValue(ColumnType.day, widget.initialDate), 
+      getInitialValue(ColumnType.month, widget.initialDate), 
+      getInitialValue(ColumnType.year, widget.initialDate)
+    ] : [
+      getInitialValue(ColumnType.hour, widget.initialDate), 
+      getInitialValue(ColumnType.minute, widget.initialDate),
+    ];
     super.initState();
   }
 
@@ -100,7 +127,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton(
-              onPressed: widget.onCancel,
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                widget.onCancel();
+              },
               child: const Text(
                 'ОТМЕНА',
                 style: TextStyle(
@@ -109,7 +139,10 @@ class _DateTimePickerState extends State<DateTimePicker> {
               ),
             ),
             TextButton(
-              onPressed: () => widget.onPressed(getDateTime(values, widget.type)),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                widget.onPressed(getDateTime(values, widget.type));
+              },
               child: const Text(
                 'ОК',
                 style: TextStyle(
@@ -168,7 +201,7 @@ class DateTimeCarousel extends StatelessWidget {
     } else {
       cols = [
         CarouselColumn(
-          type: ColumnType.minute,
+          type: ColumnType.hour,
           col: 0,
           index: values[0],
           setValue: setValue,
@@ -188,7 +221,7 @@ class DateTimeCarousel extends StatelessWidget {
           ),
         ),
         CarouselColumn(
-          type: ColumnType.hour,
+          type: ColumnType.minute,
           col: 1,
           index: values[1],
           setValue: setValue,
@@ -220,6 +253,7 @@ class CarouselColumn extends StatelessWidget {
       required this.index,
       required this.col,
       required this.setValue,
+      this.initialDate,
       this.values})
       : super(key: key);
 
@@ -228,6 +262,7 @@ class CarouselColumn extends StatelessWidget {
   final int col;
   final List<int>? values;
   final void Function(int, int, ColumnType) setValue;
+  final DateTime? initialDate;
 
   @override
   Widget build(BuildContext context) {
@@ -267,6 +302,7 @@ class CarouselColumn extends StatelessWidget {
                   viewportFraction: 0.35,
                   enlargeCenterPage: true,
                   scrollDirection: Axis.vertical,
+                  initialPage: getInitialValue(type, null),
                   onPageChanged: ((index, reason) {
                     setValue(col, index, type);
                   })),

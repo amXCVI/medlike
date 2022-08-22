@@ -11,10 +11,23 @@ class DiaryRepository {
   Future<List<DiaryCategoryModel>> getDiaryCategories({
     required String project,
     required String platform,
+    DateTime? updateSince
   }) async {
     try {
+      var queryParams = {
+        'Project': project,
+        'Platform': platform      
+      };
+
+      if(updateSince != null) {
+        queryParams.addAll({
+          'updateSince': dateTimeToServerFormat(updateSince, 3),
+        });
+      }
+
       final response = await _dioClient.get(
-        '/api/v1.0/diary/category-list?Project=$project&Platform=$platform'
+        '/api/v1.0/diary/category-list',
+        queryParameters: queryParams
       );
 
       final List list = response.data;
@@ -114,6 +127,7 @@ class DiaryRepository {
 
   Future<bool> putDiaryEntry({
     required DateTime date,
+    required DateTime oldDate,
     required String syn,
     String? userId,
     required List<double> values
@@ -121,7 +135,8 @@ class DiaryRepository {
     try {
       final response = await _dioClient.put('/api/v1.0/diary',
         data: {
-          'dateTime': dateTimeToServerFormat(date, 3),
+          'dateTime': dateTimeToServerFormat(date, 0),
+          'oldDatetime': dateTimeToServerFormat(oldDate, 0),
           'synonim': syn,
           'userID' : userId,
           'values': values

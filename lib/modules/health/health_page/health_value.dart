@@ -25,35 +25,32 @@ class HealthValue extends StatelessWidget {
       '${format.format(time)}, ${fhour.format(time)}';
 
     return SizedBox(
-      width: 150,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            data == null ? const Text(
-              '–',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 28,
-                color: Color.fromRGBO(158, 157, 157, 1),
-              ),
-            ) : RowData(
-              innerData: data!.getCurrentValue.innerData,
-              measureItem: measureItem,
-              decimalDigits: decimalDigits
+      width: 170,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          data == null ? const Text(
+            '–',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 28,
+              color: Color.fromRGBO(158, 157, 157, 1),
             ),
-            const SizedBox(height: 2),
-            Text(
-              data == null ? 'Нет данных' : getTime(data!.getCurrentValue.date),
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color.fromRGBO(158, 157, 157, 1),
-              ),
-            )
-          ],
-        ),
+          ) : RowData(
+            innerData: data!.getCurrentValue.innerData,
+            measureItem: measureItem,
+            decimalDigits: decimalDigits
+          ),
+          const SizedBox(height: 2),
+          Text(
+            data == null ? 'Нет данных' : getTime(data!.getCurrentValue.date),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color.fromRGBO(158, 157, 157, 1),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as mt;
 import 'package:intl/intl.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 
@@ -69,6 +70,55 @@ class ValueHelper {
     }
   }
 
+  static List<DateTime> getAnotherPeriodTiming(DateTime date, String grouping, bool isNext) {
+    Duration duration;
+    
+    switch (grouping) {
+      case 'Hour':
+        duration = const Duration(
+          hours: 1
+        );
+        break;
+      case 'Day':
+        duration = const Duration(
+          days: 1
+        );
+        break;
+      case 'Week':
+        duration = const Duration(
+          hours: 7
+        );
+        break;
+      case 'Month':
+        duration = Duration(
+          days: mt.DateUtils.getDaysInMonth(date.year, date.month)
+        );
+        break;
+      default:
+        duration = const Duration(
+          hours: 7
+        );
+    }
+
+    if(!isNext) {
+      duration = -duration;
+    }
+
+    DateTime newDate = date.add(duration);
+    return getPeriodTiming(newDate, grouping);
+  }
+
+  static getDayString(DateTime date) {
+    if(date.day == DateTime.now().day) {
+      return 'Сегодня';
+    } else if(date.day == DateTime.now().day - 1) {
+      return 'Вчера';
+    } else {
+      DateFormat dateFormat = DateFormat("dd MMMM", 'ru_RU');
+      return dateFormat.format(date);
+    }
+  }
+
   /// Возвращает текстовое представления периода
   /// среднего замера
   static String getPeriodString(DateTime date, String grouping) {
@@ -91,9 +141,11 @@ class ValueHelper {
           microseconds: -date.microsecond
         ));
 
-        return 'Сегодня, ${dateFormat.format(fromHour)} - ${dateFormat.format(toHour)}';
+        final day = ValueHelper.getDayString(date);
+
+        return '$day, ${dateFormat.format(fromHour)} - ${dateFormat.format(toHour)}';
       case 'Day':
-        return 'Сегодня';
+        return ValueHelper.getDayString(date);
       case 'Week':
         DateFormat dateFormat = DateFormat("d MMMM", 'ru_RU');
 
@@ -118,5 +170,17 @@ class ValueHelper {
 
   static getDateInDiaryItem(DateTime date) {
     return DateFormat('EEEE, d MMM, hh:mm').format(date); /// e.g Thursday
+  }
+
+  static String? getDatepickerString(DateTime? date, bool isDate) {
+    if(date == null) {
+      return null;
+    }
+
+    if(isDate) {
+      return DateFormat('dd MMMM yyyy г.', 'ru_RU').format(date);
+    } else {
+      return DateFormat('kk:mm').format(date);
+    }
   }
 }
