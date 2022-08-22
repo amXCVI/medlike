@@ -139,6 +139,7 @@ class PaymentItem extends StatelessWidget {
                         .textTheme
                         .bodySmall
                         ?.copyWith(fontWeight: FontWeight.w500),
+                    overflow: TextOverflow.ellipsis,
                   )
                 ],
               ),
@@ -148,12 +149,16 @@ class PaymentItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(width: 34),
-                  Text(
-                    subtitle ?? '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppColors.lightText),
+                  Flexible(
+                    child: Text(
+                      subtitle ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: AppColors.lightText),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                    ),
                   ),
                   Text(
                     price != null ? rublesFormat.format(price! / 100) : '',
