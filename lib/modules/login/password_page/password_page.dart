@@ -6,6 +6,7 @@ import 'package:medlike/modules/login/password_page/password_bottom_navigator.da
 import 'package:medlike/modules/login/password_page/password_view.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 
 class PasswordPage extends StatelessWidget {
   const PasswordPage({Key? key, required this.phoneNumber}) : super(key: key);
@@ -23,6 +24,7 @@ class PasswordPage extends StatelessWidget {
       child: DefaultScaffold(
         child: PasswordPageWidget(phoneNumber: phoneNumber),
         appBarTitle: 'Заполярье',
+        actions: const [UnauthSupportButton()],
         onPressedAppLogo: () {
           context.router.replaceAll([StartPhoneNumberRoute()]);
         },

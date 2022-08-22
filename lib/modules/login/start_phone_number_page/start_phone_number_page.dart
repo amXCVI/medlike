@@ -6,6 +6,7 @@ import 'package:medlike/modules/login/start_phone_number_page/phone_number_botto
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_view.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 
 class StartPhoneNumberPage extends StatefulWidget {
   const StartPhoneNumberPage({Key? key, this.isDeletingProfile = false})
@@ -75,6 +76,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
       child: const StartPhoneNumberView(),
       appBarTitle: 'Заполярье',
       onPressedAppLogo: () {},
+      actions: const [UnauthSupportButton()],
       bottomNavigationBar: const LoginPageBottomNavigationBar(),
     );
   }
