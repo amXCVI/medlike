@@ -16,11 +16,13 @@ class PinCodeView extends StatefulWidget {
     required this.handleBiometricMethod,
     this.isForcedShowingBiometricModal = false,
     this.signInTitle,
+    required this.pinCodeTitle,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
   final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
   final String? signInTitle;
+  final String pinCodeTitle;
 
   @override
   State<PinCodeView> createState() => _PinCodeViewState();
@@ -134,30 +136,48 @@ class _PinCodeViewState extends State<PinCodeView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.height - 280,
+      height: MediaQuery.of(context).size.height - 160,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...pointsArray
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: e == -1
-                                  ? AppColors.circleBgFirst
-                                  : AppColors.mainBrandColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ],
+          const Expanded(child: SizedBox()),
+          Expanded(
+            child: Center(
+              child: Column(
+                children: [
+                  Center(
+                      child: Text(
+                    widget.pinCodeTitle,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: AppColors.mainText),
+                    textAlign: TextAlign.center,
+                  )),
+                  const SizedBox(height: 28),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...pointsArray
+                          .map((e) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10),
+                                child: Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: e == -1
+                                        ? AppColors.circleBgFirst
+                                        : AppColors.mainBrandColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Material(
@@ -217,7 +237,8 @@ class _PinCodeViewState extends State<PinCodeView> {
                                                   .textTheme
                                                   .headlineLarge
                                                   ?.copyWith(
-                                                      color: AppColors.mainText,
+                                                      color:
+                                                          AppColors.mainText,
                                                       fontSize: 28,
                                                       fontWeight:
                                                           FontWeight.w400),
