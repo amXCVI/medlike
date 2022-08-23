@@ -22,7 +22,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     'assets/images/auth_application.png',
-                    width: 150,
+                    width: 250,
                   ),
                 ),
                 const SizedBox(height: 27),

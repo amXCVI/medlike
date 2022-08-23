@@ -9,6 +9,7 @@ import 'package:medlike/modules/login/auth_user_agreements/agreements_list.dart'
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
+import 'package:medlike/widgets/checkbox/custom_checkbox.dart';
 
 class CheckerScreenUserAgreements extends StatefulWidget {
   const CheckerScreenUserAgreements({Key? key}) : super(key: key);
@@ -37,8 +38,14 @@ class _CheckerScreenUserAgreementsState
           .read<UserCubit>()
           .acceptedAgreements(agreementId: AppConstants.actualUserAgreement)
           .then((value) => {
-                context.router.replaceAll([const MainRoute()])
+                context.router.replaceAll([const CreatePinCodeRoute()])
               });
+    }
+
+    void _onChangeChecker(bool e) {
+      setState(() {
+        isChecked = e;
+      });
     }
 
     return WillPopScope(
@@ -89,26 +96,16 @@ class _CheckerScreenUserAgreementsState
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
               child: Row(
                 children: [
-                  Checkbox(
-                    checkColor: Theme.of(context).primaryColor,
-                    fillColor: MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.disabled)) {
-                        return Theme.of(context).backgroundColor;
-                      }
-                      return AppColors.lightText;
-                    }),
+                  CustomCheckbox(
                     value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
+                    onChanged: _onChangeChecker,
                   ),
-                  const SizedBox(width: 5),
-                  const Text('Я согласен с условиями'),
+                  const SizedBox(width: 15),
+                  GestureDetector(
+                      onTap: () {
+                        _onChangeChecker(!isChecked);
+                      },
+                      child: const Text('Я согласен с условиями')),
                 ],
               ),
             ),

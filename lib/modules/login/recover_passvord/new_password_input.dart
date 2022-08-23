@@ -105,6 +105,16 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
           context.router.push(const CreatePinCodeRoute());
         }
 
+        if (state.changePasswordStatus == ChangePasswordStatuses.success) {
+          context.router.replace(const SettingsRoute());
+        }
+
+        if (state.changePasswordStatus == ChangePasswordStatuses.failed ||
+            state.resetPasswordStatus == ResetPasswordStatuses.failed) {
+          context.router
+              .replace(RecoverPasswordNewRoute(smsToken: widget.token));
+        }
+
         return Column(
           children: [
             TextField(
