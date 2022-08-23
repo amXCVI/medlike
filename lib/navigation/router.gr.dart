@@ -10,10 +10,10 @@
 //
 // ignore_for_file: type=lint
 
-import 'package:auto_route/auto_route.dart' as _i35;
-import 'package:flutter/material.dart' as _i36;
-import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i38;
-import 'package:medlike/data/models/diary_models/diary_models.dart' as _i39;
+import 'package:auto_route/auto_route.dart' as _i34;
+import 'package:flutter/material.dart' as _i35;
+import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i37;
+import 'package:medlike/data/models/diary_models/diary_models.dart' as _i38;
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart'
     as _i27;
 import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart'
@@ -24,7 +24,6 @@ import 'package:medlike/modules/appointments/appointments_page.dart' as _i10;
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart'
     as _i33;
 import 'package:medlike/modules/health/diary_page/diary_page.dart' as _i32;
-import 'package:medlike/modules/health/filters_page/filters_page.dart' as _i34;
 import 'package:medlike/modules/health/health_page/health_page.dart' as _i31;
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart'
     as _i7;
@@ -70,54 +69,54 @@ import 'package:medlike/modules/subscribe/services_list/services_list_page.dart'
     as _i13;
 import 'package:medlike/modules/subscribe/specialisations_list/specialisations_list_page.dart'
     as _i15;
-import 'package:medlike/navigation/guards.dart' as _i37;
+import 'package:medlike/navigation/guards.dart' as _i36;
 
-class AppRouter extends _i35.RootStackRouter {
+class AppRouter extends _i34.RootStackRouter {
   AppRouter(
-      {_i36.GlobalKey<_i36.NavigatorState>? navigatorKey,
+      {_i35.GlobalKey<_i35.NavigatorState>? navigatorKey,
       required this.checkIsSavedPinCode,
       required this.checkIsAuthUser})
       : super(navigatorKey);
 
-  final _i37.CheckIsSavedPinCode checkIsSavedPinCode;
+  final _i36.CheckIsSavedPinCode checkIsSavedPinCode;
 
-  final _i37.CheckIsAuthUser checkIsAuthUser;
+  final _i36.CheckIsAuthUser checkIsAuthUser;
 
   @override
-  final Map<String, _i35.PageFactory> pagesMap = {
+  final Map<String, _i34.PageFactory> pagesMap = {
     StartPhoneNumberRoute.name: (routeData) {
       final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
           orElse: () => const StartPhoneNumberRouteArgs());
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i1.StartPhoneNumberPage(
               key: args.key, isDeletingProfile: args.isDeletingProfile));
     },
     PasswordRoute.name: (routeData) {
       final args = routeData.argsAs<PasswordRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child:
               _i2.PasswordPage(key: args.key, phoneNumber: args.phoneNumber));
     },
     CreatePinCodeRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i3.CreatePinCodePage());
     },
     CheckPinCodeRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i4.CheckPinCodePage());
     },
     RecoverPasswordSmsRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordSmsRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i5.RecoverPasswordSmsPage(
               key: args.key, phoneNumber: args.phoneNumber));
     },
     RecoverPasswordNewRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordNewRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i6.RecoverPasswordNewPage(
               key: args.key, smsToken: args.smsToken));
@@ -125,40 +124,40 @@ class AppRouter extends _i35.RootStackRouter {
     AuthUserAgreementsRoute.name: (routeData) {
       final args = routeData.argsAs<AuthUserAgreementsRouteArgs>(
           orElse: () => const AuthUserAgreementsRouteArgs());
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i7.AuthUserAgreementsPage(
               key: args.key, isFullScreen: args.isFullScreen));
     },
     UnauthSupportRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i8.UnauthSupportPage());
     },
     MainRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i9.MainPage());
     },
     AppointmentsRoute.name: (routeData) {
       final args = routeData.argsAs<AppointmentsRouteArgs>(
           orElse: () => const AppointmentsRouteArgs());
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child:
               _i10.AppointmentsPage(key: args.key, isRefresh: args.isRefresh));
     },
     ProfilesListRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i11.ProfilesListPage());
     },
     ClinicsListRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i12.ClinicsListPage(key: args.key, userId: args.userId));
     },
     ServicesListRoute.name: (routeData) {
       final args = routeData.argsAs<ServicesListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i13.ServicesListPage(
               key: args.key,
@@ -168,7 +167,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     ResearchesListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchesListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i14.ResearchesListPage(
               key: args.key,
@@ -179,7 +178,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     SpecialisationsListRoute.name: (routeData) {
       final args = routeData.argsAs<SpecialisationsListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i15.SpecialisationsListPage(
               key: args.key,
@@ -190,7 +189,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     DoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<DoctorsListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i16.DoctorsListPage(
               key: args.key,
@@ -203,7 +202,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     ResearchCabinetsListRoute.name: (routeData) {
       final args = routeData.argsAs<ResearchCabinetsListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i17.ResearchCabinetsListPage(
               key: args.key,
@@ -215,7 +214,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     FavoriteDoctorsListRoute.name: (routeData) {
       final args = routeData.argsAs<FavoriteDoctorsListRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i18.FavoriteDoctorsListPage(
               key: args.key,
@@ -225,7 +224,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     ScheduleRoute.name: (routeData) {
       final args = routeData.argsAs<ScheduleRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i19.SchedulePage(
               key: args.key,
@@ -244,18 +243,18 @@ class AppRouter extends _i35.RootStackRouter {
     },
     ConfirmationSubscribeRoute.name: (routeData) {
       final args = routeData.argsAs<ConfirmationSubscribeRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i20.ConfirmationSubscribePage(
               key: args.key, userId: args.userId));
     },
     MedcardProfilesListRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i21.MedcardProfilesListPage());
     },
     MedcardRoute.name: (routeData) {
       final args = routeData.argsAs<MedcardRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i22.MedcardPage(
               key: args.key,
@@ -264,52 +263,52 @@ class AppRouter extends _i35.RootStackRouter {
     },
     FilesRoute.name: (routeData) {
       final args = routeData.argsAs<FilesRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i23.FilesPage(key: args.key, userId: args.userId));
     },
     SettingsRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i24.SettingsPage());
     },
     AgreementsRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i25.AgreementsPage());
     },
     SupportRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i26.SupportPage());
     },
     AllClinicsListRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i27.AllClinicsListPage());
     },
     DetailClinicRoute.name: (routeData) {
       final args = routeData.argsAs<DetailClinicRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i28.DetailClinicPage(
               key: args.key, selectedClinic: args.selectedClinic));
     },
     PriceRoute.name: (routeData) {
       final args = routeData.argsAs<PriceRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i29.PricePage(key: args.key, clinicId: args.clinicId));
     },
     SalesRoute.name: (routeData) {
       final args = routeData.argsAs<SalesRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i30.SalesPage(key: args.key, clinicId: args.clinicId));
     },
     HealthRoute.name: (routeData) {
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i31.HealthPage());
     },
     DiaryRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i32.DiaryPage(
               key: args.key,
@@ -318,7 +317,7 @@ class AppRouter extends _i35.RootStackRouter {
     },
     DiaryAddRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryAddRouteArgs>();
-      return _i35.AdaptivePage<dynamic>(
+      return _i34.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i33.DiaryAddPage(
               key: args.key,
@@ -328,94 +327,83 @@ class AppRouter extends _i35.RootStackRouter {
               paramName: args.paramName,
               initialValues: args.initialValues,
               initialDate: args.initialDate));
-    },
-    FiltersRoute.name: (routeData) {
-      return _i35.CustomPage<dynamic>(
-          routeData: routeData,
-          child: const _i34.FiltersPage(),
-          transitionsBuilder: _i35.TransitionsBuilders.slideBottom,
-          durationInMilliseconds: 400,
-          opaque: true,
-          barrierDismissible: false);
     }
   };
 
   @override
-  List<_i35.RouteConfig> get routes => [
-        _i35.RouteConfig('/#redirect',
+  List<_i34.RouteConfig> get routes => [
+        _i34.RouteConfig('/#redirect',
             path: '/', redirectTo: '/main', fullMatch: true),
-        _i35.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
-        _i35.RouteConfig(PasswordRoute.name, path: '/login_password'),
-        _i35.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
-        _i35.RouteConfig(CheckPinCodeRoute.name,
+        _i34.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
+        _i34.RouteConfig(PasswordRoute.name, path: '/login_password'),
+        _i34.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
+        _i34.RouteConfig(CheckPinCodeRoute.name,
             path: '/login_pin_code_check', guards: [checkIsSavedPinCode]),
-        _i35.RouteConfig(RecoverPasswordSmsRoute.name,
+        _i34.RouteConfig(RecoverPasswordSmsRoute.name,
             path: '/login_recover_password_sms'),
-        _i35.RouteConfig(RecoverPasswordNewRoute.name,
+        _i34.RouteConfig(RecoverPasswordNewRoute.name,
             path: '/login_recover_password_new'),
-        _i35.RouteConfig(AuthUserAgreementsRoute.name,
+        _i34.RouteConfig(AuthUserAgreementsRoute.name,
             path: '/login_auth_user_agreements'),
-        _i35.RouteConfig(UnauthSupportRoute.name,
+        _i34.RouteConfig(UnauthSupportRoute.name,
             path: '/login_unauth_support'),
-        _i35.RouteConfig(MainRoute.name,
+        _i34.RouteConfig(MainRoute.name,
             path: '/main', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(AppointmentsRoute.name,
+        _i34.RouteConfig(AppointmentsRoute.name,
             path: '/my_appointments', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ProfilesListRoute.name,
+        _i34.RouteConfig(ProfilesListRoute.name,
             path: '/subscribe_profiles', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ClinicsListRoute.name,
+        _i34.RouteConfig(ClinicsListRoute.name,
             path: '/subscribe_clinics', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ServicesListRoute.name,
+        _i34.RouteConfig(ServicesListRoute.name,
             path: '/subscribe_services', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ResearchesListRoute.name,
+        _i34.RouteConfig(ResearchesListRoute.name,
             path: '/subscribe_researches', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(SpecialisationsListRoute.name,
+        _i34.RouteConfig(SpecialisationsListRoute.name,
             path: '/subscribe_specialisations', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(DoctorsListRoute.name,
+        _i34.RouteConfig(DoctorsListRoute.name,
             path: '/subscribe_doctors', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ResearchCabinetsListRoute.name,
+        _i34.RouteConfig(ResearchCabinetsListRoute.name,
             path: '/subscribe_research_cabinets', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(FavoriteDoctorsListRoute.name,
+        _i34.RouteConfig(FavoriteDoctorsListRoute.name,
             path: '/subscribe_favorite_doctors', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ScheduleRoute.name,
+        _i34.RouteConfig(ScheduleRoute.name,
             path: '/subscribe_schedule', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ConfirmationSubscribeRoute.name,
+        _i34.RouteConfig(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(MedcardProfilesListRoute.name,
+        _i34.RouteConfig(MedcardProfilesListRoute.name,
             path: '/medcard', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(MedcardRoute.name,
+        _i34.RouteConfig(MedcardRoute.name,
             path: '/medcard_files_list', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(FilesRoute.name,
+        _i34.RouteConfig(FilesRoute.name,
             path: '/medcard_user_files_list', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(SettingsRoute.name,
+        _i34.RouteConfig(SettingsRoute.name,
             path: '/settings', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(AgreementsRoute.name, path: '/settings_agreements'),
-        _i35.RouteConfig(SupportRoute.name,
+        _i34.RouteConfig(AgreementsRoute.name, path: '/settings_agreements'),
+        _i34.RouteConfig(SupportRoute.name,
             path: '/settings_support', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(AllClinicsListRoute.name,
+        _i34.RouteConfig(AllClinicsListRoute.name,
             path: '/clinic_info', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(DetailClinicRoute.name,
+        _i34.RouteConfig(DetailClinicRoute.name,
             path: '/clinic_info_details', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(PriceRoute.name,
+        _i34.RouteConfig(PriceRoute.name,
             path: '/clinic_info_price', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(SalesRoute.name,
+        _i34.RouteConfig(SalesRoute.name,
             path: '/clinic_info_sales', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(HealthRoute.name,
+        _i34.RouteConfig(HealthRoute.name,
             path: '/health', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(DiaryRoute.name,
+        _i34.RouteConfig(DiaryRoute.name,
             path: '/diary', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(DiaryAddRoute.name,
-            path: '/diary_add', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(FiltersRoute.name,
-            path: '/health_filters', guards: [checkIsAuthUser])
+        _i34.RouteConfig(DiaryAddRoute.name,
+            path: '/diary_add', guards: [checkIsAuthUser])
       ];
 }
 
 /// generated route for
 /// [_i1.StartPhoneNumberPage]
 class StartPhoneNumberRoute
-    extends _i35.PageRouteInfo<StartPhoneNumberRouteArgs> {
-  StartPhoneNumberRoute({_i36.Key? key, bool isDeletingProfile = false})
+    extends _i34.PageRouteInfo<StartPhoneNumberRouteArgs> {
+  StartPhoneNumberRoute({_i35.Key? key, bool isDeletingProfile = false})
       : super(StartPhoneNumberRoute.name,
             path: '/login_phone',
             args: StartPhoneNumberRouteArgs(
@@ -427,7 +415,7 @@ class StartPhoneNumberRoute
 class StartPhoneNumberRouteArgs {
   const StartPhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final bool isDeletingProfile;
 
@@ -439,8 +427,8 @@ class StartPhoneNumberRouteArgs {
 
 /// generated route for
 /// [_i2.PasswordPage]
-class PasswordRoute extends _i35.PageRouteInfo<PasswordRouteArgs> {
-  PasswordRoute({_i36.Key? key, required String phoneNumber})
+class PasswordRoute extends _i34.PageRouteInfo<PasswordRouteArgs> {
+  PasswordRoute({_i35.Key? key, required String phoneNumber})
       : super(PasswordRoute.name,
             path: '/login_password',
             args: PasswordRouteArgs(key: key, phoneNumber: phoneNumber));
@@ -451,7 +439,7 @@ class PasswordRoute extends _i35.PageRouteInfo<PasswordRouteArgs> {
 class PasswordRouteArgs {
   const PasswordRouteArgs({this.key, required this.phoneNumber});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String phoneNumber;
 
@@ -463,7 +451,7 @@ class PasswordRouteArgs {
 
 /// generated route for
 /// [_i3.CreatePinCodePage]
-class CreatePinCodeRoute extends _i35.PageRouteInfo<void> {
+class CreatePinCodeRoute extends _i34.PageRouteInfo<void> {
   const CreatePinCodeRoute()
       : super(CreatePinCodeRoute.name, path: '/login_pin_code');
 
@@ -472,7 +460,7 @@ class CreatePinCodeRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.CheckPinCodePage]
-class CheckPinCodeRoute extends _i35.PageRouteInfo<void> {
+class CheckPinCodeRoute extends _i34.PageRouteInfo<void> {
   const CheckPinCodeRoute()
       : super(CheckPinCodeRoute.name, path: '/login_pin_code_check');
 
@@ -482,8 +470,8 @@ class CheckPinCodeRoute extends _i35.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.RecoverPasswordSmsPage]
 class RecoverPasswordSmsRoute
-    extends _i35.PageRouteInfo<RecoverPasswordSmsRouteArgs> {
-  RecoverPasswordSmsRoute({_i36.Key? key, required String phoneNumber})
+    extends _i34.PageRouteInfo<RecoverPasswordSmsRouteArgs> {
+  RecoverPasswordSmsRoute({_i35.Key? key, required String phoneNumber})
       : super(RecoverPasswordSmsRoute.name,
             path: '/login_recover_password_sms',
             args: RecoverPasswordSmsRouteArgs(
@@ -495,7 +483,7 @@ class RecoverPasswordSmsRoute
 class RecoverPasswordSmsRouteArgs {
   const RecoverPasswordSmsRouteArgs({this.key, required this.phoneNumber});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String phoneNumber;
 
@@ -508,8 +496,8 @@ class RecoverPasswordSmsRouteArgs {
 /// generated route for
 /// [_i6.RecoverPasswordNewPage]
 class RecoverPasswordNewRoute
-    extends _i35.PageRouteInfo<RecoverPasswordNewRouteArgs> {
-  RecoverPasswordNewRoute({_i36.Key? key, required String smsToken})
+    extends _i34.PageRouteInfo<RecoverPasswordNewRouteArgs> {
+  RecoverPasswordNewRoute({_i35.Key? key, required String smsToken})
       : super(RecoverPasswordNewRoute.name,
             path: '/login_recover_password_new',
             args: RecoverPasswordNewRouteArgs(key: key, smsToken: smsToken));
@@ -520,7 +508,7 @@ class RecoverPasswordNewRoute
 class RecoverPasswordNewRouteArgs {
   const RecoverPasswordNewRouteArgs({this.key, required this.smsToken});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String smsToken;
 
@@ -533,8 +521,8 @@ class RecoverPasswordNewRouteArgs {
 /// generated route for
 /// [_i7.AuthUserAgreementsPage]
 class AuthUserAgreementsRoute
-    extends _i35.PageRouteInfo<AuthUserAgreementsRouteArgs> {
-  AuthUserAgreementsRoute({_i36.Key? key, bool isFullScreen = false})
+    extends _i34.PageRouteInfo<AuthUserAgreementsRouteArgs> {
+  AuthUserAgreementsRoute({_i35.Key? key, bool isFullScreen = false})
       : super(AuthUserAgreementsRoute.name,
             path: '/login_auth_user_agreements',
             args: AuthUserAgreementsRouteArgs(
@@ -546,7 +534,7 @@ class AuthUserAgreementsRoute
 class AuthUserAgreementsRouteArgs {
   const AuthUserAgreementsRouteArgs({this.key, this.isFullScreen = false});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final bool isFullScreen;
 
@@ -558,7 +546,7 @@ class AuthUserAgreementsRouteArgs {
 
 /// generated route for
 /// [_i8.UnauthSupportPage]
-class UnauthSupportRoute extends _i35.PageRouteInfo<void> {
+class UnauthSupportRoute extends _i34.PageRouteInfo<void> {
   const UnauthSupportRoute()
       : super(UnauthSupportRoute.name, path: '/login_unauth_support');
 
@@ -567,7 +555,7 @@ class UnauthSupportRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i9.MainPage]
-class MainRoute extends _i35.PageRouteInfo<void> {
+class MainRoute extends _i34.PageRouteInfo<void> {
   const MainRoute() : super(MainRoute.name, path: '/main');
 
   static const String name = 'MainRoute';
@@ -575,8 +563,8 @@ class MainRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.AppointmentsPage]
-class AppointmentsRoute extends _i35.PageRouteInfo<AppointmentsRouteArgs> {
-  AppointmentsRoute({_i36.Key? key, bool? isRefresh = false})
+class AppointmentsRoute extends _i34.PageRouteInfo<AppointmentsRouteArgs> {
+  AppointmentsRoute({_i35.Key? key, bool? isRefresh = false})
       : super(AppointmentsRoute.name,
             path: '/my_appointments',
             args: AppointmentsRouteArgs(key: key, isRefresh: isRefresh));
@@ -587,7 +575,7 @@ class AppointmentsRoute extends _i35.PageRouteInfo<AppointmentsRouteArgs> {
 class AppointmentsRouteArgs {
   const AppointmentsRouteArgs({this.key, this.isRefresh = false});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final bool? isRefresh;
 
@@ -599,7 +587,7 @@ class AppointmentsRouteArgs {
 
 /// generated route for
 /// [_i11.ProfilesListPage]
-class ProfilesListRoute extends _i35.PageRouteInfo<void> {
+class ProfilesListRoute extends _i34.PageRouteInfo<void> {
   const ProfilesListRoute()
       : super(ProfilesListRoute.name, path: '/subscribe_profiles');
 
@@ -608,8 +596,8 @@ class ProfilesListRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i12.ClinicsListPage]
-class ClinicsListRoute extends _i35.PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({_i36.Key? key, required String userId})
+class ClinicsListRoute extends _i34.PageRouteInfo<ClinicsListRouteArgs> {
+  ClinicsListRoute({_i35.Key? key, required String userId})
       : super(ClinicsListRoute.name,
             path: '/subscribe_clinics',
             args: ClinicsListRouteArgs(key: key, userId: userId));
@@ -620,7 +608,7 @@ class ClinicsListRoute extends _i35.PageRouteInfo<ClinicsListRouteArgs> {
 class ClinicsListRouteArgs {
   const ClinicsListRouteArgs({this.key, required this.userId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -632,9 +620,9 @@ class ClinicsListRouteArgs {
 
 /// generated route for
 /// [_i13.ServicesListPage]
-class ServicesListRoute extends _i35.PageRouteInfo<ServicesListRouteArgs> {
+class ServicesListRoute extends _i34.PageRouteInfo<ServicesListRouteArgs> {
   ServicesListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -656,7 +644,7 @@ class ServicesListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -672,9 +660,9 @@ class ServicesListRouteArgs {
 
 /// generated route for
 /// [_i14.ResearchesListPage]
-class ResearchesListRoute extends _i35.PageRouteInfo<ResearchesListRouteArgs> {
+class ResearchesListRoute extends _i34.PageRouteInfo<ResearchesListRouteArgs> {
   ResearchesListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -699,7 +687,7 @@ class ResearchesListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -718,9 +706,9 @@ class ResearchesListRouteArgs {
 /// generated route for
 /// [_i15.SpecialisationsListPage]
 class SpecialisationsListRoute
-    extends _i35.PageRouteInfo<SpecialisationsListRouteArgs> {
+    extends _i34.PageRouteInfo<SpecialisationsListRouteArgs> {
   SpecialisationsListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -745,7 +733,7 @@ class SpecialisationsListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -763,9 +751,9 @@ class SpecialisationsListRouteArgs {
 
 /// generated route for
 /// [_i16.DoctorsListPage]
-class DoctorsListRoute extends _i35.PageRouteInfo<DoctorsListRouteArgs> {
+class DoctorsListRoute extends _i34.PageRouteInfo<DoctorsListRouteArgs> {
   DoctorsListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -796,7 +784,7 @@ class DoctorsListRouteArgs {
       required this.specialisationId,
       required this.specialisationName});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -819,9 +807,9 @@ class DoctorsListRouteArgs {
 /// generated route for
 /// [_i17.ResearchCabinetsListPage]
 class ResearchCabinetsListRoute
-    extends _i35.PageRouteInfo<ResearchCabinetsListRouteArgs> {
+    extends _i34.PageRouteInfo<ResearchCabinetsListRouteArgs> {
   ResearchCabinetsListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -849,7 +837,7 @@ class ResearchCabinetsListRouteArgs {
       required this.categoryTypeId,
       required this.researchIds});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -870,9 +858,9 @@ class ResearchCabinetsListRouteArgs {
 /// generated route for
 /// [_i18.FavoriteDoctorsListPage]
 class FavoriteDoctorsListRoute
-    extends _i35.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
+    extends _i34.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
   FavoriteDoctorsListRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -894,7 +882,7 @@ class FavoriteDoctorsListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -910,9 +898,9 @@ class FavoriteDoctorsListRouteArgs {
 
 /// generated route for
 /// [_i19.SchedulePage]
-class ScheduleRoute extends _i35.PageRouteInfo<ScheduleRouteArgs> {
+class ScheduleRoute extends _i34.PageRouteInfo<ScheduleRouteArgs> {
   ScheduleRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String pageTitle,
       String pageSubtitle = '',
       required String userId,
@@ -961,7 +949,7 @@ class ScheduleRouteArgs {
       required this.isAny,
       this.isFavorite = false});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String pageTitle;
 
@@ -996,8 +984,8 @@ class ScheduleRouteArgs {
 /// generated route for
 /// [_i20.ConfirmationSubscribePage]
 class ConfirmationSubscribeRoute
-    extends _i35.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
-  ConfirmationSubscribeRoute({_i36.Key? key, required String userId})
+    extends _i34.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
+  ConfirmationSubscribeRoute({_i35.Key? key, required String userId})
       : super(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm',
             args: ConfirmationSubscribeRouteArgs(key: key, userId: userId));
@@ -1008,7 +996,7 @@ class ConfirmationSubscribeRoute
 class ConfirmationSubscribeRouteArgs {
   const ConfirmationSubscribeRouteArgs({this.key, required this.userId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -1020,7 +1008,7 @@ class ConfirmationSubscribeRouteArgs {
 
 /// generated route for
 /// [_i21.MedcardProfilesListPage]
-class MedcardProfilesListRoute extends _i35.PageRouteInfo<void> {
+class MedcardProfilesListRoute extends _i34.PageRouteInfo<void> {
   const MedcardProfilesListRoute()
       : super(MedcardProfilesListRoute.name, path: '/medcard');
 
@@ -1029,9 +1017,9 @@ class MedcardProfilesListRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i22.MedcardPage]
-class MedcardRoute extends _i35.PageRouteInfo<MedcardRouteArgs> {
+class MedcardRoute extends _i34.PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute(
-      {_i36.Key? key, required String userId, required bool isChildrenPage})
+      {_i35.Key? key, required String userId, required bool isChildrenPage})
       : super(MedcardRoute.name,
             path: '/medcard_files_list',
             args: MedcardRouteArgs(
@@ -1044,7 +1032,7 @@ class MedcardRouteArgs {
   const MedcardRouteArgs(
       {this.key, required this.userId, required this.isChildrenPage});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -1058,8 +1046,8 @@ class MedcardRouteArgs {
 
 /// generated route for
 /// [_i23.FilesPage]
-class FilesRoute extends _i35.PageRouteInfo<FilesRouteArgs> {
-  FilesRoute({_i36.Key? key, required String userId})
+class FilesRoute extends _i34.PageRouteInfo<FilesRouteArgs> {
+  FilesRoute({_i35.Key? key, required String userId})
       : super(FilesRoute.name,
             path: '/medcard_user_files_list',
             args: FilesRouteArgs(key: key, userId: userId));
@@ -1070,7 +1058,7 @@ class FilesRoute extends _i35.PageRouteInfo<FilesRouteArgs> {
 class FilesRouteArgs {
   const FilesRouteArgs({this.key, required this.userId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String userId;
 
@@ -1082,7 +1070,7 @@ class FilesRouteArgs {
 
 /// generated route for
 /// [_i24.SettingsPage]
-class SettingsRoute extends _i35.PageRouteInfo<void> {
+class SettingsRoute extends _i34.PageRouteInfo<void> {
   const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
 
   static const String name = 'SettingsRoute';
@@ -1090,7 +1078,7 @@ class SettingsRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i25.AgreementsPage]
-class AgreementsRoute extends _i35.PageRouteInfo<void> {
+class AgreementsRoute extends _i34.PageRouteInfo<void> {
   const AgreementsRoute()
       : super(AgreementsRoute.name, path: '/settings_agreements');
 
@@ -1099,7 +1087,7 @@ class AgreementsRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i26.SupportPage]
-class SupportRoute extends _i35.PageRouteInfo<void> {
+class SupportRoute extends _i34.PageRouteInfo<void> {
   const SupportRoute() : super(SupportRoute.name, path: '/settings_support');
 
   static const String name = 'SupportRoute';
@@ -1107,7 +1095,7 @@ class SupportRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i27.AllClinicsListPage]
-class AllClinicsListRoute extends _i35.PageRouteInfo<void> {
+class AllClinicsListRoute extends _i34.PageRouteInfo<void> {
   const AllClinicsListRoute()
       : super(AllClinicsListRoute.name, path: '/clinic_info');
 
@@ -1116,8 +1104,8 @@ class AllClinicsListRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i28.DetailClinicPage]
-class DetailClinicRoute extends _i35.PageRouteInfo<DetailClinicRouteArgs> {
-  DetailClinicRoute({_i36.Key? key, required _i38.ClinicModel selectedClinic})
+class DetailClinicRoute extends _i34.PageRouteInfo<DetailClinicRouteArgs> {
+  DetailClinicRoute({_i35.Key? key, required _i37.ClinicModel selectedClinic})
       : super(DetailClinicRoute.name,
             path: '/clinic_info_details',
             args: DetailClinicRouteArgs(
@@ -1129,9 +1117,9 @@ class DetailClinicRoute extends _i35.PageRouteInfo<DetailClinicRouteArgs> {
 class DetailClinicRouteArgs {
   const DetailClinicRouteArgs({this.key, required this.selectedClinic});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
-  final _i38.ClinicModel selectedClinic;
+  final _i37.ClinicModel selectedClinic;
 
   @override
   String toString() {
@@ -1141,8 +1129,8 @@ class DetailClinicRouteArgs {
 
 /// generated route for
 /// [_i29.PricePage]
-class PriceRoute extends _i35.PageRouteInfo<PriceRouteArgs> {
-  PriceRoute({_i36.Key? key, required String clinicId})
+class PriceRoute extends _i34.PageRouteInfo<PriceRouteArgs> {
+  PriceRoute({_i35.Key? key, required String clinicId})
       : super(PriceRoute.name,
             path: '/clinic_info_price',
             args: PriceRouteArgs(key: key, clinicId: clinicId));
@@ -1153,7 +1141,7 @@ class PriceRoute extends _i35.PageRouteInfo<PriceRouteArgs> {
 class PriceRouteArgs {
   const PriceRouteArgs({this.key, required this.clinicId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String clinicId;
 
@@ -1165,8 +1153,8 @@ class PriceRouteArgs {
 
 /// generated route for
 /// [_i30.SalesPage]
-class SalesRoute extends _i35.PageRouteInfo<SalesRouteArgs> {
-  SalesRoute({_i36.Key? key, required String clinicId})
+class SalesRoute extends _i34.PageRouteInfo<SalesRouteArgs> {
+  SalesRoute({_i35.Key? key, required String clinicId})
       : super(SalesRoute.name,
             path: '/clinic_info_sales',
             args: SalesRouteArgs(key: key, clinicId: clinicId));
@@ -1177,7 +1165,7 @@ class SalesRoute extends _i35.PageRouteInfo<SalesRouteArgs> {
 class SalesRouteArgs {
   const SalesRouteArgs({this.key, required this.clinicId});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String clinicId;
 
@@ -1189,7 +1177,7 @@ class SalesRouteArgs {
 
 /// generated route for
 /// [_i31.HealthPage]
-class HealthRoute extends _i35.PageRouteInfo<void> {
+class HealthRoute extends _i34.PageRouteInfo<void> {
   const HealthRoute() : super(HealthRoute.name, path: '/health');
 
   static const String name = 'HealthRoute';
@@ -1197,11 +1185,11 @@ class HealthRoute extends _i35.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i32.DiaryPage]
-class DiaryRoute extends _i35.PageRouteInfo<DiaryRouteArgs> {
+class DiaryRoute extends _i34.PageRouteInfo<DiaryRouteArgs> {
   DiaryRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String title,
-      required _i39.DiaryCategoryModel categoryModel})
+      required _i38.DiaryCategoryModel categoryModel})
       : super(DiaryRoute.name,
             path: '/diary',
             args: DiaryRouteArgs(
@@ -1214,11 +1202,11 @@ class DiaryRouteArgs {
   const DiaryRouteArgs(
       {this.key, required this.title, required this.categoryModel});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String title;
 
-  final _i39.DiaryCategoryModel categoryModel;
+  final _i38.DiaryCategoryModel categoryModel;
 
   @override
   String toString() {
@@ -1228,9 +1216,9 @@ class DiaryRouteArgs {
 
 /// generated route for
 /// [_i33.DiaryAddPage]
-class DiaryAddRoute extends _i35.PageRouteInfo<DiaryAddRouteArgs> {
+class DiaryAddRoute extends _i34.PageRouteInfo<DiaryAddRouteArgs> {
   DiaryAddRoute(
-      {_i36.Key? key,
+      {_i35.Key? key,
       required String title,
       required String measureItem,
       required int decimalDigits,
@@ -1261,7 +1249,7 @@ class DiaryAddRouteArgs {
       this.initialValues,
       this.initialDate});
 
-  final _i36.Key? key;
+  final _i35.Key? key;
 
   final String title;
 
@@ -1279,12 +1267,4 @@ class DiaryAddRouteArgs {
   String toString() {
     return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, initialValues: $initialValues, initialDate: $initialDate}';
   }
-}
-
-/// generated route for
-/// [_i34.FiltersPage]
-class FiltersRoute extends _i35.PageRouteInfo<void> {
-  const FiltersRoute() : super(FiltersRoute.name, path: '/health_filters');
-
-  static const String name = 'FiltersRoute';
 }
