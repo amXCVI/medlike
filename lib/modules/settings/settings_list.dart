@@ -9,7 +9,6 @@ import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.da
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
@@ -19,7 +18,7 @@ class SettingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleChangePinCode() {
-      context.router.pushNamed(AppRoutes.loginPinCodeCreate);
+      context.router.push(CreatePinCodeRoute(noUsedBiometric: true));
     }
 
     void handleTapAgreements() {

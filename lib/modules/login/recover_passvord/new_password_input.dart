@@ -102,7 +102,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
         }
 
         if (state.resetPasswordStatus == ResetPasswordStatuses.success) {
-          context.router.push(const CreatePinCodeRoute());
+          context.router.push(CreatePinCodeRoute());
         }
 
         if (state.changePasswordStatus == ChangePasswordStatuses.success) {
