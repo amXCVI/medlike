@@ -46,7 +46,7 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
         getAppointmentsStatus: GetAppointmentsStatuses.success,
         appointmentsList: response,
         filteredAppointmentsList: response,
-        selectedDate: firstSelectedDate,
+        // selectedDate: firstSelectedDate,
         //     ? firstSelectedDate
         //     : DateTime.now(),
       ));

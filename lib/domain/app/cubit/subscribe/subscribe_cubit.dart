@@ -577,16 +577,6 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
-        selectedUser: null,
-        selectedDoctor: null,
-        selectedBuilding: null,
-        selectedCabinet: null,
-        selectedCalendarItem: null,
-        selectedResearchesIds: null,
-        selectedService: null,
-        selectedSpecialisation: null,
-        selectedTimetableCell: null,
-        selectedDate: DateTime.now(),
       ));
       if (state.selectedPayType == AppConstants.cardPayType) {
         registerOrder(
@@ -594,7 +584,18 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       }
       Future.delayed(const Duration(seconds: 2), () {
         emit(state.copyWith(
-            creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
+          creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
+          selectedUser: null,
+          selectedDoctor: null,
+          selectedBuilding: null,
+          selectedCabinet: null,
+          selectedCalendarItem: null,
+          selectedResearchesIds: null,
+          selectedService: null,
+          selectedSpecialisation: null,
+          selectedTimetableCell: null,
+          selectedDate: DateTime.now(),
+        ));
       });
     } catch (e) {
       emit(state.copyWith(
@@ -626,8 +627,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         paymentUrl: response.paymentUrl,
       ));
       Future.delayed(const Duration(seconds: 2), () {
-        emit(state.copyWith(
-            registerOrderStatus: RegisterOrderStatuses.initial));
+        emit(
+            state.copyWith(registerOrderStatus: RegisterOrderStatuses.initial));
       });
     } catch (e) {
       emit(state.copyWith(registerOrderStatus: RegisterOrderStatuses.failed));

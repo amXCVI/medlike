@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
@@ -31,13 +32,14 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
         if (state.creatingAppointmentStatus ==
                 CreatingAppointmentStatuses.success &&
             state.registerOrderStatus != RegisterOrderStatuses.loading) {
+          context.read<AppointmentsCubit>().setSelectedDate(state.selectedCalendarItem!.date);
           Future.delayed(const Duration(seconds: 1), () {
             context.router.push(AppointmentsRoute(isRefresh: true));
           });
         }
 
         if (state.registerOrderStatus == RegisterOrderStatuses.success) {
-          _launchURL('${state.paymentUrl}');
+          // _launchURL('${state.paymentUrl}');
           // return SizedBox(
           //   height: MediaQuery.of(context).size.height,
           //   width: MediaQuery.of(context).size.width,
