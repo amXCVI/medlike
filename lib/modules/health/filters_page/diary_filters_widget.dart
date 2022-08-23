@@ -24,6 +24,18 @@ class _DiaryFiltersWidgetState extends State<DiaryFiltersWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DiaryCubit, DiaryState>(builder: (context, state) {
+      void handleCheckItem(int i, bool? isChecked) {
+        setState(() {
+          final syn = state.diariesCategoriesList![i].synonim;
+          if (selected.contains(syn)) {
+            selected.remove(syn);
+          } else {
+            selected.add(syn);
+          }
+        });
+        context.read<DiaryCubit>().setFiltered(selected);
+      }
+
       if (state.getDiaryCategoriesStatuses ==
           GetDiaryCategoriesStatuses.failed) {
         return const Text('');
@@ -45,14 +57,7 @@ class _DiaryFiltersWidgetState extends State<DiaryFiltersWidget> {
                 )
                 .toList(),
             onChecked: (i, isChecked) {
-              setState(() {
-                final syn = state.diariesCategoriesList![i].synonim;
-                if (selected.contains(syn)) {
-                  selected.remove(syn);
-                } else {
-                  selected.add(syn);
-                }
-              });
+              handleCheckItem(i, isChecked);
             });
       } else {
         return const FiltersSkeleton();
