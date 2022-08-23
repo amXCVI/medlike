@@ -45,10 +45,10 @@ int getInitialValue(ColumnType type, DateTime? initialDate) {
 DateTime getDateTime(List<int> values, PickerType type) {
   switch (type) {
     case PickerType.date:
-      return DateTime(getYear(values[2]), values[1] + 1, values[0]);
+      return DateTime(getYear(values[2]), values[1] + 1, values[0] + 1);
     case PickerType.time:
       return DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day, values[0] + 1, values[1] + 1);
+          DateTime.now().day, values[0], values[1]);
   }
 }
 

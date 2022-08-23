@@ -55,6 +55,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       getDiaryStatuses: GetDiaryStatuses.loading,
+      updateDiaryStatuses: UpdateDiaryStatuses.loading
     ));
     try {
       final currentSelectedUserId =
@@ -129,6 +130,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
+      getDiaryStatuses :GetDiaryStatuses.loading
     ));
 
     try {
@@ -152,6 +154,7 @@ class DiaryCubit extends Cubit<DiaryState> {
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
+        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
       ));
     }
   }
@@ -165,6 +168,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
+      getDiaryStatuses: GetDiaryStatuses.loading
     ));
 
     try {
@@ -189,6 +193,7 @@ class DiaryCubit extends Cubit<DiaryState> {
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
+        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
       ));
     }
   }
@@ -200,6 +205,7 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
+      getDiaryStatuses :GetDiaryStatuses.loading
     ));
 
     try {
@@ -222,6 +228,7 @@ class DiaryCubit extends Cubit<DiaryState> {
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
+        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
       ));
     }
   }

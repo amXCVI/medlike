@@ -52,6 +52,7 @@ class DiaryState {
     return DiaryState(
       getDiaryStatuses: getDiaryStatuses ?? this.getDiaryStatuses,
       getDiaryCategoriesStatuses: getDiaryCategoriesStatuses ?? this.getDiaryCategoriesStatuses,
+      updateDiaryStatuses: updateDiaryStatuses ?? this.updateDiaryStatuses,
       pageUpdateStatuses: pageUpdateStatuses ?? this.pageUpdateStatuses,
       diariesList: diariesList ?? this.diariesList,
       diariesCategoriesList: diariesCategoriesList ?? this.diariesCategoriesList,

@@ -61,7 +61,7 @@ class _DiaryPageState extends State<DiaryPage> {
         }
 
         if(state.updateDiaryStatuses == UpdateDiaryStatuses.success) {
-          final date = DateTime.now().toUtc(); /// Попробавать везде
+          final date = DateTime.now().toUtc();
           final dates = ValueHelper.getPeriodTiming(date, grouping);
 
           context.read<DiaryCubit>().getDiariesList(
@@ -76,7 +76,7 @@ class _DiaryPageState extends State<DiaryPage> {
       },
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
-          final date = DateTime.now();
+          final date = DateTime.now().toUtc();
           final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
           context.read<DiaryCubit>().getDiariesList(
