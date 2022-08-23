@@ -9,9 +9,15 @@ final lightTheme = ThemeData(
 
   /// Typography
   textTheme: const TextTheme(
-    displayLarge: TextStyle(),
-    displayMedium: TextStyle(),
-    displaySmall: TextStyle(),
+    displayLarge: TextStyle(
+      fontFamily: 'AquawaxPro',
+    ),
+    displayMedium: TextStyle(
+      fontFamily: 'AquawaxPro',
+    ),
+    displaySmall: TextStyle(
+      fontFamily: 'AquawaxPro',
+    ),
     headlineLarge: TextStyle(
       fontFamily: 'AquawaxPro',
       fontSize: 18.0,
@@ -59,8 +65,12 @@ final lightTheme = ThemeData(
       letterSpacing: 1.24975,
       color: Colors.white,
     ),
-    bodyLarge: TextStyle(),
-    bodyMedium: TextStyle(),
+    bodyLarge: TextStyle(
+      fontFamily: 'AquawaxPro',
+    ),
+    bodyMedium: TextStyle(
+      fontFamily: 'AquawaxPro',
+    ),
     bodySmall: TextStyle(
       /// Мелкий текст на экранах
       fontFamily: 'AquawaxPro',
