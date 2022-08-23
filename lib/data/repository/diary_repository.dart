@@ -13,6 +13,10 @@ class DiaryRepository {
     required String platform,
     DateTime? updateSince
   }) async {
+    final tz = int.tryParse(
+      await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+    ) ?? 0;
+
     try {
       var queryParams = {
         'Project': project,
@@ -21,7 +25,7 @@ class DiaryRepository {
 
       if(updateSince != null) {
         queryParams.addAll({
-          'updateSince': dateTimeToServerFormat(updateSince, 3),
+          'updateSince': dateTimeToServerFormat(updateSince, tz),
         });
       }
 
@@ -51,6 +55,10 @@ class DiaryRepository {
     DateTime? dateTo, 
   }) async {
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      ) ?? 0;
+
       String url = '/api/v1.0/diary';
       var queryParams = {
         'Project': project,
@@ -72,13 +80,17 @@ class DiaryRepository {
 
       if(dateFrom != null) {
         queryParams.addAll({
-          'DateFrom': dateTimeToServerFormat(dateFrom, 3),
+          'DateFrom': dateTimeToServerFormat(
+            dateFrom, tz
+          ),
         });
       }
 
       if(dateTo != null) {
         queryParams.addAll({
-          'DateTo': dateTimeToServerFormat(dateTo, 3)
+          'DateTo': dateTimeToServerFormat(
+            dateTo, tz
+          )
         });
       }
       
@@ -103,9 +115,13 @@ class DiaryRepository {
     required List<double> values
   }) async {
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      ) ?? 0;
+
       final response = await _dioClient.post('/api/v1.0/diary',
         data: {
-          'dateTime': dateTimeToServerFormat(date, 3),
+          'dateTime': dateTimeToServerFormat(date, tz),
           'synonim': syn,
           'userID' : userId,
           'values': values
@@ -133,13 +149,17 @@ class DiaryRepository {
     required List<double> values
   }) async {
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      ) ?? 0;
+
       final response = await _dioClient.put('/api/v1.0/diary',
         data: {
-          'dateTime': dateTimeToServerFormat(date, 0),
-          'oldDatetime': dateTimeToServerFormat(oldDate, 0),
-          'synonim': syn,
-          'userID' : userId,
-          'values': values
+          'DateTime': dateTimeToServerFormat(date, tz),
+          'OldDatetime': dateTimeToServerFormat(oldDate, tz),
+          'Synonim': syn,
+          'UserID' : userId,
+          'Values': values
         },
         options: Options(
           headers: {
@@ -163,8 +183,12 @@ class DiaryRepository {
     String? userId,
   }) async {
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      ) ?? 0;
+
       var queryParams = {
-        'DateTime': dateTimeToServerFormat(date, 3),
+        'DateTime': dateTimeToServerFormat(date, tz),
         'Synonim': syn
       };
 

@@ -43,7 +43,7 @@ class _DiaryPageState extends State<DiaryPage> {
             context.read<DiaryCubit>().getDiariesList(
               project: 'Zapolyarye', 
               platform: Platform.isAndroid ? 'Android' : 'IOS',
-              grouping: 'Day',
+              grouping: 'None',
               dateFrom: dates[0],
               dateTo: dates[1],
               syn: state.selectedDiary!.syn
@@ -61,13 +61,13 @@ class _DiaryPageState extends State<DiaryPage> {
         }
 
         if(state.updateDiaryStatuses == UpdateDiaryStatuses.success) {
-          final date = DateTime.now();
+          final date = DateTime.now().toUtc(); /// Попробавать везде
           final dates = ValueHelper.getPeriodTiming(date, grouping);
 
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            grouping: 'None',
             dateFrom: dates[0],
             dateTo: dates[1],
             syn: state.selectedDiary!.syn
@@ -82,7 +82,7 @@ class _DiaryPageState extends State<DiaryPage> {
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: selectedGroup == 'Hour' ? 'Hour' : 'Day',
+            grouping: 'None',
             dateFrom: dates[0],
             dateTo: dates[1],
             syn: syn
@@ -100,7 +100,7 @@ class _DiaryPageState extends State<DiaryPage> {
           context.read<DiaryCubit>().getDiariesList(
             project: 'Zapolyarye', 
             platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: grouping == 'Hour' ? 'Hour' : 'Day',
+            grouping: 'None',
             dateFrom: dates[0],
             dateTo: dates[1],
             syn: state.selectedDiary!.syn

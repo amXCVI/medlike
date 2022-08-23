@@ -75,16 +75,22 @@ class DiaryTile extends StatelessWidget {
           children: [
             SlidableAction(
               flex: 2,
-              onPressed: (ctx) {
-                context
-                    .read<DiaryCubit>()
-                    .deleteDiaryEntry(date: item.date, syn: syn);
-              },
+              onPressed: (ctx) {},
               backgroundColor: const Color(0xFFFE4A49),
               icon: Icons.delete,
               label: 'Delete',
             ),
           ],
+          dismissible: DismissiblePane(onDismissed: () {
+            context
+              .read<DiaryCubit>()
+              .deleteDiaryEntry(
+                date: item.date.add(
+                  Duration(seconds: item.value.secondsSinceMidnight.floor()
+                )), 
+                syn: syn
+              );
+          }),
         ),
         child: Container(
           decoration: const BoxDecoration(
@@ -103,7 +109,11 @@ class DiaryTile extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              ValueHelper.getDateInDiaryItem(item.date),
+              ValueHelper.getDateInDiaryItem(
+                item.date.add(Duration(
+                  seconds: item.value.secondsSinceMidnight.floor()
+                ))
+              ),
               style: const TextStyle(
                 color: Color.fromRGBO(158, 157, 157, 1),
                 fontWeight: FontWeight.w400,
@@ -117,7 +127,9 @@ class DiaryTile extends StatelessWidget {
                   decimalDigits: decimalDigits,
                   paramName: paramName,
                   initialValues: item.value.innerData,
-                  initialDate: item.date));
+                  initialDate: item.date.add(
+                    Duration(seconds: item.value.secondsSinceMidnight.floor()
+                  )) ));
             },
           ),
         ));
