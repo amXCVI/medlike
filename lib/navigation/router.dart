@@ -7,7 +7,6 @@ import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';
 import 'package:medlike/modules/health/diary_page/diary_page.dart';
-import 'package:medlike/modules/health/filters_page/filters_page.dart';
 import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
@@ -80,13 +79,6 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.health, page: HealthPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
-    CustomRoute(
-      path: AppRoutes.healthFilters, 
-      page: FiltersPage, 
-      guards: [CheckIsAuthUser],
-      transitionsBuilder: TransitionsBuilders.slideBottom,          
-      durationInMilliseconds: 400
-    )
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],
