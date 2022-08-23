@@ -54,6 +54,7 @@ class UnauthSupportPage extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: const SizedBox(),
     );
   }
 }
