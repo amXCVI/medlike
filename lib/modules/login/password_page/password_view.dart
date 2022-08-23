@@ -71,7 +71,7 @@ class PasswordPageWidget extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state.authStatus == UserAuthStatuses.loadingAuth ||
-            state.authStatus == UserAuthStatuses.successAuth ||
+            // state.authStatus == UserAuthStatuses.successAuth ||
             state.getAllUserAgreementsStatus ==
                 GetAllUserAgreementsStatuses.loading) {
           return const DefaultAuthSkeleton();
