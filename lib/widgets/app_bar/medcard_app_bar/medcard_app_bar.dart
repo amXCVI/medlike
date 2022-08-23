@@ -10,14 +10,17 @@ class MedcardAppBar extends StatefulWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     required this.filteringFunction,
-    this.isChildrenPage = false, required this.handleTapOnFiltersButton,
+    this.isChildrenPage = false,
+    required this.handleTapOnFiltersButton,
     required this.handleResetFilters,
+    required this.isFilteringMode,
   })  : preferredSize = const Size.fromHeight(56),
         super(key: key);
   @override
   final Size preferredSize; // default is 56.0
   final String title;
   final bool isChildrenPage;
+  final bool isFilteringMode;
   final void Function(String searchingStr) filteringFunction;
   final void Function() handleTapOnFiltersButton;
   final void Function() handleResetFilters;
@@ -31,7 +34,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
   bool _isSearchMode = false;
   String searchQuery = "Search query";
 
-  bool _isFiltersMode = false;
+  // bool _isFiltersMode = false;
 
   void _startSearch() {
     ModalRoute.of(context)
@@ -76,16 +79,9 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
         ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopFiltering));
 
     widget.handleTapOnFiltersButton();
-    setState(() {
-      _isFiltersMode = true;
-    });
   }
 
-  void _stopFiltering() {
-    setState(() {
-      _isFiltersMode = false;
-    });
-  }
+  void _stopFiltering() {}
 
   void _handleFiltering() {
     widget.handleTapOnFiltersButton();
@@ -120,7 +116,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                   _handleSearch();
                 },
               )
-            : _isFiltersMode
+            : widget.isFilteringMode
                 ? Text('Фильтр',
                     style: Theme.of(context)
                         .textTheme
@@ -136,7 +132,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                         ?.copyWith(fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
-        leading: _isFiltersMode
+        leading: widget.isFilteringMode
             ? IconButton(
                 onPressed: () {
                   widget.handleResetFilters();
@@ -163,7 +159,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                         width: 28.0),
                   ),
         actions: [
-          !_isFiltersMode && !_isSearchMode
+          !widget.isFilteringMode && !_isSearchMode
               ? IconButton(
                   onPressed: () {
                     _startFiltering();
@@ -171,13 +167,13 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                   icon:
                       SvgPicture.asset('assets/icons/app_bar/filters_icon.svg'))
               : const SizedBox(),
-          _isFiltersMode
+          widget.isFilteringMode
               ? IconButton(
                   onPressed: () {
                     _handleFiltering();
                   },
-                  icon:
-                      SvgPicture.asset('assets/icons/app_bar/ic_check_filters.svg'))
+                  icon: SvgPicture.asset(
+                      'assets/icons/app_bar/ic_check_filters.svg'))
               : IconButton(
                   onPressed: () {
                     if (_isSearchMode) {
