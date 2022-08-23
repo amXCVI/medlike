@@ -22,39 +22,43 @@ class AgreementsChecker extends StatelessWidget {
       context.router.push(const AgreementsRoute());
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        CustomCheckbox(
-          value: isChecked,
-          onChanged: (e) {
-            setIsCheckedValue(e);
-          },
-        ),
-        const SizedBox(width: 15),
-        Expanded(
-          child: Text.rich(
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-            maxLines: 3,
-            TextSpan(
-              children: [
-                TextSpan(
-                    text: 'Я ознакомлен со всеми',
-                    recognizer: TapGestureRecognizer()..onTap = onTapChecker),
-                TextSpan(
-                    text: ' документами ',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                    recognizer: TapGestureRecognizer()..onTap = onTapDocsLink),
-                TextSpan(
-                    text: 'и принимаю условия "Z-Clinic"',
-                    recognizer: TapGestureRecognizer()..onTap = onTapChecker)
-              ],
-            ),
-            style: Theme.of(context).textTheme.bodySmall,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CustomCheckbox(
+            value: isChecked,
+            onChanged: (e) {
+              setIsCheckedValue(e);
+            },
           ),
-        ),
-      ],
+          const SizedBox(width: 15),
+          Expanded(
+            child: Text.rich(
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              maxLines: 3,
+              TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'Я ознакомлен со всеми',
+                      recognizer: TapGestureRecognizer()..onTap = onTapChecker),
+                  TextSpan(
+                      text: ' документами ',
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = onTapDocsLink),
+                  TextSpan(
+                      text: 'и принимаю условия "Z-Clinic"',
+                      recognizer: TapGestureRecognizer()..onTap = onTapChecker)
+                ],
+              ),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
