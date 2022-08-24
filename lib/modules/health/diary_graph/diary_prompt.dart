@@ -47,16 +47,19 @@ class DiaryPrompt extends StatelessWidget {
                     fontSize: 28,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 2,
-                    bottom: 5
-                  ),
-                  child: Text(
-                    measureItem,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 2,
+                      bottom: 5
+                    ),
+                    child: Text(
+                      measureItem,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 )

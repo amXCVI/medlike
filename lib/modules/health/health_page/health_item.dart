@@ -101,9 +101,10 @@ class HealthItem extends StatelessWidget {
                               lastDate: lastDate, 
                               measureItem: measureItem, 
                               decimalDigits: decimalDigits, 
-                              onSelect: (id) {
+                              onSelect: (id, newOffset) {
                                 /// TODO: DiaryPrompt
                               },
+                              onUnselect: () {},
                               grouping: 'Week',
                               isClean: true,
                             )

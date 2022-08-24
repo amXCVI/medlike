@@ -20,6 +20,7 @@ class DiaryGraph extends StatefulWidget {
     required this.decimalDigits,
     required this.grouping,
     required this.onSelect,
+    required this.onUnselect,
     this.onLoadDate,
     this.isClean = false
   }) : super(key: key);
@@ -32,7 +33,8 @@ class DiaryGraph extends StatefulWidget {
   final int decimalDigits;
   final bool isClean;
   final Function(bool)? onLoadDate;
-  final Function(int) onSelect;
+  final Function(int, Offset) onSelect;
+  final Function onUnselect;
 
   @override
   State<DiaryGraph> createState() => _DiaryGraphState();
@@ -81,6 +83,22 @@ class _DiaryGraphState extends State<DiaryGraph> {
     if (seriesController != null) {
       seriesController!
         .updateDataSource(addedDataIndexes: []);
+    }
+  }
+
+  int getXFromDate(DateTime date) {
+    return date.millisecondsSinceEpoch;
+  }
+
+  void onPointTap(ChartPointDetails? details) {
+    if(details?.pointIndex != null) {
+      CartesianChartPoint<dynamic> chartPoint =
+        CartesianChartPoint<dynamic>(
+          getXFromDate(chartData[details!.pointIndex!].x),
+          chartData[details.pointIndex!].y
+        );
+      Offset pointLocation = seriesController!.pointToPixel(chartPoint);
+      widget.onSelect(details.pointIndex!, pointLocation);
     }
   }
 
@@ -150,13 +168,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
           onRendererCreated: (ChartSeriesController controller) {
             seriesController = controller;
           },
-          onPointTap: (ChartPointDetails? details) {
-              print('DETAILS');
-              print(details?.pointIndex);
-              if(details?.pointIndex != null) {
-                widget.onSelect(details!.pointIndex!);
-              }
-            }
+          onPointTap: onPointTap
         ),
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
@@ -171,13 +183,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         onRendererCreated: (ChartSeriesController controller) {
           seriesController = controller;
         },
-        onPointTap: (ChartPointDetails? details) {
-              print('DETAILS');
-              print(details?.pointIndex);
-              if(details?.pointIndex != null) {
-                widget.onSelect(details!.pointIndex!);
-              }
-            }
+        onPointTap: onPointTap,
       ),
       if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
@@ -193,13 +199,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             onRendererCreated: (ChartSeriesController controller) {
               seriesController = controller;
             },
-            onPointTap: (ChartPointDetails? details) {
-              print('DETAILS');
-              print(details?.pointIndex);
-              if(details?.pointIndex != null) {
-                widget.onSelect(details!.pointIndex!);
-              }
-            }
+            onPointTap: onPointTap
           ),
     ];
 
@@ -274,7 +274,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
             args.markerHeight = 6;
             args.markerWidth = 6;
           }
-        }, 
+        },
+
+        onChartTouchInteractionUp: (args) => widget.onUnselect()
       )
     );
   }

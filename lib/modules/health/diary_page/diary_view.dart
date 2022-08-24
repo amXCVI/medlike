@@ -4,6 +4,7 @@ import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/diary_graph/diary_prompt.dart';
 import 'package:medlike/modules/health/diary_page/diary_list.dart';
 import 'package:medlike/modules/health/diary_page/diary_value.dart';
+import 'package:medlike/utils/helpers/context_helper.dart';
 
 class DiaryView extends StatefulWidget {
   const DiaryView({
@@ -36,9 +37,13 @@ class DiaryView extends StatefulWidget {
 class _DiaryViewState extends State<DiaryView> {
   bool isPrompt = false;
   int selectedId = 0;
+  Offset offset = const Offset(0, 0);
+  Offset? centerOffset;
+  final GlobalKey _widgetKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: Column(
@@ -51,9 +56,16 @@ class _DiaryViewState extends State<DiaryView> {
             grouping: widget.grouping,
           ),
           if (isPrompt) Stack(
+            alignment: Alignment.center,
             children: [
+              SizedBox(
+                height: 76,
+                width: MediaQuery.of(context).size.width,
+              ),
               Positioned(
+                left: centerOffset?.dx ?? offset.dx,
                 child: DiaryPrompt(
+                  key: _widgetKey,
                   item: widget.diaryModel.values[selectedId], 
                   decimalDigits: widget.decimalDigits, 
                   measureItem: widget.measureItem
@@ -69,10 +81,34 @@ class _DiaryViewState extends State<DiaryView> {
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
             onLoadDate: widget.onLoadDate,
-            onSelect: (id) {
+            onSelect: (id, newOffset) {
+              Future.microtask(
+                () {
+                  setState(() {
+                    selectedId = id;
+                    isPrompt = true;
+                    offset = newOffset;
+                  });
+
+                  ContextHelper.getFutureSizeFromGlobalKey(
+                    _widgetKey, 
+                    (size) => setState(() {
+                      final dw = MediaQuery.of(context).size.width;
+                      var w = offset.dx - size.width / 2;
+                      w = w < 0 ? 0 : w;
+                      w = w > dw ? dw : w;
+                      centerOffset = Offset(
+                        w < 0 ? 0 : w,
+                        size.height
+                      );
+                    }) 
+                  );
+                }
+              );
+            },
+            onUnselect: () {
               setState(() {
-                selectedId = id;
-                isPrompt = true;
+                isPrompt = false;
               });
             },
           ),
