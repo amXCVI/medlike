@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -20,6 +19,7 @@ class DiaryGraph extends StatefulWidget {
     required this.measureItem,
     required this.decimalDigits,
     required this.grouping,
+    required this.onSelect,
     this.onLoadDate,
     this.isClean = false
   }) : super(key: key);
@@ -32,13 +32,14 @@ class DiaryGraph extends StatefulWidget {
   final int decimalDigits;
   final bool isClean;
   final Function(bool)? onLoadDate;
+  final Function(int) onSelect;
 
   @override
   State<DiaryGraph> createState() => _DiaryGraphState();
 }
 
 class _DiaryGraphState extends State<DiaryGraph> {
-  late TrackballBehavior _trackballBehavior;
+  //late TrackballBehavior _trackballBehavior;
   ChartSeriesController? seriesController;
   late List<ChartData> chartData;
 
@@ -51,7 +52,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         e.value.innerData.length > 1 ? e.value.innerData[1] : null
       )
     ).toList();
-
+    /*
     _trackballBehavior = TrackballBehavior(
       enable: false,
       tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
@@ -67,68 +68,10 @@ class _DiaryGraphState extends State<DiaryGraph> {
           return Container();
         }
 
-        DateFormat dateFormat = DateFormat("d MMMM y", 'ru_RU');
-        final val = ValueHelper.getStringFromValues(
-          widget.items[index].value.innerData, 
-          widget.decimalDigits
-        );
-
-        return Container(
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: const Color.fromRGBO(238, 238, 238, 1)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      val,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 28,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 2,
-                        bottom: 5
-                      ),
-                      child: Text(
-                        widget.measureItem,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(
-                    dateFormat.format(
-                      widget.items[index].date,
-                    ),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color.fromRGBO(158, 157, 157, 1)
-                    ),
-                  ),
-                )
-              ]
-            ),
-          ),
-        );
+        
       },
     );
+    */
     super.initState();
   }
 
@@ -207,6 +150,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
           onRendererCreated: (ChartSeriesController controller) {
             seriesController = controller;
           },
+          onPointTap: (ChartPointDetails? details) {
+              print('DETAILS');
+              print(details?.pointIndex);
+              if(details?.pointIndex != null) {
+                widget.onSelect(details!.pointIndex!);
+              }
+            }
         ),
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
@@ -221,6 +171,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
         onRendererCreated: (ChartSeriesController controller) {
           seriesController = controller;
         },
+        onPointTap: (ChartPointDetails? details) {
+              print('DETAILS');
+              print(details?.pointIndex);
+              if(details?.pointIndex != null) {
+                widget.onSelect(details!.pointIndex!);
+              }
+            }
       ),
       if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
@@ -237,7 +194,11 @@ class _DiaryGraphState extends State<DiaryGraph> {
               seriesController = controller;
             },
             onPointTap: (ChartPointDetails? details) {
-              /// TODO: trackball
+              print('DETAILS');
+              print(details?.pointIndex);
+              if(details?.pointIndex != null) {
+                widget.onSelect(details!.pointIndex!);
+              }
             }
           ),
     ];
@@ -303,7 +264,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             dashArray: <double>[5,3]
           )
         ),
-        trackballBehavior: _trackballBehavior,
+        //trackballBehavior: _trackballBehavior,
         enableAxisAnimation: true,
         series: data,
         

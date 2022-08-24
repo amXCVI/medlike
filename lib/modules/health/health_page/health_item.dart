@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health/diary_page/diary_graph.dart';
+import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 
@@ -101,6 +101,9 @@ class HealthItem extends StatelessWidget {
                               lastDate: lastDate, 
                               measureItem: measureItem, 
                               decimalDigits: decimalDigits, 
+                              onSelect: (id) {
+                                /// TODO: DiaryPrompt
+                              },
                               grouping: 'Week',
                               isClean: true,
                             )

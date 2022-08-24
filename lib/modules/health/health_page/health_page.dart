@@ -72,7 +72,7 @@ class HealthPage extends StatelessWidget {
           icon: SvgPicture.asset('assets/icons/app_bar/filters_icon.svg')
         )
       ],
-      appBarTitle: 'Заполярье',
+      appBarTitle: 'Показатели здоровья',
     );
   }
 }
