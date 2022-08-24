@@ -77,12 +77,20 @@ class _MedcardPageState extends State<MedcardPage> {
           isChildrenPage: widget.isChildrenPage,
           handleTapOnFiltersButton: handleTapOnFiltersButton,
           handleResetFilters: handleResetFilters,
+          isFilteringMode: isFilteringMode,
         ),
         widgetOverBody: isFilteringMode
             ? MedcardFiltersWidget(key: widgetOverBodyGlobalKey)
-            : SelectedFiltersWidget(
-                key: widgetOverBodyGlobalKey,
-                isShowingWidget: isShowingFilters && !isFilteringMode),
+            : GestureDetector(
+                onTap: () {
+                  handleTapOnFiltersButton();
+                  ModalRoute.of(context)
+                      ?.addLocalHistoryEntry(LocalHistoryEntry());
+                },
+                child: SelectedFiltersWidget(
+                    key: widgetOverBodyGlobalKey,
+                    isShowingWidget: isShowingFilters && !isFilteringMode),
+              ),
         widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
             ? widgetOverBodyGlobalKey
             : null,

@@ -11,7 +11,6 @@ class SelectedFiltersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (!isShowingWidget) {
       return const SizedBox();
     }
@@ -33,21 +32,28 @@ class SelectedFiltersWidget extends StatelessWidget {
                 maxLines: 2,
                 softWrap: true,
                 textAlign: TextAlign.center,
-                TextSpan(children: [
-                  const TextSpan(text: 'Выбраны: '),
-                  ...?state.medcardSelectedFilters?.entries.map((entry) {
-                    return TextSpan(
+                TextSpan(
+                  children: [
+                    const TextSpan(text: 'Выбраны: '),
+                    ...?state.medcardSelectedFilters?.entries.map((entry) {
+                      return TextSpan(
                         text: medcardFiltersList
                             .firstWhere((e) => e.value == entry.key)
                             .title,
                         children: [
                           TextSpan(
-                              text: ' ${entry.value.label}, ',
+                              text: ' ${entry.value.label}',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColor))
-                        ]);
-                  }).toList()
-                ]));
+                                  color: Theme.of(context).primaryColor)),
+                          TextSpan(
+                              text: entry.key != medcardFiltersList.first.value
+                                  ? ''
+                                  : ', '),
+                        ],
+                      );
+                    }).toList()
+                  ],
+                ));
           },
         ),
       ),

@@ -16,7 +16,7 @@ class FiltersSkeleton extends StatelessWidget {
           style: SkeletonParagraphStyle(
             lines: 1,
             lineStyle: SkeletonLineStyle(
-              height: 170,
+              height: 66,
               borderRadius: BorderRadius.circular(12),
             )
           ),

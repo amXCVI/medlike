@@ -29,6 +29,7 @@ class UserCubit extends Cubit<UserState> {
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
         userPhoneNumber: phone, authScreen: UserAuthScreens.inputPassword));
+    UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
