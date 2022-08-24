@@ -21,13 +21,16 @@ class WorkTimesList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: workTimes!
-                        .map((item) => Text(
-                              item,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(color: AppColors.lightText),
-                            ))
+                        .map((item) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 1.5),
+                          child: Text(
+                                item,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: AppColors.lightText),
+                              ),
+                        ))
                         .toList()),
               ],
             ),
