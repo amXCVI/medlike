@@ -83,54 +83,72 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
           );
         },
       ),
-      child: ListView(
-        padding: const EdgeInsets.only(bottom: 24),
-        children: [
-          BlocBuilder<ClinicsCubit, ClinicsState>(
-            builder: (context, clinicsState) {
-              List<BuildingLatLngModel>? clinicBuildings = clinicsState
-                  .allDownloadedBuildings
-                  ?.where((element) => element.id == widget.selectedClinic.id)
-                  .toList();
-              return SizedBox(
+      child: BlocBuilder<ClinicsCubit, ClinicsState>(
+        builder: (context, clinicsState) {
+          List<BuildingLatLngModel>? clinicBuildings = clinicsState
+              .allDownloadedBuildings
+              ?.where((element) => element.id == widget.selectedClinic.id)
+              .toList();
+          return ListView(
+            padding: const EdgeInsets.only(bottom: 24),
+            children: [
+              SizedBox(
                 height: 240,
                 child: ClinicMapPlaces(
                   buildingsList: clinicBuildings ?? [],
                   handleSelectedBuilding: handleSelectedBuilding,
                   selectedBuildingId: selectedBuilding.buildingId,
                 ),
-              );
-            },
-          ),
-          WorkTimesList(workTimes: selectedBuilding.workTime),
-          PhonesList(phonesList: selectedBuilding.phone),
-          ClinicAddress(address: selectedBuilding.address),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: DefaultDivider(
-              color: Theme.of(context).dividerColor,
-            ),
-          ),
-          SubscribeRowItem(
-            title: 'Прейскурант',
-            customIcon: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: SvgPicture.asset(
-                  'assets/icons/clinics/ic_attention_circle.svg'),
-            ),
-            isFirstSymbolForIcon: false,
-            onTap: _handleTapPrice,
-          ),
-          SubscribeRowItem(
-            title: 'Акции и скидки',
-            customIcon: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: SvgPicture.asset('assets/icons/clinics/ic_stok_star.svg'),
-            ),
-            isFirstSymbolForIcon: false,
-            onTap: _handleTapSales,
-          )
-        ],
+              ),
+              WorkTimesList(workTimes: selectedBuilding.workTime),
+              PhonesList(phonesList: selectedBuilding.phone),
+              ClinicAddress(
+                address: selectedBuilding.address,
+                lat: clinicsState.allDownloadedBuildings != null &&
+                        clinicsState.allDownloadedBuildings!.isNotEmpty
+                    ? clinicsState.allDownloadedBuildings!
+                        .firstWhere((element) =>
+                            element.buildingId == selectedBuilding.buildingId)
+                        .latitude
+                    : 0,
+                lng: clinicsState.allDownloadedBuildings != null &&
+                        clinicsState.allDownloadedBuildings!.isNotEmpty
+                    ? clinicsState.allDownloadedBuildings!
+                        .firstWhere((element) =>
+                            element.buildingId == selectedBuilding.buildingId)
+                        .longitude
+                    : 0,
+                clinicName: selectedBuilding.name,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: DefaultDivider(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+              SubscribeRowItem(
+                title: 'Прейскурант',
+                customIcon: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: SvgPicture.asset(
+                      'assets/icons/clinics/ic_attention_circle.svg'),
+                ),
+                isFirstSymbolForIcon: false,
+                onTap: _handleTapPrice,
+              ),
+              SubscribeRowItem(
+                title: 'Акции и скидки',
+                customIcon: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child:
+                      SvgPicture.asset('assets/icons/clinics/ic_stok_star.svg'),
+                ),
+                isFirstSymbolForIcon: false,
+                onTap: _handleTapSales,
+              )
+            ],
+          );
+        },
       ),
     );
   }

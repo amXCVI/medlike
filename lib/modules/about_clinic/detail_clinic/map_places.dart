@@ -32,8 +32,10 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
   @override
   void initState() {
     controller = MapController(
-      location: LatLng(widget.buildingsList.first.latitude,
-          widget.buildingsList.first.longitude),
+      location: widget.buildingsList.isNotEmpty
+          ? LatLng(widget.buildingsList.first.latitude,
+              widget.buildingsList.first.longitude)
+          : const LatLng(47.23617, 38.89688),
       zoom: widget.buildingsList.length > 1 ? 17 : 18,
     );
     super.initState();

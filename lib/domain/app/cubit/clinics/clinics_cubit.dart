@@ -24,19 +24,17 @@ class ClinicsCubit extends Cubit<ClinicsState> {
     try {
       final List<ClinicModel> response;
       response = await clinicsRepository.getAllClinicsList();
-      emit(state.copyWith(
-        getAllClinicsListStatus: GetAllClinicsListStatuses.success,
-        clinicsList: response,
-      ));
 
       /// Далее все строения получают адрес с широтой и долготой.
       /// И Дальше используются уже они
       /// Возможно, не самое красивое решение, сделал так из-за того, что планировал
       /// использовать сервис с ограничениями по кол-ву запросов в минуту
-      final YandexGeocoder geocoder = YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
+      final YandexGeocoder geocoder =
+          YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
       response.forEach((clinic) => clinic.buildings.forEach((e) => {
             Future.delayed((const Duration(milliseconds: 2200)), () async {
-              final GeocodeResponse geocodeFromAddress = await geocoder.getGeocode(GeocodeRequest(
+              final GeocodeResponse geocodeFromAddress =
+                  await geocoder.getGeocode(GeocodeRequest(
                 geocode: AddressGeocode(address: e.address),
                 lang: Lang.ru,
               ));
@@ -54,6 +52,11 @@ class ClinicsCubit extends Cubit<ClinicsState> {
               addBuildingWithAddress(building);
             })
           }));
+
+      emit(state.copyWith(
+        getAllClinicsListStatus: GetAllClinicsListStatuses.success,
+        clinicsList: response,
+      ));
     } catch (e) {
       emit(state.copyWith(
           getAllClinicsListStatus: GetAllClinicsListStatuses.failed));
