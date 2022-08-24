@@ -149,3 +149,32 @@ Map<String, dynamic> _$$_MainscreenPromotionModelToJson(
       'promoPrice': instance.promoPrice,
       'fileName': instance.fileName,
     };
+
+_$_BuildingLatLngModel _$$_BuildingLatLngModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_BuildingLatLngModel(
+      name: json['name'] as String,
+      departmentName: json['departmentName'] as String?,
+      address: json['address'] as String,
+      id: json['id'] as String,
+      buildingId: json['buildingId'] as String,
+      phone: (json['phone'] as List<dynamic>).map((e) => e as String).toList(),
+      workTime:
+          (json['workTime'] as List<dynamic>).map((e) => e as String).toList(),
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+    );
+
+Map<String, dynamic> _$$_BuildingLatLngModelToJson(
+        _$_BuildingLatLngModel instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'departmentName': instance.departmentName,
+      'address': instance.address,
+      'id': instance.id,
+      'buildingId': instance.buildingId,
+      'phone': instance.phone,
+      'workTime': instance.workTime,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+    };

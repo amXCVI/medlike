@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 part 'clinics_state.dart';
 
@@ -26,6 +28,32 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         getAllClinicsListStatus: GetAllClinicsListStatuses.success,
         clinicsList: response,
       ));
+
+      /// Далее все строения получают адрес с широтой и долготой.
+      /// И Дальше используются уже они
+      /// Возможно, не самое красивое решение, сделал так из-за того, что планировал
+      /// использовать сервис с ограничениями по кол-ву запросов в минуту
+      final YandexGeocoder geocoder = YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
+      response.forEach((clinic) => clinic.buildings.forEach((e) => {
+            Future.delayed((const Duration(milliseconds: 2200)), () async {
+              final GeocodeResponse geocodeFromAddress = await geocoder.getGeocode(GeocodeRequest(
+                geocode: AddressGeocode(address: e.address),
+                lang: Lang.ru,
+              ));
+              BuildingLatLngModel building = BuildingLatLngModel(
+                name: e.name,
+                departmentName: e.departmentName,
+                address: e.address,
+                id: e.id,
+                buildingId: e.buildingId,
+                phone: e.phone,
+                workTime: e.workTime,
+                latitude: geocodeFromAddress.firstPoint?.latitude ?? 47.23617,
+                longitude: geocodeFromAddress.firstPoint?.longitude ?? 38.89688,
+              );
+              addBuildingWithAddress(building);
+            })
+          }));
     } catch (e) {
       emit(state.copyWith(
           getAllClinicsListStatus: GetAllClinicsListStatuses.failed));
@@ -104,5 +132,14 @@ class ClinicsCubit extends Cubit<ClinicsState> {
           getMainscreenPromotionsListStatus:
               GetMainscreenPromotionsListStatuses.failed));
     }
+  }
+
+  /// Добавляет строение в списочек всех существующих строений
+  /// Нужен для карты, потому что запрос адреса можно делать только раз в 2 секунды - долго
+  void addBuildingWithAddress(BuildingLatLngModel building) {
+    emit(state.copyWith(
+        allDownloadedBuildings: state.allDownloadedBuildings != null
+            ? [...?state.allDownloadedBuildings, building]
+            : [building].toList()));
   }
 }

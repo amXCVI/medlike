@@ -104,3 +104,21 @@ class MainscreenPromotionModel with _$MainscreenPromotionModel {
   factory MainscreenPromotionModel.fromJson(Map<String, Object?> json) =>
       _$MainscreenPromotionModelFromJson(json);
 }
+
+@freezed
+class BuildingLatLngModel with _$BuildingLatLngModel {
+  const factory BuildingLatLngModel({
+    required String name,
+    required String? departmentName,
+    required String address,
+    required String id,
+    required String buildingId,
+    required List<String> phone,
+    required List<String> workTime,
+    required double latitude,
+    required double longitude,
+  }) = _BuildingLatLngModel;
+
+  factory BuildingLatLngModel.fromJson(Map<String, Object?> json) =>
+      _$BuildingLatLngModelFromJson(json);
+}
