@@ -17,12 +17,14 @@ class PinCodeView extends StatefulWidget {
     this.isForcedShowingBiometricModal = false,
     this.signInTitle,
     required this.pinCodeTitle,
+    this.noUsedBiometric,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
   final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
   final String? signInTitle;
   final String pinCodeTitle;
+  final bool? noUsedBiometric;
 
   @override
   State<PinCodeView> createState() => _PinCodeViewState();
@@ -37,8 +39,14 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   void initState() {
-    initBiometricValue();
     pointsArray = initPointsArray;
+    if (widget.noUsedBiometric != null && widget.noUsedBiometric == true) {
+      isShowingBiometricModal = false;
+      isSupportedAndEnabledBiometric = false;
+      return;
+    } else {
+      initBiometricValue();
+    }
     super.initState();
   }
 
@@ -160,8 +168,8 @@ class _PinCodeViewState extends State<PinCodeView> {
                     children: [
                       ...pointsArray
                           .map((e) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 child: Container(
                                   width: 10,
                                   height: 10,
@@ -237,8 +245,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                                                   .textTheme
                                                   .headlineLarge
                                                   ?.copyWith(
-                                                      color:
-                                                          AppColors.mainText,
+                                                      color: AppColors.mainText,
                                                       fontSize: 28,
                                                       fontWeight:
                                                           FontWeight.w400),

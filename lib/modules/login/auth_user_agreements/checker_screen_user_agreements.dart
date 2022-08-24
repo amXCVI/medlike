@@ -38,7 +38,7 @@ class _CheckerScreenUserAgreementsState
           .read<UserCubit>()
           .acceptedAgreements(agreementId: AppConstants.actualUserAgreement)
           .then((value) => {
-                context.router.replaceAll([const CreatePinCodeRoute()])
+                context.router.replaceAll([CreatePinCodeRoute()])
               });
     }
 

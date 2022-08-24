@@ -100,8 +100,12 @@ class AppRouter extends _i34.RootStackRouter {
               _i2.PasswordPage(key: args.key, phoneNumber: args.phoneNumber));
     },
     CreatePinCodeRoute.name: (routeData) {
+      final args = routeData.argsAs<CreatePinCodeRouteArgs>(
+          orElse: () => const CreatePinCodeRouteArgs());
       return _i34.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i3.CreatePinCodePage());
+          routeData: routeData,
+          child: _i3.CreatePinCodePage(
+              key: args.key, noUsedBiometric: args.noUsedBiometric));
     },
     CheckPinCodeRoute.name: (routeData) {
       return _i34.AdaptivePage<dynamic>(
@@ -451,11 +455,27 @@ class PasswordRouteArgs {
 
 /// generated route for
 /// [_i3.CreatePinCodePage]
-class CreatePinCodeRoute extends _i34.PageRouteInfo<void> {
-  const CreatePinCodeRoute()
-      : super(CreatePinCodeRoute.name, path: '/login_pin_code');
+class CreatePinCodeRoute extends _i34.PageRouteInfo<CreatePinCodeRouteArgs> {
+  CreatePinCodeRoute({_i35.Key? key, bool? noUsedBiometric})
+      : super(CreatePinCodeRoute.name,
+            path: '/login_pin_code',
+            args: CreatePinCodeRouteArgs(
+                key: key, noUsedBiometric: noUsedBiometric));
 
   static const String name = 'CreatePinCodeRoute';
+}
+
+class CreatePinCodeRouteArgs {
+  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric});
+
+  final _i35.Key? key;
+
+  final bool? noUsedBiometric;
+
+  @override
+  String toString() {
+    return 'CreatePinCodeRouteArgs{key: $key, noUsedBiometric: $noUsedBiometric}';
+  }
 }
 
 /// generated route for
