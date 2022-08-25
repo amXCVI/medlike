@@ -22,7 +22,7 @@ class WorkTimesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: workTimes!
                         .map((item) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 1.5),
+                          padding: const EdgeInsets.symmetric(vertical: 3),
                           child: Text(
                                 item,
                                 style: Theme.of(context)

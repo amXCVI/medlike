@@ -29,12 +29,13 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
   late MapController controller = MapController(
     location: const LatLng(47.23617, 38.89688),
   );
+  late bool _isVisibleMarkers = false;
 
   @override
   void initState() {
     if (widget.buildingsList.isNotEmpty) {
       /// вычисляем нужный масштаб.
-      /// Опытным путем подобрал y = -150x + 19
+      /// Опытным путем подобрал y = -130x + 18
       double minLat = widget.buildingsList.map((e) => e.latitude).reduce((min));
       double maxLat = widget.buildingsList.map((e) => e.latitude).reduce((max));
       double minLng =
@@ -43,16 +44,22 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
           widget.buildingsList.map((e) => e.longitude).reduce((max));
       double calculatedZoom = 18;
       if (maxLat - minLat > maxLng - minLng) {
-        calculatedZoom = -150 * (maxLat - minLat) + 19;
+        calculatedZoom = -130 * (maxLat - minLat) + 18;
       } else {
-        calculatedZoom = -150 * (maxLng - minLng) + 19;
+        calculatedZoom = -130 * (maxLng - minLng) + 18;
       }
 
       controller = MapController(
         location: LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2),
-        zoom: calculatedZoom > 0 && calculatedZoom < 20 ? calculatedZoom : 18,
+        zoom: calculatedZoom > 0 && calculatedZoom < 18 ? calculatedZoom : 17,
       );
     }
+
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        _isVisibleMarkers = true;
+      });
+    });
 
     super.initState();
   }
@@ -115,15 +122,19 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
       left: isSelectedBuilding ? pos.dx - 16 : pos.dx - 22,
       top: isSelectedBuilding ? pos.dy - 12 : pos.dy - 16,
       child: GestureDetector(
-        child: SvgPicture.asset(
-          isSelectedBuilding
-              ? 'assets/icons/clinics/ic_pin_large.svg'
-              : 'assets/icons/clinics/ic_pin_small.svg',
-          width: isSelectedBuilding ? 32 : 25,
-        ),
         onTap: () {
           widget.handleSelectedBuilding(itemBuilding.buildingId);
         },
+        child: AnimatedOpacity(
+          opacity: _isVisibleMarkers ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 1000),
+          child: SvgPicture.asset(
+            isSelectedBuilding
+                ? 'assets/icons/clinics/ic_pin_large.svg'
+                : 'assets/icons/clinics/ic_pin_small.svg',
+            width: isSelectedBuilding ? 32 : 25,
+          ),
+        ),
       ),
     );
   }

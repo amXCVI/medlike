@@ -30,24 +30,22 @@ class ClinicAddress extends StatelessWidget {
           builder: (BuildContext context) {
             return SafeArea(
               child: SingleChildScrollView(
-                child: Container(
-                  child: Wrap(
-                    children: <Widget>[
-                      for (var map in availableMaps)
-                        ListTile(
-                          onTap: () => map.showMarker(
-                            coords: coords,
-                            title: title,
-                          ),
-                          title: Text(map.mapName),
-                          leading: SvgPicture.asset(
-                            map.icon,
-                            height: 30.0,
-                            width: 30.0,
-                          ),
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coords,
+                          title: title,
                         ),
-                    ],
-                  ),
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
                 ),
               ),
             );
@@ -77,7 +75,7 @@ class ClinicAddress extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
-                    ?.copyWith(color: AppColors.lightText),
+                    ?.copyWith(color: AppColors.mainOther),
               ),
             )
           ],

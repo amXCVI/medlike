@@ -120,6 +120,7 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
                     : 0,
                 clinicName: selectedBuilding.name,
               ),
+              const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: DefaultDivider(
