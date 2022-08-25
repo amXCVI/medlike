@@ -4,6 +4,7 @@ import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/diary_graph/diary_prompt.dart';
 import 'package:medlike/modules/health/diary_page/diary_list.dart';
 import 'package:medlike/modules/health/diary_page/diary_value.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
 
 class DiaryView extends StatefulWidget {
@@ -56,19 +57,29 @@ class _DiaryViewState extends State<DiaryView> {
             grouping: widget.grouping,
           ),
           if (isPrompt) Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomCenter,
             children: [
               SizedBox(
                 height: 76,
                 width: MediaQuery.of(context).size.width,
               ),
               Positioned(
+                top: 0,
                 left: centerOffset?.dx ?? offset.dx,
                 child: DiaryPrompt(
                   key: _widgetKey,
                   item: widget.diaryModel.values[selectedId], 
                   decimalDigits: widget.decimalDigits, 
                   measureItem: widget.measureItem
+                )
+              ),
+              Positioned(
+                left: offset.dx - 1,
+                bottom: 0,
+                child: Container(
+                  height: 16,
+                  width: 1,
+                  color: AppColors.mainSeparatorAlpha,
                 )
               )
             ],
@@ -81,6 +92,7 @@ class _DiaryViewState extends State<DiaryView> {
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
             onLoadDate: widget.onLoadDate,
+            selected: offset.dx,
             onSelect: (id, newOffset) {
               Future.microtask(
                 () {

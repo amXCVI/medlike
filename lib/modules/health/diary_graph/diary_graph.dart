@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -21,6 +22,7 @@ class DiaryGraph extends StatefulWidget {
     required this.grouping,
     required this.onSelect,
     required this.onUnselect,
+    this.selected,
     this.onLoadDate,
     this.isClean = false
   }) : super(key: key);
@@ -28,6 +30,7 @@ class DiaryGraph extends StatefulWidget {
   final List<DiaryItem> items;
   final DateTime firstDate;
   final DateTime lastDate;
+  final double? selected;
   final String measureItem;
   final String grouping;
   final int decimalDigits;
@@ -238,9 +241,20 @@ class _DiaryGraphState extends State<DiaryGraph> {
       child: SfCartesianChart(
         onPlotAreaSwipe: (ChartSwipeDirection direction) =>
           performSwipe(direction),
+        margin: EdgeInsets.zero,
         plotAreaBorderWidth: 1,
-        plotAreaBorderColor: const Color.fromRGBO(158, 157, 157, 0.4),
+        plotAreaBorderColor: AppColors.mainSeparatorAlpha,
         primaryXAxis: DateTimeAxis(
+          plotBands: [
+            if(widget.selected != null && seriesController != null) PlotBand(
+              start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              shouldRenderAboveSeries: false,
+              borderWidth: 1,
+              borderColor: Colors.grey.shade300,
+              color: Colors.grey.shade300
+            )
+          ],
           interval: interval,
           intervalType: type,
           minimum: widget.firstDate,
