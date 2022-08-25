@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:map/map.dart';
 import 'package:latlng/latlng.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 
 class ClinicMapPlaces extends StatefulWidget {
@@ -31,13 +32,28 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
 
   @override
   void initState() {
-    controller = MapController(
-      location: widget.buildingsList.isNotEmpty
-          ? LatLng(widget.buildingsList.first.latitude,
-              widget.buildingsList.first.longitude)
-          : const LatLng(47.23617, 38.89688),
-      zoom: widget.buildingsList.length > 1 ? 17 : 18,
-    );
+    if (widget.buildingsList.isNotEmpty) {
+      /// вычисляем нужный масштаб.
+      /// Опытным путем подобрал y = -150x + 19
+      double minLat = widget.buildingsList.map((e) => e.latitude).reduce((min));
+      double maxLat = widget.buildingsList.map((e) => e.latitude).reduce((max));
+      double minLng =
+          widget.buildingsList.map((e) => e.longitude).reduce((min));
+      double maxLng =
+          widget.buildingsList.map((e) => e.longitude).reduce((max));
+      double calculatedZoom = 18;
+      if (maxLat - minLat > maxLng - minLng) {
+        calculatedZoom = -150 * (maxLat - minLat) + 19;
+      } else {
+        calculatedZoom = -150 * (maxLng - minLng) + 19;
+      }
+
+      controller = MapController(
+        location: LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2),
+        zoom: calculatedZoom > 0 && calculatedZoom < 20 ? calculatedZoom : 18,
+      );
+    }
+
     super.initState();
   }
 
@@ -46,6 +62,12 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
     if (x > max) x = max;
 
     return x;
+  }
+
+  String mapbox(int z, int x, int y) {
+    final url =
+        'https://api.mapbox.com/styles/v1/zapolyarye/cl77oixdb000114lpeu7ifz5d/tiles/$z/$x/$y?access_token=${AppConstants.mapBoxApiKey}';
+    return url;
   }
 
   void _onDoubleTap(MapTransformer transformer, Offset position) {
@@ -150,11 +172,8 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
                     x %= tilesInZoom;
                     y %= tilesInZoom;
 
-                    final url =
-                        'https://www.google.com/maps/vt/pb=!1m4!1m3!1i$z!2i$x!3i$y!2m3!1e0!2sm!3i420120488!3m7!2sen!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0!5m1!1e0!23i4111425';
-
                     return CachedNetworkImage(
-                      imageUrl: url,
+                      imageUrl: mapbox(z, x, y),
                       fit: BoxFit.cover,
                     );
                   },
