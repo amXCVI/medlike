@@ -29,10 +29,8 @@ class AllClinicsListPage extends StatelessWidget {
           } else if (state.getAllClinicsListStatus ==
               GetAllClinicsListStatuses.success) {
             return AllClinicsList(
-              clinicsList:
-              state.clinicsList as List<ClinicModel>,
-              onRefreshData: _onLoadDada
-            );
+                clinicsList: state.clinicsList as List<ClinicModel>,
+                onRefreshData: _onLoadDada);
           } else {
             return const AllClinicsListSkeleton();
           }
