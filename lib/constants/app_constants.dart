@@ -13,7 +13,12 @@ class AppConstants {
   static const String selectedUserId = 'selectedUserId';
 
   // Ключ Яндекс.карты
-  static const String yandexMapApiKey = '492944f6-afb1-4915-bebe-6a3639caf540';
+  //! Не наш ключ!!! Нашел в гугле!!! Наш не работает!!!
+  static const String yandexMapApiKey = 'c0d403ab-e5be-4049-908c-8122a58acf23';
+
+  // access token для карт mapbox
+  static const String mapBoxApiKey =
+      'pk.eyJ1IjoiemFwb2x5YXJ5ZSIsImEiOiJjbDc3bmJjdWswMWpiM29zNmo2OGoycDI4In0.9-BixC9CCxdi5VrXwmn2-Q';
 
   // Ключ для сохранения часового пояса выбранной клиники
   static const String timeZoneOffset = 'timeZoneOffset';
