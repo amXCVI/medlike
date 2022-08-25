@@ -36,7 +36,7 @@ class PhonesList extends StatelessWidget {
                         .map((item) => GestureDetector(
                               onTap: () => {_makePhoneCall(item)},
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 1.5),
+                                padding: const EdgeInsets.symmetric(vertical: 3),
                                 child: Text(item,
                                     style: Theme.of(context)
                                         .textTheme

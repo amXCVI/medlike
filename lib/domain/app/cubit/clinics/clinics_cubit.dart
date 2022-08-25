@@ -32,7 +32,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
       final YandexGeocoder geocoder =
           YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
       response.forEach((clinic) => clinic.buildings.forEach((e) => {
-            Future.delayed((const Duration(milliseconds: 2200)), () async {
+            Future.delayed((const Duration()), () async {
               final GeocodeResponse geocodeFromAddress =
                   await geocoder.getGeocode(GeocodeRequest(
                 geocode: AddressGeocode(address: e.address),
