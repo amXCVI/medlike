@@ -71,7 +71,7 @@ class RowData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           ValueHelper.getStringFromValues(innerData, decimalDigits),

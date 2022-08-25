@@ -210,6 +210,16 @@ class _DiaryGraphState extends State<DiaryGraph> {
       return SfCartesianChart(
         plotAreaBorderWidth: 0,
         primaryXAxis: DateTimeAxis(
+          plotBands: [
+            if(widget.selected != null && seriesController != null) PlotBand(
+              start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              shouldRenderAboveSeries: false,
+              borderWidth: 1,
+              borderColor: Colors.grey.shade300,
+              color: Colors.grey.shade300
+            )
+          ],
           interval: interval,
           intervalType: type,
           minimum: widget.firstDate,
@@ -231,7 +241,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
         ),
         series: data,
 
-        margin: EdgeInsets.zero
+        margin: EdgeInsets.zero,
+        onChartTouchInteractionUp: (args) => widget.onUnselect()
       );
     }
 
