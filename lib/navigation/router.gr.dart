@@ -317,7 +317,8 @@ class AppRouter extends _i34.RootStackRouter {
           child: _i32.DiaryPage(
               key: args.key,
               title: args.title,
-              categoryModel: args.categoryModel));
+              categoryModel: args.categoryModel,
+              syn: args.syn));
     },
     DiaryAddRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryAddRouteArgs>();
@@ -1209,18 +1210,25 @@ class DiaryRoute extends _i34.PageRouteInfo<DiaryRouteArgs> {
   DiaryRoute(
       {_i35.Key? key,
       required String title,
-      required _i38.DiaryCategoryModel categoryModel})
+      required _i38.DiaryCategoryModel categoryModel,
+      required String syn})
       : super(DiaryRoute.name,
             path: '/diary',
             args: DiaryRouteArgs(
-                key: key, title: title, categoryModel: categoryModel));
+                key: key,
+                title: title,
+                categoryModel: categoryModel,
+                syn: syn));
 
   static const String name = 'DiaryRoute';
 }
 
 class DiaryRouteArgs {
   const DiaryRouteArgs(
-      {this.key, required this.title, required this.categoryModel});
+      {this.key,
+      required this.title,
+      required this.categoryModel,
+      required this.syn});
 
   final _i35.Key? key;
 
@@ -1228,9 +1236,11 @@ class DiaryRouteArgs {
 
   final _i38.DiaryCategoryModel categoryModel;
 
+  final String syn;
+
   @override
   String toString() {
-    return 'DiaryRouteArgs{key: $key, title: $title, categoryModel: $categoryModel}';
+    return 'DiaryRouteArgs{key: $key, title: $title, categoryModel: $categoryModel, syn: $syn}';
   }
 }
 

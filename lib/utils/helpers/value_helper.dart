@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as mt;
 import 'package:intl/intl.dart';
+import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 
 class ValueHelper {
@@ -182,5 +183,17 @@ class ValueHelper {
     } else {
       return DateFormat('kk:mm').format(date);
     }
+  }
+
+  static DiaryModel filterByPeriod({
+    required DiaryModel diariesList,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    final items = diariesList.values.where((f) => (
+      f.date.isAfter(start) || f.date.isBefore(end)
+    )).toList(); 
+
+    return diariesList.copyWith(values: items);
   }
 }

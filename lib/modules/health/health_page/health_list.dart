@@ -46,9 +46,10 @@ class HealthList extends StatelessWidget {
             firstDate: firstDate,
             lastDate: lastDate,
             onLoadDada: onLoadDada,
-            onNavigate: (String title) {
+            onNavigate: (String title, String syn) {
               context.router.push(
                 DiaryRoute(
+                  syn: syn,
                   title: title,
                   categoryModel: diariesCategoriesList[index]
                 )

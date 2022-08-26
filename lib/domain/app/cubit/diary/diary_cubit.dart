@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -55,9 +55,13 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       getDiaryStatuses: GetDiaryStatuses.loading,
-      updateDiaryStatuses: UpdateDiaryStatuses.loading
+      //updateDiaryStatuses: UpdateDiaryStatuses.loading
     ));
     try {
+      final date = DateTime.now().toUtc();
+      final startDate = dateFrom ?? date_utils.DateUtils.firstDayOfWeek(date);
+      final endDate = dateFrom ?? date_utils.DateUtils.lastDayOfWeek(date);
+
       final currentSelectedUserId =
         await UserSecureStorage.getField(AppConstants.selectedUserId);
 
@@ -71,6 +75,8 @@ class DiaryCubit extends Cubit<DiaryState> {
         userId: currentSelectedUserId,
         synFilter: syn
       );
+      
+      /*
       if(syn != null) {
         if(syn != state.selectedDiary?.syn) {
           emit(state.copyWith(
@@ -89,26 +95,51 @@ class DiaryCubit extends Cubit<DiaryState> {
           /// Чтобы не вызвать повторения их загрузки (см. DiaryPage)
           updateDiaryStatuses: UpdateDiaryStatuses.initial,
           selectedDiary: selectedDiary,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
+          dateFrom: startDate,
+          dateTo: endDate,
           pageUpdateStatuses: PageUpdateStatuses.initial
         ));
+
+        setTimePeriod(
+          start: startDate,
+          end: endDate
+        );
       } else {
+      */
         emit(state.copyWith(
           getDiaryStatuses: GetDiaryStatuses.success,
-          updateDiaryStatuses: UpdateDiaryStatuses.initial,
+          //updateDiaryStatuses: UpdateDiaryStatuses.initial,
           diariesList: response,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
+          dateFrom: startDate,
+          dateTo: endDate,
           pageUpdateStatuses: PageUpdateStatuses.initial
         ));
-      }
     } catch (e) {
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.failed,
         updateDiaryStatuses: UpdateDiaryStatuses.failed)
       );
     }
+  }
+
+  void setTimePeriod({
+    required DateTime start,
+    required DateTime end,
+    required String syn
+  }) {
+    final selectedDiary = state.diariesList!.firstWhere((element) =>
+      element.syn == syn
+    );
+
+    emit(state.copyWith(
+      periodedSelectedDiary: ValueHelper.filterByPeriod(
+        diariesList: selectedDiary, 
+        start: start, 
+        end: end
+      ),
+      dateFrom: start,
+      dateTo: end
+    ));
   }
 
   /// Фильтровать дневники

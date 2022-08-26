@@ -66,7 +66,7 @@ class _HealthItemState extends State<HealthItem> {
             child: InkWell(
               onTap: ()  {
                 widget.onLoadDada('Hour', syn: widget.data!.syn);
-                widget.onNavigate(widget.title);
+                widget.onNavigate(widget.title, widget.data!.syn);
               },
               child: Container(
                 padding: const EdgeInsets.all(15),

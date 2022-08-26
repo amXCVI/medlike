@@ -16,6 +16,7 @@ class DiaryState {
   final List<DiaryCategoryModel>? filteredDiariesCategoriesList;
   final List<String> filteredSyns;
   final DiaryModel? selectedDiary;
+  final DiaryModel? periodedSelectedDiary;
   final DateTime dateFrom;
   final DateTime dateTo;
 
@@ -25,6 +26,7 @@ class DiaryState {
     this.diariesList,
     this.diariesCategoriesList,
     this.selectedDiary,
+    this.periodedSelectedDiary,
     this.updateDiaryStatuses,
     this.pageUpdateStatuses,
     this.filteredDiariesCategoriesList,
@@ -44,6 +46,7 @@ class DiaryState {
     List<DiaryCategoryModel>? diariesCategoriesList,
     List<DiaryCategoryModel>? filteredDiariesCategoriesList,
     DiaryModel? selectedDiary,
+    DiaryModel? periodedSelectedDiary,
     String? selectedDiaryTitle,
     List<String>? filteredSyns,
     DateTime? dateFrom,
@@ -58,6 +61,7 @@ class DiaryState {
       diariesCategoriesList: diariesCategoriesList ?? this.diariesCategoriesList,
       filteredDiariesCategoriesList: filteredDiariesCategoriesList ?? this.filteredDiariesCategoriesList,
       selectedDiary: selectedDiary ?? this.selectedDiary,
+      periodedSelectedDiary: periodedSelectedDiary ?? this.periodedSelectedDiary,
       filteredSyns: filteredSyns ?? this.filteredSyns,
       dateFrom: dateFrom ?? this.dateFrom,
       dateTo: dateTo ?? this.dateTo

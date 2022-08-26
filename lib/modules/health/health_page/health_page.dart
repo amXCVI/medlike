@@ -7,7 +7,6 @@ import 'package:medlike/modules/health/filters_page/diary_filters_widget.dart';
 import 'package:medlike/modules/health/health_page/health_list.dart';
 import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
@@ -30,10 +29,6 @@ class _HealthPageState extends State<HealthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateTime.now();
-    final dateFrom = DateUtils.firstDayOfWeek(date);
-    final dateTo = DateUtils.lastDayOfWeek(date);
-
     void _onLoadDada(String grouping, {String? syn}) {
       context.read<DiaryCubit>().getDiaryCategoriesList(
           project: 'Zapolyarye',
@@ -43,8 +38,6 @@ class _HealthPageState extends State<HealthPage> {
           project: 'Zapolyarye',
           platform: Platform.isAndroid ? 'Android' : 'IOS',
           grouping: grouping,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
           syn: syn);
     }
 
@@ -110,8 +103,8 @@ class _HealthPageState extends State<HealthPage> {
               return HealthList(
                   diariesCategoriesList: state.filteredDiariesCategoriesList!,
                   diariesItems: state.diariesList ?? [],
-                  firstDate: dateFrom,
-                  lastDate: dateTo,
+                  firstDate: state.dateFrom,
+                  lastDate: state.dateTo,
                   onLoadDada: _onLoadDada);
             } else {
               return const HealthListSkeleton();
