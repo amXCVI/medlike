@@ -22,7 +22,7 @@ class DiaryView extends StatefulWidget {
   }) : super(key: key);
   
   final String title;
-  final DiaryModel diaryModel;
+  final DiaryFlatModel diaryModel;
   final String measureItem;
   final int decimalDigits;
   final DateTime firstDate;
@@ -51,7 +51,7 @@ class _DiaryViewState extends State<DiaryView> {
         children: [
           if (!isPrompt) DiaryValue(
             date: widget.firstDate,
-            currentValue: widget.diaryModel.getCurrentValue,
+            currentValue: widget.diaryModel.currentValue,
             measureItem: widget.measureItem,
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
@@ -131,6 +131,7 @@ class _DiaryViewState extends State<DiaryView> {
             measureItem: widget.measureItem,
             syn: widget.diaryModel.syn,
             paramName: widget.paramName,
+            grouping: widget.grouping,
           )
         ],
       ),

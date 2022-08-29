@@ -11,12 +11,13 @@ class DiaryState {
   final UpdateDiaryStatuses? updateDiaryStatuses;
   final PageUpdateStatuses? pageUpdateStatuses;
 
-  final List<DiaryModel>? diariesList;
+  final List<DiaryFlatModel>? diariesList;
+  final List<DiaryFlatModel>? weekDiariesList;
   final List<DiaryCategoryModel>? diariesCategoriesList;
   final List<DiaryCategoryModel>? filteredDiariesCategoriesList;
   final List<String> filteredSyns;
-  final DiaryModel? selectedDiary;
-  final DiaryModel? periodedSelectedDiary;
+  final DiaryFlatModel? selectedDiary;
+  final DiaryFlatModel? periodedSelectedDiary;
   final DateTime dateFrom;
   final DateTime dateTo;
 
@@ -24,6 +25,7 @@ class DiaryState {
     this.getDiaryStatuses,
     this.getDiaryCategoriesStatuses,
     this.diariesList,
+    this.weekDiariesList,
     this.diariesCategoriesList,
     this.selectedDiary,
     this.periodedSelectedDiary,
@@ -42,11 +44,12 @@ class DiaryState {
     GetDiaryCategoriesStatuses? getDiaryCategoriesStatuses,
     UpdateDiaryStatuses? updateDiaryStatuses,
     PageUpdateStatuses? pageUpdateStatuses,
-    List<DiaryModel>? diariesList,
+    List<DiaryFlatModel>? diariesList,
+    List<DiaryFlatModel>? weekDiariesList,
     List<DiaryCategoryModel>? diariesCategoriesList,
     List<DiaryCategoryModel>? filteredDiariesCategoriesList,
-    DiaryModel? selectedDiary,
-    DiaryModel? periodedSelectedDiary,
+    DiaryFlatModel? selectedDiary,
+    DiaryFlatModel? periodedSelectedDiary,
     String? selectedDiaryTitle,
     List<String>? filteredSyns,
     DateTime? dateFrom,
@@ -58,6 +61,7 @@ class DiaryState {
       updateDiaryStatuses: updateDiaryStatuses ?? this.updateDiaryStatuses,
       pageUpdateStatuses: pageUpdateStatuses ?? this.pageUpdateStatuses,
       diariesList: diariesList ?? this.diariesList,
+      weekDiariesList: weekDiariesList ?? this.weekDiariesList,
       diariesCategoriesList: diariesCategoriesList ?? this.diariesCategoriesList,
       filteredDiariesCategoriesList: filteredDiariesCategoriesList ?? this.filteredDiariesCategoriesList,
       selectedDiary: selectedDiary ?? this.selectedDiary,

@@ -27,7 +27,7 @@ class DiaryGraph extends StatefulWidget {
     this.isClean = false
   }) : super(key: key);
 
-  final List<DiaryItem> items;
+  final List<DataItem> items;
   final DateTime firstDate;
   final DateTime lastDate;
   final double? selected;
@@ -53,8 +53,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
     chartData = widget.items.map((e) => 
       ChartData(
         e.date, 
-        e.value.innerData[0], 
-        e.value.innerData.length > 1 ? e.value.innerData[1] : null
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null
       )
     ).toList();
     /*
@@ -156,7 +156,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
     }
 
     final data = <CartesianSeries>[
-      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         RangeColumnSeries<ChartData, DateTime>(
           dataSource: chartData,
           width: width,
@@ -188,7 +188,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         },
         onPointTap: onPointTap,
       ),
-      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
             markerSettings: const MarkerSettings(

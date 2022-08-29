@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/diary_graph/diary_small_prompt.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
@@ -27,7 +29,7 @@ class HealthItem extends StatefulWidget {
   final String title;
   final String measureItem;
   final int decimalDigits;
-  final DiaryModel? data;
+  final DiaryFlatModel? data;
   final DateTime firstDate;
   final DateTime lastDate;
   final Function onLoadDada;
@@ -40,7 +42,7 @@ class HealthItem extends StatefulWidget {
 class _HealthItemState extends State<HealthItem> {
   Offset offset = const Offset(0, 0);
   Offset? centerOffset;
-  DiaryItem? item;
+  DataItem? item;
   final GlobalKey _widgetKey = GlobalKey();
 
   @override
@@ -65,7 +67,8 @@ class _HealthItemState extends State<HealthItem> {
             ),
             child: InkWell(
               onTap: ()  {
-                widget.onLoadDada('Hour', syn: widget.data!.syn);
+                //widget.onLoadDada('Hour', syn: widget.data!.syn);
+                //context.read<DiaryCubit>().onNavigate();
                 widget.onNavigate(widget.title, widget.data!.syn);
               },
               child: Container(

@@ -185,13 +185,13 @@ class ValueHelper {
     }
   }
 
-  static DiaryModel filterByPeriod({
-    required DiaryModel diariesList,
+  static DiaryFlatModel filterByPeriod({
+    required DiaryFlatModel diariesList,
     required DateTime start,
     required DateTime end,
   }) {
     final items = diariesList.values.where((f) => (
-      f.date.isAfter(start) || f.date.isBefore(end)
+      f.date.isAfter(start) && f.date.isBefore(end)
     )).toList(); 
 
     return diariesList.copyWith(values: items);

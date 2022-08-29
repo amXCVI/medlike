@@ -13,7 +13,7 @@ class HealthValue extends StatelessWidget {
 
   final String measureItem;
   final int decimalDigits;
-  final DiaryModel? data;
+  final DiaryFlatModel? data;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +38,13 @@ class HealthValue extends StatelessWidget {
               color: Color.fromRGBO(158, 157, 157, 1),
             ),
           ) : RowData(
-            innerData: data!.getCurrentValue.innerData,
+            innerData: data!.currentValue.innerData,
             measureItem: measureItem,
             decimalDigits: decimalDigits
           ),
           const SizedBox(height: 2),
           Text(
-            data == null ? 'Нет данных' : getTime(data!.getCurrentValue.date),
+            data == null ? 'Нет данных' : getTime(data!.currentValue.date),
             style: const TextStyle(
               fontSize: 14,
               color: Color.fromRGBO(158, 157, 157, 1),

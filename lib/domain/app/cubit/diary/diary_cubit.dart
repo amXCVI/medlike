@@ -59,9 +59,13 @@ class DiaryCubit extends Cubit<DiaryState> {
     ));
     try {
       final date = DateTime.now().toUtc();
-      final startDate = dateFrom ?? date_utils.DateUtils.firstDayOfWeek(date);
-      final endDate = dateFrom ?? date_utils.DateUtils.lastDayOfWeek(date);
-
+      final startDate = dateFrom ?? date.subtract(const Duration(
+        days: 365
+      ));
+      final endDate = dateTo ?? date.add(const Duration(
+        days: 365
+      ));
+      
       final currentSelectedUserId =
         await UserSecureStorage.getField(AppConstants.selectedUserId);
 
@@ -70,50 +74,37 @@ class DiaryCubit extends Cubit<DiaryState> {
         project: project,
         platform: platform,
         grouping: grouping,
-        dateFrom: dateFrom,
-        dateTo: dateTo,
+        dateFrom: startDate,
+        dateTo: endDate,
         userId: currentSelectedUserId,
         synFilter: syn
       );
+
+      final flatResponse = response.map((e) => DiaryFlatModel(
+        syn: e.syn, 
+        firstValue: e.firstValue, 
+        currentValue: e.getCurrentValue, 
+        values: DataItem.toFlat(e.values), 
+        grouping: e.grouping)
+      ).toList();
       
-      /*
-      if(syn != null) {
-        if(syn != state.selectedDiary?.syn) {
-          emit(state.copyWith(
-            pageUpdateStatuses: PageUpdateStatuses.loading,
-          ));
-        }
-
-        final selectedDiary = response.firstWhere((element) =>
-          element.syn == syn
-        );
-
-        emit(state.copyWith(
-          getDiaryStatuses: GetDiaryStatuses.success,
-          //diariesList: response,
-          /// Здесь и далее сбрасываем состояние апдейти записей
-          /// Чтобы не вызвать повторения их загрузки (см. DiaryPage)
-          updateDiaryStatuses: UpdateDiaryStatuses.initial,
-          selectedDiary: selectedDiary,
-          dateFrom: startDate,
-          dateTo: endDate,
-          pageUpdateStatuses: PageUpdateStatuses.initial
-        ));
-
-        setTimePeriod(
-          start: startDate,
-          end: endDate
-        );
-      } else {
-      */
-        emit(state.copyWith(
-          getDiaryStatuses: GetDiaryStatuses.success,
-          //updateDiaryStatuses: UpdateDiaryStatuses.initial,
-          diariesList: response,
-          dateFrom: startDate,
-          dateTo: endDate,
-          pageUpdateStatuses: PageUpdateStatuses.initial
-        ));
+      final perioded = flatResponse.map((el) => (
+        ValueHelper.filterByPeriod(
+          diariesList: el, 
+          start: date_utils.DateUtils.firstDayOfWeek(date), 
+          end: date_utils.DateUtils.lastDayOfWeek(date)
+        )
+      )).toList();
+      
+      emit(state.copyWith(
+        getDiaryStatuses: GetDiaryStatuses.success,
+        //updateDiaryStatuses: UpdateDiaryStatuses.initial,
+        diariesList: flatResponse,
+        weekDiariesList: perioded,
+        dateFrom: date_utils.DateUtils.firstDayOfWeek(date),
+        dateTo: date_utils.DateUtils.lastDayOfWeek(date),
+        pageUpdateStatuses: PageUpdateStatuses.initial
+      ));
     } catch (e) {
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.failed,
@@ -132,6 +123,8 @@ class DiaryCubit extends Cubit<DiaryState> {
     );
 
     emit(state.copyWith(
+      selectedDiary: selectedDiary,
+      updateDiaryStatuses: UpdateDiaryStatuses.success,
       periodedSelectedDiary: ValueHelper.filterByPeriod(
         diariesList: selectedDiary, 
         start: start, 
@@ -157,11 +150,12 @@ class DiaryCubit extends Cubit<DiaryState> {
   void postDiaryEntry({
     required DateTime date,
     required String syn,
-    required List<double> values
+    required List<double> values,
+    DateTime? updateFrom,
+    DateTime? updateTo
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
-      getDiaryStatuses :GetDiaryStatuses.loading
     ));
 
     try {
@@ -179,13 +173,34 @@ class DiaryCubit extends Cubit<DiaryState> {
         AppToast.showAppToast(msg: 'Запись добавлена');
       }
 
+      DataItem val = DataItem(
+        date: date,
+        isAbnormal: false,
+        isChangeable: false,
+        innerData: values
+      );
+
+      List<DataItem> items = [...state.selectedDiary!.values];
+      items.add(val);
+
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.success,
+        selectedDiary: state.selectedDiary!.copyWith(
+          values: items
+        )
       ));
+      
+      if(updateFrom != null && updateTo != null) {
+        setTimePeriod(
+          start: updateFrom,
+          end: updateTo,
+          syn: state.selectedDiary!.syn
+        );
+      }
+
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
-        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
       ));
     }
   }

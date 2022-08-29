@@ -16,15 +16,17 @@ class DiaryList extends StatelessWidget {
     required this.decimalDigits,
     required this.measureItem,
     required this.syn,
-    required this.paramName
+    required this.paramName,
+    required this.grouping
   }) : super(key: key);
 
   final String title;
-  final List<DiaryItem> items;
+  final List<DataItem> items;
   final int decimalDigits;
   final String measureItem;
   final List<String> paramName;
   final String syn;
+  final String grouping;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,8 @@ class DiaryList extends StatelessWidget {
             decimalDigits: decimalDigits, 
             measureItem: measureItem, 
             syn: syn, 
-            paramName: paramName
+            paramName: paramName,
+            grouping: grouping,
           )
         ).toList()
       ],
@@ -53,23 +56,25 @@ class DiaryTile extends StatelessWidget {
     required this.decimalDigits,
     required this.measureItem,
     required this.syn,
-    required this.paramName
+    required this.paramName,
+    required this.grouping
   }) : super(key: key);
 
   final String title;
-  final DiaryItem item;
+  final DataItem item;
   final int decimalDigits;
   final String measureItem;
   final List<String> paramName;
   final String syn;
+  final String grouping;
 
   @override
   Widget build(BuildContext context) {
     final val =
-      ValueHelper.getStringFromValues(item.value.innerData, decimalDigits);
+      ValueHelper.getStringFromValues(item.innerData, decimalDigits);
 
     return Slidable(
-        key: ValueKey(item.value.hashCode),
+        key: ValueKey(item.hashCode),
         endActionPane: ActionPane(
           motion: const ScrollMotion(),
           children: [
@@ -85,9 +90,7 @@ class DiaryTile extends StatelessWidget {
             context
               .read<DiaryCubit>()
               .deleteDiaryEntry(
-                date: item.date.add(
-                  Duration(seconds: item.value.secondsSinceMidnight.floor()
-                )), 
+                date: item.date,
                 syn: syn
               );
           }),
@@ -110,9 +113,7 @@ class DiaryTile extends StatelessWidget {
             ),
             subtitle: Text(
               ValueHelper.getDateInDiaryItem(
-                item.date.add(Duration(
-                  seconds: item.value.secondsSinceMidnight.floor()
-                ))
+                item.date
               ),
               style: const TextStyle(
                 color: Color.fromRGBO(158, 157, 157, 1),
@@ -126,10 +127,9 @@ class DiaryTile extends StatelessWidget {
                   measureItem: measureItem,
                   decimalDigits: decimalDigits,
                   paramName: paramName,
-                  initialValues: item.value.innerData,
-                  initialDate: item.date.add(
-                    Duration(seconds: item.value.secondsSinceMidnight.floor()
-                  )) ));
+                  initialValues: item.innerData,
+                  grouping: grouping,
+                  initialDate: item.date));
             },
           ),
         ));

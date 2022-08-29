@@ -16,6 +16,7 @@ class DiaryAddPage extends StatefulWidget {
     required this.measureItem,
     required this.decimalDigits,
     required this.paramName,
+    required this.grouping,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -26,6 +27,7 @@ class DiaryAddPage extends StatefulWidget {
   final List<String> paramName;
   final DateTime? initialDate;
   final List<double>? initialValues;
+  final String grouping;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -131,6 +133,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
+              final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
+
               final newDate = date!.add(Duration(
                 hours: time!.hour,
                 minutes: time!.minute,
@@ -151,7 +155,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   syn: state.selectedDiary!.syn,
                   values: _controllers.map((e) => 
                     double.parse(e.text) 
-                  ).toList()
+                  ).toList(),
+                  updateFrom: dates[0],
+                  updateTo: dates[1]
                 );
               }
               context.router.pop();

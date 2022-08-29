@@ -102,7 +102,7 @@ class _HealthPageState extends State<HealthPage> {
                 state.getDiaryStatuses == GetDiaryStatuses.success) {
               return HealthList(
                   diariesCategoriesList: state.filteredDiariesCategoriesList!,
-                  diariesItems: state.diariesList ?? [],
+                  diariesItems: state.weekDiariesList ?? [],
                   firstDate: state.dateFrom,
                   lastDate: state.dateTo,
                   onLoadDada: _onLoadDada);

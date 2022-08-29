@@ -330,6 +330,7 @@ class AppRouter extends _i34.RootStackRouter {
               measureItem: args.measureItem,
               decimalDigits: args.decimalDigits,
               paramName: args.paramName,
+              grouping: args.grouping,
               initialValues: args.initialValues,
               initialDate: args.initialDate));
     }
@@ -1253,6 +1254,7 @@ class DiaryAddRoute extends _i34.PageRouteInfo<DiaryAddRouteArgs> {
       required String measureItem,
       required int decimalDigits,
       required List<String> paramName,
+      required String grouping,
       List<double>? initialValues,
       DateTime? initialDate})
       : super(DiaryAddRoute.name,
@@ -1263,6 +1265,7 @@ class DiaryAddRoute extends _i34.PageRouteInfo<DiaryAddRouteArgs> {
                 measureItem: measureItem,
                 decimalDigits: decimalDigits,
                 paramName: paramName,
+                grouping: grouping,
                 initialValues: initialValues,
                 initialDate: initialDate));
 
@@ -1276,6 +1279,7 @@ class DiaryAddRouteArgs {
       required this.measureItem,
       required this.decimalDigits,
       required this.paramName,
+      required this.grouping,
       this.initialValues,
       this.initialDate});
 
@@ -1289,12 +1293,14 @@ class DiaryAddRouteArgs {
 
   final List<String> paramName;
 
+  final String grouping;
+
   final List<double>? initialValues;
 
   final DateTime? initialDate;
 
   @override
   String toString() {
-    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, initialValues: $initialValues, initialDate: $initialDate}';
+    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, grouping: $grouping, initialValues: $initialValues, initialDate: $initialDate}';
   }
 }

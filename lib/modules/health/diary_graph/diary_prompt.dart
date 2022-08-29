@@ -11,7 +11,7 @@ class DiaryPrompt extends StatelessWidget {
     required this.measureItem
   }) : super(key: key);
 
-  final DiaryItem item;
+  final DataItem item;
   final int decimalDigits;
   final String measureItem;
 
@@ -19,7 +19,7 @@ class DiaryPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("d MMMM y", 'ru_RU');
     final val = ValueHelper.getStringFromValues(
-      item.value.innerData, 
+      item.innerData, 
       decimalDigits
     );
 

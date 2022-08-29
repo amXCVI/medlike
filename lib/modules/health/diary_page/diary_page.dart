@@ -32,19 +32,7 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DiaryCubit, DiaryState>(
-      listener: (context, state) {
-        if(state.selectedDiary == null) {
-          final date = DateTime.now().toUtc();
-          final dates = ValueHelper.getPeriodTiming(date, grouping);
-
-          context.read<DiaryCubit>().setTimePeriod(
-            start: dates[0],
-            end: dates[1],
-            syn: widget.syn
-          );
-        }
-      },
+    return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
           final date = DateTime.now().toUtc();
@@ -74,9 +62,9 @@ class _DiaryPageState extends State<DiaryPage> {
 
         Widget page; 
 
-        if(state.getDiaryStatuses == GetDiaryStatuses.failed) {
-          page = const Text('');
-        } else if(state.getDiaryStatuses == GetDiaryStatuses.loading 
+        if(state.updateDiaryStatuses == UpdateDiaryStatuses.failed) {
+          page = const Text('Failed');
+        } else if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
           || state.periodedSelectedDiary == null) {
           page = const DiarySkeleton();
         } else if(state.periodedSelectedDiary!.values.isEmpty && grouping == '') {
@@ -120,7 +108,8 @@ class _DiaryPageState extends State<DiaryPage> {
                   title: widget.title, 
                   measureItem: widget.categoryModel.measureItem,
                   decimalDigits: widget.categoryModel.decimalDigits, 
-                  paramName: widget.categoryModel.paramName
+                  paramName: widget.categoryModel.paramName,
+                  grouping: grouping
                 )
               );
             },

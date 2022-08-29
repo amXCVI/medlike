@@ -11,14 +11,14 @@ class DiarySmallPrompt extends StatelessWidget {
     required this.decimalDigits
   }) : super(key: key);
 
-  final DiaryItem item;
+  final DataItem item;
   final int decimalDigits;
 
   @override
   Widget build(BuildContext context) {
     DateFormat dateFormat = DateFormat("dd MMMM", 'ru_RU');
     final val = ValueHelper.getStringFromValues(
-      item.value.innerData, 
+      item.innerData, 
       decimalDigits
     );
 
