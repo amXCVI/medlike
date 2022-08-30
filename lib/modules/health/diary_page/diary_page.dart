@@ -35,7 +35,7 @@ class _DiaryPageState extends State<DiaryPage> {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
-          final date = DateTime.now().toUtc();
+          final date = DateTime.now();
           final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
           context.read<DiaryCubit>().setTimePeriod(

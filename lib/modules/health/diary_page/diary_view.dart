@@ -6,6 +6,7 @@ import 'package:medlike/modules/health/diary_page/diary_list.dart';
 import 'package:medlike/modules/health/diary_page/diary_value.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
+import 'package:medlike/utils/helpers/grouping_helper.dart';
 
 class DiaryView extends StatefulWidget {
   const DiaryView({
@@ -44,6 +45,16 @@ class _DiaryViewState extends State<DiaryView> {
 
   @override
   Widget build(BuildContext context) {
+    List<DataItem> items =  widget.diaryModel.values;
+    switch(widget.grouping) {
+      case 'Day':
+        items = GroupingHelper.groupByHour(items);
+        break;
+      case 'Week':
+      case 'Month':
+      default:
+        items = GroupingHelper.groupByDay(items);
+    }
 
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
@@ -85,7 +96,7 @@ class _DiaryViewState extends State<DiaryView> {
             ],
           ),
           DiaryGraph(
-            items: widget.diaryModel.values,
+            items: items,
             firstDate: widget.firstDate,
             lastDate: widget.lastDate,
             measureItem: widget.measureItem,
@@ -126,7 +137,7 @@ class _DiaryViewState extends State<DiaryView> {
           ),
           DiaryList(
             title: widget.title,
-            items: widget.diaryModel.values,
+            items: items,
             decimalDigits: widget.decimalDigits,
             measureItem: widget.measureItem,
             syn: widget.diaryModel.syn,

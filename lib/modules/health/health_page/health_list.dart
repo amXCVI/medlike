@@ -50,7 +50,7 @@ class HealthList extends StatelessWidget {
             lastDate: lastDate,
             onLoadDada: onLoadDada,
             onNavigate: (String title, String syn) {
-              final date = DateTime.now().toUtc();
+              final date = DateTime.now();
               final dates = ValueHelper.getPeriodTiming(date, '');
 
               context.read<DiaryCubit>().setTimePeriod(

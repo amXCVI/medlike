@@ -13,11 +13,13 @@ class DiaryRepository {
     required String platform,
     DateTime? updateSince
   }) async {
-    final tz = int.tryParse(
-      await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
-    ) ?? 0;
 
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
       var queryParams = {
         'Project': project,
         'Platform': platform      
@@ -25,7 +27,7 @@ class DiaryRepository {
 
       if(updateSince != null) {
         queryParams.addAll({
-          'updateSince': dateTimeToServerFormat(updateSince, tz),
+          'updateSince': dateTimeToServerFormat(updateSince, tz ?? offsetTz),
         });
       }
 
@@ -57,7 +59,8 @@ class DiaryRepository {
     try {
       final tz = int.tryParse(
         await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
-      ) ?? 0;
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       String url = '/api/v1.0/diary';
       var queryParams = {
@@ -81,7 +84,7 @@ class DiaryRepository {
       if(dateFrom != null) {
         queryParams.addAll({
           'DateFrom': dateTimeToServerFormat(
-            dateFrom, tz
+            dateFrom, tz ?? offsetTz
           ),
         });
       }
@@ -89,7 +92,7 @@ class DiaryRepository {
       if(dateTo != null) {
         queryParams.addAll({
           'DateTo': dateTimeToServerFormat(
-            dateTo, tz
+            dateTo, tz ?? offsetTz
           )
         });
       }
@@ -117,11 +120,12 @@ class DiaryRepository {
     try {
       final tz = int.tryParse(
         await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
-      ) ?? 0;
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       final response = await _dioClient.post('/api/v1.0/diary',
         data: {
-          'dateTime': dateTimeToServerFormat(date, tz),
+          'dateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
           'synonim': syn,
           'userID' : userId,
           'values': values
@@ -151,12 +155,13 @@ class DiaryRepository {
     try {
       final tz = int.tryParse(
         await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
-      ) ?? 0;
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       final response = await _dioClient.put('/api/v1.0/diary',
         data: {
-          'DateTime': dateTimeToServerFormat(date, tz),
-          'OldDatetime': dateTimeToServerFormat(oldDate, tz),
+          'DateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
+          'OldDatetime': dateTimeToServerFormat(oldDate, tz ?? offsetTz),
           'Synonim': syn,
           'UserID' : userId,
           'Values': values
@@ -185,10 +190,11 @@ class DiaryRepository {
     try {
       final tz = int.tryParse(
         await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
-      ) ?? 0;
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       var queryParams = {
-        'DateTime': dateTimeToServerFormat(date, tz),
+        'DateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
         'Synonim': syn
       };
 

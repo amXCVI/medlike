@@ -135,11 +135,14 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             onPressed: () {
               final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
 
-              final newDate = date!.add(Duration(
-                hours: time!.hour,
-                minutes: time!.minute,
-                seconds: time!.second
-              ));
+              final newDate = DateTime(
+                date!.year,
+                date!.month,
+                date!.day,
+                time!.hour,
+                time!.minute
+              ); 
+              
               if(widget.initialDate != null || widget.initialValues != null) {
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,

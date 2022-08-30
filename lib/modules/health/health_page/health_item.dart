@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/diary_graph/diary_small_prompt.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
+import 'package:medlike/utils/helpers/grouping_helper.dart';
 
 
 class HealthItem extends StatefulWidget {
@@ -47,6 +46,9 @@ class _HealthItemState extends State<HealthItem> {
 
   @override
   Widget build(BuildContext context) {
+    final items = GroupingHelper.groupByDay(widget.data?.values ?? []);
+    
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
@@ -120,7 +122,7 @@ class _HealthItemState extends State<HealthItem> {
                                 SizedBox(
                                   height: 65,
                                   child: DiaryGraph(
-                                    items: widget.data?.values ?? [], 
+                                    items: items, 
                                     firstDate: widget.firstDate, 
                                     lastDate: widget.lastDate, 
                                     measureItem: widget.measureItem, 

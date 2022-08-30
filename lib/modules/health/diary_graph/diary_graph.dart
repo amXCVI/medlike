@@ -44,12 +44,11 @@ class DiaryGraph extends StatefulWidget {
 }
 
 class _DiaryGraphState extends State<DiaryGraph> {
-  //late TrackballBehavior _trackballBehavior;
   ChartSeriesController? seriesController;
   late List<ChartData> chartData;
 
   @override
-  void initState(){
+  void initState() {
     chartData = widget.items.map((e) => 
       ChartData(
         e.date, 
@@ -57,26 +56,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         e.innerData.length > 1 ? e.innerData[1] : null
       )
     ).toList();
-    /*
-    _trackballBehavior = TrackballBehavior(
-      enable: false,
-      tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
-      activationMode: ActivationMode.singleTap,
-      builder: (context, details) {
-        if(details.pointIndex == null) {
-          return Container();
-        }
-
-        final index = details.pointIndex! - 1;
-
-        if(index < 0 || index >= widget.items.length) {
-          return Container();
-        }
-
-        
-      },
-    );
-    */
+  
     super.initState();
   }
 

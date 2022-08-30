@@ -58,7 +58,7 @@ class DiaryCubit extends Cubit<DiaryState> {
       //updateDiaryStatuses: UpdateDiaryStatuses.loading
     ));
     try {
-      final date = DateTime.now().toUtc();
+      final date = DateTime.now();
       final startDate = dateFrom ?? date.subtract(const Duration(
         days: 365
       ));

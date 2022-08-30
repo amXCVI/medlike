@@ -11,9 +11,9 @@ String getTime(int time, ColumnType type) {
   switch (type) {
     case ColumnType.minute:
     case ColumnType.hour:
-      return time < 9 ? "0$time" : "$time";
+      return time <= 9 ? "0$time" : "$time";
     case ColumnType.day:
-      return time < 9 ? "0${time + 1}" : "${time + 1}";
+      return time <= 9 ? "0${time + 1}" : "${time + 1}";
     case ColumnType.month:
       final format = DateFormat('d MMM y', 'ru_RU');
 
@@ -45,7 +45,7 @@ int getInitialValue(ColumnType type, DateTime? initialDate) {
 DateTime getDateTime(List<int> values, PickerType type) {
   switch (type) {
     case PickerType.date:
-      return DateTime(getYear(values[2]), values[1] + 1, values[0] + 1);
+      return DateTime(getYear(values[2]), values[1], values[0]);
     case PickerType.time:
       return DateTime(DateTime.now().year, DateTime.now().month,
           DateTime.now().day, values[0], values[1]);
