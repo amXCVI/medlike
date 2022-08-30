@@ -44,14 +44,14 @@ class FieldWrapper extends StatelessWidget {
             fontWeight: FontWeight.w400
           ),
           contentPadding: const EdgeInsets.only(top: 4),
-          floatingLabelStyle: const TextStyle(
-            color: AppColors.lightText, 
-            fontSize: 22,
+          floatingLabelStyle: TextStyle(
+            color: isEmpty ? AppColors.lightText : AppColors.mainText, 
+            fontSize: 21,
             fontWeight: FontWeight.w300
           ),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: isEmpty ? AppColors.mainSeparatorAlpha : AppColors.mainText
+              color: isEmpty ? AppColors.lightText : AppColors.mainText
             )
           ),
           focusedBorder: const UnderlineInputBorder(

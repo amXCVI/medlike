@@ -16,7 +16,7 @@ class HealthListSkeleton extends StatelessWidget {
           style: SkeletonParagraphStyle(
             lines: 1,
             lineStyle: SkeletonLineStyle(
-              height: 170,
+              height: 130,
               borderRadius: BorderRadius.circular(12),
             )
           ),

@@ -61,7 +61,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
   }
 
   void performSwipe(ChartSwipeDirection direction) {
-    widget.onLoadDate!(direction == ChartSwipeDirection.end);
+    widget.onLoadDate!(direction == ChartSwipeDirection.start);
 
     if (seriesController != null) {
       seriesController!

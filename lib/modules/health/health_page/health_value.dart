@@ -21,8 +21,13 @@ class HealthValue extends StatelessWidget {
     var format = DateFormat.MMMMd('ru');
     var fhour = DateFormat.Hm('ru');
 
-    String getTime (DateTime time) => 
-      '${format.format(time)}, ${fhour.format(time)}';
+    String getTime (DateTime time) {
+      if(time.day == DateTime.now().day) {
+        return 'Сегодня, ${fhour.format(time)}';
+      }
+
+      return '${format.format(time)}, ${fhour.format(time)}';
+    }
 
     return SizedBox(
       width: 135,
