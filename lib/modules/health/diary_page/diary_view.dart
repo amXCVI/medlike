@@ -71,7 +71,7 @@ class _DiaryViewState extends State<DiaryView> {
             alignment: Alignment.bottomCenter,
             children: [
               SizedBox(
-                height: 76,
+                height: 88,
                 width: MediaQuery.of(context).size.width,
               ),
               Positioned(
@@ -88,7 +88,7 @@ class _DiaryViewState extends State<DiaryView> {
                 left: offset.dx - 1,
                 bottom: 0,
                 child: Container(
-                  height: 16,
+                  height: 28,
                   width: 1,
                   color: AppColors.mainSeparatorAlpha,
                 )

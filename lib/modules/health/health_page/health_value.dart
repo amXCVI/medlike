@@ -25,7 +25,7 @@ class HealthValue extends StatelessWidget {
       '${format.format(time)}, ${fhour.format(time)}';
 
     return SizedBox(
-      width: 170,
+      width: 135,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class RowData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
           ValueHelper.getStringFromValues(innerData, decimalDigits),

@@ -77,32 +77,33 @@ class _HealthItemState extends State<HealthItem> {
                 padding: const EdgeInsets.all(15),
                 height: 130,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Image.network(
-                                '${ApiConstants.baseUrl}${widget.iconPath}',
-                                width: 20,
-                                height: 20,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                widget.title,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              )
-                            ]
-                          ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.network(
+                              '${ApiConstants.baseUrl}${widget.iconPath}',
+                              width: 20,
+                              height: 20,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              widget.title,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            )
+                          ]
                         ),
-                        HealthValue(
-                          data: widget.data,
-                          measureItem: widget.measureItem,
-                          decimalDigits: widget.decimalDigits
+                        Flexible(
+                          child: HealthValue(
+                            data: widget.data,
+                            measureItem: widget.measureItem,
+                            decimalDigits: widget.decimalDigits
+                          ),
                         ),
                       ],
                     ),
@@ -119,48 +120,45 @@ class _HealthItemState extends State<HealthItem> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                SizedBox(
-                                  height: 65,
-                                  child: DiaryGraph(
-                                    items: items, 
-                                    firstDate: widget.firstDate, 
-                                    lastDate: widget.lastDate, 
-                                    measureItem: widget.measureItem, 
-                                    decimalDigits: widget.decimalDigits,
-                                    selected: offset.dx, 
-                                    onSelect: (id, newOffset) {
-                                      Future.microtask(
-                                        () {
-                                          setState(() {
-                                            item = widget.data?.values[id];
-                                            offset = newOffset;
-                                          });
+                                DiaryGraph(
+                                  items: items, 
+                                  firstDate: widget.firstDate, 
+                                  lastDate: widget.lastDate, 
+                                  measureItem: widget.measureItem, 
+                                  decimalDigits: widget.decimalDigits,
+                                  selected: offset.dx, 
+                                  onSelect: (id, newOffset) {
+                                    Future.microtask(
+                                      () {
+                                        setState(() {
+                                          item = widget.data?.values[id];
+                                          offset = newOffset;
+                                        });
                           
-                                          ContextHelper.getFutureSizeFromGlobalKey(
-                                            _widgetKey, 
-                                            (size) => setState(() {
-                                              final dw = MediaQuery.of(context).size.width;
-                                              var w = offset.dx - size.width / 2;
-                                              w = w < 0 ? 0 : w;
-                                              w = w > dw ? dw : w;
-                                              centerOffset = Offset(
-                                                w < 0 ? 0 : w,
-                                                size.height
-                                              );
-                                            }) 
-                                          );
-                                        }
-                                      );
-                                    },
-                                    onUnselect: () {
-                                      setState(() {
-                                        item = null;
-                                        offset = const Offset(0, 0);
-                                      });
-                                    },
-                                    grouping: 'Week',
-                                    isClean: true,
-                                  ),
+                                        ContextHelper.getFutureSizeFromGlobalKey(
+                                          _widgetKey, 
+                                          (size) => setState(() {
+                                            final dw = MediaQuery.of(context).size.width;
+                                            var w = offset.dx - size.width / 2;
+                                            w = w < 0 ? 0 : w;
+                                            w = w > dw ? dw : w;
+                                            centerOffset = Offset(
+                                              w < 0 ? 0 : w,
+                                              size.height
+                                            );
+                                          }) 
+                                        );
+                                      }
+                                    );
+                                  },
+                                  onUnselect: () {
+                                    setState(() {
+                                      item = null;
+                                      offset = const Offset(0, 0);
+                                    });
+                                  },
+                                  grouping: 'Week',
+                                  isClean: true,
                                 ),
                               ],
                             ),

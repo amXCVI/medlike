@@ -95,6 +95,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
       switch(widget.grouping) {
         case 'Week':
+        case '':
           final DateFormat formatter = DateFormat('E','ru_RU');
           text = formatter.format(date).toUpperCase();
           if(widget.isClean) {
@@ -187,42 +188,45 @@ class _DiaryGraphState extends State<DiaryGraph> {
     ];
 
     if(widget.isClean) {
-      return SfCartesianChart(
-        plotAreaBorderWidth: 0,
-        primaryXAxis: DateTimeAxis(
-          plotBands: [
-            if(widget.selected != null && seriesController != null) PlotBand(
-              start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
-              end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
-              shouldRenderAboveSeries: false,
-              borderWidth: 1,
-              borderColor: Colors.grey.shade300,
-              color: Colors.grey.shade300
+      return SizedBox(
+        height: 85,
+        child: SfCartesianChart(
+          plotAreaBorderWidth: 0,
+          primaryXAxis: DateTimeAxis(
+            plotBands: [
+              if(widget.selected != null && seriesController != null) PlotBand(
+                start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                shouldRenderAboveSeries: false,
+                borderWidth: 1,
+                borderColor: Colors.grey.shade300,
+                color: Colors.grey.shade300
+              )
+            ],
+            interval: interval,
+            intervalType: type,
+            minimum: widget.firstDate,
+            maximum: widget.lastDate,
+            axisLabelFormatter: labelFormatter,
+            rangePadding: ChartRangePadding.none,
+            majorGridLines: const MajorGridLines(
+              width: 0
+            ),
+            majorTickLines: const MajorTickLines(
+              width: 0,
+            ),
+            axisLine: const AxisLine(
+              width: 0,
             )
-          ],
-          interval: interval,
-          intervalType: type,
-          minimum: widget.firstDate,
-          maximum: widget.lastDate,
-          axisLabelFormatter: labelFormatter,
-          rangePadding: ChartRangePadding.none,
-          majorGridLines: const MajorGridLines(
-            width: 0
           ),
-          majorTickLines: const MajorTickLines(
-            width: 0,
+          primaryYAxis: NumericAxis(
+            isVisible: false
           ),
-          axisLine: const AxisLine(
-            width: 0,
-          )
-        ),
-        primaryYAxis: NumericAxis(
-          isVisible: false
-        ),
-        series: data,
+          series: data,
 
-        margin: EdgeInsets.zero,
-        onChartTouchInteractionUp: (args) => widget.onUnselect()
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          onChartTouchInteractionUp: (args) => widget.onUnselect()
+        ),
       );
     }
 
