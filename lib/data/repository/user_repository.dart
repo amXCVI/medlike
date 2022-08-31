@@ -309,45 +309,11 @@ class UserRepository {
     });
 
     try {
-      final response =
-          await _dioClient.post('/api/v1.0/support/emailWithoutAuth',
-              data: formData,
-              options: Options(
-                contentType: 'multipart/form-data',
-              ));
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
-      rethrow;
-    }
-  }
-
-  Future<bool> registerUserDevice({
-    required String deviceId,
-    required int clientPlatform,
-    required int appBuildType,
-    List<File>? files,
-  }) async {
-    List uploadFilesList = [];
-    if (files != null) {
-      for (var file in files) {
-        var multipartFile = await MultipartFile.fromFile(file.path);
-        uploadFilesList.add(multipartFile);
-      }
-    }
-
-    try {
-      final response = await _dioClient.post(
-        '/api/v1.0/profile/devices',
-        data: {
-          "DeviceId": deviceId,
-          "ClientPlatform": clientPlatform,
-          "AppBuildType": appBuildType // Dev = 0, Prod = 1
-        },
-      );
+      final response = await _dioClient.post('/api/v1.0/support/emailWithoutAuth',
+          data: formData,
+          options: Options(
+            contentType: 'multipart/form-data',
+          ));
       if (response.statusCode == 200) {
         return true;
       } else {
