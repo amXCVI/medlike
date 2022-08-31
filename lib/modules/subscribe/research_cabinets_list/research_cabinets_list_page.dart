@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/research_cabinets_list.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/research_cabinets_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class ResearchCabinetsListPage extends StatelessWidget {
   const ResearchCabinetsListPage({
@@ -55,20 +56,24 @@ class ResearchCabinetsListPage extends StatelessWidget {
             return const Text('');
           } else if (state.getCabinetsListStatus ==
               GetCabinetsListStatuses.success) {
-            return ResearchCabinetsList(
-              doctorsList: state.filteredDoctorsList as List<Doctor>,
-              onRefreshData: _onRefreshData,
-              cabinetsList: state.filteredCabinetsList as List<Cabinet>,
-              nextPageTitle:
-                  CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
-                      .russianCategoryTypeName,
-              nextPageSubtitle: getCountResearches(researchIds.length),
-              userId: userId,
-              clinicId: clinicId,
-              buildingId: buildingId,
-              categoryTypeId: categoryTypeId,
-              researchIds: state.selectedResearchesIds as List<String>,
-            );
+            return state.cabinetsList!.isNotEmpty &&
+                    state.filteredCabinetsList!.isEmpty
+                ? const NotFoundData()
+                : ResearchCabinetsList(
+                    doctorsList: state.filteredDoctorsList as List<Doctor>,
+                    onRefreshData: _onRefreshData,
+                    cabinetsList: state.filteredCabinetsList as List<Cabinet>,
+                    nextPageTitle:
+                        CategoryTypes.getCategoryTypeByCategoryTypeId(
+                                categoryTypeId)
+                            .russianCategoryTypeName,
+                    nextPageSubtitle: getCountResearches(researchIds.length),
+                    userId: userId,
+                    clinicId: clinicId,
+                    buildingId: buildingId,
+                    categoryTypeId: categoryTypeId,
+                    researchIds: state.selectedResearchesIds as List<String>,
+                  );
           } else {
             return const ResearchCabinetsListSkeleton();
           }
