@@ -79,11 +79,13 @@ class DateTimePicker extends StatefulWidget {
 }
 
 class _DateTimePickerState extends State<DateTimePicker> {
-  DateTime dateTime = DateTime.now();
+  late DateTime dateTime;
   late List<int> values;
 
   @override
   void initState() {
+    dateTime = widget.initialDate ?? DateTime.now();
+
     values = widget.type == PickerType.date ? [
       getInitialValue(ColumnType.day, widget.initialDate), 
       getInitialValue(ColumnType.month, widget.initialDate), 
@@ -121,6 +123,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
             type: widget.type,
             values: values,
             setValue: setValue,
+            initialDate: widget.initialDate,
           )),
       actions: [
         Row(
@@ -162,12 +165,14 @@ class DateTimeCarousel extends StatelessWidget {
       {Key? key,
       required this.type,
       required this.values,
-      required this.setValue})
+      required this.setValue,
+      this.initialDate})
       : super(key: key);
 
   final PickerType type;
   final List<int> values;
   final void Function(int, int, ColumnType) setValue;
+  final DateTime? initialDate;
 
   @override
   Widget build(BuildContext context) {
@@ -184,18 +189,21 @@ class DateTimeCarousel extends StatelessWidget {
           /// все индексы
           values: values,
           setValue: setValue,
+          initialDate: initialDate,
         ),
         CarouselColumn(
           type: ColumnType.month,
           col: 1,
           index: values[1],
           setValue: setValue,
+          initialDate: initialDate,
         ),
         CarouselColumn(
           type: ColumnType.year,
           col: 2,
           index: values[2],
           setValue: setValue,
+          initialDate: initialDate,
         ),
       ];
     } else {
@@ -205,6 +213,7 @@ class DateTimeCarousel extends StatelessWidget {
           col: 0,
           index: values[0],
           setValue: setValue,
+          initialDate: initialDate,
         ),
         Container(
           height: 60 * 3,
@@ -225,6 +234,7 @@ class DateTimeCarousel extends StatelessWidget {
           col: 1,
           index: values[1],
           setValue: setValue,
+          initialDate: initialDate,
         ),
       ];
     }
@@ -302,7 +312,7 @@ class CarouselColumn extends StatelessWidget {
                   viewportFraction: 0.35,
                   enlargeCenterPage: true,
                   scrollDirection: Axis.vertical,
-                  initialPage: getInitialValue(type, null),
+                  initialPage: getInitialValue(type, initialDate),
                   onPageChanged: ((index, reason) {
                     setValue(col, index, type);
                   })),

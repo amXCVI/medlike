@@ -150,7 +150,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   syn: state.selectedDiary!.syn,
                   values: _controllers.map((e) => 
                     double.parse(e.text) 
-                  ).toList()
+                  ).toList(),
+                  updateFrom: dates[0],
+                  updateTo: dates[1]
                 );
               } else {
                 context.read<DiaryCubit>().postDiaryEntry(

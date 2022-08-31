@@ -124,7 +124,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
     emit(state.copyWith(
       selectedDiary: selectedDiary,
-      updateDiaryStatuses: UpdateDiaryStatuses.success,
       periodedSelectedDiary: ValueHelper.filterByPeriod(
         diariesList: selectedDiary, 
         start: start, 
@@ -176,7 +175,7 @@ class DiaryCubit extends Cubit<DiaryState> {
       DataItem val = DataItem(
         date: date,
         isAbnormal: false,
-        isChangeable: false,
+        isChangeable: true,
         innerData: values
       );
 
@@ -184,7 +183,6 @@ class DiaryCubit extends Cubit<DiaryState> {
       items.add(val);
 
       emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.success,
         selectedDiary: state.selectedDiary!.copyWith(
           values: items
         )
@@ -198,6 +196,10 @@ class DiaryCubit extends Cubit<DiaryState> {
         );
       }
 
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.success
+      ));
+
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
@@ -210,7 +212,9 @@ class DiaryCubit extends Cubit<DiaryState> {
     required DateTime date,
     required DateTime oldDate,
     required String syn,
-    required List<double> values
+    required List<double> values,
+    DateTime? updateFrom,
+    DateTime? updateTo
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
@@ -233,9 +237,32 @@ class DiaryCubit extends Cubit<DiaryState> {
         AppToast.showAppToast(msg: 'Запись обновлена');
       }
 
+      final items = state.selectedDiary!.values.map((el) {
+        if(el.date != oldDate) {
+          return el;
+        }
+        return DataItem(
+          date: date,
+          isAbnormal: false,
+          isChangeable: true,
+          innerData: values
+        );
+      }).toList();
+
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.success,
+        selectedDiary: state.selectedDiary!.copyWith(
+          values: items
+        )
       ));
+
+      if(updateFrom != null && updateTo != null) {
+        setTimePeriod(
+          start: updateFrom,
+          end: updateTo,
+          syn: state.selectedDiary!.syn
+        );
+      }
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
@@ -248,6 +275,8 @@ class DiaryCubit extends Cubit<DiaryState> {
   void deleteDiaryEntry({
     required DateTime date,
     required String syn,
+    DateTime? updateFrom,
+    DateTime? updateTo
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
@@ -268,9 +297,24 @@ class DiaryCubit extends Cubit<DiaryState> {
         AppToast.showAppToast(msg: 'Запись удалена');
       }
 
+      final items = state.selectedDiary!.values.where((el) =>
+        el.date != date
+      ).toList();
+
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.success,
+        selectedDiary: state.selectedDiary!.copyWith(
+          values: items
+        )
       ));
+
+      if(updateFrom != null && updateTo != null) {
+        setTimePeriod(
+          start: updateFrom,
+          end: updateTo,
+          syn: state.selectedDiary!.syn
+        );
+      }
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,

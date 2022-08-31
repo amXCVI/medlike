@@ -18,6 +18,22 @@ class GroupingHelper {
     }
   }
 
+  static List<double> _innerLast(List<DataItem> items) {
+    double first = items[items.length - 1].innerData[0];
+
+    if(items[0].innerData.length == 2) {
+      double second = items[items.length - 1].innerData[1];
+
+      return [first, second];
+    } else {
+      return [first];
+    }
+  }
+
+  static DateTime _innerTime(List<DataItem> items) {
+    return items[items.length - 1].date;
+  }  
+
   static List<DataItem> _groupBy(List<DataItem> items, DateTime Function(DataItem item) getGroup) {
     Map<DateTime, List<DataItem>> map = {};
 
@@ -35,8 +51,8 @@ class GroupingHelper {
       DataItem(
         isAbnormal: false, 
         isChangeable: true, 
-        date: k, 
-        innerData: _innerMean(v)
+        date: _innerTime(v), 
+        innerData: _innerLast(v)
       )
     ));
 

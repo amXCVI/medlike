@@ -43,7 +43,7 @@ class _HealthPageState extends State<HealthPage> {
 
     void handleTapOnFiltersButton() {
       if (isFilteringMode) {
-        _onLoadDada('Hour');
+        _onLoadDada('None');
         setState(() {
           isFilteringMode = false;
         });
@@ -58,10 +58,10 @@ class _HealthPageState extends State<HealthPage> {
       setState(() {
         isFilteringMode = false;
       });
-      _onLoadDada('Hour');
+      _onLoadDada('None');
     }
 
-    _onLoadDada('Hour');
+    _onLoadDada('None');
 
     return WillPopScope(
       onWillPop: () async {
