@@ -20,15 +20,20 @@ class AttachFilesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         filesList.isNotEmpty
-            ? Text(
-                'Прикрепленные файлы',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(fontSize: 12, color: AppColors.lightText),
-              )
+            ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                  'Прикрепленные файлы',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontSize: 12, color: AppColors.lightText),
+                  textAlign: TextAlign.start,
+                ),
+            )
             : const SizedBox(),
         ...filesList
             .map((e) => Slidable(

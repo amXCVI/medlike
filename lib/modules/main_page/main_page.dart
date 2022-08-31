@@ -40,6 +40,7 @@ class MainPage extends StatelessWidget {
           rightBottomWidget: const BarcodeButton(),
           child: Column(
             children: [
+              const SizedBox(height: 16),
               const SliderWidget(),
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
