@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/utils/helpers/value_helper.dart';
-import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'diary_state.dart';
@@ -66,9 +64,6 @@ class DiaryCubit extends Cubit<DiaryState> {
       final endDate = date.add(const Duration(
         days: 365
       ));
-      
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
 
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
@@ -77,7 +72,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         grouping: grouping,
         dateFrom: startDate,
         dateTo: endDate,
-        userId: currentSelectedUserId,
+        userId: state.userId,
         //synFilter: syn
       );
 
@@ -168,13 +163,10 @@ class DiaryCubit extends Cubit<DiaryState> {
     ));
 
     try {
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
-
       final response = await diaryRepository.postDiaryEntry(
         date: date, 
         syn: syn,
-        userId: currentSelectedUserId, 
+        userId: state.userId, 
         values: values
       );
 
@@ -215,14 +207,11 @@ class DiaryCubit extends Cubit<DiaryState> {
     ));
 
     try {
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
-
       final response = await diaryRepository.putDiaryEntry(
         date: date, 
         oldDate: oldDate,
         syn: syn,
-        userId: currentSelectedUserId, 
+        userId: state.userId, 
         values: values
       );
 
@@ -261,13 +250,10 @@ class DiaryCubit extends Cubit<DiaryState> {
     ));
 
     try {
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
-
       final response = await diaryRepository.deleteDiaryEntry(
         date: date, 
         syn: syn,
-        userId: currentSelectedUserId, 
+        userId: state.userId, 
       );
 
       if(response) {
@@ -290,5 +276,11 @@ class DiaryCubit extends Cubit<DiaryState> {
         getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
       ));
     }
+  }
+
+  void setUserId(String userId) {
+    emit(state.copyWith(
+      userId: userId
+    ));
   }
 }
