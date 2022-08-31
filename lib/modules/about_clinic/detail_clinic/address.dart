@@ -75,7 +75,7 @@ class ClinicAddress extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
-                    ?.copyWith(color: AppColors.lightText),
+                    ?.copyWith(color: AppColors.mainOther),
               ),
             )
           ],
