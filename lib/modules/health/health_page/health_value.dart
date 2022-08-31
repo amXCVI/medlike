@@ -19,7 +19,7 @@ class HealthValue extends StatelessWidget {
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'ru_RU';
     var format = DateFormat.MMMMd('ru');
-    var fhour = DateFormat.Hm('ru');
+    var fhour = DateFormat('HH:mm','ru');
 
     String getTime (DateTime time) {
       if(time.day == DateTime.now().day) {

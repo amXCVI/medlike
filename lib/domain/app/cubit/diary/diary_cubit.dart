@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
@@ -59,10 +60,10 @@ class DiaryCubit extends Cubit<DiaryState> {
     ));
     try {
       final date = DateTime.now();
-      final startDate = dateFrom ?? date.subtract(const Duration(
+      final startDate = date.subtract(const Duration(
         days: 365
       ));
-      final endDate = dateTo ?? date.add(const Duration(
+      final endDate = date.add(const Duration(
         days: 365
       ));
       
@@ -77,7 +78,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         dateFrom: startDate,
         dateTo: endDate,
         userId: currentSelectedUserId,
-        synFilter: syn
+        //synFilter: syn
       );
 
       final flatResponse = response.map((e) => DiaryFlatModel(
@@ -105,6 +106,14 @@ class DiaryCubit extends Cubit<DiaryState> {
         dateTo: date_utils.DateUtils.lastDayOfWeek(date),
         pageUpdateStatuses: PageUpdateStatuses.initial
       ));
+
+      if(syn != null) {
+        setTimePeriod(
+          start: dateFrom!, 
+          end: dateTo!, 
+          syn: syn
+        );
+      }
     } catch (e) {
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.failed,
@@ -124,13 +133,14 @@ class DiaryCubit extends Cubit<DiaryState> {
 
     emit(state.copyWith(
       selectedDiary: selectedDiary,
+      updateDiaryStatuses: UpdateDiaryStatuses.success,
       periodedSelectedDiary: ValueHelper.filterByPeriod(
         diariesList: selectedDiary, 
         start: start, 
         end: end
       ),
-      dateFrom: start,
-      dateTo: end
+      //dateFrom: start,
+      //dateTo: end
     ));
   }
 
@@ -169,36 +179,19 @@ class DiaryCubit extends Cubit<DiaryState> {
       );
 
       if(response) {
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo,
+            syn: syn
+          );
+        }
+
         AppToast.showAppToast(msg: 'Запись добавлена');
       }
-
-      DataItem val = DataItem(
-        date: date,
-        isAbnormal: false,
-        isChangeable: true,
-        innerData: values
-      );
-
-      List<DataItem> items = [...state.selectedDiary!.values];
-      items.add(val);
-
-      emit(state.copyWith(
-        selectedDiary: state.selectedDiary!.copyWith(
-          values: items
-        )
-      ));
-      
-      if(updateFrom != null && updateTo != null) {
-        setTimePeriod(
-          start: updateFrom,
-          end: updateTo,
-          syn: state.selectedDiary!.syn
-        );
-      }
-
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.success
-      ));
 
     } catch (e) {
       emit(state.copyWith(
@@ -234,34 +227,18 @@ class DiaryCubit extends Cubit<DiaryState> {
       );
 
       if(response) {
-        AppToast.showAppToast(msg: 'Запись обновлена');
-      }
-
-      final items = state.selectedDiary!.values.map((el) {
-        if(el.date != oldDate) {
-          return el;
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo ,
+            syn: syn
+          );
         }
-        return DataItem(
-          date: date,
-          isAbnormal: false,
-          isChangeable: true,
-          innerData: values
-        );
-      }).toList();
 
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.success,
-        selectedDiary: state.selectedDiary!.copyWith(
-          values: items
-        )
-      ));
-
-      if(updateFrom != null && updateTo != null) {
-        setTimePeriod(
-          start: updateFrom,
-          end: updateTo,
-          syn: state.selectedDiary!.syn
-        );
+        AppToast.showAppToast(msg: 'Запись отредактирование');
       }
     } catch (e) {
       emit(state.copyWith(
@@ -294,26 +271,18 @@ class DiaryCubit extends Cubit<DiaryState> {
       );
 
       if(response) {
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo ,
+            syn: syn
+          );
+        }
+
         AppToast.showAppToast(msg: 'Запись удалена');
-      }
-
-      final items = state.selectedDiary!.values.where((el) =>
-        el.date != date
-      ).toList();
-
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.success,
-        selectedDiary: state.selectedDiary!.copyWith(
-          values: items
-        )
-      ));
-
-      if(updateFrom != null && updateTo != null) {
-        setTimePeriod(
-          start: updateFrom,
-          end: updateTo,
-          syn: state.selectedDiary!.syn
-        );
       }
     } catch (e) {
       emit(state.copyWith(
