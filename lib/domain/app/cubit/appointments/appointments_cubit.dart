@@ -46,11 +46,11 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
         getAppointmentsStatus: GetAppointmentsStatuses.success,
         appointmentsList: response,
         filteredAppointmentsList: response,
-        selectedDate: firstSelectedDate,
+        // selectedDate: firstSelectedDate,
         //     ? firstSelectedDate
         //     : DateTime.now(),
       ));
-      filterAppointmentsList(firstSelectedDate);
+      filterAppointmentsList(state.selectedDate ?? DateTime.now());
     } catch (e) {
       emit(state.copyWith(
           getAppointmentsStatus: GetAppointmentsStatuses.failed));
