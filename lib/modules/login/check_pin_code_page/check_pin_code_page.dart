@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code.dart';
 import 'package:medlike/modules/login/password_page/password_bottom_navigator.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -22,7 +23,7 @@ class CheckPinCodePage extends StatelessWidget {
       },
       child: DefaultScaffold(
         child: const CheckPinCode(),
-        appBarTitle: 'Заполярье',
+        appBarTitle: AppConstants.appName,
         actions: const [UnauthSupportButton()],
         bottomNavigationBar: const PasswordPageBottomNavigationBar(),
         onPressedAppLogo: _onPressedAppLogo,

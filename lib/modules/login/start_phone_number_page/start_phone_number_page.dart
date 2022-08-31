@@ -74,7 +74,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
 
     return DefaultScaffold(
       child: const StartPhoneNumberView(),
-      appBarTitle: 'Заполярье',
+      appBarTitle: AppConstants.appName,
       onPressedAppLogo: () {},
       actions: const [UnauthSupportButton()],
       bottomNavigationBar: const LoginPageBottomNavigationBar(),

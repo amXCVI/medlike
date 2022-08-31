@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/health/filters_page/diary_filters_widget.dart';
 import 'package:medlike/modules/health/health_page/health_list.dart';
 import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
@@ -91,7 +92,7 @@ class _HealthPageState extends State<HealthPage> {
                   icon:
                       SvgPicture.asset('assets/icons/app_bar/filters_icon.svg'))
         ],
-        appBarTitle: 'Заполярье',
+        appBarTitle: AppConstants.appName,
         isChildrenPage: true,
         widgetOverBody: isFilteringMode
             ? DiaryFiltersWidget(key: widgetOverBodyGlobalKey)
