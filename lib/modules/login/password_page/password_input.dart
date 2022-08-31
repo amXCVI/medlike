@@ -84,6 +84,7 @@ class _PasswordInputState extends State<PasswordInput> {
             ),
           ),
         ),
+        const SizedBox(height: 32),
       ],
     );
   }

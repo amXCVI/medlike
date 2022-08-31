@@ -125,7 +125,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ? IconButton(
               onPressed: () {
                 RouteData.of(context).router.popTop();
-                HapticFeedback.lightImpact();
               },
               icon: SvgPicture.asset(
                   'assets/icons/app_bar/app_bar_back_icon.svg'))

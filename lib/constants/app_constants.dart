@@ -47,6 +47,9 @@ class AppConstants {
 
   // Тип оплаты, картой
   static const String cardPayType = 'cash';
+
+  // Человекочитаемое название приложения
+  static const appName = 'Z-Clinic';
 }
 
 // Способы авторизации

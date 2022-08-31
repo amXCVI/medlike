@@ -5,6 +5,7 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctors_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 import 'doctors_list.dart';
 
@@ -56,16 +57,19 @@ class DoctorsListPage extends StatelessWidget {
             return const Text('');
           } else if (state.getDoctorsListStatus ==
               GetDoctorsListStatuses.success) {
-            return DoctorsList(
-              doctorsList: state.filteredDoctorsList as List<Doctor>,
-              specialisationId: specialisationId,
-              onRefreshData: _onRefreshData,
-              userId: userId,
-              clinicId: clinicId,
-              buildingId: buildingId,
-              specialisation: specialisationName,
-              categoryTypeId: categoryTypeId,
-            );
+            return state.doctorsList!.isNotEmpty &&
+                    state.filteredDoctorsList!.isEmpty
+                ? const NotFoundData()
+                : DoctorsList(
+                    doctorsList: state.filteredDoctorsList as List<Doctor>,
+                    specialisationId: specialisationId,
+                    onRefreshData: _onRefreshData,
+                    userId: userId,
+                    clinicId: clinicId,
+                    buildingId: buildingId,
+                    specialisation: specialisationName,
+                    categoryTypeId: categoryTypeId,
+                  );
           } else {
             return const DoctorsListSkeleton();
           }

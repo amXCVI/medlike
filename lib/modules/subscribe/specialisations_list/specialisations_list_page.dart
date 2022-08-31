@@ -6,6 +6,7 @@ import 'package:medlike/modules/subscribe/specialisations_list/specialisations_l
 import 'package:medlike/modules/subscribe/specialisations_list/specialisations_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class SpecialisationsListPage extends StatelessWidget {
   const SpecialisationsListPage({
@@ -52,17 +53,20 @@ class SpecialisationsListPage extends StatelessWidget {
             return const Text('');
           } else if (state.getSpecialisationsListStatus ==
               GetSpecialisationsListStatuses.success) {
-            return SpecialisationsList(
-              specialisationsList:
-                  state.filteredSpecialisationsList as List<NavigationItem>,
-              onRefreshData: _onRefreshData,
-              userId: userId,
-              clinicId: clinicId,
-              buildingId: buildingId,
-              categoryTypeId: categoryTypeId,
-              isFilteredList: state.filteredSpecialisationsList?.length !=
-                  state.specialisationsList?.length,
-            );
+            return state.specialisationsList!.isNotEmpty &&
+                    state.filteredSpecialisationsList!.isEmpty
+                ? const NotFoundData()
+                : SpecialisationsList(
+                    specialisationsList: state.filteredSpecialisationsList
+                        as List<NavigationItem>,
+                    onRefreshData: _onRefreshData,
+                    userId: userId,
+                    clinicId: clinicId,
+                    buildingId: buildingId,
+                    categoryTypeId: categoryTypeId,
+                    isFilteredList: state.filteredSpecialisationsList?.length !=
+                        state.specialisationsList?.length,
+                  );
           } else {
             return const SpecialisationsListSkeleton();
           }

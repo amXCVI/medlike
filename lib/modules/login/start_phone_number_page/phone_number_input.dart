@@ -67,6 +67,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
             autocorrect: false,
           ),
         ),
+        const SizedBox(height: 32),
       ],
     );
   }

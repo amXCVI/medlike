@@ -10,6 +10,7 @@ import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/modules/medcard/files/files_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class FilesPage extends StatefulWidget {
   const FilesPage({Key? key, required this.userId}) : super(key: key);
@@ -76,14 +77,17 @@ class _FilesPageState extends State<FilesPage> {
             return const Text('');
           } else if (state.getMedcardUserFilesListStatus ==
               GetMedcardUserFilesListStatuses.success) {
-            return FilesList(
-              listController: _listController,
-              userFilesList: state.filteredMedcardUserFilesList
-                  as List<MedcardUserFileModel>,
-              onRefreshData: _onLoadDada,
-              userId: widget.userId,
-              downloadingFileId: state.downloadingFileId as String,
-            );
+            return state.medcardUserFilesList!.isNotEmpty &&
+                    state.filteredMedcardUserFilesList!.isEmpty
+                ? const NotFoundData()
+                : FilesList(
+                    listController: _listController,
+                    userFilesList: state.filteredMedcardUserFilesList
+                        as List<MedcardUserFileModel>,
+                    onRefreshData: _onLoadDada,
+                    userId: widget.userId,
+                    downloadingFileId: state.downloadingFileId as String,
+                  );
           } else {
             return const MedcardDocsListSkeleton();
           }

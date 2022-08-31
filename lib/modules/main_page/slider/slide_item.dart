@@ -14,7 +14,7 @@ class SlideItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width - 32,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
             begin: Alignment.topRight,
@@ -51,6 +51,22 @@ class SlideItem extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    AppColors.homeSliderGradientColor1,
+                    AppColors.homeSliderGradientColor2,
+                  ],
+                  stops: [
+                    0,
+                    1
+                  ]),
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),

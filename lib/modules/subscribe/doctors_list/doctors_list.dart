@@ -7,7 +7,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/doctors_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
-import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class DoctorsList extends StatefulWidget {
@@ -99,7 +99,7 @@ class _DoctorsListState extends State<DoctorsList> {
                     .toList()
               ]),
           )
-          : const SubscribeNotFoundData(text: 'Нет свободного специалиста'),
+          : const NotFoundData(text: 'Нет свободного специалиста'),
     );
   }
 }
