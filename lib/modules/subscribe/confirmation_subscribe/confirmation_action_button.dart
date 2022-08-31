@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
@@ -19,7 +20,7 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
     //     mode: LaunchMode.inAppWebView,
     //   );
     // } else {
-      AppToast.showAppToast(msg: 'Не удалось откыть страницу оплаты');
+    AppToast.showAppToast(msg: 'Не удалось откыть страницу оплаты');
     // }
   }
 
@@ -65,10 +66,18 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
             : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.loading ||
                     state.registerOrderStatus == RegisterOrderStatuses.loading
-                ? const SizedBox(
-                    width: 150,
-                    child: Center(
-                        child: CircularProgressIndicator(color: Colors.white)))
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Записаться'.toUpperCase(),
+                        style: Theme.of(context).textTheme.titleSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                      Lottie.asset('assets/animations/loader_white.json',
+                          width: 40),
+                    ],
+                  )
                 : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.failed
                     ? Text(

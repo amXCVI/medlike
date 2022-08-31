@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/day_appointments_list.dart';
 import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
@@ -86,6 +87,7 @@ class SchedulePage extends StatelessWidget {
     void _setSelectedDate(CalendarModel selectedDay) {
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
+      context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
       if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
         _getCellsList();
       } else {
