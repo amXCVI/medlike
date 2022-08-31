@@ -68,7 +68,7 @@ class ExitAppDialog extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall
-                      ?.copyWith(color: AppColors.mainText),
+                      ?.copyWith(color: AppColors.mainBrandColor),
                 ),
               ),
             );

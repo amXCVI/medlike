@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/about_clinic/price/price_list.dart';
 import 'package:medlike/modules/about_clinic/price/price_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class PricePage extends StatelessWidget {
   const PricePage({Key? key, required this.clinicId}) : super(key: key);
@@ -26,13 +27,14 @@ class PricePage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<ClinicsCubit, ClinicsState>(
         builder: (context, state) {
-          if (state.getPriceListStatus ==
-              GetPriceListStatuses.failed) {
+          if (state.getPriceListStatus == GetPriceListStatuses.failed) {
             return const Text('');
-          } else if (state.getPriceListStatus ==
-              GetPriceListStatuses.success) {
-            return PriceList(
-                priceList: state.filteredPriceList as List<PriceItemModel>,);
+          } else if (state.getPriceListStatus == GetPriceListStatuses.success) {
+            return state.priceList!.isNotEmpty && state.filteredPriceList!.isEmpty
+                ? const NotFoundData()
+                : PriceList(
+                    priceList: state.filteredPriceList as List<PriceItemModel>,
+                  );
           } else {
             return const PriceListSkeleton();
           }

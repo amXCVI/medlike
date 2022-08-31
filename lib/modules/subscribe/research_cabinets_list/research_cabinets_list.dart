@@ -8,7 +8,7 @@ import 'package:medlike/modules/subscribe/research_cabinets_list/cabinet_item.da
 import 'package:medlike/modules/subscribe/research_cabinets_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
-import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class ResearchCabinetsList extends StatefulWidget {
@@ -111,7 +111,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
                   ))
               .toList(),
           widget.doctorsList.isEmpty && widget.cabinetsList.isEmpty
-              ? const SubscribeNotFoundData(text: 'Нет свободного специалиста')
+              ? const NotFoundData(text: 'Нет свободного специалиста')
               : const SizedBox()
         ]),
       ),

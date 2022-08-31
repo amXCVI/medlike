@@ -14,7 +14,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
-import 'package:medlike/widgets/subscribe_not_found_data/subscribe_not_found_data.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({
@@ -188,7 +188,7 @@ class SchedulePage extends StatelessWidget {
                   state.getTimetableCellsStatus ==
                               GetTimetableCellsStatuses.success &&
                           state.timetableCellsList!.isEmpty
-                      ? const SubscribeNotFoundData(
+                      ? const NotFoundData(
                           text: 'Нет свободного времени')
                       : const SizedBox(),
                   state.getTimetableCellsStatus ==
