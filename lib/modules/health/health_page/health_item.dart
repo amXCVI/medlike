@@ -39,7 +39,7 @@ class HealthItem extends StatefulWidget {
 }
 
 class _HealthItemState extends State<HealthItem> {
-  Offset offset = const Offset(0, 0);
+  Offset? offset;
   Offset? centerOffset;
   DataItem? item;
   final GlobalKey _widgetKey = GlobalKey();
@@ -47,7 +47,6 @@ class _HealthItemState extends State<HealthItem> {
   @override
   Widget build(BuildContext context) {
     final items = GroupingHelper.groupByDay(widget.data?.values ?? []);
-    
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -126,7 +125,7 @@ class _HealthItemState extends State<HealthItem> {
                                   lastDate: widget.lastDate, 
                                   measureItem: widget.measureItem, 
                                   decimalDigits: widget.decimalDigits,
-                                  selected: offset.dx, 
+                                  selected: offset?.dx, 
                                   onSelect: (id, newOffset) {
                                     Future.microtask(
                                       () {
@@ -139,7 +138,7 @@ class _HealthItemState extends State<HealthItem> {
                                           _widgetKey, 
                                           (size) => setState(() {
                                             final dw = MediaQuery.of(context).size.width;
-                                            var w = offset.dx - size.width / 2;
+                                            var w = offset?.dx ?? 0 - size.width / 2;
                                             w = w < 0 ? 0 : w;
                                             w = w > dw ? dw : w;
                                             centerOffset = Offset(
@@ -154,7 +153,7 @@ class _HealthItemState extends State<HealthItem> {
                                   onUnselect: () {
                                     setState(() {
                                       item = null;
-                                      offset = const Offset(0, 0);
+                                      offset = null;
                                     });
                                   },
                                   grouping: 'Week',
@@ -164,8 +163,8 @@ class _HealthItemState extends State<HealthItem> {
                             ),
                           ),
                           if(item != null) Positioned(
-                            top: 10,
-                            left: centerOffset?.dx ?? offset.dx,
+                            top: 5,
+                            left: centerOffset?.dx ?? offset?.dx,
                             child: DiarySmallPrompt(
                               key: _widgetKey,
                               item: item!, 
@@ -173,8 +172,8 @@ class _HealthItemState extends State<HealthItem> {
                             ),
                           ),
                           Positioned(
-                            left: offset.dx - 1,
-                            top: 32,
+                            left: (centerOffset?.dx ?? offset?.dx),
+                            top: 12,
                             child: Container(
                               height: 5,
                               width: 1,
