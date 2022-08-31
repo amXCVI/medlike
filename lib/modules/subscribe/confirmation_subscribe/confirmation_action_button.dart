@@ -5,23 +5,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmationActionButtonLabel extends StatelessWidget {
   const ConfirmationActionButtonLabel({Key? key}) : super(key: key);
 
   _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(
-          Uri.parse(url),
-        webViewConfiguration: const WebViewConfiguration(
-          enableJavaScript: true,
-        ),
-        mode: LaunchMode.inAppWebView,
-      );
-    } else {
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(
+    //       Uri.parse(url),
+    //     webViewConfiguration: const WebViewConfiguration(
+    //       enableJavaScript: true,
+    //     ),
+    //     mode: LaunchMode.inAppWebView,
+    //   );
+    // } else {
       AppToast.showAppToast(msg: 'Не удалось откыть страницу оплаты');
-    }
+    // }
   }
 
   @override
