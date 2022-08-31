@@ -85,7 +85,7 @@ class _CardsPageState extends State<CardsPage> {
                   icon:
                       SvgPicture.asset('assets/icons/app_bar/filters_icon.svg'))
         ],
-        appBarTitle: AppConstants.appName,
+        appBarTitle: 'Показатели здоровья',
         isChildrenPage: true,
         widgetOverBody: isFilteringMode
             ? DiaryFiltersWidget(key: widgetOverBodyGlobalKey)
