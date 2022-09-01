@@ -46,7 +46,6 @@ class FieldWrapper extends StatelessWidget {
           contentPadding: const EdgeInsets.only(top: 4),
           floatingLabelStyle: TextStyle(
             color: isEmpty ? AppColors.lightText : AppColors.mainText, 
-            fontSize: 21,
             fontWeight: FontWeight.w300
           ),
           border: UnderlineInputBorder(

@@ -25,7 +25,17 @@ class UnauthSupportForm extends StatelessWidget {
               controller: controllerEmail,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: 'E-mail для обратной связи',
+                labelText: 'E-mail для обратной связи',
+                labelStyle: const TextStyle(
+                  color: AppColors.lightText,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: controllerEmail.text.isEmpty 
+                    ? AppColors.lightText : AppColors.mainText, 
+                  fontWeight: FontWeight.w300
+                ),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 hintStyle: Theme.of(context)
                     .textTheme
@@ -53,7 +63,17 @@ class UnauthSupportForm extends StatelessWidget {
               controller: controllerMessage,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
-                hintText: 'Сообщение',
+                labelText: 'Сообщение',
+                labelStyle: const TextStyle(
+                  color: AppColors.lightText,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: controllerMessage.text.isEmpty 
+                    ? AppColors.lightText : AppColors.mainText, 
+                  fontWeight: FontWeight.w300
+                ),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 hintStyle: Theme.of(context)
                     .textTheme

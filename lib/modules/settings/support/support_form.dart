@@ -27,7 +27,17 @@ class SupportForm extends StatelessWidget {
               controller: controllerTheme,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                hintText: 'Тема *',
+                labelText: 'Тема *',
+                labelStyle: const TextStyle(
+                  color: AppColors.lightText,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: controllerTheme.text.isEmpty 
+                    ? AppColors.lightText : AppColors.mainText, 
+                  fontWeight: FontWeight.w300
+                ),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 hintStyle: Theme.of(context)
                     .textTheme
@@ -49,7 +59,17 @@ class SupportForm extends StatelessWidget {
               controller: controllerMessage,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
-                hintText: 'Сообщение *',
+                labelText: 'Сообщение *',
+                labelStyle: const TextStyle(
+                  color: AppColors.lightText,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: controllerMessage.text.isEmpty 
+                    ? AppColors.lightText : AppColors.mainText, 
+                  fontWeight: FontWeight.w300
+                ),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 hintStyle: Theme.of(context)
                     .textTheme
@@ -72,7 +92,17 @@ class SupportForm extends StatelessWidget {
               controller: controllerEmail,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: 'E-mail *',
+                labelText: 'E-mail *',
+                labelStyle: const TextStyle(
+                  color: AppColors.lightText,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: controllerEmail.text.isEmpty 
+                    ? AppColors.lightText : AppColors.mainText, 
+                  fontWeight: FontWeight.w300
+                ),
                 floatingLabelAlignment: FloatingLabelAlignment.start,
                 hintStyle: Theme.of(context)
                     .textTheme
