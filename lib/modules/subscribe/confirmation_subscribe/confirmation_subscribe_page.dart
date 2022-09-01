@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -35,9 +36,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
   @override
   Widget build(BuildContext context) {
     void _createNewAppointment() {
-      if (!isCheckedAgreements) {
-        return;
-      }
+      HapticFeedback.heavyImpact();
       context.read<SubscribeCubit>().createNewAppointment(
             userId: widget.userId,
             userName: context.read<UserCubit>().getShortUserName(widget.userId),
@@ -53,13 +52,20 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
       child: DefaultScaffold(
         appBarTitle: 'Запись на прием',
         isChildrenPage: true,
-        actionButton: FloatingActionButton.extended(
-            onPressed: _createNewAppointment,
-            backgroundColor: isCheckedAgreements
-                ? Theme.of(context).primaryColor
-                : AppColors.lightText,
-            extendedPadding: const EdgeInsets.all(15),
-            label: const ConfirmationActionButtonLabel()),
+        actionButton: BlocBuilder<SubscribeCubit, SubscribeState>(
+          builder: (context, state) {
+            bool isDisabledButton = !isCheckedAgreements ||
+                state.getAppointmentInfoStatus ==
+                    GetAppointmentInfoStatuses.loading;
+            return FloatingActionButton.extended(
+                onPressed: isDisabledButton ? () {} : _createNewAppointment,
+                backgroundColor: !isDisabledButton
+                    ? Theme.of(context).primaryColor
+                    : AppColors.lightText,
+                extendedPadding: const EdgeInsets.all(15),
+                label: const ConfirmationActionButtonLabel());
+          },
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: DefaultScrollbar(
