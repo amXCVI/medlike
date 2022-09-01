@@ -29,6 +29,17 @@ class DiaryPage extends StatefulWidget {
 
 class _DiaryPageState extends State<DiaryPage> {
   String grouping = '';
+  late DateTime dateFrom;
+  late DateTime dateTo;
+
+  @override
+  void initState() {
+    final dates = ValueHelper.getPeriodTiming(DateTime.now(), '');
+
+    dateFrom = dates[0];
+    dateTo = dates[1];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +57,8 @@ class _DiaryPageState extends State<DiaryPage> {
 
           setState(() {
             grouping = selectedGroup;
+            dateFrom = dates[0];
+            dateTo = dates[1];
           });
 
         }
@@ -58,6 +71,11 @@ class _DiaryPageState extends State<DiaryPage> {
             end: dates[1],
             syn: state.selectedDiary!.syn
           );
+
+          setState(() {
+            dateFrom = dates[0];
+            dateTo = dates[1];
+          });
         }
 
         Widget page; 
@@ -67,7 +85,7 @@ class _DiaryPageState extends State<DiaryPage> {
         } else if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
           || state.periodedSelectedDiary == null) {
           page = const DiarySkeleton();
-        } else if(state.periodedSelectedDiary!.values.isEmpty && grouping == '') {
+        } else if(state.selectedDiary!.values.isEmpty && grouping == '') {
           page = const DiaryNodata();
         } else {
           page = DiaryView(
@@ -75,8 +93,8 @@ class _DiaryPageState extends State<DiaryPage> {
             diaryModel: state.periodedSelectedDiary!,
             decimalDigits: widget.categoryModel.decimalDigits,
             measureItem: widget.categoryModel.measureItem,
-            firstDate: state.dateFrom,
-            lastDate: state.dateTo,
+            firstDate: dateFrom,
+            lastDate: dateTo,
             grouping: grouping,
             paramName: widget.categoryModel.paramName,
             onLoadDate: onLoadDate

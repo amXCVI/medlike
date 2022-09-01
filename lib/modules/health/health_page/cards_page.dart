@@ -62,8 +62,6 @@ class _CardsPageState extends State<CardsPage> {
       _onLoadDada('None');
     }
 
-    _onLoadDada('None');
-
     return WillPopScope(
       onWillPop: () async {
         if (isFilteringMode) {

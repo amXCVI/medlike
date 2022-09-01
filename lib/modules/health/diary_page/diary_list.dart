@@ -75,6 +75,7 @@ class DiaryTile extends StatelessWidget {
       ValueHelper.getStringFromValues(item.innerData, decimalDigits);
 
     final dates = ValueHelper.getPeriodTiming(item.date, grouping);
+    print(dates);
 
     return Slidable(
         key: ValueKey(item.hashCode),
