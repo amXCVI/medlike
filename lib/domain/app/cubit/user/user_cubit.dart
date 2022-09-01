@@ -477,7 +477,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       List<UserAgreementItemModel> response =
           await userRepository.getUserAllAgreements();
-      UserAgreementItemModel actualUserAgreement = response.firstWhere(
+      UserAgreementItemModel? actualUserAgreement = response.firstWhere(
           (element) => element.id == AppConstants.actualUserAgreement);
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.success,
