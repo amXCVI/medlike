@@ -121,19 +121,22 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Hour':
         type = DateTimeIntervalType.minutes;
         interval = 15;
+        width = 0.001;
         break;
       case 'Day':
         type = DateTimeIntervalType.hours;
         interval = 6;
-        width = 0.02;
+        width = 0.03;
         break;
       case 'Week':
         type = DateTimeIntervalType.days;
         interval = 1;
+        width = 0.15;
         break;
       default:
         type = DateTimeIntervalType.days;
         interval = 1;
+        width = 0.50;
     }
 
     final data = <CartesianSeries>[
