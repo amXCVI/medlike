@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -11,21 +13,36 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _loadData(String grouping) {
+      context.read<DiaryCubit>().getDiaryCategoriesList(
+          project: 'Zapolyarye',
+          platform: Platform.isAndroid ? 'Android' : 'IOS');
+
+      context.read<DiaryCubit>().getDiariesList(
+          project: 'Zapolyarye',
+          platform: Platform.isAndroid ? 'Android' : 'IOS',
+          grouping: 'None');
+    }
     
-    return BlocBuilder<DiaryCubit, DiaryState>(
+    return BlocConsumer<DiaryCubit, DiaryState>(
+      listener: (context, state) {
+        
+      },
       builder: (context, state) {
         final userList = context.read<UserCubit>().state.userProfiles!;
 
-        if(userList.length == 1) {
+        /// Кринж но думать некогда (демо 01.09.2022)
+        if(userList.length == 1 && context.router.current.name == 'HealthRoute') {
           context.read<DiaryCubit>().setUserId(userList.first.id);
+          _loadData('None');
           context.router.pushNamed(AppRoutes.health);
         }
 
         return ProfilesListPage(
           title: 'Показатели здоровья',
-          selectedId: state.userId,
           handleTapOnUserProfile: (userId, isChild) {
             context.read<DiaryCubit>().setUserId(userId);
+            _loadData('None');
             context.router.pushNamed(AppRoutes.health);
           },
         );
