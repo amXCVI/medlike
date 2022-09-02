@@ -101,6 +101,10 @@ class DioInterceptors extends Interceptor {
         return e;
       });
     } else {
+      if (err.response == null) {
+        AppToast.showAppToast(msg: 'Ошибка сети\nПроверьте подключение к интернету');
+        return super.onError(err, handler);
+      }
       String? errStr = DefaultErrorModel.fromJson(err.response!.data).message;
       if (errStr == null) {
         return super.onError(err, handler);
