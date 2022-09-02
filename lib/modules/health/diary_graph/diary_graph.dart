@@ -61,7 +61,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
   }
 
   void performSwipe(ChartSwipeDirection direction) {
-    widget.onLoadDate!(direction == ChartSwipeDirection.start);
+    widget.onLoadDate!(direction == ChartSwipeDirection.end);
 
     if (seriesController != null) {
       seriesController!
@@ -131,12 +131,16 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Week':
         type = DateTimeIntervalType.days;
         interval = 1;
-        width = 0.15;
+        if(!widget.isClean) {
+          width = 0.15;
+        }
         break;
       default:
         type = DateTimeIntervalType.days;
         interval = 1;
-        width = 0.50;
+        if(!widget.isClean) {
+          width = 0.15;
+        }
     }
 
     final data = <CartesianSeries>[

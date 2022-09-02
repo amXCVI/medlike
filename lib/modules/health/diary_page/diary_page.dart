@@ -34,7 +34,15 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @override
   void initState() {
-    final dates = ValueHelper.getPeriodTiming(DateTime.now(), '');
+    final cubit = context.read<DiaryCubit>();
+    final date = cubit.state.selectedDiary!.currentValue.date;
+    final dates = ValueHelper.getPeriodTiming(date, '');
+
+    cubit.setTimePeriod(
+      start: dates[0],
+      end: dates[1],
+      syn: cubit.state.selectedDiary!.syn
+    );
 
     dateFrom = dates[0];
     dateTo = dates[1];
@@ -46,7 +54,7 @@ class _DiaryPageState extends State<DiaryPage> {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
-          final date = DateTime.now();
+          final date = state.selectedDiary!.currentValue.date;
           final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
           context.read<DiaryCubit>().setTimePeriod(
@@ -64,7 +72,7 @@ class _DiaryPageState extends State<DiaryPage> {
         }
 
         void onLoadDate(bool isRight) {
-          final dates = ValueHelper.getAnotherPeriodTiming(state.dateFrom, grouping, isRight);
+          final dates = ValueHelper.getAnotherPeriodTiming(dateFrom, grouping, isRight);
 
           context.read<DiaryCubit>().setTimePeriod(
             start: dates[0],

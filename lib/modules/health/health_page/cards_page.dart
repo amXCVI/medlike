@@ -102,9 +102,7 @@ class _CardsPageState extends State<CardsPage> {
                 }
               return HealthList(
                   diariesCategoriesList: state.filteredDiariesCategoriesList!,
-                  diariesItems: state.weekDiariesList ?? [],
-                  firstDate: state.dateFrom,
-                  lastDate: state.dateTo,
+                  diariesItems: state.diariesList ?? [],
                   onLoadDada: _onLoadDada);
             } else {
               return const HealthListSkeleton();
