@@ -17,6 +17,8 @@ class HealthItem extends StatefulWidget {
     required this.title,
     required this.measureItem,
     required this.decimalDigits,
+    required this.minValue,
+    required this.maxValue,
     required this.onLoadDada,
     required this.onNavigate,
     required this.firstDate,
@@ -28,6 +30,8 @@ class HealthItem extends StatefulWidget {
   final String title;
   final String measureItem;
   final int decimalDigits;
+  final List<double> minValue;
+  final List<double> maxValue;
   final DiaryFlatModel? data;
   final DateTime firstDate;
   final DateTime lastDate;
@@ -125,6 +129,8 @@ class _HealthItemState extends State<HealthItem> {
                                   lastDate: widget.lastDate, 
                                   measureItem: widget.measureItem, 
                                   decimalDigits: widget.decimalDigits,
+                                  minValue: widget.minValue,
+                                  maxValue: widget.maxValue,
                                   selected: offset?.dx, 
                                   onSelect: (id, newOffset) {
                                     Future.microtask(

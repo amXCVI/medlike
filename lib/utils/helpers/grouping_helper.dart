@@ -30,6 +30,10 @@ class GroupingHelper {
     }
   }
 
+  static bool _lastAbnormal(List<DataItem> items) {
+    return items[items.length - 1].isAbnormal;
+  }
+
   static DateTime _innerTime(List<DataItem> items) {
     return items[items.length - 1].date;
   }  
@@ -49,7 +53,7 @@ class GroupingHelper {
 
     map.forEach((k, v) => res.add(
       DataItem(
-        isAbnormal: false, 
+        isAbnormal: _lastAbnormal(v), 
         isChangeable: true, 
         date: _innerTime(v), 
         innerData: _innerLast(v)

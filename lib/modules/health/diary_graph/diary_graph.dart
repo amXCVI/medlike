@@ -5,10 +5,11 @@ import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
-  ChartData(this.x, this.y, this.y1);
+  ChartData(this.x, this.y, this.y1, this.isAbnormal);
   final DateTime x;
   final double? y;
   final double? y1;
+  final bool isAbnormal;
 }
 
 class DiaryGraph extends StatefulWidget {
@@ -19,6 +20,8 @@ class DiaryGraph extends StatefulWidget {
     required this.lastDate,
     required this.measureItem,
     required this.decimalDigits,
+    required this.minValue,
+    required this.maxValue,
     required this.grouping,
     required this.onSelect,
     required this.onUnselect,
@@ -34,6 +37,8 @@ class DiaryGraph extends StatefulWidget {
   final String measureItem;
   final String grouping;
   final int decimalDigits;
+  final List<double> minValue;
+  final List<double> maxValue;
   final bool isClean;
   final Function(bool)? onLoadDate;
   final Function(int, Offset) onSelect;
@@ -53,7 +58,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
       ChartData(
         e.date, 
         e.innerData[0], 
-        e.innerData.length > 1 ? e.innerData[1] : null
+        e.innerData.length > 1 ? e.innerData[1] : null,
+        e.isAbnormal
       )
     ).toList();
   
@@ -87,6 +93,14 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<ChartData> abnormalData = chartData.where(
+      (el) => el.isAbnormal
+    ).toList();
+
+    List<ChartData> normalData = chartData.where(
+      (el) => el.isAbnormal
+    ).toList();
 
     ChartAxisLabel labelFormatter(args) {
       String text = args.text;
@@ -146,13 +160,17 @@ class _DiaryGraphState extends State<DiaryGraph> {
     final data = <CartesianSeries>[
       if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         RangeColumnSeries<ChartData, DateTime>(
-          dataSource: chartData,
+          dataSource: normalData,
           width: width,
           color: const Color.fromRGBO(237, 245, 247, 1),
+          pointColorMapper: ((datum, index) => datum.isAbnormal 
+            ? const Color.fromRGBO(254, 235, 240, 1) 
+            : const Color.fromRGBO(237, 245, 247, 1)),
           markerSettings: const MarkerSettings(
-              isVisible: true,
-              color: Color.fromRGBO(60, 148, 168, 1),
-              height: 8),
+            isVisible: true,
+            color: AppColors.mainBrandColor,
+            height: 8
+          ),
           xValueMapper: (ChartData data, _) => data.x,
           highValueMapper: (ChartData data, _) => data.y,
           lowValueMapper: (ChartData data, _) => data.y1,
@@ -163,12 +181,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
         ),
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
-        color: const Color.fromRGBO(60, 148, 168, 1),
+        color: AppColors.mainBrandColor,
         markerSettings: const MarkerSettings(
-            color: Color.fromRGBO(60, 148, 168, 1),
-            borderColor: Color.fromRGBO(237, 245, 247, 1),
-            borderWidth: 2,
-            isVisible: true),
+          color: AppColors.mainBrandColor,
+          borderColor: Color.fromRGBO(237, 245, 247, 1),
+          borderWidth: 2,
+          isVisible: true
+        ),
         xValueMapper: (ChartData data, _) => data.x,
         yValueMapper: (ChartData data, _) => data.y,
         onRendererCreated: (ChartSeriesController controller) {
@@ -185,6 +204,40 @@ class _DiaryGraphState extends State<DiaryGraph> {
                 borderWidth: 2,
                 isVisible: true),
             color: const Color.fromRGBO(60, 148, 168, 1),
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y1,
+            onRendererCreated: (ChartSeriesController controller) {
+              seriesController = controller;
+            },
+            onPointTap: onPointTap
+          ),
+
+      SplineSeries<ChartData, DateTime>(
+          dataSource: abnormalData,
+          markerSettings: const MarkerSettings(
+              color: AppColors.mainError,
+              borderColor: Color.fromRGBO(254, 235, 240, 1),
+              borderWidth: 2,
+              isVisible: true),
+          color: AppColors.mainError,
+          opacity: 0,
+          xValueMapper: (ChartData data, _) => data.x,
+          yValueMapper: (ChartData data, _) => data.y,
+          onRendererCreated: (ChartSeriesController controller) {
+            seriesController = controller;
+          },
+          onPointTap: onPointTap
+        ),
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
+        SplineSeries<ChartData, DateTime>(
+            dataSource: abnormalData,
+            markerSettings: const MarkerSettings(
+                color: AppColors.mainError,
+                borderColor: Color.fromRGBO(254, 235, 240, 1),
+                borderWidth: 2,
+                isVisible: true),
+            color: AppColors.mainError,
+            opacity: 0,
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y1,
             onRendererCreated: (ChartSeriesController controller) {
@@ -227,7 +280,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
             )
           ),
           primaryYAxis: NumericAxis(
-            isVisible: false
+            isVisible: false,
+            minimum: widget.minValue[0],
+            maximum: widget.maxValue[0],
           ),
           series: data,
 
@@ -271,6 +326,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
           )
         ),
         primaryYAxis: NumericAxis(
+          minimum: widget.minValue[0],
+          maximum: widget.maxValue[0],
           opposedPosition: true,
           axisLine: const AxisLine(
             width: 1,
