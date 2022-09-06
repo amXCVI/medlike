@@ -51,6 +51,8 @@ class HealthList extends StatelessWidget {
             title: diariesCategoriesList[index].name,
             measureItem: diariesCategoriesList[index].measureItem,
             decimalDigits: diariesCategoriesList[index].decimalDigits,
+            minValue: diariesCategoriesList[index].minValue,
+            maxValue: diariesCategoriesList[index].maxValue,
             data: getDiaryEntries(index),
             firstDate: dateFrom,
             lastDate: dateTo,

@@ -101,6 +101,8 @@ class _DiaryPageState extends State<DiaryPage> {
             diaryModel: state.periodedSelectedDiary!,
             decimalDigits: widget.categoryModel.decimalDigits,
             measureItem: widget.categoryModel.measureItem,
+            minValue: widget.categoryModel.minValue,
+            maxValue: widget.categoryModel.maxValue,
             firstDate: dateFrom,
             lastDate: dateTo,
             grouping: grouping,
