@@ -50,8 +50,11 @@ dependencies:
   cached_network_image: ^3.2.1
   yandex_geocoder: ^2.0.2
   map_launcher: ^2.3.0+1
+  firebase_core: ^1.21.1
+  firebase_messaging: ^13.0.0
 
   cupertino_icons: ^1.0.5
+  firebase_analytics: ^9.3.3
 
 dev_dependencies:
   flutter_test:

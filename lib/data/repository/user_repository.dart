@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
 
 enum UserAuthenticationStatus {
@@ -309,16 +311,33 @@ class UserRepository {
     });
 
     try {
-      final response = await _dioClient.post('/api/v1.0/support/emailWithoutAuth',
-          data: formData,
-          options: Options(
-            contentType: 'multipart/form-data',
-          ));
+      final response =
+          await _dioClient.post('/api/v1.0/support/emailWithoutAuth',
+              data: formData,
+              options: Options(
+                contentType: 'multipart/form-data',
+              ));
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> registerDeviceFirebaseToken({
+    required String token,
+  }) async {
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/profile/devices', data: {
+        "DeviceId": token,
+        "ClientPlatform": Platform.isAndroid ? "Android" : "iOS",
+        "AppBuildType": kDebugMode ? "Dev" : "Prod",
+      });
+      AppToast.showAppToast(msg: 'sending deviceId $token');
     } catch (err) {
       rethrow;
     }

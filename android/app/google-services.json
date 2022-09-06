@@ -1,0 +1,179 @@
+{
+  "project_info": {
+    "project_number": "352364144955",
+    "firebase_url": "https://medlike-medotrade.firebaseio.com",
+    "project_id": "medlike-medotrade",
+    "storage_bucket": "medlike-medotrade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352364144955:android:54beea10929893ddcf2f1e",
+        "android_client_info": {
+          "package_name": "com.example.medlike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medotrade.medlike"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352364144955:android:aeb7da09350a395a",
+        "android_client_info": {
+          "package_name": "ru.medotrade.mobile.medlike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352364144955-jaeo2laies4sgn6m5ktcr0rk72nso921.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.medotrade.mobile.medlike",
+            "certificate_hash": "5c18656510ed5059923e3e04607f2f661179a32f"
+          }
+        },
+        {
+          "client_id": "352364144955-p3pg436smit1nc75gefrfk5mppblkor1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.medotrade.mobile.medlike",
+            "certificate_hash": "1fbfcc2788ed7873d8385168180666ee1028846b"
+          }
+        },
+        {
+          "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medotrade.medlike"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352364144955:android:eecd39c9e9c268d1cf2f1e",
+        "android_client_info": {
+          "package_name": "ru.medotrade.mobile.medlike.medis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medotrade.medlike"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352364144955:android:83cdc0529ece52decf2f1e",
+        "android_client_info": {
+          "package_name": "ru.medotrade.mobile.medlike.zapolarye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352364144955-83je5lti98nckk1v5o1tpnbov8k1ub8j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.medotrade.mobile.medlike.zapolarye",
+            "certificate_hash": "1fbfcc2788ed7873d8385168180666ee1028846b"
+          }
+        },
+        {
+          "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medotrade.medlike"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
