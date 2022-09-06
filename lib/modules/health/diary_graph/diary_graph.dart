@@ -50,21 +50,6 @@ class DiaryGraph extends StatefulWidget {
 
 class _DiaryGraphState extends State<DiaryGraph> {
   ChartSeriesController? seriesController;
-  late List<ChartData> chartData;
-
-  @override
-  void initState() {
-    chartData = widget.items.map((e) => 
-      ChartData(
-        e.date, 
-        e.innerData[0], 
-        e.innerData.length > 1 ? e.innerData[1] : null,
-        e.isAbnormal
-      )
-    ).toList();
-  
-    super.initState();
-  }
 
   void performSwipe(ChartSwipeDirection direction) {
     widget.onLoadDate!(direction == ChartSwipeDirection.end);
@@ -80,6 +65,15 @@ class _DiaryGraphState extends State<DiaryGraph> {
   }
 
   void onPointTap(ChartPointDetails? details) {
+    List<ChartData> chartData = widget.items.map((e) => 
+      ChartData(
+        e.date, 
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null,
+        e.isAbnormal
+      )
+    ).toList();
+
     if(details?.pointIndex != null) {
       CartesianChartPoint<dynamic> chartPoint =
         CartesianChartPoint<dynamic>(
@@ -94,12 +88,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
   @override
   Widget build(BuildContext context) {
 
-    List<ChartData> abnormalData = chartData.where(
-      (el) => el.isAbnormal
-    ).toList();
-
-    List<ChartData> normalData = chartData.where(
-      (el) => el.isAbnormal
+    List<ChartData> chartData = widget.items.map((e) => 
+      ChartData(
+        e.date, 
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null,
+        e.isAbnormal
+      )
     ).toList();
 
     ChartAxisLabel labelFormatter(args) {
@@ -135,7 +130,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Hour':
         type = DateTimeIntervalType.minutes;
         interval = 15;
-        width = 0.001;
+        width = 0.05;
         break;
       case 'Day':
         type = DateTimeIntervalType.hours;
@@ -146,21 +141,25 @@ class _DiaryGraphState extends State<DiaryGraph> {
         type = DateTimeIntervalType.days;
         interval = 1;
         if(!widget.isClean) {
-          width = 0.15;
+          width = 0.23;
+        }
+        break;
+      case 'Month':
+        type = DateTimeIntervalType.days;
+        interval = 7;
+        if(!widget.isClean) {
+          width = 0.73;
         }
         break;
       default:
         type = DateTimeIntervalType.days;
         interval = 1;
-        if(!widget.isClean) {
-          width = 0.15;
-        }
     }
 
     final data = <CartesianSeries>[
       if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         RangeColumnSeries<ChartData, DateTime>(
-          dataSource: normalData,
+          dataSource: chartData,
           width: width,
           color: const Color.fromRGBO(237, 245, 247, 1),
           pointColorMapper: ((datum, index) => datum.isAbnormal 
@@ -182,6 +181,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
         color: AppColors.mainBrandColor,
+        pointColorMapper: (ChartData datum, _) => !datum.isAbnormal 
+          ? AppColors.mainBrandColor 
+          : AppColors.mainError,
         markerSettings: const MarkerSettings(
           color: AppColors.mainBrandColor,
           borderColor: Color.fromRGBO(237, 245, 247, 1),
@@ -198,46 +200,16 @@ class _DiaryGraphState extends State<DiaryGraph> {
       if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
+            pointColorMapper: (ChartData datum, _) => !datum.isAbnormal 
+              ? AppColors.mainBrandColor 
+              : AppColors.mainError,
             markerSettings: const MarkerSettings(
-                color: Color.fromRGBO(60, 148, 168, 1),
-                borderColor: Color.fromRGBO(237, 245, 247, 1),
-                borderWidth: 2,
-                isVisible: true),
-            color: const Color.fromRGBO(60, 148, 168, 1),
-            xValueMapper: (ChartData data, _) => data.x,
-            yValueMapper: (ChartData data, _) => data.y1,
-            onRendererCreated: (ChartSeriesController controller) {
-              seriesController = controller;
-            },
-            onPointTap: onPointTap
-          ),
-
-      SplineSeries<ChartData, DateTime>(
-          dataSource: abnormalData,
-          markerSettings: const MarkerSettings(
-              color: AppColors.mainError,
-              borderColor: Color.fromRGBO(254, 235, 240, 1),
+              color: Color.fromRGBO(60, 148, 168, 1),
+              borderColor: Color.fromRGBO(237, 245, 247, 1),
               borderWidth: 2,
-              isVisible: true),
-          color: AppColors.mainError,
-          opacity: 0,
-          xValueMapper: (ChartData data, _) => data.x,
-          yValueMapper: (ChartData data, _) => data.y,
-          onRendererCreated: (ChartSeriesController controller) {
-            seriesController = controller;
-          },
-          onPointTap: onPointTap
-        ),
-      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
-        SplineSeries<ChartData, DateTime>(
-            dataSource: abnormalData,
-            markerSettings: const MarkerSettings(
-                color: AppColors.mainError,
-                borderColor: Color.fromRGBO(254, 235, 240, 1),
-                borderWidth: 2,
-                isVisible: true),
-            color: AppColors.mainError,
-            opacity: 0,
+              isVisible: true
+            ),
+            color: const Color.fromRGBO(60, 148, 168, 1),
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y1,
             onRendererCreated: (ChartSeriesController controller) {
@@ -286,6 +258,14 @@ class _DiaryGraphState extends State<DiaryGraph> {
           ),
           series: data,
 
+          onMarkerRender: (args) {
+            if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
+              if(chartData[args.pointIndex!].isAbnormal) {
+                args.color = AppColors.mainError;
+                args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
+              }
+            }
+          },
           margin: const EdgeInsets.symmetric(horizontal: 10),
           onChartTouchInteractionUp: (args) => widget.onUnselect()
         ),
@@ -343,9 +323,11 @@ class _DiaryGraphState extends State<DiaryGraph> {
         
         onMarkerRender: (args) {
           if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
-            args.borderWidth = 0;
-            args.markerHeight = 6;
-            args.markerWidth = 6;
+
+            if(chartData[args.pointIndex!].isAbnormal) {
+              args.color = AppColors.mainError;
+              args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
+            }
           }
         },
 
