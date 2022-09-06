@@ -16,6 +16,7 @@ class DiaryAddPage extends StatefulWidget {
     required this.measureItem,
     required this.decimalDigits,
     required this.paramName,
+    required this.grouping,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -26,6 +27,7 @@ class DiaryAddPage extends StatefulWidget {
   final List<String> paramName;
   final DateTime? initialDate;
   final List<double>? initialValues;
+  final String grouping;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -131,11 +133,16 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
-              final newDate = date!.add(Duration(
-                hours: time!.hour,
-                minutes: time!.minute,
-                seconds: time!.second
-              ));
+              final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
+
+              final newDate = DateTime(
+                date!.year,
+                date!.month,
+                date!.day,
+                time!.hour,
+                time!.minute
+              ); 
+              
               if(widget.initialDate != null || widget.initialValues != null) {
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,
@@ -143,7 +150,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   syn: state.selectedDiary!.syn,
                   values: _controllers.map((e) => 
                     double.parse(e.text) 
-                  ).toList()
+                  ).toList(),
+                  updateFrom: dates[0],
+                  updateTo: dates[1]
                 );
               } else {
                 context.read<DiaryCubit>().postDiaryEntry(
@@ -151,7 +160,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   syn: state.selectedDiary!.syn,
                   values: _controllers.map((e) => 
                     double.parse(e.text) 
-                  ).toList()
+                  ).toList(),
+                  updateFrom: dates[0],
+                  updateTo: dates[1]
                 );
               }
               context.router.pop();

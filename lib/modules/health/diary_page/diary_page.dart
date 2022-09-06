@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
@@ -17,11 +15,13 @@ class DiaryPage extends StatefulWidget {
   const DiaryPage({
     Key? key,
     required this.title,
-    required this.categoryModel
+    required this.categoryModel,
+    required this.syn
   }) : super(key: key);
 
   final String title;
   final DiaryCategoryModel categoryModel;
+  final String syn;
 
   @override
   State<DiaryPage> createState() => _DiaryPageState();
@@ -29,101 +29,80 @@ class DiaryPage extends StatefulWidget {
 
 class _DiaryPageState extends State<DiaryPage> {
   String grouping = '';
+  late DateTime dateFrom;
+  late DateTime dateTo;
+
+  @override
+  void initState() {
+    final cubit = context.read<DiaryCubit>();
+    final date = cubit.state.selectedDiary!.currentValue.date;
+    final dates = ValueHelper.getPeriodTiming(date, '');
+
+    cubit.setTimePeriod(
+      start: dates[0],
+      end: dates[1],
+      syn: cubit.state.selectedDiary!.syn
+    );
+
+    dateFrom = dates[0];
+    dateTo = dates[1];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<DiaryCubit, DiaryState>(
-      listener: (context, state) {
-        if(state.selectedDiary != null 
-          && state.selectedDiary!.values.isNotEmpty && grouping == ''
-        ) {
-            final last = state.selectedDiary!.values.last;
-            final dates = ValueHelper.getPeriodTiming(last.date, 'Week');
-
-            context.read<DiaryCubit>().getDiariesList(
-              project: 'Zapolyarye', 
-              platform: Platform.isAndroid ? 'Android' : 'IOS',
-              grouping: 'None',
-              dateFrom: dates[0],
-              dateTo: dates[1],
-              syn: state.selectedDiary!.syn
-            );
-
-            setState(() {
-              grouping = 'Load';
-            });
-        }
-
-        if(state.pageUpdateStatuses == PageUpdateStatuses.loading) {
-          setState(() {
-            grouping = '';
-          });
-        }
-
-        if(state.updateDiaryStatuses == UpdateDiaryStatuses.success) {
-          final date = DateTime.now().toUtc();
-          final dates = ValueHelper.getPeriodTiming(date, grouping);
-
-          context.read<DiaryCubit>().getDiariesList(
-            project: 'Zapolyarye', 
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: 'None',
-            dateFrom: dates[0],
-            dateTo: dates[1],
-            syn: state.selectedDiary!.syn
-          );
-        }
-      },
+    return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
-          final date = DateTime.now().toUtc();
+          final date = state.selectedDiary!.currentValue.date;
           final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
-          context.read<DiaryCubit>().getDiariesList(
-            project: 'Zapolyarye', 
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: 'None',
-            dateFrom: dates[0],
-            dateTo: dates[1],
+          context.read<DiaryCubit>().setTimePeriod(
+            start: dates[0],
+            end: dates[1],
             syn: syn
           );
 
           setState(() {
             grouping = selectedGroup;
+            dateFrom = dates[0];
+            dateTo = dates[1];
           });
 
         }
 
         void onLoadDate(bool isRight) {
-          final dates = ValueHelper.getAnotherPeriodTiming(state.dateFrom, grouping, isRight);
+          final dates = ValueHelper.getAnotherPeriodTiming(dateFrom, grouping, isRight);
 
-          context.read<DiaryCubit>().getDiariesList(
-            project: 'Zapolyarye', 
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
-            grouping: 'None',
-            dateFrom: dates[0],
-            dateTo: dates[1],
+          context.read<DiaryCubit>().setTimePeriod(
+            start: dates[0],
+            end: dates[1],
             syn: state.selectedDiary!.syn
           );
+
+          setState(() {
+            dateFrom = dates[0];
+            dateTo = dates[1];
+          });
         }
 
         Widget page; 
 
-        if(state.getDiaryStatuses == GetDiaryStatuses.failed) {
-          page = const Text('');
-        } else if(state.getDiaryStatuses == GetDiaryStatuses.loading 
-          || state.selectedDiary == null) {
+        if(state.updateDiaryStatuses == UpdateDiaryStatuses.failed) {
+          page = const Text('Failed');
+        } else if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
+          || state.periodedSelectedDiary == null) {
           page = const DiarySkeleton();
         } else if(state.selectedDiary!.values.isEmpty && grouping == '') {
           page = const DiaryNodata();
         } else {
           page = DiaryView(
             title: widget.title,
-            diaryModel: state.selectedDiary!,
+            diaryModel: state.periodedSelectedDiary!,
             decimalDigits: widget.categoryModel.decimalDigits,
             measureItem: widget.categoryModel.measureItem,
-            firstDate: state.dateFrom,
-            lastDate: state.dateTo,
+            firstDate: dateFrom,
+            lastDate: dateTo,
             grouping: grouping,
             paramName: widget.categoryModel.paramName,
             onLoadDate: onLoadDate
@@ -155,7 +134,8 @@ class _DiaryPageState extends State<DiaryPage> {
                   title: widget.title, 
                   measureItem: widget.categoryModel.measureItem,
                   decimalDigits: widget.categoryModel.decimalDigits, 
-                  paramName: widget.categoryModel.paramName
+                  paramName: widget.categoryModel.paramName,
+                  grouping: grouping
                 )
               );
             },

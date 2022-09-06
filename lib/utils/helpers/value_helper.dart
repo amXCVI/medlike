@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' as mt;
 import 'package:intl/intl.dart';
+import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 
 class ValueHelper {
@@ -86,7 +87,7 @@ class ValueHelper {
         break;
       case 'Week':
         duration = const Duration(
-          hours: 7
+          days: 7
         );
         break;
       case 'Month':
@@ -96,7 +97,7 @@ class ValueHelper {
         break;
       default:
         duration = const Duration(
-          hours: 7
+          days: 7
         );
     }
 
@@ -124,7 +125,7 @@ class ValueHelper {
   static String getPeriodString(DateTime date, String grouping) {
     switch (grouping) {
       case 'Hour':
-        DateFormat dateFormat = DateFormat("hh:mm", 'ru_RU');
+        DateFormat dateFormat = DateFormat("HH:mm", 'ru_RU');
 
         final fromHour = date.subtract(Duration(
           minutes: date.minute,
@@ -169,7 +170,7 @@ class ValueHelper {
   }
 
   static getDateInDiaryItem(DateTime date) {
-    return DateFormat('EEEE, d MMM, hh:mm').format(date); /// e.g Thursday
+    return DateFormat('EEEE, d MMM, HH:mm').format(date); /// e.g Thursday
   }
 
   static String? getDatepickerString(DateTime? date, bool isDate) {
@@ -182,5 +183,17 @@ class ValueHelper {
     } else {
       return DateFormat('kk:mm').format(date);
     }
+  }
+
+  static DiaryFlatModel filterByPeriod({
+    required DiaryFlatModel diariesList,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    final items = diariesList.values.where((f) => (
+      f.date.isAfter(start) && f.date.isBefore(end)
+    )).toList(); 
+
+    return diariesList.copyWith(values: items);
   }
 }

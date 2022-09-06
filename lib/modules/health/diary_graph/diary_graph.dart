@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/utils/helpers/value_helper.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
@@ -20,115 +20,43 @@ class DiaryGraph extends StatefulWidget {
     required this.measureItem,
     required this.decimalDigits,
     required this.grouping,
+    required this.onSelect,
+    required this.onUnselect,
+    this.selected,
     this.onLoadDate,
     this.isClean = false
   }) : super(key: key);
 
-  final List<DiaryItem> items;
+  final List<DataItem> items;
   final DateTime firstDate;
   final DateTime lastDate;
+  final double? selected;
   final String measureItem;
   final String grouping;
   final int decimalDigits;
   final bool isClean;
   final Function(bool)? onLoadDate;
+  final Function(int, Offset) onSelect;
+  final Function onUnselect;
 
   @override
   State<DiaryGraph> createState() => _DiaryGraphState();
 }
 
 class _DiaryGraphState extends State<DiaryGraph> {
-  late TrackballBehavior _trackballBehavior;
   ChartSeriesController? seriesController;
   late List<ChartData> chartData;
 
   @override
-  void initState(){
+  void initState() {
     chartData = widget.items.map((e) => 
       ChartData(
         e.date, 
-        e.value.innerData[0], 
-        e.value.innerData.length > 1 ? e.value.innerData[1] : null
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null
       )
     ).toList();
-
-    _trackballBehavior = TrackballBehavior(
-      enable: false,
-      tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
-      activationMode: ActivationMode.singleTap,
-      builder: (context, details) {
-        if(details.pointIndex == null) {
-          return Container();
-        }
-
-        final index = details.pointIndex! - 1;
-
-        if(index < 0 || index >= widget.items.length) {
-          return Container();
-        }
-
-        DateFormat dateFormat = DateFormat("d MMMM y", 'ru_RU');
-        final val = ValueHelper.getStringFromValues(
-          widget.items[index].value.innerData, 
-          widget.decimalDigits
-        );
-
-        return Container(
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: const Color.fromRGBO(238, 238, 238, 1)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      val,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 28,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 2,
-                        bottom: 5
-                      ),
-                      child: Text(
-                        widget.measureItem,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(
-                    dateFormat.format(
-                      widget.items[index].date,
-                    ),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color.fromRGBO(158, 157, 157, 1)
-                    ),
-                  ),
-                )
-              ]
-            ),
-          ),
-        );
-      },
-    );
+  
     super.initState();
   }
 
@@ -138,6 +66,22 @@ class _DiaryGraphState extends State<DiaryGraph> {
     if (seriesController != null) {
       seriesController!
         .updateDataSource(addedDataIndexes: []);
+    }
+  }
+
+  int getXFromDate(DateTime date) {
+    return date.millisecondsSinceEpoch;
+  }
+
+  void onPointTap(ChartPointDetails? details) {
+    if(details?.pointIndex != null) {
+      CartesianChartPoint<dynamic> chartPoint =
+        CartesianChartPoint<dynamic>(
+          getXFromDate(chartData[details!.pointIndex!].x),
+          chartData[details.pointIndex!].y
+        );
+      Offset pointLocation = seriesController!.pointToPixel(chartPoint);
+      widget.onSelect(details.pointIndex!, pointLocation);
     }
   }
 
@@ -151,6 +95,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
       switch(widget.grouping) {
         case 'Week':
+        case '':
           final DateFormat formatter = DateFormat('E','ru_RU');
           text = formatter.format(date).toUpperCase();
           if(widget.isClean) {
@@ -176,23 +121,30 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Hour':
         type = DateTimeIntervalType.minutes;
         interval = 15;
+        width = 0.001;
         break;
       case 'Day':
         type = DateTimeIntervalType.hours;
         interval = 6;
-        width = 0.02;
+        width = 0.03;
         break;
       case 'Week':
         type = DateTimeIntervalType.days;
         interval = 1;
+        if(!widget.isClean) {
+          width = 0.15;
+        }
         break;
       default:
         type = DateTimeIntervalType.days;
         interval = 1;
+        if(!widget.isClean) {
+          width = 0.15;
+        }
     }
 
     final data = <CartesianSeries>[
-      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         RangeColumnSeries<ChartData, DateTime>(
           dataSource: chartData,
           width: width,
@@ -207,6 +159,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
           onRendererCreated: (ChartSeriesController controller) {
             seriesController = controller;
           },
+          onPointTap: onPointTap
         ),
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
@@ -221,8 +174,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
         onRendererCreated: (ChartSeriesController controller) {
           seriesController = controller;
         },
+        onPointTap: onPointTap,
       ),
-      if (widget.items.isNotEmpty && widget.items[0].value.innerData.length > 1)
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
             markerSettings: const MarkerSettings(
@@ -236,38 +190,50 @@ class _DiaryGraphState extends State<DiaryGraph> {
             onRendererCreated: (ChartSeriesController controller) {
               seriesController = controller;
             },
-            onPointTap: (ChartPointDetails? details) {
-              /// TODO: trackball
-            }
+            onPointTap: onPointTap
           ),
     ];
 
     if(widget.isClean) {
-      return SfCartesianChart(
-        plotAreaBorderWidth: 0,
-        primaryXAxis: DateTimeAxis(
-          interval: interval,
-          intervalType: type,
-          minimum: widget.firstDate,
-          maximum: widget.lastDate,
-          axisLabelFormatter: labelFormatter,
-          rangePadding: ChartRangePadding.none,
-          majorGridLines: const MajorGridLines(
-            width: 0
+      return SizedBox(
+        height: 85,
+        child: SfCartesianChart(
+          plotAreaBorderWidth: 0,
+          primaryXAxis: DateTimeAxis(
+            plotBands: [
+              if(widget.selected != null && seriesController != null) PlotBand(
+                start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                shouldRenderAboveSeries: false,
+                borderWidth: 1,
+                borderColor: Colors.grey.shade300,
+                color: Colors.grey.shade300
+              )
+            ],
+            interval: interval,
+            intervalType: type,
+            minimum: widget.firstDate,
+            maximum: widget.lastDate,
+            axisLabelFormatter: labelFormatter,
+            rangePadding: ChartRangePadding.none,
+            majorGridLines: const MajorGridLines(
+              width: 0
+            ),
+            majorTickLines: const MajorTickLines(
+              width: 0,
+            ),
+            axisLine: const AxisLine(
+              width: 0,
+            )
           ),
-          majorTickLines: const MajorTickLines(
-            width: 0,
+          primaryYAxis: NumericAxis(
+            isVisible: false
           ),
-          axisLine: const AxisLine(
-            width: 0,
-          )
-        ),
-        primaryYAxis: NumericAxis(
-          isVisible: false
-        ),
-        series: data,
+          series: data,
 
-        margin: EdgeInsets.zero
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          onChartTouchInteractionUp: (args) => widget.onUnselect()
+        ),
       );
     }
 
@@ -277,9 +243,20 @@ class _DiaryGraphState extends State<DiaryGraph> {
       child: SfCartesianChart(
         onPlotAreaSwipe: (ChartSwipeDirection direction) =>
           performSwipe(direction),
+        margin: EdgeInsets.zero,
         plotAreaBorderWidth: 1,
-        plotAreaBorderColor: const Color.fromRGBO(158, 157, 157, 0.4),
+        plotAreaBorderColor: AppColors.mainSeparatorAlpha,
         primaryXAxis: DateTimeAxis(
+          plotBands: [
+            if(widget.selected != null && seriesController != null) PlotBand(
+              start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+              shouldRenderAboveSeries: false,
+              borderWidth: 1,
+              borderColor: Colors.grey.shade300,
+              color: Colors.grey.shade300
+            )
+          ],
           interval: interval,
           intervalType: type,
           minimum: widget.firstDate,
@@ -303,7 +280,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             dashArray: <double>[5,3]
           )
         ),
-        trackballBehavior: _trackballBehavior,
+        //trackballBehavior: _trackballBehavior,
         enableAxisAnimation: true,
         series: data,
         
@@ -313,7 +290,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
             args.markerHeight = 6;
             args.markerWidth = 6;
           }
-        }, 
+        },
+
+        onChartTouchInteractionUp: (args) => widget.onUnselect()
       )
     );
   }

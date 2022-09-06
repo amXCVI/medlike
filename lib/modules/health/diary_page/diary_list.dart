@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -16,15 +17,17 @@ class DiaryList extends StatelessWidget {
     required this.decimalDigits,
     required this.measureItem,
     required this.syn,
-    required this.paramName
+    required this.paramName,
+    required this.grouping
   }) : super(key: key);
 
   final String title;
-  final List<DiaryItem> items;
+  final List<DataItem> items;
   final int decimalDigits;
   final String measureItem;
   final List<String> paramName;
   final String syn;
+  final String grouping;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,8 @@ class DiaryList extends StatelessWidget {
             decimalDigits: decimalDigits, 
             measureItem: measureItem, 
             syn: syn, 
-            paramName: paramName
+            paramName: paramName,
+            grouping: grouping,
           )
         ).toList()
       ],
@@ -53,23 +57,28 @@ class DiaryTile extends StatelessWidget {
     required this.decimalDigits,
     required this.measureItem,
     required this.syn,
-    required this.paramName
+    required this.paramName,
+    required this.grouping
   }) : super(key: key);
 
   final String title;
-  final DiaryItem item;
+  final DataItem item;
   final int decimalDigits;
   final String measureItem;
   final List<String> paramName;
   final String syn;
+  final String grouping;
 
   @override
   Widget build(BuildContext context) {
     final val =
-      ValueHelper.getStringFromValues(item.value.innerData, decimalDigits);
+      ValueHelper.getStringFromValues(item.innerData, decimalDigits);
+
+    final dates = ValueHelper.getPeriodTiming(item.date, grouping);
+    print(dates);
 
     return Slidable(
-        key: ValueKey(item.value.hashCode),
+        key: ValueKey(item.hashCode),
         endActionPane: ActionPane(
           motion: const ScrollMotion(),
           children: [
@@ -85,10 +94,10 @@ class DiaryTile extends StatelessWidget {
             context
               .read<DiaryCubit>()
               .deleteDiaryEntry(
-                date: item.date.add(
-                  Duration(seconds: item.value.secondsSinceMidnight.floor()
-                )), 
-                syn: syn
+                date: item.date,
+                syn: syn,
+                updateFrom: dates[0],
+                updateTo: dates[1]
               );
           }),
         ),
@@ -110,9 +119,7 @@ class DiaryTile extends StatelessWidget {
             ),
             subtitle: Text(
               ValueHelper.getDateInDiaryItem(
-                item.date.add(Duration(
-                  seconds: item.value.secondsSinceMidnight.floor()
-                ))
+                item.date
               ),
               style: const TextStyle(
                 color: Color.fromRGBO(158, 157, 157, 1),
@@ -120,16 +127,19 @@ class DiaryTile extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
+            trailing: SvgPicture.asset(
+              'assets/icons/ic_arrow_right_calendar.svg',
+              color: AppColors.lightText
+            ),
             onTap: () {
               context.router.push(DiaryAddRoute(
                   title: title,
                   measureItem: measureItem,
                   decimalDigits: decimalDigits,
                   paramName: paramName,
-                  initialValues: item.value.innerData,
-                  initialDate: item.date.add(
-                    Duration(seconds: item.value.secondsSinceMidnight.floor()
-                  )) ));
+                  initialValues: item.innerData,
+                  grouping: grouping,
+                  initialDate: item.date));
             },
           ),
         ));
