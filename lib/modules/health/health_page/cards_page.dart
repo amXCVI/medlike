@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/health/filters_page/diary_filters_widget.dart';
 import 'package:medlike/modules/health/health_page/health_list.dart';
 import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
+import 'package:medlike/modules/health/health_page/health_nodata.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +44,6 @@ class _CardsPageState extends State<CardsPage> {
 
     void handleTapOnFiltersButton() {
       if (isFilteringMode) {
-        _onLoadDada('None');
         setState(() {
           isFilteringMode = false;
         });
@@ -59,7 +58,6 @@ class _CardsPageState extends State<CardsPage> {
       setState(() {
         isFilteringMode = false;
       });
-      _onLoadDada('None');
     }
 
     return WillPopScope(
@@ -98,12 +96,13 @@ class _CardsPageState extends State<CardsPage> {
               return const Text('');
             } else if (state.getDiaryCategoriesStatuses ==
                     GetDiaryCategoriesStatuses.success &&
-                state.getDiaryStatuses == GetDiaryStatuses.success) {
+              state.getDiaryStatuses == GetDiaryStatuses.success) {
+                if(state.filteredDiariesCategoriesList!.isEmpty) {
+                  return const HealthNodata();
+                }
               return HealthList(
                   diariesCategoriesList: state.filteredDiariesCategoriesList!,
-                  diariesItems: state.weekDiariesList ?? [],
-                  firstDate: state.dateFrom,
-                  lastDate: state.dateTo,
+                  diariesItems: state.diariesList ?? [],
                   onLoadDada: _onLoadDada);
             } else {
               return const HealthListSkeleton();

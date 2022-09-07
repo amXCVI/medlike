@@ -87,7 +87,7 @@ class ValueHelper {
         break;
       case 'Week':
         duration = const Duration(
-          hours: 7
+          days: 7
         );
         break;
       case 'Month':
@@ -97,7 +97,7 @@ class ValueHelper {
         break;
       default:
         duration = const Duration(
-          hours: 7
+          days: 7
         );
     }
 
@@ -125,7 +125,7 @@ class ValueHelper {
   static String getPeriodString(DateTime date, String grouping) {
     switch (grouping) {
       case 'Hour':
-        DateFormat dateFormat = DateFormat("hh:mm", 'ru_RU');
+        DateFormat dateFormat = DateFormat("HH:mm", 'ru_RU');
 
         final fromHour = date.subtract(Duration(
           minutes: date.minute,
@@ -170,7 +170,7 @@ class ValueHelper {
   }
 
   static getDateInDiaryItem(DateTime date) {
-    return DateFormat('EEEE, d MMM, hh:mm').format(date); /// e.g Thursday
+    return DateFormat('EEEE, d MMM, HH:mm').format(date); /// e.g Thursday
   }
 
   static String? getDatepickerString(DateTime? date, bool isDate) {

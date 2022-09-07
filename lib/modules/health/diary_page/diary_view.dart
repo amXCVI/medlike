@@ -15,6 +15,8 @@ class DiaryView extends StatefulWidget {
     required this.diaryModel,
     required this.decimalDigits,
     required this.measureItem,
+    required this.minValue,
+    required this.maxValue,
     required this.firstDate,
     required this.lastDate,
     required this.grouping,
@@ -26,6 +28,8 @@ class DiaryView extends StatefulWidget {
   final DiaryFlatModel diaryModel;
   final String measureItem;
   final int decimalDigits;
+  final List<double> minValue;
+  final List<double> maxValue;
   final DateTime firstDate;
   final DateTime lastDate;
   final String grouping;
@@ -47,6 +51,8 @@ class _DiaryViewState extends State<DiaryView> {
   Widget build(BuildContext context) {
     List<DataItem> items =  widget.diaryModel.values;
     switch(widget.grouping) {
+      case 'Hour':
+        break;
       case 'Day':
         items = GroupingHelper.groupByHour(items);
         break;
@@ -104,6 +110,8 @@ class _DiaryViewState extends State<DiaryView> {
             grouping: widget.grouping,
             onLoadDate: widget.onLoadDate,
             selected: offset.dx,
+            minValue: widget.minValue,
+            maxValue: widget.maxValue,
             onSelect: (id, newOffset) {
               Future.microtask(
                 () {

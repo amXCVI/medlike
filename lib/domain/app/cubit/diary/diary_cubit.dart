@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -84,21 +83,10 @@ class DiaryCubit extends Cubit<DiaryState> {
         grouping: e.grouping)
       ).toList();
       
-      final perioded = flatResponse.map((el) => (
-        ValueHelper.filterByPeriod(
-          diariesList: el, 
-          start: date_utils.DateUtils.firstDayOfWeek(date), 
-          end: date_utils.DateUtils.lastDayOfWeek(date)
-        )
-      )).toList();
-      
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.success,
         //updateDiaryStatuses: UpdateDiaryStatuses.initial,
         diariesList: flatResponse,
-        weekDiariesList: perioded,
-        dateFrom: date_utils.DateUtils.firstDayOfWeek(date),
-        dateTo: date_utils.DateUtils.lastDayOfWeek(date),
         pageUpdateStatuses: PageUpdateStatuses.initial
       ));
 
