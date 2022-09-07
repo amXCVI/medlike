@@ -181,9 +181,18 @@ class _DiaryGraphState extends State<DiaryGraph> {
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
         color: AppColors.mainBrandColor,
-        pointColorMapper: (ChartData datum, _) => !datum.isAbnormal 
-          ? AppColors.mainBrandColor 
-          : AppColors.mainError,
+        pointColorMapper: (ChartData datum, _) {
+          final next = chartData.indexOf(datum) + 1;
+
+          if (next >= chartData.length) {
+            return AppColors.mainBrandColor;
+          }
+
+          return !datum.isAbnormal 
+            && chartData[next].isAbnormal
+            ? AppColors.mainBrandColor
+            : AppColors.mainError;
+        },
         markerSettings: const MarkerSettings(
           color: AppColors.mainBrandColor,
           borderColor: Color.fromRGBO(237, 245, 247, 1),
@@ -259,7 +268,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
           series: data,
 
           onMarkerRender: (args) {
-            if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
+            if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
               if(chartData[args.pointIndex!].isAbnormal) {
                 args.color = AppColors.mainError;
                 args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
@@ -322,7 +331,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         series: data,
         
         onMarkerRender: (args) {
-          if(args.pointIndex != null && chartData[args.pointIndex!].y1 != null) {
+          if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
 
             if(chartData[args.pointIndex!].isAbnormal) {
               args.color = AppColors.mainError;

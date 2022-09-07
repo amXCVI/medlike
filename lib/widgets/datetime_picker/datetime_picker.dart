@@ -13,7 +13,7 @@ String getTime(int time, ColumnType type) {
     case ColumnType.hour:
       return time <= 9 ? "0$time" : "$time";
     case ColumnType.day:
-      return time <= 9 ? "0${time + 1}" : "${time + 1}";
+      return time < 9 ? "0${time + 1}" : "${time + 1}";
     case ColumnType.month:
       final format = DateFormat('d MMM y', 'ru_RU');
 

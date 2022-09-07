@@ -8,6 +8,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
 import 'package:medlike/utils/helpers/grouping_helper.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 
 
 class HealthItem extends StatefulWidget {
@@ -50,8 +51,11 @@ class _HealthItemState extends State<HealthItem> {
 
   @override
   Widget build(BuildContext context) {
-    final items = GroupingHelper.groupByDay(widget.data?.values ?? []);
-
+    final items = ValueHelper.filterItemsByPeriod(
+      items: GroupingHelper.groupByDay(widget.data?.values ?? []),
+      start: widget.firstDate,
+      end: widget.lastDate
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(

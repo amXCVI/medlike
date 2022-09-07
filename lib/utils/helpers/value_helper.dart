@@ -190,10 +190,22 @@ class ValueHelper {
     required DateTime start,
     required DateTime end,
   }) {
-    final items = diariesList.values.where((f) => (
+    return diariesList.copyWith(
+      values: filterItemsByPeriod(
+        items: diariesList.values,
+        start: start,
+        end: end
+      )
+    );
+  }
+
+  static List<DataItem> filterItemsByPeriod({
+    required List<DataItem> items,
+    required DateTime start,
+    required DateTime end,
+  }) {
+    return items.where((f) => (
       f.date.isAfter(start) && f.date.isBefore(end)
     )).toList(); 
-
-    return diariesList.copyWith(values: items);
   }
 }
