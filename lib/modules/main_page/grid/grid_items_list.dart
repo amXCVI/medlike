@@ -14,11 +14,6 @@ class GridItemModel {
 
 List<GridItemModel> gridItemsList = [
   GridItemModel(
-    actionLink: AppRoutes.subscribeProfiles,
-    imgSrc: 'assets/icons/main_page/ic_main_button_one@2x.png',
-    label: 'Запись на прием',
-  ),
-  GridItemModel(
     actionLink: AppRoutes.myAppointments,
     imgSrc: 'assets/icons/main_page/ic_main_button_two@2x.png',
     label: 'Мои приемы',
@@ -27,6 +22,11 @@ List<GridItemModel> gridItemsList = [
     actionLink: AppRoutes.medcard,
     imgSrc: 'assets/icons/main_page/ic_main_button_three@2x.png',
     label: 'Медкарта',
+  ),
+  GridItemModel(
+    actionLink: AppRoutes.health,
+    imgSrc: 'assets/icons/main_page/ic_main_button_one@2x.png',
+    label: 'Показатели здоровья',
   ),
   GridItemModel(
     actionLink: AppRoutes.clinicInfo,
