@@ -32,7 +32,9 @@ class TimeCellItem extends StatelessWidget {
           child: Center(
             child: Text(DateFormat("HH:mm").format(time),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: isSelected ? Colors.white : AppColors.mainText)),
+                      color: isSelected ? Colors.white : AppColors.mainText,
+                      height: 1,
+                    )),
           ),
         ),
       ),
