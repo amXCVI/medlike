@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:352364144955:ios:0e885db4fb89e13acf2f1e",
-  "FIREBASE_PROJECT_ID": "medlike-medotrade",
-  "GCM_SENDER_ID": "352364144955"
+  "GOOGLE_APP_ID": "1:1083145779008:ios:bba2d29b7cf23d21742ca5",
+  "FIREBASE_PROJECT_ID": "z-clinic-flutter-project",
+  "GCM_SENDER_ID": "1083145779008"
 }

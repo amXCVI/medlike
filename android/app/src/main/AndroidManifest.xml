@@ -9,7 +9,7 @@
 
     <application
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="medlike"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config">
@@ -40,6 +40,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="medlike"
                     android:host="payment" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>

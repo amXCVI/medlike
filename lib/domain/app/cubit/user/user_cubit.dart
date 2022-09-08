@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
@@ -60,6 +61,7 @@ class UserCubit extends Cubit<UserState> {
         token: response.token,
         refreshToken: response.refreshToken,
       ));
+      addFirebaseDeviceId();
       return true;
     } catch (e) {
       emit(state.copyWith(
@@ -88,6 +90,13 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
+    addFirebaseDeviceId();
+  }
+
+  /// Сохраняет deviceId устройства на бэке
+  void addFirebaseDeviceId() async {
+    String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+    userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
 
   /// Получает список профилей из всех МО
@@ -164,6 +173,7 @@ class UserCubit extends Cubit<UserState> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
+      addFirebaseDeviceId();
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код');

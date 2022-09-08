@@ -331,10 +331,9 @@ class UserRepository {
     required String token,
   }) async {
     try {
-      final response =
-          await _dioClient.post('/api/v1.0/profile/devices', data: {
+      await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
-        "ClientPlatform": Platform.isAndroid ? "Android" : "iOS",
+        "ClientPlatform": Platform.isAndroid ? "1" : "2",
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
       AppToast.showAppToast(msg: 'sending deviceId $token');

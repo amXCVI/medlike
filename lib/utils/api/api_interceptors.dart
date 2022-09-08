@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -24,6 +26,8 @@ class DioInterceptors extends Interceptor {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
       'Project': 'Medlike',
+      'VerApp': '1.0',
+      'Platform': Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
