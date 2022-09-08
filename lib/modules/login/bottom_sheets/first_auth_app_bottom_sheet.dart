@@ -26,7 +26,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 27),
-                Text('Авторизация в приложении',
+                Text('Регистрация в приложении',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge

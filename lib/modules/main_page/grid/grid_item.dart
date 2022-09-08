@@ -59,7 +59,7 @@ class GridItem extends StatelessWidget {
                       child: Image.asset(imgSrc, width: 100)),
                   Container(
                     padding: const EdgeInsets.all(16.0),
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.32,
                     child: Text(
                       label,
                       style: Theme.of(context)

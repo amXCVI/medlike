@@ -8,7 +8,6 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
 
 enum UserAuthenticationStatus {
@@ -336,7 +335,6 @@ class UserRepository {
         "ClientPlatform": Platform.isAndroid ? "1" : "2",
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
-      AppToast.showAppToast(msg: 'sending deviceId $token');
     } catch (err) {
       rethrow;
     }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/main_page/barcode_skeleton.dart';
+import 'package:medlike/modules/main_page/barcode/barcode_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/barcode_helper.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
