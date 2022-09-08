@@ -21,7 +21,8 @@ class DiaryView extends StatefulWidget {
     required this.lastDate,
     required this.grouping,
     required this.paramName,
-    required this.onLoadDate
+    required this.onLoadDate,
+    required this.onSubmit
   }) : super(key: key);
   
   final String title;
@@ -35,6 +36,7 @@ class DiaryView extends StatefulWidget {
   final String grouping;
   final Function(bool) onLoadDate;
   final List<String> paramName;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   State<DiaryView> createState() => _DiaryViewState();
@@ -151,6 +153,7 @@ class _DiaryViewState extends State<DiaryView> {
             syn: widget.diaryModel.syn,
             paramName: widget.paramName,
             grouping: widget.grouping,
+            onSubmit: widget.onSubmit,
           )
         ],
       ),

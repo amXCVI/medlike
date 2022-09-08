@@ -18,6 +18,7 @@ class DiarySkeleton extends StatelessWidget {
 
     return Column(
       children: [
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: chips

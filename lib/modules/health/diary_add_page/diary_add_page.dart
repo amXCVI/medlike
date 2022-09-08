@@ -17,6 +17,7 @@ class DiaryAddPage extends StatefulWidget {
     required this.decimalDigits,
     required this.paramName,
     required this.grouping,
+    required this.onSubmit,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -28,6 +29,7 @@ class DiaryAddPage extends StatefulWidget {
   final DateTime? initialDate;
   final List<double>? initialValues;
   final String grouping;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -141,9 +143,12 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 date!.day,
                 time!.hour,
                 time!.minute
-              ); 
+              );
               
               if(widget.initialDate != null || widget.initialValues != null) {
+                final dates = ValueHelper.getPeriodTiming(widget.initialDate!, widget.grouping);
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,
                   oldDate: widget.initialDate!,
@@ -155,6 +160,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   updateTo: dates[1]
                 );
               } else {
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().postDiaryEntry(
                   date: newDate,
                   syn: state.selectedDiary!.syn,

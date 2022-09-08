@@ -32,6 +32,14 @@ class _DiaryPageState extends State<DiaryPage> {
   late DateTime dateFrom;
   late DateTime dateTo;
 
+  void onSubmit(String grouping, DateTime dateFrom, DateTime dateTo) {
+    setState(() {
+      this.grouping = grouping;
+      this.dateFrom = dateFrom;
+      this.dateTo = dateTo;
+    });
+  }
+
   @override
   void initState() {
     final cubit = context.read<DiaryCubit>();
@@ -107,25 +115,29 @@ class _DiaryPageState extends State<DiaryPage> {
             lastDate: dateTo,
             grouping: grouping,
             paramName: widget.categoryModel.paramName,
-            onLoadDate: onLoadDate
+            onLoadDate: onLoadDate,
+            onSubmit: onSubmit,
           );
         }
         return DefaultScaffold(
           isChildrenPage: true,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                if(state.selectedDiary != null
-                  && !(state.selectedDiary!.values.isEmpty && grouping == '')
-                ) 
-                  DiaryChips(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  if((
+                    state.selectedDiary != null &&
+                    !(state.selectedDiary!.values.isEmpty && grouping == '')  
+                    ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
+                  ) DiaryChips(
                     syn: state.selectedDiary!.syn,
                     onTap: onTap,
                     selectedGroup: grouping,
                   ),
-                page,
-              ],
+                  page,
+                ],
+              ),
             ),
           ),
           appBarTitle: widget.title,
@@ -137,7 +149,8 @@ class _DiaryPageState extends State<DiaryPage> {
                   measureItem: widget.categoryModel.measureItem,
                   decimalDigits: widget.categoryModel.decimalDigits, 
                   paramName: widget.categoryModel.paramName,
-                  grouping: grouping
+                  grouping: grouping,
+                  onSubmit: onSubmit
                 )
               );
             },

@@ -204,8 +204,14 @@ class ValueHelper {
     required DateTime start,
     required DateTime end,
   }) {
-    return items.where((f) => (
+    var perioded = items.where((f) => (
       f.date.isAfter(start) && f.date.isBefore(end)
     )).toList(); 
+
+    perioded.sort(
+      (a, b) => a.date.isAfter(b.date) ? 1 : -1
+    );
+
+    return perioded;
   }
 }
