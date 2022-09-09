@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:collection/collection.dart';
 
 class ChartData {
   ChartData(this.x, this.y, this.y1, this.isAbnormal);
@@ -62,6 +63,10 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   int getXFromDate(DateTime date) {
     return date.millisecondsSinceEpoch;
+  }
+
+  DateTime getDateFromX(double x) {
+    return DateTime.fromMillisecondsSinceEpoch(x.floor());
   }
 
   void onPointTap(ChartPointDetails? details) {
@@ -340,7 +345,33 @@ class _DiaryGraphState extends State<DiaryGraph> {
           }
         },
 
-        onChartTouchInteractionUp: (args) => widget.onUnselect()
+        onChartTouchInteractionUp: (args) {
+          int diff;
+          switch(widget.grouping) {
+            case 'Hour':
+              diff = 60 * 3;
+              break;
+            case 'Day':
+              diff = 60 * 60;
+              break;
+            case 'Week':
+              diff = 60 * 60 * 12;
+              break;
+            case 'Month':
+              diff = 60 * 60 * 24;
+              break;
+            default:
+              diff = 60 * 60 * 3;
+          }
+
+          final date = getDateFromX(seriesController!.pixelToPoint(args.position).x);
+          final point = chartData.firstWhereOrNull((el) => 
+            el.x.difference(date).inSeconds.abs() <= diff
+          );
+          if(point == null) {
+            widget.onUnselect();
+          }
+        }
       )
     );
   }

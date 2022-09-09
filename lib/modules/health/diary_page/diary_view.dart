@@ -111,7 +111,7 @@ class _DiaryViewState extends State<DiaryView> {
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
             onLoadDate: widget.onLoadDate,
-            selected: offset.dx,
+            selected: isPrompt ? offset.dx : null,
             minValue: widget.minValue,
             maxValue: widget.maxValue,
             onSelect: (id, newOffset) {
@@ -129,7 +129,7 @@ class _DiaryViewState extends State<DiaryView> {
                       final dw = MediaQuery.of(context).size.width;
                       var w = offset.dx - size.width / 2;
                       w = w < 0 ? 0 : w;
-                      w = w > dw ? dw : w;
+                      w = offset.dx > dw ? dw : w;
                       centerOffset = Offset(
                         w < 0 ? 0 : w,
                         size.height
