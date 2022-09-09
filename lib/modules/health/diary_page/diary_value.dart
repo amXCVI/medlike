@@ -70,7 +70,10 @@ class DiaryValue extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
           child: Text(
-            ValueHelper.getPeriodString(date, grouping),
+            ValueHelper.getPeriodString(
+              date.toLocal(), 
+              grouping
+            ),
             style: const TextStyle(
               color: Color.fromRGBO(158, 157, 157, 1),
               fontWeight: FontWeight.w400,

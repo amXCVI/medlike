@@ -135,8 +135,6 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
-              final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
-
               final newDate = DateTime(
                 date!.year,
                 date!.month,
@@ -144,6 +142,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 time!.hour,
                 time!.minute
               );
+
+              final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);
               
               if(widget.initialDate != null || widget.initialValues != null) {
                 final dates = ValueHelper.getPeriodTiming(widget.initialDate!, widget.grouping);
