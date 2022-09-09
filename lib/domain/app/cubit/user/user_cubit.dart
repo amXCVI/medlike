@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -632,6 +633,47 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получить последнее непочитанное уведомление
+  Future<void> getLastNotReadNotification() async {
+    emit(state.copyWith(
+      getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
+    ));
+    try {
+      NotificationModel lastNotification = await userRepository.getLastNotReadedEvent();
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+        lastNotification: lastNotification,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Пометить событие как прочитанное
+  Future<void> updateNotificationStatus(String eventId) async {
+    emit(state.copyWith(
+      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+    ));
+    try {
+      await userRepository.updateNotificationStatus(eventId);
+      emit(state.copyWith(
+        lastNotification: null,
+      ));
+      await getLastNotReadNotification();
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

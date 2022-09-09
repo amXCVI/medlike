@@ -44,7 +44,7 @@ class AppointmentsWidget extends StatelessWidget {
                     ?.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
-            state.getAppointmentsStatus != GetAppointmentsStatuses.success
+            state.getAppointmentsStatus == GetAppointmentsStatuses.loading
                 ? const AppointmentsWidgetSkeleton()
                 : state.appointmentsList!.isEmpty
                     ? const NotFoundAppointment()

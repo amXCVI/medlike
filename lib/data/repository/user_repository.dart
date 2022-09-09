@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -335,6 +336,31 @@ class UserRepository {
         "ClientPlatform": Platform.isAndroid ? "1" : "2",
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<NotificationModel> getLastNotReadedEvent() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/events/mainscreen');
+      return NotificationModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> updateNotificationStatus(String eventId) async {
+    try {
+      final response = await _dioClient.put(
+        '/api/v1.0/events/$eventId/seen',
+        data: {},
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (err) {
       rethrow;
     }

@@ -36,18 +36,23 @@ class NotFoundAppointment extends StatelessWidget {
               child: Image.asset(
                   'assets/icons/main_page/ic_main_button_three@2x.png',
                   width: 100)),
-          Text(
-            'У вас нет предстоящих приемов',
-            style: Theme.of(context).textTheme.titleMedium,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'У вас нет предстоящих приемов',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Но это легко исправить, \nзаписавшись к нужному \nспециалисту',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: AppColors.lightText),
+              )
+            ],
           ),
-          const SizedBox(height: 6),
-          Text(
-            'Но это легко исправить, \nзаписавшись к нужному \nспециалисту',
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall
-                ?.copyWith(color: AppColors.lightText),
-          )
         ],
       ),
     );
