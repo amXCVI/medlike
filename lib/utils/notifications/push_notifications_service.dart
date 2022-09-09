@@ -1,13 +1,28 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/firebase_options.dart';
 
 class FCMService {
   static FirebaseMessaging? _firebaseMessaging;
 
   static Future<void> initializeFirebase() async {
-    await Firebase.initializeApp();
+    try {
+      if (Firebase.apps.isEmpty) {
+        /// Непонятно, почему в ios нельзя указать название приложения
+        /// Не работает. Для Android название обязательно
+        await Firebase.initializeApp(
+          name: Platform.isAndroid ? AppConstants.appName : '[DEFAULT]',
+          options: DefaultFirebaseOptions.currentPlatform,
+        );
+      }
+    } catch (err) {
+      rethrow;
+    }
     FCMService._firebaseMessaging = FirebaseMessaging.instance;
 
     // 3. On iOS, this helps to take the user permissions

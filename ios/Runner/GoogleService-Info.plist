@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>692211461765-vdj5h2kjdvahaene3fr0i0lt9qm4cqdr.apps.googleusercontent.com</string>
+	<string>352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.692211461765-vdj5h2kjdvahaene3fr0i0lt9qm4cqdr</string>
+	<string>com.googleusercontent.apps.352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>352364144955-83je5lti98nckk1v5o1tpnbov8k1ub8j.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDBdBAqgcxx3Z-XnLvZSRGqzupk49g3R6E</string>
+	<string>AIzaSyBaM_tyvgyE34xKuCj-g-V_5ClxkkeQKXg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>692211461765</string>
+	<string>352364144955</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.medotrade.medlike</string>
 	<key>PROJECT_ID</key>
-	<string>zclinic-flutter</string>
+	<string>medlike-medotrade</string>
 	<key>STORAGE_BUCKET</key>
-	<string>zclinic-flutter.appspot.com</string>
+	<string>medlike-medotrade.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:692211461765:ios:b59f0e0ce89e6742c683ec</string>
+	<string>1:352364144955:ios:75abf5ddd3ff7395cf2f1e</string>
+	<key>DATABASE_URL</key>
+	<string>https://medlike-medotrade.firebaseio.com</string>
 </dict>
 </plist>
