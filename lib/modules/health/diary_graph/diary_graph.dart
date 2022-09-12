@@ -188,15 +188,15 @@ class _DiaryGraphState extends State<DiaryGraph> {
         color: AppColors.mainBrandColor,
         pointColorMapper: (ChartData datum, _) {
           final next = chartData.indexOf(datum) + 1;
+          //final prev = chartData.indexOf(datum) - 1;
 
-          if (next >= chartData.length) {
-            return AppColors.mainBrandColor;
-          }
+          final isRight = next >= chartData.length || chartData[next].isAbnormal;
+          //final isLeft = prev < 0 || chartData[prev].isAbnormal;
 
-          return !datum.isAbnormal 
-            && chartData[next].isAbnormal
-            ? AppColors.mainBrandColor
-            : AppColors.mainError;
+          return datum.isAbnormal 
+            && isRight //&& isLeft
+            ? AppColors.mainError
+            : null;
         },
         markerSettings: const MarkerSettings(
           color: AppColors.mainBrandColor,
@@ -214,9 +214,18 @@ class _DiaryGraphState extends State<DiaryGraph> {
       if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         SplineSeries<ChartData, DateTime>(
             dataSource: chartData,
-            pointColorMapper: (ChartData datum, _) => !datum.isAbnormal 
-              ? AppColors.mainBrandColor 
-              : AppColors.mainError,
+            pointColorMapper: (ChartData datum, _) {
+              final next = chartData.indexOf(datum) + 1;
+              //final prev = chartData.indexOf(datum) - 1;
+
+              final isRight = next >= chartData.length || chartData[next].isAbnormal;
+              //final isLeft = prev < 0 || chartData[prev].isAbnormal;
+
+              return datum.isAbnormal 
+                && isRight //&& isLeft
+                ? AppColors.mainError
+                : null;
+            },
             markerSettings: const MarkerSettings(
               color: Color.fromRGBO(60, 148, 168, 1),
               borderColor: Color.fromRGBO(237, 245, 247, 1),
