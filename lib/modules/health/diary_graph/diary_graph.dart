@@ -135,7 +135,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
       case 'Hour':
         type = DateTimeIntervalType.minutes;
         interval = 15;
-        width = 0.05;
+        width = chartData.length == 1 ? 0.001 : 0.6;
         break;
       case 'Day':
         type = DateTimeIntervalType.hours;
@@ -153,7 +153,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
         type = DateTimeIntervalType.days;
         interval = 7;
         if(!widget.isClean) {
-          width = 0.73;
+          width = 0.83;
         }
         break;
       default:
