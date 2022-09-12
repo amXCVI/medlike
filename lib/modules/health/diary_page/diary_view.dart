@@ -56,9 +56,9 @@ class _DiaryViewState extends State<DiaryView> {
       case 'Hour':
         break;
       case 'Day':
-        items = GroupingHelper.groupByHour(items);
-        break;
       case 'Week':
+        items = GroupingHelper.groupBySixHours(items);
+        break;
       case 'Month':
       default:
         items = GroupingHelper.groupByDay(items);
