@@ -102,6 +102,10 @@ class _DiaryGraphState extends State<DiaryGraph> {
       )
     ).toList();
 
+    List<ChartData> abnormalData = chartData.where(
+      (e) => e.isAbnormal
+    ).toList();
+
     ChartAxisLabel labelFormatter(args) {
       String text = args.text;
       final val = args.value as int;
@@ -129,32 +133,23 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
     DateTimeIntervalType type;
     double interval;
-    double width = 0.23;
 
     switch(widget.grouping) {
       case 'Hour':
         type = DateTimeIntervalType.minutes;
         interval = 15;
-        width = chartData.length == 1 ? 0.001 : 0.6;
         break;
       case 'Day':
         type = DateTimeIntervalType.hours;
         interval = 6;
-        width = 0.03;
         break;
       case 'Week':
         type = DateTimeIntervalType.days;
         interval = 1;
-        if(!widget.isClean) {
-          width = 0.23;
-        }
         break;
       case 'Month':
         type = DateTimeIntervalType.days;
         interval = 7;
-        if(!widget.isClean) {
-          width = 0.83;
-        }
         break;
       default:
         type = DateTimeIntervalType.days;
@@ -165,16 +160,35 @@ class _DiaryGraphState extends State<DiaryGraph> {
       if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
         RangeColumnSeries<ChartData, DateTime>(
           dataSource: chartData,
-          width: width,
+          width: 0,
           color: const Color.fromRGBO(237, 245, 247, 1),
-          pointColorMapper: ((datum, index) => datum.isAbnormal 
-            ? const Color.fromRGBO(254, 235, 240, 1) 
-            : const Color.fromRGBO(237, 245, 247, 1)),
           markerSettings: const MarkerSettings(
             isVisible: true,
             color: AppColors.mainBrandColor,
             height: 8
           ),
+          borderWidth: 10,
+          borderColor: AppColors.circleBgSecond,
+          xValueMapper: (ChartData data, _) => data.x,
+          highValueMapper: (ChartData data, _) => data.y,
+          lowValueMapper: (ChartData data, _) => data.y1,
+          onRendererCreated: (ChartSeriesController controller) {
+            seriesController = controller;
+          },
+          onPointTap: onPointTap
+        ),
+      if (widget.items.isNotEmpty && widget.items[0].innerData.length > 1)
+        RangeColumnSeries<ChartData, DateTime>(
+          dataSource: abnormalData,
+          width: 0,
+          color: const Color.fromRGBO(237, 245, 247, 1),
+          markerSettings: const MarkerSettings(
+            isVisible: true,
+            color: AppColors.mainBrandColor,
+            height: 8
+          ),
+          borderWidth: 10,
+          borderColor: const Color.fromRGBO(254, 235, 240, 1),
           xValueMapper: (ChartData data, _) => data.x,
           highValueMapper: (ChartData data, _) => data.y,
           lowValueMapper: (ChartData data, _) => data.y1,
