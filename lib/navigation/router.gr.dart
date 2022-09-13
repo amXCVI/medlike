@@ -337,6 +337,8 @@ class AppRouter extends _i35.RootStackRouter {
               paramName: args.paramName,
               grouping: args.grouping,
               onSubmit: args.onSubmit,
+              minValue: args.minValue,
+              maxValue: args.maxValue,
               initialValues: args.initialValues,
               initialDate: args.initialDate));
     }
@@ -1272,6 +1274,8 @@ class DiaryAddRoute extends _i35.PageRouteInfo<DiaryAddRouteArgs> {
       required List<String> paramName,
       required String grouping,
       required dynamic Function(String, DateTime, DateTime) onSubmit,
+      required List<double> minValue,
+      required List<double> maxValue,
       List<double>? initialValues,
       DateTime? initialDate})
       : super(DiaryAddRoute.name,
@@ -1284,6 +1288,8 @@ class DiaryAddRoute extends _i35.PageRouteInfo<DiaryAddRouteArgs> {
                 paramName: paramName,
                 grouping: grouping,
                 onSubmit: onSubmit,
+                minValue: minValue,
+                maxValue: maxValue,
                 initialValues: initialValues,
                 initialDate: initialDate));
 
@@ -1299,6 +1305,8 @@ class DiaryAddRouteArgs {
       required this.paramName,
       required this.grouping,
       required this.onSubmit,
+      required this.minValue,
+      required this.maxValue,
       this.initialValues,
       this.initialDate});
 
@@ -1316,12 +1324,16 @@ class DiaryAddRouteArgs {
 
   final dynamic Function(String, DateTime, DateTime) onSubmit;
 
+  final List<double> minValue;
+
+  final List<double> maxValue;
+
   final List<double>? initialValues;
 
   final DateTime? initialDate;
 
   @override
   String toString() {
-    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, grouping: $grouping, onSubmit: $onSubmit, initialValues: $initialValues, initialDate: $initialDate}';
+    return 'DiaryAddRouteArgs{key: $key, title: $title, measureItem: $measureItem, decimalDigits: $decimalDigits, paramName: $paramName, grouping: $grouping, onSubmit: $onSubmit, minValue: $minValue, maxValue: $maxValue, initialValues: $initialValues, initialDate: $initialDate}';
   }
 }

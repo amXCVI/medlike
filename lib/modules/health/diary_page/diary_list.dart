@@ -18,6 +18,8 @@ class DiaryList extends StatelessWidget {
     required this.measureItem,
     required this.syn,
     required this.paramName,
+    required this.minValue,
+    required this.maxValue,
     required this.grouping,
     required this.onSubmit
   }) : super(key: key);
@@ -29,6 +31,8 @@ class DiaryList extends StatelessWidget {
   final List<String> paramName;
   final String syn;
   final String grouping;
+  final List<double> minValue;
+  final List<double> maxValue;
   final Function(String, DateTime, DateTime) onSubmit;
 
   @override
@@ -44,6 +48,8 @@ class DiaryList extends StatelessWidget {
             syn: syn, 
             paramName: paramName,
             grouping: grouping,
+            minValue: minValue,
+            maxValue: maxValue,
             onSubmit: onSubmit,
           )
         ).toList()
@@ -62,6 +68,8 @@ class DiaryTile extends StatelessWidget {
     required this.syn,
     required this.paramName,
     required this.grouping,
+    required this.minValue,
+    required this.maxValue,
     required this.onSubmit
   }) : super(key: key);
 
@@ -72,6 +80,8 @@ class DiaryTile extends StatelessWidget {
   final List<String> paramName;
   final String syn;
   final String grouping;
+  final List<double> minValue;
+  final List<double> maxValue;
   final Function(String, DateTime, DateTime) onSubmit;
 
   @override
@@ -145,7 +155,9 @@ class DiaryTile extends StatelessWidget {
                   initialValues: item.innerData,
                   grouping: grouping,
                   initialDate: item.date,
-                  onSubmit: onSubmit
+                  onSubmit: onSubmit,
+                  minValue: minValue,
+                  maxValue: maxValue
                 )
               );
             },

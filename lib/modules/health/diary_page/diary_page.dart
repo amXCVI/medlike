@@ -31,6 +31,7 @@ class _DiaryPageState extends State<DiaryPage> {
   String grouping = '';
   late DateTime dateFrom;
   late DateTime dateTo;
+  bool isPrompt = false;
 
   void onSubmit(String grouping, DateTime dateFrom, DateTime dateTo) {
     setState(() {
@@ -75,6 +76,7 @@ class _DiaryPageState extends State<DiaryPage> {
             grouping = selectedGroup;
             dateFrom = dates[0];
             dateTo = dates[1];
+            isPrompt = false;
           });
 
         }
@@ -114,6 +116,12 @@ class _DiaryPageState extends State<DiaryPage> {
             firstDate: dateFrom,
             lastDate: dateTo,
             grouping: grouping,
+            isPrompt: isPrompt,
+            setPrompt: () {
+              setState(() {
+                isPrompt = true;
+              });
+            },
             paramName: widget.categoryModel.paramName,
             onLoadDate: onLoadDate,
             onSubmit: onSubmit,
@@ -150,6 +158,8 @@ class _DiaryPageState extends State<DiaryPage> {
                   decimalDigits: widget.categoryModel.decimalDigits, 
                   paramName: widget.categoryModel.paramName,
                   grouping: grouping,
+                  minValue: widget.categoryModel.minValue,
+                  maxValue: widget.categoryModel.maxValue,
                   onSubmit: onSubmit
                 )
               );

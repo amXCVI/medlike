@@ -18,6 +18,8 @@ class DiaryAddPage extends StatefulWidget {
     required this.paramName,
     required this.grouping,
     required this.onSubmit,
+    required this.minValue,
+    required this.maxValue,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -28,6 +30,8 @@ class DiaryAddPage extends StatefulWidget {
   final List<String> paramName;
   final DateTime? initialDate;
   final List<double>? initialValues;
+  final List<double> minValue;
+  final List<double> maxValue;
   final String grouping;
   final Function(String, DateTime, DateTime) onSubmit;
 
@@ -83,20 +87,28 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   @override
   Widget build(BuildContext context) {
     final fields = widget.paramName.map((e) {
+      int index = widget.paramName.indexOf(e);
+
       return FormField(
         labelText: e, 
-        controller: _controllers[widget.paramName.indexOf(e)], 
-        isEmpty: isEmpties[widget.paramName.indexOf(e)],
+        controller: _controllers[index], 
+        isEmpty: isEmpties[index],
         validator: (str) {
           final num = double.tryParse(str ?? '');
           if(num == null) {
             return 'Введите число';
           }
+          if(num < widget.minValue[index]) {
+            return 'Введённое значени ниже минимального';
+          }
+          if(num > widget.maxValue[index]) {
+            return 'Введённое значени выше максимального';
+          }
           return null;
         },
         onChange: (text) {
           setState(() {
-            isEmpties[widget.paramName.indexOf(e)] = text == '';
+            isEmpties[index] = text == '';
           });
         },
       );
