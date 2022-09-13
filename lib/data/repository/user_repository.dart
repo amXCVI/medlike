@@ -333,7 +333,7 @@ class UserRepository {
     try {
       await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
-        "ClientPlatform": Platform.isAndroid ? "1" : "2",
+        "ClientPlatform": "1",// Platform.isAndroid ? "1" : "2",
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
     } catch (err) {

@@ -46,7 +46,8 @@ class AppointmentsWidget extends StatelessWidget {
             ),
             state.getAppointmentsStatus == GetAppointmentsStatuses.loading
                 ? const AppointmentsWidgetSkeleton()
-                : state.appointmentsList!.isEmpty
+                : state.appointmentsList == null ||
+                        state.appointmentsList!.isEmpty
                     ? const NotFoundAppointment()
                     : CarouselSlider(
                         items: [

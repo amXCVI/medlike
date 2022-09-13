@@ -59,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
-    appId: '1:1083145779008:ios:bba2d29b7cf23d21742ca5',
+    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
     messagingSenderId: '1083145779008',
     projectId: 'z-clinic-flutter-project',
     storageBucket: 'z-clinic-flutter-project.appspot.com',
-    iosClientId: '1083145779008-3co934mq2dhf1o5t527rejf8vk3v0dmb.apps.googleusercontent.com',
-    iosBundleId: 'com.medotrade.medlike',
+    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
+    iosBundleId: 'com.example.medlike',
   );
 }

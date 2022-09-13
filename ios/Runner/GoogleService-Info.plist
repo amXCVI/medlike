@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com</string>
+	<string>352364144955-u212159v0illl9169j4vj36ucgfvg2l2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns</string>
+	<string>com.googleusercontent.apps.352364144955-u212159v0illl9169j4vj36ucgfvg2l2</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>352364144955-83je5lti98nckk1v5o1tpnbov8k1ub8j.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.medotrade.medlike</string>
+	<string>com.example.medlike</string>
 	<key>PROJECT_ID</key>
 	<string>medlike-medotrade</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:352364144955:ios:75abf5ddd3ff7395cf2f1e</string>
+	<string>1:352364144955:ios:3741a750d81dcd4ccf2f1e</string>
 	<key>DATABASE_URL</key>
 	<string>https://medlike-medotrade.firebaseio.com</string>
 </dict>
