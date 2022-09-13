@@ -200,6 +200,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
       SplineSeries<ChartData, DateTime>(
         dataSource: chartData,
         color: AppColors.mainBrandColor,
+        splineType: SplineType.monotonic,
         pointColorMapper: (ChartData datum, _) {
           final next = chartData.indexOf(datum) + 1;
           //final prev = chartData.indexOf(datum) - 1;
@@ -240,6 +241,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
                 ? AppColors.mainError
                 : null;
             },
+            splineType: SplineType.monotonic,
             markerSettings: const MarkerSettings(
               color: Color.fromRGBO(60, 148, 168, 1),
               borderColor: Color.fromRGBO(237, 245, 247, 1),

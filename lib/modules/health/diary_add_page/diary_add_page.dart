@@ -147,6 +147,10 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
+
               final newDate = DateTime(
                 date!.year,
                 date!.month,

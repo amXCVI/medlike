@@ -98,9 +98,7 @@ class _DiaryPageState extends State<DiaryPage> {
 
         Widget page; 
 
-        if(state.updateDiaryStatuses == UpdateDiaryStatuses.failed) {
-          page = const Text('Failed');
-        } else if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
+        if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
           || state.periodedSelectedDiary == null) {
           page = const DiarySkeleton();
         } else if(state.selectedDiary!.values.isEmpty && grouping == '') {
