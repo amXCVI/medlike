@@ -20,8 +20,11 @@ class DiaryView extends StatefulWidget {
     required this.firstDate,
     required this.lastDate,
     required this.grouping,
+    required this.isPrompt,
+    required this.setPrompt,
     required this.paramName,
-    required this.onLoadDate
+    required this.onLoadDate,
+    required this.onSubmit
   }) : super(key: key);
   
   final String title;
@@ -33,8 +36,11 @@ class DiaryView extends StatefulWidget {
   final DateTime firstDate;
   final DateTime lastDate;
   final String grouping;
+  final bool isPrompt; 
+  final Function setPrompt;
   final Function(bool) onLoadDate;
   final List<String> paramName;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   State<DiaryView> createState() => _DiaryViewState();
@@ -49,14 +55,16 @@ class _DiaryViewState extends State<DiaryView> {
 
   @override
   Widget build(BuildContext context) {
+    final prompted = isPrompt && widget.isPrompt;
+
     List<DataItem> items =  widget.diaryModel.values;
     switch(widget.grouping) {
       case 'Hour':
         break;
       case 'Day':
+      case 'Week':
         items = GroupingHelper.groupByHour(items);
         break;
-      case 'Week':
       case 'Month':
       default:
         items = GroupingHelper.groupByDay(items);
@@ -66,14 +74,14 @@ class _DiaryViewState extends State<DiaryView> {
       physics: const NeverScrollableScrollPhysics(),
       child: Column(
         children: [
-          if (!isPrompt) DiaryValue(
+          if (!prompted) DiaryValue(
             date: widget.firstDate,
             currentValue: widget.diaryModel.currentValue,
             measureItem: widget.measureItem,
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
           ),
-          if (isPrompt) Stack(
+          if (prompted) Stack(
             alignment: Alignment.bottomCenter,
             children: [
               SizedBox(
@@ -109,7 +117,7 @@ class _DiaryViewState extends State<DiaryView> {
             decimalDigits: widget.decimalDigits,
             grouping: widget.grouping,
             onLoadDate: widget.onLoadDate,
-            selected: offset.dx,
+            selected: prompted ? offset.dx : null,
             minValue: widget.minValue,
             maxValue: widget.maxValue,
             onSelect: (id, newOffset) {
@@ -118,20 +126,28 @@ class _DiaryViewState extends State<DiaryView> {
                   setState(() {
                     selectedId = id;
                     isPrompt = true;
+                    widget.setPrompt();
                     offset = newOffset;
                   });
 
                   ContextHelper.getFutureSizeFromGlobalKey(
                     _widgetKey, 
                     (size) => setState(() {
-                      final dw = MediaQuery.of(context).size.width;
+                      final dw = MediaQuery.of(context).size.width - 32;
                       var w = offset.dx - size.width / 2;
                       w = w < 0 ? 0 : w;
-                      w = w > dw ? dw : w;
-                      centerOffset = Offset(
-                        w < 0 ? 0 : w,
-                        size.height
-                      );
+                      w = offset.dx > dw ? dw : w;
+                      if(offset.dx + size.width <= dw) {
+                        centerOffset = Offset(
+                          w < 0 ? 0 : w,
+                          size.height
+                        );
+                      } else {
+                        centerOffset = Offset(
+                          dw - size.width,
+                          size.height
+                        );
+                      }
                     }) 
                   );
                 }
@@ -151,6 +167,9 @@ class _DiaryViewState extends State<DiaryView> {
             syn: widget.diaryModel.syn,
             paramName: widget.paramName,
             grouping: widget.grouping,
+            onSubmit: widget.onSubmit,
+            minValue: widget.minValue,
+            maxValue: widget.maxValue,
           )
         ],
       ),

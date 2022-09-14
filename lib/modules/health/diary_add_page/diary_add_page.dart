@@ -17,6 +17,9 @@ class DiaryAddPage extends StatefulWidget {
     required this.decimalDigits,
     required this.paramName,
     required this.grouping,
+    required this.onSubmit,
+    required this.minValue,
+    required this.maxValue,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -27,7 +30,10 @@ class DiaryAddPage extends StatefulWidget {
   final List<String> paramName;
   final DateTime? initialDate;
   final List<double>? initialValues;
+  final List<double> minValue;
+  final List<double> maxValue;
   final String grouping;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -81,20 +87,28 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   @override
   Widget build(BuildContext context) {
     final fields = widget.paramName.map((e) {
+      int index = widget.paramName.indexOf(e);
+
       return FormField(
         labelText: e, 
-        controller: _controllers[widget.paramName.indexOf(e)], 
-        isEmpty: isEmpties[widget.paramName.indexOf(e)],
+        controller: _controllers[index], 
+        isEmpty: isEmpties[index],
         validator: (str) {
           final num = double.tryParse(str ?? '');
           if(num == null) {
             return 'Введите число';
           }
+          if(num < widget.minValue[index]) {
+            return 'Введённое значени ниже минимального';
+          }
+          if(num > widget.maxValue[index]) {
+            return 'Введённое значени выше максимального';
+          }
           return null;
         },
         onChange: (text) {
           setState(() {
-            isEmpties[widget.paramName.indexOf(e)] = text == '';
+            isEmpties[index] = text == '';
           });
         },
       );
@@ -133,7 +147,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
-              final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
 
               final newDate = DateTime(
                 date!.year,
@@ -141,9 +157,14 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 date!.day,
                 time!.hour,
                 time!.minute
-              ); 
+              );
+
+              final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);
               
               if(widget.initialDate != null || widget.initialValues != null) {
+                final dates = ValueHelper.getPeriodTiming(widget.initialDate!, widget.grouping);
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,
                   oldDate: widget.initialDate!,
@@ -155,6 +176,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   updateTo: dates[1]
                 );
               } else {
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().postDiaryEntry(
                   date: newDate,
                   syn: state.selectedDiary!.syn,

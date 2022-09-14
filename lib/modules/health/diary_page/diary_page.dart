@@ -31,6 +31,15 @@ class _DiaryPageState extends State<DiaryPage> {
   String grouping = '';
   late DateTime dateFrom;
   late DateTime dateTo;
+  bool isPrompt = false;
+
+  void onSubmit(String grouping, DateTime dateFrom, DateTime dateTo) {
+    setState(() {
+      this.grouping = grouping;
+      this.dateFrom = dateFrom;
+      this.dateTo = dateTo;
+    });
+  }
 
   @override
   void initState() {
@@ -67,6 +76,7 @@ class _DiaryPageState extends State<DiaryPage> {
             grouping = selectedGroup;
             dateFrom = dates[0];
             dateTo = dates[1];
+            isPrompt = false;
           });
 
         }
@@ -88,9 +98,7 @@ class _DiaryPageState extends State<DiaryPage> {
 
         Widget page; 
 
-        if(state.updateDiaryStatuses == UpdateDiaryStatuses.failed) {
-          page = const Text('Failed');
-        } else if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
+        if(state.updateDiaryStatuses == UpdateDiaryStatuses.loading 
           || state.periodedSelectedDiary == null) {
           page = const DiarySkeleton();
         } else if(state.selectedDiary!.values.isEmpty && grouping == '') {
@@ -106,26 +114,36 @@ class _DiaryPageState extends State<DiaryPage> {
             firstDate: dateFrom,
             lastDate: dateTo,
             grouping: grouping,
+            isPrompt: isPrompt,
+            setPrompt: () {
+              setState(() {
+                isPrompt = true;
+              });
+            },
             paramName: widget.categoryModel.paramName,
-            onLoadDate: onLoadDate
+            onLoadDate: onLoadDate,
+            onSubmit: onSubmit,
           );
         }
         return DefaultScaffold(
           isChildrenPage: true,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                if(state.selectedDiary != null
-                  && !(state.selectedDiary!.values.isEmpty && grouping == '')
-                ) 
-                  DiaryChips(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  if((
+                    state.selectedDiary != null &&
+                    !(state.selectedDiary!.values.isEmpty && grouping == '')  
+                    ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
+                  ) DiaryChips(
                     syn: state.selectedDiary!.syn,
                     onTap: onTap,
                     selectedGroup: grouping,
                   ),
-                page,
-              ],
+                  page,
+                ],
+              ),
             ),
           ),
           appBarTitle: widget.title,
@@ -137,7 +155,10 @@ class _DiaryPageState extends State<DiaryPage> {
                   measureItem: widget.categoryModel.measureItem,
                   decimalDigits: widget.categoryModel.decimalDigits, 
                   paramName: widget.categoryModel.paramName,
-                  grouping: grouping
+                  grouping: grouping,
+                  minValue: widget.categoryModel.minValue,
+                  maxValue: widget.categoryModel.maxValue,
+                  onSubmit: onSubmit
                 )
               );
             },

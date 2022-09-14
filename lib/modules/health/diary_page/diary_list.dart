@@ -18,7 +18,10 @@ class DiaryList extends StatelessWidget {
     required this.measureItem,
     required this.syn,
     required this.paramName,
-    required this.grouping
+    required this.minValue,
+    required this.maxValue,
+    required this.grouping,
+    required this.onSubmit
   }) : super(key: key);
 
   final String title;
@@ -28,6 +31,9 @@ class DiaryList extends StatelessWidget {
   final List<String> paramName;
   final String syn;
   final String grouping;
+  final List<double> minValue;
+  final List<double> maxValue;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +48,9 @@ class DiaryList extends StatelessWidget {
             syn: syn, 
             paramName: paramName,
             grouping: grouping,
+            minValue: minValue,
+            maxValue: maxValue,
+            onSubmit: onSubmit,
           )
         ).toList()
       ],
@@ -58,7 +67,10 @@ class DiaryTile extends StatelessWidget {
     required this.measureItem,
     required this.syn,
     required this.paramName,
-    required this.grouping
+    required this.grouping,
+    required this.minValue,
+    required this.maxValue,
+    required this.onSubmit
   }) : super(key: key);
 
   final String title;
@@ -68,6 +80,9 @@ class DiaryTile extends StatelessWidget {
   final List<String> paramName;
   final String syn;
   final String grouping;
+  final List<double> minValue;
+  final List<double> maxValue;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +90,6 @@ class DiaryTile extends StatelessWidget {
       ValueHelper.getStringFromValues(item.innerData, decimalDigits);
 
     final dates = ValueHelper.getPeriodTiming(item.date, grouping);
-    print(dates);
 
     return Slidable(
         key: ValueKey(item.hashCode),
@@ -132,14 +146,20 @@ class DiaryTile extends StatelessWidget {
               color: AppColors.lightText
             ),
             onTap: () {
-              context.router.push(DiaryAddRoute(
+              context.router.push(
+                DiaryAddRoute(
                   title: title,
                   measureItem: measureItem,
                   decimalDigits: decimalDigits,
                   paramName: paramName,
                   initialValues: item.innerData,
                   grouping: grouping,
-                  initialDate: item.date));
+                  initialDate: item.date,
+                  onSubmit: onSubmit,
+                  minValue: minValue,
+                  maxValue: maxValue
+                )
+              );
             },
           ),
         ));

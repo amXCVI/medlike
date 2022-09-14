@@ -215,7 +215,7 @@ class DiaryCubit extends Cubit<DiaryState> {
           );
         }
 
-        AppToast.showAppToast(msg: 'Запись отредактирование');
+        AppToast.showAppToast(msg: 'Запись отредактирована');
       }
     } catch (e) {
       emit(state.copyWith(

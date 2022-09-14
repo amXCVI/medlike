@@ -8,6 +8,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
 import 'package:medlike/utils/helpers/grouping_helper.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 
 
 class HealthItem extends StatefulWidget {
@@ -45,13 +46,18 @@ class HealthItem extends StatefulWidget {
 class _HealthItemState extends State<HealthItem> {
   Offset? offset;
   Offset? centerOffset;
+  Offset? blockOffset;
   DataItem? item;
   final GlobalKey _widgetKey = GlobalKey();
+  final GlobalKey _keyContext = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    final items = GroupingHelper.groupByDay(widget.data?.values ?? []);
-
+    final items = ValueHelper.filterItemsByPeriod(
+      items: GroupingHelper.groupByDay(widget.data?.values ?? []),
+      start: widget.firstDate,
+      end: widget.lastDate
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
@@ -124,6 +130,7 @@ class _HealthItemState extends State<HealthItem> {
                                   height: 10,
                                 ),
                                 DiaryGraph(
+                                  key: _keyContext,
                                   items: items, 
                                   firstDate: widget.firstDate, 
                                   lastDate: widget.lastDate, 
@@ -133,22 +140,32 @@ class _HealthItemState extends State<HealthItem> {
                                   maxValue: widget.maxValue,
                                   selected: offset?.dx, 
                                   onSelect: (id, newOffset) {
+                                    final box = _keyContext.currentContext?.findRenderObject() as RenderBox;
+                                    final pos = box.localToGlobal(Offset.zero);
+
                                     Future.microtask(
                                       () {
                                         setState(() {
                                           item = widget.data?.values[id];
                                           offset = newOffset;
+                                          blockOffset = newOffset;
                                         });
                           
                                         ContextHelper.getFutureSizeFromGlobalKey(
                                           _widgetKey, 
                                           (size) => setState(() {
-                                            final dw = MediaQuery.of(context).size.width;
+                                            final dw = pos.dx;
                                             var w = offset?.dx ?? 0 - size.width / 2;
                                             w = w < 0 ? 0 : w;
                                             w = w > dw ? dw : w;
                                             centerOffset = Offset(
                                               w < 0 ? 0 : w,
+                                              size.height
+                                            );
+
+                                            blockOffset = Offset(
+                                              offset!.dx + size.width <= dw 
+                                                ? offset!.dx : dw - size.width,
                                               size.height
                                             );
                                           }) 
@@ -170,7 +187,7 @@ class _HealthItemState extends State<HealthItem> {
                           ),
                           if(item != null) Positioned(
                             top: 5,
-                            left: centerOffset?.dx ?? offset?.dx,
+                            left: blockOffset?.dx,
                             child: DiarySmallPrompt(
                               key: _widgetKey,
                               item: item!, 
@@ -178,7 +195,7 @@ class _HealthItemState extends State<HealthItem> {
                             ),
                           ),
                           Positioned(
-                            left: (centerOffset?.dx ?? offset?.dx),
+                            left: (centerOffset?.dx ?? blockOffset?.dx),
                             top: 12,
                             child: Container(
                               height: 5,
