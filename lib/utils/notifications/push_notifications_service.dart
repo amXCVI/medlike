@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -16,7 +14,7 @@ class FCMService {
         /// Непонятно, почему в ios нельзя указать название приложения
         /// Не работает. Для Android название обязательно
         await Firebase.initializeApp(
-          name: Platform.isAndroid ? AppConstants.appName : '[DEFAULT]',
+          name: AppConstants.appName, //Platform.isAndroid ? AppConstants.appName : '[DEFAULT]',
           options: DefaultFirebaseOptions.currentPlatform,
         );
       }
@@ -103,5 +101,32 @@ class FCMService {
         payload: "new follower",
       );
     });
+  }
+
+  static Future<String?> getAPNSToken() async {
+    String? iosToken=await FirebaseMessaging.instance.getAPNSToken();
+    if (kDebugMode) {
+      print('!!!!!!!!! APNS Token: $iosToken');
+    }
+    return iosToken;
+  }
+
+  static Future<String?> getFCMToken() async {
+    String? fcmToken=await FirebaseMessaging.instance.getToken();
+    if (kDebugMode) {
+      print('!!!!!!!!! FCM Token: $fcmToken');
+    }
+    return fcmToken;
+  }
+
+  static Future<void> getFCMApps() async {
+    String? appName=await FirebaseMessaging.instance.app.name;
+    if (kDebugMode) {
+      print('!!!!!!!!! FCM appName: $appName');
+    }
+  }
+
+  static Future<void> cleanFCMToken() async {
+    await FirebaseMessaging.instance.deleteToken();
   }
 }
