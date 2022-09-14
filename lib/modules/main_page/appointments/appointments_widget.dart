@@ -44,9 +44,10 @@ class AppointmentsWidget extends StatelessWidget {
                     ?.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
-            state.getAppointmentsStatus != GetAppointmentsStatuses.success
+            state.getAppointmentsStatus == GetAppointmentsStatuses.loading
                 ? const AppointmentsWidgetSkeleton()
-                : state.appointmentsList!.isEmpty
+                : state.appointmentsList == null ||
+                        state.appointmentsList!.isEmpty
                     ? const NotFoundAppointment()
                     : CarouselSlider(
                         items: [
@@ -180,7 +181,7 @@ class AppointmentsWidget extends StatelessWidget {
                                                             const SizedBox(
                                                                 width: 8.0),
                                                             Text(DateFormat(
-                                                                    'dd.MM.yyyy, HH:mm')
+                                                                    'dd.MM.yy, HH:mm')
                                                                 .format(dateTimeToUTC(
                                                                     appointmentItem
                                                                         .appointmentDateTime,
@@ -215,10 +216,15 @@ class AppointmentsWidget extends StatelessWidget {
                                                                 'assets/icons/appointments/profile.svg'),
                                                             const SizedBox(
                                                                 width: 8.0),
-                                                            Text(appointmentItem
-                                                                .patientInfo
-                                                                .name
-                                                                .toString()),
+                                                            Text(
+                                                              appointmentItem
+                                                                  .patientInfo
+                                                                  .name
+                                                                  .toString(),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
                                                           ],
                                                         ),
                                                       ),

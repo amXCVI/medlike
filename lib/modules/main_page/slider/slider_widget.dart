@@ -23,8 +23,11 @@ class _SliderWidgetState extends State<SliderWidget> {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
         if (state.getMainscreenPromotionsListStatus ==
-            GetMainscreenPromotionsListStatuses.failed) {
-          return const Text('');
+                GetMainscreenPromotionsListStatuses.failed ||
+            state.getMainscreenPromotionsListStatus ==
+                    GetMainscreenPromotionsListStatuses.success &&
+                state.mainscreenPromotionsList!.isEmpty) {
+          return const SizedBox();
         } else if (state.getMainscreenPromotionsListStatus ==
             GetMainscreenPromotionsListStatuses.success) {
           return Stack(
