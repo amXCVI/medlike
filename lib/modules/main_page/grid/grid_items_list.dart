@@ -15,7 +15,7 @@ class GridItemModel {
 List<GridItemModel> gridItemsList = [
   GridItemModel(
     actionLink: AppRoutes.myAppointments,
-    imgSrc: 'assets/icons/main_page/ic_main_button_five@2x.png',
+    imgSrc: 'assets/icons/main_page/ic_main_button_two@2x.png',
     label: 'Мои приемы',
   ),
   GridItemModel(
@@ -25,7 +25,7 @@ List<GridItemModel> gridItemsList = [
   ),
   GridItemModel(
     actionLink: AppRoutes.health,
-    imgSrc: 'assets/icons/main_page/ic_main_button_one@2x.png',
+    imgSrc: 'assets/icons/main_page/ic_main_button_five@2x.png',
     label: 'Показатели здоровья',
   ),
   GridItemModel(
