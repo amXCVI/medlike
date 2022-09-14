@@ -50,6 +50,10 @@ dependencies:
   yandex_geocoder: ^2.0.2
   map_launcher: ^2.3.0+1
   collection: ^1.16.0
+  firebase_core: ^1.21.1
+  firebase_messaging: ^13.0.0
+  flutter_local_notifications: ^9.9.1
+  flutter_launcher_icons: ^0.10.0
 
   cupertino_icons: ^1.0.5
 
@@ -115,3 +119,8 @@ flutter:
 flutter_intl:
   main_locale: ru_RU
   enabled: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_logo.png"

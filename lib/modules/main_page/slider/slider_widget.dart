@@ -23,8 +23,11 @@ class _SliderWidgetState extends State<SliderWidget> {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
         if (state.getMainscreenPromotionsListStatus ==
-            GetMainscreenPromotionsListStatuses.failed) {
-          return const Text('');
+                GetMainscreenPromotionsListStatuses.failed ||
+            state.getMainscreenPromotionsListStatus ==
+                    GetMainscreenPromotionsListStatuses.success &&
+                state.mainscreenPromotionsList!.isEmpty) {
+          return const SizedBox();
         } else if (state.getMainscreenPromotionsListStatus ==
             GetMainscreenPromotionsListStatuses.success) {
           return Stack(
@@ -38,8 +41,8 @@ class _SliderWidgetState extends State<SliderWidget> {
                             ))
                         .toList(),
                     options: CarouselOptions(
+                      viewportFraction: 0.93,
                       aspectRatio: 16 / 9,
-                      viewportFraction: 1,
                       initialPage: 0,
                       enableInfiniteScroll: true,
                       reverse: false,
@@ -48,7 +51,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       autoPlayAnimationDuration:
                           const Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
+                      enlargeCenterPage: false,
                       onPageChanged: (page, reason) {
                         setState(() {
                           activePage = page;
