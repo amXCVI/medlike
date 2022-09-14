@@ -24,6 +24,8 @@ class HealthItem extends StatefulWidget {
     required this.onNavigate,
     required this.firstDate,
     required this.lastDate,
+    required this.isSelected,
+    required this.setSelected,
     this.data
   }) : super(key: key);
 
@@ -38,6 +40,8 @@ class HealthItem extends StatefulWidget {
   final DateTime lastDate;
   final Function onLoadDada;
   final Function onNavigate;
+  final bool isSelected;
+  final Function(bool) setSelected;
 
   @override
   State<HealthItem> createState() => _HealthItemState();
@@ -58,6 +62,9 @@ class _HealthItemState extends State<HealthItem> {
       start: widget.firstDate,
       end: widget.lastDate
     );
+
+    final isPrompted = item != null && widget.isSelected;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
@@ -138,7 +145,7 @@ class _HealthItemState extends State<HealthItem> {
                                   decimalDigits: widget.decimalDigits,
                                   minValue: widget.minValue,
                                   maxValue: widget.maxValue,
-                                  selected: offset?.dx, 
+                                  selected: isPrompted ? offset?.dx : null, 
                                   onSelect: (id, newOffset) {
                                     final box = _keyContext.currentContext?.findRenderObject() as RenderBox;
                                     final pos = box.localToGlobal(Offset.zero);
@@ -149,6 +156,7 @@ class _HealthItemState extends State<HealthItem> {
                                           item = widget.data?.values[id];
                                           offset = newOffset;
                                           blockOffset = newOffset;
+                                          widget.setSelected(true);
                                         });
                           
                                         ContextHelper.getFutureSizeFromGlobalKey(
@@ -177,6 +185,7 @@ class _HealthItemState extends State<HealthItem> {
                                     setState(() {
                                       item = null;
                                       offset = null;
+                                      widget.setSelected(false);
                                     });
                                   },
                                   grouping: 'Week',
@@ -185,7 +194,7 @@ class _HealthItemState extends State<HealthItem> {
                               ],
                             ),
                           ),
-                          if(item != null) Positioned(
+                          if(isPrompted) Positioned(
                             top: 5,
                             left: blockOffset?.dx,
                             child: DiarySmallPrompt(
@@ -194,7 +203,7 @@ class _HealthItemState extends State<HealthItem> {
                               decimalDigits: widget.decimalDigits, 
                             ),
                           ),
-                          Positioned(
+                          if(isPrompted) Positioned(
                             left: (centerOffset?.dx ?? blockOffset?.dx),
                             top: 12,
                             child: Container(

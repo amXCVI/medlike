@@ -212,7 +212,7 @@ class ValueHelper {
     )).toList(); 
 
     perioded.sort(
-      (a, b) => a.date.isAfter(b.date) ? 1 : -1
+      (a, b) => a.date.isAfter(b.date) ? -1 : 1
     );
 
     return perioded;

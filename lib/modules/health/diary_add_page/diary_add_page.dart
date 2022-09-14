@@ -99,10 +99,10 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             return 'Введите число';
           }
           if(num < widget.minValue[index]) {
-            return 'Введённое значени ниже минимального';
+            return 'Введённое значение ниже минимального';
           }
           if(num > widget.maxValue[index]) {
-            return 'Введённое значени выше максимального';
+            return 'Введённое значение выше максимального';
           }
           return null;
         },
