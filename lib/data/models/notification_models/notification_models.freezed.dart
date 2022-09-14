@@ -20,16 +20,13 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$NotificationModel {
-  String get id =>
-      throw _privateConstructorUsedError; // "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  String get title => throw _privateConstructorUsedError; // "string",
-  String get description => throw _privateConstructorUsedError; // "string",
-  DateTime get eventDate =>
-      throw _privateConstructorUsedError; // "2022-09-09T11:59:35.882Z",
-  int get eventsCount => throw _privateConstructorUsedError; // 0,
-  String get userId =>
-      throw _privateConstructorUsedError; // "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  String get eventType => throw _privateConstructorUsedError; // "string",
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  DateTime get eventDate => throw _privateConstructorUsedError;
+  int get eventsCount => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get eventType => throw _privateConstructorUsedError;
   String get entityId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -206,25 +203,18 @@ class _$_NotificationModel implements _NotificationModel {
 
   @override
   final String id;
-// "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   @override
   final String title;
-// "string",
   @override
   final String description;
-// "string",
   @override
   final DateTime eventDate;
-// "2022-09-09T11:59:35.882Z",
   @override
   final int eventsCount;
-// 0,
   @override
   final String userId;
-// "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   @override
   final String eventType;
-// "string",
   @override
   final String entityId;
 
@@ -291,19 +281,19 @@ abstract class _NotificationModel implements NotificationModel {
 
   @override
   String get id => throw _privateConstructorUsedError;
-  @override // "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  @override
   String get title => throw _privateConstructorUsedError;
-  @override // "string",
+  @override
   String get description => throw _privateConstructorUsedError;
-  @override // "string",
+  @override
   DateTime get eventDate => throw _privateConstructorUsedError;
-  @override // "2022-09-09T11:59:35.882Z",
+  @override
   int get eventsCount => throw _privateConstructorUsedError;
-  @override // 0,
+  @override
   String get userId => throw _privateConstructorUsedError;
-  @override // "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  @override
   String get eventType => throw _privateConstructorUsedError;
-  @override // "string",
+  @override
   String get entityId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
