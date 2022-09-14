@@ -6,12 +6,15 @@ class SliderSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SkeletonItem(
-        child: SkeletonLine(
-      style: SkeletonLineStyle(
-          height: MediaQuery.of(context).size.width / 16 * 9,
-          width: MediaQuery.of(context).size.width,
-          borderRadius: const BorderRadius.all(Radius.circular(12))),
-    ));
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SkeletonItem(
+          child: SkeletonLine(
+        style: SkeletonLineStyle(
+            height: MediaQuery.of(context).size.width / 16 * 9,
+            width: MediaQuery.of(context).size.width,
+            borderRadius: const BorderRadius.all(Radius.circular(12))),
+      )),
+    );
   }
 }
