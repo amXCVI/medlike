@@ -24,7 +24,7 @@ List<GridItemModel> gridItemsList = [
     label: 'Медкарта',
   ),
   GridItemModel(
-    actionLink: AppRoutes.health,
+    actionLink: AppRoutes.healthProfiles,
     imgSrc: 'assets/icons/main_page/ic_main_button_five@2x.png',
     label: 'Показатели здоровья',
   ),
