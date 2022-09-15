@@ -87,7 +87,7 @@ class AppointmentItemCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               SizedBox(
-                height: 32,
+                height: 30,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [

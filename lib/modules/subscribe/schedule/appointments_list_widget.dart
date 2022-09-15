@@ -203,6 +203,7 @@ class AppointmentsList extends StatelessWidget {
                   )),
             )
             .toList(),
+        const SizedBox(height: 8.0),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.dart';
 import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.dart';
@@ -72,12 +73,18 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
       }
     });
 
-    return DefaultScaffold(
-      child: const StartPhoneNumberView(),
-      appBarTitle: AppConstants.appName,
-      onPressedAppLogo: () {},
-      actions: const [UnauthSupportButton()],
-      bottomNavigationBar: const LoginPageBottomNavigationBar(),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: DefaultScaffold(
+        child: const StartPhoneNumberView(),
+        appBarTitle: AppConstants.appName,
+        onPressedAppLogo: () {},
+        actions: const [UnauthSupportButton()],
+        bottomNavigationBar: const LoginPageBottomNavigationBar(),
+      ),
     );
   }
 }
