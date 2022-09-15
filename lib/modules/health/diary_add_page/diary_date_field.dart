@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/modules/health/diary_add_page/field_wrapper.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/datetime_picker/datetime_picker.dart';
