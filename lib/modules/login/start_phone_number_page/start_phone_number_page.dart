@@ -8,6 +8,7 @@ import 'package:medlike/modules/login/start_phone_number_page/start_phone_number
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class StartPhoneNumberPage extends StatefulWidget {
   const StartPhoneNumberPage({Key? key, this.isDeletingProfile = false})
@@ -78,12 +79,14 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         SystemNavigator.pop();
         return false;
       },
-      child: DefaultScaffold(
-        child: const StartPhoneNumberView(),
-        appBarTitle: AppConstants.appName,
-        onPressedAppLogo: () {},
-        actions: const [UnauthSupportButton()],
-        bottomNavigationBar: const LoginPageBottomNavigationBar(),
+      child: TapCanvas(
+        child: DefaultScaffold(
+          child: const StartPhoneNumberView(),
+          appBarTitle: AppConstants.appName,
+          onPressedAppLogo: () {},
+          actions: const [UnauthSupportButton()],
+          bottomNavigationBar: const LoginPageBottomNavigationBar(),
+        ),
       ),
     );
   }
