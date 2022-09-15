@@ -11,7 +11,6 @@ import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart'
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
-import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ConfirmationSubscribePage extends StatefulWidget {
   const ConfirmationSubscribePage({Key? key, required this.userId})
@@ -66,30 +65,25 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                 label: const ConfirmationActionButtonLabel());
           },
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: DefaultScrollbar(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                const SizedBox(height: 20),
-                UserInfo(userId: widget.userId),
-                const SizedBox(height: 19),
-                const DashDivider(),
-                const SizedBox(height: 24),
-                const PaymentWidget(),
-                const AppointmentInfo(),
-                const SizedBox(height: 24),
-                const DashDivider(),
-                const SizedBox(height: 24),
-                AgreementsChecker(
-                  isChecked: isCheckedAgreements,
-                  setIsCheckedValue: setIsCheckedValue,
-                ),
-                const SizedBox(height: 44),
-              ],
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            const SizedBox(height: 20),
+            UserInfo(userId: widget.userId),
+            const SizedBox(height: 19),
+            const DashDivider(),
+            const SizedBox(height: 24),
+            const PaymentWidget(),
+            const AppointmentInfo(),
+            const SizedBox(height: 24),
+            const DashDivider(),
+            const SizedBox(height: 24),
+            AgreementsChecker(
+              isChecked: isCheckedAgreements,
+              setIsCheckedValue: setIsCheckedValue,
             ),
-          ),
+            const SizedBox(height: 44),
+          ],
         ),
       ),
     );
