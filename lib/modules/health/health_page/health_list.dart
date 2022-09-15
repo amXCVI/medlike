@@ -10,12 +10,12 @@ import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:collection/collection.dart';
 
 class HealthList extends StatelessWidget {
-  const HealthList({
-    Key? key,
-    required this.diariesCategoriesList,
-    required this.diariesItems,
-    required this.onLoadDada
-  }) : super(key: key);
+  const HealthList(
+      {Key? key,
+      required this.diariesCategoriesList,
+      required this.diariesItems,
+      required this.onLoadDada})
+      : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryFlatModel> diariesItems;
@@ -24,8 +24,8 @@ class HealthList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DiaryFlatModel? getDiaryEntries(int index) {
-      for(int i = 0; i < diariesItems.length; i++) {
-        if(diariesItems[i].syn == diariesCategoriesList[index].synonim) {
+      for (int i = 0; i < diariesItems.length; i++) {
+        if (diariesItems[i].syn == diariesCategoriesList[index].synonim) {
           return diariesItems[i];
         }
       }
@@ -33,51 +33,49 @@ class HealthList extends StatelessWidget {
       return null;
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ListView.builder(
+    return ListView.builder(
         itemCount: diariesCategoriesList.length,
         itemBuilder: (ctx, index) {
           final diary = diariesItems.firstWhereOrNull(
-            (el) => el.syn == diariesCategoriesList[index].synonim
-          );
+              (el) => el.syn == diariesCategoriesList[index].synonim);
 
           final date = diary?.currentValue.date ?? DateTime.now();
           DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(date);
           DateTime dateTo = date_utils.DateUtils.lastDayOfWeek(date);
 
-          return HealthItem(
-            iconPath: diariesCategoriesList[index].categoryImg, 
-            title: diariesCategoriesList[index].name,
-            measureItem: diariesCategoriesList[index].measureItem,
-            decimalDigits: diariesCategoriesList[index].decimalDigits,
-            minValue: diariesCategoriesList[index].minValue,
-            maxValue: diariesCategoriesList[index].maxValue,
-            data: getDiaryEntries(index),
-            firstDate: dateFrom,
-            lastDate: dateTo,
-            onLoadDada: onLoadDada,
-            onNavigate: (String title, String syn) {
-              final date = DateTime.now();
-              final dates = ValueHelper.getPeriodTiming(date, '');
+          return Padding(
+            padding: EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: index == 0 ? 16.0 : 0,
+              bottom: index == diariesCategoriesList.length - 1 ? 32.0 : 0,
+            ),
+            child: HealthItem(
+              iconPath: diariesCategoriesList[index].categoryImg,
+              title: diariesCategoriesList[index].name,
+              measureItem: diariesCategoriesList[index].measureItem,
+              decimalDigits: diariesCategoriesList[index].decimalDigits,
+              minValue: diariesCategoriesList[index].minValue,
+              maxValue: diariesCategoriesList[index].maxValue,
+              data: getDiaryEntries(index),
+              firstDate: dateFrom,
+              lastDate: dateTo,
+              onLoadDada: onLoadDada,
+              onNavigate: (String title, String syn) {
+                final date = DateTime.now();
+                final dates = ValueHelper.getPeriodTiming(date, '');
 
-              context.read<DiaryCubit>().setTimePeriod(
-                start: dates[0],
-                end: dates[1],
-                syn: syn
-              );
+                context
+                    .read<DiaryCubit>()
+                    .setTimePeriod(start: dates[0], end: dates[1], syn: syn);
 
-              context.router.push(
-                DiaryRoute(
-                  syn: syn,
-                  title: title,
-                  categoryModel: diariesCategoriesList[index]
-                )
-              );
-            },
+                context.router.push(DiaryRoute(
+                    syn: syn,
+                    title: title,
+                    categoryModel: diariesCategoriesList[index]));
+              },
+            ),
           );
-        }
-      ),
-    );
+        });
   }
 }

@@ -145,10 +145,13 @@ class _PinCodeViewState extends State<PinCodeView> {
     return SizedBox(
       width: 300,
       height: MediaQuery.of(context).size.width < AppConstants.smScreenWidth
-          ? MediaQuery.of(context).size.height - 70
+          ? MediaQuery.of(context).size.height - 140
           : MediaQuery.of(context).size.height - 160,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.spaceBetween,
         children: [
           const Expanded(child: SizedBox()),
           Expanded(
@@ -164,7 +167,11 @@ class _PinCodeViewState extends State<PinCodeView> {
                         ?.copyWith(color: AppColors.mainText),
                     textAlign: TextAlign.center,
                   )),
-                  const SizedBox(height: 28),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.width <
+                              AppConstants.smScreenWidth
+                          ? 8
+                          : 28),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
