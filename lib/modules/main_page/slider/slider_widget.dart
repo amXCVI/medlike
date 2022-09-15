@@ -41,6 +41,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                         .toList(),
                     options: CarouselOptions(
                       viewportFraction: 0.93,
+                      height: 176,
                       aspectRatio: 16 / 9,
                       initialPage: 0,
                       enableInfiniteScroll: true,
