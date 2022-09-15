@@ -347,7 +347,7 @@ class AppRouter extends _i35.RootStackRouter {
   @override
   List<_i35.RouteConfig> get routes => [
         _i35.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/main', fullMatch: true),
+            path: '/', redirectTo: '/login_pin_code_check', fullMatch: true),
         _i35.RouteConfig(StartPhoneNumberRoute.name, path: '/login_phone'),
         _i35.RouteConfig(PasswordRoute.name, path: '/login_password'),
         _i35.RouteConfig(CreatePinCodeRoute.name, path: '/login_pin_code'),
