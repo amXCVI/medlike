@@ -7,7 +7,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Wrap(
+      child: ListView(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
@@ -49,7 +49,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                     }),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

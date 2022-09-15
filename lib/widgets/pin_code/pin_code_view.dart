@@ -144,7 +144,9 @@ class _PinCodeViewState extends State<PinCodeView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.height - 160,
+      height: MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+          ? MediaQuery.of(context).size.height - 70
+          : MediaQuery.of(context).size.height - 160,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

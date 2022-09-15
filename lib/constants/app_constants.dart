@@ -50,6 +50,9 @@ class AppConstants {
 
   // Человекочитаемое название приложения
   static const appName = 'Z-Clinic';
+
+  // Размер экрана для iPhone SE. Используется в верстке, уникальные случаи
+  static const int smScreenWidth = 330;
 }
 
 // Способы авторизации
