@@ -153,7 +153,9 @@ class _PinCodeViewState extends State<PinCodeView> {
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.spaceBetween,
         children: [
-          const Expanded(child: SizedBox()),
+          MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+              ? const SizedBox(height: 12)
+              : const Expanded(child: SizedBox()),
           Expanded(
             child: Center(
               child: Column(
