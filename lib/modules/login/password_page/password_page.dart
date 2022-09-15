@@ -19,7 +19,7 @@ class PasswordPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         context.router.replaceAll([StartPhoneNumberRoute()]);
-        context.read<UserCubit>().signOut();
+        context.read<UserCubit>().forceLogout();
         return false;
       },
       child: DefaultScaffold(

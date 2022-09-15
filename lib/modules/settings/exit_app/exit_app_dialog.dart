@@ -16,7 +16,7 @@ class ExitAppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void confirmSignOut() {
-      context.read<UserCubit>().signOut();
+      context.read<UserCubit>().forceLogout();
       if (goToLoginPage) {
         context.router.replaceAll([StartPhoneNumberRoute()]);
       } else {

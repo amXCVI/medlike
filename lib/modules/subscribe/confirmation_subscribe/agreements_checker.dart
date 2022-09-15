@@ -25,6 +25,7 @@ class AgreementsChecker extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        const SizedBox(width: 16.0),
         CustomCheckbox(
           value: isChecked,
           onChanged: (e) {
