@@ -10,6 +10,7 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class DiaryPage extends StatefulWidget {
   const DiaryPage({
@@ -56,6 +57,12 @@ class _DiaryPageState extends State<DiaryPage> {
     dateFrom = dates[0];
     dateTo = dates[1];
     super.initState();
+  }
+
+  void onScreenTap() {
+    setState(() {
+      isPrompt = false;
+    });
   }
 
   @override

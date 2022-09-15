@@ -5,27 +5,21 @@ class HealthNodata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 50,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/empty_indicator.png'),
-          const SizedBox(height: 50,),
-          const Text(
-            'Здесь будет список \nваших показателей здоровья',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color.fromRGBO(158, 157, 157, 1)
-            ),
-          )
-        ]
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset('assets/images/empty_indicator.png'),
+        const Text(
+          'Здесь будет список \nваших показателей здоровья',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Color.fromRGBO(158, 157, 157, 1)
+          ),
+        )
+      ]
     );
   }
 }

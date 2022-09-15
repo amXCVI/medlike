@@ -110,14 +110,17 @@ class ValueHelper {
   }
 
   static getDayString(DateTime date) {
-    if(date.day == DateTime.now().day) {
-      return 'Сегодня';
-    } else if(date.day == DateTime.now().day - 1) {
-      return 'Вчера';
-    } else {
-      DateFormat dateFormat = DateFormat("dd MMMM", 'ru_RU');
-      return dateFormat.format(date);
+    final now = DateTime.now();
+
+    if(date.month == now.month && date.year == date.year) {
+      if(date.day == now.day) {
+        return 'Сегодня';
+      } else if(date.day == now.day - 1) {
+        return 'Вчера';
+      } 
     }
+    DateFormat dateFormat = DateFormat("dd MMMM", 'ru_RU');
+    return dateFormat.format(date);
   }
 
   /// Возвращает текстовое представления периода
@@ -209,7 +212,7 @@ class ValueHelper {
     )).toList(); 
 
     perioded.sort(
-      (a, b) => a.date.isAfter(b.date) ? 1 : -1
+      (a, b) => a.date.isAfter(b.date) ? -1 : 1
     );
 
     return perioded;

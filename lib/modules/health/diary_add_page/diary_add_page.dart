@@ -99,14 +99,23 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             return 'Введите число';
           }
           if(num < widget.minValue[index]) {
-            return 'Введённое значени ниже минимального';
+            return 'Введённое значение ниже минимального';
           }
           if(num > widget.maxValue[index]) {
-            return 'Введённое значени выше максимального';
+            return 'Введённое значение выше максимального';
           }
           return null;
         },
         onChange: (text) {
+          final regex = RegExp(r'(^\d*\.?\d*)');
+          
+          _controllers[index].text = regex.firstMatch(text)?.group(0) ?? '';
+          _controllers[index].selection = TextSelection.fromPosition(
+            TextPosition(
+              offset: _controllers[index].text.length
+            )
+          );
+
           setState(() {
             isEmpties[index] = text == '';
           });
