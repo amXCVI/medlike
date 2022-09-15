@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -60,6 +62,7 @@ class UserCubit extends Cubit<UserState> {
         token: response.token,
         refreshToken: response.refreshToken,
       ));
+      addFirebaseDeviceId();
       return true;
     } catch (e) {
       emit(state.copyWith(
@@ -88,6 +91,13 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
+    addFirebaseDeviceId();
+  }
+
+  /// Сохраняет deviceId устройства на бэке
+  void addFirebaseDeviceId() async {
+    String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+    userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
 
   /// Получает список профилей из всех МО
@@ -164,6 +174,7 @@ class UserCubit extends Cubit<UserState> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
+      addFirebaseDeviceId();
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -477,7 +488,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       List<UserAgreementItemModel> response =
           await userRepository.getUserAllAgreements();
-      UserAgreementItemModel actualUserAgreement = response.firstWhere(
+      UserAgreementItemModel? actualUserAgreement = response.firstWhere(
           (element) => element.id == AppConstants.actualUserAgreement);
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.success,
@@ -622,6 +633,47 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получить последнее непочитанное уведомление
+  Future<void> getLastNotReadNotification() async {
+    emit(state.copyWith(
+      getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
+    ));
+    try {
+      NotificationModel lastNotification = await userRepository.getLastNotReadedEvent();
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+        lastNotification: lastNotification,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Пометить событие как прочитанное
+  Future<void> updateNotificationStatus(String eventId) async {
+    emit(state.copyWith(
+      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+    ));
+    try {
+      await userRepository.updateNotificationStatus(eventId);
+      emit(state.copyWith(
+        lastNotification: null,
+      ));
+      await getLastNotReadNotification();
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

@@ -7,7 +7,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Wrap(
+      child: ListView(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
@@ -26,7 +26,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 27),
-                Text('Авторизация в приложении',
+                Text('Регистрация в приложении',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge
@@ -49,7 +49,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                     }),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

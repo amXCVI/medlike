@@ -73,7 +73,7 @@ class AppointmentItem extends StatelessWidget {
             ],
           ),
           AppointmentItemRecommendations(
-              recommendations: appointmentItem.recommendations!),
+              recommendations: appointmentItem.recommendations ?? ''),
           const SizedBox(height: 8.0),
           Row(
             children: [

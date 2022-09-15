@@ -33,6 +33,10 @@ enum AcceptedAgreementsStatuses { initial, loading, success, failed }
 
 enum SendingEmailToSupportStatuses { initial, loading, success, failed }
 
+enum GetLastNotReadEventStatuses { initial, loading, success, failed }
+
+enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -56,6 +60,9 @@ class UserState {
   final GetAllUserAgreementsStatuses? getAllUserAgreementsStatus;
   final AcceptedAgreementsStatuses? acceptedAgreementsStatus;
   final SendingEmailToSupportStatuses? sendingEmailToSupportStatus;
+  final GetLastNotReadEventStatuses? getLastNotReadEventStatus;
+  final NotificationModel? lastNotification;
+  final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -82,6 +89,9 @@ class UserState {
     this.getAllUserAgreementsStatus = GetAllUserAgreementsStatuses.initial,
     this.acceptedAgreementsStatus,
     this.sendingEmailToSupportStatus,
+    this.getLastNotReadEventStatus,
+    this.lastNotification,
+    this.updatingNotificationStatusStatus,
   });
 
   UserState copyWith({
@@ -107,6 +117,9 @@ class UserState {
     GetAllUserAgreementsStatuses? getAllUserAgreementsStatus,
     AcceptedAgreementsStatuses? acceptedAgreementsStatus,
     SendingEmailToSupportStatuses? sendingEmailToSupportStatus,
+    GetLastNotReadEventStatuses? getLastNotReadEventStatus,
+    NotificationModel? lastNotification,
+    UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -141,6 +154,11 @@ class UserState {
           acceptedAgreementsStatus ?? this.acceptedAgreementsStatus,
       sendingEmailToSupportStatus:
           sendingEmailToSupportStatus ?? this.sendingEmailToSupportStatus,
+      getLastNotReadEventStatus:
+          getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
+      lastNotification: lastNotification ?? this.lastNotification,
+      updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
+          this.updatingNotificationStatusStatus,
     );
   }
 

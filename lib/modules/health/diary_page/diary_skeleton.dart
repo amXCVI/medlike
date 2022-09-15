@@ -78,17 +78,16 @@ class DiarySkeleton extends StatelessWidget {
         const SizedBox(height: 55),
         SkeletonParagraph(
           style: SkeletonParagraphStyle(
-            padding: EdgeInsets.zero,
-            lines: 2,
-            spacing: 6,
-            lineStyle: SkeletonLineStyle(
-              randomLength: true,
-              height: 16,
-              borderRadius: BorderRadius.circular(16),
-              minLength: 106,
-              maxLength: 166,
-            )
-          ),
+              padding: EdgeInsets.zero,
+              lines: 2,
+              spacing: 6,
+              lineStyle: SkeletonLineStyle(
+                randomLength: true,
+                height: 16,
+                borderRadius: BorderRadius.circular(16),
+                minLength: 106,
+                maxLength: 166,
+              )),
         )
       ],
     );
@@ -96,19 +95,15 @@ class DiarySkeleton extends StatelessWidget {
 }
 
 class SkeletonRow extends StatelessWidget {
-  const SkeletonRow({
-    Key? key,
-    required this.height
-  }) : super(key: key);
+  const SkeletonRow({Key? key, required this.height}) : super(key: key);
 
   final double height;
+
   @override
   Widget build(BuildContext context) {
     return SkeletonLine(
       style: SkeletonLineStyle(
-        height: height,
-        width: 16,
-        borderRadius: BorderRadius.circular(16)),
+          height: height, width: 16, borderRadius: BorderRadius.circular(16)),
     );
   }
 }
