@@ -28,7 +28,7 @@ class TimeCellItem extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 13.0),
           child: Center(
             child: Text(DateFormat("HH:mm").format(time),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(

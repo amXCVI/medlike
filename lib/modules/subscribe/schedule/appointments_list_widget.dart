@@ -31,14 +31,7 @@ class AppointmentsListWidget extends StatelessWidget {
                     DateFormat('dd.MM.yyyy').format(item.appointmentDateTime) ==
                         DateFormat('dd.MM.yyyy').format(selectedDate))
                 .isEmpty) {
-          return Center(
-              child: Text(
-            '${DateFormat('dd.MM.yyyy').format(selectedDate)} у вас нет предстоящих приемов',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(color: AppColors.lightText),
-          ));
+          return const SizedBox();
         } else if (state.getAppointmentsStatus ==
             GetAppointmentsStatuses.success) {
           return AppointmentsList(
