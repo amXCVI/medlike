@@ -127,7 +127,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
                 ),
                 child: DefaultClipRRect(child: widget.child)),
           ),
-          const UnAuthChecker(),
+          // const UnAuthChecker(),
         ]),
       ),
       floatingActionButton: widget.actionButton,

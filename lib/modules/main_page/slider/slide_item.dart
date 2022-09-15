@@ -21,7 +21,8 @@ class SlideItem extends StatelessWidget {
     return GestureDetector(
       onTap: handleTapOnBanner,
       child: Container(
-        width: MediaQuery.of(context).size.width - 32 - 4,
+        width: MediaQuery.of(context).size.width - 32,
+        margin: const EdgeInsets.only(left: 4, right: 4),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
               begin: Alignment.topRight,

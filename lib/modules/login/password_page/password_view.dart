@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -40,6 +43,16 @@ class PasswordPageWidget extends StatelessWidget {
           .then((value) => {
                 if (value)
                   {
+                    // if (kIsWeb)
+                    //   {
+                    //     UserSecureStorage.setField(AppConstants.isAuth, 'true'),
+                    //     context
+                    //         .read<UserCubit>()
+                    //         .setPinCodeToStorage([0, 0, 0, 0, 0]),
+                    //     context.router.replaceAll([const MainRoute()]),
+                    //   }
+                    // else
+                    //   {
                     checkIsAcceptedUserAgreements().then((res) => {
                           if (!res)
                             {
@@ -64,7 +77,8 @@ class PasswordPageWidget extends StatelessWidget {
                                   })
                             }
                         })
-                  }
+                  },
+                // }
               });
     }
 

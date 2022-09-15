@@ -1,12 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:local_auth/local_auth.dart';
+// import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
+// import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
+// import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class PinCodeView extends StatefulWidget {
@@ -40,38 +41,40 @@ class _PinCodeViewState extends State<PinCodeView> {
   @override
   void initState() {
     pointsArray = initPointsArray;
-    if (widget.noUsedBiometric != null && widget.noUsedBiometric == true) {
+    if (widget.noUsedBiometric != null &&
+        widget.noUsedBiometric == true &&
+        !kIsWeb) {
       isShowingBiometricModal = false;
       isSupportedAndEnabledBiometric = false;
       return;
     } else {
-      initBiometricValue();
+      // initBiometricValue();
     }
     super.initState();
   }
 
-  void initBiometricValue() async {
-    String authMethod =
-        '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
-    bool isSupportedBiometric = await AuthService.canCheckBiometrics();
-    if (authMethod == SelectedAuthMethods.pinCode.toString() ||
-        authMethod == 'null' ||
-        !isSupportedBiometric) {
-      setState(() {
-        isSupportedAndEnabledBiometric = false;
-      });
-    } else {
-      isSupportedAndEnabledBiometric = true;
-    }
-
-    List<BiometricType> supportedBiometricTypesList =
-        await AuthService.getAvailableBiometrics();
-    if (supportedBiometricTypesList.contains(BiometricType.face)) {
-      setState(() {
-        isFaceId = true;
-      });
-    }
-  }
+  // void initBiometricValue() async {
+  //   String authMethod =
+  //       '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
+  //   bool isSupportedBiometric = await AuthService.canCheckBiometrics();
+  //   if (authMethod == SelectedAuthMethods.pinCode.toString() ||
+  //       authMethod == 'null' ||
+  //       !isSupportedBiometric) {
+  //     setState(() {
+  //       isSupportedAndEnabledBiometric = false;
+  //     });
+  //   } else {
+  //     isSupportedAndEnabledBiometric = true;
+  //   }
+  //
+  //   List<BiometricType> supportedBiometricTypesList =
+  //       await AuthService.getAvailableBiometrics();
+  //   if (supportedBiometricTypesList.contains(BiometricType.face)) {
+  //     setState(() {
+  //       isFaceId = true;
+  //     });
+  //   }
+  // }
 
   void onCancelBiometricAuthMethod() {
     setState(() {
@@ -270,14 +273,16 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
-          isSupportedAndEnabledBiometric && isShowingBiometricModal ||
-                  widget.isForcedShowingBiometricModal
-              ? BiometricAuthenticationWidget(
-                  onSuccess: onSuccessAuthBiometric,
-                  onCancel: onCancelBiometricAuthMethod,
-                  signInTitle: widget.signInTitle,
-                )
-              : const SizedBox(),
+          // isSupportedAndEnabledBiometric &&
+          //             !kIsWeb &&
+          //             isShowingBiometricModal ||
+          //         widget.isForcedShowingBiometricModal
+          //     ? BiometricAuthenticationWidget(
+          //         onSuccess: onSuccessAuthBiometric,
+          //         onCancel: onCancelBiometricAuthMethod,
+          //         signInTitle: widget.signInTitle,
+          //       )
+          //     : const SizedBox(),
         ],
       ),
     );
