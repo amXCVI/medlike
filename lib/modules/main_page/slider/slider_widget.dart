@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/main_page/slider/slide_item.dart';
-import 'package:medlike/modules/main_page/slider/slider_page_indicators.dart';
 import 'package:medlike/modules/main_page/slider/slider_skeleton.dart';
 
 class SliderWidget extends StatefulWidget {
@@ -60,21 +59,22 @@ class _SliderWidgetState extends State<SliderWidget> {
                       scrollDirection: Axis.horizontal,
                     )),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width / 16 * 9 - 32,
-                  width: MediaQuery.of(context).size.width,
-                  child: SliderPageIndicators(
-                    indicators: state.mainscreenPromotionsList!
-                        .asMap()
-                        .map((index, item) => MapEntry(index, ''))
-                        .keys
-                        .toList(),
-                    activeIndicator: activePage,
-                  ),
-                ),
-              ),
+              /// Белые точки с кол-вом слайдов и отметкой активной страницы
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: SizedBox(
+              //     height: MediaQuery.of(context).size.width / 16 * 9 - 32,
+              //     width: MediaQuery.of(context).size.width,
+              //     child: SliderPageIndicators(
+              //       indicators: state.mainscreenPromotionsList!
+              //           .asMap()
+              //           .map((index, item) => MapEntry(index, ''))
+              //           .keys
+              //           .toList(),
+              //       activeIndicator: activePage,
+              //     ),
+              //   ),
+              // ),
             ],
           );
         } else {

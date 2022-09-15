@@ -165,77 +165,88 @@ class AppointmentsWidget extends StatelessWidget {
                                               ],
                                             ),
                                             const SizedBox(height: 8),
-                                            Row(
-                                              children: [
-                                                RichText(
-                                                  text: WidgetSpan(
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: AppColors
-                                                            .circleBgFirst,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                              'assets/icons/appointments/clock.svg'),
-                                                          const SizedBox(
-                                                              width: 8.0),
-                                                          Text(DateFormat(
-                                                                  'dd.MM.yy, HH:mm')
-                                                              .format(dateTimeToUTC(
-                                                                  appointmentItem
-                                                                      .appointmentDateTime,
-                                                                  int.parse(DateTime
-                                                                          .now()
-                                                                      .timeZoneOffset
-                                                                      .inHours
-                                                                      .toString())))),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8.0),
-                                                RichText(
-                                                  text: WidgetSpan(
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: AppColors
-                                                            .circleBgFirst,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                              'assets/icons/appointments/profile.svg'),
-                                                          const SizedBox(
-                                                              width: 8.0),
-                                                          Text(
-                                                            appointmentItem
-                                                                .patientInfo
-                                                                .name
-                                                                .toString(),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ],
+                                            SizedBox(
+                                              height: 32,
+                                              child: ListView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                children: [
+                                                  RichText(
+                                                    text: WidgetSpan(
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: AppColors
+                                                              .circleBgFirst,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Row(
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                                'assets/icons/appointments/clock.svg'),
+                                                            const SizedBox(
+                                                                width: 8.0),
+                                                            Text(DateFormat(
+                                                                    'dd.MM.yy, HH:mm')
+                                                                .format(dateTimeToUTC(
+                                                                    appointmentItem
+                                                                        .appointmentDateTime,
+                                                                    int.parse(DateTime
+                                                                            .now()
+                                                                        .timeZoneOffset
+                                                                        .inHours
+                                                                        .toString())))),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  const SizedBox(width: 8.0),
+                                                  RichText(
+                                                    text: WidgetSpan(
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: AppColors
+                                                              .circleBgFirst,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                        ),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Row(
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                                'assets/icons/appointments/profile.svg'),
+                                                            const SizedBox(
+                                                                width: 8.0),
+                                                            Text(
+                                                              '${appointmentItem.patientInfo.name}'
+                                                                  .characters
+                                                                  .replaceAll(
+                                                                      Characters(
+                                                                          ''),
+                                                                      Characters(
+                                                                          '\u{200B}'))
+                                                                  .toString(),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         )),
@@ -245,7 +256,6 @@ class AppointmentsWidget extends StatelessWidget {
                         ],
                         options: CarouselOptions(
                           viewportFraction: 0.93,
-                          aspectRatio: 2.0,
                           initialPage: 0,
                           enableInfiniteScroll: false,
                           reverse: false,

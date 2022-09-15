@@ -6,8 +6,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 
 class SlideItem extends StatelessWidget {
-  const SlideItem({Key? key, required this.promotionItem})
-      : super(key: key);
+  const SlideItem({Key? key, required this.promotionItem}) : super(key: key);
 
   final MainscreenPromotionModel promotionItem;
 
@@ -71,7 +70,7 @@ class SlideItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -84,56 +83,54 @@ class SlideItem extends StatelessWidget {
                       .headlineLarge
                       ?.copyWith(color: Colors.white),
                 ),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            promotionItem.description,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                            softWrap: true,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontSize: 12, color: Colors.white),
-                          ),
-                        ),
-                        promotionItem.defaultPrice != 0
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '${promotionItem.defaultPrice / 100}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${promotionItem.promoPrice / 100}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                  ],
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 140,
+                  child: Text(
+                    promotionItem.description,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 8,
+                    softWrap: true,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontSize: 12, color: Colors.white),
+                  ),
                 ),
               ],
             ),
           ),
+          promotionItem.defaultPrice != 0
+              ? Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '${promotionItem.defaultPrice / 100}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            decoration: TextDecoration.lineThrough,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Text(
+                          '${promotionItem.promoPrice / 100}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
