@@ -30,6 +30,7 @@ class FieldWrapper extends StatelessWidget {
           onChange(text);
         },
         keyboardType: TextInputType.number,
+        readOnly: true,
         controller: controller,
         decoration: InputDecoration(
           labelText: labelText,
