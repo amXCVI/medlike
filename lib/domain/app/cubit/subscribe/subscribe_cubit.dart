@@ -457,7 +457,9 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getAppointmentInfoStatus: GetAppointmentInfoStatuses.success,
         appointmentInfoData: response,
-        selectedPayType: response.payType,
+        selectedPayType: AppConstants.noPayedPayType,
+        //! Пока убрана оплата картой. При включении функционала раскомментировать !//
+        // selectedPayType: response.payType,
       ));
     } catch (e) {
       emit(state.copyWith(

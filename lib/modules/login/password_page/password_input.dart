@@ -53,7 +53,7 @@ class _PasswordInputState extends State<PasswordInput> {
               controller: _controller,
               onChanged: (text) => _onChangePassword(text),
               focusNode: _focus,
-              autofocus: false,
+              autofocus: true,
               decoration: InputDecoration(
                 hintText: '********',
                 hintStyle: Theme.of(context)

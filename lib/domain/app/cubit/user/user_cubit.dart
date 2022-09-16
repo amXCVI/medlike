@@ -72,10 +72,28 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  /// logout
+  /// Лайтовый выход из приложения. Заблокировать сессию
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
+    emit(state.copyWith(
+      authStatus: UserAuthStatuses.unAuth,
+      authScreen: UserAuthScreens.inputPhone,
+      userProfiles: null,
+      selectedUserId: null,
+    ));
+  }
+
+  /// Выход из приложения с удалением данных сессии
+  void forceLogout() async {
+    UserSecureStorage.setField(AppConstants.isAuth, 'false');
+    UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'false');
+    UserSecureStorage.deleteField(AppConstants.selectedUserId);
+    UserSecureStorage.deleteField(AppConstants.accessToken);
+    UserSecureStorage.deleteField(AppConstants.refreshToken);
+    UserSecureStorage.deleteField(AppConstants.authPinCode);
+    UserSecureStorage.deleteField(AppConstants.useBiometricMethodAuthentication);
+
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.dart';
 import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.dart';
@@ -7,6 +8,7 @@ import 'package:medlike/modules/login/start_phone_number_page/start_phone_number
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class StartPhoneNumberPage extends StatefulWidget {
   const StartPhoneNumberPage({Key? key, this.isDeletingProfile = false})
@@ -72,12 +74,20 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
       }
     });
 
-    return DefaultScaffold(
-      child: const StartPhoneNumberView(),
-      appBarTitle: AppConstants.appName,
-      onPressedAppLogo: () {},
-      actions: const [UnauthSupportButton()],
-      bottomNavigationBar: const LoginPageBottomNavigationBar(),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: TapCanvas(
+        child: DefaultScaffold(
+          child: const StartPhoneNumberView(),
+          appBarTitle: AppConstants.appName,
+          onPressedAppLogo: () {},
+          actions: const [UnauthSupportButton()],
+          bottomNavigationBar: const LoginPageBottomNavigationBar(),
+        ),
+      ),
     );
   }
 }
