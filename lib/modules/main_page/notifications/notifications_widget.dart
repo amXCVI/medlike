@@ -58,7 +58,7 @@ class NotificationsWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 2.0, horizontal: 12.0),
                       decoration: const BoxDecoration(
-                          color: AppColors.red,
+                          color: AppColors.mainError,
                           borderRadius: BorderRadius.all(Radius.circular(24))),
                       child: Text(
                         (notificationItem.eventsCount + 1).toString(),
