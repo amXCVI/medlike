@@ -63,13 +63,17 @@ class _ClinicDetailWithBottomSheetsPageState
                 ?.where((element) => element.id == widget.selectedClinic.id)
                 .toList();
 
+            if (widget.selectedClinic.buildings.length == 1) {
+              _panelController.open();
+            }
+
             return SlidingUpPanel(
                 controller: _panelController,
                 maxHeight: MediaQuery.of(context).size.height * .80,
-                minHeight: clinicBuildings!.length * 90 + 75 >
+                minHeight: clinicBuildings!.length * 88 + 72 >
                         MediaQuery.of(context).size.height * .4
                     ? MediaQuery.of(context).size.height * .4
-                    : clinicBuildings.length * 90 + 75,
+                    : clinicBuildings.length * 88 + 72,
                 panel: ExpandedSlidingPanel(
                   selectedBuilding: clinicBuildings.firstWhere((element) =>
                       element.buildingId == selectedBuilding.buildingId),
@@ -81,10 +85,10 @@ class _ClinicDetailWithBottomSheetsPageState
                 ),
                 body: Padding(
                   padding: EdgeInsets.only(
-                    bottom: clinicBuildings.length * 90 + 75 >
-                            MediaQuery.of(context).size.height * .4
+                    bottom: clinicBuildings.length * 88 + 72 >
+                        MediaQuery.of(context).size.height * .4
                         ? MediaQuery.of(context).size.height * .4
-                        : clinicBuildings.length * 90 + 75,
+                        : clinicBuildings.length * 88 + 70,
                   ),
                   child: ClinicMapPlaces(
                     buildingsList: clinicBuildings ?? [],
