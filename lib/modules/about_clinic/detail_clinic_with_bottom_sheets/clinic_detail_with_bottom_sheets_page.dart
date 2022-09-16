@@ -63,7 +63,8 @@ class _ClinicDetailWithBottomSheetsPageState
                 ?.where((element) => element.id == widget.selectedClinic.id)
                 .toList();
 
-            if (widget.selectedClinic.buildings.length == 1) {
+            if (widget.selectedClinic.buildings != null &&
+                widget.selectedClinic.buildings.length == 1) {
               _panelController.open();
             }
 
@@ -86,7 +87,7 @@ class _ClinicDetailWithBottomSheetsPageState
                 body: Padding(
                   padding: EdgeInsets.only(
                     bottom: clinicBuildings.length * 88 + 72 >
-                        MediaQuery.of(context).size.height * .4
+                            MediaQuery.of(context).size.height * .4
                         ? MediaQuery.of(context).size.height * .4
                         : clinicBuildings.length * 88 + 70,
                   ),
