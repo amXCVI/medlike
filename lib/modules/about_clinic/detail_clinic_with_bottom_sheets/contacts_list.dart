@@ -32,7 +32,8 @@ class ContactsList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Контакты'),
+                      Text('Контакты',
+                          style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 3),
                       ...phonesList!
                           .map((item) => GestureDetector(

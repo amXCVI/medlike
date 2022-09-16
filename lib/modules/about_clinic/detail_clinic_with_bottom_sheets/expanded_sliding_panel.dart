@@ -1,17 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/address.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/contacts_list.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/maps_services_scheet.dart';
+import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/next_action_button_item.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/sliding_panel_header.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/work_times_list.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
-import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class ExpandedSlidingPanel extends StatelessWidget {
   const ExpandedSlidingPanel({Key? key, required this.selectedBuilding})
@@ -67,25 +66,16 @@ class ExpandedSlidingPanel extends StatelessWidget {
               const Divider(indent: 16.0, endIndent: 16.0, height: 2),
               ContactsList(phonesList: selectedBuilding.phone),
               const Divider(indent: 16.0, endIndent: 16.0, height: 2),
-              SubscribeRowItem(
+              NextActionButtonItem(
+                handleTap: _handleTapPrice,
+                iconPath: 'assets/icons/clinics/ic_doc_oval-2.svg',
                 title: 'Прейскурант',
-                customIcon: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: SvgPicture.asset(
-                      'assets/icons/clinics/ic_attention_circle.svg'),
-                ),
-                isFirstSymbolForIcon: false,
-                onTap: _handleTapPrice,
               ),
-              SubscribeRowItem(
+              const Divider(indent: 16.0, endIndent: 16.0, height: 2),
+              NextActionButtonItem(
+                handleTap: _handleTapSales,
+                iconPath: 'assets/icons/clinics/ic_doc_oval-3.svg',
                 title: 'Акции и скидки',
-                customIcon: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child:
-                      SvgPicture.asset('assets/icons/clinics/ic_stok_star.svg'),
-                ),
-                isFirstSymbolForIcon: false,
-                onTap: _handleTapSales,
               ),
               const SizedBox(height: 16),
               Padding(
@@ -122,7 +112,8 @@ class ExpandedSlidingPanel extends StatelessWidget {
                   height: 48,
                   child: const Text('Проложить маршрут'),
                 ),
-              )
+              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),

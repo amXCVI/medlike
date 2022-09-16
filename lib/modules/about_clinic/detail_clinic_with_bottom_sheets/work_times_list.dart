@@ -21,7 +21,8 @@ class WorkTimesList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Режим работы'),
+                      Text('Режим работы',
+                          style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 3),
                       ...workTimes!
                           .map((item) => Padding(
@@ -35,7 +36,8 @@ class WorkTimesList extends StatelessWidget {
                                       ?.copyWith(color: AppColors.lightText),
                                 ),
                               ))
-                          .toList()
+                          .toList(),
+                      const SizedBox(height: 8),
                     ]),
               ],
             ),

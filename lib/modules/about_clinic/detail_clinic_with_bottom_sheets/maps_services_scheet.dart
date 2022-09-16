@@ -15,7 +15,9 @@ void openMapsSheet({
 
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       builder: (BuildContext context) {
         return SafeArea(
           child: SingleChildScrollView(
