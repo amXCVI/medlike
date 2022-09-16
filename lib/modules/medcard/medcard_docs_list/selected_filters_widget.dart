@@ -46,7 +46,9 @@ class SelectedFiltersWidget extends StatelessWidget {
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor)),
                           TextSpan(
-                              text: entry.key != medcardFiltersList.first.value
+                              text: entry.key !=
+                                      state.medcardSelectedFilters?.entries
+                                          .first.key
                                   ? ''
                                   : ', '),
                         ],
