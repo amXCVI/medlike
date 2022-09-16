@@ -18,7 +18,7 @@ class AllClinicsList extends StatelessWidget {
   Widget build(BuildContext context) {
     void _handleTapOnClinic(ClinicModel clinic) {
       context.router.push(
-          DetailClinicRoute(selectedClinic: clinic));
+          ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
     }
 
     return RefreshIndicator(

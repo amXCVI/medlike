@@ -50,8 +50,9 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
   Widget build(BuildContext context) {
     void _showModal(Widget bottomSheet) {
       showModalBottomSheet(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12), topLeft: Radius.circular(12))),
           context: context,
           builder: (context) => bottomSheet);
     }
