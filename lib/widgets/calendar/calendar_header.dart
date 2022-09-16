@@ -28,7 +28,7 @@ class CalendarHeader extends StatelessWidget {
             onPressed: onLeftArrowTap,
           ),
           Text(
-            headerText,
+            '${toBeginningOfSentenceCase(headerText)}',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           IconButton(
