@@ -11,6 +11,7 @@ import 'package:medlike/modules/settings/support/support_form.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({Key? key}) : super(key: key);
@@ -76,42 +77,44 @@ class _SupportPageState extends State<SupportPage> {
       });
     }
 
-    return DefaultScaffold(
-      appBarTitle: 'Тех. поддержка',
-      isChildrenPage: true,
-      actionButton: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          return FloatingActionButton.extended(
-            onPressed: sendingEmail,
-            label: state.sendingEmailToSupportStatus ==
-                    SendingEmailToSupportStatuses.loading
-                ? const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+    return TapCanvas(
+      child: DefaultScaffold(
+        appBarTitle: 'Тех. поддержка',
+        isChildrenPage: true,
+        actionButton: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: sendingEmail,
+              label: state.sendingEmailToSupportStatus ==
+                      SendingEmailToSupportStatuses.loading
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      'Отправить'.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-                  )
-                : Text(
-                    'Отправить'.toUpperCase(),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-          );
-        },
-      ),
-      rightBottomWidget: AttachFileButton(
-        attachPickedFile: attachPickedFile,
-        attachFilePickerResult: attachFilePickerResult,
-      ),
-      child: ListView(
-        children: [
-          SupportForm(
-            formKey: _formKey,
-            controllerTheme: _controllerTheme,
-            controllerMessage: _controllerMessage,
-            controllerEmail: _controllerEmail,
-          ),
-          AttachFilesList(filesList: filesList, handleDeleteFile: handleDeleteFile),
-        ],
+            );
+          },
+        ),
+        rightBottomWidget: AttachFileButton(
+          attachPickedFile: attachPickedFile,
+          attachFilePickerResult: attachFilePickerResult,
+        ),
+        child: ListView(
+          children: [
+            SupportForm(
+              formKey: _formKey,
+              controllerTheme: _controllerTheme,
+              controllerMessage: _controllerMessage,
+              controllerEmail: _controllerEmail,
+            ),
+            AttachFilesList(filesList: filesList, handleDeleteFile: handleDeleteFile),
+          ],
+        ),
       ),
     );
   }
