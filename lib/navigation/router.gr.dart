@@ -16,7 +16,7 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i38;
 import 'package:medlike/data/models/diary_models/diary_models.dart' as _i39;
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart'
     as _i27;
-import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart'
+import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/clinic_detail_with_bottom_sheets_page.dart'
     as _i28;
 import 'package:medlike/modules/about_clinic/price/price_page.dart' as _i29;
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart' as _i30;
@@ -288,11 +288,11 @@ class AppRouter extends _i35.RootStackRouter {
       return _i35.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i27.AllClinicsListPage());
     },
-    DetailClinicRoute.name: (routeData) {
-      final args = routeData.argsAs<DetailClinicRouteArgs>();
+    ClinicDetailWithBottomSheetsRoute.name: (routeData) {
+      final args = routeData.argsAs<ClinicDetailWithBottomSheetsRouteArgs>();
       return _i35.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i28.DetailClinicPage(
+          child: _i28.ClinicDetailWithBottomSheetsPage(
               key: args.key, selectedClinic: args.selectedClinic));
     },
     PriceRoute.name: (routeData) {
@@ -398,7 +398,7 @@ class AppRouter extends _i35.RootStackRouter {
             path: '/settings_support', guards: [checkIsAuthUser]),
         _i35.RouteConfig(AllClinicsListRoute.name,
             path: '/clinic_info', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(DetailClinicRoute.name,
+        _i35.RouteConfig(ClinicDetailWithBottomSheetsRoute.name,
             path: '/clinic_info_details', guards: [checkIsAuthUser]),
         _i35.RouteConfig(PriceRoute.name,
             path: '/clinic_info_price', guards: [checkIsAuthUser]),
@@ -1135,19 +1135,22 @@ class AllClinicsListRoute extends _i35.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i28.DetailClinicPage]
-class DetailClinicRoute extends _i35.PageRouteInfo<DetailClinicRouteArgs> {
-  DetailClinicRoute({_i36.Key? key, required _i38.ClinicModel selectedClinic})
-      : super(DetailClinicRoute.name,
+/// [_i28.ClinicDetailWithBottomSheetsPage]
+class ClinicDetailWithBottomSheetsRoute
+    extends _i35.PageRouteInfo<ClinicDetailWithBottomSheetsRouteArgs> {
+  ClinicDetailWithBottomSheetsRoute(
+      {_i36.Key? key, required _i38.ClinicModel selectedClinic})
+      : super(ClinicDetailWithBottomSheetsRoute.name,
             path: '/clinic_info_details',
-            args: DetailClinicRouteArgs(
+            args: ClinicDetailWithBottomSheetsRouteArgs(
                 key: key, selectedClinic: selectedClinic));
 
-  static const String name = 'DetailClinicRoute';
+  static const String name = 'ClinicDetailWithBottomSheetsRoute';
 }
 
-class DetailClinicRouteArgs {
-  const DetailClinicRouteArgs({this.key, required this.selectedClinic});
+class ClinicDetailWithBottomSheetsRouteArgs {
+  const ClinicDetailWithBottomSheetsRouteArgs(
+      {this.key, required this.selectedClinic});
 
   final _i36.Key? key;
 
@@ -1155,7 +1158,7 @@ class DetailClinicRouteArgs {
 
   @override
   String toString() {
-    return 'DetailClinicRouteArgs{key: $key, selectedClinic: $selectedClinic}';
+    return 'ClinicDetailWithBottomSheetsRouteArgs{key: $key, selectedClinic: $selectedClinic}';
   }
 }
 

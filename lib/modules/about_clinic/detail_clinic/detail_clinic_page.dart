@@ -15,6 +15,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
+/// Страница о клинике в старом дизайне
 class DetailClinicPage extends StatefulWidget {
   const DetailClinicPage({
     Key? key,
