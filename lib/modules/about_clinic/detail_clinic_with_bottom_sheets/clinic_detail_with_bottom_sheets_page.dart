@@ -26,6 +26,7 @@ class _ClinicDetailWithBottomSheetsPageState
     extends State<ClinicDetailWithBottomSheetsPage> {
   late BuildingModel selectedBuilding;
   final PanelController _panelController = PanelController();
+  late int selectedBuildingIndex = 0;
 
   @override
   void initState() {
@@ -34,11 +35,28 @@ class _ClinicDetailWithBottomSheetsPageState
   }
 
   void onTapBuilding(String buildingId) {
+    BuildingModel building = widget.selectedClinic.buildings
+        .firstWhere((element) => element.buildingId == buildingId);
+    int index = widget.selectedClinic.buildings.indexOf(building);
     setState(() {
-      selectedBuilding = widget.selectedClinic.buildings
-          .firstWhere((element) => element.buildingId == buildingId);
+      selectedBuilding = building;
+      selectedBuildingIndex = index;
     });
     _panelController.open();
+  }
+
+  /// Ф-я для свайпа строений клиники
+  void onChangeBuildingIndex(int newIndex) {
+    late int newSelectedIndex = newIndex;
+    if (newIndex < 0) {
+      newSelectedIndex = widget.selectedClinic.buildings.length - 1;
+    } else if (newIndex > widget.selectedClinic.buildings.length - 1) {
+      newSelectedIndex = 0;
+    }
+    setState(() {
+      selectedBuilding = widget.selectedClinic.buildings[newSelectedIndex];
+      selectedBuildingIndex = newSelectedIndex;
+    });
   }
 
   @override
@@ -78,6 +96,8 @@ class _ClinicDetailWithBottomSheetsPageState
                 panel: ExpandedSlidingPanel(
                   selectedBuilding: clinicBuildings.firstWhere((element) =>
                       element.buildingId == selectedBuilding.buildingId),
+                  onChangeBuildingIndex: onChangeBuildingIndex,
+                  buildingIndex: selectedBuildingIndex,
                 ),
                 collapsed: CollapsedSlidingPanel(
                   buildingsList: clinicBuildings ?? [],
