@@ -83,7 +83,9 @@ class _ClinicDetailWithBottomSheetsPageState
 
             if (widget.selectedClinic.buildings != null &&
                 widget.selectedClinic.buildings.length == 1) {
-              _panelController.open();
+              Future.delayed(const Duration(milliseconds: 500), () {
+                _panelController.open();
+              });
             }
 
             return SlidingUpPanel(
@@ -94,8 +96,7 @@ class _ClinicDetailWithBottomSheetsPageState
                     ? MediaQuery.of(context).size.height * .4
                     : clinicBuildings.length * 88 + 72,
                 panel: ExpandedSlidingPanel(
-                  selectedBuilding: clinicBuildings.firstWhere((element) =>
-                      element.buildingId == selectedBuilding.buildingId),
+                  buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,
                   buildingIndex: selectedBuildingIndex,
                 ),

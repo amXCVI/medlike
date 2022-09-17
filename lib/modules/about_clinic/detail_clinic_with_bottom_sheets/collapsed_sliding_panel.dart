@@ -19,6 +19,7 @@ class CollapsedSlidingPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SlidingPanelHeaderMark(),
         SlidingPanelHeader(clinicName: clinicName),
         Expanded(
           child: ListView(
