@@ -10,29 +10,11 @@ class SlidingPanelHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24.0),
-          topRight: Radius.circular(24.0),
-        ),
-        color: Theme.of(context).backgroundColor,
-      ),
+      color: Theme.of(context).backgroundColor,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsets.only(top: 12.0),
-              height: 5,
-              width: 30,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(3.0),
-                ),
-                color: AppColors.mainSeparatorAlpha,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -44,6 +26,27 @@ class SlidingPanelHeader extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SlidingPanelHeaderMark extends StatelessWidget {
+  const SlidingPanelHeaderMark({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.only(top: 12.0),
+        height: 5,
+        width: 30,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.0),
+          ),
+          color: AppColors.mainSeparatorAlpha,
+        ),
       ),
     );
   }

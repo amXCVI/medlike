@@ -81,7 +81,7 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
                 : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.failed
                     ? Text(
-                        'Ошибочка вышла'.toUpperCase(),
+                        'Попробуйте заново'.toUpperCase(),
                         style: Theme.of(context).textTheme.titleSmall,
                       )
                     : SizedBox(

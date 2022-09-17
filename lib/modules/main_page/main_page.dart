@@ -46,6 +46,7 @@ class MainPage extends StatelessWidget {
               const NotificationsWidget(),
               const AppointmentsWidget(),
               const SliderWidget(),
+              const SizedBox(height: 8),
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
