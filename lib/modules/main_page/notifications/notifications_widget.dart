@@ -12,7 +12,8 @@ class NotificationsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleCleanLastNotification(String eventId) {
-      context.read<UserCubit>().updateNotificationStatus(eventId);
+      context.read<UserCubit>().updateNotificationStatus(eventId).then(
+          (value) => context.read<UserCubit>().getLastNotReadNotification());
     }
 
     context.read<UserCubit>().getLastNotReadNotification();
@@ -43,6 +44,7 @@ class NotificationsWidget extends StatelessWidget {
               color: Theme.of(context).backgroundColor,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +63,7 @@ class NotificationsWidget extends StatelessWidget {
                           color: AppColors.mainError,
                           borderRadius: BorderRadius.all(Radius.circular(24))),
                       child: Text(
-                        (notificationItem.eventsCount + 1).toString(),
+                        (notificationItem.eventsCount).toString(),
                         style: const TextStyle(
                             fontSize: 12,
                             color: Colors.white,
