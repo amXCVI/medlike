@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tap_canvas/tap_canvas.dart';
@@ -308,14 +310,14 @@ class _DiaryGraphState extends State<DiaryGraph> {
               }
             },
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            onChartTouchInteractionUp: (args) => widget.onUnselect()
+            onChartTouchInteractionUp: (args) => context.read<PromptCubit>().unselect()
           ),
         ),
       );
     }
 
     return TapOutsideDetectorWidget(
-      onTappedOutside: () => widget.onUnselect(),
+      onTappedOutside: () => context.read<PromptCubit>().unselect(),
       child: SizedBox(
         height: 200,
         width: MediaQuery.of(context).size.width,
@@ -390,7 +392,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             }
 
             if(pixels > 15) {
-              widget.onUnselect();
+              context.read<PromptCubit>().unselect();
             }
           }
         )
