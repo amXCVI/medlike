@@ -57,13 +57,22 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                     GetAppointmentInfoStatuses.loading ||
                 state.creatingAppointmentStatus ==
                     CreatingAppointmentStatuses.loading;
-            return FloatingActionButton.extended(
-                onPressed: isDisabledButton ? () {} : _createNewAppointment,
-                backgroundColor: !isDisabledButton
-                    ? Theme.of(context).primaryColor
-                    : AppColors.lightText,
-                extendedPadding: const EdgeInsets.all(15),
-                label: const ConfirmationActionButtonLabel());
+            return SizedBox(
+              width: 200,
+              child: AnimatedFractionallySizedBox(
+                duration: const Duration(milliseconds: 500),
+                widthFactor: state.creatingAppointmentStatus ==
+                    CreatingAppointmentStatuses.success ? 0.25 : 1,
+                child: FloatingActionButton.extended(
+                  onPressed: isDisabledButton ? () {} : _createNewAppointment,
+                  backgroundColor: !isDisabledButton
+                      ? Theme.of(context).primaryColor
+                      : AppColors.lightText,
+                  extendedPadding: const EdgeInsets.all(15),
+                  label: const ConfirmationActionButtonLabel(),
+                ),
+              ),
+            );
           },
         ),
         child: ListView(
