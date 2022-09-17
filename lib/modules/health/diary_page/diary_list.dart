@@ -8,7 +8,6 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:tap_canvas/tap_canvas.dart';
 
 class DiaryList extends StatelessWidget {
   const DiaryList({
