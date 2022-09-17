@@ -35,11 +35,14 @@ class PhonesList extends StatelessWidget {
                     children: phonesList!
                         .map((item) => GestureDetector(
                               onTap: () => {_makePhoneCall(item)},
-                              child: Text(item,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: AppColors.mainOther)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 3),
+                                child: Text(item,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(color: AppColors.mainOther)),
+                              ),
                             ))
                         .toList()),
               ],

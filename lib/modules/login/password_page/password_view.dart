@@ -33,37 +33,45 @@ class PasswordPageWidget extends StatelessWidget {
       return res;
     }
 
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        if (state.authStatus == UserAuthStatuses.successAuth &&
-            state.getAllUserAgreementsStatus ==
-                GetAllUserAgreementsStatuses.initial) {
-          checkIsAcceptedUserAgreements().then((res) => {
-                if (!res)
+    void _authenticateWithPhoneAndPassword({required String password}) async {
+      await context
+          .read<UserCubit>()
+          .handleSubmitPassword(password)
+          .then((value) => {
+                if (value)
                   {
-                    context.router.replaceAll([const AuthUserAgreementsRoute()])
-                  }
-                else
-                  {
-                    getIsSavedPinCode().then((res) => {
-                          if (res == true)
+                    checkIsAcceptedUserAgreements().then((res) => {
+                          if (!res)
                             {
-                              UserSecureStorage.setField(
-                                  AppConstants.isAuth, 'true'),
-                              context.router.replaceAll([const MainRoute()])
+                              context.router
+                                  .replaceAll([AuthUserAgreementsRoute()])
                             }
                           else
                             {
-                              context.router
-                                  .navigateNamed(AppRoutes.loginPinCodeCreate),
+                              getIsSavedPinCode().then((res) => {
+                                    if (res == true)
+                                      {
+                                        UserSecureStorage.setField(
+                                            AppConstants.isAuth, 'true'),
+                                        context.router
+                                            .replaceAll([const MainRoute()])
+                                      }
+                                    else
+                                      {
+                                        context.router.navigateNamed(
+                                            AppRoutes.loginPinCodeCreate),
+                                      }
+                                  })
                             }
                         })
                   }
               });
-        }
+    }
 
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
         if (state.authStatus == UserAuthStatuses.loadingAuth ||
-            state.authStatus == UserAuthStatuses.successAuth ||
+            // state.authStatus == UserAuthStatuses.successAuth ||
             state.getAllUserAgreementsStatus ==
                 GetAllUserAgreementsStatuses.loading) {
           return const DefaultAuthSkeleton();
@@ -74,7 +82,10 @@ class PasswordPageWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const DefaultLoginAnimation(),
-                PasswordInput(phoneNumber: phoneNumber),
+                PasswordInput(
+                  phoneNumber: phoneNumber,
+                  onAuth: _authenticateWithPhoneAndPassword,
+                ),
               ],
             ),
           );

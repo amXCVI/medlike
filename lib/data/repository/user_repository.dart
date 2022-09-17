@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -271,6 +273,89 @@ class UserRepository {
                   'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
             },
           ));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> sendUnauthEmail({
+    required String email,
+    required String subject,
+    required String message,
+    required String techInfo,
+    required String personFio,
+    required String personPhone,
+    List<File>? files,
+  }) async {
+    List uploadFilesList = [];
+    if (files != null) {
+      for (var file in files) {
+        var multipartFile = await MultipartFile.fromFile(file.path);
+        uploadFilesList.add(multipartFile);
+      }
+    }
+
+    FormData formData = FormData.fromMap({
+      "Files": uploadFilesList,
+      'Email': email,
+      'Subject': subject,
+      'Message': message,
+      'TechInfo': techInfo,
+      'PersonFio': personFio,
+      'PersonPhone': personPhone,
+    });
+
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/support/emailWithoutAuth',
+              data: formData,
+              options: Options(
+                contentType: 'multipart/form-data',
+              ));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> registerDeviceFirebaseToken({
+    required String token,
+  }) async {
+    try {
+      await _dioClient.post('/api/v1.0/profile/devices', data: {
+        "DeviceId": token,
+        "ClientPlatform": "1",// Platform.isAndroid ? "1" : "2",
+        "AppBuildType": kDebugMode ? "Dev" : "Prod",
+      });
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<NotificationModel> getLastNotReadedEvent() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/events/mainscreen');
+      return NotificationModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> updateNotificationStatus(String eventId) async {
+    try {
+      final response = await _dioClient.put(
+        '/api/v1.0/events/$eventId/seen',
+        data: {},
+      );
       if (response.statusCode == 200) {
         return true;
       } else {

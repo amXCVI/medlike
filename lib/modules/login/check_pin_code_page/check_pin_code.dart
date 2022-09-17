@@ -7,7 +7,6 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
-import 'package:medlike/themes/colors.dart';
 
 class CheckPinCode extends StatefulWidget {
   const CheckPinCode({Key? key}) : super(key: key);
@@ -47,7 +46,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             });
   }
 
-  void onSuccessBiometricAuthenticate() {
+  void onSuccessBiometricAuthenticate(bool result) {
     setState(() {
       isBiometricAuthenticate = false;
     });
@@ -82,20 +81,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Center(
-              child: Text(
-            'Введите пин - код',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(color: AppColors.mainText),
-            textAlign: TextAlign.center,
-          )),
-        ),
-        const SizedBox(height: 4),
         PinCodeView(
+          pinCodeTitle: 'Введите пин - код',
           setPinCode: _checkPinCode,
           key: const Key('2'),
           handleBiometricMethod: onSuccessBiometricAuthenticate,

@@ -61,7 +61,7 @@ class UserProfilesList extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
                   children: state.userProfiles!
-                      .map((item) => GestureDetector(
+                      .map((item) => InkWell(
                             onTap: () {
                               selectableItems
                                   ? handleTapOnUserProfile(item.id)

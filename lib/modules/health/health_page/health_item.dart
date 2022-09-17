@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
-import 'package:medlike/modules/health/diary_page/diary_graph.dart';
+import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
+import 'package:medlike/modules/health/diary_graph/diary_small_prompt.dart';
 import 'package:medlike/modules/health/health_page/health_value.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/utils/helpers/context_helper.dart';
+import 'package:medlike/utils/helpers/grouping_helper.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 
 
-class HealthItem extends StatelessWidget {
+class HealthItem extends StatefulWidget {
   const HealthItem({
     Key? key,
     required this.iconPath,
     required this.title,
     required this.measureItem,
     required this.decimalDigits,
+    required this.minValue,
+    required this.maxValue,
     required this.onLoadDada,
     required this.onNavigate,
     required this.firstDate,
     required this.lastDate,
+    required this.isSelected,
+    required this.setSelected,
     this.data
   }) : super(key: key);
 
@@ -24,14 +33,38 @@ class HealthItem extends StatelessWidget {
   final String title;
   final String measureItem;
   final int decimalDigits;
-  final DiaryModel? data;
+  final List<double> minValue;
+  final List<double> maxValue;
+  final DiaryFlatModel? data;
   final DateTime firstDate;
   final DateTime lastDate;
   final Function onLoadDada;
   final Function onNavigate;
+  final bool isSelected;
+  final Function(bool) setSelected;
+
+  @override
+  State<HealthItem> createState() => _HealthItemState();
+}
+
+class _HealthItemState extends State<HealthItem> {
+  Offset? offset;
+  Offset? centerOffset;
+  Offset? blockOffset;
+  DataItem? item;
+  final GlobalKey _widgetKey = GlobalKey();
+  final GlobalKey _keyContext = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    final items = ValueHelper.filterItemsByPeriod(
+      items: GroupingHelper.groupByDay(widget.data?.values ?? []),
+      start: widget.firstDate,
+      end: widget.lastDate
+    );
+
+    final isPrompted = item != null && widget.isSelected;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
@@ -50,64 +83,133 @@ class HealthItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Ink(
-              child: SizedBox(
-                //padding: const EdgeInsets.only(bottom: 15),
-                height: 170,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+            child: InkWell(
+              onTap: ()  {
+                //widget.onLoadDada('Hour', syn: widget.data!.syn);
+                //context.read<DiaryCubit>().onNavigate();
+                widget.onNavigate(widget.title, widget.data!.syn);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                height: 130,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 200,
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  '${ApiConstants.baseUrl}$iconPath',
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  title,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                )
-                              ]
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.network(
+                              '${ApiConstants.baseUrl}${widget.iconPath}',
+                              width: 20,
+                              height: 20,
                             ),
+                            const SizedBox(width: 6),
+                            Text(
+                              widget.title,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            )
+                          ]
+                        ),
+                        Flexible(
+                          child: HealthValue(
+                            data: widget.data,
+                            measureItem: widget.measureItem,
+                            decimalDigits: widget.decimalDigits
                           ),
-                          IconButton(
-                            icon: SvgPicture.asset('assets/icons/ic_arrow_right_calendar.svg'),
-                            onPressed: () {
-                              onLoadDada('Hour', syn: data!.syn);
-                              onNavigate(title);
-                            },
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      child: Stack(
+                        alignment: Alignment.topRight,
                         children: [
-                          HealthValue(
-                            data: data,
-                            measureItem: measureItem,
-                            decimalDigits: decimalDigits
+                          SvgPicture.asset('assets/icons/ic_arrow_right_calendar.svg'),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                DiaryGraph(
+                                  key: _keyContext,
+                                  items: items, 
+                                  firstDate: widget.firstDate, 
+                                  lastDate: widget.lastDate, 
+                                  measureItem: widget.measureItem, 
+                                  decimalDigits: widget.decimalDigits,
+                                  minValue: widget.minValue,
+                                  maxValue: widget.maxValue,
+                                  selected: isPrompted ? offset?.dx : null, 
+                                  onSelect: (id, newOffset) {
+                                    final box = _keyContext.currentContext?.findRenderObject() as RenderBox;
+                                    final pos = box.localToGlobal(Offset.zero);
+
+                                    Future.microtask(
+                                      () {
+                                        setState(() {
+                                          item = widget.data?.values[id];
+                                          offset = newOffset;
+                                          blockOffset = newOffset;
+                                          widget.setSelected(true);
+                                        });
+                          
+                                        ContextHelper.getFutureSizeFromGlobalKey(
+                                          _widgetKey, 
+                                          (size) => setState(() {
+                                            final dw = pos.dx;
+                                            var w = offset?.dx ?? 0 - size.width / 2;
+                                            w = w < 0 ? 0 : w;
+                                            w = w > dw ? dw : w;
+                                            centerOffset = Offset(
+                                              w < 0 ? 0 : w,
+                                              size.height
+                                            );
+
+                                            blockOffset = Offset(
+                                              offset!.dx + size.width <= dw 
+                                                ? offset!.dx : dw - size.width,
+                                              size.height
+                                            );
+                                          }) 
+                                        );
+                                      }
+                                    );
+                                  },
+                                  onUnselect: () {
+                                    setState(() {
+                                      item = null;
+                                      offset = null;
+                                      widget.setSelected(false);
+                                    });
+                                  },
+                                  grouping: 'Week',
+                                  isClean: true,
+                                ),
+                              ],
+                            ),
                           ),
-                          Expanded(
-                            child: DiaryGraph(
-                              items: data?.values ?? [], 
-                              firstDate: firstDate, 
-                              lastDate: lastDate, 
-                              measureItem: measureItem, 
-                              decimalDigits: decimalDigits, 
-                              grouping: 'Week',
-                              isClean: true,
+                          if(isPrompted) Positioned(
+                            top: 5,
+                            left: blockOffset?.dx,
+                            child: DiarySmallPrompt(
+                              key: _widgetKey,
+                              item: item!, 
+                              decimalDigits: widget.decimalDigits, 
+                            ),
+                          ),
+                          if(isPrompted) Positioned(
+                            left: (centerOffset?.dx ?? blockOffset?.dx),
+                            top: 12,
+                            child: Container(
+                              height: 5,
+                              width: 1,
+                              color: AppColors.mainSeparatorAlpha,
                             )
                           )
                         ],

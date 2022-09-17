@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -29,20 +31,22 @@ class UserCubit extends Cubit<UserState> {
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
         userPhoneNumber: phone, authScreen: UserAuthScreens.inputPassword));
+    UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
-  void handleSubmitPassword(String password) {
+  Future<bool> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
         state.userPhoneNumber.toString().length == 11) {
-      signIn(state.userPhoneNumber.toString(), password);
+      return signIn(state.userPhoneNumber.toString(), password);
     } else {
       emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
+      return Future(() => false);
     }
   }
 
   /// Авторизация по номеру телефона и паролю
-  void signIn(String phone, String password) async {
+  Future<bool> signIn(String phone, String password) async {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -52,22 +56,41 @@ class UserCubit extends Cubit<UserState> {
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
+      UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
       emit(state.copyWith(
         authStatus: UserAuthStatuses.successAuth,
         token: response.token,
         refreshToken: response.refreshToken,
       ));
+      addFirebaseDeviceId();
+      return true;
     } catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
+      return false;
     }
   }
 
-  /// logout
+  /// Лайтовый выход из приложения. Заблокировать сессию
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
+    emit(state.copyWith(
+      authStatus: UserAuthStatuses.unAuth,
+      authScreen: UserAuthScreens.inputPhone,
+      userProfiles: null,
+      selectedUserId: null,
+    ));
+  }
+
+  /// Выход из приложения с удалением данных сессии
+  void forceLogout() async {
+    UserSecureStorage.setField(AppConstants.isAuth, 'false');
+    UserSecureStorage.deleteField(AppConstants.selectedUserId);
+    UserSecureStorage.deleteField(AppConstants.accessToken);
+    UserSecureStorage.deleteField(AppConstants.refreshToken);
+
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
@@ -83,6 +106,13 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
+    addFirebaseDeviceId();
+  }
+
+  /// Сохраняет deviceId устройства на бэке
+  void addFirebaseDeviceId() async {
+    String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+    userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
 
   /// Получает список профилей из всех МО
@@ -101,10 +131,16 @@ class UserCubit extends Cubit<UserState> {
           await UserSecureStorage.getField(AppConstants.selectedUserId);
       final List<UserProfile> response;
       response = await userRepository.getProfiles();
+
+      final defaultUserId = response[0].id;
+      if(currentSelectedUserId == null) {
+        await UserSecureStorage.setField(AppConstants.selectedUserId, defaultUserId);
+      }
+
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.success,
         userProfiles: response,
-        selectedUserId: currentSelectedUserId?.toString(),
+        selectedUserId: (currentSelectedUserId ?? defaultUserId).toString(),
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
     } catch (e) {
@@ -153,6 +189,7 @@ class UserCubit extends Cubit<UserState> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
+      addFirebaseDeviceId();
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -374,7 +411,7 @@ class UserCubit extends Cubit<UserState> {
             uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
             userProfiles: state.userProfiles
                 ?.map((e) =>
-            e.id == userId ? e.copyWith(avatar: response.result) : e)
+                    e.id == userId ? e.copyWith(avatar: response.result) : e)
                 .toList()));
       });
     } catch (e) {
@@ -402,8 +439,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -466,7 +503,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       List<UserAgreementItemModel> response =
           await userRepository.getUserAllAgreements();
-      UserAgreementItemModel actualUserAgreement = response.firstWhere(
+      UserAgreementItemModel? actualUserAgreement = response.firstWhere(
           (element) => element.id == AppConstants.actualUserAgreement);
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.success,
@@ -524,8 +561,8 @@ class UserCubit extends Cubit<UserState> {
                 ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.device} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version}\n'
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
           'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
@@ -561,6 +598,97 @@ class UserCubit extends Cubit<UserState> {
     } catch (e) {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Отправить сообщение в техподдержку от неавторизованного пользователя
+  Future<void> sendUnauthEmailToSupport({
+    required String email,
+    required String message,
+  }) async {
+    emit(state.copyWith(
+      sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
+    ));
+
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String techInfo = '';
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      techInfo = 'Устройство: ${iosInfo.name}\n'
+          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+          'Пользователь не авторизован\n'
+          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
+          'Окружение: ${ApiConstants.baseUrl}\n';
+    }
+
+    try {
+      await userRepository.sendUnauthEmail(
+        email: email,
+        message: message,
+        subject: '',
+        techInfo: techInfo,
+        personFio: 'Пользователь не авторизован',
+        personPhone: '${state.userPhoneNumber}',
+      );
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.success,
+      ));
+      AppToast.showAppToast(
+          msg: 'Ваше обращение успешно доставлено. Ожидайте ответ');
+    } catch (e) {
+      emit(state.copyWith(
+        sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Получить последнее непочитанное уведомление
+  Future<void> getLastNotReadNotification() async {
+    emit(state.copyWith(
+      getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
+    ));
+    try {
+      NotificationModel lastNotification = await userRepository.getLastNotReadedEvent();
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+        lastNotification: lastNotification,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Пометить событие как прочитанное
+  Future<void> updateNotificationStatus(String eventId) async {
+    emit(state.copyWith(
+      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+    ));
+    try {
+      await userRepository.updateNotificationStatus(eventId);
+      emit(state.copyWith(
+        lastNotification: null,
+      ));
+      await getLastNotReadNotification();
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

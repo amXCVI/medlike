@@ -4,6 +4,7 @@ import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 import 'package:medlike/widgets/default_scaffold/unauth_checker.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({
@@ -83,50 +84,52 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           ),
       bottomNavigationBar: widget.bottomNavigationBar ??
           BottomBar(rightBottomWidget: widget.rightBottomWidget),
-      body: Stack(children: [
-        widget.widgetOverBody ?? const SizedBox(),
-        AnimatedPadding(
-          padding: EdgeInsets.only(
-              left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 0),
-          duration: _bodyTopPaddingAnimatedDuration,
-          child: Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: const BorderRadius.all(Radius.circular(28)),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 4,
-                  offset: Offset(0, 1),
-                ),
-              ],
-            ),
-          ),
-        ),
-        AnimatedPadding(
+      body: TapCanvas(
+        child: Stack(children: [
+          widget.widgetOverBody ?? const SizedBox(),
+          AnimatedPadding(
             padding: EdgeInsets.only(
-                left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 35),
+                left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 0),
             duration: _bodyTopPaddingAnimatedDuration,
             child: Container(
-              padding: const EdgeInsets.all(17),
+              height: 100,
               decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor,
                 borderRadius: const BorderRadius.all(Radius.circular(28)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black54,
+                    blurRadius: 4,
+                    offset: Offset(0, 1),
+                  ),
+                ],
               ),
-            )),
-        AnimatedPadding(
-          padding: EdgeInsets.only(
-              left: 0, top: widgetOverBodyHeight + 7, right: 0, bottom: 0),
-          duration: _bodyTopPaddingAnimatedDuration,
-          child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(28)),
-              ),
-              child: DefaultClipRRect(child: widget.child)),
-        ),
-        const UnAuthChecker(),
-      ]),
+            ),
+          ),
+          AnimatedPadding(
+              padding: EdgeInsets.only(
+                  left: 0, top: widgetOverBodyHeight + 6, right: 0, bottom: 35),
+              duration: _bodyTopPaddingAnimatedDuration,
+              child: Container(
+                padding: const EdgeInsets.all(17),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(28)),
+                ),
+              )),
+          AnimatedPadding(
+            padding: EdgeInsets.only(
+                left: 0, top: widgetOverBodyHeight + 7, right: 0, bottom: 0),
+            duration: _bodyTopPaddingAnimatedDuration,
+            child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(28)),
+                ),
+                child: DefaultClipRRect(child: widget.child)),
+          ),
+          const UnAuthChecker(),
+        ]),
+      ),
       floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

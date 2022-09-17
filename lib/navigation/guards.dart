@@ -15,7 +15,10 @@ class CheckIsAuthUser extends AutoRouteGuard {
         '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
     /// Должен быть токен, он не пустой, и пин-код для быстрого входа в приложение сохранен
-    if (token != 'null' && token.toString().isNotEmpty && isAuth && isSavedPinCode) {
+    if (token != 'null' &&
+        token.toString().isNotEmpty &&
+        isAuth &&
+        isSavedPinCode) {
       resolver.next(true);
     } else {
       router.navigateNamed(AppRoutes.loginPinCodeCheck);
@@ -29,7 +32,10 @@ class CheckIsSavedPinCode extends AutoRouteGuard {
     final isSavedPinCode =
         '${await UserSecureStorage.getField(AppConstants.isSavedPinCodeForAuth)}' ==
             'true';
-    if (isSavedPinCode) {
+    final token =
+        '${await UserSecureStorage.getField(AppConstants.accessToken)}';
+
+    if (token != 'null' && token.toString().isNotEmpty && isSavedPinCode) {
       resolver.next(true);
     } else {
       router.navigateNamed(AppRoutes.loginPhone);

@@ -16,7 +16,7 @@ class CalendarHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final headerText = DateFormat.yMMM('ru_RU').format(focusedDay);
+    final headerText = DateFormat.yMMMM('ru_RU').format(focusedDay);
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
@@ -28,7 +28,7 @@ class CalendarHeader extends StatelessWidget {
             onPressed: onLeftArrowTap,
           ),
           Text(
-            headerText,
+            '${toBeginningOfSentenceCase(headerText)}',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           IconButton(

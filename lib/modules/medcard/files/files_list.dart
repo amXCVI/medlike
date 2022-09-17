@@ -8,6 +8,7 @@ import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/modules/medcard/files/file_item.dart';
 import 'package:medlike/modules/medcard/files/not_found_user_files.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/not_found_data/empty_list_widget.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class FilesList extends StatelessWidget {
@@ -86,7 +87,14 @@ class FilesList extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ],
+                              ),
+                              child: FileItem(
+                                fileItem: item,
+                                onTap: () {
+                                  handleTapOnUserFile(item);
+                                },
+                                isDownloading: item.id == downloadingFileId,
                               ),
                             ),
                           ],

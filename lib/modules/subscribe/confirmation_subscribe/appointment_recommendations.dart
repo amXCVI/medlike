@@ -26,7 +26,7 @@ class _AppointmentRecommendationsState
         child: Text(
           widget.recommendations.substring(1, widget.recommendations.length - 2),
           overflow: TextOverflow.ellipsis,
-          maxLines: isOpenRow ? 20 : 2,
+          maxLines: isOpenRow ? 100 : 2,
           softWrap: true,
         ),
       );

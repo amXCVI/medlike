@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class PhoneNumberInput extends StatefulWidget {
   const PhoneNumberInput({Key? key}) : super(key: key);
@@ -15,15 +16,17 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final FocusNode _focus = FocusNode();
-  late final TextEditingController _controller = TextEditingController(text: '');
+
+  late final TextEditingController _controller =
+      TextEditingController(text: '');
 
   void _onChangePhone(String text) {
     RegExp exp = RegExp(r"[^0-9]+");
-    if (_controller.text.replaceAll(exp, '').length >= 11) {
+    if (_controller.text.replaceAll(exp, '').length == 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
       setState(() {
-        _controller.text = '';
+        _controller.value = const TextEditingValue(text: '');
       });
     }
   }
@@ -31,8 +34,31 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
   void _savePhoneNumber(String phone) {
     RegExp exp = RegExp(r"[^0-9]+");
     String phoneString = phone.replaceAll(exp, '');
+    if (phoneString.length != 11) {
+      return;
+    }
     context.read<UserCubit>().savePhoneNumber(phoneString);
     context.router.push(PasswordRoute(phoneNumber: phoneString));
+    dispose();
+  }
+
+  void _onUnFocus() {
+    _focus.unfocus();
+    if (_controller.text.length == 2) {
+      setState(() {
+        _controller.text = '';
+      });
+    }
+  }
+
+  void _onFocus() {
+    if (_controller.text.isEmpty) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        _controller.text = '+7';
+        _controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: _controller.text.length));
+      });
+    }
   }
 
   @override
@@ -43,30 +69,36 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
             style: Theme.of(context).textTheme.labelMedium),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: TextField(
-            controller: _controller,
-            onChanged: (text) => _onChangePhone(text),
-            autofocus: false,
-            keyboardType: TextInputType.phone,
-            inputFormatters: [phoneMaskFormatter],
-            decoration: InputDecoration(
-              hintText: '+7 (###) ###-##-##',
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: AppColors.lightText),
+          child: TapOutsideDetectorWidget(
+            onTappedOutside: _onUnFocus,
+            onTappedInside: _onFocus,
+            child: TextField(
+              key: UniqueKey(),
+              controller: _controller,
+              onChanged: (text) => _onChangePhone(text),
+              autofocus: false,
+              keyboardType: TextInputType.phone,
+              inputFormatters: [phoneMaskFormatter],
+              decoration: InputDecoration(
+                hintText: '+7 (XXX) XXX XX XX',
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: AppColors.lightText),
+              ),
+              style: Theme.of(context).textTheme.labelLarge,
+              textAlign: TextAlign.center,
+              cursorColor: AppColors.mainText,
+              onSubmitted: (value) {
+                _savePhoneNumber(value);
+              },
+              enableSuggestions: false,
+              autocorrect: false,
+              focusNode: _focus,
             ),
-            style: Theme.of(context).textTheme.labelLarge,
-            textAlign: TextAlign.center,
-            showCursor:
-                _focus.hasFocus && _controller.text.isNotEmpty ? true : false,
-            onSubmitted: (value) {
-              _savePhoneNumber(value);
-            },
-            enableSuggestions: false,
-            autocorrect: false,
           ),
         ),
+        const SizedBox(height: 32),
       ],
     );
   }

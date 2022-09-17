@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
-import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'diary_state.dart';
 
@@ -15,16 +15,19 @@ class DiaryCubit extends Cubit<DiaryState> {
   /// Получить список дневников
   void getDiaryCategoriesList({
     required String project,
-    required String platform
+    required String platform,
+    DateTime? updateSince,
   }) async {
     emit(state.copyWith(
       getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.loading,
+      getDiaryStatuses: GetDiaryStatuses.loading,
     ));
     try {
       final List<DiaryCategoryModel> response;
       response = await diaryRepository.getDiaryCategories(
         project: project,
-        platform: platform
+        platform: platform,
+        updateSince: updateSince
       );
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
@@ -50,46 +53,78 @@ class DiaryCubit extends Cubit<DiaryState> {
   }) async {
     emit(state.copyWith(
       getDiaryStatuses: GetDiaryStatuses.loading,
+      //updateDiaryStatuses: UpdateDiaryStatuses.loading
     ));
     try {
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
+      final date = DateTime.now();
+      final startDate = date.subtract(const Duration(
+        days: 365
+      ));
+      final endDate = date.add(const Duration(
+        days: 365
+      ));
 
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
         project: project,
         platform: platform,
         grouping: grouping,
-        dateFrom: dateFrom,
-        dateTo: dateTo,
-        userId: currentSelectedUserId,
-        synFilter: syn
+        dateFrom: startDate,
+        dateTo: endDate,
+        userId: state.userId,
+        //synFilter: syn
       );
-      if(syn != null) {
-        final selectedDiary = response.firstWhere((element) =>
-          element.syn == syn
-        );
 
-        emit(state.copyWith(
-          getDiaryStatuses: GetDiaryStatuses.success,
-          //diariesList: response,
-          selectedDiary: selectedDiary,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
-        ));
-      } else {
-        emit(state.copyWith(
-          getDiaryStatuses: GetDiaryStatuses.success,
-          diariesList: response,
-          dateFrom: dateFrom,
-          dateTo: dateTo,
-        ));
+      final flatResponse = response.map((e) => DiaryFlatModel(
+        syn: e.syn, 
+        firstValue: e.firstValue, 
+        currentValue: e.getCurrentValue, 
+        values: DataItem.toFlat(e.values), 
+        grouping: e.grouping)
+      ).toList();
+      
+      emit(state.copyWith(
+        getDiaryStatuses: GetDiaryStatuses.success,
+        //updateDiaryStatuses: UpdateDiaryStatuses.initial,
+        diariesList: flatResponse,
+        pageUpdateStatuses: PageUpdateStatuses.initial
+      ));
+
+      if(syn != null) {
+        setTimePeriod(
+          start: dateFrom!, 
+          end: dateTo!, 
+          syn: syn
+        );
       }
     } catch (e) {
       emit(state.copyWith(
-        getDiaryStatuses: GetDiaryStatuses.failed)
+        getDiaryStatuses: GetDiaryStatuses.failed,
+        updateDiaryStatuses: UpdateDiaryStatuses.failed)
       );
     }
+  }
+
+  void setTimePeriod({
+    required DateTime start,
+    required DateTime end,
+    required String syn
+  }) {
+    final selectedDiary = state.diariesList!.firstWhere((element) =>
+      element.syn == syn
+    );
+
+    emit(state.copyWith(
+      selectedDiary: selectedDiary,
+      updateDiaryStatuses: UpdateDiaryStatuses.success,
+      periodedSelectedDiary: ValueHelper.filterByPeriod(
+        diariesList: selectedDiary, 
+        start: start, 
+        end: end
+      ),
+      //dateFrom: start,
+      //dateTo: end
+    ));
   }
 
   /// Фильтровать дневники
@@ -105,32 +140,135 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Отправить запись
   void postDiaryEntry({
-    required String date,
+    required DateTime date,
     required String syn,
-    required List<double> values
+    required List<double> values,
+    DateTime? updateFrom,
+    DateTime? updateTo
   }) async {
     emit(state.copyWith(
       updateDiaryStatuses: UpdateDiaryStatuses.loading,
     ));
 
     try {
-      final currentSelectedUserId =
-        await UserSecureStorage.getField(AppConstants.selectedUserId);
-
-      await diaryRepository.postDiaryEntry(
+      final response = await diaryRepository.postDiaryEntry(
         date: date, 
         syn: syn,
-        userId: currentSelectedUserId, 
+        userId: state.userId, 
         values: values
       );
 
-      emit(state.copyWith(
-        getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
-      ));
+      if(response) {
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo,
+            syn: syn
+          );
+        }
+
+        AppToast.showAppToast(msg: 'Запись добавлена');
+      }
+
     } catch (e) {
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
       ));
     }
+  }
+
+  /// Редактировать запись
+  void putDiaryEntry({
+    required DateTime date,
+    required DateTime oldDate,
+    required String syn,
+    required List<double> values,
+    DateTime? updateFrom,
+    DateTime? updateTo
+  }) async {
+    emit(state.copyWith(
+      updateDiaryStatuses: UpdateDiaryStatuses.loading,
+      getDiaryStatuses: GetDiaryStatuses.loading
+    ));
+
+    try {
+      final response = await diaryRepository.putDiaryEntry(
+        date: date, 
+        oldDate: oldDate,
+        syn: syn,
+        userId: state.userId, 
+        values: values
+      );
+
+      if(response) {
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo ,
+            syn: syn
+          );
+        }
+
+        AppToast.showAppToast(msg: 'Запись отредактирована');
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.failed,
+        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
+      ));
+    }
+  }
+
+  /// Удалить запись
+  void deleteDiaryEntry({
+    required DateTime date,
+    required String syn,
+    DateTime? updateFrom,
+    DateTime? updateTo
+  }) async {
+    emit(state.copyWith(
+      updateDiaryStatuses: UpdateDiaryStatuses.loading,
+      getDiaryStatuses :GetDiaryStatuses.loading
+    ));
+
+    try {
+      final response = await diaryRepository.deleteDiaryEntry(
+        date: date, 
+        syn: syn,
+        userId: state.userId, 
+      );
+
+      if(response) {
+        if(updateFrom != null && updateTo != null) {
+          getDiariesList(
+            project: 'Zapolyarye',
+            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            grouping: 'None',
+            dateFrom: updateFrom,
+            dateTo: updateTo ,
+            syn: syn
+          );
+        }
+
+        AppToast.showAppToast(msg: 'Запись удалена');
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        updateDiaryStatuses: UpdateDiaryStatuses.failed,
+        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
+      ));
+    }
+  }
+
+  void setUserId(String userId) {
+    emit(state.copyWith(
+      userId: userId
+    ));
   }
 }

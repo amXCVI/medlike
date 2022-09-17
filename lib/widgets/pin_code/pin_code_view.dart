@@ -16,11 +16,15 @@ class PinCodeView extends StatefulWidget {
     required this.handleBiometricMethod,
     this.isForcedShowingBiometricModal = false,
     this.signInTitle,
+    required this.pinCodeTitle,
+    this.noUsedBiometric,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
-  final void Function() handleBiometricMethod;
+  final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
   final String? signInTitle;
+  final String pinCodeTitle;
+  final bool? noUsedBiometric;
 
   @override
   State<PinCodeView> createState() => _PinCodeViewState();
@@ -35,8 +39,14 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   void initState() {
-    initBiometricValue();
     pointsArray = initPointsArray;
+    if (widget.noUsedBiometric != null && widget.noUsedBiometric == true) {
+      isShowingBiometricModal = false;
+      isSupportedAndEnabledBiometric = false;
+      return;
+    } else {
+      initBiometricValue();
+    }
     super.initState();
   }
 
@@ -67,10 +77,13 @@ class _PinCodeViewState extends State<PinCodeView> {
     setState(() {
       isShowingBiometricModal = false;
     });
+    if (widget.isForcedShowingBiometricModal) {
+      widget.handleBiometricMethod(false);
+    }
   }
 
   void onSuccessAuthBiometric() {
-    widget.handleBiometricMethod();
+    widget.handleBiometricMethod(true);
     setState(() {
       isShowingBiometricModal = false;
     });
@@ -88,7 +101,8 @@ class _PinCodeViewState extends State<PinCodeView> {
         });
       }
     } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
-        isSupportedAndEnabledBiometric) {
+        isSupportedAndEnabledBiometric &&
+        !widget.isForcedShowingBiometricModal) {
       setState(() {
         isShowingBiometricModal = true;
       });
@@ -122,13 +136,6 @@ class _PinCodeViewState extends State<PinCodeView> {
         });
       }
 
-      if (res && widget.isForcedShowingBiometricModal) {
-        setState(() {
-          isSupportedAndEnabledBiometric = true;
-          isShowingBiometricModal = true;
-        });
-      }
-
       return;
     }
   }
@@ -137,30 +144,59 @@ class _PinCodeViewState extends State<PinCodeView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.height - 280,
+      height: MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+          ? MediaQuery.of(context).size.height - 140
+          : MediaQuery.of(context).size.height - 160,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...pointsArray
-                    .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            width: 10,
-                            height: 10,
-                            decoration: BoxDecoration(
-                              color: e == -1
-                                  ? AppColors.circleBgFirst
-                                  : AppColors.mainBrandColor,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-              ],
+          MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+              ? const SizedBox(height: 12)
+              : const Expanded(child: SizedBox()),
+          Expanded(
+            child: Center(
+              child: Column(
+                children: [
+                  Center(
+                      child: Text(
+                    widget.pinCodeTitle,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(color: AppColors.mainText),
+                    textAlign: TextAlign.center,
+                  )),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.width <
+                              AppConstants.smScreenWidth
+                          ? 8
+                          : 28),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...pointsArray
+                          .map((e) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: e == -1
+                                        ? AppColors.circleBgFirst
+                                        : AppColors.mainBrandColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Material(
@@ -234,7 +270,8 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
-          isSupportedAndEnabledBiometric && isShowingBiometricModal
+          isSupportedAndEnabledBiometric && isShowingBiometricModal ||
+                  widget.isForcedShowingBiometricModal
               ? BiometricAuthenticationWidget(
                   onSuccess: onSuccessAuthBiometric,
                   onCancel: onCancelBiometricAuthMethod,

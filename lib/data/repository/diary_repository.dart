@@ -11,10 +11,29 @@ class DiaryRepository {
   Future<List<DiaryCategoryModel>> getDiaryCategories({
     required String project,
     required String platform,
+    DateTime? updateSince
   }) async {
+
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
+      var queryParams = {
+        'Project': project,
+        'Platform': platform      
+      };
+
+      if(updateSince != null) {
+        queryParams.addAll({
+          'updateSince': dateTimeToServerFormat(updateSince, tz ?? offsetTz),
+        });
+      }
+
       final response = await _dioClient.get(
-        '/api/v1.0/diary/category-list?Project=$project&Platform=$platform'
+        '/api/v1.0/diary/category-list',
+        queryParameters: queryParams
       );
 
       final List list = response.data;
@@ -38,6 +57,11 @@ class DiaryRepository {
     DateTime? dateTo, 
   }) async {
     try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
       String url = '/api/v1.0/diary';
       var queryParams = {
         'Project': project,
@@ -59,13 +83,17 @@ class DiaryRepository {
 
       if(dateFrom != null) {
         queryParams.addAll({
-          'DateFrom': dateTimeToServerFormat(dateFrom, 3),
+          'DateFrom': dateTimeToServerFormat(
+            dateFrom, tz ?? offsetTz
+          ),
         });
       }
 
       if(dateTo != null) {
         queryParams.addAll({
-          'DateTo': dateTimeToServerFormat(dateTo, 3)
+          'DateTo': dateTimeToServerFormat(
+            dateTo, tz ?? offsetTz
+          )
         });
       }
       
@@ -83,16 +111,57 @@ class DiaryRepository {
     }
   }
 
-  Future<void> postDiaryEntry({
-    required String date,
+  Future<bool> postDiaryEntry({
+    required DateTime date,
     required String syn,
     String? userId,
     required List<double> values
   }) async {
     try {
-      await _dioClient.post('/api/v1.0/diary',
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
+      final response = await _dioClient.post('/api/v1.0/diary',
         data: {
-          'DateTime': date,
+          'dateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
+          'synonim': syn,
+          'userID' : userId,
+          'values': values
+        },
+        options: Options(
+          headers: {
+            'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+          },
+        )
+      );
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> putDiaryEntry({
+    required DateTime date,
+    required DateTime oldDate,
+    required String syn,
+    String? userId,
+    required List<double> values
+  }) async {
+    try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
+      final response = await _dioClient.put('/api/v1.0/diary',
+        data: {
+          'DateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
+          'OldDatetime': dateTimeToServerFormat(oldDate, tz ?? offsetTz),
           'Synonim': syn,
           'UserID' : userId,
           'Values': values
@@ -104,6 +173,50 @@ class DiaryRepository {
           },
         )
       );
+
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteDiaryEntry({
+    required DateTime date,
+    required String syn,
+    String? userId,
+  }) async {
+    try {
+      final tz = int.tryParse(
+        await UserSecureStorage.getField(AppConstants.timeZoneOffset) ?? ''
+      );
+      final offsetTz = DateTime.now().timeZoneOffset.inHours;
+
+      var queryParams = {
+        'DateTime': dateTimeToServerFormat(date, tz ?? offsetTz),
+        'Synonim': syn
+      };
+
+      if(userId != null) {
+        queryParams.addAll({
+          'UserId': userId
+        });
+      }
+
+      final response = await _dioClient.delete('/api/v1.0/diary',
+        queryParameters: queryParams,
+        options: Options(
+          headers: {
+            'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+          },
+        )
+      );
+
+      final res = response.statusCode ?? 0;
+
+      return res >= 200 && res < 300;
     } catch (error) {
       rethrow;
     }

@@ -6,11 +6,12 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class InitialPinCode extends StatefulWidget {
-  const InitialPinCode({Key? key}) : super(key: key);
+  const InitialPinCode({Key? key, this.noUsedBiometric}) : super(key: key);
+
+  final bool? noUsedBiometric;
 
   @override
   State<InitialPinCode> createState() => _InitialPinCodeState();
@@ -19,20 +20,28 @@ class InitialPinCode extends StatefulWidget {
 class _InitialPinCodeState extends State<InitialPinCode> {
   late List<int> initialPinCode;
   late int step = 0;
+  late bool isForcedShowingBiometricModal = false;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void onSuccessBiometricAuthenticate() {
+  void onSuccessBiometricAuthenticate(bool result) {
     context.read<UserCubit>().signInBiometric();
     context.router.replaceAll([const MainRoute()]);
   }
 
-  void onSuccessBiometricDataSaved() {
-    UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
-        SelectedAuthMethods.touchId.toString());
+  void onSuccessBiometricDataSaved(bool result) {
+    if (result) {
+      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
+          SelectedAuthMethods.touchId.toString());
+    }
+
+    setState(() {
+      isForcedShowingBiometricModal = false;
+    });
+    context.router.replaceAll([const MainRoute()]);
   }
 
   @override
@@ -52,7 +61,13 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     Future<bool> _checkRepeatPinCode(List<int> repeatPinCode) async {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
-        context.router.replaceAll([const MainRoute()]);
+        if (widget.noUsedBiometric == null || widget.noUsedBiometric == false) {
+          setState(() {
+            isForcedShowingBiometricModal = true;
+          });
+        } else {
+          context.router.replace(const SettingsRoute());
+        }
         return true;
       } else {
         AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -63,34 +78,25 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     return ListView(
       shrinkWrap: true,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Center(
-              child: Text(
-            step == 0
-                ? 'Придумайте пин-код\nдля быстрого входа в приложение'
-                : 'Повторите пин-код',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(color: AppColors.mainText),
-            textAlign: TextAlign.center,
-          )),
-        ),
-        const SizedBox(height: 4),
         step == 0
             ? PinCodeView(
+                pinCodeTitle:
+                    'Придумайте пин-код\nдля быстрого входа в приложение',
                 setPinCode: _saveInitialPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricAuthenticate,
+                noUsedBiometric: widget.noUsedBiometric,
               )
             : PinCodeView(
+                pinCodeTitle: 'Повторите пин-код',
                 setPinCode: _checkRepeatPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricDataSaved,
-                isForcedShowingBiometricModal: true,
+                isForcedShowingBiometricModal: isForcedShowingBiometricModal,
                 signInTitle:
-                    'Сохраните свои биометрические данные для упрощенного входа в приолжение'),
+                    'Сохраните свои биометрические данные для упрощенного входа в приолжение',
+                noUsedBiometric: widget.noUsedBiometric,
+              )
       ],
     );
   }

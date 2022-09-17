@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 
@@ -17,8 +18,9 @@ class DeleteProfileDialog extends StatelessWidget {
           .deleteUserAccount(userId: selectedUserId)
           .then((value) {
         UserSecureStorage.cleanStorage();
-        context.read<UserCubit>().signOut();
-        context.router.replaceAll([StartPhoneNumberRoute(isDeletingProfile: true)]);
+        context.read<UserCubit>().forceLogout();
+        context.router
+            .replaceAll([StartPhoneNumberRoute(isDeletingProfile: true)]);
       });
     }
 
@@ -27,9 +29,10 @@ class DeleteProfileDialog extends StatelessWidget {
       actionsAlignment: MainAxisAlignment.spaceAround,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12.0))),
-      title: const Text(
+      title: Text(
         'Вы уверены. что хотите удалить учетную запись?',
         textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -46,6 +49,10 @@ class DeleteProfileDialog extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             child: Text(
               'Отмена'.toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: AppColors.mainText),
             ),
           ),
         ),
@@ -60,6 +67,10 @@ class DeleteProfileDialog extends StatelessWidget {
                     vertical: 16.0, horizontal: 20.0),
                 child: Text(
                   'Удалить'.toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(color: AppColors.mainError),
                 ),
               ),
             );
