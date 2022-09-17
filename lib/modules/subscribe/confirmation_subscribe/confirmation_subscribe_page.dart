@@ -54,7 +54,9 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
           builder: (context, state) {
             bool isDisabledButton = !isCheckedAgreements ||
                 state.getAppointmentInfoStatus ==
-                    GetAppointmentInfoStatuses.loading;
+                    GetAppointmentInfoStatuses.loading ||
+                state.creatingAppointmentStatus ==
+                    CreatingAppointmentStatuses.loading;
             return FloatingActionButton.extended(
                 onPressed: isDisabledButton ? () {} : _createNewAppointment,
                 backgroundColor: !isDisabledButton
@@ -71,6 +73,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
             UserInfo(userId: widget.userId),
             const SizedBox(height: 19),
             const DashDivider(),
+
             /// Карточки с выбором способа оплаты.
             /// Не работает оплата картой, поэтому закомментировано
             /// Раскомментировать в кубите
