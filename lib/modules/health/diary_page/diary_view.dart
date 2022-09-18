@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/modules/health/diary_graph/diary_graph.dart';
 import 'package:medlike/modules/health/diary_graph/diary_prompt.dart';
 import 'package:medlike/modules/health/diary_page/diary_list.dart';
@@ -74,89 +76,96 @@ class _DiaryViewState extends State<DiaryView> {
       physics: const NeverScrollableScrollPhysics(),
       child: Column(
         children: [
-          if (!prompted) DiaryValue(
-            date: widget.firstDate,
-            currentValue: widget.diaryModel.currentValue,
-            measureItem: widget.measureItem,
-            decimalDigits: widget.decimalDigits,
-            grouping: widget.grouping,
-          ),
-          if (prompted) Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              SizedBox(
-                height: 88,
-                width: MediaQuery.of(context).size.width,
-              ),
-              Positioned(
-                top: 0,
-                left: centerOffset?.dx ?? offset.dx,
-                child: DiaryPrompt(
-                  key: _widgetKey,
-                  item: widget.diaryModel.values[selectedId], 
-                  decimalDigits: widget.decimalDigits, 
-                  measureItem: widget.measureItem
-                )
-              ),
-              Positioned(
-                left: offset.dx - 1,
-                bottom: 0,
-                child: Container(
-                  height: 28,
-                  width: 1,
-                  color: AppColors.mainSeparatorAlpha,
-                )
-              )
-            ],
-          ),
-          DiaryGraph(
-            items: items,
-            firstDate: widget.firstDate,
-            lastDate: widget.lastDate,
-            measureItem: widget.measureItem,
-            decimalDigits: widget.decimalDigits,
-            grouping: widget.grouping,
-            onLoadDate: widget.onLoadDate,
-            selected: prompted ? offset.dx : null,
-            minValue: widget.minValue,
-            maxValue: widget.maxValue,
-            onSelect: (id, newOffset) {
-              Future.microtask(
-                () {
-                  setState(() {
-                    selectedId = id;
-                    isPrompt = true;
-                    widget.setPrompt();
-                    offset = newOffset;
-                  });
+          BlocBuilder<PromptCubit, PromptState>(
+            builder: (context, state) {
+              final prompted = state.promptStatuses == PromptStatuses.selected;
 
-                  ContextHelper.getFutureSizeFromGlobalKey(
-                    _widgetKey, 
-                    (size) => setState(() {
-                      final dw = MediaQuery.of(context).size.width - 32;
-                      var w = offset.dx - size.width / 2;
-                      w = w < 0 ? 0 : w;
-                      w = offset.dx > dw ? dw : w;
-                      if(offset.dx + size.width <= dw) {
-                        centerOffset = Offset(
-                          w < 0 ? 0 : w,
-                          size.height
-                        );
-                      } else {
-                        centerOffset = Offset(
-                          dw - size.width,
-                          size.height
-                        );
-                      }
-                    }) 
-                  );
-                }
+              return Column(
+                children: [
+                  if(!prompted) DiaryValue(
+                    date: widget.firstDate,
+                    currentValue: widget.diaryModel.currentValue,
+                    measureItem: widget.measureItem,
+                    decimalDigits: widget.decimalDigits,
+                    grouping: widget.grouping,
+                  ),
+                  if(prompted)  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      SizedBox(
+                        height: 88,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      Positioned(
+                        top: 0,
+                        left: centerOffset?.dx ?? offset.dx,
+                        child: DiaryPrompt(
+                          key: _widgetKey,
+                          item: widget.diaryModel.values[selectedId], 
+                          decimalDigits: widget.decimalDigits, 
+                          measureItem: widget.measureItem
+                        )
+                      ),
+                      Positioned(
+                        left: offset.dx - 1,
+                        bottom: 0,
+                        child: Container(
+                          height: 28,
+                          width: 1,
+                          color: AppColors.mainSeparatorAlpha,
+                        )
+                      )
+                    ],
+                  ),
+                DiaryGraph(
+                    items: items,
+                    firstDate: widget.firstDate,
+                    lastDate: widget.lastDate,
+                    measureItem: widget.measureItem,
+                    decimalDigits: widget.decimalDigits,
+                    grouping: widget.grouping,
+                    onLoadDate: widget.onLoadDate,
+                    selected: prompted ? offset.dx : null,
+                    minValue: widget.minValue,
+                    maxValue: widget.maxValue,
+                    onSelect: (id, newOffset) {
+                      Future.microtask(
+                        () {
+                          setState(() {
+                            selectedId = id;
+                            context.read<PromptCubit>().select();
+                            offset = newOffset;
+                          });
+
+                          ContextHelper.getFutureSizeFromGlobalKey(
+                            _widgetKey, 
+                            (size) => setState(() {
+                              final dw = MediaQuery.of(context).size.width - 32;
+                              var w = offset.dx - size.width / 2;
+                              w = w < 0 ? 0 : w;
+                              w = offset.dx > dw ? dw : w;
+                              if(offset.dx + size.width <= dw) {
+                                centerOffset = Offset(
+                                  w < 0 ? 0 : w,
+                                  size.height
+                                );
+                              } else {
+                                centerOffset = Offset(
+                                  dw - size.width,
+                                  size.height
+                                );
+                              }
+                            }) 
+                          );
+                        }
+                      );
+                    },
+                    onUnselect: () {
+                      context.read<PromptCubit>().unselect();
+                    },
+                  ),
+                ],
               );
-            },
-            onUnselect: () {
-              setState(() {
-                isPrompt = false;
-              });
             },
           ),
           DiaryList(
