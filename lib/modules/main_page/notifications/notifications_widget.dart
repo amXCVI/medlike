@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
+import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class NotificationsWidget extends StatelessWidget {
-  const NotificationsWidget({Key? key}) : super(key: key);
+  NotificationsWidget({Key? key}) : super(key: key);
+
+  final _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,7 @@ class NotificationsWidget extends StatelessWidget {
     }
 
     context.read<UserCubit>().getLastNotReadNotification();
+    context.read<TourCubit>().show();
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
@@ -56,18 +61,33 @@ class NotificationsWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2.0, horizontal: 12.0),
-                      decoration: const BoxDecoration(
-                          color: AppColors.mainError,
-                          borderRadius: BorderRadius.all(Radius.circular(24))),
-                      child: Text(
-                        (notificationItem.eventsCount).toString(),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
+                    BlocListener<TourCubit, TourState>(
+                      listener: (context, state) {
+                        final tooltip = TourTooltip.of(context).create(
+                          'Отслеживайте события по всем своим закрепленным пользователям'
+                        );
+
+                        if(state.tourStatuses == TourStatuses.first) {
+                          tooltip.show(
+                            widgetKey: _key
+                          );
+                        }    
+                      },
+                      child: Container(
+                        key: _key,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2.0, horizontal: 12.0),
+                        decoration: const BoxDecoration(
+                            color: AppColors.mainError,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(24))),
+                        child: Text(
+                          (notificationItem.eventsCount).toString(),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
                     )
                   ],

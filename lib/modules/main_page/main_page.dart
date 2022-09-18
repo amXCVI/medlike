@@ -43,7 +43,7 @@ class MainPage extends StatelessWidget {
           child: ListView(
             children: [
               const SizedBox(height: 16),
-              const NotificationsWidget(),
+              NotificationsWidget(),
               const AppointmentsWidget(),
               const SliderWidget(),
               const SizedBox(height: 8),

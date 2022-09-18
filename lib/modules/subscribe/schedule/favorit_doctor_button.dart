@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class FavoriteDoctorButton extends StatefulWidget {
   const FavoriteDoctorButton({
@@ -65,15 +66,21 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
       }
     }
 
-    return IconButton(
-      onPressed: _handleTapOnFavoriteDoctor,
-      icon: Lottie.asset(
-        'assets/animations/favorite_doctor_button.json',
-        controller: _lottieAnimationController,
-        alignment: Alignment.center,
-        repeat: false,
+    return OverflowBox(
+      child: Column(
+        children: [
+          IconButton(
+            onPressed: _handleTapOnFavoriteDoctor,
+            icon: Lottie.asset(
+              'assets/animations/favorite_doctor_button.json',
+              controller: _lottieAnimationController,
+              alignment: Alignment.center,
+              repeat: false,
+            ),
+            tooltip: widget.isFavorite.toString(),
+          ),
+        ],
       ),
-      tooltip: widget.isFavorite.toString(),
     );
   }
 }
