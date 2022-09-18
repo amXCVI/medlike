@@ -4,16 +4,20 @@ enum PromptStatuses { unselected, selected }
 
 class PromptState {
   final PromptStatuses? promptStatuses;
+  final int? selectedId;
 
   PromptState({
     this.promptStatuses,
+    this.selectedId
   });
 
   PromptState copyWith({
-    PromptStatuses? promptStatuses
+    PromptStatuses? promptStatuses,
+    int? selectedId
   }) {
     return PromptState(
-      promptStatuses: promptStatuses ?? this.promptStatuses
+      promptStatuses: promptStatuses ?? this.promptStatuses,
+      selectedId: selectedId ?? this.selectedId
     );
   }
 }

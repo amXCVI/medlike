@@ -71,6 +71,29 @@ class _DiaryGraphState extends State<DiaryGraph> {
     return DateTime.fromMillisecondsSinceEpoch(x.floor());
   }
 
+  void onChartTap (
+    ChartTouchInteractionArgs args,
+    List<ChartData> chartData,
+    int maxPixels
+  ) {
+    // Заранее большое число
+    double pixels = 10000;
+
+    for (var el in chartData) { 
+      final offset = seriesController!.pointToPixel(
+        CartesianChartPoint(getXFromDate(el.x), el.y)
+      );
+      final dx = (offset.dx - args.position.dx).abs();
+      if(dx < pixels) {
+        pixels = dx;
+      }
+    }
+
+    if(pixels > maxPixels) {
+      context.read<PromptCubit>().unselect();
+    }
+  }
+
   void onPointTap(ChartPointDetails? details) {
     List<ChartData> chartData = widget.items.map((e) => 
       ChartData(
@@ -262,7 +285,11 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
     if(widget.isClean) {
       return TapOutsideDetectorWidget(
-        onTappedOutside: () => widget.onUnselect(),
+        onTappedOutside: ()  {
+          if(widget.selected != null) {
+            context.read<PromptCubit>().unselect();
+          }
+        },
         child: SizedBox(
           height: 85,
           child: SfCartesianChart(
@@ -310,7 +337,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
               }
             },
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            onChartTouchInteractionUp: (args) => context.read<PromptCubit>().unselect()
+            onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
           ),
         ),
       );
@@ -377,24 +404,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             }
           },
     
-          onChartTouchInteractionUp: (args) {
-            // Заранее большое число
-            double pixels = 10000;
-
-            for (var el in chartData) { 
-              final offset = seriesController!.pointToPixel(
-                CartesianChartPoint(getXFromDate(el.x), el.y)
-              );
-              final dx = (offset.dx - args.position.dx).abs();
-              if(dx < pixels) {
-                pixels = dx;
-              }
-            }
-
-            if(pixels > 15) {
-              context.read<PromptCubit>().unselect();
-            }
-          }
+          onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
         )
       ),
     );

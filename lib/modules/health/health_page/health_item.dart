@@ -25,7 +25,7 @@ class HealthItem extends StatefulWidget {
       required this.onNavigate,
       required this.firstDate,
       required this.lastDate,
-      required this.isSelected,
+      required this.index,
       required this.setSelected,
       this.data})
       : super(key: key);
@@ -41,7 +41,7 @@ class HealthItem extends StatefulWidget {
   final DateTime lastDate;
   final Function onLoadDada;
   final Function onNavigate;
-  final bool isSelected;
+  final int index;
   final Function(bool) setSelected;
 
   @override
@@ -65,7 +65,7 @@ class _HealthItemState extends State<HealthItem> {
 
     return BlocBuilder<PromptCubit, PromptState>(
       builder: (context, state) {
-        final isPrompted = item != null 
+        final isPrompted = widget.index == state.selectedId 
           && state.promptStatuses == PromptStatuses.selected;
 
         return Padding(
@@ -149,6 +149,10 @@ class _HealthItemState extends State<HealthItem> {
                                       maxValue: widget.maxValue,
                                       selected: isPrompted ? offset?.dx : null,
                                       onSelect: (id, newOffset) {
+                                        context.read<PromptCubit>().select(
+                                          selectedId: widget.index
+                                        );
+
                                         final box = _keyContext.currentContext
                                             ?.findRenderObject() as RenderBox;
                                         final pos =
@@ -161,8 +165,6 @@ class _HealthItemState extends State<HealthItem> {
                                             blockOffset = newOffset;
                                             //widget.setSelected(true);
                                           });
-
-                                          context.read<PromptCubit>().select();
 
                                           ContextHelper
                                               .getFutureSizeFromGlobalKey(
