@@ -42,7 +42,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => MedcardCubit(MedcardRepository())),
         BlocProvider(create: (context) => DiaryCubit(DiaryRepository())),
         BlocProvider(create: (context) => PromptCubit()),
-        BlocProvider(create: (context) => TourCubit())
+        BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],
       child: InactivityManager(
         child: MaterialApp.router(

@@ -64,36 +64,44 @@ class NotificationsWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    BlocListener<TourCubit, TourState>(
-                      listener: (ctx, state) {
+                    BlocBuilder<TourCubit, TourState>(
+                      buildWhen: (_, state) {
                         final tooltip = TourTooltip.of(context).create(
-                          'Отслеживайте события по всем своим закрепленным пользователям'
+                          'Отслеживайте события по всем своим закрепленным пользователям',
+                          onDismiss: () {
+                            context.read<TourCubit>().checkNotification();
+                          }
                         );
 
                         if(state.tourStatuses == TourStatuses.first
-                          && state.tourStage == TourStage.notification) {
+                          && state.isNotificationShown != true) {
                           tooltip.show(
                             widgetKey: _key,
                             offset: const Offset(24, 0)
                           );
-                        }    
+                        }
+                        
+                        return true;
                       },
-                      child: Container(
-                        key: _key,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 2.0, horizontal: 12.0),
-                        decoration: const BoxDecoration(
-                            color: AppColors.mainError,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(24))),
-                        child: Text(
-                          (notificationItem.eventsCount).toString(),
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
+                      builder: (ctx, state) {
+                      
+                        return Container(
+                          key: _key,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2.0, horizontal: 12.0),
+                          decoration: const BoxDecoration(
+                              color: AppColors.mainError,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24))),
+                          child: Text(
+                            (notificationItem.eventsCount).toString(),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        );    
+                      },
                     )
                   ],
                 ),

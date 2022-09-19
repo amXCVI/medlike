@@ -45,7 +45,6 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
 
   @override
   Widget build(BuildContext context) {
-    context.read<TourCubit>().show(TourStage.favorite);
     void _handleTapOnFavoriteDoctor() {
       String categoryType =
           CategoryTypes.getCategoryTypeByCategoryTypeId(widget.categoryTypeId)
@@ -69,33 +68,41 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
       }
     }
 
-    return BlocListener<TourCubit, TourState>(
-      listener: (cxt, state) {
+    return BlocBuilder<TourCubit, TourState>(
+      buildWhen: (_, state) {
         final tooltip = TourTooltip.of(context).create(
           'Добавьте врача в избранные',
           width: 221,
-          height: 44
+          height: 44,
+          onDismiss: () {
+            context.read<TourCubit>().checkFavorite();
+          }
         );
 
         if(state.tourStatuses == TourStatuses.first
-          && state.tourStage == TourStage.favorite
+          && state.isFavoriteShown != true
         ) {
           tooltip.show(
             widgetKey: _key,
           );
-        }   
+        }
+
+        return true;
       },
-      child: IconButton(
-        onPressed: _handleTapOnFavoriteDoctor,
-        icon: Lottie.asset(
-          key: _key,
-          'assets/animations/favorite_doctor_button.json',
-          controller: _lottieAnimationController,
-          alignment: Alignment.center,
-          repeat: false,
-        ),
-        tooltip: widget.isFavorite.toString(),
-      )
+      builder: (cxt, state) {
+        
+        return IconButton(
+          onPressed: _handleTapOnFavoriteDoctor,
+          icon: Lottie.asset(
+            key: _key,
+            'assets/animations/favorite_doctor_button.json',
+            controller: _lottieAnimationController,
+            alignment: Alignment.center,
+            repeat: false,
+          ),
+          tooltip: widget.isFavorite.toString(),
+        );   
+      },
     );
   }
 }

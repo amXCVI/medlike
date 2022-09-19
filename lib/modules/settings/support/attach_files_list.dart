@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/file_size_helpers.dart';
 import 'package:mime/mime.dart';
@@ -19,13 +21,21 @@ class AttachFilesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onShow(BuildContext context) {
+      Slidable.of(context)!.openEndActionPane();
+      Future.delayed(const Duration(milliseconds: 400), () {
+        Slidable.of(context)!.close();
+        context.read<TourCubit>().checkSupport();
+      });
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         filesList.isNotEmpty
             ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
                   'Прикрепленные файлы',
                   style: Theme.of(context)
                       .textTheme
@@ -33,7 +43,7 @@ class AttachFilesList extends StatelessWidget {
                       ?.copyWith(fontSize: 12, color: AppColors.lightText),
                   textAlign: TextAlign.start,
                 ),
-            )
+              )
             : const SizedBox(),
         ...filesList
             .map((e) => Slidable(
@@ -74,46 +84,62 @@ class AttachFilesList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16.0, horizontal: 16.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom:
-                            BorderSide(color: Theme.of(context).dividerColor),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(radius: 20, backgroundImage: FileImage(e)),
-                        const SizedBox(width: 24),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                e.path.split('/').last,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: true,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${MediaType.parse(lookupMimeType(e.path) as String).toString().toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(e.lengthSync())}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                softWrap: true,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.lightText),
-                              )
-                            ],
+                  child: BlocBuilder<TourCubit, TourState>(
+                    buildWhen: (_, state) {
+                      if(state.tourStatuses == TourStatuses.first
+                        && state.isAppointmentShown != true
+                        && filesList.indexOf(e) == 0
+                      ) {
+                        onShow(context);
+                      }
+
+                      return true;
+                    },
+                    builder: (context, state) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: Theme.of(context).dividerColor),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                                radius: 20, backgroundImage: FileImage(e)),
+                            const SizedBox(width: 24),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.path.split('/').last,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${MediaType.parse(lookupMimeType(e.path) as String).toString().toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(e.lengthSync())}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(color: AppColors.lightText),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ))
             .toList()

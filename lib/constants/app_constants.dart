@@ -9,6 +9,9 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для сохранения статуса пользования приложением
+  static const String demoTourStatus = 'demoTourStatus';
+
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 

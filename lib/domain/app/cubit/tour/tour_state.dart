@@ -5,28 +5,34 @@ enum TourStatuses {
   late
 }
 
-enum TourStage {
-  notification,
-  favorite,
-  dismiss
-}
-
 class TourState {
   final TourStatuses? tourStatuses;
-  final TourStage? tourStage;
+  final bool? isNotificationShown;
+  final bool? isFavoriteShown;
+  final bool? isAppointmentShown;
+  final bool? isSupportShown;
 
   TourState({
     this.tourStatuses,
-    this.tourStage
+    this.isNotificationShown,
+    this.isFavoriteShown,
+    this.isAppointmentShown,
+    this.isSupportShown,
   });
 
   TourState copyWith({
     TourStatuses? tourStatuses,
-    TourStage? tourStage
+    bool? isNotificationShown,
+    bool? isFavoriteShown,
+    bool? isAppointmentShown,
+    bool? isSupportShown,
   }) {
     return TourState(
       tourStatuses: tourStatuses ?? this.tourStatuses,
-      tourStage: tourStage ?? this.tourStage
+      isNotificationShown: isNotificationShown ?? this.isNotificationShown,
+      isFavoriteShown: isFavoriteShown ?? this.isFavoriteShown,
+      isAppointmentShown: isAppointmentShown ?? this.isAppointmentShown,
+      isSupportShown: isSupportShown ?? this.isSupportShown,
     );
   }
 }

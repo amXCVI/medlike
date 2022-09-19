@@ -13,7 +13,8 @@ class TourTooltip {
 
   TextPopup create(String text, {
     double? width,
-    double? height
+    double? height,
+    Function? onDismiss
   }) {
     return TextPopup(
       context,
@@ -29,7 +30,9 @@ class TourTooltip {
       backgroundColor: AppColors.mainText,
       padding: const EdgeInsets.all(12.0),
       borderRadius: BorderRadius.circular(8.0),
-      onDismiss: () {}
+      onDismiss: () {
+        onDismiss?.call();
+      }
     );
   }
 }

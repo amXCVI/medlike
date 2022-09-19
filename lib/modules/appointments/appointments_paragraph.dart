@@ -26,8 +26,9 @@ class AppointmentsParagraph extends StatelessWidget {
   Widget build(BuildContext context) {
     void onShow(BuildContext context) {
       Slidable.of(context)!.openEndActionPane();
-      Future.delayed(const Duration(milliseconds: 400), () => {
-        Slidable.of(context)!.close()
+      Future.delayed(const Duration(milliseconds: 400), () {
+        Slidable.of(context)!.close();
+        context.read<TourCubit>().checkAppointment();
       });
     }
 
@@ -36,10 +37,7 @@ class AppointmentsParagraph extends StatelessWidget {
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
-    }
-
-
-    context.read<TourCubit>().show(TourStage.dismiss);
+    }    
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -127,17 +125,22 @@ class AppointmentsParagraph extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: BlocListener<TourCubit, TourState>(
-                                listener: (context, state) {
+                              child: BlocBuilder<TourCubit, TourState>(
+                                buildWhen: (_, state) {
                                   if(state.tourStatuses == TourStatuses.first
-                                  && state.tourStage == TourStage.dismiss) {
+                                    && state.isAppointmentShown != true
+                                    && appointmentsList.indexOf(item) == 0
+                                  ) {
                                     onShow(context);
                                   }
+                                  return true;
                                 },
-                                child: AppointmentItem(
-                                  appointmentItem: item,
-                                ),
-                              ),
+                                builder: (context, state) {
+                                  return AppointmentItem(
+                                    appointmentItem: item,
+                                  );
+                                }
+                              )
                             )
                           : AppointmentItem(
                               appointmentItem: item,
