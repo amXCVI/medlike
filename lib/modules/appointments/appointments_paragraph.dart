@@ -6,7 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
+
 
 class AppointmentsParagraph extends StatelessWidget {
   const AppointmentsParagraph({
@@ -22,12 +24,22 @@ class AppointmentsParagraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onShow(BuildContext context) {
+      Slidable.of(context)!.openEndActionPane();
+      Future.delayed(const Duration(milliseconds: 400), () => {
+        Slidable.of(context)!.close()
+      });
+    }
+
     void _deleteAppointment(String appointmentId, String userId) {
       HapticFeedback.lightImpact();
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
     }
+
+
+    context.read<TourCubit>().show(TourStage.dismiss);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -115,8 +127,16 @@ class AppointmentsParagraph extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: AppointmentItem(
-                                appointmentItem: item,
+                              child: BlocListener<TourCubit, TourState>(
+                                listener: (context, state) {
+                                  if(state.tourStatuses == TourStatuses.first
+                                  && state.tourStage == TourStage.dismiss) {
+                                    onShow(context);
+                                  }
+                                },
+                                child: AppointmentItem(
+                                  appointmentItem: item,
+                                ),
                               ),
                             )
                           : AppointmentItem(

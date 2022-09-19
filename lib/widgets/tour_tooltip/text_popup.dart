@@ -51,16 +51,16 @@ class TextPopup {
   }
 
   /// Shows a popup near a widget with key [widgetKey] or [rect].
-  void show({Rect? rect, GlobalKey? widgetKey}) {
+  void show({Rect? rect, GlobalKey? widgetKey, Offset? offset}) {
     if (rect == null && widgetKey == null) {
       print("both 'rect' and 'key' can't be null");
       return;
     }
 
-    this._showRect = rect ?? _getWidgetGlobalRect(widgetKey!);
+    _showRect = rect ?? _getWidgetGlobalRect(widgetKey!);
     this._screenSize = window.physicalSize / window.devicePixelRatio;
 
-    _calculatePosition(context);
+    _calculatePosition(context, offset);
 
     _entry = OverlayEntry(builder: (context) {
       return buildPopupLayout(_offset);
@@ -70,8 +70,8 @@ class TextPopup {
     _isVisible = true;
   }
 
-  void _calculatePosition(BuildContext context) {
-    _offset = _calculateOffset(context);
+  void _calculatePosition(BuildContext context, Offset? offset) {
+    _offset = _calculateOffset(context, offset ?? Offset.zero);
   }
 
   /// Returns globalRect of widget with key [key]
@@ -83,8 +83,8 @@ class TextPopup {
   }
 
   /// Returns calculated widget offset using [context]
-  Offset _calculateOffset(BuildContext context) {
-    double dx = _showRect.left + _showRect.width / 2.0 - _popupWidth / 2.0;
+  Offset _calculateOffset(BuildContext context, Offset offset) {
+    double dx = _showRect.left +_showRect.width / 2.0 - _popupWidth / 2.0;
     if (dx < 10.0) {
       dx = 10.0;
     }
@@ -93,6 +93,8 @@ class TextPopup {
       double tempDx = _screenSize.width - _popupWidth - 10;
       if (tempDx > 10) dx = tempDx;
     }
+
+    dx -= offset.dx;
 
     double dy = _showRect.top - _popupHeight;
     /* 

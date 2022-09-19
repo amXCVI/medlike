@@ -11,7 +11,10 @@ class TourTooltip {
     return TourTooltip(context);
   }
 
-  TextPopup create(String text) {
+  TextPopup create(String text, {
+    double? width,
+    double? height
+  }) {
     return TextPopup(
       context,
       text: text,
@@ -21,8 +24,8 @@ class TourTooltip {
         fontSize: 14,
         height: 1.42
       ),
-      height: 64,
-      width: 272,
+      height: height ?? 64,
+      width: width ?? 272,
       backgroundColor: AppColors.mainText,
       padding: const EdgeInsets.all(12.0),
       borderRadius: BorderRadius.circular(8.0),

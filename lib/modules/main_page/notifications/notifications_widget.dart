@@ -21,7 +21,6 @@ class NotificationsWidget extends StatelessWidget {
     }
 
     context.read<UserCubit>().getLastNotReadNotification();
-    context.read<TourCubit>().show();
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
@@ -30,6 +29,10 @@ class NotificationsWidget extends StatelessWidget {
                 GetLastNotReadEventStatuses.success) {
           return const SizedBox();
         } else {
+          /* context.read<TourCubit>().show(
+            TourStage.notification
+          ); */
+
           NotificationModel notificationItem =
               state.lastNotification as NotificationModel;
           return Container(
@@ -62,14 +65,16 @@ class NotificationsWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     BlocListener<TourCubit, TourState>(
-                      listener: (context, state) {
+                      listener: (ctx, state) {
                         final tooltip = TourTooltip.of(context).create(
                           'Отслеживайте события по всем своим закрепленным пользователям'
                         );
 
-                        if(state.tourStatuses == TourStatuses.first) {
+                        if(state.tourStatuses == TourStatuses.first
+                          && state.tourStage == TourStage.notification) {
                           tooltip.show(
-                            widgetKey: _key
+                            widgetKey: _key,
+                            offset: const Offset(24, 0)
                           );
                         }    
                       },
