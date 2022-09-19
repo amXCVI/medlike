@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
-import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/modules/health/health_page/health_item.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -10,7 +9,7 @@ import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:collection/collection.dart';
 
-class HealthList extends StatelessWidget {
+class HealthList extends StatefulWidget {
   const HealthList({
     Key? key,
     required this.diariesCategoriesList,
@@ -23,13 +22,18 @@ class HealthList extends StatelessWidget {
   final Function onLoadDada;
 
   @override
-  Widget build(BuildContext context) {
-    final selectedId = context.read<PromptCubit>().state.selectedId;
+  State<HealthList> createState() => _HealthListState();
+}
 
+class _HealthListState extends State<HealthList> {
+  int? selectedId;
+
+  @override
+  Widget build(BuildContext context) {
     DiaryFlatModel? getDiaryEntries(int index) {
-      for(int i = 0; i < diariesItems.length; i++) {
-        if(diariesItems[i].syn == diariesCategoriesList[index].synonim) {
-          return diariesItems[i];
+      for(int i = 0; i < widget.diariesItems.length; i++) {
+        if(widget.diariesItems[i].syn == widget.diariesCategoriesList[index].synonim) {
+          return widget.diariesItems[i];
         }
       }
 
@@ -39,10 +43,10 @@ class HealthList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView.builder(
-        itemCount: diariesCategoriesList.length,
+        itemCount: widget.diariesCategoriesList.length,
         itemBuilder: (ctx, index) {
-          final diary = diariesItems.firstWhereOrNull(
-            (el) => el.syn == diariesCategoriesList[index].synonim
+          final diary = widget.diariesItems.firstWhereOrNull(
+            (el) => el.syn == widget.diariesCategoriesList[index].synonim
           );
 
           final date = diary?.currentValue.date ?? DateTime.now();
@@ -50,22 +54,26 @@ class HealthList extends StatelessWidget {
           DateTime dateTo = date_utils.DateUtils.lastDayOfWeek(date);
 
           return HealthItem(
-            iconPath: diariesCategoriesList[index].categoryImg, 
-            title: diariesCategoriesList[index].name,
-            measureItem: diariesCategoriesList[index].measureItem,
-            decimalDigits: diariesCategoriesList[index].decimalDigits,
-            minValue: diariesCategoriesList[index].minValue,
-            maxValue: diariesCategoriesList[index].maxValue,
+            iconPath: widget.diariesCategoriesList[index].categoryImg, 
+            title: widget.diariesCategoriesList[index].name,
+            measureItem: widget.diariesCategoriesList[index].measureItem,
+            decimalDigits: widget.diariesCategoriesList[index].decimalDigits,
+            minValue: widget.diariesCategoriesList[index].minValue,
+            maxValue: widget.diariesCategoriesList[index].maxValue,
             data: getDiaryEntries(index),
             firstDate: dateFrom,
             lastDate: dateTo,
-            index: index,
+            isSelected: selectedId == index,
             setSelected: (status) {
-              context.read<PromptCubit>().select(
-                selectedId: index
-              );
+              setState(() {
+                if(status) {
+                  selectedId = index;
+                } else {
+                  selectedId = null;
+                }
+              });
             },
-            onLoadDada: onLoadDada,
+            onLoadDada: widget.onLoadDada,
             onNavigate: (String title, String syn) {
               final date = DateTime.now();
               final dates = ValueHelper.getPeriodTiming(date, '');
@@ -80,11 +88,13 @@ class HealthList extends StatelessWidget {
                 DiaryRoute(
                   syn: syn,
                   title: title,
-                  categoryModel: diariesCategoriesList[index]
+                  categoryModel: widget.diariesCategoriesList[index]
                 )
               );
 
-              context.read<PromptCubit>().unselect();
+              setState(() {
+                selectedId = null;
+              });
             },
           );
         }

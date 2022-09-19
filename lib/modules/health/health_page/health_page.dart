@@ -29,11 +29,11 @@ class HealthPage extends StatelessWidget {
         
       },
       builder: (context, state) {
-        final userList = context.read<UserCubit>().state.userProfiles;
+        final userList = context.read<UserCubit>().state.userProfiles!;
 
         /// Кринж но думать некогда (демо 01.09.2022)
-        if(userList?.length == 1 && context.router.current.name == 'HealthRoute') {
-          context.read<DiaryCubit>().setUserId(userList?.first.id ?? '');
+        if(userList.length == 1 && context.router.current.name == 'HealthRoute') {
+          context.read<DiaryCubit>().setUserId(userList.first.id);
           _loadData('None');
           context.router.pushNamed(AppRoutes.health);
         }
