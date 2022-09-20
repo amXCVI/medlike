@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
@@ -111,6 +112,9 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняет deviceId устройства на бэке
   void addFirebaseDeviceId() async {
+    if (kIsWeb) {
+      return;
+    }
     String fcmToken = await FirebaseMessaging.instance.getToken() as String;
     userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
@@ -133,8 +137,9 @@ class UserCubit extends Cubit<UserState> {
       response = await userRepository.getProfiles();
 
       final defaultUserId = response[0].id;
-      if(currentSelectedUserId == null) {
-        await UserSecureStorage.setField(AppConstants.selectedUserId, defaultUserId);
+      if (currentSelectedUserId == null) {
+        await UserSecureStorage.setField(
+            AppConstants.selectedUserId, defaultUserId);
       }
 
       emit(state.copyWith(
@@ -659,7 +664,8 @@ class UserCubit extends Cubit<UserState> {
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel lastNotification = await userRepository.getLastNotReadedEvent();
+      NotificationModel lastNotification =
+          await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
         lastNotification: lastNotification,
@@ -675,7 +681,8 @@ class UserCubit extends Cubit<UserState> {
   /// Пометить событие как прочитанное
   Future<void> updateNotificationStatus(String eventId) async {
     emit(state.copyWith(
-      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+      updatingNotificationStatusStatus:
+          UpdatingNotificationStatusStatuses.loading,
     ));
     try {
       await userRepository.updateNotificationStatus(eventId);
@@ -684,11 +691,13 @@ class UserCubit extends Cubit<UserState> {
       ));
       await getLastNotReadNotification();
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

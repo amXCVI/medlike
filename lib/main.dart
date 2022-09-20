@@ -9,10 +9,10 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  await FCMService.initializeFirebase();
-  await FCMService.initializeLocalNotifications();
-  await FCMService.onBackgroundMsg();
-  await FCMService.onMessage();
+  // await FCMService.initializeFirebase();
+  // await FCMService.initializeLocalNotifications();
+  // await FCMService.onBackgroundMsg();
+  // await FCMService.onMessage();
 
   runApp(App());
 

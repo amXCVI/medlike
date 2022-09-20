@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/modules/settings/about_app/about_app_dialog.dart';
@@ -30,7 +31,7 @@ class SettingsList extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const BiometricAuthentication(),
+          !kIsWeb ? const BiometricAuthentication() : const SizedBox(),
           SettingsListItem(
             title: 'Сменить пароль',
             iconSrc: 'assets/icons/settings/ic_password_outline.svg',
