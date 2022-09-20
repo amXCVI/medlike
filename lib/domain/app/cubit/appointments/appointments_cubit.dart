@@ -72,7 +72,12 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
   }) async {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
+      appointmentsList: state.appointmentsList
+        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+        .toList(),
     ));
+
+    filterAppointmentsList(state.selectedDate);
     try {
       final bool response;
       response = await appointmentsRepository.deleteAppointment(
@@ -80,14 +85,10 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
 
       emit(state.copyWith(
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
-        appointmentsList: state.appointmentsList
-            ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
-            .toList(),
       ));
       if (response) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
-      filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
           deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
