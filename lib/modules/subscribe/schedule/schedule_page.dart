@@ -207,14 +207,17 @@ class SchedulePage extends StatelessWidget {
                               state.selectedCalendarItem != null &&
                               state.selectedCalendarItem!.hasAvailableCells
                           ? const TimeCellsListSkeleton()
-                          : Center(
-                              child: Text(
-                              'Нет свободного времени',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(color: AppColors.lightText),
-                            )),
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: Center(
+                                child: Text(
+                                  'Нет свободного времени',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(color: AppColors.lightText),
+                                ),
+                              )),
                   AppointmentsListWidget(selectedDate: state.selectedDate),
                 ],
               ),

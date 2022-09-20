@@ -9,7 +9,12 @@ class HealthNodata extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('assets/images/empty_indicator.png'),
+        Image.asset(
+          width: 181,
+          height: 181,
+          'assets/images/empty_indicator.png'
+        ),
+        const SizedBox(height: 50),
         const Text(
           'Здесь будет список \nваших показателей здоровья',
           textAlign: TextAlign.center,

@@ -72,6 +72,7 @@ class SubscribeRowItem extends StatelessWidget {
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.w500,
+                                          fontFamily: 'AquawaxPro',
                                         )),
                                   )
                                 : customIcon
