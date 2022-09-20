@@ -4,6 +4,7 @@ import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 part 'diary_state.dart';
 
@@ -162,7 +163,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
             project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo,
@@ -207,7 +208,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
             project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo ,
@@ -248,7 +249,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
             project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
+            platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo ,

@@ -11,6 +11,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CardsPage extends StatefulWidget {
   const CardsPage({Key? key}) : super(key: key);
@@ -33,11 +34,11 @@ class _CardsPageState extends State<CardsPage> {
     void _onLoadDada(String grouping, {String? syn}) {
       context.read<DiaryCubit>().getDiaryCategoriesList(
           project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+          platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS');
 
       context.read<DiaryCubit>().getDiariesList(
           project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
+          platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS',
           grouping: grouping,
           syn: syn);
     }

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HealthPage extends StatelessWidget {
   const HealthPage({Key? key}) : super(key: key);
@@ -16,11 +17,11 @@ class HealthPage extends StatelessWidget {
     void _loadData(String grouping) {
       context.read<DiaryCubit>().getDiaryCategoriesList(
           project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+          platform: kIsWeb ||  Platform.isAndroid ? 'Android' : 'IOS');
 
       context.read<DiaryCubit>().getDiariesList(
           project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
+          platform: kIsWeb || Platform.isAndroid ? 'Android' : 'IOS',
           grouping: 'None');
     }
     
