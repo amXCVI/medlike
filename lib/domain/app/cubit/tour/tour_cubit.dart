@@ -37,6 +37,7 @@ class TourCubit extends Cubit<TourState> {
     
     if(demoTourStatus == null) {
       setStatus(TourStatuses.first);
+      await UserSecureStorage.setField(AppConstants.demoTourStatus, 'true');
     } else {
       setStatus(TourStatuses.late);
     }

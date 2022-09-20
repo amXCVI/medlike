@@ -60,6 +60,7 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
         ) {
           tooltip.show(
             widgetKey: _key,
+            offset: const Offset(0, 16)
           );
         }
     });

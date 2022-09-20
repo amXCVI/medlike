@@ -109,6 +109,8 @@ class TextPopup {
     */
 
     dy = arrowHeight + _showRect.height + _showRect.top;
+
+    dy -= offset.dy;
     _isDownArrow = false;
 
     return Offset(dx, dy);
