@@ -41,6 +41,28 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
     if (widget.isFavorite) {
       _lottieAnimationController.forward();
     }
+
+    Future.delayed(const Duration(
+      milliseconds: 100
+    ), () {
+      final state = context.read<TourCubit>().state;
+      final tooltip = TourTooltip.of(context).create(
+          'Добавьте врача в избранные',
+          width: 221,
+          height: 44,
+          onDismiss: () {
+            context.read<TourCubit>().checkFavorite();
+          }
+        );
+
+        if(state.tourStatuses == TourStatuses.first
+          && state.isFavoriteShown != true
+        ) {
+          tooltip.show(
+            widgetKey: _key,
+          );
+        }
+    });
   }
 
   @override
@@ -69,32 +91,11 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
     }
 
     return BlocBuilder<TourCubit, TourState>(
-      buildWhen: (_, state) {
-        final tooltip = TourTooltip.of(context).create(
-          'Добавьте врача в избранные',
-          width: 221,
-          height: 44,
-          onDismiss: () {
-            context.read<TourCubit>().checkFavorite();
-          }
-        );
-
-        if(state.tourStatuses == TourStatuses.first
-          && state.isFavoriteShown != true
-        ) {
-          tooltip.show(
-            widgetKey: _key,
-          );
-        }
-
-        return true;
-      },
       builder: (cxt, state) {
-        
         return IconButton(
+          key: _key,
           onPressed: _handleTapOnFavoriteDoctor,
           icon: Lottie.asset(
-            key: _key,
             'assets/animations/favorite_doctor_button.json',
             controller: _lottieAnimationController,
             alignment: Alignment.center,

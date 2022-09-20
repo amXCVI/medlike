@@ -24,14 +24,6 @@ class AppointmentsParagraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onShow(BuildContext context) {
-      Slidable.of(context)!.openEndActionPane();
-      Future.delayed(const Duration(milliseconds: 400), () {
-        Slidable.of(context)!.close();
-        context.read<TourCubit>().checkAppointment();
-      });
-    }
-
     void _deleteAppointment(String appointmentId, String userId) {
       HapticFeedback.lightImpact();
       context
@@ -125,22 +117,7 @@ class AppointmentsParagraph extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: BlocBuilder<TourCubit, TourState>(
-                                buildWhen: (_, state) {
-                                  if(state.tourStatuses == TourStatuses.first
-                                    && state.isAppointmentShown != true
-                                    && appointmentsList.indexOf(item) == 0
-                                  ) {
-                                    onShow(context);
-                                  }
-                                  return true;
-                                },
-                                builder: (context, state) {
-                                  return AppointmentItem(
-                                    appointmentItem: item,
-                                  );
-                                }
-                              )
+                              child: SliderChild(item: item, index: appointmentsList.indexOf(item))
                             )
                           : AppointmentItem(
                               appointmentItem: item,
@@ -150,6 +127,63 @@ class AppointmentsParagraph extends StatelessWidget {
               .toList(),
         ],
       ),
+    );
+  }
+}
+
+class SliderChild extends StatefulWidget {
+  const SliderChild({
+    Key? key,
+    required this.item,
+    required this.index
+  }) : super(key: key);
+
+  final AppointmentModel item;
+  final int index;
+
+  @override
+  State<SliderChild> createState() => _SliderChildState();
+}
+
+class _SliderChildState extends State<SliderChild> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () {
+        final state = context.read<TourCubit>().state;
+        if(state.tourStatuses == TourStatuses.first
+          && state.isAppointmentShown != true
+          && widget.index == 0
+        ) {
+          onShow(context);
+        }
+      }
+    );
+  }
+
+  void onShow(BuildContext context) {
+    Slidable.of(context)!.openEndActionPane();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Slidable.of(context)!.close();
+      context.read<TourCubit>().checkAppointment();
+    });
+  }
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TourCubit, TourState>(
+      buildWhen: (_, state) {
+        
+        return true;
+      },
+      builder: (context, state) {
+        return AppointmentItem(
+          appointmentItem: widget.item,
+        );
+      }
     );
   }
 }

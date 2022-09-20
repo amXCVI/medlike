@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -21,13 +22,6 @@ class AttachFilesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onShow(BuildContext context) {
-      Slidable.of(context)!.openEndActionPane();
-      Future.delayed(const Duration(milliseconds: 400), () {
-        Slidable.of(context)!.close();
-        context.read<TourCubit>().checkSupport();
-      });
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,66 +78,102 @@ class AttachFilesList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: BlocBuilder<TourCubit, TourState>(
-                    buildWhen: (_, state) {
-                      if(state.tourStatuses == TourStatuses.first
-                        && state.isAppointmentShown != true
-                        && filesList.indexOf(e) == 0
-                      ) {
-                        onShow(context);
-                      }
-
-                      return true;
-                    },
-                    builder: (context, state) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 16.0),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: Theme.of(context).dividerColor),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                                radius: 20, backgroundImage: FileImage(e)),
-                            const SizedBox(width: 24),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    e.path.split('/').last,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: true,
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${MediaType.parse(lookupMimeType(e.path) as String).toString().toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(e.lengthSync())}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(color: AppColors.lightText),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                  child: SliderChild(file: e, index: filesList.indexOf(e)),
                 ))
             .toList()
       ],
+    );
+  }
+}
+
+class SliderChild extends StatefulWidget {
+  const SliderChild({
+    Key? key,
+    required this.file,
+    required this.index
+  }) : super(key: key);
+
+  final File file;
+  final int index;
+
+  @override
+  State<SliderChild> createState() => _SliderChildState();
+}
+
+class _SliderChildState extends State<SliderChild> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      final state = context.read<TourCubit>().state;
+      if(state.tourStatuses == TourStatuses.first
+        && state.isAppointmentShown != true
+        && widget.index == 0
+      ) {
+        onShow(context);
+      }
+
+    });
+  }
+
+  void onShow(BuildContext context) {
+      Slidable.of(context)!.openEndActionPane();
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        Slidable.of(context)!.close();
+        context.read<TourCubit>().checkSupport();
+      });
+    }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TourCubit, TourState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(
+              vertical: 16.0, horizontal: 16.0),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                  color: Theme.of(context).dividerColor),
+            ),
+          ),
+          child: Row(
+            children: [
+              CircleAvatar(
+                  radius: 20, backgroundImage: FileImage(widget.file)),
+              const SizedBox(width: 24),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.file.path.split('/').last,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style:
+                          Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${MediaType.parse(lookupMimeType(widget.file.path) as String).toString().toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(widget.file.lengthSync())}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: true,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: AppColors.lightText),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
