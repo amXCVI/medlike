@@ -22,6 +22,7 @@ class DefaultLoginAnimation extends StatelessWidget {
                 MediaQuery.of(context).size.width < AppConstants.smScreenWidth
                     ? MediaQuery.of(context).size.width * 0.7
                     : MediaQuery.of(context).size.width * 0.9,
+            frameRate: FrameRate.max,
           ),
         ));
   }
