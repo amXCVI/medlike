@@ -63,6 +63,8 @@ class UserCubit extends Cubit<UserState> {
         refreshToken: response.refreshToken,
       ));
       addFirebaseDeviceId();
+
+      getUserProfiles(true);
       return true;
     } catch (e) {
       emit(state.copyWith(
