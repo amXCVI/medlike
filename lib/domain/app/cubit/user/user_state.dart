@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'user_cubit.dart';
 
 /// Статусы при авторизации. Для авторизации с номером-паролем
@@ -36,6 +38,14 @@ enum SendingEmailToSupportStatuses { initial, loading, success, failed }
 enum GetLastNotReadEventStatuses { initial, loading, success, failed }
 
 enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
+
+enum NotificationEventType { 
+  AppointmentCompleted, 
+  AppointmentCanceled, 
+  NewMedcardEventPdf, 
+  NewMedcardEventJson, 
+  AppointmentScheduled
+}
 
 class UserState {
   final UserAuthStatuses? authStatus;

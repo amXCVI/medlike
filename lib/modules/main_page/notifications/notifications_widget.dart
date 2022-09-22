@@ -5,6 +5,7 @@ import 'package:medlike/data/models/notification_models/notification_models.dart
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
@@ -15,11 +16,6 @@ class NotificationsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleCleanLastNotification(String eventId) {
-      context.read<UserCubit>().updateNotificationStatus(eventId).then(
-          (value) => context.read<UserCubit>().getLastNotReadNotification());
-    }
-
     context.read<UserCubit>().getLastNotReadNotification();
 
     return BlocBuilder<UserCubit, UserState>(
@@ -29,10 +25,6 @@ class NotificationsWidget extends StatelessWidget {
                 GetLastNotReadEventStatuses.success) {
           return const SizedBox();
         } else {
-          /* context.read<TourCubit>().show(
-            TourStage.notification
-          ); */
-
           NotificationModel notificationItem =
               state.lastNotification as NotificationModel;
           return Container(
@@ -132,18 +124,7 @@ class NotificationsWidget extends StatelessWidget {
                     state.updatingNotificationStatusStatus ==
                             UpdatingNotificationStatusStatuses.loading
                         ? const CircularLoader(radius: 10)
-                        : TextButton(
-                            onPressed: () {
-                              handleCleanLastNotification(notificationItem.id);
-                            },
-                            child: Text('ОЧИСТИТЬ'.toUpperCase(),
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 1,
-                                  height: 1,
-                                )))
+                        : NotificationBottom(notificationItem: notificationItem)
                   ],
                 )
               ],
@@ -152,5 +133,44 @@ class NotificationsWidget extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class NotificationBottom extends StatelessWidget {
+  const NotificationBottom({
+    Key? key,
+    required this.notificationItem,
+  }) : super(key: key);
+
+  final NotificationModel notificationItem;
+
+  @override
+  Widget build(BuildContext context) {
+    void handleCleanLastNotification(String eventId) {
+      context.read<UserCubit>().updateNotificationStatus(eventId).then(
+          (value) => context.read<UserCubit>().getLastNotReadNotification());
+    }
+
+    if(notificationItem.eventType == NotificationEventType.AppointmentScheduled.name) {
+      return Row(
+        children: [
+          PrimaryButton(label: const Text(''), onTap: () {},),
+          PrimaryButton(label: const Text(''), onTap: () {})
+        ],
+      );
+    }
+
+    return TextButton(
+      onPressed: () {
+        handleCleanLastNotification(notificationItem.id);
+      },
+      child: Text('ОЧИСТИТЬ'.toUpperCase(),
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1,
+            height: 1,
+          )));
   }
 }
