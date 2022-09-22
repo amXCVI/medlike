@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tap_canvas/tap_canvas.dart';
@@ -67,6 +69,29 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   DateTime getDateFromX(double x) {
     return DateTime.fromMillisecondsSinceEpoch(x.floor());
+  }
+
+  void onChartTap (
+    ChartTouchInteractionArgs args,
+    List<ChartData> chartData,
+    int maxPixels
+  ) {
+    // Заранее большое число
+    double pixels = 10000;
+
+    for (var el in chartData) { 
+      final offset = seriesController!.pointToPixel(
+        CartesianChartPoint(getXFromDate(el.x), el.y)
+      );
+      final dx = (offset.dx - args.position.dx).abs();
+      if(dx < pixels) {
+        pixels = dx;
+      }
+    }
+
+    if(pixels > maxPixels) {
+      context.read<PromptCubit>().unselect();
+    }
   }
 
   void onPointTap(ChartPointDetails? details) {
@@ -260,7 +285,11 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
     if(widget.isClean) {
       return TapOutsideDetectorWidget(
-        onTappedOutside: () => widget.onUnselect(),
+        onTappedOutside: ()  {
+          if(widget.selected != null) {
+            context.read<PromptCubit>().unselect();
+          }
+        },
         child: SizedBox(
           height: 85,
           child: SfCartesianChart(
@@ -308,14 +337,14 @@ class _DiaryGraphState extends State<DiaryGraph> {
               }
             },
             margin: const EdgeInsets.symmetric(horizontal: 10),
-            onChartTouchInteractionUp: (args) => widget.onUnselect()
+            onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
           ),
         ),
       );
     }
 
     return TapOutsideDetectorWidget(
-      onTappedOutside: () => widget.onUnselect(),
+      onTappedOutside: () => context.read<PromptCubit>().unselect(),
       child: SizedBox(
         height: 200,
         width: MediaQuery.of(context).size.width,
@@ -375,24 +404,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             }
           },
     
-          onChartTouchInteractionUp: (args) {
-            // Заранее большое число
-            double pixels = 10000;
-
-            for (var el in chartData) { 
-              final offset = seriesController!.pointToPixel(
-                CartesianChartPoint(getXFromDate(el.x), el.y)
-              );
-              final dx = (offset.dx - args.position.dx).abs();
-              if(dx < pixels) {
-                pixels = dx;
-              }
-            }
-
-            if(pixels > 15) {
-              widget.onUnselect();
-            }
-          }
+          onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
         )
       ),
     );

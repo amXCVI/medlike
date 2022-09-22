@@ -67,24 +67,29 @@ class AppointmentItemCard extends StatelessWidget {
                       maxLines: 1,
                     ),
               const SizedBox(height: 6),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 15,
-                    child: Text(appointmentItem.doctorInfo.lastName![0]),
-                    backgroundColor: AppColors.mainBrand[100],
-                  ),
-                  const SizedBox(width: 8.0),
-                  Text(
-                    '${appointmentItem.doctorInfo.lastName} ${appointmentItem.doctorInfo.firstName![0]}. ${appointmentItem.doctorInfo.middleName![0]}.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppColors.lightText),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+              appointmentItem.doctorInfo.lastName != null
+                  ? Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 15,
+                          child: Text('appointmentItem.doctorInfo.lastName'[0]),
+                          backgroundColor: AppColors.mainBrand[100],
+                        ),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          '${appointmentItem.doctorInfo.lastName} ' +
+                              '${appointmentItem.doctorInfo.firstName}'[0] +
+                              '. ${appointmentItem.doctorInfo.middleName![0]}' +
+                              '.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: AppColors.lightText),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    )
+                  : const SizedBox(height: 26),
               const SizedBox(height: 8),
               SizedBox(
                 height: 30,

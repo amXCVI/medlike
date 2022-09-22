@@ -41,13 +41,18 @@ class ResearchesListPage extends StatelessWidget {
       } else if (state.getResearchesListStatus ==
           GetResearchesListStatuses.success) {
         return ResearchesList(
-          researchesList: state.researchesList as List<Research>,
+          researchesList: state.filteredResearchesList as List<Research>,
           selectedResearchesIds: state.selectedResearchesIds as List<String>,
           onRefreshData: _onRefreshData,
         );
       } else {
         return const ResearchesListSkeleton();
       }
+    }
+
+
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterResearchesList(filterStr);
     }
 
     _onRefreshData();
@@ -59,6 +64,8 @@ class ResearchesListPage extends StatelessWidget {
               CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                   .russianCategoryTypeName,
           isChildrenPage: true,
+          isSearch: true,
+          filteringFunction: _onFilterList,
           actionButton: Visibility(
             visible: state.getResearchesListStatus ==
                         GetResearchesListStatuses.success &&

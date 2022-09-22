@@ -132,46 +132,48 @@ class _DiaryPageState extends State<DiaryPage> {
             onSubmit: onSubmit,
           );
         }
-        return DefaultScaffold(
-          isChildrenPage: true,
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  if((
-                    state.selectedDiary != null &&
-                    !(state.selectedDiary!.values.isEmpty && grouping == '')  
-                    ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
-                  ) DiaryChips(
-                    syn: state.selectedDiary!.syn,
-                    onTap: onTap,
-                    selectedGroup: grouping,
-                  ),
-                  page,
-                ],
+        return TapCanvas(
+          child: DefaultScaffold(
+            isChildrenPage: true,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    if((
+                      state.selectedDiary != null &&
+                      !(state.selectedDiary!.values.isEmpty && grouping == '')  
+                      ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
+                    ) DiaryChips(
+                      syn: state.selectedDiary!.syn,
+                      onTap: onTap,
+                      selectedGroup: grouping,
+                    ),
+                    page,
+                  ],
+                ),
               ),
             ),
-          ),
-          appBarTitle: widget.title,
-          actionButton: FloatingActionButton.extended(
-            onPressed: () {
-              context.router.push(
-                DiaryAddRoute(
-                  title: widget.title, 
-                  measureItem: widget.categoryModel.measureItem,
-                  decimalDigits: widget.categoryModel.decimalDigits, 
-                  paramName: widget.categoryModel.paramName,
-                  grouping: grouping,
-                  minValue: widget.categoryModel.minValue,
-                  maxValue: widget.categoryModel.maxValue,
-                  onSubmit: onSubmit
-                )
-              );
-            },
-            label: Text(
-              'Добавить'.toUpperCase(),
-              style: Theme.of(context).textTheme.titleSmall,
+            appBarTitle: widget.title,
+            actionButton: FloatingActionButton.extended(
+              onPressed: () {
+                context.router.push(
+                  DiaryAddRoute(
+                    title: widget.title, 
+                    measureItem: widget.categoryModel.measureItem,
+                    decimalDigits: widget.categoryModel.decimalDigits, 
+                    paramName: widget.categoryModel.paramName,
+                    grouping: grouping,
+                    minValue: widget.categoryModel.minValue,
+                    maxValue: widget.categoryModel.maxValue,
+                    onSubmit: onSubmit
+                  )
+                );
+              },
+              label: Text(
+                'Добавить'.toUpperCase(),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
           ),
         );
