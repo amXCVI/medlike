@@ -44,6 +44,42 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:352364144955:android:3a74c123bb5f0613cf2f1e",
+        "android_client_info": {
+          "package_name": "com.medotrade.flutter.zclinic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352364144955-461ed8c174cf1h2ro7q5nhn9veff4hr0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352364144955-87snoj8im1hqvghvp58rfmmmprvr2rns.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.medotrade.medlike"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:352364144955:android:aeb7da09350a395a",
         "android_client_info": {
           "package_name": "ru.medotrade.mobile.medlike"
