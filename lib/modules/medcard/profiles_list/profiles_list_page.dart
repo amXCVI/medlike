@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medlike/data/models/user_models/user_models.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/medcard/profiles_list/profiles_list.dart';
-import 'package:medlike/modules/subscribe/profiles_list/profiles_list_skeleton.dart';
-import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
 
 class MedcardProfilesListPage extends StatelessWidget {
   const MedcardProfilesListPage({Key? key}) : super(key: key);
@@ -15,27 +14,18 @@ class MedcardProfilesListPage extends StatelessWidget {
       context.read<UserCubit>().getUserProfiles(isRefresh);
     }
 
+    void _handleTapOnUserProfile(String userId, bool isChildren) {
+      context.read<UserCubit>().setSelectedUserId(userId);
+      context.router
+          .push(MedcardRoute(userId: userId, isChildrenPage: isChildren));
+    }
+
     _onRefreshData();
 
-    return DefaultScaffold(
-      appBarTitle: 'Медкарта',
-      child: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          if (state.getUserProfileStatus ==
-              GetUserProfilesStatusesList.success) {
-            return ProfilesList(
-              profilesList: state.userProfiles as List<UserProfile>,
-              selectedUserId: state.selectedUserId.toString(),
-              onRefreshData: _onRefreshData,
-            );
-          } else if (state.getUserProfileStatus ==
-              GetUserProfilesStatusesList.failure) {
-            return const Text('');
-          } else {
-            return const ProfilesListSkeleton();
-          }
-        },
-      ),
+    return ProfilesListPage(
+      title: 'Медкарта',
+      routeName: 'MedcardProfilesListPage',
+      handleTapOnUserProfile: _handleTapOnUserProfile
     );
   }
 }
