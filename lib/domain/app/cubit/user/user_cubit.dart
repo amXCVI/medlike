@@ -9,6 +9,7 @@ import 'package:medlike/data/models/notification_models/notification_models.dart
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -92,6 +93,8 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
+
+    FCMService.cleanFCMToken();
 
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
