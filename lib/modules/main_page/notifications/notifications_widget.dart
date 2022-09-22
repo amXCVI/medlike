@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
@@ -158,11 +159,28 @@ class NotificationBottom extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: SimpleButton(isPrimary: true, labelText: 'Подтвердить', onTap: () {},)
+                child: SimpleButton(
+                  isPrimary: true, 
+                  labelText: 'Подтвердить', 
+                  onTap: () {
+                    context.read<AppointmentsCubit>().confirmAppointment(
+                      appointmentId: notificationItem.entityId, 
+                      userId: notificationItem.userId
+                    );
+                  },
+                )
               ),
               const SizedBox(width: 12,),
               Expanded(
-                child: SimpleButton(labelText: 'Отменить', onTap: () {})
+                child: SimpleButton(
+                  labelText: 'Отменить', 
+                  onTap: () {
+                    context.read<AppointmentsCubit>().deleteAppointment(
+                      appointmentId: notificationItem.entityId, 
+                      userId: notificationItem.userId
+                    );
+                  }
+                )
               )
             ],
           ),
