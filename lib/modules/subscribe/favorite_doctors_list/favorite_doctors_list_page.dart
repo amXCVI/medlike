@@ -28,11 +28,17 @@ class FavoriteDoctorsListPage extends StatelessWidget {
           );
     }
 
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterFavoritesDoctorsList(filterStr);
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: 'Избранные',
       isChildrenPage: true,
+      isSearch: true,
+      filteringFunction: _onFilterList,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getFavoriteDoctorsListStatus ==
@@ -41,7 +47,8 @@ class FavoriteDoctorsListPage extends StatelessWidget {
           } else if (state.getFavoriteDoctorsListStatus ==
               GetFavoriteDoctorsListStatuses.success) {
             return FavoriteDoctorsList(
-              doctorsList: state.favoriteDoctorsList as List<FavoriteDoctor>,
+              doctorsList:
+                  state.filteredFavoriteDoctorsList as List<FavoriteDoctor>,
               onRefreshData: _onRefreshData,
               userId: userId,
               buildingId: buildingId,
