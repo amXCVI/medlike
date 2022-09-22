@@ -5,7 +5,7 @@ import 'package:medlike/data/models/notification_models/notification_models.dart
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/widgets/buttons/primary_button.dart';
+import 'package:medlike/widgets/buttons/simple_button.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
@@ -110,22 +110,10 @@ class NotificationsWidget extends StatelessWidget {
                   maxLines: 3,
                 ),
                 const SizedBox(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      DateFormat('dd.MM.yyyy')
-                          .format(notificationItem.eventDate),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.lightText),
-                    ),
-                    state.updatingNotificationStatusStatus ==
-                            UpdatingNotificationStatusStatuses.loading
-                        ? const CircularLoader(radius: 10)
-                        : NotificationBottom(notificationItem: notificationItem)
-                  ],
+                NotificationBottom(
+                  notificationItem: notificationItem,
+                  isLoading: state.updatingNotificationStatusStatus ==
+                    UpdatingNotificationStatusStatuses.loading,
                 )
               ],
             ),
@@ -140,9 +128,11 @@ class NotificationBottom extends StatelessWidget {
   const NotificationBottom({
     Key? key,
     required this.notificationItem,
+    required this.isLoading
   }) : super(key: key);
 
   final NotificationModel notificationItem;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -151,26 +141,55 @@ class NotificationBottom extends StatelessWidget {
           (value) => context.read<UserCubit>().getLastNotReadNotification());
     }
 
+    final dateWidget = Text(
+      DateFormat('dd.MM.yyyy')
+          .format(notificationItem.eventDate),
+      style: Theme.of(context)
+          .textTheme
+          .bodySmall
+          ?.copyWith(color: AppColors.lightText)
+    );
+
     if(notificationItem.eventType == NotificationEventType.AppointmentScheduled.name) {
-      return Row(
-        children: [
-          PrimaryButton(label: const Text(''), onTap: () {},),
-          PrimaryButton(label: const Text(''), onTap: () {})
-        ],
-      );
+      return 
+        Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SimpleButton(isPrimary: true, labelText: 'Подтвердить', onTap: () {},)
+              ),
+              const SizedBox(width: 12,),
+              Expanded(
+                child: SimpleButton(labelText: 'Отменить', onTap: () {})
+              )
+            ],
+          ),
+        );
     }
 
-    return TextButton(
-      onPressed: () {
-        handleCleanLastNotification(notificationItem.id);
-      },
-      child: Text('ОЧИСТИТЬ'.toUpperCase(),
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 1,
-            height: 1,
-          )));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        dateWidget,
+          isLoading
+            ? const CircularLoader(radius: 10)
+            : TextButton(
+                onPressed: () {
+                  handleCleanLastNotification(notificationItem.id);
+                },
+                child: Text('ОЧИСТИТЬ'.toUpperCase(),
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1,
+                      height: 1,
+                    )
+                  )
+                )
+      ],
+    );
   }
 }
