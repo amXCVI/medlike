@@ -57,7 +57,7 @@ class BarcodeButton extends StatelessWidget {
                                       )),
                                       const SizedBox(height: 16),
                                       Text(
-                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрих-код\nмедицинскому сотруднику',
+                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрихкод\nмедицинскому сотруднику',
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall
