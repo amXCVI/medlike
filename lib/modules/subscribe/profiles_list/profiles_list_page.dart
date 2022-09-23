@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
 
 class SubscribeProfilesListPage extends StatelessWidget {
@@ -10,9 +11,14 @@ class SubscribeProfilesListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _handleTapOnUserProfile(userId) {
+    void _handleTapOnUserProfile(String userId, bool isChildren) {
       context.read<UserCubit>().setSelectedUserId(userId);
-      context.router.push(ClinicsListRoute(userId: userId));
+
+      if (isChildren) {
+        context.router.push(ClinicsListRoute(userId: userId));
+      } else {
+        context.router.replace(ClinicsListRoute(userId: userId));
+      }
     }
 
     void _onRefreshData({bool isRefresh = false}) {
@@ -23,8 +29,8 @@ class SubscribeProfilesListPage extends StatelessWidget {
 
     return ProfilesListPage(
       title: 'Запись на прием',
-      routeName: 'SubscribeProfilesListRoute',
-      handleTapOnUserProfile: (userId, isChild) => _handleTapOnUserProfile(userId)
+      routeName: AppRoutes.subscribeProfiles,
+      handleTapOnUserProfile: _handleTapOnUserProfile,
     );
   }
 }
