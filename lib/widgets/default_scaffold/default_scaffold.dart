@@ -10,7 +10,7 @@ class DefaultScaffold extends StatefulWidget {
     Key? key,
     required this.child,
     required this.appBarTitle,
-    this.isChildrenPage = false,
+    this.isChildrenPage = true,
     this.actionButton,
     this.appBarSubtitle = '',
     this.isSearch = false,
