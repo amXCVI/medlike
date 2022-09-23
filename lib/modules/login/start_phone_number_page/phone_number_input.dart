@@ -20,14 +20,6 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
 
   void _onChangePhone(String text) {
     RegExp exp = RegExp(r"[^0-9]+");
-          
-    _controller.text = exp.firstMatch(text)?.group(0) ?? '';
-    _controller.selection = TextSelection.fromPosition(
-      TextPosition(
-        offset: _controller.text.length
-      )
-    );
-
     if (_controller.text.replaceAll(exp, '').length == 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
@@ -86,7 +78,9 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               onChanged: (text) => _onChangePhone(text),
               autofocus: false,
               keyboardType: TextInputType.phone,
-              inputFormatters: [phoneMaskFormatter],
+              inputFormatters: [
+                phoneMaskFormatter
+              ],
               decoration: InputDecoration(
                 hintText: '+7 (XXX) XXX XX XX',
                 hintStyle: Theme.of(context)

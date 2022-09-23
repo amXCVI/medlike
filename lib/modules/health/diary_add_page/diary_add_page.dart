@@ -107,15 +107,6 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           return null;
         },
         onChange: (text) {
-          final regex = RegExp(r'(^\d*\.?\d*)');
-          
-          _controllers[index].text = regex.firstMatch(text)?.group(0) ?? '';
-          _controllers[index].selection = TextSelection.fromPosition(
-            TextPosition(
-              offset: _controllers[index].text.length
-            )
-          );
-
           setState(() {
             isEmpties[index] = text == '';
           });
