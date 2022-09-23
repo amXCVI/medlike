@@ -2,6 +2,8 @@ part of 'appointments_cubit.dart';
 
 enum GetAppointmentsStatuses { initial, loading, success, failed }
 
+enum PutAppointmentsStatuses {initial, loading, success, failed }
+
 enum DeleteAppointmentStatuses { initial, loading, success, failed }
 
 @immutable
@@ -9,6 +11,7 @@ class AppointmentsState {
   final GetAppointmentsStatuses? getAppointmentsStatus;
   final List<AppointmentModel>? appointmentsList;
   final List<AppointmentModel>? filteredAppointmentsList;
+  final PutAppointmentsStatuses? putAppointmentStatus;
   final DeleteAppointmentStatuses? deleteAppointmentStatus;
   final DateTime startDate;
   final DateTime endDate;
@@ -18,6 +21,7 @@ class AppointmentsState {
     this.getAppointmentsStatus,
     this.appointmentsList,
     this.filteredAppointmentsList,
+    this.putAppointmentStatus,
     this.deleteAppointmentStatus,
     DateTime? startDate,
     DateTime? endDate,
@@ -30,6 +34,7 @@ class AppointmentsState {
     GetAppointmentsStatuses? getAppointmentsStatus,
     List<AppointmentModel>? appointmentsList,
     List<AppointmentModel>? filteredAppointmentsList,
+    PutAppointmentsStatuses? putAppointmentStatus,
     DeleteAppointmentStatuses? deleteAppointmentStatus,
     DateTime? startDate,
     DateTime? endDate,
@@ -41,6 +46,8 @@ class AppointmentsState {
       appointmentsList: appointmentsList ?? this.appointmentsList,
       filteredAppointmentsList:
           filteredAppointmentsList ?? this.filteredAppointmentsList,
+      putAppointmentStatus:
+          putAppointmentStatus ?? this.putAppointmentStatus,
       deleteAppointmentStatus:
           deleteAppointmentStatus ?? this.deleteAppointmentStatus,
       startDate: startDate ?? this.startDate,

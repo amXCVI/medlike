@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -11,11 +12,13 @@ class ProfilesListPage extends StatelessWidget {
     Key? key,
     required this.title,
     this.selectedId,
+    required this.routeName,
     required this.handleTapOnUserProfile
   }) : super(key: key);
 
   final String title;
   final String? selectedId;
+  final String routeName;
   final Function(String, bool) handleTapOnUserProfile;
 
   @override
@@ -30,6 +33,12 @@ class ProfilesListPage extends StatelessWidget {
       appBarTitle: title,
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
+          final userList = state.userProfiles;
+
+          if(userList?.length == 1 && context.router.current.name == routeName) {
+            handleTapOnUserProfile(userList![0].id, false);
+          }
+
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
             return ProfilesList(

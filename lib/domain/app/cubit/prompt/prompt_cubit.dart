@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:medlike/data/models/diary_models/diary_models.dart';
 
 part 'prompt_state.dart';
 

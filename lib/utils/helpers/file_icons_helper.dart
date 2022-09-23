@@ -1,7 +1,5 @@
 class FileIconsHelper {
   static String getCustomFileIcon(String fileType) {
-    print('##########################$fileType');
-
     switch (fileType.toLowerCase()) {
       case 'jpeg':
         return ('assets/icons/medcard/ic_img_outline.svg');

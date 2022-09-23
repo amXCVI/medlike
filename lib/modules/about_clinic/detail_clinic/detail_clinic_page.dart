@@ -63,7 +63,7 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
             buildingId: selectedBuilding.id,
             clinicId: widget.selectedClinic.id));
       } else {
-        context.router.push(const ProfilesListRoute());
+        context.router.push(const SubscribeProfilesListRoute());
       }
     }
 

@@ -9,6 +9,9 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для сохранения статуса пользования приложением
+  static const String demoTourStatus = 'demoTourStatus';
+
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 
@@ -29,8 +32,11 @@ class AppConstants {
   // Ключ для хранения хэша пин-кода
   static const String authPinCode = 'authPinCode';
 
-  // Время таймаута. Приложение автоматически выкидывает пользователя после буздействия
+  // Время таймаута. Приложение автоматически выкидывает пользователя после бездействия
   static const int timeoutDurationMinutes = 5;
+
+   // Время блокировки приложения
+  static const String timeoutStart = 'timeoutStart';
 
   // Id документа, который проверяется и подтверждается при первой авторизации
   static const int actualUserAgreement = 4;

@@ -24,22 +24,11 @@ class HealthPage extends StatelessWidget {
           grouping: 'None');
     }
     
-    return BlocConsumer<DiaryCubit, DiaryState>(
-      listener: (context, state) {
-        
-      },
+    return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
-        final userList = context.read<UserCubit>().state.userProfiles;
-
-        /// Кринж но думать некогда (демо 01.09.2022)
-        if(userList?.length == 1 && context.router.current.name == 'HealthRoute') {
-          context.read<DiaryCubit>().setUserId(userList?.first.id ?? '');
-          _loadData('None');
-          context.router.pushNamed(AppRoutes.health);
-        }
-
         return ProfilesListPage(
           title: 'Показатели здоровья',
+          routeName: 'HealthRoute',
           handleTapOnUserProfile: (userId, isChild) {
             context.read<DiaryCubit>().setUserId(userId);
             _loadData('None');

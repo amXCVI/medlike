@@ -150,9 +150,9 @@ class AppRouter extends _i35.RootStackRouter {
           child:
               _i10.AppointmentsPage(key: args.key, isRefresh: args.isRefresh));
     },
-    ProfilesListRoute.name: (routeData) {
+    SubscribeProfilesListRoute.name: (routeData) {
       return _i35.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i11.ProfilesListPage());
+          routeData: routeData, child: const _i11.SubscribeProfilesListPage());
     },
     ClinicsListRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
@@ -365,7 +365,7 @@ class AppRouter extends _i35.RootStackRouter {
             path: '/main', guards: [checkIsAuthUser]),
         _i35.RouteConfig(AppointmentsRoute.name,
             path: '/my_appointments', guards: [checkIsAuthUser]),
-        _i35.RouteConfig(ProfilesListRoute.name,
+        _i35.RouteConfig(SubscribeProfilesListRoute.name,
             path: '/subscribe_profiles', guards: [checkIsAuthUser]),
         _i35.RouteConfig(ClinicsListRoute.name,
             path: '/subscribe_clinics', guards: [checkIsAuthUser]),
@@ -618,12 +618,12 @@ class AppointmentsRouteArgs {
 }
 
 /// generated route for
-/// [_i11.ProfilesListPage]
-class ProfilesListRoute extends _i35.PageRouteInfo<void> {
-  const ProfilesListRoute()
-      : super(ProfilesListRoute.name, path: '/subscribe_profiles');
+/// [_i11.SubscribeProfilesListPage]
+class SubscribeProfilesListRoute extends _i35.PageRouteInfo<void> {
+  const SubscribeProfilesListRoute()
+      : super(SubscribeProfilesListRoute.name, path: '/subscribe_profiles');
 
-  static const String name = 'ProfilesListRoute';
+  static const String name = 'SubscribeProfilesListRoute';
 }
 
 /// generated route for
