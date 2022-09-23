@@ -65,12 +65,18 @@ class ConfirmationActionButtonLabel extends StatelessWidget {
                 'assets/icons/subscribe/success_creating_appointment_icon.svg')
             : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.loading ||
-                    state.registerOrderStatus == RegisterOrderStatuses.loading
+                    state.registerOrderStatus ==
+                        RegisterOrderStatuses.loading ||
+                    state.getAppointmentInfoStatus ==
+                        GetAppointmentInfoStatuses.loading
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        'Записаться'.toUpperCase(),
+                        state.getAppointmentInfoStatus ==
+                                GetAppointmentInfoStatuses.loading
+                            ? 'Ожидайте'
+                            : 'Записаться'.toUpperCase(),
                         style: Theme.of(context).textTheme.titleSmall,
                         textAlign: TextAlign.center,
                       ),
