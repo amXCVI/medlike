@@ -39,7 +39,7 @@ class BarcodeButton extends StatelessWidget {
                                       const Divider(),
                                       const SizedBox(height: 24),
                                       SvgPicture.string(buildBarcode(
-                                        Barcode.gs128(),
+                                        Barcode.pdf417(),
                                         state.selectedUserId == null ||
                                                 state.selectedUserId!.isEmpty
                                             ? state.userProfiles![0].barCode
