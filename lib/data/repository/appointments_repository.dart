@@ -14,6 +14,19 @@ class AppointmentsRepository {
     }
   }
 
+  Future<bool> confirmAppointment({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    try {
+      final response = await _dioClient
+        .put('/api/v1.0/schedule/appointments/$appointmentId/confirm?userId=$userId');
+      return response.statusCode == 200 ? true : false;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<bool> deleteAppointment({
     required String appointmentId,
     required String userId,
