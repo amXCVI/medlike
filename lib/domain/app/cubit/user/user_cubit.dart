@@ -28,10 +28,15 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(token: accessToken));
   }
 
+  /// Сохраняем номер для последующей проверки
+  void tempSavePhoneNumber(String phone) {
+    emit(state.copyWith(
+        userPhoneNumber: phone));
+  }
+
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
-    emit(state.copyWith(
-        userPhoneNumber: phone, authScreen: UserAuthScreens.inputPassword));
+    emit(state.copyWith(authScreen: UserAuthScreens.inputPassword));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 

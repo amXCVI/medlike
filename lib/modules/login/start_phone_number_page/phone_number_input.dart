@@ -1,8 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
@@ -37,8 +35,10 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     if (phoneString.length != 11) {
       return;
     }
-    context.read<UserCubit>().savePhoneNumber(phoneString);
-    context.router.push(PasswordRoute(phoneNumber: phoneString));
+
+    context.read<UserCubit>().checkUserAccount(phoneNumber: phoneString);
+
+    context.read<UserCubit>().tempSavePhoneNumber(phoneString);
     dispose();
   }
 
