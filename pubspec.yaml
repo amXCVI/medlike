@@ -52,6 +52,7 @@ dependencies:
   tap_canvas: ^0.9.4
   firebase_core: ^1.21.1
   firebase_messaging: ^13.0.0
+  firebase_analytics: ^9.3.5
   flutter_local_notifications: ^9.9.1
   flutter_launcher_icons: ^0.10.0
   sliding_up_panel: ^2.0.0+1
