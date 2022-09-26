@@ -8,13 +8,13 @@ import 'package:medlike/widgets/profiles_list/profiles_list.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_skeleton.dart';
 
 class ProfilesListPage extends StatelessWidget {
-  const ProfilesListPage({
-    Key? key,
-    required this.title,
-    this.selectedId,
-    required this.routeName,
-    required this.handleTapOnUserProfile
-  }) : super(key: key);
+  const ProfilesListPage(
+      {Key? key,
+      required this.title,
+      this.selectedId,
+      required this.routeName,
+      required this.handleTapOnUserProfile})
+      : super(key: key);
 
   final String title;
   final String? selectedId;
@@ -35,7 +35,8 @@ class ProfilesListPage extends StatelessWidget {
         builder: (context, state) {
           final userList = state.userProfiles;
 
-          if(userList?.length == 1 && context.router.current.name == routeName) {
+          if (userList?.length == 1 &&
+              context.router.current.path.contains(routeName)) {
             handleTapOnUserProfile(userList![0].id, false);
           }
 
@@ -45,7 +46,7 @@ class ProfilesListPage extends StatelessWidget {
               profilesList: state.userProfiles as List<UserProfile>,
               selectedUserId: selectedId,
               onRefreshData: _onRefreshData,
-              handleTapOnUserProfile: handleTapOnUserProfile
+              handleTapOnUserProfile: handleTapOnUserProfile,
             );
           } else if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.failure) {

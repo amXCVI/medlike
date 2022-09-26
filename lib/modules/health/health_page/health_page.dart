@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -23,19 +22,23 @@ class HealthPage extends StatelessWidget {
           platform: Platform.isAndroid ? 'Android' : 'IOS',
           grouping: 'None');
     }
-    
-    return BlocBuilder<DiaryCubit, DiaryState>(
-      builder: (context, state) {
-        return ProfilesListPage(
-          title: 'Показатели здоровья',
-          routeName: 'HealthRoute',
-          handleTapOnUserProfile: (userId, isChild) {
-            context.read<DiaryCubit>().setUserId(userId);
-            _loadData('None');
-            context.router.pushNamed(AppRoutes.health);
-          },
-        );
+
+    void _handleTapOnUserProfile(String userId, bool isChildren) {
+      context.read<DiaryCubit>().setUserId(userId);
+      _loadData('None');
+      if (isChildren) {
+        context.router.pushNamed(AppRoutes.health);
+      } else {
+        context.router.replaceNamed(AppRoutes.health);
       }
-    );
+    }
+
+    return BlocBuilder<DiaryCubit, DiaryState>(builder: (context, state) {
+      return ProfilesListPage(
+        title: 'Показатели здоровья',
+        routeName: AppRoutes.health,
+        handleTapOnUserProfile: _handleTapOnUserProfile,
+      );
+    });
   }
 }
