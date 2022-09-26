@@ -32,8 +32,7 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(
-        userPhoneNumber: phone));
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
   /// Сохраняем номер телефона в кубит
@@ -70,8 +69,10 @@ class UserCubit extends Cubit<UserState> {
         token: response.token,
         refreshToken: response.refreshToken,
       ));
-      addFirebaseDeviceId();
-      await FirebaseAnalyticsService.registerAppLoginEvent();
+      if (!kIsWeb) {
+        addFirebaseDeviceId();
+        await FirebaseAnalyticsService.registerAppLoginEvent();
+      }
 
       getUserProfiles(true);
       return true;
@@ -198,7 +199,8 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true');
     UserSecureStorage.setField(AppConstants.isAuth, 'true');
 
-    await FirebaseAnalyticsService.registerCustomEvent(name: 'авторизация по пин-коду');
+    await FirebaseAnalyticsService.registerCustomEvent(
+        name: 'авторизация по пин-коду');
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного

@@ -46,6 +46,7 @@ class PasswordPageWidget extends StatelessWidget {
                     // if (kIsWeb)
                     //   {
                     //     UserSecureStorage.setField(AppConstants.isAuth, 'true'),
+                    //     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true'),
                     //     context
                     //         .read<UserCubit>()
                     //         .setPinCodeToStorage([0, 0, 0, 0, 0]),
