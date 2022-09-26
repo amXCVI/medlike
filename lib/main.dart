@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medlike/app.dart';
@@ -13,6 +14,8 @@ void main() async {
   // await FCMService.initializeLocalNotifications();
   // await FCMService.onBackgroundMsg();
   // await FCMService.onMessage();
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   runApp(App());
 

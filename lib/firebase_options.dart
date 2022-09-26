@@ -50,23 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC5w7u84emU5UXRDgb0pHlwZrRHKdm5YX8',
-    appId: '1:352364144955:android:5e79c8778f4f4dcbcf2f1e',
-    messagingSenderId: '352364144955',
-    projectId: 'medlike-medotrade',
-    databaseURL: 'https://medlike-medotrade.firebaseio.com',
-    storageBucket: 'medlike-medotrade.appspot.com',
+    apiKey: 'AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4',
+    appId: '1:1083145779008:android:487e71139690f03c742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBaM_tyvgyE34xKuCj-g-V_5ClxkkeQKXg',
-    appId: '1:352364144955:ios:3741a750d81dcd4ccf2f1e',
-    messagingSenderId: '352364144955',
-    projectId: 'medlike-medotrade',
-    databaseURL: 'https://medlike-medotrade.firebaseio.com',
-    storageBucket: 'medlike-medotrade.appspot.com',
-    androidClientId: '352364144955-83je5lti98nckk1v5o1tpnbov8k1ub8j.apps.googleusercontent.com',
-    iosClientId: '352364144955-u212159v0illl9169j4vj36ucgfvg2l2.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
+    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
+    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
     iosBundleId: 'com.example.medlike',
   );
 }

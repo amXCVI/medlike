@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
-import 'package:medlike/modules/subscribe/profiles_list/profile_item.dart';
+import 'package:medlike/widgets/profiles_list/profile_item.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ProfilesList extends StatefulWidget {

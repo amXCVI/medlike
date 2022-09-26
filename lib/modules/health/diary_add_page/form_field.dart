@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:medlike/themes/colors.dart';
 
 class FormField extends StatelessWidget {
@@ -26,6 +27,9 @@ class FormField extends StatelessWidget {
         onChanged: (text) => onChange(text),
         keyboardType: TextInputType.number,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+        ],
         decoration: InputDecoration(
           labelText: labelText,
           labelStyle: const TextStyle(

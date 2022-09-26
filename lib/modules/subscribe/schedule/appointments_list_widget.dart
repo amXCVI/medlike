@@ -127,7 +127,7 @@ class AppointmentsList extends StatelessWidget {
                               maxLines: 1,
                             ),
                       const SizedBox(height: 6),
-                      appointmentItem.doctorInfo != null
+                      appointmentItem.doctorInfo.lastName != null
                           ? Row(
                               children: [
                                 CircleAvatar(

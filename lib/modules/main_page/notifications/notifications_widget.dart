@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/buttons/simple_button.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
@@ -15,11 +17,6 @@ class NotificationsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleCleanLastNotification(String eventId) {
-      context.read<UserCubit>().updateNotificationStatus(eventId).then(
-          (value) => context.read<UserCubit>().getLastNotReadNotification());
-    }
-
     context.read<UserCubit>().getLastNotReadNotification();
 
     return BlocBuilder<UserCubit, UserState>(
@@ -29,10 +26,6 @@ class NotificationsWidget extends StatelessWidget {
                 GetLastNotReadEventStatuses.success) {
           return const SizedBox();
         } else {
-          /* context.read<TourCubit>().show(
-            TourStage.notification
-          ); */
-
           NotificationModel notificationItem =
               state.lastNotification as NotificationModel;
           return Container(
@@ -118,39 +111,103 @@ class NotificationsWidget extends StatelessWidget {
                   maxLines: 3,
                 ),
                 const SizedBox(height: 14),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      DateFormat('dd.MM.yyyy')
-                          .format(notificationItem.eventDate),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.lightText),
-                    ),
-                    state.updatingNotificationStatusStatus ==
-                            UpdatingNotificationStatusStatuses.loading
-                        ? const CircularLoader(radius: 10)
-                        : TextButton(
-                            onPressed: () {
-                              handleCleanLastNotification(notificationItem.id);
-                            },
-                            child: Text('ОЧИСТИТЬ'.toUpperCase(),
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 1,
-                                  height: 1,
-                                )))
-                  ],
+                NotificationBottom(
+                  notificationItem: notificationItem,
+                  isLoading: state.updatingNotificationStatusStatus ==
+                    UpdatingNotificationStatusStatuses.loading,
                 )
               ],
             ),
           );
         }
       },
+    );
+  }
+}
+
+class NotificationBottom extends StatelessWidget {
+  const NotificationBottom({
+    Key? key,
+    required this.notificationItem,
+    required this.isLoading
+  }) : super(key: key);
+
+  final NotificationModel notificationItem;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    void handleCleanLastNotification(String eventId) {
+      context.read<UserCubit>().updateNotificationStatus(eventId).then(
+          (value) => context.read<UserCubit>().getLastNotReadNotification());
+    }
+
+    final dateWidget = Text(
+      DateFormat('dd.MM.yyyy')
+          .format(notificationItem.eventDate),
+      style: Theme.of(context)
+          .textTheme
+          .bodySmall
+          ?.copyWith(color: AppColors.lightText)
+    );
+
+    if(notificationItem.eventType == NotificationEventType.AppointmentScheduled.name) {
+      return 
+        Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SimpleButton(
+                  isPrimary: true, 
+                  labelText: 'Подтвердить', 
+                  onTap: () {
+                    context.read<AppointmentsCubit>().confirmAppointment(
+                      appointmentId: notificationItem.entityId, 
+                      userId: notificationItem.userId
+                    );
+                  },
+                )
+              ),
+              const SizedBox(width: 12,),
+              Expanded(
+                child: SimpleButton(
+                  labelText: 'Отменить', 
+                  onTap: () {
+                    context.read<AppointmentsCubit>().deleteAppointment(
+                      appointmentId: notificationItem.entityId, 
+                      userId: notificationItem.userId
+                    );
+                  }
+                )
+              )
+            ],
+          ),
+        );
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        dateWidget,
+          isLoading
+            ? const CircularLoader(radius: 10)
+            : TextButton(
+                onPressed: () {
+                  handleCleanLastNotification(notificationItem.id);
+                },
+                child: Text('ОЧИСТИТЬ'.toUpperCase(),
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1,
+                      height: 1,
+                    )
+                  )
+                )
+      ],
     );
   }
 }

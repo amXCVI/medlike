@@ -49,6 +49,7 @@ class SubscribeState {
   final GetResearchesListStatuses? getResearchesListStatus;
   final List<Research>? researchesList;
   final List<String>? selectedResearchesIds;
+  final List<Research>? filteredResearchesList;
 
   final GetSpecialisationsListStatuses? getSpecialisationsListStatus;
   final List<NavigationItem>? specialisationsList;
@@ -67,6 +68,7 @@ class SubscribeState {
 
   final GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus;
   final List<FavoriteDoctor>? favoriteDoctorsList;
+  final List<FavoriteDoctor>? filteredFavoriteDoctorsList;
 
   final GetCalendarStatuses? getCalendarStatus;
   final List<CalendarModel>? calendarList;
@@ -113,6 +115,7 @@ class SubscribeState {
     this.getResearchesListStatus,
     this.researchesList,
     this.selectedResearchesIds,
+    this.filteredResearchesList,
     this.getSpecialisationsListStatus,
     this.specialisationsList,
     this.selectedSpecialisation,
@@ -127,6 +130,7 @@ class SubscribeState {
     this.selectedCabinet,
     this.getFavoriteDoctorsListStatus,
     this.favoriteDoctorsList,
+    this.filteredFavoriteDoctorsList,
     this.getCalendarStatus,
     this.calendarList,
     this.selectedCalendarItem,
@@ -163,6 +167,7 @@ class SubscribeState {
     GetResearchesListStatuses? getResearchesListStatus,
     List<Research>? researchesList,
     List<String>? selectedResearchesIds,
+    List<Research>? filteredResearchesList,
     GetSpecialisationsListStatuses? getSpecialisationsListStatus,
     List<NavigationItem>? specialisationsList,
     NavigationItem? selectedSpecialisation,
@@ -176,6 +181,7 @@ class SubscribeState {
     Cabinet? selectedCabinet,
     GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus,
     List<FavoriteDoctor>? favoriteDoctorsList,
+    List<FavoriteDoctor>? filteredFavoriteDoctorsList,
     List<Cabinet>? filteredCabinetsList,
     GetCalendarStatuses? getCalendarStatus,
     List<CalendarModel>? calendarList,
@@ -214,6 +220,8 @@ class SubscribeState {
       researchesList: researchesList ?? this.researchesList,
       selectedResearchesIds:
           selectedResearchesIds ?? this.selectedResearchesIds,
+      filteredResearchesList:
+          filteredResearchesList ?? this.filteredResearchesList,
       getSpecialisationsListStatus:
           getSpecialisationsListStatus ?? this.getSpecialisationsListStatus,
       specialisationsList: specialisationsList ?? this.specialisationsList,
@@ -233,6 +241,8 @@ class SubscribeState {
       getFavoriteDoctorsListStatus:
           getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,
       favoriteDoctorsList: favoriteDoctorsList ?? this.favoriteDoctorsList,
+      filteredFavoriteDoctorsList:
+          filteredFavoriteDoctorsList ?? this.filteredFavoriteDoctorsList,
       getCalendarStatus: getCalendarStatus ?? this.getCalendarStatus,
       calendarList: calendarList ?? this.calendarList,
       selectedCalendarItem: selectedCalendarItem ?? this.selectedCalendarItem,

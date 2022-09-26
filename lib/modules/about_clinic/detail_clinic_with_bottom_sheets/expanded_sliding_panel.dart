@@ -41,7 +41,7 @@ class ExpandedSlidingPanel extends StatelessWidget {
         context.router.push(ServicesListRoute(
             userId: userId, buildingId: clinicId, clinicId: clinicId));
       } else {
-        context.router.push(const ProfilesListRoute());
+        context.router.push(const SubscribeProfilesListRoute());
       }
     }
 

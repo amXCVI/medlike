@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,15 +50,18 @@ class App extends StatelessWidget {
         child: MaterialApp.router(
           title: 'Medlike',
           theme: AppTheme.lightAppTheme,
-          routerDelegate: _router.delegate(),
+          routerDelegate: AutoRouterDelegate(
+            _router,
+            navigatorObservers: () => [
+              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+            ],
+          ),
           routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en')
-          ],
+          supportedLocales: const [Locale('en')],
         ),
       ),
     );
