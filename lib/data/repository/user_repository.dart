@@ -341,9 +341,12 @@ class UserRepository {
     }
   }
 
-  Future<NotificationModel> getLastNotReadedEvent() async {
+  Future<NotificationModel?> getLastNotReadedEvent() async {
     try {
       final response = await _dioClient.get('/api/v1.0/events/mainscreen');
+      if (response.data is! Map<String, Object?>) {
+        return null;
+      }
       return NotificationModel.fromJson(response.data);
     } catch (err) {
       rethrow;

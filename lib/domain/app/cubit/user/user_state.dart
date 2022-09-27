@@ -72,6 +72,7 @@ class UserState {
   final SendingEmailToSupportStatuses? sendingEmailToSupportStatus;
   final GetLastNotReadEventStatuses? getLastNotReadEventStatus;
   final NotificationModel? lastNotification;
+  final bool? isLastNotificationShow;
   final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
 
   UserState({
@@ -101,6 +102,7 @@ class UserState {
     this.sendingEmailToSupportStatus,
     this.getLastNotReadEventStatus,
     this.lastNotification,
+    this.isLastNotificationShow,
     this.updatingNotificationStatusStatus,
   });
 
@@ -129,6 +131,7 @@ class UserState {
     SendingEmailToSupportStatuses? sendingEmailToSupportStatus,
     GetLastNotReadEventStatuses? getLastNotReadEventStatus,
     NotificationModel? lastNotification,
+    bool? isLastNotificationShow,
     UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
   }) {
     return UserState(
@@ -167,6 +170,7 @@ class UserState {
       getLastNotReadEventStatus:
           getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
       lastNotification: lastNotification ?? this.lastNotification,
+      isLastNotificationShow: isLastNotificationShow ?? this.isLastNotificationShow,
       updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
           this.updatingNotificationStatusStatus,
     );
