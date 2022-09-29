@@ -136,6 +136,8 @@ class _DiaryGraphState extends State<DiaryGraph> {
       final val = args.value as int;
       final date = DateTime.fromMillisecondsSinceEpoch(val);
 
+      TextStyle textStyle = args.textStyle;
+
       switch(widget.grouping) {
         case 'Week':
         case '':
@@ -145,6 +147,13 @@ class _DiaryGraphState extends State<DiaryGraph> {
             text = text[0];
           }
 
+          if(date.weekday == DateTime.now().weekday) {
+            textStyle = textStyle.copyWith(
+              color: AppColors.mainText,
+              fontWeight: FontWeight.w600
+            );
+          }
+
           break;
         case 'Month':
           final DateFormat formatter = DateFormat('dd','ru_RU');
@@ -152,7 +161,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
           break;
         }
 
-      return ChartAxisLabel(text, args.textStyle);
+      return ChartAxisLabel(text, textStyle);
     }
 
 
@@ -307,7 +316,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
               ],
               interval: interval,
               intervalType: type,
-              minimum: widget.firstDate,
+              minimum: widget.firstDate.subtract(const Duration(hours: 6)),
               maximum: widget.lastDate,
               axisLabelFormatter: labelFormatter,
               rangePadding: ChartRangePadding.none,
