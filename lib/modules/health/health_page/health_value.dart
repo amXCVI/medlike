@@ -13,47 +13,49 @@ class HealthValue extends StatelessWidget {
 
   final String measureItem;
   final int decimalDigits;
-  final DiaryModel? data;
+  final DiaryFlatModel? data;
 
   @override
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'ru_RU';
     var format = DateFormat.MMMMd('ru');
-    var fhour = DateFormat.Hm('ru');
+    var fhour = DateFormat('HH:mm','ru');
 
-    String getTime (DateTime time) => 
-      '${format.format(time)}, ${fhour.format(time)}';
+    String getTime (DateTime time) {
+      if(time.day == DateTime.now().day) {
+        return 'Сегодня, ${fhour.format(time)}';
+      }
+
+      return '${format.format(time)}, ${fhour.format(time)}';
+    }
 
     return SizedBox(
-      width: 150,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            data == null ? const Text(
-              '–',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 28,
-                color: Color.fromRGBO(158, 157, 157, 1),
-              ),
-            ) : RowData(
-              innerData: data!.getCurrentValue.innerData,
-              measureItem: measureItem,
-              decimalDigits: decimalDigits
+      width: 135,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          data == null ? const Text(
+            '–',
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 28,
+              color: Color.fromRGBO(158, 157, 157, 1),
             ),
-            const SizedBox(height: 2),
-            Text(
-              data == null ? 'Нет данных' : getTime(data!.getCurrentValue.date),
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color.fromRGBO(158, 157, 157, 1),
-              ),
-            )
-          ],
-        ),
+          ) : RowData(
+            innerData: data!.currentValue.innerData,
+            measureItem: measureItem,
+            decimalDigits: decimalDigits
+          ),
+          const SizedBox(height: 2),
+          Text(
+            data == null ? 'Нет данных' : getTime(data!.currentValue.date),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color.fromRGBO(158, 157, 157, 1),
+            ),
+          )
+        ],
       ),
     );
   }

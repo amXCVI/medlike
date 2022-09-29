@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/unauth_support/unauth_support_form.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class UnauthSupportPage extends StatelessWidget {
   const UnauthSupportPage({Key? key}) : super(key: key);
@@ -27,32 +28,35 @@ class UnauthSupportPage extends StatelessWidget {
       }
     }
 
-    return DefaultScaffold(
-      appBarTitle: 'Тех. поддержка',
-      isChildrenPage: true,
-      child: UnauthSupportForm(
-        controllerEmail: _controllerEmail,
-        formKey: _formKey,
-        controllerMessage: _controllerMessage,
-      ),
-      actionButton: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          return FloatingActionButton.extended(
-            onPressed: sendingEmail,
-            label: state.sendingEmailToSupportStatus ==
-                    SendingEmailToSupportStatuses.loading
-                ? const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+    return TapCanvas(
+      child: DefaultScaffold(
+        appBarTitle: 'Тех. поддержка',
+        isChildrenPage: true,
+        child: UnauthSupportForm(
+          controllerEmail: _controllerEmail,
+          formKey: _formKey,
+          controllerMessage: _controllerMessage,
+        ),
+        actionButton: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: sendingEmail,
+              label: state.sendingEmailToSupportStatus ==
+                      SendingEmailToSupportStatuses.loading
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      'Отправить'.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-                  )
-                : Text(
-                    'Отправить'.toUpperCase(),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-          );
-        },
+            );
+          },
+        ),
+        bottomNavigationBar: const SizedBox(height: 56),
       ),
     );
   }

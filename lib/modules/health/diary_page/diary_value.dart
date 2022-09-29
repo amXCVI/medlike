@@ -7,11 +7,13 @@ class DiaryValue extends StatelessWidget {
     Key? key,
     required this.currentValue,
     required this.measureItem,
+    required this.date,
     required this.decimalDigits,
     required this.grouping
   }) : super(key: key);
 
   final CurrentValue currentValue;
+  final DateTime date;
   final String measureItem;
   final int decimalDigits;
   final String grouping;
@@ -65,12 +67,18 @@ class DiaryValue extends StatelessWidget {
             ],
           ),
         ),
-        Text(
-          ValueHelper.getPeriodString(currentValue.date, grouping),
-          style: const TextStyle(
-            color: Color.fromRGBO(158, 157, 157, 1),
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Text(
+            ValueHelper.getPeriodString(
+              date.toLocal(), 
+              grouping
+            ),
+            style: const TextStyle(
+              color: Color.fromRGBO(158, 157, 157, 1),
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+            ),
           ),
         )
       ]

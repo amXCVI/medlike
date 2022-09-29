@@ -6,7 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
+
 
 class AppointmentsParagraph extends StatelessWidget {
   const AppointmentsParagraph({
@@ -27,7 +29,7 @@ class AppointmentsParagraph extends StatelessWidget {
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
-    }
+    }    
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -115,9 +117,7 @@ class AppointmentsParagraph extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: AppointmentItem(
-                                appointmentItem: item,
-                              ),
+                              child: SliderChild(item: item, index: appointmentsList.indexOf(item))
                             )
                           : AppointmentItem(
                               appointmentItem: item,
@@ -127,6 +127,63 @@ class AppointmentsParagraph extends StatelessWidget {
               .toList(),
         ],
       ),
+    );
+  }
+}
+
+class SliderChild extends StatefulWidget {
+  const SliderChild({
+    Key? key,
+    required this.item,
+    required this.index
+  }) : super(key: key);
+
+  final AppointmentModel item;
+  final int index;
+
+  @override
+  State<SliderChild> createState() => _SliderChildState();
+}
+
+class _SliderChildState extends State<SliderChild> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () {
+        final state = context.read<TourCubit>().state;
+        if(state.tourStatuses == TourStatuses.first
+          && state.isAppointmentShown != true
+          && widget.index == 0
+        ) {
+          onShow(context);
+        }
+      }
+    );
+  }
+
+  void onShow(BuildContext context) {
+    Slidable.of(context)!.openEndActionPane();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Slidable.of(context)!.close();
+      context.read<TourCubit>().checkAppointment();
+    });
+  }
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TourCubit, TourState>(
+      buildWhen: (_, state) {
+        
+        return true;
+      },
+      builder: (context, state) {
+        return AppointmentItem(
+          appointmentItem: widget.item,
+        );
+      }
     );
   }
 }

@@ -9,7 +9,9 @@ import 'package:medlike/widgets/pin_code/pin_code_view.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class InitialPinCode extends StatefulWidget {
-  const InitialPinCode({Key? key}) : super(key: key);
+  const InitialPinCode({Key? key, this.noUsedBiometric}) : super(key: key);
+
+  final bool? noUsedBiometric;
 
   @override
   State<InitialPinCode> createState() => _InitialPinCodeState();
@@ -59,9 +61,13 @@ class _InitialPinCodeState extends State<InitialPinCode> {
     Future<bool> _checkRepeatPinCode(List<int> repeatPinCode) async {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
-        setState(() {
-          isForcedShowingBiometricModal = true;
-        });
+        if (widget.noUsedBiometric == null || widget.noUsedBiometric == false) {
+          setState(() {
+            isForcedShowingBiometricModal = true;
+          });
+        } else {
+          context.router.replace(const SettingsRoute());
+        }
         return true;
       } else {
         AppToast.showAppToast(msg: 'Неверный пин-код');
@@ -79,6 +85,8 @@ class _InitialPinCodeState extends State<InitialPinCode> {
                 setPinCode: _saveInitialPinCode,
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricAuthenticate,
+                noUsedBiometric: widget.noUsedBiometric,
+                isInit: true,
               )
             : PinCodeView(
                 pinCodeTitle: 'Повторите пин-код',
@@ -87,7 +95,10 @@ class _InitialPinCodeState extends State<InitialPinCode> {
                 handleBiometricMethod: onSuccessBiometricDataSaved,
                 isForcedShowingBiometricModal: isForcedShowingBiometricModal,
                 signInTitle:
-                    'Сохраните свои биометрические данные для упрощенного входа в приолжение'),
+                    'Сохраните свои биометрические данные для упрощенного входа в приолжение',
+                noUsedBiometric: widget.noUsedBiometric,
+                isInit: true,
+              )
       ],
     );
   }

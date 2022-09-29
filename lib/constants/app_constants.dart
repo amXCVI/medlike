@@ -9,11 +9,19 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для сохранения статуса пользования приложением
+  static const String demoTourStatus = 'demoTourStatus';
+
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 
   // Ключ Яндекс.карты
-  static const String yandexMapApiKey = '492944f6-afb1-4915-bebe-6a3639caf540';
+  //! Не наш ключ!!! Нашел в гугле!!! Наш не работает!!!
+  static const String yandexMapApiKey = 'c0d403ab-e5be-4049-908c-8122a58acf23';
+
+  // access token для карт mapbox
+  static const String mapBoxApiKey =
+      'pk.eyJ1IjoiemFwb2x5YXJ5ZSIsImEiOiJjbDc3bmJjdWswMWpiM29zNmo2OGoycDI4In0.9-BixC9CCxdi5VrXwmn2-Q';
 
   // Ключ для сохранения часового пояса выбранной клиники
   static const String timeZoneOffset = 'timeZoneOffset';
@@ -24,8 +32,11 @@ class AppConstants {
   // Ключ для хранения хэша пин-кода
   static const String authPinCode = 'authPinCode';
 
-  // Время таймаута. Приложение автоматически выкидывает пользователя после буздействия
+  // Время таймаута. Приложение автоматически выкидывает пользователя после бездействия
   static const int timeoutDurationMinutes = 5;
+
+   // Время блокировки приложения
+  static const String timeoutStart = 'timeoutStart';
 
   // Id документа, который проверяется и подтверждается при первой авторизации
   static const int actualUserAgreement = 4;
@@ -42,6 +53,12 @@ class AppConstants {
 
   // Тип оплаты, картой
   static const String cardPayType = 'cash';
+
+  // Человекочитаемое название приложения
+  static const appName = 'Z-Clinic';
+
+  // Размер экрана для iPhone SE. Используется в верстке, уникальные случаи
+  static const int smScreenWidth = 330;
 }
 
 // Способы авторизации

@@ -1669,3 +1669,323 @@ abstract class _MainscreenPromotionModel implements MainscreenPromotionModel {
   _$$_MainscreenPromotionModelCopyWith<_$_MainscreenPromotionModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+BuildingLatLngModel _$BuildingLatLngModelFromJson(Map<String, dynamic> json) {
+  return _BuildingLatLngModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BuildingLatLngModel {
+  String get name => throw _privateConstructorUsedError;
+  String? get departmentName => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get buildingId => throw _privateConstructorUsedError;
+  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get workTime => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BuildingLatLngModelCopyWith<BuildingLatLngModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BuildingLatLngModelCopyWith<$Res> {
+  factory $BuildingLatLngModelCopyWith(
+          BuildingLatLngModel value, $Res Function(BuildingLatLngModel) then) =
+      _$BuildingLatLngModelCopyWithImpl<$Res>;
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime,
+      double latitude,
+      double longitude});
+}
+
+/// @nodoc
+class _$BuildingLatLngModelCopyWithImpl<$Res>
+    implements $BuildingLatLngModelCopyWith<$Res> {
+  _$BuildingLatLngModelCopyWithImpl(this._value, this._then);
+
+  final BuildingLatLngModel _value;
+  // ignore: unused_field
+  final $Res Function(BuildingLatLngModel) _then;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value.workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_BuildingLatLngModelCopyWith<$Res>
+    implements $BuildingLatLngModelCopyWith<$Res> {
+  factory _$$_BuildingLatLngModelCopyWith(_$_BuildingLatLngModel value,
+          $Res Function(_$_BuildingLatLngModel) then) =
+      __$$_BuildingLatLngModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String name,
+      String? departmentName,
+      String address,
+      String id,
+      String buildingId,
+      List<String> phone,
+      List<String> workTime,
+      double latitude,
+      double longitude});
+}
+
+/// @nodoc
+class __$$_BuildingLatLngModelCopyWithImpl<$Res>
+    extends _$BuildingLatLngModelCopyWithImpl<$Res>
+    implements _$$_BuildingLatLngModelCopyWith<$Res> {
+  __$$_BuildingLatLngModelCopyWithImpl(_$_BuildingLatLngModel _value,
+      $Res Function(_$_BuildingLatLngModel) _then)
+      : super(_value, (v) => _then(v as _$_BuildingLatLngModel));
+
+  @override
+  _$_BuildingLatLngModel get _value => super._value as _$_BuildingLatLngModel;
+
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? departmentName = freezed,
+    Object? address = freezed,
+    Object? id = freezed,
+    Object? buildingId = freezed,
+    Object? phone = freezed,
+    Object? workTime = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+  }) {
+    return _then(_$_BuildingLatLngModel(
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      departmentName: departmentName == freezed
+          ? _value.departmentName
+          : departmentName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      buildingId: buildingId == freezed
+          ? _value.buildingId
+          : buildingId // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: phone == freezed
+          ? _value._phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      workTime: workTime == freezed
+          ? _value._workTime
+          : workTime // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_BuildingLatLngModel implements _BuildingLatLngModel {
+  const _$_BuildingLatLngModel(
+      {required this.name,
+      required this.departmentName,
+      required this.address,
+      required this.id,
+      required this.buildingId,
+      required final List<String> phone,
+      required final List<String> workTime,
+      required this.latitude,
+      required this.longitude})
+      : _phone = phone,
+        _workTime = workTime;
+
+  factory _$_BuildingLatLngModel.fromJson(Map<String, dynamic> json) =>
+      _$$_BuildingLatLngModelFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String? departmentName;
+  @override
+  final String address;
+  @override
+  final String id;
+  @override
+  final String buildingId;
+  final List<String> _phone;
+  @override
+  List<String> get phone {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_phone);
+  }
+
+  final List<String> _workTime;
+  @override
+  List<String> get workTime {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_workTime);
+  }
+
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+
+  @override
+  String toString() {
+    return 'BuildingLatLngModel(name: $name, departmentName: $departmentName, address: $address, id: $id, buildingId: $buildingId, phone: $phone, workTime: $workTime, latitude: $latitude, longitude: $longitude)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BuildingLatLngModel &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality()
+                .equals(other.departmentName, departmentName) &&
+            const DeepCollectionEquality().equals(other.address, address) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.buildingId, buildingId) &&
+            const DeepCollectionEquality().equals(other._phone, _phone) &&
+            const DeepCollectionEquality().equals(other._workTime, _workTime) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(departmentName),
+      const DeepCollectionEquality().hash(address),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(buildingId),
+      const DeepCollectionEquality().hash(_phone),
+      const DeepCollectionEquality().hash(_workTime),
+      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(longitude));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_BuildingLatLngModelCopyWith<_$_BuildingLatLngModel> get copyWith =>
+      __$$_BuildingLatLngModelCopyWithImpl<_$_BuildingLatLngModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BuildingLatLngModelToJson(this);
+  }
+}
+
+abstract class _BuildingLatLngModel implements BuildingLatLngModel {
+  const factory _BuildingLatLngModel(
+      {required final String name,
+      required final String? departmentName,
+      required final String address,
+      required final String id,
+      required final String buildingId,
+      required final List<String> phone,
+      required final List<String> workTime,
+      required final double latitude,
+      required final double longitude}) = _$_BuildingLatLngModel;
+
+  factory _BuildingLatLngModel.fromJson(Map<String, dynamic> json) =
+      _$_BuildingLatLngModel.fromJson;
+
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String? get departmentName => throw _privateConstructorUsedError;
+  @override
+  String get address => throw _privateConstructorUsedError;
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get buildingId => throw _privateConstructorUsedError;
+  @override
+  List<String> get phone => throw _privateConstructorUsedError;
+  @override
+  List<String> get workTime => throw _privateConstructorUsedError;
+  @override
+  double get latitude => throw _privateConstructorUsedError;
+  @override
+  double get longitude => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BuildingLatLngModelCopyWith<_$_BuildingLatLngModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1083145779008",
+    "project_id": "z-clinic-flutter-project",
+    "storage_bucket": "z-clinic-flutter-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083145779008:android:4b162a5ecbd2536a742ca5",
+        "android_client_info": {
+          "package_name": "com.example.medlike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.medlike"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083145779008:android:487e71139690f03c742ca5",
+        "android_client_info": {
+          "package_name": "com.medotrade.flutter.zclinic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.medlike"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

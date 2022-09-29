@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/themes/colors.dart';
 
 class DiaryChips extends StatelessWidget {
   const DiaryChips({
@@ -22,18 +24,38 @@ class DiaryChips extends StatelessWidget {
         void tap(String grouping) {
           onTap(grouping, syn);
         }
+        const width = 10.0;
 
-        return SizedBox(
+        final list = [
+          DiaryChip(grouping: 'Hour', title: 'Час', onTap: tap, selected: selectedGroup),
+          const SizedBox(width: width),
+          DiaryChip(grouping: 'Day', title: 'День', onTap: tap, selected: selectedGroup),
+          const SizedBox(width: width),
+          DiaryChip(grouping: 'Week', title: 'Неделя', onTap: tap, selected: selectedGroup),
+          const SizedBox(width: width),
+          DiaryChip(grouping: 'Month', title: 'Месяц', onTap: tap, selected: selectedGroup),
+        ];
+
+        if(MediaQuery.of(context).size.width <= AppConstants.smScreenWidth) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: 64,
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: list
+            )
+          );
+        }
+
+        return Container(
           width: MediaQuery.of(context).size.width,
-          height: 100,
+          height: 64,
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DiaryChip(grouping: 'Hour', title: 'Час', onTap: tap, selected: selectedGroup),
-              DiaryChip(grouping: 'Day', title: 'День', onTap: tap, selected: selectedGroup),
-              DiaryChip(grouping: 'Week', title: 'Неделя', onTap: tap, selected: selectedGroup),
-              DiaryChip(grouping: 'Month', title: 'Месяц', onTap: tap, selected: selectedGroup),
-            ],
+            mainAxisSize: MainAxisSize.min,
+            children: list,
           ),
         );
       },
@@ -57,22 +79,36 @@ class DiaryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    final widget = InkWell(
       onTap: () => onTap(grouping),
       child: Chip(
-        backgroundColor: selected == grouping ? const Color.fromRGBO(60, 148, 168, 1) : Colors.white,
-        label: SizedBox(
-          width: MediaQuery.of(context).size.width / 7,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: selected == grouping ? Colors.white : Colors.black,
-            ),
-          )
+        backgroundColor: selected == grouping ? AppColors.mainBrandColor : AppColors.mainAppBackground,
+        shadowColor: const Color.fromRGBO(0, 0, 0, 0.5),
+        elevation: 8,
+        label: Flex(
+          direction: Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: selected == grouping ? AppColors.mainAppBackground : AppColors.mainText,
+                fontWeight: FontWeight.w400
+              ),
+              overflow: TextOverflow.ellipsis,
+            )
+          ],
         ),
-        elevation: 3,
       ),
     );
+
+    if(MediaQuery.of(context).size.width > AppConstants.smScreenWidth) {
+      return Expanded(
+        child: widget
+      );
+    }
+
+    return widget;
   }
 }

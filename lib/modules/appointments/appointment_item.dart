@@ -42,7 +42,10 @@ class AppointmentItem extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 15,
-                        child: Text(appointmentItem.doctorInfo.lastName![0]),
+                        child: Text(
+                          appointmentItem.doctorInfo.lastName![0],
+                          style: const TextStyle(fontFamily: 'AquawaxPro'),
+                        ),
                         backgroundColor: AppColors.mainBrand[100],
                       ),
                       const SizedBox(width: 8.0),
@@ -73,7 +76,7 @@ class AppointmentItem extends StatelessWidget {
             ],
           ),
           AppointmentItemRecommendations(
-              recommendations: appointmentItem.recommendations!),
+              recommendations: appointmentItem.recommendations ?? ''),
           const SizedBox(height: 8.0),
           Row(
             children: [

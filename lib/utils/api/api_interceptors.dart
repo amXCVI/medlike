@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -24,6 +26,8 @@ class DioInterceptors extends Interceptor {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
       'Project': 'Medlike',
+      'VerApp': '1.0',
+      'Platform': '1', //Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
@@ -45,7 +49,11 @@ class DioInterceptors extends Interceptor {
   onError(DioError err, ErrorInterceptorHandler handler) async {
     if (kDebugMode) {
       print('ERROR[${err.message}] => PATH: ${err.requestOptions.path}');
+      print(err.type);
     }
+    hasInternetConnection().then((value) => null).catchError((e) {
+      return;
+    });
     if (err.response?.statusCode == 401) {
       final requestOptions = err.response!.requestOptions;
       _lockDio();
@@ -70,7 +78,7 @@ class DioInterceptors extends Interceptor {
         }
         if (response.statusCode == 200 || response.statusCode == 201) {
           RefreshTokenResponseModel parsedResponse =
-          RefreshTokenResponseModel.fromJson(response.data);
+              RefreshTokenResponseModel.fromJson(response.data);
           UserSecureStorage.setField(
               AppConstants.accessToken, parsedResponse.token);
           UserSecureStorage.setField(
@@ -81,7 +89,7 @@ class DioInterceptors extends Interceptor {
       }).then((e) async {
         requestOptions.headers['Retry-Count'] = 1;
         err.requestOptions.headers["Authorization"] =
-        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+            'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
         final opts = Options(
             method: err.requestOptions.method,
             headers: err.requestOptions.headers);
@@ -122,5 +130,16 @@ class DioInterceptors extends Interceptor {
     loggedDio.interceptors.errorLock.unlock();
   }
 
-
+  Future<bool> hasInternetConnection() async {
+    try {
+      await InternetAddress.lookup('google.com');
+      return true;
+    } on SocketException catch (_) {
+      if (kDebugMode) {
+        print('not connected Internet');
+      }
+      AppToast.showAppToast(msg: 'Проверьте подключение к сети Интернет');
+      return false;
+    }
+  }
 }

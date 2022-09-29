@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'user_cubit.dart';
 
 /// Статусы при авторизации. Для авторизации с номером-паролем
@@ -33,6 +35,18 @@ enum AcceptedAgreementsStatuses { initial, loading, success, failed }
 
 enum SendingEmailToSupportStatuses { initial, loading, success, failed }
 
+enum GetLastNotReadEventStatuses { initial, loading, success, failed }
+
+enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
+
+enum NotificationEventType { 
+  AppointmentCompleted, 
+  AppointmentCanceled, 
+  NewMedcardEventPdf, 
+  NewMedcardEventJson, 
+  AppointmentScheduled
+}
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
@@ -56,6 +70,10 @@ class UserState {
   final GetAllUserAgreementsStatuses? getAllUserAgreementsStatus;
   final AcceptedAgreementsStatuses? acceptedAgreementsStatus;
   final SendingEmailToSupportStatuses? sendingEmailToSupportStatus;
+  final GetLastNotReadEventStatuses? getLastNotReadEventStatus;
+  final NotificationModel? lastNotification;
+  final bool? isLastNotificationShow;
+  final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -82,6 +100,10 @@ class UserState {
     this.getAllUserAgreementsStatus = GetAllUserAgreementsStatuses.initial,
     this.acceptedAgreementsStatus,
     this.sendingEmailToSupportStatus,
+    this.getLastNotReadEventStatus,
+    this.lastNotification,
+    this.isLastNotificationShow,
+    this.updatingNotificationStatusStatus,
   });
 
   UserState copyWith({
@@ -107,6 +129,10 @@ class UserState {
     GetAllUserAgreementsStatuses? getAllUserAgreementsStatus,
     AcceptedAgreementsStatuses? acceptedAgreementsStatus,
     SendingEmailToSupportStatuses? sendingEmailToSupportStatus,
+    GetLastNotReadEventStatuses? getLastNotReadEventStatus,
+    NotificationModel? lastNotification,
+    bool? isLastNotificationShow,
+    UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -141,6 +167,12 @@ class UserState {
           acceptedAgreementsStatus ?? this.acceptedAgreementsStatus,
       sendingEmailToSupportStatus:
           sendingEmailToSupportStatus ?? this.sendingEmailToSupportStatus,
+      getLastNotReadEventStatus:
+          getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
+      lastNotification: lastNotification ?? this.lastNotification,
+      isLastNotificationShow: isLastNotificationShow ?? this.isLastNotificationShow,
+      updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
+          this.updatingNotificationStatusStatus,
     );
   }
 

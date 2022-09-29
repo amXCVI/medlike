@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 
@@ -17,10 +16,11 @@ class ExitAppDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void confirmSignOut() {
-      context.read<UserCubit>().signOut();
       if (goToLoginPage) {
+        context.read<UserCubit>().forceLogout();
         context.router.replaceAll([StartPhoneNumberRoute()]);
       } else {
+        context.read<UserCubit>().signOut();
         SystemNavigator.pop();
       }
     }
@@ -69,7 +69,7 @@ class ExitAppDialog extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall
-                      ?.copyWith(color: AppColors.mainText),
+                      ?.copyWith(color: AppColors.mainBrandColor),
                 ),
               ),
             );

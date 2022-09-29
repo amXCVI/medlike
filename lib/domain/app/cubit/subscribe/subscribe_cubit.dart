@@ -95,12 +95,26 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getResearchesListStatus: GetResearchesListStatuses.success,
         researchesList: response,
+        filteredResearchesList: response,
         selectedResearchesIds: <String>[],
       ));
     } catch (e) {
       emit(state.copyWith(
           getResearchesListStatus: GetResearchesListStatuses.failed));
     }
+  }
+
+  /// Фильтр researches
+  void filterResearchesList(String filterStr) {
+    final List<Research> filteredList;
+    filteredList = state.researchesList!
+        .where((element) =>
+            element.name.toLowerCase().contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredResearchesList: filteredList,
+    ));
   }
 
   /// Добавление или удаление услуг в списке выбранных
@@ -263,12 +277,15 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             .contains(filterStr.toLowerCase()))
         .toList();
 
+    print(filteredDoctorsList);
+
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
       filteredCabinetsList: filteredCabinetsList,
     ));
   }
 
+  /// Получение списка избранных врачей
   void getFavoritesDoctorsList(
     userId,
     buildingId,
@@ -285,11 +302,27 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.success,
         favoriteDoctorsList: response,
+        filteredFavoriteDoctorsList: response,
       ));
     } catch (e) {
       emit(state.copyWith(
           getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
     }
+  }
+
+  /// Фильтр избранных врачей
+  void filterFavoritesDoctorsList(String filterStr) {
+    final List<FavoriteDoctor> filteredDoctorsList;
+    filteredDoctorsList = state.favoriteDoctorsList!
+        .where((element) =>
+            '${element.lastName} ${element.middleName} ${element.middleName} ${element.specialization}'
+                .toLowerCase()
+                .contains(filterStr.toLowerCase()))
+        .toList();
+
+    emit(state.copyWith(
+      filteredFavoriteDoctorsList: filteredDoctorsList,
+    ));
   }
 
   void getCalendarList({
@@ -457,7 +490,9 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getAppointmentInfoStatus: GetAppointmentInfoStatuses.success,
         appointmentInfoData: response,
-        selectedPayType: response.payType,
+        selectedPayType: AppConstants.noPayedPayType,
+        //! Пока убрана оплата картой. При включении функционала раскомментировать !//
+        // selectedPayType: response.payType,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -716,6 +751,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: false))
             .toList(),
         favoriteDoctorsList:
+            state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
+        filteredFavoriteDoctorsList:
             state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
       ));
     } catch (e) {

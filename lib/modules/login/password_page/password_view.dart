@@ -48,20 +48,8 @@ class PasswordPageWidget extends StatelessWidget {
                             }
                           else
                             {
-                              getIsSavedPinCode().then((res) => {
-                                    if (res == true)
-                                      {
-                                        UserSecureStorage.setField(
-                                            AppConstants.isAuth, 'true'),
-                                        context.router
-                                            .replaceAll([const MainRoute()])
-                                      }
-                                    else
-                                      {
-                                        context.router.navigateNamed(
+                              context.router.navigateNamed(
                                             AppRoutes.loginPinCodeCreate),
-                                      }
-                                  })
                             }
                         })
                   }
@@ -71,7 +59,7 @@ class PasswordPageWidget extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state.authStatus == UserAuthStatuses.loadingAuth ||
-            state.authStatus == UserAuthStatuses.successAuth ||
+            // state.authStatus == UserAuthStatuses.successAuth ||
             state.getAllUserAgreementsStatus ==
                 GetAllUserAgreementsStatuses.loading) {
           return const DefaultAuthSkeleton();

@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class UserSecureStorage {
   static const _storage = FlutterSecureStorage();
@@ -13,7 +12,6 @@ class UserSecureStorage {
     try {
       return await _storage.read(key: key);
     } on PlatformException catch (err) {
-      AppToast.showAppToast(msg: 'Ошибка чтения данных :(');
       await _storage.delete(key: key);
     }
     return null;

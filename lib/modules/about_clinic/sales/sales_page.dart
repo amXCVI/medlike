@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/about_clinic/sales/promotions_list.dart';
 import 'package:medlike/modules/about_clinic/sales/promotions_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/empty_list_widget.dart';
 
 class SalesPage extends StatelessWidget {
   const SalesPage({Key? key, required this.clinicId}) : super(key: key);
@@ -29,11 +30,15 @@ class SalesPage extends StatelessWidget {
             return const Text('');
           } else if (state.getPromotionsListStatus ==
               GetPromotionsListStatuses.success) {
-            return PromotionsList(
-              promotionsList:
-                  state.promotionsList as List<ClinicPromotionModel>,
-              onRefreshData: _onLoadDada,
-            );
+            return state.promotionsList!.isNotEmpty
+                ? PromotionsList(
+                    promotionsList:
+                        state.promotionsList as List<ClinicPromotionModel>,
+                    onRefreshData: _onLoadDada,
+                  )
+                : const EmptyListWidget(
+                    imgPath: 'assets/images/empty_sales.png',
+                    label: 'Здесь будет список акций клиники');
           } else {
             return const PromotionsListSkeleton();
           }

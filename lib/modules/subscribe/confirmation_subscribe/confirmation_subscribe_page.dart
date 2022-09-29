@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_action_button.dart';
-import 'package:medlike/modules/subscribe/confirmation_subscribe/payment_widget.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
-import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ConfirmationSubscribePage extends StatefulWidget {
   const ConfirmationSubscribePage({Key? key, required this.userId})
@@ -35,9 +34,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
   @override
   Widget build(BuildContext context) {
     void _createNewAppointment() {
-      if (!isCheckedAgreements) {
-        return;
-      }
+      HapticFeedback.heavyImpact();
       context.read<SubscribeCubit>().createNewAppointment(
             userId: widget.userId,
             userName: context.read<UserCubit>().getShortUserName(widget.userId),
@@ -53,34 +50,55 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
       child: DefaultScaffold(
         appBarTitle: 'Запись на прием',
         isChildrenPage: true,
-        actionButton: FloatingActionButton.extended(
-            onPressed: _createNewAppointment,
-            backgroundColor: isCheckedAgreements
-                ? Theme.of(context).primaryColor
-                : AppColors.lightText,
-            extendedPadding: const EdgeInsets.all(15),
-            label: const ConfirmationActionButtonLabel()),
-        child: DefaultScrollbar(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const SizedBox(height: 20),
-              UserInfo(userId: widget.userId),
-              const SizedBox(height: 19),
-              const DashDivider(),
-              const SizedBox(height: 24),
-              const PaymentWidget(),
-              const AppointmentInfo(),
-              const SizedBox(height: 24),
-              const DashDivider(),
-              const SizedBox(height: 24),
-              AgreementsChecker(
-                isChecked: isCheckedAgreements,
-                setIsCheckedValue: setIsCheckedValue,
+        actionButton: BlocBuilder<SubscribeCubit, SubscribeState>(
+          builder: (context, state) {
+            bool isDisabledButton = !isCheckedAgreements ||
+                state.getAppointmentInfoStatus ==
+                    GetAppointmentInfoStatuses.loading ||
+                state.creatingAppointmentStatus ==
+                    CreatingAppointmentStatuses.loading;
+            return SizedBox(
+              width: 200,
+              child: AnimatedFractionallySizedBox(
+                duration: const Duration(milliseconds: 500),
+                widthFactor: state.creatingAppointmentStatus ==
+                    CreatingAppointmentStatuses.success ? 0.25 : 1,
+                child: FloatingActionButton.extended(
+                  onPressed: isDisabledButton ? () {} : _createNewAppointment,
+                  backgroundColor: !isDisabledButton
+                      ? Theme.of(context).primaryColor
+                      : AppColors.lightText,
+                  extendedPadding: const EdgeInsets.all(15),
+                  label: const ConfirmationActionButtonLabel(),
+                ),
               ),
-              const SizedBox(height: 44),
-            ],
-          ),
+            );
+          },
+        ),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            const SizedBox(height: 20),
+            UserInfo(userId: widget.userId),
+            const SizedBox(height: 19),
+            const DashDivider(),
+
+            /// Карточки с выбором способа оплаты.
+            /// Не работает оплата картой, поэтому закомментировано
+            /// Раскомментировать в кубите
+            /// получение информации о приеме
+            // const SizedBox(height: 24),
+            // const PaymentWidget(),
+            const AppointmentInfo(),
+            const SizedBox(height: 24),
+            const DashDivider(),
+            const SizedBox(height: 24),
+            AgreementsChecker(
+              isChecked: isCheckedAgreements,
+              setIsCheckedValue: setIsCheckedValue,
+            ),
+            const SizedBox(height: 44),
+          ],
         ),
       ),
     );

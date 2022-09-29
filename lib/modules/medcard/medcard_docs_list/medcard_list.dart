@@ -34,16 +34,17 @@ class MedcardList extends StatelessWidget {
       onRefresh: () => onRefreshData(isRefresh: true),
       child: medcardDocsList.isEmpty
           ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 100),
-              child: Center(
-                child: Text(
-                  'Нет результатов',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.lightText),
-                ),
+              padding: const EdgeInsets.symmetric(vertical: 65),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Нет результатов',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: AppColors.lightText, fontWeight: FontWeight.w400),
+                  ),
+                ],
               ),
             )
           : DefaultScrollbar(

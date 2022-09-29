@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +13,9 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
@@ -39,20 +43,25 @@ class App extends StatelessWidget {
             create: (context) => AppointmentsCubit(AppointmentsRepository())),
         BlocProvider(create: (context) => MedcardCubit(MedcardRepository())),
         BlocProvider(create: (context) => DiaryCubit(DiaryRepository())),
+        BlocProvider(create: (context) => PromptCubit()),
+        BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],
       child: InactivityManager(
         child: MaterialApp.router(
           title: 'Medlike',
           theme: AppTheme.lightAppTheme,
-          routerDelegate: _router.delegate(),
+          routerDelegate: AutoRouterDelegate(
+            _router,
+            navigatorObservers: () => [
+              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+            ],
+          ),
           routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en')
-          ],
+          supportedLocales: const [Locale('en')],
         ),
       ),
     );

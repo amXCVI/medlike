@@ -27,30 +27,12 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
       final List<AppointmentModel> response;
       response = await appointmentsRepository.getAppointmentsList();
 
-      /// когда открывается страница Мои приемы —
-      /// по умолчанию выбрана ближайшая дата с приемом,
-      /// который требует подтверждения
-      //! не получилось сделать с первого раза.
-      //! Вроде работает, но не факт. Если приемы пропали - проблема здесь )
-      DateTime firstSelectedDate = DateTime.now();
-      try {
-        List<AppointmentModel>? myListFiltered = state.appointmentsList
-            ?.where((e) => e.status == 4 || e.status == 0)
-            .toList();
-        if (myListFiltered != null) {
-          firstSelectedDate = myListFiltered[0].appointmentDateTime;
-        }
-      } catch (e) {}
-
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.success,
         appointmentsList: response,
         filteredAppointmentsList: response,
-        // selectedDate: firstSelectedDate,
-        //     ? firstSelectedDate
-        //     : DateTime.now(),
       ));
-      filterAppointmentsList(firstSelectedDate);
+      filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
           getAppointmentsStatus: GetAppointmentsStatuses.failed));
@@ -83,6 +65,25 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     ));
   }
 
+  void getLastAppointment() async {
+    emit(state.copyWith(
+      getLastAppointmentStatus: GetLastAppointmentStatuses.loading,
+    ));
+
+    try {
+      final AppointmentModel response;
+      response = await appointmentsRepository.getLastAppointment();
+
+      emit(state.copyWith(
+        getLastAppointmentStatus: GetLastAppointmentStatuses.success,
+        lastAppointment: response
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+    }
+  }
+
   /// Отменить прием
   void deleteAppointment({
     required String appointmentId,
@@ -90,7 +91,12 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
   }) async {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
+      appointmentsList: state.appointmentsList
+        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+        .toList(),
     ));
+
+    filterAppointmentsList(state.selectedDate);
     try {
       final bool response;
       response = await appointmentsRepository.deleteAppointment(
@@ -98,17 +104,43 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
 
       emit(state.copyWith(
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
-        appointmentsList: state.appointmentsList
-            ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
-            .toList(),
       ));
       if (response) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
-      filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
           deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
+    }
+  }
+
+  /// Подтвердить приём
+  void confirmAppointment({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      putAppointmentStatus: PutAppointmentsStatuses.loading,
+      appointmentsList: state.appointmentsList
+        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
+        .toList(),
+    ));
+
+    filterAppointmentsList(state.selectedDate);
+    try {
+      final bool response;
+      response = await appointmentsRepository.confirmAppointment(
+          appointmentId: appointmentId, userId: userId);
+
+      emit(state.copyWith(
+        putAppointmentStatus: PutAppointmentsStatuses.success,
+      ));
+      if (response) {
+        AppToast.showAppToast(msg: 'Прием успешно подтверждён');
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        putAppointmentStatus: PutAppointmentsStatuses.failed));
     }
   }
 }
