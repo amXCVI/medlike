@@ -361,8 +361,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         buildingId: buildingId,
         clinicId: clinicId,
         categoryType: categoryType,
-        endDate: endDate ?? state.endDate,
-        startDate: startDate ?? state.startDate,
+        endDate: endDate ?? state.endDate.add(const Duration(days: 7)),
+        startDate: startDate ?? state.startDate.add(const Duration(days: -7)),
         dynamicParams: getDynamicParams(
           isAny: isAny,
           doctorId: doctorId,
