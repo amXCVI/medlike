@@ -1,7 +1,21 @@
+@JS()
+library script.js;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medlike/app.dart';
 
+import 'dart:js' as js;
+
+
+import 'package:js/js.dart';
+
+@JS()
+@anonymous
+abstract class WebBridge {
+  external factory WebBridge();
+  external void enableLogs();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,5 +23,11 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(App());
+  
+  // var instance = js.JsObject.fromBrowserObject(js.context['jsClassInstance']);
 
+  var bridge = js.JsObject.fromBrowserObject(js.context['bridge']);
+
+  print(bridge);
+  // print(instance.getData());
 }
