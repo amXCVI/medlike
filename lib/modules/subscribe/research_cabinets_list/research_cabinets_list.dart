@@ -44,14 +44,12 @@ class ResearchCabinetsList extends StatefulWidget {
 class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
   @override
   Widget build(BuildContext context) {
-    void _handleTapOnDoctor({
-      Doctor? doctor
-    }) {
+    void _handleTapOnDoctor({Doctor? doctor}) {
       if (doctor != null) {
         context.read<SubscribeCubit>().setSelectedDoctor(doctor);
         context.router.push(ScheduleRoute(
-          pageTitle: widget.nextPageTitle,
-          pageSubtitle: widget.nextPageSubtitle,
+          pageTitle: '${doctor.lastName} ${doctor.firstName} ${doctor.middleName}',
+          pageSubtitle: doctor.specialization,
           userId: widget.userId,
           buildingId: widget.buildingId,
           clinicId: widget.clinicId,
