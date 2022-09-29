@@ -277,6 +277,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             .contains(filterStr.toLowerCase()))
         .toList();
 
+    print(filteredDoctorsList);
+
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
       filteredCabinetsList: filteredCabinetsList,
