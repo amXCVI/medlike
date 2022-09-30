@@ -631,6 +631,20 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           selectedSpecialisation: null,
           selectedTimetableCell: null,
           selectedDate: DateTime.now(),
+          appointmentInfoData: null,
+          researchesList: null,
+          filteredResearchesList: null,
+          specialisationsList: null,
+          filteredSpecialisationsList: null,
+          doctorsList: null,
+          filteredDoctorsList: null,
+          cabinetsList: null,
+          filteredCabinetsList: null,
+          calendarList: null,
+          timetableCellsList: null,
+          timetableLogsList: null,
+          selectedPayType: null,
+          paymentUrl: null,
         ));
       });
     } catch (e) {
