@@ -10,6 +10,7 @@ import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
@@ -721,6 +722,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
               .toList(),
         ),
       );
+      AppToast.showAppToast(msg: 'Врач добавлен в избранные');
     } catch (e) {
       emit(state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
@@ -755,6 +757,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredFavoriteDoctorsList:
             state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
       ));
+      AppToast.showAppToast(msg: 'Врач удален из избранного');
     } catch (e) {
       emit(state.copyWith(
           deleteDoctorFromFavoritesStatus:
