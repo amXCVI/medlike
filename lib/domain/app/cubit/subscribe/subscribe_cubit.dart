@@ -115,6 +115,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
     emit(state.copyWith(
       filteredResearchesList: filteredList,
+      selectedResearchesIds: [],
     ));
   }
 
