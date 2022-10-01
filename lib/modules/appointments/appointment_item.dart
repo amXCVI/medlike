@@ -35,7 +35,8 @@ class AppointmentItem extends StatelessWidget {
                       child: Text(e.name as String,
                           style: Theme.of(context).textTheme.titleMedium)))
                 ])),
-          appointmentItem.doctorInfo.id != null
+          appointmentItem.doctorInfo.id != null &&
+                  appointmentItem.doctorInfo.id!.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(top: 4.0, bottom: 15.0),
                   child: Row(
