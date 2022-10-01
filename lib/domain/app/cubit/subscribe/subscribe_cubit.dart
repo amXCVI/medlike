@@ -580,17 +580,18 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           'Address': state.selectedBuilding?.address
         },
         'PatientInfo': {'Id': userId, 'Name': userName},
-        'DoctorInfo': state.selectedDoctor != null
-            ? {
-                'Id': state.selectedDoctor?.id,
-                'FirstName': state.selectedDoctor?.firstName,
-                'MiddleName': state.selectedDoctor?.middleName,
-                'LastName': state.selectedDoctor?.lastName,
-                'SpecializationId': state.selectedDoctor?.specializationId,
-                'Specialization': state.selectedDoctor?.specialization,
-                'CabinetName': state.selectedTimetableCell?.cabinetName
-              }
-            : {},
+        'DoctorInfo':
+            state.selectedDoctor != null && state.selectedDoctor!.id.isNotEmpty
+                ? {
+                    'Id': state.selectedDoctor?.id,
+                    'FirstName': state.selectedDoctor?.firstName,
+                    'MiddleName': state.selectedDoctor?.middleName,
+                    'LastName': state.selectedDoctor?.lastName,
+                    'SpecializationId': state.selectedDoctor?.specializationId,
+                    'Specialization': state.selectedDoctor?.specialization,
+                    'CabinetName': state.selectedTimetableCell?.cabinetName
+                  }
+                : {},
         'Researches': state.selectedResearchesIds != null
             ? state.selectedResearchesIds
                 ?.map((e) => {
@@ -620,10 +621,23 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             userId: userId, appointmentIds: [response.result].toList());
       }
       Future.delayed(const Duration(seconds: 2), () {
+        /// похоже, null в стейт поместить нельзя. С доктором не сработало
+        /// хотя ошибок нет в линтере.
         emit(state.copyWith(
           creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
           selectedUser: null,
-          selectedDoctor: null,
+          selectedDoctor: const Doctor(
+            id: '',
+            lastName: '',
+            firstName: '',
+            middleName: '',
+            specializationId: '',
+            specialization: '',
+            price: 0,
+            categoryType: -1,
+            isFavorite: false,
+            categories: [],
+          ),
           selectedBuilding: null,
           selectedCabinet: null,
           selectedCalendarItem: null,
@@ -633,17 +647,17 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           selectedTimetableCell: null,
           selectedDate: DateTime.now(),
           appointmentInfoData: null,
-          researchesList: null,
-          filteredResearchesList: null,
-          specialisationsList: null,
-          filteredSpecialisationsList: null,
-          doctorsList: null,
-          filteredDoctorsList: null,
-          cabinetsList: null,
-          filteredCabinetsList: null,
-          calendarList: null,
-          timetableCellsList: null,
-          timetableLogsList: null,
+          researchesList: [],
+          filteredResearchesList: [],
+          specialisationsList: [],
+          filteredSpecialisationsList: [],
+          doctorsList: [],
+          filteredDoctorsList: [],
+          cabinetsList: [],
+          filteredCabinetsList: [],
+          calendarList: [],
+          timetableCellsList: [],
+          timetableLogsList: [],
           selectedPayType: null,
           paymentUrl: null,
         ));

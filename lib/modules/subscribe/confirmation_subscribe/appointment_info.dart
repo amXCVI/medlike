@@ -52,7 +52,8 @@ class AppointmentInfo extends StatelessWidget {
                   title: 'Адрес',
                   value: ClinicAddressHelper.getShortAddress(
                       state.selectedBuilding!.address)),
-              state.selectedDoctor != null
+              state.selectedDoctor != null &&
+                      state.selectedDoctor!.id.isNotEmpty
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
