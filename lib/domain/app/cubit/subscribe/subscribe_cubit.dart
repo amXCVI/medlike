@@ -22,7 +22,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
   /// Получает список доступных клиник для записи к врачу
   void getAvailableClinicsList(String userId, bool isRefresh) async {
-    if (!isRefresh &&
+    if (userId == state.selectedUser?.id &&
+        !isRefresh &&
         state.getAvailableClinicsStatus ==
             GetAvailableClinicsListStatuses.success &&
         state.availableClinicsList != null &&
