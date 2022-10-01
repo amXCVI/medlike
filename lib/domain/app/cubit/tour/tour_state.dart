@@ -1,9 +1,6 @@
 part of 'tour_cubit.dart';
 
-enum TourStatuses {
-  first,
-  late
-}
+enum TourStatuses { first, late }
 
 class TourState {
   final TourStatuses? tourStatuses;
@@ -11,6 +8,7 @@ class TourState {
   final bool? isFavoriteShown;
   final bool? isAppointmentShown;
   final bool? isSupportShown;
+  final bool? isCabinetsInfoPlaceShow;
 
   TourState({
     this.tourStatuses,
@@ -18,6 +16,7 @@ class TourState {
     this.isFavoriteShown,
     this.isAppointmentShown,
     this.isSupportShown,
+    this.isCabinetsInfoPlaceShow,
   });
 
   TourState copyWith({
@@ -26,6 +25,7 @@ class TourState {
     bool? isFavoriteShown,
     bool? isAppointmentShown,
     bool? isSupportShown,
+    bool? isCabinetsInfoPlaceShow,
   }) {
     return TourState(
       tourStatuses: tourStatuses ?? this.tourStatuses,
@@ -33,6 +33,8 @@ class TourState {
       isFavoriteShown: isFavoriteShown ?? this.isFavoriteShown,
       isAppointmentShown: isAppointmentShown ?? this.isAppointmentShown,
       isSupportShown: isSupportShown ?? this.isSupportShown,
+      isCabinetsInfoPlaceShow:
+          isCabinetsInfoPlaceShow ?? this.isCabinetsInfoPlaceShow,
     );
   }
 }

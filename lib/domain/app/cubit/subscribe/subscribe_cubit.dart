@@ -10,6 +10,7 @@ import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
@@ -114,6 +115,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
     emit(state.copyWith(
       filteredResearchesList: filteredList,
+      selectedResearchesIds: [],
     ));
   }
 
@@ -361,8 +363,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         buildingId: buildingId,
         clinicId: clinicId,
         categoryType: categoryType,
-        endDate: endDate ?? state.endDate,
-        startDate: startDate ?? state.startDate,
+        endDate: endDate ?? state.endDate.add(const Duration(days: 7)),
+        startDate: startDate ?? state.startDate.add(const Duration(days: -7)),
         dynamicParams: getDynamicParams(
           isAny: isAny,
           doctorId: doctorId,
@@ -612,16 +614,6 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
-        selectedUser: null,
-        selectedDoctor: null,
-        selectedBuilding: null,
-        selectedCabinet: null,
-        selectedCalendarItem: null,
-        selectedResearchesIds: null,
-        selectedService: null,
-        selectedSpecialisation: null,
-        selectedTimetableCell: null,
-        selectedDate: DateTime.now(),
       ));
       if (state.selectedPayType == AppConstants.cardPayType) {
         registerOrder(
@@ -629,7 +621,32 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       }
       Future.delayed(const Duration(seconds: 2), () {
         emit(state.copyWith(
-            creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
+          creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
+          selectedUser: null,
+          selectedDoctor: null,
+          selectedBuilding: null,
+          selectedCabinet: null,
+          selectedCalendarItem: null,
+          selectedResearchesIds: null,
+          selectedService: null,
+          selectedSpecialisation: null,
+          selectedTimetableCell: null,
+          selectedDate: DateTime.now(),
+          appointmentInfoData: null,
+          researchesList: null,
+          filteredResearchesList: null,
+          specialisationsList: null,
+          filteredSpecialisationsList: null,
+          doctorsList: null,
+          filteredDoctorsList: null,
+          cabinetsList: null,
+          filteredCabinetsList: null,
+          calendarList: null,
+          timetableCellsList: null,
+          timetableLogsList: null,
+          selectedPayType: null,
+          paymentUrl: null,
+        ));
       });
     } catch (e) {
       emit(state.copyWith(
@@ -720,6 +737,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
               .toList(),
         ),
       );
+      AppToast.showAppToast(msg: 'Врач добавлен в избранные');
     } catch (e) {
       emit(state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
@@ -754,6 +772,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredFavoriteDoctorsList:
             state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
       ));
+      AppToast.showAppToast(msg: 'Врач удален из избранного');
     } catch (e) {
       emit(state.copyWith(
           deleteDoctorFromFavoritesStatus:

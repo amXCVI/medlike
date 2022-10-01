@@ -32,7 +32,7 @@ class AppointmentItem extends StatelessWidget {
                           '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ',
                           style: Theme.of(context).textTheme.titleMedium)),
                   ...appointmentItem.researches.map((e) => WidgetSpan(
-                      child: Text(e.name,
+                      child: Text(e.name as String,
                           style: Theme.of(context).textTheme.titleMedium)))
                 ])),
           appointmentItem.doctorInfo.id != null
