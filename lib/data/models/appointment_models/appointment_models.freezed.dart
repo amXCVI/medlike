@@ -715,7 +715,7 @@ ClinicInfoModel _$ClinicInfoModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ClinicInfoModel {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
@@ -730,7 +730,7 @@ abstract class $ClinicInfoModelCopyWith<$Res> {
   factory $ClinicInfoModelCopyWith(
           ClinicInfoModel value, $Res Function(ClinicInfoModel) then) =
       _$ClinicInfoModelCopyWithImpl<$Res>;
-  $Res call({String id, String? name, String? address});
+  $Res call({String? id, String? name, String? address});
 }
 
 /// @nodoc
@@ -752,7 +752,7 @@ class _$ClinicInfoModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -772,7 +772,7 @@ abstract class _$$_ClinicInfoModelCopyWith<$Res>
           _$_ClinicInfoModel value, $Res Function(_$_ClinicInfoModel) then) =
       __$$_ClinicInfoModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String? name, String? address});
+  $Res call({String? id, String? name, String? address});
 }
 
 /// @nodoc
@@ -796,7 +796,7 @@ class __$$_ClinicInfoModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -819,7 +819,7 @@ class _$_ClinicInfoModel implements _ClinicInfoModel {
       _$$_ClinicInfoModelFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final String? name;
   @override
@@ -861,7 +861,7 @@ class _$_ClinicInfoModel implements _ClinicInfoModel {
 
 abstract class _ClinicInfoModel implements ClinicInfoModel {
   const factory _ClinicInfoModel(
-      {required final String id,
+      {required final String? id,
       required final String? name,
       required final String? address}) = _$_ClinicInfoModel;
 
@@ -869,7 +869,7 @@ abstract class _ClinicInfoModel implements ClinicInfoModel {
       _$_ClinicInfoModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
@@ -1131,8 +1131,8 @@ ResearchesModel _$ResearchesModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ResearchesModel {
-  String get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1145,7 +1145,7 @@ abstract class $ResearchesModelCopyWith<$Res> {
   factory $ResearchesModelCopyWith(
           ResearchesModel value, $Res Function(ResearchesModel) then) =
       _$ResearchesModelCopyWithImpl<$Res>;
-  $Res call({String id, String name});
+  $Res call({String? id, String? name});
 }
 
 /// @nodoc
@@ -1166,11 +1166,11 @@ class _$ResearchesModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -1182,7 +1182,7 @@ abstract class _$$_ResearchesModelCopyWith<$Res>
           _$_ResearchesModel value, $Res Function(_$_ResearchesModel) then) =
       __$$_ResearchesModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name});
+  $Res call({String? id, String? name});
 }
 
 /// @nodoc
@@ -1205,11 +1205,11 @@ class __$$_ResearchesModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -1223,9 +1223,9 @@ class _$_ResearchesModel implements _ResearchesModel {
       _$$_ResearchesModelFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String name;
+  final String? name;
 
   @override
   String toString() {
@@ -1261,16 +1261,16 @@ class _$_ResearchesModel implements _ResearchesModel {
 
 abstract class _ResearchesModel implements ResearchesModel {
   const factory _ResearchesModel(
-      {required final String id,
-      required final String name}) = _$_ResearchesModel;
+      {required final String? id,
+      required final String? name}) = _$_ResearchesModel;
 
   factory _ResearchesModel.fromJson(Map<String, dynamic> json) =
       _$_ResearchesModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ResearchesModelCopyWith<_$_ResearchesModel> get copyWith =>

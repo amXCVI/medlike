@@ -113,7 +113,7 @@ class AppointmentsList extends StatelessWidget {
                                   ...appointmentItem.researches
                                       .map((e) => WidgetSpan(
                                               child: Text(
-                                            e.name.characters
+                                            e.name!.characters
                                                 .replaceAll(Characters(''),
                                                     Characters('\u{200B}'))
                                                 .toString(),

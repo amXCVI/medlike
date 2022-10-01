@@ -46,7 +46,7 @@ class PatientInfoModel with _$PatientInfoModel {
 @freezed
 class ClinicInfoModel with _$ClinicInfoModel {
   const factory ClinicInfoModel({
-    required String id,
+    required String? id,
     required String? name,
     required String? address,
   }) = _ClinicInfoModel;
@@ -73,8 +73,8 @@ class DoctorInfoModel with _$DoctorInfoModel {
 @freezed
 class ResearchesModel with _$ResearchesModel {
   const factory ResearchesModel({
-    required String id,
-    required String name,
+    required String? id,
+    required String? name,
   }) = _ResearchesModel;
 
   factory ResearchesModel.fromJson(Map<String, Object?> json) =>
