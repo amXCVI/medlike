@@ -191,7 +191,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               context.router.pop();
             },
             label: Text(
-              'Добавить'.toUpperCase(),
+              (widget.initialValues == null ? 'Добавить' : 'Сохранить').toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),

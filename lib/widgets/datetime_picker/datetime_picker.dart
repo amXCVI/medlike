@@ -45,7 +45,7 @@ int getInitialValue(ColumnType type, DateTime? initialDate) {
 DateTime getDateTime(List<int> values, PickerType type) {
   switch (type) {
     case PickerType.date:
-      return DateTime(getYear(values[2]), values[1], values[0]);
+      return DateTime(getYear(values[2]), values[1] + 1, values[0] + 1);
     case PickerType.time:
       return DateTime(DateTime.now().year, DateTime.now().month,
           DateTime.now().day, values[0], values[1]);
@@ -61,13 +61,13 @@ int getMonthDays(int month, year) {
 }
 
 class DateTimePicker extends StatefulWidget {
-  const DateTimePicker(
-      {Key? key,
-      required this.type,
-      required this.onPressed,
-      required this.onCancel,
-      this.initialDate})
-      : super(key: key);
+  const DateTimePicker({
+    Key? key,
+    required this.type,
+    required this.onPressed,
+    required this.onCancel,
+    this.initialDate
+  }) : super(key: key);
 
   final PickerType type;
   final void Function(DateTime) onPressed;
@@ -99,6 +99,11 @@ class _DateTimePickerState extends State<DateTimePicker> {
 
   void setValue(int index, int value, ColumnType type) {
     setState(() {
+      if(type == ColumnType.month) {
+        final prev = DateUtils.getDaysInMonth(getYear(values[0]), values[1] + 1);
+        final cur = DateUtils.getDaysInMonth(getYear(values[0]), value + 1);
+        values[2] =  values[2] + prev - cur;
+      }
       values[index] = value;
     });
   }
@@ -257,15 +262,15 @@ class DateTimeCarousel extends StatelessWidget {
 }
 
 class CarouselColumn extends StatelessWidget {
-  const CarouselColumn(
-      {Key? key,
-      required this.type,
-      required this.index,
-      required this.col,
-      required this.setValue,
-      this.initialDate,
-      this.values})
-      : super(key: key);
+  const CarouselColumn({
+    Key? key,
+    required this.type,
+    required this.index,
+    required this.col,
+    required this.setValue,
+    this.initialDate,
+    this.values
+  }) : super(key: key);
 
   final ColumnType type;
   final int index;
