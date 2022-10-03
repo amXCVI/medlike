@@ -41,6 +41,8 @@ class DiaryAddPage extends StatefulWidget {
 
 class _DiaryAddPageState extends State<DiaryAddPage> {
   final _formKey = GlobalKey<FormState>();
+  DateTime? _initialDate;
+  DateTime? _initialTime;
   
   late final List<TextEditingController> _controllers = widget.paramName.map(
     (e) => TextEditingController()
@@ -63,6 +65,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     if(widget.initialDate != null) {
       date = widget.initialDate;
       time = widget.initialDate;
+      _initialDate = widget.initialDate;
+      _initialTime = widget.initialDate;
     }
 
     if(widget.initialValues != null) {
@@ -118,6 +122,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       setState(() {
         dateController.text = text;
         this.date = date;
+        _initialDate = date;
       });
     }
 
@@ -125,6 +130,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       setState(() {
         timeController.text = text;
         this.time = time;
+        _initialTime = time;
       });
     }
 
@@ -137,7 +143,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             child: DiaryAddForm(
               children: fields,
               formKey: _formKey,
-              initialDate: widget.initialDate,
+              initialDate: _initialDate,
+              initialTime: _initialTime,
               onDateChange: onDateChange,
               onTimeChange: onTimeChange,
               dateController: dateController,

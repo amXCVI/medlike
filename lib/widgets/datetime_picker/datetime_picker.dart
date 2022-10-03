@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart' as DateHelper;
 import 'package:intl/intl.dart';
 
 enum PickerType { date, time }
@@ -81,6 +82,7 @@ class DateTimePicker extends StatefulWidget {
 class _DateTimePickerState extends State<DateTimePicker> {
   late DateTime dateTime;
   late List<int> values;
+  late List<CarouselController> controllers;
 
   @override
   void initState() {
@@ -94,15 +96,32 @@ class _DateTimePickerState extends State<DateTimePicker> {
       getInitialValue(ColumnType.hour, widget.initialDate), 
       getInitialValue(ColumnType.minute, widget.initialDate),
     ];
+
+    controllers = [
+      CarouselController(),
+      CarouselController(),
+      CarouselController(),
+    ];
     super.initState();
   }
 
   void setValue(int index, int value, ColumnType type) {
     setState(() {
-      if(type == ColumnType.month) {
-        final prev = DateUtils.getDaysInMonth(getYear(values[0]), values[1] + 1);
-        final cur = DateUtils.getDaysInMonth(getYear(values[0]), value + 1);
-        values[2] =  values[2] + prev - cur;
+      /// TODO: убрать "магические" константы
+      if(type == ColumnType.month) { 
+        final prev = DateUtils.getDaysInMonth(getYear(values[2]), values[1] + 1);
+        final cur = DateUtils.getDaysInMonth(getYear(values[2]), value + 1);
+        values[0] += prev - cur;
+        //_scrollToDate
+        controllers[0].animateToPage(values[0]);
+      } else if(type == ColumnType.year) {
+        final prev = DateHelper.DateUtils.isLeapYear(getYear(values[2]));
+        final cur = DateHelper.DateUtils.isLeapYear(getYear(value));
+        if(values[1] == 1 && prev != cur) {
+          values[0] -= 1;
+          //_scrollToDate
+          controllers[0].animateToPage(values[0]);
+        }
       }
       values[index] = value;
     });
@@ -127,6 +146,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
           child: DateTimeCarousel(
             type: widget.type,
             values: values,
+            controllers: controllers,
             setValue: setValue,
             initialDate: widget.initialDate,
           )),
@@ -166,16 +186,18 @@ class _DateTimePickerState extends State<DateTimePicker> {
 }
 
 class DateTimeCarousel extends StatelessWidget {
-  const DateTimeCarousel(
-      {Key? key,
-      required this.type,
-      required this.values,
-      required this.setValue,
-      this.initialDate})
-      : super(key: key);
+  const DateTimeCarousel({
+    Key? key,
+    required this.type,
+    required this.values,
+    required this.controllers,
+    required this.setValue,
+    this.initialDate
+  }) : super(key: key);
 
   final PickerType type;
   final List<int> values;
+  final List<CarouselController> controllers;
   final void Function(int, int, ColumnType) setValue;
   final DateTime? initialDate;
 
@@ -189,6 +211,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.day,
           col: 0,
           index: values[0],
+          controller: controllers[0],
 
           /// Для подсчёта количества дней обязательно передавать
           /// все индексы
@@ -200,6 +223,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.month,
           col: 1,
           index: values[1],
+          controller: controllers[1],
           setValue: setValue,
           initialDate: initialDate,
         ),
@@ -207,6 +231,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.year,
           col: 2,
           index: values[2],
+          controller: controllers[2],
           setValue: setValue,
           initialDate: initialDate,
         ),
@@ -217,6 +242,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.hour,
           col: 0,
           index: values[0],
+          controller: controllers[0],
           setValue: setValue,
           initialDate: initialDate,
         ),
@@ -237,6 +263,7 @@ class DateTimeCarousel extends StatelessWidget {
         CarouselColumn(
           type: ColumnType.minute,
           col: 1,
+          controller: controllers[1],
           index: values[1],
           setValue: setValue,
           initialDate: initialDate,
@@ -267,6 +294,7 @@ class CarouselColumn extends StatelessWidget {
     required this.type,
     required this.index,
     required this.col,
+    required this.controller,
     required this.setValue,
     this.initialDate,
     this.values
@@ -275,6 +303,7 @@ class CarouselColumn extends StatelessWidget {
   final ColumnType type;
   final int index;
   final int col;
+  final CarouselController controller;
   final List<int>? values;
   final void Function(int, int, ColumnType) setValue;
   final DateTime? initialDate;
@@ -312,6 +341,7 @@ class CarouselColumn extends StatelessWidget {
         children: [
           CarouselSlider.builder(
               itemCount: count,
+              carouselController: controller,
               options: CarouselOptions(
                   height: height * 3,
                   viewportFraction: 0.35,
@@ -319,7 +349,7 @@ class CarouselColumn extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   initialPage: getInitialValue(type, initialDate),
                   onPageChanged: ((index, reason) {
-                    setValue(col, index, type);
+                    setValue(col, index, type); 
                   })),
               itemBuilder:
                   (BuildContext context, int itemIndex, int pageViewIndex) =>
