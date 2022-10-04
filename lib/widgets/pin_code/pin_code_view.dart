@@ -2,13 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
-// import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
-// import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
-import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class PinCodeView extends StatefulWidget {
   const PinCodeView({
@@ -17,6 +13,7 @@ class PinCodeView extends StatefulWidget {
     required this.handleBiometricMethod,
     this.isForcedShowingBiometricModal = false,
     this.signInTitle,
+    this.isInit = false,
     required this.pinCodeTitle,
     this.noUsedBiometric,
   }) : super(key: key);
@@ -24,6 +21,7 @@ class PinCodeView extends StatefulWidget {
   final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
   final String? signInTitle;
+  final bool isInit;
   final String pinCodeTitle;
   final bool? noUsedBiometric;
 
@@ -232,7 +230,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                                     )
                                   : item.buttonType ==
                                           PinCodeKeyboardTypes.biometric
-                                      ? isSupportedAndEnabledBiometric
+                                      ? isSupportedAndEnabledBiometric  && !widget.isInit
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(12.0),
@@ -275,7 +273,7 @@ class _PinCodeViewState extends State<PinCodeView> {
           ),
           // isSupportedAndEnabledBiometric &&
           //             !kIsWeb &&
-          //             isShowingBiometricModal ||
+          //             isShowingBiometricModal && !widget.isInit ||
           //         widget.isForcedShowingBiometricModal
           //     ? BiometricAuthenticationWidget(
           //         onSuccess: onSuccessAuthBiometric,

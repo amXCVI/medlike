@@ -680,7 +680,7 @@ class UserCubit extends Cubit<UserState> {
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel lastNotification =
+      NotificationModel? lastNotification =
           await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,

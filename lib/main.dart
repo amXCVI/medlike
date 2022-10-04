@@ -1,5 +1,5 @@
 @JS()
-library script.js;
+library boundle.js;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,11 +23,15 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(App());
-  
-  // var instance = js.JsObject.fromBrowserObject(js.context['jsClassInstance']);
 
-  var bridge = js.JsObject.fromBrowserObject(js.context['bridge']);
 
-  print(bridge);
-  // print(instance.getData());
+  var bridge = js.JsObject.fromBrowserObject(js.context['webBridgeInstance']);
+
+
+  print(bridge['logsEnabled']);
+  print(bridge['isRenameParamsEnabled']);
+
+  js.context['webBridgeInstance'].callMethod('enableLogs');
+
+  // print(bridge['logsEnabled']);
 }
