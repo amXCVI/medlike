@@ -685,6 +685,7 @@ class UserCubit extends Cubit<UserState> {
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
         lastNotification: lastNotification,
+        isLastNotificationShow: lastNotification == null ? false : true
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -707,13 +708,11 @@ class UserCubit extends Cubit<UserState> {
       ));
       await getLastNotReadNotification();
       emit(state.copyWith(
-        updatingNotificationStatusStatus:
-            UpdatingNotificationStatusStatuses.success,
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(
-        updatingNotificationStatusStatus:
-            UpdatingNotificationStatusStatuses.failed,
+        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

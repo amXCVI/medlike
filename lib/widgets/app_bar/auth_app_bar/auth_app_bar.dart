@@ -49,7 +49,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
     setState(() {
       searchQuery = newQuery;
     });
-    if (newQuery.length > 2 || newQuery.isEmpty) {
+    /// Здесь можно задать минимальо необходимое кол-во букв для начала поиска
+    if (newQuery.isNotEmpty || newQuery.isEmpty) {
       _handleSearch();
     }
   }

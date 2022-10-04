@@ -10,6 +10,7 @@ import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
@@ -21,7 +22,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
   /// Получает список доступных клиник для записи к врачу
   void getAvailableClinicsList(String userId, bool isRefresh) async {
-    if (!isRefresh &&
+    if (userId == state.selectedUser?.id &&
+        !isRefresh &&
         state.getAvailableClinicsStatus ==
             GetAvailableClinicsListStatuses.success &&
         state.availableClinicsList != null &&
@@ -114,6 +116,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
 
     emit(state.copyWith(
       filteredResearchesList: filteredList,
+      selectedResearchesIds: [],
     ));
   }
 
@@ -277,6 +280,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             .contains(filterStr.toLowerCase()))
         .toList();
 
+    print(filteredDoctorsList);
+
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
       filteredCabinetsList: filteredCabinetsList,
@@ -359,8 +364,8 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         buildingId: buildingId,
         clinicId: clinicId,
         categoryType: categoryType,
-        endDate: endDate ?? state.endDate,
-        startDate: startDate ?? state.startDate,
+        endDate: endDate ?? state.endDate.add(const Duration(days: 7)),
+        startDate: startDate ?? state.startDate.add(const Duration(days: -7)),
         dynamicParams: getDynamicParams(
           isAny: isAny,
           doctorId: doctorId,
@@ -576,17 +581,18 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           'Address': state.selectedBuilding?.address
         },
         'PatientInfo': {'Id': userId, 'Name': userName},
-        'DoctorInfo': state.selectedDoctor != null
-            ? {
-                'Id': state.selectedDoctor?.id,
-                'FirstName': state.selectedDoctor?.firstName,
-                'MiddleName': state.selectedDoctor?.middleName,
-                'LastName': state.selectedDoctor?.lastName,
-                'SpecializationId': state.selectedDoctor?.specializationId,
-                'Specialization': state.selectedDoctor?.specialization,
-                'CabinetName': state.selectedTimetableCell?.cabinetName
-              }
-            : {},
+        'DoctorInfo':
+            state.selectedDoctor != null && state.selectedDoctor!.id.isNotEmpty
+                ? {
+                    'Id': state.selectedDoctor?.id,
+                    'FirstName': state.selectedDoctor?.firstName,
+                    'MiddleName': state.selectedDoctor?.middleName,
+                    'LastName': state.selectedDoctor?.lastName,
+                    'SpecializationId': state.selectedDoctor?.specializationId,
+                    'Specialization': state.selectedDoctor?.specialization,
+                    'CabinetName': state.selectedTimetableCell?.cabinetName
+                  }
+                : {},
         'Researches': state.selectedResearchesIds != null
             ? state.selectedResearchesIds
                 ?.map((e) => {
@@ -610,24 +616,52 @@ class SubscribeCubit extends Cubit<SubscribeState> {
           await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
-        selectedUser: null,
-        selectedDoctor: null,
-        selectedBuilding: null,
-        selectedCabinet: null,
-        selectedCalendarItem: null,
-        selectedResearchesIds: null,
-        selectedService: null,
-        selectedSpecialisation: null,
-        selectedTimetableCell: null,
-        selectedDate: DateTime.now(),
       ));
       if (state.selectedPayType == AppConstants.cardPayType) {
         registerOrder(
             userId: userId, appointmentIds: [response.result].toList());
       }
       Future.delayed(const Duration(seconds: 2), () {
+        /// похоже, null в стейт поместить нельзя. С доктором не сработало
+        /// хотя ошибок нет в линтере.
         emit(state.copyWith(
-            creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
+          creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
+          selectedUser: null,
+          selectedDoctor: const Doctor(
+            id: '',
+            lastName: '',
+            firstName: '',
+            middleName: '',
+            specializationId: '',
+            specialization: '',
+            price: 0,
+            categoryType: -1,
+            isFavorite: false,
+            categories: [],
+          ),
+          selectedBuilding: null,
+          selectedCabinet: null,
+          selectedCalendarItem: null,
+          selectedResearchesIds: null,
+          selectedService: null,
+          selectedSpecialisation: null,
+          selectedTimetableCell: null,
+          selectedDate: DateTime.now(),
+          appointmentInfoData: null,
+          researchesList: [],
+          filteredResearchesList: [],
+          specialisationsList: [],
+          filteredSpecialisationsList: [],
+          doctorsList: [],
+          filteredDoctorsList: [],
+          cabinetsList: [],
+          filteredCabinetsList: [],
+          calendarList: [],
+          timetableCellsList: [],
+          timetableLogsList: [],
+          selectedPayType: null,
+          paymentUrl: null,
+        ));
       });
     } catch (e) {
       emit(state.copyWith(
@@ -718,6 +752,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
               .toList(),
         ),
       );
+      AppToast.showAppToast(msg: 'Врач добавлен в избранные');
     } catch (e) {
       emit(state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
@@ -752,6 +787,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredFavoriteDoctorsList:
             state.favoriteDoctorsList?.where((e) => e.id != doctorId).toList(),
       ));
+      AppToast.showAppToast(msg: 'Врач удален из избранного');
     } catch (e) {
       emit(state.copyWith(
           deleteDoctorFromFavoritesStatus:

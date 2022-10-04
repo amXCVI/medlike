@@ -56,8 +56,10 @@ class ResearchCabinetsListPage extends StatelessWidget {
             return const Text('');
           } else if (state.getCabinetsListStatus ==
               GetCabinetsListStatuses.success) {
-            return state.cabinetsList!.isNotEmpty &&
-                    state.filteredCabinetsList!.isEmpty
+            return (state.cabinetsList!.isNotEmpty &&
+                    state.filteredCabinetsList!.isEmpty)
+                && (state.doctorsList!.isNotEmpty &&
+                  state.filteredDoctorsList!.isEmpty)
                 ? const NotFoundData()
                 : ResearchCabinetsList(
                     doctorsList: state.filteredDoctorsList as List<Doctor>,

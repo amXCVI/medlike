@@ -48,4 +48,10 @@ class TourCubit extends Cubit<TourState> {
       tourStatuses: status,
     ));
   }
+
+  void closeCabinetsInfoPlace() {
+    emit(state.copyWith(
+      isCabinetsInfoPlaceShow: true,
+    ));
+  }
 }

@@ -4,6 +4,16 @@ import 'package:medlike/utils/api/dio_client.dart';
 class AppointmentsRepository {
   final _dioClient = Api().dio;
 
+  Future<AppointmentModel> getLastAppointment() async {
+    try {
+      final response = await _dioClient.get('/api/v1.0/schedule/appointments/mainscreen');
+      final appointment = response.data;
+      return AppointmentModel.fromJson(appointment);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
   Future<List<AppointmentModel>> getAppointmentsList() async {
     try {
       final response = await _dioClient.get('/api/v1.0/schedule/appointments');

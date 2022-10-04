@@ -6,7 +6,7 @@ String getServiceIconById(String serviceId) {
       return 'assets/icons/services/consultation.svg';
     case '1':
       return 'assets/icons/services/laboratory.svg';
-    case '3':
+    case '5':
       return 'assets/icons/services/mrt.svg';
     case '4':
       return 'assets/icons/services/uzi.svg';

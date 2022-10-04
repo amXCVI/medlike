@@ -62,20 +62,8 @@ class PasswordPageWidget extends StatelessWidget {
                             }
                           else
                             {
-                              getIsSavedPinCode().then((res) => {
-                                    if (res == true)
-                                      {
-                                        UserSecureStorage.setField(
-                                            AppConstants.isAuth, 'true'),
-                                        context.router
-                                            .replaceAll([const MainRoute()])
-                                      }
-                                    else
-                                      {
-                                        context.router.navigateNamed(
+                              context.router.navigateNamed(
                                             AppRoutes.loginPinCodeCreate),
-                                      }
-                                  })
                             }
                         })
                   },

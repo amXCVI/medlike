@@ -105,6 +105,8 @@ class SchedulePage extends StatelessWidget {
     }
 
     dynamic _onRefreshData() {
+      _setSelectedDate(CalendarModel(
+          date: DateTime.now(), hasAvailableCells: true, hasLogs: true));
       _getCalendarList(isRefresh: true);
       _getCellsList(isRefresh: true);
       return Future(() => null);
