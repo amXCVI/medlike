@@ -32,13 +32,9 @@ class _CardsPageState extends State<CardsPage> {
   @override
   Widget build(BuildContext context) {
     void _onLoadDada(String grouping, {String? syn}) {
-      context.read<DiaryCubit>().getDiaryCategoriesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+      context.read<DiaryCubit>().getDiaryCategoriesList();
 
       context.read<DiaryCubit>().getDiariesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
           grouping: grouping,
           syn: syn);
     }

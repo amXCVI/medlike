@@ -13,13 +13,9 @@ class HealthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _loadData(String grouping) {
-      context.read<DiaryCubit>().getDiaryCategoriesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+      context.read<DiaryCubit>().getDiaryCategoriesList();
 
       context.read<DiaryCubit>().getDiariesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
           grouping: 'None');
     }
 
