@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_svg/svg.dart';
@@ -35,8 +33,9 @@ class _CardsPageState extends State<CardsPage> {
       context.read<DiaryCubit>().getDiaryCategoriesList();
 
       context.read<DiaryCubit>().getDiariesList(
-          grouping: grouping,
-          syn: syn);
+        grouping: grouping,
+        syn: syn
+      );
     }
 
     void handleTapOnFiltersButton() {

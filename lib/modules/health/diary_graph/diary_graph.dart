@@ -316,7 +316,9 @@ class _DiaryGraphState extends State<DiaryGraph> {
               ],
               interval: interval,
               intervalType: type,
-              minimum: widget.firstDate.subtract(const Duration(hours: 6)),
+              minimum: widget.firstDate.subtract(
+                Duration(hours: DateTime.now().timeZoneOffset.inHours + 6)
+              ),
               maximum: widget.lastDate,
               axisLabelFormatter: labelFormatter,
               rangePadding: ChartRangePadding.none,
