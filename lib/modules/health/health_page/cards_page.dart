@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart' hide DateUtils;
 import 'package:flutter_svg/svg.dart';
@@ -32,15 +30,12 @@ class _CardsPageState extends State<CardsPage> {
   @override
   Widget build(BuildContext context) {
     void _onLoadDada(String grouping, {String? syn}) {
-      context.read<DiaryCubit>().getDiaryCategoriesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+      context.read<DiaryCubit>().getDiaryCategoriesList();
 
       context.read<DiaryCubit>().getDiariesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
-          grouping: grouping,
-          syn: syn);
+        grouping: grouping,
+        syn: syn
+      );
     }
 
     void handleTapOnFiltersButton() {

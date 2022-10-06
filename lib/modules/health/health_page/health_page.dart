@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,13 +11,9 @@ class HealthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void _loadData(String grouping) {
-      context.read<DiaryCubit>().getDiaryCategoriesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS');
+      context.read<DiaryCubit>().getDiaryCategoriesList();
 
       context.read<DiaryCubit>().getDiariesList(
-          project: 'Zapolyarye',
-          platform: Platform.isAndroid ? 'Android' : 'IOS',
           grouping: 'None');
     }
 

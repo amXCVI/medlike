@@ -58,10 +58,14 @@ class _HealthItemState extends State<HealthItem> {
 
   @override
   Widget build(BuildContext context) {
-    final items = ValueHelper.filterItemsByPeriod(
+    List<DataItem> items = ValueHelper.filterItemsByPeriod(
         items: GroupingHelper.groupByDay(widget.data?.values ?? []),
         start: widget.firstDate,
         end: widget.lastDate);
+
+    items = items.map((e) {
+      return GroupingHelper.getByDay(e);
+    }).toList();
 
     return BlocBuilder<PromptCubit, PromptState>(
       builder: (context, state) {

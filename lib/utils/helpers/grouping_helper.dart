@@ -36,7 +36,7 @@ class GroupingHelper {
 
   static DateTime _innerTime(List<DataItem> items) {
     return items[items.length - 1].date;
-  }  
+  }
 
   static List<DataItem> _groupBy(List<DataItem> items, DateTime Function(DataItem item) getGroup) {
     Map<DateTime, List<DataItem>> map = {};
@@ -56,12 +56,21 @@ class GroupingHelper {
         isAbnormal: _lastAbnormal(v), 
         isChangeable: true, 
         date: _innerTime(v), 
-        innerData: _innerLast(v)
+        innerData: _innerMean(v)
       )
     ));
 
     return res;
   }
+
+  static DataItem _getBy(DataItem item, DateTime Function(DataItem item) getGroup) {
+    return DataItem(
+      isAbnormal: item.isAbnormal, 
+      isChangeable: item.isChangeable, 
+      date: getGroup(item), 
+      innerData: item.innerData
+    );
+  } 
 
   static List<DataItem> groupByHour(List<DataItem> items) {
     return _groupBy(items, (item) => DateTime(
@@ -83,6 +92,32 @@ class GroupingHelper {
 
   static List<DataItem> groupByDay(List<DataItem> items) {
     return _groupBy(items, (item) => DateTime(
+      item.date.year,
+      item.date.month,
+      item.date.day,
+    ));
+  }
+
+  static DataItem getByHour(DataItem item) {
+    return _getBy(item, (item) => DateTime(
+      item.date.year,
+      item.date.month,
+      item.date.day,
+      item.date.hour
+    ));
+  }
+
+  static DataItem getBySixHours(DataItem item) {
+    return _getBy(item, (item) => DateTime(
+      item.date.year,
+      item.date.month,
+      item.date.day,
+      (item.date.hour / 6).ceil()
+    ));
+  }
+
+  static DataItem getByDay(DataItem item) {
+    return _getBy(item, (item) => DateTime(
       item.date.year,
       item.date.month,
       item.date.day,

@@ -24,12 +24,14 @@ class HealthList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedId = context.read<PromptCubit>().state.selectedId;
-
-    DiaryFlatModel? getDiaryEntries(int index) {
+    DiaryFlatModel? getDiaryEntries(int index, DateTime periodStart, DateTime periodEnd) {
       for(int i = 0; i < diariesItems.length; i++) {
         if(diariesItems[i].syn == diariesCategoriesList[index].synonim) {
-          return diariesItems[i];
+          return ValueHelper.filterByPeriod(
+            diariesList: diariesItems[i],
+            start: periodStart,
+            end: periodEnd
+          );
         }
       }
 
@@ -56,7 +58,7 @@ class HealthList extends StatelessWidget {
             decimalDigits: diariesCategoriesList[index].decimalDigits,
             minValue: diariesCategoriesList[index].minValue,
             maxValue: diariesCategoriesList[index].maxValue,
-            data: getDiaryEntries(index),
+            data: getDiaryEntries(index, dateFrom, dateTo),
             firstDate: dateFrom,
             lastDate: dateTo,
             index: index,
