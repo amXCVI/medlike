@@ -23,12 +23,6 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     if (_controller.text.replaceAll(exp, '').length == 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
-      if (!mounted) {
-        return;
-      }
-        setState(() {
-        _controller.value = const TextEditingValue(text: '');
-      });
     }
   }
 
@@ -66,45 +60,59 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Введите номер телефона',
-            style: Theme.of(context).textTheme.labelMedium),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: TapOutsideDetectorWidget(
-            onTappedOutside: _onUnFocus,
-            onTappedInside: _onFocus,
-            child: TextField(
-              key: UniqueKey(),
-              controller: _controller,
-              onChanged: (text) => _onChangePhone(text),
-              autofocus: false,
-              keyboardType: TextInputType.phone,
-              inputFormatters: [
-                phoneMaskFormatter
-              ],
-              decoration: InputDecoration(
-                hintText: '+7 (XXX) XXX XX XX',
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.lightText),
+    return BlocListener<UserCubit, UserState>(
+      listenWhen: (prev, cur) {
+        return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
+      },
+      listener: (context, state) {
+        if(state.checkUserAccountStatus == CheckUserAccountStatuses.failed) {
+          if (!mounted) {
+            return;
+          }
+          setState(() {
+            phoneMaskFormatter.clear();
+            _controller.text = '';
+          });
+        }
+      },
+      child: Column(
+        children: [
+          Text('Введите номер телефона',
+              style: Theme.of(context).textTheme.labelMedium),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: TapOutsideDetectorWidget(
+              onTappedOutside: _onUnFocus,
+              onTappedInside: _onFocus,
+              child: TextField(
+                key: UniqueKey(),
+                controller: _controller,
+                onChanged: (text) => _onChangePhone(text),
+                autofocus: false,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [phoneMaskFormatter],
+                decoration: InputDecoration(
+                  hintText: '+7 (XXX) XXX XX XX',
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(color: AppColors.lightText),
+                ),
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.center,
+                cursorColor: AppColors.mainText,
+                onSubmitted: (value) {
+                  _savePhoneNumber(value);
+                },
+                enableSuggestions: false,
+                autocorrect: false,
+                focusNode: _focus,
               ),
-              style: Theme.of(context).textTheme.labelLarge,
-              textAlign: TextAlign.center,
-              cursorColor: AppColors.mainText,
-              onSubmitted: (value) {
-                _savePhoneNumber(value);
-              },
-              enableSuggestions: false,
-              autocorrect: false,
-              focusNode: _focus,
             ),
           ),
-        ),
-        const SizedBox(height: 32),
-      ],
+          const SizedBox(height: 32),
+        ],
+      ),
     );
   }
 }
