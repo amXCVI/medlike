@@ -23,7 +23,10 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     if (_controller.text.replaceAll(exp, '').length == 11) {
       _focus.unfocus();
       _savePhoneNumber(_controller.text);
-      setState(() {
+      if (!mounted) {
+        return;
+      }
+        setState(() {
         _controller.value = const TextEditingValue(text: '');
       });
     }
@@ -39,7 +42,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     context.read<UserCubit>().checkUserAccount(phoneNumber: phoneString);
 
     context.read<UserCubit>().tempSavePhoneNumber(phoneString);
-    dispose();
+    //dispose();
   }
 
   void _onUnFocus() {
