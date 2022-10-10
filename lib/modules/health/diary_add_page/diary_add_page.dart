@@ -53,6 +53,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   late List<String> initialValues = widget.paramName.map(
     (e) => ''
   ).toList();
+  late List<bool> isValidate = widget.paramName.map(
+    (e) => false
+  ).toList();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
@@ -88,17 +91,31 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     super.initState();
   }
 
+  void onFocus(int index, bool status) {
+    _formKey.currentState!.validate();
+    setState(() {
+      isValidate[index] = status;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final fields = widget.paramName.map((e) {
       int index = widget.paramName.indexOf(e);
 
       return FormField(
-        labelText: e, 
+        labelText: e,
+        isValidate: isValidate[index],
+        onFocus: () => onFocus(index, false), 
         controller: _controllers[index], 
         isEmpty: isEmpties[index],
         validator: (str) {
           final num = double.tryParse(str ?? '');
+
+          if(!isValidate[index]) {
+            return null;
+          }
+
           if(num == null) {
             return 'Введите число';
           }
@@ -111,6 +128,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           return null;
         },
         onChange: (text) {
+          onFocus(index, false);
           setState(() {
             isEmpties[index] = text == '';
           });
@@ -154,6 +172,13 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
+              isValidate.asMap().map((k, v) {
+                setState(() {
+                  isValidate[k] = true;
+                });
+                return MapEntry(k, v);
+              });
+
               if (!_formKey.currentState!.validate()) {
                 return;
               }

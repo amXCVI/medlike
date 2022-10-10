@@ -9,6 +9,8 @@ class FormField extends StatefulWidget {
     required this.controller,
     required this.onChange,
     required this.isEmpty,
+    required this.onFocus,
+    required this.isValidate,
     required this.validator
   }) : super(key: key);
 
@@ -16,6 +18,8 @@ class FormField extends StatefulWidget {
   final TextEditingController controller;
   final Function onChange;
   final bool isEmpty;
+  final Function onFocus;
+  final bool isValidate;
   final String? Function(String?) validator;
 
   @override
@@ -23,13 +27,11 @@ class FormField extends StatefulWidget {
 }
 
 class _FormFieldState extends State<FormField> {
-  late FocusNode _node;
-  bool isFocused = false; 
+  final FocusNode _node = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _node = FocusNode();
   }
 
   @override
@@ -38,15 +40,16 @@ class _FormFieldState extends State<FormField> {
       padding: const EdgeInsets.only(bottom: 35),
       child: Focus(
         focusNode: _node,
-        onFocusChange: (focus) => setState(() {
-          isFocused = focus;
-        }),
+        onFocusChange: (status) {
+          if(status == true) {
+            widget.onFocus();
+          }
+        },
         child: TextFormField(
           controller: widget.controller,
           onChanged: (text) => widget.onChange(text),
           keyboardType: TextInputType.number,
-          autovalidateMode: !isFocused
-            ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: AutovalidateMode.always,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
           ],
