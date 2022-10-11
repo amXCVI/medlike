@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/api/api_interceptors.dart';
+import 'package:medlike/utils/api/smaptapp_client.dart';
 
 class Api {
   static BaseOptions options = BaseOptions(
@@ -18,15 +19,15 @@ class Api {
   Api() {
     _dio.interceptors.add(DioInterceptors());
 
-    if(_dio.httpClientAdapter is DefaultHttpClientAdapter){
+    if (_dio.httpClientAdapter is DefaultHttpClientAdapter) {
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (HttpClient client) {
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
 
         if (!kIsWeb) {
-          (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-              (client) {
+          (dio.httpClientAdapter as DefaultHttpClientAdapter)
+              .onHttpClientCreate = (client) {
             client.badCertificateCallback =
                 (X509Certificate cert, String host, int port) => true;
             return client;
@@ -38,5 +39,8 @@ class Api {
     }
   }
 
-  Dio get dio => _dio;
+  static SmartAppClient smartAppClient = SmartAppClient();
+
+  dynamic get dio => kIsWeb ? smartAppClient : _dio;
 }
+
