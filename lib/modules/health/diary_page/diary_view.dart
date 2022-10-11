@@ -56,6 +56,15 @@ class _DiaryViewState extends State<DiaryView> {
   Offset? centerOffset;
   final GlobalKey _widgetKey = GlobalKey();
 
+  String getMeasureItem(DateTime periodStart, DateTime periodEnd) {
+    return ValueHelper.getMeasureItem(
+      diariesList: widget.diaryModel,
+      start: periodStart,
+      end: periodEnd,
+      decimalDigits: widget.decimalDigits
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<DataItem> items = widget.diaryModel.values;
@@ -87,7 +96,7 @@ class _DiaryViewState extends State<DiaryView> {
                 children: [
                   if(!prompted) DiaryValue(
                     date: widget.firstDate,
-                    currentValue: widget.diaryModel.currentValue,
+                    currentValue: getMeasureItem(widget.firstDate, widget.lastDate),
                     measureItem: widget.measureItem,
                     decimalDigits: widget.decimalDigits,
                     grouping: widget.grouping,

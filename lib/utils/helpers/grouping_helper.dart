@@ -4,9 +4,13 @@ import 'package:medlike/data/models/diary_models/diary_models.dart';
 /// предобрабатывать из-за скорости бэка, переработать логику
 /// когда пофиксят скорость запросов на бэке
 /// (здесь дублируем логику бэка что нехорошо)
-
+ 
 class GroupingHelper {
-  static List<double> _innerMean(List<DataItem> items) {
+  static List<double> innerMean(List<DataItem> items) {
+    if(items.isEmpty) {
+      return [];
+    }
+
     double first = items.fold(0, (p, el) => p + el.innerData[0]);
 
     if(items[0].innerData.length == 2) {
@@ -56,7 +60,7 @@ class GroupingHelper {
         isAbnormal: _lastAbnormal(v), 
         isChangeable: true, 
         date: _innerTime(v), 
-        innerData: _innerMean(v)
+        innerData: innerMean(v)
       )
     ));
 
