@@ -86,6 +86,7 @@ class _InitialPinCodeState extends State<InitialPinCode> {
                 key: UniqueKey(),
                 handleBiometricMethod: onSuccessBiometricAuthenticate,
                 noUsedBiometric: widget.noUsedBiometric,
+                isInit: true,
               )
             : PinCodeView(
                 pinCodeTitle: 'Повторите пин-код',
@@ -96,6 +97,7 @@ class _InitialPinCodeState extends State<InitialPinCode> {
                 signInTitle:
                     'Сохраните свои биометрические данные для упрощенного входа в приолжение',
                 noUsedBiometric: widget.noUsedBiometric,
+                isInit: true,
               )
       ],
     );

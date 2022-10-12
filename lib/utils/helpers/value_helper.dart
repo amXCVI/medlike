@@ -2,13 +2,17 @@ import 'package:flutter/material.dart' as mt;
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
+import 'package:medlike/utils/helpers/grouping_helper.dart';
 
 class ValueHelper {
   /// Преобразует значение параметра здоровья,
   /// состоящее либо из одного или двух чисел
   /// в строку
   static String getStringFromValues(List<double> innerData, int decimalDigits) {
-    if (innerData.length > 1) {
+    if(innerData.isEmpty) {
+      return '-';
+    }
+    else if (innerData.length > 1) {
       return '${innerData[0].toStringAsFixed(decimalDigits)}/${innerData[1].toStringAsFixed(decimalDigits)}';
     } else {
       return innerData[0].toStringAsFixed(decimalDigits);
@@ -217,4 +221,37 @@ class ValueHelper {
 
     return perioded;
   }
+
+  static String getMeasureItem({
+    required DiaryFlatModel diariesList,
+    required DateTime start,
+    required DateTime end,
+    required int decimalDigits
+  }) {
+    return getMeasureItemFromList(
+      items: diariesList.values,
+      start: start,
+      end: end,
+      decimalDigits: decimalDigits
+    );
+  }
+
+  static String getMeasureItemFromList({
+    required List<DataItem> items,
+    required DateTime start,
+    required DateTime end,
+    required int decimalDigits
+  }) {
+    var perioded = items.where((f) => (
+      f.date.isAfter(start) && f.date.isBefore(end)
+    )).toList(); 
+
+    var values = GroupingHelper.innerMean(perioded);
+
+    return ValueHelper.getStringFromValues(
+      values, 
+      decimalDigits
+    );
+  }
+
 }

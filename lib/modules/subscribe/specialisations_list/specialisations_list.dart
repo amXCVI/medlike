@@ -79,7 +79,7 @@ class _SpecialisationsListState extends State<SpecialisationsList> {
       onRefresh: () async => widget.onRefreshData(),
       child: DefaultScrollbar(
         child: ListView(shrinkWrap: true, children: [
-          !widget.isFilteredList
+          !widget.isFilteredList && widget.specialisationsList.length > 1
               ? SubscribeRowItem(
                   title: navigationItemForAllDoctors.name.toString(),
                   subtitle:

@@ -673,10 +673,11 @@ class UserCubit extends Cubit<UserState> {
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel lastNotification = await userRepository.getLastNotReadedEvent();
+      NotificationModel? lastNotification = await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
         lastNotification: lastNotification,
+        isLastNotificationShow: lastNotification == null ? false : true
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -695,6 +696,7 @@ class UserCubit extends Cubit<UserState> {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
         lastNotification: null,
+        isLastNotificationShow: false
       ));
       await getLastNotReadNotification();
       emit(state.copyWith(

@@ -140,7 +140,7 @@ class SubscribeRepository {
 
     try {
       final response = await _dioClient.get(
-          '/api/v1.0/schedule/calendar?clinicId=$clinicId&buildingId=$buildingId&userId=$userId&startDate=$startDateStr&endDate=$endDateStr&categoryType=$categoryType&appointmentStatusesToShow=Scheduled&appointmentStatusesToShow=Completed&appointmentStatusesToShow=NotCompleted&appointmentStatusesToShow=Awaiting$dynamicParams');
+          '/api/v1.0/schedule/calendar?clinicId=$clinicId&buildingId=$buildingId&userId=$userId&startDate=$startDateStr&endDate=$endDateStr&categoryType=$categoryType&appointmentStatusesToShow=Scheduled&appointmentStatusesToShow=Awaiting$dynamicParams');
       final List daysList = response.data;
       return daysList.map((e) => CalendarModel.fromJson(e)).toList();
     } catch (err) {

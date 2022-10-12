@@ -65,6 +65,25 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     ));
   }
 
+  void getLastAppointment() async {
+    emit(state.copyWith(
+      getLastAppointmentStatus: GetLastAppointmentStatuses.loading,
+    ));
+
+    try {
+      final AppointmentModel response;
+      response = await appointmentsRepository.getLastAppointment();
+
+      emit(state.copyWith(
+        getLastAppointmentStatus: GetLastAppointmentStatuses.success,
+        lastAppointment: response
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+    }
+  }
+
   /// Отменить прием
   void deleteAppointment({
     required String appointmentId,
@@ -110,14 +129,14 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     filterAppointmentsList(state.selectedDate);
     try {
       final bool response;
-      response = await appointmentsRepository.deleteAppointment(
+      response = await appointmentsRepository.confirmAppointment(
           appointmentId: appointmentId, userId: userId);
 
       emit(state.copyWith(
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
       if (response) {
-        AppToast.showAppToast(msg: 'Прием успешно отменен');
+        AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
     } catch (e) {
       emit(state.copyWith(

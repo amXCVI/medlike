@@ -10,7 +10,8 @@ class DiaryAddForm extends StatelessWidget {
     required this.onTimeChange,
     required this.dateController,
     required this.timeController,
-    this.initialDate
+    this.initialDate,
+    this.initialTime
   }) : super(key: key);
 
   final GlobalKey formKey;
@@ -18,6 +19,7 @@ class DiaryAddForm extends StatelessWidget {
   final Function(DateTime, String) onDateChange;
   final Function(DateTime, String) onTimeChange;
   final DateTime? initialDate;
+  final DateTime? initialTime;
   
   final TextEditingController dateController;
   final TextEditingController timeController;
@@ -40,7 +42,7 @@ class DiaryAddForm extends StatelessWidget {
             labelText: 'Время', 
             type:  DiaryDateFieldType.time, 
             onChange: onTimeChange,
-            initialDate: initialDate ?? DateTime.now(),
+            initialDate: initialTime ?? DateTime.now(),
             controller: timeController,
           ),
         ],

@@ -70,7 +70,8 @@ class _DiaryPageState extends State<DiaryPage> {
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
-          final date = state.selectedDiary!.currentValue.date;
+          //final date = state.selectedDiary!.currentValue.date;
+          final date = DateTime.now();
           final dates = ValueHelper.getPeriodTiming(date, selectedGroup);
 
           context.read<DiaryCubit>().setTimePeriod(

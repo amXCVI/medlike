@@ -31,20 +31,23 @@ class SimpleButton extends StatelessWidget {
           ) : null,
           boxShadow: const [
             BoxShadow(
-              color: AppColors.lightText,
+              color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 12,
               offset: Offset(0, 4),
             ),
           ],
         ),
         child: Center(
-          child: Text(
-            labelText.toUpperCase(),
-            style: TextStyle(
-              fontSize: 14,
-              height: 1.142,
-              fontWeight: FontWeight.w700,
-              color: isPrimary ? AppColors.mainBrandColor : AppColors.mainText
+          child: FittedBox(
+            fit:BoxFit.cover,
+            child: Text(
+              labelText.toUpperCase(),
+              style: TextStyle(
+                fontSize: 14,
+                height: 1.142,
+                fontWeight: FontWeight.w700,
+                color: isPrimary ? AppColors.mainBrandColor : AppColors.mainText
+              ),
             ),
           ),
         ),

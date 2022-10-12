@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
@@ -14,8 +13,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Получить список дневников
   void getDiaryCategoriesList({
-    required String project,
-    required String platform,
     DateTime? updateSince,
   }) async {
     emit(state.copyWith(
@@ -25,8 +22,6 @@ class DiaryCubit extends Cubit<DiaryState> {
     try {
       final List<DiaryCategoryModel> response;
       response = await diaryRepository.getDiaryCategories(
-        project: project,
-        platform: platform,
         updateSince: updateSince
       );
       emit(state.copyWith(
@@ -44,8 +39,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
   /// Получить список дневников
   void getDiariesList({
-    required String project,
-    required String platform,
     required String grouping,
     DateTime? dateFrom,
     DateTime? dateTo, 
@@ -66,8 +59,6 @@ class DiaryCubit extends Cubit<DiaryState> {
 
       final List<DiaryModel> response;
       response = await diaryRepository.getDiaries(
-        project: project,
-        platform: platform,
         grouping: grouping,
         dateFrom: startDate,
         dateTo: endDate,
@@ -161,8 +152,6 @@ class DiaryCubit extends Cubit<DiaryState> {
       if(response) {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
-            project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo,
@@ -206,8 +195,6 @@ class DiaryCubit extends Cubit<DiaryState> {
       if(response) {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
-            project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo ,
@@ -247,8 +234,6 @@ class DiaryCubit extends Cubit<DiaryState> {
       if(response) {
         if(updateFrom != null && updateTo != null) {
           getDiariesList(
-            project: 'Zapolyarye',
-            platform: Platform.isAndroid ? 'Android' : 'IOS',
             grouping: 'None',
             dateFrom: updateFrom,
             dateTo: updateTo ,
