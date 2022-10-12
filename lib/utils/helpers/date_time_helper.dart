@@ -52,10 +52,22 @@ Future<int> getTimeZoneOffset() async {
 /// с таймзоной клиники в случае её отличия от 
 /// таймзоны МСК +03:00
 String getAppointmentTime(DateTime dateTime, int timeZoneOffset) {
-  return DateFormat('dd.MM.yy, HH:mm').format(
+  final timeString = DateFormat('HH:mm').format(
     dateTimeToUTC(
       dateTime,
-      timeZoneOffset
+      int.parse(
+        DateTime.now()
+          .timeZoneOffset
+          .inHours
+          .toString()
+        )
       )
     );
+
+  if(timeZoneOffset == 3) {
+    return timeString;
+  } else {
+    final sign = timeZoneOffset < 0 ? '-' : '+' ;
+    return '$timeString (МСК $sign$timeZoneOffset)';
+  }
 }
