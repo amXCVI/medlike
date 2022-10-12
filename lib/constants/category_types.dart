@@ -8,7 +8,7 @@ class CategoryTypes {
     CategoryType(4, 'UZI', 'УЗИ'),
     CategoryType(5, 'XRay', 'Рентген'),
     CategoryType(6, 'Proc', 'Процедуры и манипуляции'),
-    CategoryType(7, 'Instrumental', 'Не определено'),
+    CategoryType(7, 'Instrumental', 'Инструментальные исследования'),
     CategoryType(8, 'Other', 'Прочее'),
     CategoryType(9, 'Endoscopy', 'Эндоскопия'),
     CategoryType(10, 'Stomatology', 'Стоматология'),
