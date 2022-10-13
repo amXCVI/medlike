@@ -34,7 +34,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
       minutes: kDebugMode ? 60 : AppConstants.timeoutDurationMinutes
     );
 
-    if(state == AppLifecycleState.paused) {
+    if(state != AppLifecycleState.resumed) {
       await UserSecureStorage.setField(AppConstants.timeoutStart, DateTime.now().toString());
     } else {
       final time = DateTime.tryParse(

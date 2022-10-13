@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 
 class DiaryValue extends StatelessWidget {
@@ -12,7 +11,7 @@ class DiaryValue extends StatelessWidget {
     required this.grouping
   }) : super(key: key);
 
-  final CurrentValue currentValue;
+  final String currentValue;
   final DateTime date;
   final String measureItem;
   final int decimalDigits;
@@ -20,11 +19,6 @@ class DiaryValue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final val = ValueHelper.getStringFromValues(
-      currentValue.innerData, 
-      decimalDigits
-    );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start, 
       children: [
@@ -44,7 +38,7 @@ class DiaryValue extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                val,
+                currentValue,
                 textAlign: TextAlign.end,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,

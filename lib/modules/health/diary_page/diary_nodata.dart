@@ -13,7 +13,7 @@ class DiaryNodata extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/images/empty_medcard.png'),
+          Image.asset('assets/images/empty_indicator.png'),
           const SizedBox(height: 50,),
           const Text(
             'Здесь будет график вашего показателя здоровья',

@@ -102,7 +102,7 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
             alignment: Alignment.center,
             repeat: false,
           ),
-          tooltip: widget.isFavorite.toString(),
+          tooltip: widget.isFavorite ? 'Удалить из избранных' : 'Добавить в избранные',
         );   
       },
     );

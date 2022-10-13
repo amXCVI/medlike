@@ -62,7 +62,9 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
               child: AnimatedFractionallySizedBox(
                 duration: const Duration(milliseconds: 500),
                 widthFactor: state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.success ? 0.25 : 1,
+                        CreatingAppointmentStatuses.success
+                    ? 0.25
+                    : 1,
                 child: FloatingActionButton.extended(
                   onPressed: isDisabledButton ? () {} : _createNewAppointment,
                   backgroundColor: !isDisabledButton

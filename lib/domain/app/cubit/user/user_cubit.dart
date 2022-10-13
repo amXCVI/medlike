@@ -69,10 +69,8 @@ class UserCubit extends Cubit<UserState> {
         token: response.token,
         refreshToken: response.refreshToken,
       ));
-      if (!kIsWeb) {
-        addFirebaseDeviceId();
-        await FirebaseAnalyticsService.registerAppLoginEvent();
-      }
+      addFirebaseDeviceId();
+      await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
       return true;
@@ -680,8 +678,7 @@ class UserCubit extends Cubit<UserState> {
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel? lastNotification =
-          await userRepository.getLastNotReadedEvent();
+      NotificationModel? lastNotification = await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
         lastNotification: lastNotification,
@@ -698,13 +695,13 @@ class UserCubit extends Cubit<UserState> {
   /// Пометить событие как прочитанное
   Future<void> updateNotificationStatus(String eventId) async {
     emit(state.copyWith(
-      updatingNotificationStatusStatus:
-          UpdatingNotificationStatusStatuses.loading,
+      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
     ));
     try {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
         lastNotification: null,
+        isLastNotificationShow: false
       ));
       await getLastNotReadNotification();
       emit(state.copyWith(

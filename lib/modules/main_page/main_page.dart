@@ -30,6 +30,7 @@ class MainPage extends StatelessWidget {
       },
       child: DefaultScaffold(
           appBarTitle: 'Главная',
+          isChildrenPage: false,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
               context.router.navigateNamed(AppRoutes.subscribeProfiles);
