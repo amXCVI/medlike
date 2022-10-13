@@ -31,8 +31,7 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(
-        userPhoneNumber: phone));
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
   /// Сохраняем номер телефона в кубит
@@ -145,8 +144,9 @@ class UserCubit extends Cubit<UserState> {
       response = await userRepository.getProfiles();
 
       final defaultUserId = response[0].id;
-      if(currentSelectedUserId == null) {
-        await UserSecureStorage.setField(AppConstants.selectedUserId, defaultUserId);
+      if (currentSelectedUserId == null) {
+        await UserSecureStorage.setField(
+            AppConstants.selectedUserId, defaultUserId);
       }
 
       emit(state.copyWith(
@@ -193,7 +193,8 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true');
     UserSecureStorage.setField(AppConstants.isAuth, 'true');
 
-    await FirebaseAnalyticsService.registerCustomEvent(name: 'авторизация по пин-коду');
+    await FirebaseAnalyticsService.registerCustomEvent(
+        name: 'авторизация по пин-коду');
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного
@@ -669,16 +670,20 @@ class UserCubit extends Cubit<UserState> {
 
   /// Получить последнее непочитанное уведомление
   Future<void> getLastNotReadNotification() async {
+    if (state.getLastNotReadEventStatus ==
+        GetLastNotReadEventStatuses.loading) {
+      return;
+    }
     emit(state.copyWith(
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel? lastNotification = await userRepository.getLastNotReadedEvent();
+      NotificationModel? lastNotification =
+          await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
-        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
-        lastNotification: lastNotification,
-        isLastNotificationShow: lastNotification == null ? false : true
-      ));
+          getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+          lastNotification: lastNotification,
+          isLastNotificationShow: lastNotification == null ? false : true));
     } catch (e) {
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
@@ -690,21 +695,22 @@ class UserCubit extends Cubit<UserState> {
   /// Пометить событие как прочитанное
   Future<void> updateNotificationStatus(String eventId) async {
     emit(state.copyWith(
-      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+      updatingNotificationStatusStatus:
+          UpdatingNotificationStatusStatuses.loading,
     ));
     try {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
-        lastNotification: null,
-        isLastNotificationShow: false
-      ));
+          lastNotification: null, isLastNotificationShow: false));
       await getLastNotReadNotification();
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }
