@@ -40,7 +40,7 @@ class _AppointmentRecommendationsState
         ),
       );
     } else {
-      return const Text('-');
+      return const SizedBox();
     }
   }
 }

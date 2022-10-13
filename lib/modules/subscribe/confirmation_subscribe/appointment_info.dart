@@ -18,8 +18,15 @@ class AppointmentInfo extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AppointmentInfoSubtitle(title: 'Рекомендации'),
-              state.appointmentInfoData != null
+              state.appointmentInfoData != null &&
+                      state.getAppointmentInfoStatus !=
+                          GetAppointmentInfoStatuses.loading &&
+                      state.appointmentInfoData!.recommendations.isNotEmpty
+                  ? const AppointmentInfoSubtitle(title: 'Рекомендации')
+                  : const SizedBox(),
+              state.appointmentInfoData != null &&
+                      state.getAppointmentInfoStatus !=
+                          GetAppointmentInfoStatuses.loading
                   ? AppointmentRecommendations(
                       recommendations: state
                           .appointmentInfoData!.recommendations
@@ -33,6 +40,7 @@ class AppointmentInfo extends StatelessWidget {
                   : const SizedBox(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 3,

@@ -105,7 +105,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
                       state.isCabinetsInfoPlaceShow != true
                   ? InfoPlace(
                       text:
-                          'При записи на кабинет специалист подбирается автоматически, закрепленный за выбраным кабинетом',
+                          'При записи на кабинет специалист подбирается автоматически, закрепленный за выбранным кабинетом',
                       onClosePlace: _onCloseInfoPlace,
                       margin: const EdgeInsets.all(16.0),
                     )
