@@ -15,9 +15,10 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
   final AppointmentsRepository appointmentsRepository;
 
   void getAppointmentsList(bool isRefresh) async {
-    if (!isRefresh &&
-        state.getAppointmentsStatus == GetAppointmentsStatuses.success &&
-        state.appointmentsList!.isNotEmpty) {
+    if (state.getAppointmentsStatus == GetAppointmentsStatuses.loading ||
+        (!isRefresh &&
+            state.getAppointmentsStatus == GetAppointmentsStatuses.success &&
+            state.appointmentsList!.isNotEmpty)) {
       return;
     }
     emit(state.copyWith(
@@ -75,9 +76,8 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
       response = await appointmentsRepository.getLastAppointment();
 
       emit(state.copyWith(
-        getLastAppointmentStatus: GetLastAppointmentStatuses.success,
-        lastAppointment: response
-      ));
+          getLastAppointmentStatus: GetLastAppointmentStatuses.success,
+          lastAppointment: response));
     } catch (e) {
       emit(state.copyWith(
           getAppointmentsStatus: GetAppointmentsStatuses.failed));
@@ -92,8 +92,8 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
       appointmentsList: state.appointmentsList
-        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
-        .toList(),
+          ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+          .toList(),
     ));
 
     filterAppointmentsList(state.selectedDate);
@@ -122,8 +122,8 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     emit(state.copyWith(
       putAppointmentStatus: PutAppointmentsStatuses.loading,
       appointmentsList: state.appointmentsList
-        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
-        .toList(),
+          ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
+          .toList(),
     ));
 
     filterAppointmentsList(state.selectedDate);
@@ -139,8 +139,8 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
         AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
     } catch (e) {
-      emit(state.copyWith(
-        putAppointmentStatus: PutAppointmentsStatuses.failed));
+      emit(
+          state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed));
     }
   }
 }
