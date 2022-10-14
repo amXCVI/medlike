@@ -40,6 +40,12 @@ class UserCubit extends Cubit<UserState> {
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
+  /// Сохраняем номер телефона в кубит
+  void cleanPhoneNumber(String phone) {
+    emit(state.copyWith(checkUserAccountStatus: CheckUserAccountStatuses.loading));
+    UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+  }
+
   /// Юзер ввел пароль и нажал Go на клавиатуре
   Future<bool> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
