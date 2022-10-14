@@ -7,6 +7,7 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
@@ -14,20 +15,23 @@ import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 class NotificationsWidgetView extends StatelessWidget {
   NotificationsWidgetView({
     Key? key,
-    this.appointment
+    this.appointment,
+    this.clinic
   }) : super(key: key);
 
   final _key = GlobalKey();
   final AppointmentModel? appointment;
+  final ClinicModel? clinic;
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserCubit>().getLastNotReadNotification();
-
     String getAppointmentsDesc(AppointmentModel appointmentItem) {
       final initials = '${appointmentItem.doctorInfo.lastName} ${appointmentItem.doctorInfo.firstName![0]}. ${appointmentItem.doctorInfo.middleName![0]}.';
-      final date = DateFormat("dd.MM.yyyy, HH:mm")
-        .format(appointmentItem.appointmentDateTime);
+      final date = getAppointmentTime(
+        appointmentItem.appointmentDateTime, 
+        clinic?.timeZoneOffset ?? 3,
+        formatSting: 'dd.MM.yyyy, HH:mm' 
+      );
 
       return '$initials, ${appointmentItem.researches[0].name}, $date';
     }

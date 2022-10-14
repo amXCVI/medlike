@@ -65,7 +65,8 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
     ));
   }
 
-  void getLastAppointment() async {
+  /// Future<void> Для последовательного ожидания кубитов
+  Future<void> getLastAppointment() async {
     emit(state.copyWith(
       getLastAppointmentStatus: GetLastAppointmentStatuses.loading,
     ));

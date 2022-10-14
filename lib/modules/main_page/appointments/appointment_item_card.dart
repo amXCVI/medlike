@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/category_types.dart';
-import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentItemCard extends StatelessWidget {
-  const AppointmentItemCard(
-      {Key? key,
-      required this.appointmentItem,
-      required this.handleTapOnAppointment})
-      : super(key: key);
+  const AppointmentItemCard({
+    Key? key,
+    required this.appointmentItem,
+    required this.clinic,
+    required this.handleTapOnAppointment
+  }) : super(key: key);
 
   final AppointmentModel appointmentItem;
+  final ClinicModel clinic;
   final void Function(DateTime) handleTapOnAppointment;
 
   @override
@@ -109,13 +110,13 @@ class AppointmentItemCard extends StatelessWidget {
                               SvgPicture.asset(
                                   'assets/icons/appointments/clock.svg'),
                               const SizedBox(width: 8.0),
-                              Text(DateFormat('dd.MM.yy, HH:mm').format(
-                                  dateTimeToUTC(
-                                      appointmentItem.appointmentDateTime,
-                                      int.parse(DateTime.now()
-                                          .timeZoneOffset
-                                          .inHours
-                                          .toString())))),
+                              Text(
+                                getAppointmentTime(
+                                  appointmentItem.appointmentDateTime, 
+                                  clinic.timeZoneOffset ?? 3, 
+                                  formatSting: 'dd.MM.yy, HH:mm'
+                                )
+                              ),
                             ],
                           ),
                         ),
