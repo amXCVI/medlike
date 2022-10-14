@@ -20,6 +20,7 @@ import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
 import 'package:medlike/modules/medcard/profiles_list/profiles_list_page.dart';
+import 'package:medlike/modules/require_update_app/require_update_app_page.dart';
 import 'package:medlike/modules/settings/agreements/agreements_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/settings/support/support_page.dart';
@@ -80,6 +81,8 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.health, page: CardsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
+
+    AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

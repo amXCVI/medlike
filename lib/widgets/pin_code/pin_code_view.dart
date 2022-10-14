@@ -8,6 +8,7 @@ import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dar
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class PinCodeView extends StatefulWidget {
   const PinCodeView({
@@ -76,6 +77,8 @@ class _PinCodeViewState extends State<PinCodeView> {
   }
 
   void onCancelBiometricAuthMethod() {
+    print('@@@@@@@@@@@@@!!!!!!!!!!!!!@@@@@@@@@@@@@');
+    AppToast.showAppToast(msg: 'Cancel');
     setState(() {
       isShowingBiometricModal = false;
     });
