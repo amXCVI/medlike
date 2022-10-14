@@ -1,13 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:medlike/data/models/models.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info_item.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_recommendations.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentInfo extends StatelessWidget {
   const AppointmentInfo({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.failed) {
+          return const Text('');
+        } else if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.success) {
+          return ClinicsBuilder(
+            clinicsList: state.clinicsList!,
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+}
+
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({
+    Key? key,
+    required this.clinicsList
+  }) : super(key: key);
+
+  final List<ClinicModel> clinicsList;
+
+  ClinicModel? getClinic(TimetableCellModel? item, List<ClinicModel>? clinicsList) {
+    for(ClinicModel clinic in clinicsList ?? []) {
+      if(clinic.buildings.any((el) => el.buildingId == item?.buildingId)) {
+        return clinic;
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +130,11 @@ class AppointmentInfo extends StatelessWidget {
                     flex: 2,
                     child: AppointmentInfoItem(
                         title: 'Время',
-                        value: DateFormat("HH:mm")
-                            .format(state.selectedTimetableCell!.time)),
+                        value: getAppointmentTime(
+                          state.selectedTimetableCell!.time, 
+                          getClinic(state.selectedTimetableCell, clinicsList)!.timeZoneOffset ?? 3
+                        )
+                    )                       
                   )
                 ],
               ),
