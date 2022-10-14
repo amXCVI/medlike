@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/constants/category_types.dart';
-import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
@@ -19,6 +20,7 @@ class AppointmentsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AppointmentsCubit>().getAppointmentsList(false);
+    context.read<ClinicsCubit>().getAllClinicsList(false);
 
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
@@ -34,7 +36,7 @@ class AppointmentsListWidget extends StatelessWidget {
           return const SizedBox();
         } else if (state.getAppointmentsStatus ==
             GetAppointmentsStatuses.success) {
-          return AppointmentsList(
+          return ClinicsBuilder(
             appointmentsList: state.appointmentsList!
                     .where((item) =>
                         AppointmentStatuses.cancellableStatusIds
@@ -53,13 +55,58 @@ class AppointmentsListWidget extends StatelessWidget {
   }
 }
 
-class AppointmentsList extends StatelessWidget {
-  const AppointmentsList(
-      {Key? key, required this.appointmentsList, required this.selectedDate})
-      : super(key: key);
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({
+    Key? key, 
+    required this.appointmentsList, 
+    required this.selectedDate
+  }) : super(key: key);
 
   final List<AppointmentModel> appointmentsList;
   final DateTime selectedDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.failed) {
+          return const Text('');
+        } else if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.success) {
+          return AppointmentsList(
+            appointmentsList: appointmentsList,
+            clinicsList: state.clinicsList!,
+            selectedDate: selectedDate,
+          );
+        } else {
+          return const DayAppointmentsSkeleton();
+        }
+      },
+    );
+  }
+}
+
+class AppointmentsList extends StatelessWidget {
+  const AppointmentsList({
+    Key? key, 
+    required this.appointmentsList,
+    required this.clinicsList, 
+    required this.selectedDate
+  }) : super(key: key);
+
+  final List<AppointmentModel> appointmentsList;
+  final List<ClinicModel> clinicsList;
+  final DateTime selectedDate;
+
+  ClinicModel? getClinic(AppointmentModel item) {
+    for(var clinic in clinicsList) {
+      if(clinic.id == item.clinicInfo.id) {
+        return clinic;
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,13 +217,12 @@ class AppointmentsList extends StatelessWidget {
                                     SvgPicture.asset(
                                         'assets/icons/appointments/clock.svg'),
                                     const SizedBox(width: 8.0),
-                                    Text(DateFormat('HH:mm').format(
-                                        dateTimeToUTC(
-                                            appointmentItem.appointmentDateTime,
-                                            int.parse(DateTime.now()
-                                                .timeZoneOffset
-                                                .inHours
-                                                .toString())))),
+                                    Text(
+                                      getAppointmentTime(
+                                        appointmentItem.appointmentDateTime, 
+                                        getClinic(appointmentItem)!.timeZoneOffset ?? 3 // Стандарт МСК +3
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),

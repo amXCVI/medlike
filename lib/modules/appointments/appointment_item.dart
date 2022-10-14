@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/category_types.dart';
-import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem({Key? key, required this.appointmentItem})
-      : super(key: key);
+  const AppointmentItem({
+    Key? key, 
+    required this.appointmentItem,
+    required this.clinic
+  }) : super(key: key);
 
   final AppointmentModel appointmentItem;
+  final ClinicModel clinic;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +87,7 @@ class AppointmentItem extends StatelessWidget {
               RichText(
                 text: WidgetSpan(
                   child: Container(
+                    // Туда нам надо
                     decoration: BoxDecoration(
                       color: AppColors.circleBgFirst,
                       borderRadius: BorderRadius.circular(8),
@@ -93,12 +97,12 @@ class AppointmentItem extends StatelessWidget {
                       children: [
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
-                        Text(DateFormat('HH:mm').format(dateTimeToUTC(
-                            appointmentItem.appointmentDateTime,
-                            int.parse(DateTime.now()
-                                .timeZoneOffset
-                                .inHours
-                                .toString())))),
+                        Text(
+                          getAppointmentTime(
+                            appointmentItem.appointmentDateTime, 
+                            clinic.timeZoneOffset ?? 3 // Стандарт МСК +3
+                          )
+                        ),
                       ],
                     ),
                   ),

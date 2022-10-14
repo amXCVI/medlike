@@ -12,7 +12,8 @@ class ClinicsCubit extends Cubit<ClinicsState> {
 
   final ClinicsRepository clinicsRepository;
 
-  void getAllClinicsList(bool isRefresh) async {
+  /// Future<void> Для последовательного ожидания кубитов
+  Future<void> getAllClinicsList(bool isRefresh) async {
     if (!isRefresh &&
         state.getAllClinicsListStatus == GetAllClinicsListStatuses.success &&
         state.clinicsList!.isNotEmpty) {
