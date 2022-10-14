@@ -25,8 +25,8 @@ class DioInterceptors extends Interceptor {
     options.headers = {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
-      'Project': 'Medlike',
-      'VerApp': '1.0',
+      'Project': 'Zapolyarye',
+      'VerApp': '2.0',
       'Platform': '1', //Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
@@ -42,6 +42,7 @@ class DioInterceptors extends Interceptor {
           'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
       print('DATA: ${response.data.toString()}');
     }
+    UserSecureStorage.setField(AppConstants.isActualAppVersion, 'true');
     return super.onResponse(response, handler);
   }
 
@@ -54,67 +55,72 @@ class DioInterceptors extends Interceptor {
     hasInternetConnection().then((value) => null).catchError((e) {
       return;
     });
-    if (err.response?.statusCode == 401) {
-      final requestOptions = err.response!.requestOptions;
-      _lockDio();
-      if (requestOptions.headers['Retry-Count'] == 1) {
-        _unlockDio();
-        UserSecureStorage.deleteField(AppConstants.accessToken);
-        UserSecureStorage.deleteField(AppConstants.refreshToken);
-        UserSecureStorage.setField(AppConstants.isAuth, 'false');
-        AppToast.showAppToast(
-            msg: 'Время вашей сессии истекло. Авторизуйтесь заново');
-        //TODO: logout user here
-        // return err;
-      }
-      return _dio
-          .post('${ApiConstants.baseUrl}/api/v1.0/auth/token/refresh', data: {
-        'Token': await UserSecureStorage.getField(AppConstants.accessToken),
-        'RefreshToken':
-            await UserSecureStorage.getField(AppConstants.refreshToken),
-      }).then((response) {
-        if (kDebugMode) {
-          print('REFRESH TOKEN. ${response.statusCode}');
-        }
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          RefreshTokenResponseModel parsedResponse =
-              RefreshTokenResponseModel.fromJson(response.data);
-          UserSecureStorage.setField(
-              AppConstants.accessToken, parsedResponse.token);
-          UserSecureStorage.setField(
-              AppConstants.refreshToken, parsedResponse.refreshToken);
-        }
-      }).whenComplete(() {
-        _unlockDio();
-      }).then((e) async {
-        requestOptions.headers['Retry-Count'] = 1;
-        err.requestOptions.headers["Authorization"] =
-            'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-        final opts = Options(
-            method: err.requestOptions.method,
-            headers: err.requestOptions.headers);
-        final cloneReq = await _dio.request(
-          '${ApiConstants.baseUrl}${err.requestOptions.path}',
-          options: opts,
-          data: err.requestOptions.data,
-          queryParameters: err.requestOptions.queryParameters,
-        );
 
-        return handler.resolve(cloneReq);
-      }).catchError((e) {
-        AppToast.showAppToast(
-            msg:
-                'Время вашей сессии истекло. Пожалуйста, авторизуйтесь заново');
-        //TODO: logout user here
-        return e;
-      });
-    } else {
-      String? errStr = DefaultErrorModel.fromJson(err.response!.data).message;
-      if (errStr == null) {
+    switch (err.response?.statusCode) {
+      case 401:
+        final requestOptions = err.response!.requestOptions;
+        _lockDio();
+        if (requestOptions.headers['Retry-Count'] == 1) {
+          _unlockDio();
+          UserSecureStorage.deleteField(AppConstants.accessToken);
+          UserSecureStorage.deleteField(AppConstants.refreshToken);
+          UserSecureStorage.setField(AppConstants.isAuth, 'false');
+          AppToast.showAppToast(
+              msg: 'Время вашей сессии истекло. Авторизуйтесь заново');
+          //TODO: logout user here
+          // return err;
+        }
+        return _dio
+            .post('${ApiConstants.baseUrl}/api/v1.0/auth/token/refresh', data: {
+          'Token': await UserSecureStorage.getField(AppConstants.accessToken),
+          'RefreshToken':
+              await UserSecureStorage.getField(AppConstants.refreshToken),
+        }).then((response) {
+          if (kDebugMode) {
+            print('REFRESH TOKEN. ${response.statusCode}');
+          }
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            RefreshTokenResponseModel parsedResponse =
+                RefreshTokenResponseModel.fromJson(response.data);
+            UserSecureStorage.setField(
+                AppConstants.accessToken, parsedResponse.token);
+            UserSecureStorage.setField(
+                AppConstants.refreshToken, parsedResponse.refreshToken);
+          }
+        }).whenComplete(() {
+          _unlockDio();
+        }).then((e) async {
+          requestOptions.headers['Retry-Count'] = 1;
+          err.requestOptions.headers["Authorization"] =
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+          final opts = Options(
+              method: err.requestOptions.method,
+              headers: err.requestOptions.headers);
+          final cloneReq = await _dio.request(
+            '${ApiConstants.baseUrl}${err.requestOptions.path}',
+            options: opts,
+            data: err.requestOptions.data,
+            queryParameters: err.requestOptions.queryParameters,
+          );
+
+          return handler.resolve(cloneReq);
+        }).catchError((e) {
+          AppToast.showAppToast(
+              msg:
+                  'Время вашей сессии истекло. Пожалуйста, авторизуйтесь заново');
+          //TODO: logout user here
+          return e;
+        });
+      case 460:
+        UserSecureStorage.setField(AppConstants.isActualAppVersion, 'false');
+        return;
+      default:
+        String? errStr = DefaultErrorModel.fromJson(err.response!.data).message;
+        if (errStr == null) {
+          return super.onError(err, handler);
+        }
+        AppToast.showAppToast(msg: errStr.isNotEmpty ? errStr : err.message);
         return super.onError(err, handler);
-      }
-      AppToast.showAppToast(msg: errStr.isNotEmpty ? errStr : err.message);
-      return super.onError(err, handler);
     }
   }
 
