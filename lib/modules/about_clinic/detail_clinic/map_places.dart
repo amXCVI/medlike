@@ -55,7 +55,7 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
       );
     }
 
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         _isVisibleMarkers = true;
       });

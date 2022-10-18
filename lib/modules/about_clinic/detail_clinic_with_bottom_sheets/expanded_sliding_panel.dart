@@ -58,9 +58,9 @@ class ExpandedSlidingPanel extends StatelessWidget {
         const SlidingPanelHeaderMark(),
         CarouselSlider(
           options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * .80 - 150,
+              height: MediaQuery.of(context).size.height * .80 - 152,
               viewportFraction: 1,
-              initialPage: buildingIndex,
+              initialPage: buildingIndex + 1,
               autoPlay: false,
               enlargeCenterPage: false,
               enableInfiniteScroll: true,
@@ -73,7 +73,8 @@ class ExpandedSlidingPanel extends StatelessWidget {
                   (buildingItem) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SlidingPanelHeader(clinicName: buildingsList[buildingIndex].name),
+                      SlidingPanelHeader(
+                          clinicName: buildingsList[buildingIndex].name),
                       BuildingAddress(
                         address: buildingsList[buildingIndex].address,
                         clinicName: buildingsList[buildingIndex].name,
@@ -84,15 +85,19 @@ class ExpandedSlidingPanel extends StatelessWidget {
                       Expanded(
                         child: ListView(
                           children: [
-                            WorkTimesList(workTimes: buildingsList[buildingIndex].workTime),
+                            WorkTimesList(
+                                workTimes:
+                                    buildingsList[buildingIndex].workTime),
                             const Divider(
                                 indent: 16.0, endIndent: 16.0, height: 2),
-                            ContactsList(phonesList: buildingsList[buildingIndex].phone),
+                            ContactsList(
+                                phonesList: buildingsList[buildingIndex].phone),
                             const Divider(
                                 indent: 16.0, endIndent: 16.0, height: 2),
                             NextActionButtonItem(
                               handleTap: () {
-                                _handleTapPrice(buildingsList[buildingIndex].id);
+                                _handleTapPrice(
+                                    buildingsList[buildingIndex].id);
                               },
                               iconPath:
                                   'assets/icons/clinics/ic_doc_oval-2.svg',
@@ -102,7 +107,8 @@ class ExpandedSlidingPanel extends StatelessWidget {
                                 indent: 16.0, endIndent: 16.0, height: 2),
                             NextActionButtonItem(
                               handleTap: () {
-                                _handleTapSales(buildingsList[buildingIndex].id);
+                                _handleTapSales(
+                                    buildingsList[buildingIndex].id);
                               },
                               iconPath:
                                   'assets/icons/clinics/ic_doc_oval-3.svg',

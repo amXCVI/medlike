@@ -35,6 +35,7 @@ class _ClinicDetailWithBottomSheetsPageState
   }
 
   void onTapBuilding(String buildingId) {
+    _panelController.open();
     BuildingModel building = widget.selectedClinic.buildings
         .firstWhere((element) => element.buildingId == buildingId);
     int index = widget.selectedClinic.buildings.indexOf(building);
@@ -42,7 +43,6 @@ class _ClinicDetailWithBottomSheetsPageState
       selectedBuilding = building;
       selectedBuildingIndex = index;
     });
-    _panelController.open();
   }
 
   /// Ф-я для свайпа строений клиники
@@ -79,6 +79,7 @@ class _ClinicDetailWithBottomSheetsPageState
             List<BuildingLatLngModel>? clinicBuildings = state
                 .allDownloadedBuildings
                 ?.where((element) => element.id == widget.selectedClinic.id)
+                .toSet()
                 .toList();
 
             if (widget.selectedClinic.buildings != null &&
