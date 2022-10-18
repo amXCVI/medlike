@@ -34,7 +34,7 @@ class _AgreementsListState extends State<AgreementsList> {
     void _onLoadDada() {
       context
           .read<UserCubit>()
-          .getUserAgreementDocument(idFile: 7, typeAgreement: 'AllAgreement');
+          .getUserAgreementDocument(typeAgreement: 'userAgreement');
     }
 
     _onLoadDada();

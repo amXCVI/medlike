@@ -10,7 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class AgreementsPage extends StatefulWidget {
-  const AgreementsPage({Key? key}) : super(key: key);
+  const AgreementsPage({Key? key, this.isAppointmentAgreements = false})
+      : super(key: key);
+
+  final bool isAppointmentAgreements;
 
   @override
   State<AgreementsPage> createState() => _AgreementsPageState();
@@ -35,7 +38,11 @@ class _AgreementsPageState extends State<AgreementsPage> {
   @override
   Widget build(BuildContext context) {
     void _onLoadDada() {
-      context.read<UserCubit>().getUserAgreementDocument(idFile: 7);
+      context.read<UserCubit>().getUserAgreementDocument(
+            typeAgreement: widget.isAppointmentAgreements
+                ? 'AppointmentAgreement'
+                : 'AllAgreement',
+          );
     }
 
     _onLoadDada();

@@ -19,7 +19,7 @@ class AgreementsChecker extends StatelessWidget {
     }
 
     void onTapDocsLink() {
-      context.router.push(const AgreementsRoute());
+      context.router.push(AgreementsRoute(isAppointmentAgreements: true));
     }
 
     return Row(
