@@ -53,6 +53,7 @@ class UserState {
   final String? userPhoneNumber;
   final String? token;
   final String? refreshToken;
+  final int? tryCount;
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
   final String? selectedUserId;
@@ -81,6 +82,7 @@ class UserState {
     this.userPhoneNumber,
     this.token,
     this.refreshToken,
+    this.tryCount,
     this.getUserProfileStatus,
     this.userProfiles,
     this.selectedUserId = '',
@@ -112,6 +114,7 @@ class UserState {
     String? userPhoneNumber,
     String? token,
     String? refreshToken,
+    int? tryCount,
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
     String? selectedUserId,
@@ -140,6 +143,7 @@ class UserState {
       userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
+      tryCount: tryCount ?? this.tryCount,
       getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       userProfiles: userProfiles ?? this.userProfiles,
       selectedUserId: selectedUserId ?? this.selectedUserId,

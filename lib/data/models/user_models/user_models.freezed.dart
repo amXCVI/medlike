@@ -174,6 +174,7 @@ AuthTokenResponse _$AuthTokenResponseFromJson(Map<String, dynamic> json) {
 mixin _$AuthTokenResponse {
   String get token => throw _privateConstructorUsedError;
   String get refreshToken => throw _privateConstructorUsedError;
+  int? get tryCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -186,7 +187,7 @@ abstract class $AuthTokenResponseCopyWith<$Res> {
   factory $AuthTokenResponseCopyWith(
           AuthTokenResponse value, $Res Function(AuthTokenResponse) then) =
       _$AuthTokenResponseCopyWithImpl<$Res>;
-  $Res call({String token, String refreshToken});
+  $Res call({String token, String refreshToken, int? tryCount});
 }
 
 /// @nodoc
@@ -202,6 +203,7 @@ class _$AuthTokenResponseCopyWithImpl<$Res>
   $Res call({
     Object? token = freezed,
     Object? refreshToken = freezed,
+    Object? tryCount = freezed,
   }) {
     return _then(_value.copyWith(
       token: token == freezed
@@ -212,6 +214,10 @@ class _$AuthTokenResponseCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
+      tryCount: tryCount == freezed
+          ? _value.tryCount
+          : tryCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -223,7 +229,7 @@ abstract class _$$_AuthTokenResponseCopyWith<$Res>
           $Res Function(_$_AuthTokenResponse) then) =
       __$$_AuthTokenResponseCopyWithImpl<$Res>;
   @override
-  $Res call({String token, String refreshToken});
+  $Res call({String token, String refreshToken, int? tryCount});
 }
 
 /// @nodoc
@@ -241,6 +247,7 @@ class __$$_AuthTokenResponseCopyWithImpl<$Res>
   $Res call({
     Object? token = freezed,
     Object? refreshToken = freezed,
+    Object? tryCount = freezed,
   }) {
     return _then(_$_AuthTokenResponse(
       token: token == freezed
@@ -251,6 +258,10 @@ class __$$_AuthTokenResponseCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
+      tryCount: tryCount == freezed
+          ? _value.tryCount
+          : tryCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -258,7 +269,10 @@ class __$$_AuthTokenResponseCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AuthTokenResponse implements _AuthTokenResponse {
-  const _$_AuthTokenResponse({required this.token, required this.refreshToken});
+  const _$_AuthTokenResponse(
+      {required this.token,
+      required this.refreshToken,
+      required this.tryCount});
 
   factory _$_AuthTokenResponse.fromJson(Map<String, dynamic> json) =>
       _$$_AuthTokenResponseFromJson(json);
@@ -267,10 +281,12 @@ class _$_AuthTokenResponse implements _AuthTokenResponse {
   final String token;
   @override
   final String refreshToken;
+  @override
+  final int? tryCount;
 
   @override
   String toString() {
-    return 'AuthTokenResponse(token: $token, refreshToken: $refreshToken)';
+    return 'AuthTokenResponse(token: $token, refreshToken: $refreshToken, tryCount: $tryCount)';
   }
 
   @override
@@ -280,7 +296,8 @@ class _$_AuthTokenResponse implements _AuthTokenResponse {
             other is _$_AuthTokenResponse &&
             const DeepCollectionEquality().equals(other.token, token) &&
             const DeepCollectionEquality()
-                .equals(other.refreshToken, refreshToken));
+                .equals(other.refreshToken, refreshToken) &&
+            const DeepCollectionEquality().equals(other.tryCount, tryCount));
   }
 
   @JsonKey(ignore: true)
@@ -288,7 +305,8 @@ class _$_AuthTokenResponse implements _AuthTokenResponse {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(refreshToken));
+      const DeepCollectionEquality().hash(refreshToken),
+      const DeepCollectionEquality().hash(tryCount));
 
   @JsonKey(ignore: true)
   @override
@@ -305,7 +323,8 @@ class _$_AuthTokenResponse implements _AuthTokenResponse {
 abstract class _AuthTokenResponse implements AuthTokenResponse {
   const factory _AuthTokenResponse(
       {required final String token,
-      required final String refreshToken}) = _$_AuthTokenResponse;
+      required final String refreshToken,
+      required final int? tryCount}) = _$_AuthTokenResponse;
 
   factory _AuthTokenResponse.fromJson(Map<String, dynamic> json) =
       _$_AuthTokenResponse.fromJson;
@@ -315,8 +334,166 @@ abstract class _AuthTokenResponse implements AuthTokenResponse {
   @override
   String get refreshToken => throw _privateConstructorUsedError;
   @override
+  int? get tryCount => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
   _$$_AuthTokenResponseCopyWith<_$_AuthTokenResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AuthTokenResponseError _$AuthTokenResponseErrorFromJson(
+    Map<String, dynamic> json) {
+  return _AuthTokenResponseError.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AuthTokenResponseError {
+  String get message => throw _privateConstructorUsedError;
+  int get tryCount => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AuthTokenResponseErrorCopyWith<AuthTokenResponseError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AuthTokenResponseErrorCopyWith<$Res> {
+  factory $AuthTokenResponseErrorCopyWith(AuthTokenResponseError value,
+          $Res Function(AuthTokenResponseError) then) =
+      _$AuthTokenResponseErrorCopyWithImpl<$Res>;
+  $Res call({String message, int tryCount});
+}
+
+/// @nodoc
+class _$AuthTokenResponseErrorCopyWithImpl<$Res>
+    implements $AuthTokenResponseErrorCopyWith<$Res> {
+  _$AuthTokenResponseErrorCopyWithImpl(this._value, this._then);
+
+  final AuthTokenResponseError _value;
+  // ignore: unused_field
+  final $Res Function(AuthTokenResponseError) _then;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+    Object? tryCount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      tryCount: tryCount == freezed
+          ? _value.tryCount
+          : tryCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AuthTokenResponseErrorCopyWith<$Res>
+    implements $AuthTokenResponseErrorCopyWith<$Res> {
+  factory _$$_AuthTokenResponseErrorCopyWith(_$_AuthTokenResponseError value,
+          $Res Function(_$_AuthTokenResponseError) then) =
+      __$$_AuthTokenResponseErrorCopyWithImpl<$Res>;
+  @override
+  $Res call({String message, int tryCount});
+}
+
+/// @nodoc
+class __$$_AuthTokenResponseErrorCopyWithImpl<$Res>
+    extends _$AuthTokenResponseErrorCopyWithImpl<$Res>
+    implements _$$_AuthTokenResponseErrorCopyWith<$Res> {
+  __$$_AuthTokenResponseErrorCopyWithImpl(_$_AuthTokenResponseError _value,
+      $Res Function(_$_AuthTokenResponseError) _then)
+      : super(_value, (v) => _then(v as _$_AuthTokenResponseError));
+
+  @override
+  _$_AuthTokenResponseError get _value =>
+      super._value as _$_AuthTokenResponseError;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+    Object? tryCount = freezed,
+  }) {
+    return _then(_$_AuthTokenResponseError(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      tryCount: tryCount == freezed
+          ? _value.tryCount
+          : tryCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AuthTokenResponseError implements _AuthTokenResponseError {
+  const _$_AuthTokenResponseError(
+      {required this.message, required this.tryCount});
+
+  factory _$_AuthTokenResponseError.fromJson(Map<String, dynamic> json) =>
+      _$$_AuthTokenResponseErrorFromJson(json);
+
+  @override
+  final String message;
+  @override
+  final int tryCount;
+
+  @override
+  String toString() {
+    return 'AuthTokenResponseError(message: $message, tryCount: $tryCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AuthTokenResponseError &&
+            const DeepCollectionEquality().equals(other.message, message) &&
+            const DeepCollectionEquality().equals(other.tryCount, tryCount));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(message),
+      const DeepCollectionEquality().hash(tryCount));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AuthTokenResponseErrorCopyWith<_$_AuthTokenResponseError> get copyWith =>
+      __$$_AuthTokenResponseErrorCopyWithImpl<_$_AuthTokenResponseError>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AuthTokenResponseErrorToJson(this);
+  }
+}
+
+abstract class _AuthTokenResponseError implements AuthTokenResponseError {
+  const factory _AuthTokenResponseError(
+      {required final String message,
+      required final int tryCount}) = _$_AuthTokenResponseError;
+
+  factory _AuthTokenResponseError.fromJson(Map<String, dynamic> json) =
+      _$_AuthTokenResponseError.fromJson;
+
+  @override
+  String get message => throw _privateConstructorUsedError;
+  @override
+  int get tryCount => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AuthTokenResponseErrorCopyWith<_$_AuthTokenResponseError> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

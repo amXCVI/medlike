@@ -59,6 +59,13 @@ class UserCubit extends Cubit<UserState> {
     try {
       final response =
           await userRepository.signIn(phone: phone, password: password);
+      if (response.token.isEmpty) {
+        emit(state.copyWith(
+          tryCount: response.tryCount,
+          authStatus: UserAuthStatuses.failureAuth,
+        ));
+        return false;
+      }
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
@@ -67,6 +74,7 @@ class UserCubit extends Cubit<UserState> {
         authStatus: UserAuthStatuses.successAuth,
         token: response.token,
         refreshToken: response.refreshToken,
+        tryCount: 5,
       ));
       addFirebaseDeviceId();
       await FirebaseAnalyticsService.registerAppLoginEvent();
