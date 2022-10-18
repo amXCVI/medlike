@@ -84,6 +84,8 @@ class _ClinicDetailWithBottomSheetsPageState
                         MediaQuery.of(context).size.height * .4
                     ? MediaQuery.of(context).size.height * .4
                     : clinicBuildings.length * 88 + 72,
+                parallaxEnabled: true,
+                parallaxOffset: .5,
                 panel: ExpandedSlidingPanel(
                   buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,

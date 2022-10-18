@@ -60,9 +60,10 @@ class MainPage extends StatelessWidget {
                 children: [
                   ...gridItemsList
                       .map((item) => GridItem(
-                          label: item.label,
-                          imgSrc: item.imgSrc,
-                          actionLink: item.actionLink))
+                            label: item.label,
+                            imgSrc: item.imgSrc,
+                            actionLink: item.actionLink,
+                          ))
                       .toList(),
                 ],
               ),

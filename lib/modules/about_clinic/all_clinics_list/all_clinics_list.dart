@@ -7,18 +7,30 @@ import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'clinic_item.dart';
 
 class AllClinicsList extends StatelessWidget {
-  const AllClinicsList(
-      {Key? key, required this.clinicsList, required this.onRefreshData})
-      : super(key: key);
+  const AllClinicsList({
+    Key? key,
+    required this.clinicsList,
+    required this.onRefreshData,
+    required this.isFromMainPage,
+  }) : super(key: key);
 
   final List<ClinicModel> clinicsList;
   final dynamic onRefreshData;
+  final bool isFromMainPage;
 
   @override
   Widget build(BuildContext context) {
     void _handleTapOnClinic(ClinicModel clinic) {
-      context.router.push(
-          ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
+      if (isFromMainPage) {
+        context.router.push(PriceRoute(clinicId: clinic.id));
+      } else {
+        context.router
+            .push(ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
+      }
+    }
+
+    if (clinicsList.length == 1) {
+      _handleTapOnClinic(clinicsList[0]);
     }
 
     return RefreshIndicator(
