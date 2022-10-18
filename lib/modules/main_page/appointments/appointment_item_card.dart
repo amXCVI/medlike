@@ -73,7 +73,7 @@ class AppointmentItemCard extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 15,
-                          child: Text('appointmentItem.doctorInfo.lastName'[0]),
+                          child: Text(appointmentItem.doctorInfo.lastName![0]),
                           backgroundColor: AppColors.mainBrand[100],
                         ),
                         const SizedBox(width: 8.0),
@@ -93,7 +93,7 @@ class AppointmentItemCard extends StatelessWidget {
                   : const SizedBox(height: 26),
               const SizedBox(height: 8),
               SizedBox(
-                height: 30,
+                height: 34,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [

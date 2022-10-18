@@ -111,7 +111,7 @@ class ClinicsBuilder extends StatelessWidget {
                   .reversed,
             ],
             options: CarouselOptions(
-              height: 176,
+              height: 182,
               viewportFraction: 0.93,
               initialPage: 0,
               enableInfiniteScroll: false,

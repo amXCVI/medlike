@@ -38,9 +38,9 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
     selectedBuilding = widget.selectedClinic.buildings[0];
   }
 
-  void handleSelectedBuilding(String buildingId) {
+  void handleSelectedBuilding(BuildingLatLngModel building) {
     BuildingModel newSelectedBuilding = widget.selectedClinic.buildings
-        .firstWhere((element) => element.buildingId == buildingId);
+        .firstWhere((element) => element.buildingId == building.buildingId);
     setState(() {
       selectedBuilding = newSelectedBuilding;
     });

@@ -292,8 +292,12 @@ class AppRouter extends _i36.RootStackRouter {
           routeData: routeData, child: const _i26.SupportPage());
     },
     AllClinicsListRoute.name: (routeData) {
+      final args = routeData.argsAs<AllClinicsListRouteArgs>(
+          orElse: () => const AllClinicsListRouteArgs());
       return _i36.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i27.AllClinicsListPage());
+          routeData: routeData,
+          child: _i27.AllClinicsListPage(
+              key: args.key, isFromMainPage: args.isFromMainPage));
     },
     ClinicDetailWithBottomSheetsRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicDetailWithBottomSheetsRouteArgs>();
@@ -1156,11 +1160,27 @@ class SupportRoute extends _i36.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i27.AllClinicsListPage]
-class AllClinicsListRoute extends _i36.PageRouteInfo<void> {
-  const AllClinicsListRoute()
-      : super(AllClinicsListRoute.name, path: '/clinic_info');
+class AllClinicsListRoute extends _i36.PageRouteInfo<AllClinicsListRouteArgs> {
+  AllClinicsListRoute({_i37.Key? key, bool isFromMainPage = false})
+      : super(AllClinicsListRoute.name,
+            path: '/clinic_info',
+            args: AllClinicsListRouteArgs(
+                key: key, isFromMainPage: isFromMainPage));
 
   static const String name = 'AllClinicsListRoute';
+}
+
+class AllClinicsListRouteArgs {
+  const AllClinicsListRouteArgs({this.key, this.isFromMainPage = false});
+
+  final _i37.Key? key;
+
+  final bool isFromMainPage;
+
+  @override
+  String toString() {
+    return 'AllClinicsListRouteArgs{key: $key, isFromMainPage: $isFromMainPage}';
+  }
 }
 
 /// generated route for
