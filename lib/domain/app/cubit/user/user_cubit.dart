@@ -686,7 +686,12 @@ class UserCubit extends Cubit<UserState> {
   }
 
   /// Получить последнее непочитанное уведомление
-  Future<void> getLastNotReadNotification() async {
+  Future<void> getLastNotReadNotification(bool isRefresh) async {
+    if (!isRefresh &&
+        state.getLastNotReadEventStatus == GetLastNotReadEventStatuses.success &&
+        state.lastNotification != null) {
+      return;
+    }
     if (state.getLastNotReadEventStatus ==
         GetLastNotReadEventStatuses.loading) {
       return;
@@ -719,7 +724,7 @@ class UserCubit extends Cubit<UserState> {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
           lastNotification: null, isLastNotificationShow: false));
-      await getLastNotReadNotification();
+      //await getLastNotReadNotification(true);
       emit(state.copyWith(
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.success,

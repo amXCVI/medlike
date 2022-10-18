@@ -21,15 +21,9 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
     super.initState();
 
     Future.delayed(const Duration(milliseconds: 100), () async {
-      await context.read<ClinicsCubit>().getAllClinicsList(false);
-      print('getAllClinicsList');
-      print(context.read<ClinicsCubit>().state.clinicsList);
-      await context.read<AppointmentsCubit>().getLastAppointment();
-       print('lastAppointment');
-      print(context.read<AppointmentsCubit>().state.lastAppointment);
-      await context.read<UserCubit>().getLastNotReadNotification();
-       print('getLastNotReadNotification');
-      print(context.read<UserCubit>().state.lastNotification);
+      await context.read<ClinicsCubit>().getAllClinicsList(true);
+      await context.read<AppointmentsCubit>().getLastAppointment(true);
+      await context.read<UserCubit>().getLastNotReadNotification(true);
       setState(() {
         isLoaded = true;
       });
