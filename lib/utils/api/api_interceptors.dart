@@ -18,10 +18,10 @@ class DioInterceptors extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    if (kDebugMode) {
-      print('REQUEST[${options.method}] => PATH: ${options.path}');
-      print('DATA: ${options.data.toString()}');
-    }
+    // if (kDebugMode) {
+    //   print('REQUEST[${options.method}] => PATH: ${options.path}');
+    //   print('DATA: ${options.data.toString()}');
+    // }
     options.headers = {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
@@ -37,11 +37,11 @@ class DioInterceptors extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    if (kDebugMode) {
-      print(
-          'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-      print('DATA: ${response.data.toString()}');
-    }
+    // if (kDebugMode) {
+    //   print(
+    //       'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+    //   print('DATA: ${response.data.toString()}');
+    // }
     UserSecureStorage.setField(AppConstants.isActualAppVersion, 'true');
     return super.onResponse(response, handler);
   }

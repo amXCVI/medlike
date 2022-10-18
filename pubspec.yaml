@@ -119,6 +119,7 @@ flutter:
     - assets/icons/appointments/
     - assets/icons/login/
     - assets/icons/medcard/
+    - assets/security_certs/
 
 flutter_intl:
   main_locale: ru_RU
