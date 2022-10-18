@@ -16,7 +16,7 @@ class PriceListItem extends StatelessWidget {
     return SubscribeRowItem(
       title: priceItem.title,
       subtitle: rublesFormat.format(priceItem.price / 100),
-      isRightArrow: false,
+      isRightArrow: priceItem.haveRecommendations,
     );
   }
 }

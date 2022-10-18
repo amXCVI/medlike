@@ -69,13 +69,13 @@ class ClinicsCubit extends Cubit<ClinicsState> {
     }
   }
 
-  void getPriceList(String clinicId) async {
+  void getPriceList(String clinicId, List<String>? categories) async {
     emit(state.copyWith(
       getPriceListStatus: GetPriceListStatuses.loading,
     ));
     try {
       final List<PriceItemModel> response;
-      response = await clinicsRepository.getPriceList(clinicId);
+      response = await clinicsRepository.getPriceList(clinicId, categories);
       emit(state.copyWith(
         getPriceListStatus: GetPriceListStatuses.success,
         priceList: response,
