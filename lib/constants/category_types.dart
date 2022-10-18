@@ -1,7 +1,7 @@
 class CategoryTypes {
   static List<CategoryType> categoryTypes = [
     CategoryType(-1, 'Unknown', ''),
-    CategoryType(0, 'Telemed', 'Телемедицинский консультации'),
+    CategoryType(0, 'Telemed', 'Телемедицинские консультации'),
     CategoryType(1, 'Consultations', 'Консультации'),
     CategoryType(2, 'Laboratory', 'Лабораторные исследования'),
     CategoryType(3, 'MRT', 'МРТ'),
