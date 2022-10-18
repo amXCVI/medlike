@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +23,11 @@ class ExitAppDialog extends StatelessWidget {
         context.router.replaceAll([StartPhoneNumberRoute()]);
       } else {
         context.read<UserCubit>().signOut();
-        SystemNavigator.pop();
+        if (Platform.isAndroid) {
+          SystemNavigator.pop();
+        } else if (Platform.isIOS) {
+          exit(0);
+        }
       }
     }
 

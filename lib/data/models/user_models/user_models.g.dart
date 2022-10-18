@@ -22,6 +22,7 @@ _$_AuthTokenResponse _$$_AuthTokenResponseFromJson(Map<String, dynamic> json) =>
     _$_AuthTokenResponse(
       token: json['token'] as String,
       refreshToken: json['refreshToken'] as String,
+      tryCount: json['tryCount'] as int?,
     );
 
 Map<String, dynamic> _$$_AuthTokenResponseToJson(
@@ -29,6 +30,21 @@ Map<String, dynamic> _$$_AuthTokenResponseToJson(
     <String, dynamic>{
       'token': instance.token,
       'refreshToken': instance.refreshToken,
+      'tryCount': instance.tryCount,
+    };
+
+_$_AuthTokenResponseError _$$_AuthTokenResponseErrorFromJson(
+        Map<String, dynamic> json) =>
+    _$_AuthTokenResponseError(
+      message: json['message'] as String,
+      tryCount: json['tryCount'] as int,
+    );
+
+Map<String, dynamic> _$$_AuthTokenResponseErrorToJson(
+        _$_AuthTokenResponseError instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'tryCount': instance.tryCount,
     };
 
 _$_RefreshTokenResponseModel _$$_RefreshTokenResponseModelFromJson(

@@ -279,8 +279,13 @@ class AppRouter extends _i36.RootStackRouter {
           routeData: routeData, child: const _i24.SettingsPage());
     },
     AgreementsRoute.name: (routeData) {
+      final args = routeData.argsAs<AgreementsRouteArgs>(
+          orElse: () => const AgreementsRouteArgs());
       return _i36.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i25.AgreementsPage());
+          routeData: routeData,
+          child: _i25.AgreementsPage(
+              key: args.key,
+              isAppointmentAgreements: args.isAppointmentAgreements));
     },
     SupportRoute.name: (routeData) {
       return _i36.AdaptivePage<dynamic>(
@@ -1118,11 +1123,27 @@ class SettingsRoute extends _i36.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i25.AgreementsPage]
-class AgreementsRoute extends _i36.PageRouteInfo<void> {
-  const AgreementsRoute()
-      : super(AgreementsRoute.name, path: '/settings_agreements');
+class AgreementsRoute extends _i36.PageRouteInfo<AgreementsRouteArgs> {
+  AgreementsRoute({_i37.Key? key, bool isAppointmentAgreements = false})
+      : super(AgreementsRoute.name,
+            path: '/settings_agreements',
+            args: AgreementsRouteArgs(
+                key: key, isAppointmentAgreements: isAppointmentAgreements));
 
   static const String name = 'AgreementsRoute';
+}
+
+class AgreementsRouteArgs {
+  const AgreementsRouteArgs({this.key, this.isAppointmentAgreements = false});
+
+  final _i37.Key? key;
+
+  final bool isAppointmentAgreements;
+
+  @override
+  String toString() {
+    return 'AgreementsRouteArgs{key: $key, isAppointmentAgreements: $isAppointmentAgreements}';
+  }
 }
 
 /// generated route for

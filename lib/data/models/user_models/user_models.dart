@@ -21,10 +21,22 @@ class AuthTokenResponse with _$AuthTokenResponse {
   const factory AuthTokenResponse({
     required String token,
     required String refreshToken,
+    required int? tryCount,
   }) = _AuthTokenResponse;
 
   factory AuthTokenResponse.fromJson(Map<String, Object?> json) =>
       _$AuthTokenResponseFromJson(json);
+}
+
+@freezed
+class AuthTokenResponseError with _$AuthTokenResponseError {
+  const factory AuthTokenResponseError({
+    required String message,
+    required int tryCount,
+  }) = _AuthTokenResponseError;
+
+  factory AuthTokenResponseError.fromJson(Map<String, Object?> json) =>
+      _$AuthTokenResponseErrorFromJson(json);
 }
 
 @freezed
