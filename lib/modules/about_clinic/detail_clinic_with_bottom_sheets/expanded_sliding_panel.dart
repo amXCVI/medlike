@@ -18,12 +18,12 @@ class ExpandedSlidingPanel extends StatelessWidget {
     Key? key,
     required this.buildingsList,
     required this.onChangeBuildingIndex,
-    required this.buildingIndex,
+    required this.selectedBuilding,
   }) : super(key: key);
 
   final List<BuildingLatLngModel> buildingsList;
-  final int buildingIndex;
-  final void Function(int) onChangeBuildingIndex;
+  final void Function(BuildingLatLngModel) onChangeBuildingIndex;
+  final BuildingLatLngModel selectedBuilding;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,9 @@ class ExpandedSlidingPanel extends StatelessWidget {
     void _handleTapSubscribe(
         int profilesCount, String userId, String clinicId) {
       if (profilesCount == 1) {
-        context.router.push(ServicesListRoute(
-            userId: userId, buildingId: clinicId, clinicId: clinicId));
+        context.router.push(ClinicsListRoute(
+          userId: userId,
+        ));
       } else {
         context.router.push(const SubscribeProfilesListRoute());
       }
@@ -60,12 +61,12 @@ class ExpandedSlidingPanel extends StatelessWidget {
           options: CarouselOptions(
               height: MediaQuery.of(context).size.height * .80 - 152,
               viewportFraction: 1,
-              initialPage: buildingIndex + 1,
+              initialPage: buildingsList.indexOf(selectedBuilding) + 1,
               autoPlay: false,
               enlargeCenterPage: false,
               enableInfiniteScroll: true,
               onPageChanged: (index, _) {
-                onChangeBuildingIndex(index);
+                onChangeBuildingIndex(buildingsList[index]);
               }),
           items: [
             ...buildingsList
@@ -74,30 +75,44 @@ class ExpandedSlidingPanel extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SlidingPanelHeader(
-                          clinicName: buildingsList[buildingIndex].name),
+                          clinicName: buildingsList[
+                                  buildingsList.indexOf(selectedBuilding)]
+                              .name),
                       BuildingAddress(
-                        address: buildingsList[buildingIndex].address,
-                        clinicName: buildingsList[buildingIndex].name,
-                        lat: buildingsList[buildingIndex].latitude,
-                        lng: buildingsList[buildingIndex].longitude,
+                        address: buildingsList[
+                                buildingsList.indexOf(selectedBuilding)]
+                            .address,
+                        clinicName: buildingsList[
+                                buildingsList.indexOf(selectedBuilding)]
+                            .name,
+                        lat: buildingsList[
+                                buildingsList.indexOf(selectedBuilding)]
+                            .latitude,
+                        lng: buildingsList[
+                                buildingsList.indexOf(selectedBuilding)]
+                            .longitude,
                       ),
                       const SizedBox(height: 32),
                       Expanded(
                         child: ListView(
                           children: [
                             WorkTimesList(
-                                workTimes:
-                                    buildingsList[buildingIndex].workTime),
+                                workTimes: buildingsList[
+                                        buildingsList.indexOf(selectedBuilding)]
+                                    .workTime),
                             const Divider(
                                 indent: 16.0, endIndent: 16.0, height: 2),
                             ContactsList(
-                                phonesList: buildingsList[buildingIndex].phone),
+                                phonesList: buildingsList[
+                                        buildingsList.indexOf(selectedBuilding)]
+                                    .phone),
                             const Divider(
                                 indent: 16.0, endIndent: 16.0, height: 2),
                             NextActionButtonItem(
                               handleTap: () {
-                                _handleTapPrice(
-                                    buildingsList[buildingIndex].id);
+                                _handleTapPrice(buildingsList[
+                                        buildingsList.indexOf(selectedBuilding)]
+                                    .id);
                               },
                               iconPath:
                                   'assets/icons/clinics/ic_doc_oval-2.svg',
@@ -107,8 +122,9 @@ class ExpandedSlidingPanel extends StatelessWidget {
                                 indent: 16.0, endIndent: 16.0, height: 2),
                             NextActionButtonItem(
                               handleTap: () {
-                                _handleTapSales(
-                                    buildingsList[buildingIndex].id);
+                                _handleTapSales(buildingsList[
+                                        buildingsList.indexOf(selectedBuilding)]
+                                    .id);
                               },
                               iconPath:
                                   'assets/icons/clinics/ic_doc_oval-3.svg',
@@ -140,8 +156,8 @@ class ExpandedSlidingPanel extends StatelessWidget {
                 onTap: () {
                   _handleTapSubscribe(
                     state.userProfiles!.length,
-                    state.selectedUserId!,
-                    buildingsList[buildingIndex].id,
+                    state.userProfiles![0].id,
+                    buildingsList[buildingsList.indexOf(selectedBuilding)].id,
                   );
                 },
               );
@@ -153,7 +169,8 @@ class ExpandedSlidingPanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: MaterialButton(
             onPressed: () {
-              _openMapsSheet(context, buildingsList[buildingIndex]);
+              _openMapsSheet(context,
+                  buildingsList[buildingsList.indexOf(selectedBuilding)]);
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),

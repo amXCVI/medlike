@@ -18,7 +18,7 @@ class ClinicMapPlaces extends StatefulWidget {
   }) : super(key: key);
 
   final List<BuildingLatLngModel> buildingsList;
-  final void Function(String) handleSelectedBuilding;
+  final void Function(BuildingLatLngModel) handleSelectedBuilding;
   final String selectedBuildingId;
 
   @override
@@ -123,7 +123,7 @@ class _ClinicMapPlacesState extends State<ClinicMapPlaces> {
       top: isSelectedBuilding ? pos.dy - 12 : pos.dy - 16,
       child: GestureDetector(
         onTap: () {
-          widget.handleSelectedBuilding(itemBuilding.buildingId);
+          widget.handleSelectedBuilding(itemBuilding);
         },
         child: AnimatedOpacity(
           opacity: _isVisibleMarkers ? 1.0 : 0.0,

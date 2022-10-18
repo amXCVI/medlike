@@ -11,9 +11,10 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ClinicDetailWithBottomSheetsPage extends StatefulWidget {
-  const ClinicDetailWithBottomSheetsPage(
-      {Key? key, required this.selectedClinic})
-      : super(key: key);
+  const ClinicDetailWithBottomSheetsPage({
+    Key? key,
+    required this.selectedClinic,
+  }) : super(key: key);
 
   final ClinicModel selectedClinic;
 
@@ -24,38 +25,25 @@ class ClinicDetailWithBottomSheetsPage extends StatefulWidget {
 
 class _ClinicDetailWithBottomSheetsPageState
     extends State<ClinicDetailWithBottomSheetsPage> {
-  late BuildingModel selectedBuilding;
+  BuildingLatLngModel? selectedBuilding = null;
   final PanelController _panelController = PanelController();
-  late int selectedBuildingIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    selectedBuilding = widget.selectedClinic.buildings[0];
   }
 
-  void onTapBuilding(String buildingId) {
+  void onTapBuilding(BuildingLatLngModel building) {
     _panelController.open();
-    BuildingModel building = widget.selectedClinic.buildings
-        .firstWhere((element) => element.buildingId == buildingId);
-    int index = widget.selectedClinic.buildings.indexOf(building);
     setState(() {
       selectedBuilding = building;
-      selectedBuildingIndex = index;
     });
   }
 
   /// Ф-я для свайпа строений клиники
-  void onChangeBuildingIndex(int newIndex) {
-    late int newSelectedIndex = newIndex;
-    if (newIndex < 0) {
-      newSelectedIndex = widget.selectedClinic.buildings.length - 1;
-    } else if (newIndex > widget.selectedClinic.buildings.length - 1) {
-      newSelectedIndex = 0;
-    }
+  void onChangeBuildingIndex(BuildingLatLngModel building) {
     setState(() {
-      selectedBuilding = widget.selectedClinic.buildings[newSelectedIndex];
-      selectedBuildingIndex = newSelectedIndex;
+      selectedBuilding = building;
     });
   }
 
@@ -99,7 +87,7 @@ class _ClinicDetailWithBottomSheetsPageState
                 panel: ExpandedSlidingPanel(
                   buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,
-                  buildingIndex: selectedBuildingIndex,
+                  selectedBuilding: selectedBuilding ?? clinicBuildings[0],
                 ),
                 collapsed: CollapsedSlidingPanel(
                   buildingsList: clinicBuildings ?? [],
@@ -116,7 +104,9 @@ class _ClinicDetailWithBottomSheetsPageState
                   child: ClinicMapPlaces(
                     buildingsList: clinicBuildings ?? [],
                     handleSelectedBuilding: onTapBuilding,
-                    selectedBuildingId: selectedBuilding.buildingId,
+                    selectedBuildingId: selectedBuilding != null
+                        ? selectedBuilding!.buildingId
+                        : clinicBuildings[0].buildingId,
                   ),
                 ),
                 borderRadius: const BorderRadius.only(
