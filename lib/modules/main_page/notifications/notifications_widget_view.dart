@@ -83,6 +83,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                 padding: const EdgeInsets.only(
                     top: 0, left: 16.0, bottom: 32.0, right: 16.0),
                 child: Slidable(
+                  key: UniqueKey(),
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
                     children: [

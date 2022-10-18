@@ -719,6 +719,7 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(
       updatingNotificationStatusStatus:
           UpdatingNotificationStatusStatuses.loading,
+      isLastNotificationShow: false
     ));
     try {
       await userRepository.updateNotificationStatus(eventId);
