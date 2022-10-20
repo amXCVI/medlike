@@ -8,11 +8,9 @@ import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem({
-    Key? key, 
-    required this.appointmentItem,
-    required this.clinic
-  }) : super(key: key);
+  const AppointmentItem(
+      {Key? key, required this.appointmentItem, required this.clinic})
+      : super(key: key);
 
   final AppointmentModel appointmentItem;
   final ClinicModel clinic;
@@ -64,6 +62,7 @@ class AppointmentItem extends StatelessWidget {
                 )
               : const SizedBox(height: 15.0),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset('assets/icons/appointments/solid.svg'),
               const SizedBox(width: 8.0),
@@ -71,7 +70,9 @@ class AppointmentItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 100,
                 child: Text(
                     ClinicAddressHelper.getShortAddress(
-                        appointmentItem.clinicInfo.address!),
+                            appointmentItem.clinicInfo.address!) +
+                        ', ' +
+                        appointmentItem.researchPlace,
                     overflow: TextOverflow.fade,
                     maxLines: 2,
                     softWrap: true,
@@ -97,12 +98,10 @@ class AppointmentItem extends StatelessWidget {
                       children: [
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
-                        Text(
-                          getAppointmentTime(
-                            appointmentItem.appointmentDateTime, 
+                        Text(getAppointmentTime(
+                            appointmentItem.appointmentDateTime,
                             clinic.timeZoneOffset ?? 3 // Стандарт МСК +3
-                          )
-                        ),
+                            )),
                       ],
                     ),
                   ),
