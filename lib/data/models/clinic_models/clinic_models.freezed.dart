@@ -1989,3 +1989,185 @@ abstract class _BuildingLatLngModel implements BuildingLatLngModel {
   _$$_BuildingLatLngModelCopyWith<_$_BuildingLatLngModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+RecommendationByServiceModel _$RecommendationByServiceModelFromJson(
+    Map<String, dynamic> json) {
+  return _RecommendationByServiceModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RecommendationByServiceModel {
+  String get serviceId => throw _privateConstructorUsedError;
+  String get serviceName => throw _privateConstructorUsedError;
+  String get recommendation => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RecommendationByServiceModelCopyWith<RecommendationByServiceModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RecommendationByServiceModelCopyWith<$Res> {
+  factory $RecommendationByServiceModelCopyWith(
+          RecommendationByServiceModel value,
+          $Res Function(RecommendationByServiceModel) then) =
+      _$RecommendationByServiceModelCopyWithImpl<$Res>;
+  $Res call({String serviceId, String serviceName, String recommendation});
+}
+
+/// @nodoc
+class _$RecommendationByServiceModelCopyWithImpl<$Res>
+    implements $RecommendationByServiceModelCopyWith<$Res> {
+  _$RecommendationByServiceModelCopyWithImpl(this._value, this._then);
+
+  final RecommendationByServiceModel _value;
+  // ignore: unused_field
+  final $Res Function(RecommendationByServiceModel) _then;
+
+  @override
+  $Res call({
+    Object? serviceId = freezed,
+    Object? serviceName = freezed,
+    Object? recommendation = freezed,
+  }) {
+    return _then(_value.copyWith(
+      serviceId: serviceId == freezed
+          ? _value.serviceId
+          : serviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+      serviceName: serviceName == freezed
+          ? _value.serviceName
+          : serviceName // ignore: cast_nullable_to_non_nullable
+              as String,
+      recommendation: recommendation == freezed
+          ? _value.recommendation
+          : recommendation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_RecommendationByServiceModelCopyWith<$Res>
+    implements $RecommendationByServiceModelCopyWith<$Res> {
+  factory _$$_RecommendationByServiceModelCopyWith(
+          _$_RecommendationByServiceModel value,
+          $Res Function(_$_RecommendationByServiceModel) then) =
+      __$$_RecommendationByServiceModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String serviceId, String serviceName, String recommendation});
+}
+
+/// @nodoc
+class __$$_RecommendationByServiceModelCopyWithImpl<$Res>
+    extends _$RecommendationByServiceModelCopyWithImpl<$Res>
+    implements _$$_RecommendationByServiceModelCopyWith<$Res> {
+  __$$_RecommendationByServiceModelCopyWithImpl(
+      _$_RecommendationByServiceModel _value,
+      $Res Function(_$_RecommendationByServiceModel) _then)
+      : super(_value, (v) => _then(v as _$_RecommendationByServiceModel));
+
+  @override
+  _$_RecommendationByServiceModel get _value =>
+      super._value as _$_RecommendationByServiceModel;
+
+  @override
+  $Res call({
+    Object? serviceId = freezed,
+    Object? serviceName = freezed,
+    Object? recommendation = freezed,
+  }) {
+    return _then(_$_RecommendationByServiceModel(
+      serviceId: serviceId == freezed
+          ? _value.serviceId
+          : serviceId // ignore: cast_nullable_to_non_nullable
+              as String,
+      serviceName: serviceName == freezed
+          ? _value.serviceName
+          : serviceName // ignore: cast_nullable_to_non_nullable
+              as String,
+      recommendation: recommendation == freezed
+          ? _value.recommendation
+          : recommendation // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_RecommendationByServiceModel implements _RecommendationByServiceModel {
+  const _$_RecommendationByServiceModel(
+      {required this.serviceId,
+      required this.serviceName,
+      required this.recommendation});
+
+  factory _$_RecommendationByServiceModel.fromJson(Map<String, dynamic> json) =>
+      _$$_RecommendationByServiceModelFromJson(json);
+
+  @override
+  final String serviceId;
+  @override
+  final String serviceName;
+  @override
+  final String recommendation;
+
+  @override
+  String toString() {
+    return 'RecommendationByServiceModel(serviceId: $serviceId, serviceName: $serviceName, recommendation: $recommendation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_RecommendationByServiceModel &&
+            const DeepCollectionEquality().equals(other.serviceId, serviceId) &&
+            const DeepCollectionEquality()
+                .equals(other.serviceName, serviceName) &&
+            const DeepCollectionEquality()
+                .equals(other.recommendation, recommendation));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(serviceId),
+      const DeepCollectionEquality().hash(serviceName),
+      const DeepCollectionEquality().hash(recommendation));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RecommendationByServiceModelCopyWith<_$_RecommendationByServiceModel>
+      get copyWith => __$$_RecommendationByServiceModelCopyWithImpl<
+          _$_RecommendationByServiceModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RecommendationByServiceModelToJson(this);
+  }
+}
+
+abstract class _RecommendationByServiceModel
+    implements RecommendationByServiceModel {
+  const factory _RecommendationByServiceModel(
+      {required final String serviceId,
+      required final String serviceName,
+      required final String recommendation}) = _$_RecommendationByServiceModel;
+
+  factory _RecommendationByServiceModel.fromJson(Map<String, dynamic> json) =
+      _$_RecommendationByServiceModel.fromJson;
+
+  @override
+  String get serviceId => throw _privateConstructorUsedError;
+  @override
+  String get serviceName => throw _privateConstructorUsedError;
+  @override
+  String get recommendation => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_RecommendationByServiceModelCopyWith<_$_RecommendationByServiceModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

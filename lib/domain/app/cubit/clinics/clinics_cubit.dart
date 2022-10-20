@@ -143,6 +143,26 @@ class ClinicsCubit extends Cubit<ClinicsState> {
     }
   }
 
+  /// Получить рекомендации к приемам по списку serviceId
+  void getRecommendationsLstByServiceIds(
+      {required List<String> serviceIds}) async {
+    emit(state.copyWith(
+      getRecommendationsListStatus: GetRecommendationsListStatuses.loading,
+    ));
+    try {
+      final List<RecommendationByServiceModel> response;
+      response = await clinicsRepository.getRecommendationsByServiceIds(
+          serviceIds: serviceIds);
+      emit(state.copyWith(
+        getRecommendationsListStatus: GetRecommendationsListStatuses.success,
+        recommendationsList: response,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getRecommendationsListStatus: GetRecommendationsListStatuses.failed));
+    }
+  }
+
   /// Добавляет строение в списочек всех существующих строений
   /// Нужен для карты, потому что запрос адреса можно делать только раз в 2 секунды - долго
   void addBuildingWithAddress(BuildingLatLngModel building) {
