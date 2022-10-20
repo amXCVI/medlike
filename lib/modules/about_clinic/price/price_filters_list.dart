@@ -15,4 +15,5 @@ List<PriceFilterItem> priceFiltersList = [
   PriceFilterItem(label: 'Анализы', isSelected: false, value: 'Lab'),
   PriceFilterItem(label: 'Диагностика', isSelected: false, value: 'Instrumental'),
   PriceFilterItem(label: 'Осмотры', isSelected: false, value: 'Consult'),
+  PriceFilterItem(label: 'Лаборатория', isSelected: false, value: 'Proc'),
 ];

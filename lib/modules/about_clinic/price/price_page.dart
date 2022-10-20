@@ -27,7 +27,10 @@ class _PricePageState extends State<PricePage> {
   @override
   void initState() {
     handleResetFilters();
-    _onLoadDada();
+    _onLoadDada(
+      isRefresh: true,
+      categories: selectedFilters,
+    );
     super.initState();
   }
 
@@ -64,14 +67,40 @@ class _PricePageState extends State<PricePage> {
   }
 
   void handleTapOnFilterItem(String filterValue) {
+    if (filterValue.isEmpty) {
+      if (selectedFilters.contains(filterValue)) {
+        setState(() {
+          selectedFilters.remove(filterValue);
+        });
+      } else {
+        setState(() {
+          selectedFilters.clear();
+          selectedFilters.add(filterValue);
+        });
+      }
+      return;
+    }
     if (selectedFilters.contains(filterValue)) {
-      setState(() {
-        selectedFilters.remove(filterValue);
-      });
+      if (selectedFilters.first.isEmpty) {
+        setState(() {
+          selectedFilters.remove(filterValue);
+        });
+      } else {
+        setState(() {
+          selectedFilters.remove(filterValue);
+        });
+      }
     } else {
-      setState(() {
-        selectedFilters.add(filterValue);
-      });
+      if (selectedFilters.first.isNotEmpty) {
+        setState(() {
+          selectedFilters.add(filterValue);
+        });
+      } else {
+        setState(() {
+          selectedFilters.remove(selectedFilters.first);
+          selectedFilters.add(filterValue);
+        });
+      }
     }
   }
 
