@@ -100,8 +100,13 @@ class ExpandedSlidingPanel extends StatelessWidget {
                                 workTimes: buildingsList[
                                         buildingsList.indexOf(selectedBuilding)]
                                     .workTime),
-                            const Divider(
-                                indent: 16.0, endIndent: 16.0, height: 2),
+                            buildingsList[
+                                        buildingsList.indexOf(selectedBuilding)]
+                                    .workTime
+                                    .isNotEmpty
+                                ? const Divider(
+                                    indent: 16.0, endIndent: 16.0, height: 2)
+                                : const SizedBox(),
                             ContactsList(
                                 phonesList: buildingsList[
                                         buildingsList.indexOf(selectedBuilding)]

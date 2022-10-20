@@ -122,3 +122,15 @@ class BuildingLatLngModel with _$BuildingLatLngModel {
   factory BuildingLatLngModel.fromJson(Map<String, Object?> json) =>
       _$BuildingLatLngModelFromJson(json);
 }
+
+@freezed
+class RecommendationByServiceModel with _$RecommendationByServiceModel {
+  const factory RecommendationByServiceModel({
+    required String serviceId,
+    required String serviceName,
+    required String recommendation,
+  }) = _RecommendationByServiceModel;
+
+  factory RecommendationByServiceModel.fromJson(Map<String, Object?> json) =>
+      _$RecommendationByServiceModelFromJson(json);
+}

@@ -178,3 +178,19 @@ Map<String, dynamic> _$$_BuildingLatLngModelToJson(
       'latitude': instance.latitude,
       'longitude': instance.longitude,
     };
+
+_$_RecommendationByServiceModel _$$_RecommendationByServiceModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_RecommendationByServiceModel(
+      serviceId: json['serviceId'] as String,
+      serviceName: json['serviceName'] as String,
+      recommendation: json['recommendation'] as String,
+    );
+
+Map<String, dynamic> _$$_RecommendationByServiceModelToJson(
+        _$_RecommendationByServiceModel instance) =>
+    <String, dynamic>{
+      'serviceId': instance.serviceId,
+      'serviceName': instance.serviceName,
+      'recommendation': instance.recommendation,
+    };

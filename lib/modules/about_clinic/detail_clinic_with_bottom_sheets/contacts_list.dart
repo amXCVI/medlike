@@ -49,7 +49,7 @@ class ContactsList extends StatelessWidget {
                                               color: AppColors.mainOther)),
                                 ),
                               ))
-                          .toList()
+                          .toList(),
                     ]),
               ],
             ),

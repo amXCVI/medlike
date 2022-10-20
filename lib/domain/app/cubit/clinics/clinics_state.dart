@@ -8,6 +8,8 @@ enum GetPromotionsListStatuses { initial, loading, success, failed }
 
 enum GetMainscreenPromotionsListStatuses { initial, loading, success, failed }
 
+enum GetRecommendationsListStatuses { initial, loading, success, failed }
+
 @immutable
 class ClinicsState {
   final GetAllClinicsListStatuses? getAllClinicsListStatus;
@@ -20,6 +22,8 @@ class ClinicsState {
   final GetMainscreenPromotionsListStatuses? getMainscreenPromotionsListStatus;
   final List<MainscreenPromotionModel>? mainscreenPromotionsList;
   final List<BuildingLatLngModel>? allDownloadedBuildings;
+  final GetRecommendationsListStatuses? getRecommendationsListStatus;
+  final List<RecommendationByServiceModel>? recommendationsList;
 
   const ClinicsState({
     this.getAllClinicsListStatus = GetAllClinicsListStatuses.initial,
@@ -32,6 +36,8 @@ class ClinicsState {
     this.getMainscreenPromotionsListStatus,
     this.mainscreenPromotionsList,
     this.allDownloadedBuildings,
+    this.getRecommendationsListStatus,
+    this.recommendationsList,
   });
 
   ClinicsState copyWith({
@@ -45,6 +51,8 @@ class ClinicsState {
     GetMainscreenPromotionsListStatuses? getMainscreenPromotionsListStatus,
     List<MainscreenPromotionModel>? mainscreenPromotionsList,
     List<BuildingLatLngModel>? allDownloadedBuildings,
+    GetRecommendationsListStatuses? getRecommendationsListStatus,
+    List<RecommendationByServiceModel>? recommendationsList,
   }) {
     return ClinicsState(
       getAllClinicsListStatus:
@@ -62,6 +70,9 @@ class ClinicsState {
           mainscreenPromotionsList ?? this.mainscreenPromotionsList,
       allDownloadedBuildings:
           allDownloadedBuildings ?? this.allDownloadedBuildings,
+      getRecommendationsListStatus:
+          getRecommendationsListStatus ?? this.getRecommendationsListStatus,
+      recommendationsList: recommendationsList ?? this.recommendationsList,
     );
   }
 
