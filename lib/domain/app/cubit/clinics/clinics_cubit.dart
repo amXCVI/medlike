@@ -12,7 +12,8 @@ class ClinicsCubit extends Cubit<ClinicsState> {
 
   final ClinicsRepository clinicsRepository;
 
-  void getAllClinicsList(bool isRefresh) async {
+  /// Future<void> Для последовательного ожидания кубитов
+  Future<void> getAllClinicsList(bool isRefresh) async {
     if (!isRefresh &&
         state.getAllClinicsListStatus == GetAllClinicsListStatuses.success &&
         state.clinicsList!.isNotEmpty) {
@@ -20,6 +21,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
     }
     emit(state.copyWith(
       getAllClinicsListStatus: GetAllClinicsListStatuses.loading,
+      allDownloadedBuildings: [],
     ));
     try {
       final List<ClinicModel> response;
@@ -31,7 +33,9 @@ class ClinicsCubit extends Cubit<ClinicsState> {
       /// использовать сервис с ограничениями по кол-ву запросов в минуту
       final YandexGeocoder geocoder =
           YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
-      response.forEach((clinic) => clinic.buildings.forEach((e) => {
+      for (var clinic in response) {
+        for (var e in clinic.buildings) {
+          {
             Future.delayed((const Duration()), () async {
               final GeocodeResponse geocodeFromAddress =
                   await geocoder.getGeocode(GeocodeRequest(
@@ -50,8 +54,10 @@ class ClinicsCubit extends Cubit<ClinicsState> {
                 longitude: geocodeFromAddress.firstPoint?.longitude ?? 38.89688,
               );
               addBuildingWithAddress(building);
-            })
-          }));
+            });
+          }
+        }
+      }
 
       emit(state.copyWith(
         getAllClinicsListStatus: GetAllClinicsListStatuses.success,
@@ -63,13 +69,13 @@ class ClinicsCubit extends Cubit<ClinicsState> {
     }
   }
 
-  void getPriceList(String clinicId) async {
+  void getPriceList(String clinicId, List<String>? categories) async {
     emit(state.copyWith(
       getPriceListStatus: GetPriceListStatuses.loading,
     ));
     try {
       final List<PriceItemModel> response;
-      response = await clinicsRepository.getPriceList(clinicId);
+      response = await clinicsRepository.getPriceList(clinicId, categories);
       emit(state.copyWith(
         getPriceListStatus: GetPriceListStatuses.success,
         priceList: response,
@@ -140,9 +146,11 @@ class ClinicsCubit extends Cubit<ClinicsState> {
   /// Добавляет строение в списочек всех существующих строений
   /// Нужен для карты, потому что запрос адреса можно делать только раз в 2 секунды - долго
   void addBuildingWithAddress(BuildingLatLngModel building) {
-    emit(state.copyWith(
-        allDownloadedBuildings: state.allDownloadedBuildings != null
-            ? [...?state.allDownloadedBuildings, building]
-            : [building].toList()));
+    emit(
+      state.copyWith(
+          allDownloadedBuildings: state.allDownloadedBuildings != null
+              ? [...?state.allDownloadedBuildings, building]
+              : [building].toList()),
+    );
   }
 }

@@ -679,6 +679,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.0"
+  in_app_update:
+    dependency: "direct main"
+    description:
+      name: in_app_update
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -1160,6 +1167,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
+  testfairy_flutter:
+    dependency: "direct main"
+    description:
+      name: testfairy_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   timezone:
     dependency: transitive
     description:

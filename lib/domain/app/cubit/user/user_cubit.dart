@@ -37,7 +37,15 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
-    emit(state.copyWith(authScreen: UserAuthScreens.inputPassword));
+    emit(state.copyWith(
+      authScreen: UserAuthScreens.inputPassword,
+      checkUserAccountStatus: CheckUserAccountStatuses.continued
+    ));
+    UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+  }
+
+  /// Сохраняем номер телефона в кубит
+  void cleanPhoneNumber(String phone) {
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
@@ -60,6 +68,13 @@ class UserCubit extends Cubit<UserState> {
     try {
       final response =
           await userRepository.signIn(phone: phone, password: password);
+      if (response.token.isEmpty) {
+        emit(state.copyWith(
+          tryCount: response.tryCount,
+          authStatus: UserAuthStatuses.failureAuth,
+        ));
+        return false;
+      }
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
@@ -68,6 +83,7 @@ class UserCubit extends Cubit<UserState> {
         authStatus: UserAuthStatuses.successAuth,
         token: response.token,
         refreshToken: response.refreshToken,
+        tryCount: 5,
       ));
       addFirebaseDeviceId();
       await FirebaseAnalyticsService.registerAppLoginEvent();
@@ -123,9 +139,6 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняет deviceId устройства на бэке
   void addFirebaseDeviceId() async {
-    if (kIsWeb) {
-      return;
-    }
     String fcmToken = await FirebaseMessaging.instance.getToken() as String;
     userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
@@ -352,8 +365,15 @@ class UserCubit extends Cubit<UserState> {
       CheckUserAccountResponse response = await userRepository.checkUserAccount(
         phoneNumber: phoneNumber,
       );
+      if (!response.found) {
+        AppToast.showAppToast(
+          msg: 'Не найден пользователь с введенным номером телефона'
+        );
+      }
+
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.success,
+        isFound: response.found
       ));
       return response;
     } catch (e) {
@@ -388,15 +408,18 @@ class UserCubit extends Cubit<UserState> {
   /// Получает список всех пользовательских соглашений.
   /// Или конкретный файлик с соглашениями
   void getUserAgreementDocument({
-    required int idFile,
-    String? typeAgreement,
+    int? idFile,
+    required String typeAgreement,
   }) async {
     emit(state.copyWith(
       getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.loading,
     ));
     try {
       UserAgreementDocumentModel response =
-          await userRepository.getUserAgreementDocument(idFile: idFile);
+          await userRepository.getUserAgreementDocument(
+        idFile: idFile,
+        typeAgreement: typeAgreement,
+      );
       emit(state.copyWith(
         getUserAgreementDocumentStatus:
             GetUserAgreementDocumentStatuses.success,
@@ -673,17 +696,26 @@ class UserCubit extends Cubit<UserState> {
   }
 
   /// Получить последнее непочитанное уведомление
-  Future<void> getLastNotReadNotification() async {
+  Future<void> getLastNotReadNotification(bool isRefresh) async {
+    if (!isRefresh &&
+        state.getLastNotReadEventStatus == GetLastNotReadEventStatuses.success &&
+        state.lastNotification != null) {
+      return;
+    }
+    if (state.getLastNotReadEventStatus ==
+        GetLastNotReadEventStatuses.loading) {
+      return;
+    }
     emit(state.copyWith(
       getLastNotReadEventStatus: GetLastNotReadEventStatuses.loading,
     ));
     try {
-      NotificationModel? lastNotification = await userRepository.getLastNotReadedEvent();
+      NotificationModel? lastNotification =
+          await userRepository.getLastNotReadedEvent();
       emit(state.copyWith(
-        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
-        lastNotification: lastNotification,
-        isLastNotificationShow: lastNotification == null ? false : true
-      ));
+          getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+          lastNotification: lastNotification,
+          isLastNotificationShow: lastNotification == null ? false : true));
     } catch (e) {
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
@@ -695,21 +727,23 @@ class UserCubit extends Cubit<UserState> {
   /// Пометить событие как прочитанное
   Future<void> updateNotificationStatus(String eventId) async {
     emit(state.copyWith(
-      updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.loading,
+      updatingNotificationStatusStatus:
+          UpdatingNotificationStatusStatuses.loading,
+      isLastNotificationShow: false
     ));
     try {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
-        lastNotification: null,
-        isLastNotificationShow: false
-      ));
-      await getLastNotReadNotification();
+          lastNotification: null, isLastNotificationShow: false));
+      //await getLastNotReadNotification(true);
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.success,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(
-        updatingNotificationStatusStatus: UpdatingNotificationStatusStatuses.failed,
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.failed,
       ));
       rethrow;
     }

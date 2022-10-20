@@ -27,7 +27,14 @@ class UserRepository {
           data: {'UserName': phone, 'Password': password});
       return AuthTokenResponse.fromJson(response.data);
     } catch (err) {
-      rethrow;
+      if ((err as DioError).response?.statusCode != 400 &&
+          (err as DioError).response?.statusCode != 406) {
+        rethrow;
+      }
+      int tryCount =
+          AuthTokenResponseError.fromJson((err as DioError).response!.data)
+              .tryCount;
+      return AuthTokenResponse(token: '', refreshToken: '', tryCount: tryCount);
     }
   }
 
@@ -147,12 +154,12 @@ class UserRepository {
   }
 
   Future<UserAgreementDocumentModel> getUserAgreementDocument({
-    required int idFile,
-    String? typeAgreement,
+    int? idFile,
+    required String typeAgreement,
   }) async {
     try {
       final response = await _dioClient.get(
-          '/api/v1.0/profile/agreement-document?idFile=$idFile${typeAgreement != null ? '&typeAgreement=$typeAgreement' : ''}');
+          '/api/v1.0/profile/agreement-document?${idFile != null ? 'idFile=$idFile' : ''}&typeAgreement=$typeAgreement');
       return UserAgreementDocumentModel.fromJson(response.data);
     } catch (err) {
       rethrow;
@@ -333,7 +340,7 @@ class UserRepository {
     try {
       await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
-        "ClientPlatform": "1",// Platform.isAndroid ? "1" : "2",
+        "ClientPlatform": "1", // Platform.isAndroid ? "1" : "2",
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
     } catch (err) {

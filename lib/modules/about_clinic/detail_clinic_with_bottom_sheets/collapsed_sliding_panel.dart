@@ -13,7 +13,7 @@ class CollapsedSlidingPanel extends StatelessWidget {
 
   final List<BuildingLatLngModel> buildingsList;
   final String clinicName;
-  final void Function(String) onTapBuilding;
+  final void Function(BuildingLatLngModel) onTapBuilding;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CollapsedSlidingPanel extends StatelessWidget {
                     title: buildingItem.name,
                     isRightArrow: true,
                     onTap: () {
-                      onTapBuilding(buildingItem.buildingId);
+                      onTapBuilding(buildingItem);
                     },
                   ))
             ],

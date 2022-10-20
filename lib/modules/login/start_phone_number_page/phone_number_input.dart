@@ -65,7 +65,9 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
         return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
       },
       listener: (context, state) {
-        if(state.checkUserAccountStatus == CheckUserAccountStatuses.failed) {
+        if(state.checkUserAccountStatus == CheckUserAccountStatuses.failed
+          || state.checkUserAccountStatus == CheckUserAccountStatuses.continued
+        ) {
           if (!mounted) {
             return;
           }

@@ -9,6 +9,8 @@ class TourState {
   final bool? isAppointmentShown;
   final bool? isSupportShown;
   final bool? isCabinetsInfoPlaceShow;
+  final bool? isNotificationCloseShown;
+
 
   TourState({
     this.tourStatuses,
@@ -17,6 +19,7 @@ class TourState {
     this.isAppointmentShown,
     this.isSupportShown,
     this.isCabinetsInfoPlaceShow,
+    this.isNotificationCloseShown
   });
 
   TourState copyWith({
@@ -26,6 +29,7 @@ class TourState {
     bool? isAppointmentShown,
     bool? isSupportShown,
     bool? isCabinetsInfoPlaceShow,
+    bool? isNotificationCloseShown
   }) {
     return TourState(
       tourStatuses: tourStatuses ?? this.tourStatuses,
@@ -35,6 +39,8 @@ class TourState {
       isSupportShown: isSupportShown ?? this.isSupportShown,
       isCabinetsInfoPlaceShow:
           isCabinetsInfoPlaceShow ?? this.isCabinetsInfoPlaceShow,
+      isNotificationCloseShown:
+        isNotificationCloseShown ?? this.isNotificationCloseShown
     );
   }
 }

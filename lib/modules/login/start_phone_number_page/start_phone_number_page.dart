@@ -9,6 +9,7 @@ import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.
 import 'package:medlike/modules/login/start_phone_number_page/phone_number_bottom_navigator.dart';
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_view.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
@@ -84,7 +85,10 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
       },
       listener: (context, state) {
-        if(state.checkUserAccountStatus == CheckUserAccountStatuses.success) {
+        if(state.checkUserAccountStatus == CheckUserAccountStatuses.success &&
+          state.isFound == true &&
+          context.router.current.path == AppRoutes.loginPhone
+        ) {
           context.read<UserCubit>().savePhoneNumber(state.userPhoneNumber!);
           context.router.push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
         }

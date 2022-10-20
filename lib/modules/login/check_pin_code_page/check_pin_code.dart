@@ -17,6 +17,7 @@ class CheckPinCode extends StatefulWidget {
 
 class _CheckPinCodeState extends State<CheckPinCode> {
   late bool isBiometricAuthenticate;
+  int countAttempts = 0;
 
   @override
   void initState() {
@@ -75,6 +76,14 @@ class _CheckPinCodeState extends State<CheckPinCode> {
         context.router.replaceAll([const MainRoute()]);
         return true;
       } else {
+        if (countAttempts + 1 == AppConstants.countLoginAttemps) {
+          context.read<UserCubit>().signOut();
+          context.router.replaceAll([StartPhoneNumberRoute()]);
+          return false;
+        }
+        setState(() {
+          countAttempts = countAttempts + 1;
+        });
         return false;
       }
     }

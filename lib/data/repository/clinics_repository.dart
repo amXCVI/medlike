@@ -14,10 +14,12 @@ class ClinicsRepository {
     }
   }
 
-  Future<List<PriceItemModel>> getPriceList(clinicId) async {
+  Future<List<PriceItemModel>> getPriceList(
+      clinicId, List<String>? categories) async {
     try {
-      final response =
-      await _dioClient.get('/api/v1.0/clinics/$clinicId/prices');
+      String categoriesStr = categories!.join('&category=');
+      final response = await _dioClient
+          .get('/api/v1.0/clinics/$clinicId/prices?category=$categoriesStr');
       final List priceList = response.data;
       return priceList.map((e) => PriceItemModel.fromJson(e)).toList();
     } catch (err) {
@@ -29,7 +31,7 @@ class ClinicsRepository {
       {required String clinicId}) async {
     try {
       final response =
-      await _dioClient.get('/api/v1.0/promotions?clinicId=$clinicId');
+          await _dioClient.get('/api/v1.0/promotions?clinicId=$clinicId');
       final List priceList = response.data;
       return priceList.map((e) => ClinicPromotionModel.fromJson(e)).toList();
     } catch (err) {
@@ -48,5 +50,4 @@ class ClinicsRepository {
       rethrow;
     }
   }
-
 }

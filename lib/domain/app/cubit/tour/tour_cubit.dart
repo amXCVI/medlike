@@ -31,6 +31,12 @@ class TourCubit extends Cubit<TourState> {
     ));
   }
 
+  void checkNotificationClose() {
+    emit(state.copyWith(
+      isNotificationCloseShown: true,
+    ));
+  }
+
   void fetchStatus() async {
     String? demoTourStatus =
       await UserSecureStorage.getField(AppConstants.demoTourStatus);

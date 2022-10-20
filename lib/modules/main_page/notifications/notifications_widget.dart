@@ -1,29 +1,79 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/main_page/notifications/notifications_widget_view.dart';
 
-class NotificationsWidget extends StatelessWidget {
+class NotificationsWidget extends StatefulWidget {
   const NotificationsWidget({Key? key}) : super(key: key);
 
   @override
+  State<NotificationsWidget> createState() => _NotificationsWidgetState();
+}
+
+class _NotificationsWidgetState extends State<NotificationsWidget> {
+  bool isLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      await context.read<ClinicsCubit>().getAllClinicsList(true);
+      await context.read<AppointmentsCubit>().getLastAppointment(true);
+      await context.read<UserCubit>().getLastNotReadNotification(true);
+      setState(() {
+        isLoaded = true;
+      });
+    });
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    context.read<UserCubit>().getLastNotReadNotification();
-
-    context.read<AppointmentsCubit>().getLastAppointment();
-
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
-        if (state.lastAppointment == null ||
-            state.getAppointmentsStatus !=
-                GetAppointmentsStatuses.success) {
+        return ClinicsBuilder(
+          lastAppointment: state.lastAppointment,
+          isLoaded: isLoaded,
+        );
+      },
+    );
+  }
+}
+
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({
+    Key? key,
+    required this.isLoaded, 
+    required this.lastAppointment
+  }) : super(key: key);
+
+  final AppointmentModel? lastAppointment;
+  final bool isLoaded;
+
+  ClinicModel? getClinic(AppointmentModel? item, List<ClinicModel>? clinicsList) {
+    for(var clinic in clinicsList ?? []) {
+      if(clinic.id == item?.clinicInfo.id) {
+        return clinic;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if((state.getAllClinicsListStatus != GetAllClinicsListStatuses.success
+          && lastAppointment != null) || !isLoaded) {
           return const SizedBox();
         }
-
         return NotificationsWidgetView(
-          appointment: state.lastAppointment
+          appointment: lastAppointment,
+          clinic: getClinic(lastAppointment, state.clinicsList),
         );
       },
     );

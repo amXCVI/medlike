@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -43,17 +43,6 @@ class PasswordPageWidget extends StatelessWidget {
           .then((value) => {
                 if (value)
                   {
-                    // if (kIsWeb)
-                    //   {
-                    //     UserSecureStorage.setField(AppConstants.isAuth, 'true'),
-                    //     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true'),
-                    //     context
-                    //         .read<UserCubit>()
-                    //         .setPinCodeToStorage([0, 0, 0, 0, 0]),
-                    //     context.router.replaceAll([const MainRoute()]),
-                    //   }
-                    // else
-                    //   {
                     checkIsAcceptedUserAgreements().then((res) => {
                           if (!res)
                             {
@@ -66,13 +55,21 @@ class PasswordPageWidget extends StatelessWidget {
                                             AppRoutes.loginPinCodeCreate),
                             }
                         })
-                  },
-                // }
+                  }
               });
     }
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
+        /// разлогиниваем, если юзер ввел слишком много неправильных паролей
+        if (state.tryCount == 0) {
+          context.read<UserCubit>().signOut();
+          if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          } else if (Platform.isIOS) {
+            exit(0);
+          }
+        }
         if (state.authStatus == UserAuthStatuses.loadingAuth ||
             // state.authStatus == UserAuthStatuses.successAuth ||
             state.getAllUserAgreementsStatus ==

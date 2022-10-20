@@ -3,7 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/main_page/appointments/appointment_item_card.dart';
 import 'package:medlike/modules/main_page/appointments/appointments_widget_skeleton.dart';
 import 'package:medlike/modules/main_page/appointments/not_found_appointment.dart';
@@ -16,6 +18,7 @@ class AppointmentsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> _onLoadDada({bool isRefresh = true}) async {
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
+      context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
     }
 
     void handleTapOnAppointment(DateTime date) {
@@ -54,32 +57,69 @@ class AppointmentsWidget extends StatelessWidget {
                           handleTapOnAppointment(DateTime.now());
                         },
                         child: const NotFoundAppointment())
-                    : CarouselSlider(
-                        items: [
-                          ...state.appointmentsList!
-                              .where((item) => AppointmentStatuses
-                                  .cancellableStatusIds
-                                  .contains(item.status))
-                              .map((appointmentItem) => AppointmentItemCard(
-                                    appointmentItem: appointmentItem,
-                                    handleTapOnAppointment:
-                                        handleTapOnAppointment,
-                                  ))
-                              .toList()
-                              .reversed,
-                        ],
-                        options: CarouselOptions(
-                          height: 176,
-                          viewportFraction: 0.93,
-                          initialPage: 0,
-                          enableInfiniteScroll: false,
-                          reverse: false,
-                          autoPlay: false,
-                          enlargeCenterPage: false,
-                        ),
-                      )
+                    : ClinicsBuilder(
+                      handleTapOnAppointment: handleTapOnAppointment,
+                      appointmentsList: state.appointmentsList!,
+                    )
           ],
         );
+      },
+    );
+  }
+}
+
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({
+    Key? key,
+    required this.handleTapOnAppointment,
+    required this.appointmentsList
+  }) : super(key: key);
+
+  final Function(DateTime) handleTapOnAppointment;
+  final List<AppointmentModel> appointmentsList;
+
+  ClinicModel? getClinic(AppointmentModel item, List<ClinicModel> clinicsList) {
+    for(var clinic in clinicsList) {
+      if(clinic.id == item.clinicInfo.id) {
+        return clinic;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if(state.getAllClinicsListStatus == GetAllClinicsListStatuses.loading) {
+          return const AppointmentsWidgetSkeleton();
+        } else if(state.getAllClinicsListStatus == GetAllClinicsListStatuses.failed) {
+          return const Text('');
+        }
+        return CarouselSlider(
+            items: [
+              ...appointmentsList
+                  .where((item) => AppointmentStatuses
+                      .cancellableStatusIds
+                      .contains(item.status))
+                  .map((appointmentItem) => AppointmentItemCard(
+                        appointmentItem: appointmentItem,
+                        clinic: getClinic(appointmentItem, state.clinicsList!)!,
+                        handleTapOnAppointment: handleTapOnAppointment,
+                      ))
+                  .toList()
+                  .reversed,
+            ],
+            options: CarouselOptions(
+              height: 182,
+              viewportFraction: 0.93,
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              reverse: false,
+              autoPlay: false,
+              enlargeCenterPage: false,
+            ),
+          );
       },
     );
   }
