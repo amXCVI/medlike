@@ -64,7 +64,7 @@ class PriceFiltersWidget extends StatelessWidget {
                           item.label,
                           style: Theme.of(context)
                               .textTheme
-                              .bodySmall
+                              .labelSmall
                               ?.copyWith(
                                   color: isSelected
                                       ? Colors.white
