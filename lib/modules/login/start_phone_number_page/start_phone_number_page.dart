@@ -86,7 +86,9 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
       },
       listener: (context, state) {
         if(state.checkUserAccountStatus == CheckUserAccountStatuses.success &&
-          context.router.current.path == AppRoutes.loginPhone) {
+          state.isFound == true &&
+          context.router.current.path == AppRoutes.loginPhone
+        ) {
           context.read<UserCubit>().savePhoneNumber(state.userPhoneNumber!);
           context.router.push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
         }
