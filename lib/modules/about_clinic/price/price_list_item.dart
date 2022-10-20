@@ -19,16 +19,21 @@ class PriceListItem extends StatelessWidget {
         subtitle: rublesFormat.format(priceItem.price / 100),
         isRightArrow: priceItem.haveRecommendations,
         onTap: () {
-          showModalBottomSheet(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(12),
-                  topLeft: Radius.circular(12),
-                ),
-              ),
-              context: context,
-              builder: (context) =>
-                  RecommendationBottomSheet(serviceId: priceItem.serviceId));
+          priceItem.haveRecommendations
+              ? showModalBottomSheet(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(12),
+                      topLeft: Radius.circular(12),
+                    ),
+                  ),
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => RecommendationBottomSheet(
+                        serviceId: priceItem.serviceId,
+                        serviceName: priceItem.title,
+                      ))
+              : {};
         });
   }
 }
