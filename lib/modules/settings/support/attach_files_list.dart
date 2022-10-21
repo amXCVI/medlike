@@ -59,17 +59,15 @@ class AttachFilesList extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).errorColor,
                       ),
-                      child: Expanded(
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const SizedBox(width: 20.0),
-                              SvgPicture.asset(
-                                  'assets/icons/settings/ic_delete_support_file.svg'),
-                              const SizedBox(width: 20.0),
-                            ],
-                          ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const SizedBox(width: 20.0),
+                            SvgPicture.asset(
+                                'assets/icons/settings/ic_delete_support_file.svg'),
+                            const SizedBox(width: 20.0),
+                          ],
                         ),
                       ),
                     ),

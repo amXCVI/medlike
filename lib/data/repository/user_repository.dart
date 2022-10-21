@@ -248,8 +248,6 @@ class UserRepository {
     required String subject,
     required String message,
     required String techInfo,
-    required String personFio,
-    required String personPhone,
     List<File>? files,
   }) async {
     List uploadFilesList = [];
@@ -266,8 +264,6 @@ class UserRepository {
       'Subject': subject,
       'Message': message,
       'TechInfo': techInfo,
-      'PersonFio': personFio,
-      'PersonPhone': personPhone,
     });
 
     try {
@@ -292,7 +288,6 @@ class UserRepository {
 
   Future<bool> sendUnauthEmail({
     required String email,
-    required String subject,
     required String message,
     required String techInfo,
     required String personFio,
@@ -310,7 +305,6 @@ class UserRepository {
     FormData formData = FormData.fromMap({
       "Files": uploadFilesList,
       'Email': email,
-      'Subject': subject,
       'Message': message,
       'TechInfo': techInfo,
       'PersonFio': personFio,
