@@ -27,6 +27,7 @@ class _AppointmentItemRecommendationsState
             isOpenRow = !isOpenRow;
           }),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset('assets/icons/appointments/info.svg'),
               const SizedBox(width: 8.0),

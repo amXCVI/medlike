@@ -30,9 +30,7 @@ class PromotionItem extends StatelessWidget {
             offset: Offset(0, 8),
           ),
         ],
-        color: Theme
-            .of(context)
-            .backgroundColor,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Column(
         children: [
@@ -43,15 +41,11 @@ class PromotionItem extends StatelessWidget {
                     topRight: Radius.circular(12.0),
                     topLeft: Radius.circular(12.0)),
                 child: Image.network(
-                  '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem
-                      .id}/banner',
+                  '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem.id}/banner',
                   headers: {
                     'Authorization': 'Bearer ${state.token}',
                   },
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .width / 16 * 9,
+                  height: MediaQuery.of(context).size.width / 16 * 9,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     context.read<UserCubit>().saveAccessToken();
@@ -68,16 +62,12 @@ class PromotionItem extends StatelessWidget {
               children: [
                 Text(
                   promotionItem.name,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8.0),
                 Text(
                   promotionItem.description,
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .labelSmall
                       ?.copyWith(color: AppColors.lightText),
@@ -87,57 +77,68 @@ class PromotionItem extends StatelessWidget {
                   children: [
                     SvgPicture.asset('assets/icons/appointments/clock.svg'),
                     const SizedBox(width: 8.0),
+
+                    /// Почему-то дата парсится без учета таймзоны. Что-то где-то сломано
+                    /// Поэтому просто добавляю 12 часов, иначе вчерашний день
                     Text(
-                        'c ${DateFormat('dd.MM.yyyy').format(
-                            promotionItem.dateFrom)} по ${DateFormat(
-                            'dd.MM.yyyy').format(promotionItem.dateTo)}'),
+                        'c ${DateFormat('dd.MM.yyyy').format(promotionItem.dateFrom.add(const Duration(hours: 12)))} по ${DateFormat('dd.MM.yyyy').format(promotionItem.dateTo.add(const Duration(hours: 12)))}'),
                   ],
                 ),
                 const SizedBox(height: 12.0),
-                promotionItem.defaultPrice != 0
-                    ? Row(
+                Row(
                   children: [
-                    SvgPicture.asset(
-                        'assets/icons/clinics/majesticons_rubel-circle.svg'),
-                    const SizedBox(width: 8.0),
-                    Text(
-                      '${promotionItem.promoPrice / 100}',
-                      style: const TextStyle(
-                        color: AppColors.lightText,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.lineThrough,
-                      ),
-                    ),
-                    const Text(
-                      ' ₽',
-                      style: TextStyle(
-                          color: AppColors.lightText,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          decoration: TextDecoration.lineThrough,
-                          fontFamily: 'Arial'),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Text(
-                      '${promotionItem.promoPrice / 100}',
-                      style: const TextStyle(
-                        color: AppColors.mainBrandColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Text(
-                      ' ₽',
-                      style: TextStyle(
-                          color: AppColors.mainBrandColor,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Arial'),
-                    ),
+                    promotionItem.defaultPrice != 0
+                        ? Row(
+                            children: [
+                              SvgPicture.asset(
+                                  'assets/icons/clinics/majesticons_rubel-circle.svg'),
+                              const SizedBox(width: 8.0),
+                              Text(
+                                '${(promotionItem.defaultPrice / 100) % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
+                                style: const TextStyle(
+                                  color: AppColors.lightText,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                              const Text(
+                                ' ₽',
+                                style: TextStyle(
+                                    color: AppColors.lightText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontFamily: 'Arial'),
+                              ),
+                              const SizedBox(width: 8.0),
+                            ],
+                          )
+                        : const SizedBox(),
+                    promotionItem.promoPrice != 0
+                        ? Row(
+                            children: [
+                              Text(
+                                '${(promotionItem.promoPrice / 100) % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
+                                style: const TextStyle(
+                                  color: AppColors.mainBrandColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const Text(
+                                ' ₽',
+                                style: TextStyle(
+                                    color: AppColors.mainBrandColor,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: 'Arial'),
+                              ),
+                            ],
+                          )
+                        : const SizedBox()
                   ],
                 )
-                    : const SizedBox(),
               ],
             ),
           )
