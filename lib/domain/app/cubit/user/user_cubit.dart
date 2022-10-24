@@ -475,29 +475,16 @@ class UserCubit extends Cubit<UserState> {
     ));
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-    UserProfile? selectedUser =
-        state.selectedUserId == null || state.selectedUserId!.isEmpty
-            ? state.userProfiles![0]
-            : state.userProfiles
-                ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
           'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Окружение: ${ApiConstants.env}\n';
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       techInfo = 'Устройство: ${iosInfo.name}\n'
           'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Окружение: ${ApiConstants.baseUrl}\n';
     }
 
     try {

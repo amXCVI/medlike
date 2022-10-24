@@ -40,7 +40,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
     String? userPhoneNumber =
         await UserSecureStorage.getField(AppConstants.userPhoneNumber);
 
-    if (userPhoneNumber == null) {
+    if (userPhoneNumber == null && !widget.isDeletingProfile) {
       setState(() {
         isShowingFirstAuthAppAlert = true;
       });
