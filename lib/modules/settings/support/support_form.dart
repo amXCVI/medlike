@@ -31,79 +31,10 @@ class SupportForm extends StatelessWidget {
             TapOutsideDetectorWidget(
               onTappedOutside: unFocus,
               child: TextFormField(
-                controller: controllerTheme,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: 'Тема *',
-                  labelStyle: const TextStyle(
-                      color: AppColors.lightText,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300),
-                  floatingLabelStyle: TextStyle(
-                      color: controllerTheme.text.isEmpty
-                          ? AppColors.lightText
-                          : AppColors.mainText,
-                      fontWeight: FontWeight.w300),
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: AppColors.lightText),
-                ),
-                style: Theme.of(context).textTheme.labelLarge,
-                textAlign: TextAlign.start,
-                enableSuggestions: false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста, заполните обязательное поле';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(height: 32),
-            TapOutsideDetectorWidget(
-              onTappedOutside: unFocus,
-              child: TextFormField(
-                controller: controllerMessage,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  labelText: 'Сообщение *',
-                  labelStyle: const TextStyle(
-                      color: AppColors.lightText,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w300),
-                  floatingLabelStyle: TextStyle(
-                      color: controllerMessage.text.isEmpty
-                          ? AppColors.lightText
-                          : AppColors.mainText,
-                      fontWeight: FontWeight.w300),
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: AppColors.lightText),
-                ),
-                style: Theme.of(context).textTheme.labelLarge,
-                textAlign: TextAlign.start,
-                enableSuggestions: false,
-                maxLines: null,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста, заполните обязательное поле';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(height: 32),
-            TapOutsideDetectorWidget(
-              onTappedOutside: unFocus,
-              child: TextFormField(
                 controller: controllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                  labelText: 'E-mail *',
+                  labelText: 'E-mail',
                   labelStyle: const TextStyle(
                       color: AppColors.lightText,
                       fontSize: 17,
@@ -131,10 +62,45 @@ class SupportForm extends StatelessWidget {
                   if (!regex.hasMatch(value!) ||
                       value == null ||
                       value.isEmpty) {
-                    return 'Пожалуйста, введите правильный адрес электронной почты';
+                    return 'Пожалуйста, введите e-mail';
                   } else {
                     return null;
                   }
+                },
+              ),
+            ),
+            const SizedBox(height: 32),
+            TapOutsideDetectorWidget(
+              onTappedOutside: unFocus,
+              child: TextFormField(
+                controller: controllerMessage,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  labelText: 'Сообщение',
+                  labelStyle: const TextStyle(
+                      color: AppColors.lightText,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w300),
+                  floatingLabelStyle: TextStyle(
+                      color: controllerMessage.text.isEmpty
+                          ? AppColors.lightText
+                          : AppColors.mainText,
+                      fontWeight: FontWeight.w300),
+                  floatingLabelAlignment: FloatingLabelAlignment.start,
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(color: AppColors.lightText),
+                ),
+                style: Theme.of(context).textTheme.labelLarge,
+                textAlign: TextAlign.start,
+                enableSuggestions: false,
+                maxLines: null,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Пожалуйста, заполните обязательное поле';
+                  }
+                  return null;
                 },
               ),
             ),
