@@ -75,31 +75,37 @@ class _InitialPinCodeState extends State<InitialPinCode> {
       }
     }
 
-    return ListView(
-      shrinkWrap: true,
-      children: [
-        step == 0
-            ? PinCodeView(
-                pinCodeTitle:
-                    'Придумайте пин-код\nдля быстрого входа в приложение',
-                setPinCode: _saveInitialPinCode,
-                key: UniqueKey(),
-                handleBiometricMethod: onSuccessBiometricAuthenticate,
-                noUsedBiometric: widget.noUsedBiometric,
-                isInit: true,
-              )
-            : PinCodeView(
-                pinCodeTitle: 'Повторите пин-код',
-                setPinCode: _checkRepeatPinCode,
-                key: UniqueKey(),
-                handleBiometricMethod: onSuccessBiometricDataSaved,
-                isForcedShowingBiometricModal: isForcedShowingBiometricModal,
-                signInTitle:
-                    'Сохраните свои биометрические данные для упрощенного входа в приолжение',
-                noUsedBiometric: widget.noUsedBiometric,
-                isInit: true,
-              )
-      ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            step == 0
+                ? PinCodeView(
+                    pinCodeTitle:
+                        'Придумайте пин-код\nдля быстрого входа в приложение',
+                    setPinCode: _saveInitialPinCode,
+                    key: UniqueKey(),
+                    height: constraints.maxHeight,
+                    handleBiometricMethod: onSuccessBiometricAuthenticate,
+                    noUsedBiometric: widget.noUsedBiometric,
+                    isInit: true,
+                  )
+                : PinCodeView(
+                    pinCodeTitle: 'Повторите пин-код',
+                    setPinCode: _checkRepeatPinCode,
+                    height: constraints.maxHeight,
+                    key: UniqueKey(),
+                    handleBiometricMethod: onSuccessBiometricDataSaved,
+                    isForcedShowingBiometricModal: isForcedShowingBiometricModal,
+                    signInTitle:
+                        'Сохраните свои биометрические данные для упрощенного входа в приолжение',
+                    noUsedBiometric: widget.noUsedBiometric,
+                    isInit: true,
+                  )
+          ],
+        );
+      }
     );
   }
 }

@@ -60,6 +60,9 @@ class AppConstants {
   // Размер экрана для iPhone SE. Используется в верстке, уникальные случаи
   static const int smScreenWidth = 330;
 
+  //  Samsung S10 Viewport height
+  static const int mdScreenHeight = 760;
+
   // Количество попыток ввода пользовательского кода (графического ключа, пин-кода, биометрической информации)
   static const int countLoginAttemps = 5;
 
