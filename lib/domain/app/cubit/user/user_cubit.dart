@@ -36,7 +36,10 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
-    emit(state.copyWith(authScreen: UserAuthScreens.inputPassword));
+    emit(state.copyWith(
+      authScreen: UserAuthScreens.inputPassword,
+      checkUserAccountStatus: CheckUserAccountStatuses.continued
+    ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
@@ -363,8 +366,15 @@ class UserCubit extends Cubit<UserState> {
       CheckUserAccountResponse response = await userRepository.checkUserAccount(
         phoneNumber: phoneNumber,
       );
+      if (!response.found) {
+        AppToast.showAppToast(
+          msg: 'Не найден пользователь с введенным номером телефона'
+        );
+      }
+
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.success,
+        isFound: response.found
       ));
       return response;
     } catch (e) {

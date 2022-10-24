@@ -17,7 +17,8 @@ enum SendingResetPasswordCodeStatuses { initial, loading, success, failed }
 
 enum ResetPasswordStatuses { initial, loading, success, failed }
 
-enum CheckUserAccountStatuses { initial, loading, success, failed }
+// Специальный 5-ый статус для сброса номера в поле
+enum CheckUserAccountStatuses { initial, loading, success, failed, continued }
 
 enum GetUserAgreementsStatuses { initial, loading, success, failed }
 
@@ -61,6 +62,7 @@ class UserState {
   final SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus;
   final ResetPasswordStatuses? resetPasswordStatus;
   final CheckUserAccountStatuses? checkUserAccountStatus;
+  final bool? isFound;
   final GetUserAgreementsStatuses? getUserAgreementsStatus;
   final List<UserAgreementsModel>? userAgreementsList;
   final GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus;
@@ -91,6 +93,7 @@ class UserState {
         SendingResetPasswordCodeStatuses.initial,
     this.resetPasswordStatus,
     this.checkUserAccountStatus,
+    this.isFound,
     this.getUserAgreementsStatus,
     this.userAgreementsList,
     this.getUserAgreementDocumentStatus =
@@ -122,6 +125,7 @@ class UserState {
     SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus,
     ResetPasswordStatuses? resetPasswordStatus,
     CheckUserAccountStatuses? checkUserAccountStatus,
+    bool? isFound,
     GetUserAgreementsStatuses? getUserAgreementsStatus,
     List<UserAgreementsModel>? userAgreementsList,
     GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus,
@@ -153,6 +157,7 @@ class UserState {
       resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
       checkUserAccountStatus:
           checkUserAccountStatus ?? this.checkUserAccountStatus,
+      isFound: isFound ?? this.isFound,
       getUserAgreementsStatus:
           getUserAgreementsStatus ?? this.getUserAgreementsStatus,
       userAgreementsList: userAgreementsList ?? userAgreementsList,
