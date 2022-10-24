@@ -44,11 +44,14 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
             widget.attachPickedFile(pickedFile: image);
           }
         } else {
-          filePickerResult = (await FilePicker.platform.pickFiles(
+          filePickerResult = await FilePicker.platform.pickFiles(
+            allowedExtensions: fileType == FileType.custom
+                ? ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'rtf', 'txt']
+                : [],
             type: fileType,
             allowMultiple: false,
             onFileLoading: (FilePickerStatus status) => {},
-          ));
+          );
           if (filePickerResult != null) {
             widget.attachFilePickerResult(filePickerResult: filePickerResult);
           }
@@ -83,9 +86,9 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
           AttachFileItem(
             label: 'Проводник',
             iconPath: 'assets/icons/bottom_nav_bar/ic_file_outline.svg',
-            fileType: FileType.any,
+            fileType: FileType.custom,
             onTap: () {
-              _pickFiles(FileType.any);
+              _pickFiles(FileType.custom);
             },
           ),
         ]);
