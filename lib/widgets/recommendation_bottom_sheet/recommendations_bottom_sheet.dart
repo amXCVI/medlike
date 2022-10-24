@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
-import 'package:medlike/modules/about_clinic/price/recommendations_bottom_sheet_skeleton.dart';
+import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 
 class RecommendationBottomSheet extends StatelessWidget {
-  const RecommendationBottomSheet(
-      {Key? key, required this.serviceId, required this.serviceName})
-      : super(key: key);
+  const RecommendationBottomSheet({
+    Key? key,
+    this.serviceId,
+    required this.serviceName,
+    this.recommendationsText,
+  }) : super(key: key);
 
-  final String serviceId;
+  final String? serviceId;
   final String serviceName;
+  final String? recommendationsText;
 
   @override
   Widget build(BuildContext context) {
-    context
-        .read<ClinicsCubit>()
-        .getRecommendationsLstByServiceIds(serviceIds: [serviceId]);
+    if (serviceId != null) {
+      context
+          .read<ClinicsCubit>()
+          .getRecommendationsLstByServiceIds(serviceIds: [serviceId as String]);
+    }
 
     return SafeArea(child: BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
@@ -57,6 +63,9 @@ class RecommendationBottomSheet extends StatelessWidget {
                         ?.copyWith(color: AppColors.lightText),
                   ),
                   const SizedBox(height: 28),
+                  recommendationsText != null && recommendationsText!.isNotEmpty
+                      ? Text(recommendationsText as String)
+                      : const SizedBox(),
                   state.getRecommendationsListStatus ==
                           GetRecommendationsListStatuses.success
                       ? Column(
@@ -67,7 +76,11 @@ class RecommendationBottomSheet extends StatelessWidget {
                                 .map((e) => Text(e.recommendation))
                           ],
                         )
-                      : const RecommendationsBottomSheetSkeleton(),
+                      : const SizedBox(),
+                  state.getRecommendationsListStatus ==
+                          GetRecommendationsListStatuses.loading
+                      ? const RecommendationsBottomSheetSkeleton()
+                      : const SizedBox()
                 ],
               )
             ],
