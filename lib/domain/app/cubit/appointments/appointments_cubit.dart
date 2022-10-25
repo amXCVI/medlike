@@ -86,7 +86,7 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
           lastAppointment: response));
     } catch (e) {
       emit(state.copyWith(
-          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+          getLastAppointmentStatus: GetLastAppointmentStatuses.failed));
     }
   }
 
