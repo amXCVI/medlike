@@ -74,14 +74,14 @@ class _DiaryViewState extends State<DiaryView> {
       case 'Hour':
         break;
       case 'Day':
+        chartItems = GroupingHelper.groupByHour(items);
+        break;
       case 'Week':
-        items = GroupingHelper.groupByHour(items);
-        chartItems = items.map((e) => GroupingHelper.getByHour(e)).toList();
+        chartItems = GroupingHelper.groupBySixHours(items);
         break;
       case 'Month':
       default:
-        items = GroupingHelper.groupByDay(items);
-        chartItems = items.map((e) => GroupingHelper.getByDay(e)).toList();
+        chartItems = GroupingHelper.groupByDay(items);
     }
 
     return SingleChildScrollView(
