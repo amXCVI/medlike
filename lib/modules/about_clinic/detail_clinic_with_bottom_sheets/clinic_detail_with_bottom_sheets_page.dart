@@ -47,12 +47,22 @@ class _ClinicDetailWithBottomSheetsPageState
     });
   }
 
+  void onPanelClosed() {
+    if (widget.selectedClinic.buildings.length == 1) {
+      context.router.replaceNamed(AppRoutes.clinicInfo);
+    } else {
+      setState(() {
+        _panelController.close();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         if (_panelController.isPanelOpen) {
-          _panelController.close();
+          onPanelClosed();
         } else {
           context.router.replaceNamed(AppRoutes.clinicInfo);
         }
@@ -86,6 +96,7 @@ class _ClinicDetailWithBottomSheetsPageState
                     : clinicBuildings.length * 88 + 72,
                 parallaxEnabled: true,
                 parallaxOffset: .5,
+                onPanelClosed: onPanelClosed,
                 panel: ExpandedSlidingPanel(
                   buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,
