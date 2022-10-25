@@ -20,6 +20,7 @@ class AppointmentInfoItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
           softWrap: true,
+          style: Theme.of(context).textTheme.labelSmall,
         ),
       ],
     );

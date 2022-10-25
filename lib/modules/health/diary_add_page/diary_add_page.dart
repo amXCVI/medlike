@@ -17,6 +17,9 @@ class DiaryAddPage extends StatefulWidget {
     required this.decimalDigits,
     required this.paramName,
     required this.grouping,
+    required this.onSubmit,
+    required this.minValue,
+    required this.maxValue,
     this.initialValues,
     this.initialDate
   }) : super(key: key);
@@ -27,7 +30,10 @@ class DiaryAddPage extends StatefulWidget {
   final List<String> paramName;
   final DateTime? initialDate;
   final List<double>? initialValues;
+  final List<double> minValue;
+  final List<double> maxValue;
   final String grouping;
+  final Function(String, DateTime, DateTime) onSubmit;
 
   @override
   State<DiaryAddPage> createState() => _DiaryAddPageState();
@@ -35,6 +41,8 @@ class DiaryAddPage extends StatefulWidget {
 
 class _DiaryAddPageState extends State<DiaryAddPage> {
   final _formKey = GlobalKey<FormState>();
+  DateTime? _initialDate;
+  DateTime? _initialTime;
   
   late final List<TextEditingController> _controllers = widget.paramName.map(
     (e) => TextEditingController()
@@ -44,6 +52,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   ).toList();
   late List<String> initialValues = widget.paramName.map(
     (e) => ''
+  ).toList();
+  late List<bool> isValidate = widget.paramName.map(
+    (e) => false
   ).toList();
 
   final TextEditingController dateController = TextEditingController();
@@ -57,6 +68,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     if(widget.initialDate != null) {
       date = widget.initialDate;
       time = widget.initialDate;
+      _initialDate = widget.initialDate;
+      _initialTime = widget.initialDate;
     }
 
     if(widget.initialValues != null) {
@@ -78,23 +91,46 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     super.initState();
   }
 
+  void onFocus(int index, bool status) {
+    _formKey.currentState!.validate();
+    setState(() {
+      isValidate[index] = status;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final fields = widget.paramName.map((e) {
+      int index = widget.paramName.indexOf(e);
+
       return FormField(
-        labelText: e, 
-        controller: _controllers[widget.paramName.indexOf(e)], 
-        isEmpty: isEmpties[widget.paramName.indexOf(e)],
+        labelText: e,
+        isValidate: isValidate[index],
+        onFocus: () => onFocus(index, false), 
+        controller: _controllers[index], 
+        isEmpty: isEmpties[index],
         validator: (str) {
           final num = double.tryParse(str ?? '');
+
+          if(!isValidate[index]) {
+            return null;
+          }
+
           if(num == null) {
             return 'Введите число';
+          }
+          if(num < widget.minValue[index]) {
+            return 'Введённое значение ниже минимального';
+          }
+          if(num > widget.maxValue[index]) {
+            return 'Введённое значение выше максимального';
           }
           return null;
         },
         onChange: (text) {
+          onFocus(index, false);
           setState(() {
-            isEmpties[widget.paramName.indexOf(e)] = text == '';
+            isEmpties[index] = text == '';
           });
         },
       );
@@ -104,6 +140,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       setState(() {
         dateController.text = text;
         this.date = date;
+        _initialDate = date;
       });
     }
 
@@ -111,6 +148,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       setState(() {
         timeController.text = text;
         this.time = time;
+        _initialTime = time;
       });
     }
 
@@ -123,7 +161,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             child: DiaryAddForm(
               children: fields,
               formKey: _formKey,
-              initialDate: widget.initialDate,
+              initialDate: _initialDate,
+              initialTime: _initialTime,
               onDateChange: onDateChange,
               onTimeChange: onTimeChange,
               dateController: dateController,
@@ -133,7 +172,16 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             onPressed: () {
-              final dates = ValueHelper.getPeriodTiming(date!, widget.grouping);
+              isValidate.asMap().map((k, v) {
+                setState(() {
+                  isValidate[k] = true;
+                });
+                return MapEntry(k, v);
+              });
+
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
 
               final newDate = DateTime(
                 date!.year,
@@ -141,9 +189,14 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 date!.day,
                 time!.hour,
                 time!.minute
-              ); 
+              );
+
+              final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);
               
               if(widget.initialDate != null || widget.initialValues != null) {
+                final dates = ValueHelper.getPeriodTiming(widget.initialDate!, widget.grouping);
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().putDiaryEntry(
                   date: newDate,
                   oldDate: widget.initialDate!,
@@ -155,6 +208,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                   updateTo: dates[1]
                 );
               } else {
+                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
                 context.read<DiaryCubit>().postDiaryEntry(
                   date: newDate,
                   syn: state.selectedDiary!.syn,
@@ -168,7 +223,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               context.router.pop();
             },
             label: Text(
-              'Добавить'.toUpperCase(),
+              (widget.initialValues == null ? 'Добавить' : 'Сохранить').toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),

@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
 
 class GridItem extends StatelessWidget {
@@ -8,16 +11,24 @@ class GridItem extends StatelessWidget {
     required this.label,
     required this.imgSrc,
     required this.actionLink,
+    this.actionRoute,
   }) : super(key: key);
 
   final String label;
   final String imgSrc;
   final String actionLink;
+  final dynamic actionRoute;
 
   @override
   Widget build(BuildContext context) {
     void handleTapOnItem() {
-      context.router.pushNamed(actionLink);
+      switch (actionLink) {
+        case AppRoutes.clinicInfo:
+          context.router.push(AllClinicsListRoute(isFromMainPage: true));
+          break;
+        default:
+          context.router.pushNamed(actionLink);
+      }
     }
 
     return Padding(
@@ -56,10 +67,17 @@ class GridItem extends StatelessWidget {
                 children: [
                   Align(
                       alignment: AlignmentDirectional.bottomEnd,
-                      child: Image.asset(imgSrc, width: 100)),
+                      child: Image.asset(imgSrc,
+                          width: MediaQuery.of(context).size.width <
+                                  AppConstants.smScreenWidth
+                              ? 70
+                              : 100)),
                   Container(
                     padding: const EdgeInsets.all(16.0),
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width <
+                            AppConstants.smScreenWidth
+                        ? MediaQuery.of(context).size.width * 0.40
+                        : MediaQuery.of(context).size.width * 0.32,
                     child: Text(
                       label,
                       style: Theme.of(context)

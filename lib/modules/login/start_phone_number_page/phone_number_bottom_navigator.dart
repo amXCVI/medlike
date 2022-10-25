@@ -8,9 +8,8 @@ class LoginPageBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void handleTapOnAgreements(){
-      context.router
-          .replaceAll([AuthUserAgreementsRoute(isFullScreen: true)]);
+    void handleTapOnAgreements() {
+      context.router.push(AuthUserAgreementsRoute(isFullScreen: true));
     }
 
     return Padding(

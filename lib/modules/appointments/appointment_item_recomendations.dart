@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 
-class AppointmentItemRecommendations extends StatefulWidget {
+class AppointmentItemRecommendations extends StatelessWidget {
   const AppointmentItemRecommendations(
-      {Key? key, required this.recommendations})
+      {Key? key, required this.recommendations, required this.serviceName})
       : super(key: key);
 
   final String recommendations;
-
-  @override
-  State<AppointmentItemRecommendations> createState() =>
-      _AppointmentItemRecommendationsState();
-}
-
-class _AppointmentItemRecommendationsState
-    extends State<AppointmentItemRecommendations> {
-  bool isOpenRow = false;
+  final String serviceName;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.recommendations.isNotEmpty) {
+    if (recommendations.isNotEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: GestureDetector(
-          onTap: () => setState(() {
-            isOpenRow = !isOpenRow;
-          }),
+          onTap: () => {
+            showModalBottomSheet(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12),
+                  ),
+                ),
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => RecommendationBottomSheet(
+                      serviceName: serviceName,
+                      recommendationsText: recommendations.substring(
+                          1, recommendations.length - 1),
+                    ))
+          },
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset('assets/icons/appointments/info.svg'),
               const SizedBox(width: 8.0),
               Flexible(
                   child: Text(
-                widget.recommendations,
+                recommendations,
                 overflow: TextOverflow.ellipsis,
-                maxLines: isOpenRow ? 10 : 1,
+                maxLines: 1,
                 softWrap: true,
               )),
             ],

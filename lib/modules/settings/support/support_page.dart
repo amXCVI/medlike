@@ -8,9 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/support/attach_files_list.dart';
 import 'package:medlike/modules/settings/support/support_form.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/file_constraints_helper.dart';
 import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({Key? key}) : super(key: key);
@@ -54,9 +55,7 @@ class _SupportPageState extends State<SupportPage> {
               message: _controllerMessage.text,
               files: filesList,
             )
-            .then((value) => {
-                  context.router.replaceAll([const MainRoute()])
-                });
+            .then((value) => {context.router.pop()});
       } else {
         return;
       }
@@ -64,6 +63,9 @@ class _SupportPageState extends State<SupportPage> {
 
     void attachPickedFile({required PickedFile pickedFile}) {
       File attachedFile = File(pickedFile.path);
+      if (!checkConstraints(attachedFile)) {
+        return;
+      }
       setState(() {
         filesList.add(attachedFile);
       });
@@ -71,47 +73,53 @@ class _SupportPageState extends State<SupportPage> {
 
     void attachFilePickerResult({required FilePickerResult filePickerResult}) {
       File attachedFile = File(filePickerResult.files.first.path as String);
+      if (!checkConstraints(attachedFile)) {
+        return;
+      }
       setState(() {
         filesList.add(attachedFile);
       });
     }
 
-    return DefaultScaffold(
-      appBarTitle: 'Тех. поддержка',
-      isChildrenPage: true,
-      actionButton: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          return FloatingActionButton.extended(
-            onPressed: sendingEmail,
-            label: state.sendingEmailToSupportStatus ==
-                    SendingEmailToSupportStatuses.loading
-                ? const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
+    return TapCanvas(
+      child: DefaultScaffold(
+        appBarTitle: 'Тех. поддержка',
+        isChildrenPage: true,
+        actionButton: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: sendingEmail,
+              label: state.sendingEmailToSupportStatus ==
+                      SendingEmailToSupportStatuses.loading
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      'Отправить'.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-                  )
-                : Text(
-                    'Отправить'.toUpperCase(),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-          );
-        },
-      ),
-      rightBottomWidget: AttachFileButton(
-        attachPickedFile: attachPickedFile,
-        attachFilePickerResult: attachFilePickerResult,
-      ),
-      child: ListView(
-        children: [
-          SupportForm(
-            formKey: _formKey,
-            controllerTheme: _controllerTheme,
-            controllerMessage: _controllerMessage,
-            controllerEmail: _controllerEmail,
-          ),
-          AttachFilesList(filesList: filesList, handleDeleteFile: handleDeleteFile),
-        ],
+            );
+          },
+        ),
+        rightBottomWidget: AttachFileButton(
+          attachPickedFile: attachPickedFile,
+          attachFilePickerResult: attachFilePickerResult,
+        ),
+        child: ListView(
+          children: [
+            SupportForm(
+              formKey: _formKey,
+              controllerTheme: _controllerTheme,
+              controllerMessage: _controllerMessage,
+              controllerEmail: _controllerEmail,
+            ),
+            AttachFilesList(
+                filesList: filesList, handleDeleteFile: handleDeleteFile),
+          ],
+        ),
       ),
     );
   }

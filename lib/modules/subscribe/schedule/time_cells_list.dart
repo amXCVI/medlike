@@ -23,13 +23,16 @@ class _TimeCellsListState extends State<TimeCellsList> {
   Widget build(BuildContext context) {
     return widget.timetableCellsList.isNotEmpty
         ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Center(
-                  child: Text(
-                'Выберите время приема',
-                style: Theme.of(context).textTheme.titleLarge,
-              )),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(
+                  'Выберите время приема',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,

@@ -36,4 +36,5 @@ class AppRoutes {
   static const settings = '/settings';
   static const settingsAgreements = '/settings_agreements';
   static const settingsSupport = '/settings_support';
+  static const requireUpdater = '/require_updater_page';
 }

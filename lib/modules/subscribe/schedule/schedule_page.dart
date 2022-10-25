@@ -5,8 +5,7 @@ import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/modules/subscribe/schedule/day_appointments_list.dart';
-import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
+import 'package:medlike/modules/subscribe/schedule/appointments_list_widget.dart';
 import 'package:medlike/modules/subscribe/schedule/favorit_doctor_button.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list.dart';
 import 'package:medlike/modules/subscribe/schedule/time_cells_list_skeleton.dart';
@@ -106,6 +105,8 @@ class SchedulePage extends StatelessWidget {
     }
 
     dynamic _onRefreshData() {
+      _setSelectedDate(CalendarModel(
+          date: DateTime.now(), hasAvailableCells: true, hasLogs: true));
       _getCalendarList(isRefresh: true);
       _getCellsList(isRefresh: true);
       return Future(() => null);
@@ -190,8 +191,7 @@ class SchedulePage extends StatelessWidget {
                   state.getTimetableCellsStatus ==
                               GetTimetableCellsStatuses.success &&
                           state.timetableCellsList!.isEmpty
-                      ? const NotFoundData(
-                          text: 'Нет свободного времени')
+                      ? const NotFoundData(text: 'Нет свободного времени')
                       : const SizedBox(),
                   state.getTimetableCellsStatus ==
                           GetTimetableCellsStatuses.success
@@ -209,26 +209,18 @@ class SchedulePage extends StatelessWidget {
                               state.selectedCalendarItem != null &&
                               state.selectedCalendarItem!.hasAvailableCells
                           ? const TimeCellsListSkeleton()
-                          : Center(
-                              child: Text(
-                              'Нет свободного времени',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(color: AppColors.lightText),
-                            )),
-                  state.getTimetableCellsStatus ==
-                          GetTimetableCellsStatuses.success
-                      ? DayAppointmentsList(
-                          timetableLogsList: state.timetableLogsList
-                              as List<TimetableLogModel>,
-                        )
-                      : state.getTimetableCellsStatus ==
-                                  GetTimetableCellsStatuses.loading &&
-                              state.selectedCalendarItem != null &&
-                              state.selectedCalendarItem!.hasLogs
-                          ? const DayAppointmentsSkeleton()
-                          : const Text(''),
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: Center(
+                                child: Text(
+                                  'Нет свободного времени',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(color: AppColors.lightText),
+                                ),
+                              )),
+                  AppointmentsListWidget(selectedDate: state.selectedDate),
                 ],
               ),
             ),

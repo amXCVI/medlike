@@ -8,6 +8,7 @@ import 'package:medlike/modules/subscribe/researches_list/researches_list.dart';
 import 'package:medlike/modules/subscribe/researches_list/researches_list_skeleton.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 class ResearchesListPage extends StatelessWidget {
   const ResearchesListPage({
@@ -40,14 +41,22 @@ class ResearchesListPage extends StatelessWidget {
         return const Text('');
       } else if (state.getResearchesListStatus ==
           GetResearchesListStatuses.success) {
-        return ResearchesList(
-          researchesList: state.researchesList as List<Research>,
-          selectedResearchesIds: state.selectedResearchesIds as List<String>,
-          onRefreshData: _onRefreshData,
-        );
+        return state.filteredResearchesList.isEmpty &&
+                state.researchesList.isNotEmpty
+            ? const NotFoundData()
+            : ResearchesList(
+                researchesList: state.filteredResearchesList as List<Research>,
+                selectedResearchesIds:
+                    state.selectedResearchesIds as List<String>,
+                onRefreshData: _onRefreshData,
+              );
       } else {
         return const ResearchesListSkeleton();
       }
+    }
+
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterResearchesList(filterStr);
     }
 
     _onRefreshData();
@@ -59,6 +68,8 @@ class ResearchesListPage extends StatelessWidget {
               CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
                   .russianCategoryTypeName,
           isChildrenPage: true,
+          isSearch: true,
+          filteringFunction: _onFilterList,
           actionButton: Visibility(
             visible: state.getResearchesListStatus ==
                         GetResearchesListStatuses.success &&

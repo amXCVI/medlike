@@ -4,6 +4,7 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctors_list.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 import 'favorites_doctors_list_skeleton.dart';
 
@@ -28,11 +29,17 @@ class FavoriteDoctorsListPage extends StatelessWidget {
           );
     }
 
+    void _onFilterList(String filterStr) {
+      context.read<SubscribeCubit>().filterFavoritesDoctorsList(filterStr);
+    }
+
     _onRefreshData();
 
     return DefaultScaffold(
       appBarTitle: 'Избранные',
       isChildrenPage: true,
+      isSearch: true,
+      filteringFunction: _onFilterList,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           if (state.getFavoriteDoctorsListStatus ==
@@ -40,13 +47,17 @@ class FavoriteDoctorsListPage extends StatelessWidget {
             return const Text('fail');
           } else if (state.getFavoriteDoctorsListStatus ==
               GetFavoriteDoctorsListStatuses.success) {
-            return FavoriteDoctorsList(
-              doctorsList: state.favoriteDoctorsList as List<FavoriteDoctor>,
-              onRefreshData: _onRefreshData,
-              userId: userId,
-              buildingId: buildingId,
-              clinicId: clinicId,
-            );
+            return state.filteredFavoriteDoctorsList!.isEmpty &&
+                    state.favoriteDoctorsList!.isNotEmpty
+                ? const NotFoundData()
+                : FavoriteDoctorsList(
+                    doctorsList: state.filteredFavoriteDoctorsList
+                        as List<FavoriteDoctor>,
+                    onRefreshData: _onRefreshData,
+                    userId: userId,
+                    buildingId: buildingId,
+                    clinicId: clinicId,
+                  );
           } else {
             return const FavoritesDoctorsListSkeleton();
           }

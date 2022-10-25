@@ -5,7 +5,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
 
 class AppointmentsParagraph extends StatelessWidget {
@@ -13,12 +15,23 @@ class AppointmentsParagraph extends StatelessWidget {
     Key? key,
     required this.statusItem,
     required this.appointmentsList,
+    required this.clinicsList,
     required this.onRefreshData,
   }) : super(key: key);
 
   final StatusItem statusItem;
   final List<AppointmentModel> appointmentsList;
+  final List<ClinicModel> clinicsList;
   final Function onRefreshData;
+
+  ClinicModel? getClinic(AppointmentModel item) {
+    for (var clinic in clinicsList) {
+      if (clinic.id == item.clinicInfo.id) {
+        return clinic;
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,18 +128,72 @@ class AppointmentsParagraph extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: AppointmentItem(
-                                appointmentItem: item,
-                              ),
-                            )
+                              child: SliderChild(
+                                  item: item,
+                                  getClinic: getClinic,
+                                  index: appointmentsList.indexOf(item)))
                           : AppointmentItem(
-                              appointmentItem: item,
-                            )),
+                              appointmentItem: item, clinic: getClinic(item)!)),
                 ),
               )
               .toList(),
         ],
       ),
     );
+  }
+}
+
+class SliderChild extends StatefulWidget {
+  const SliderChild(
+      {Key? key,
+      required this.item,
+      required this.getClinic,
+      required this.index})
+      : super(key: key);
+
+  final AppointmentModel item;
+  final ClinicModel? Function(AppointmentModel) getClinic;
+  final int index;
+
+  @override
+  State<SliderChild> createState() => _SliderChildState();
+}
+
+class _SliderChildState extends State<SliderChild> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 100), () {
+      try {
+        final TourState? state = context.read<TourCubit>().state;
+        if (state!.tourStatuses == TourStatuses.first &&
+            state.isAppointmentShown != true &&
+            widget.index == 0) {
+          onShow(context);
+        }
+      } catch (err) {
+        print(err);
+      }
+    });
+  }
+
+  void onShow(BuildContext context) {
+    Slidable.of(context)!.openEndActionPane();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Slidable.of(context)!.close();
+      context.read<TourCubit>().checkAppointment();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TourCubit, TourState>(buildWhen: (_, state) {
+      return true;
+    }, builder: (context, state) {
+      return AppointmentItem(
+        appointmentItem: widget.item,
+        clinic: widget.getClinic(widget.item)!,
+      );
+    });
   }
 }

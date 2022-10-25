@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -48,20 +51,8 @@ class PasswordPageWidget extends StatelessWidget {
                             }
                           else
                             {
-                              getIsSavedPinCode().then((res) => {
-                                    if (res == true)
-                                      {
-                                        UserSecureStorage.setField(
-                                            AppConstants.isAuth, 'true'),
-                                        context.router
-                                            .replaceAll([const MainRoute()])
-                                      }
-                                    else
-                                      {
-                                        context.router.navigateNamed(
+                              context.router.navigateNamed(
                                             AppRoutes.loginPinCodeCreate),
-                                      }
-                                  })
                             }
                         })
                   }
@@ -70,6 +61,15 @@ class PasswordPageWidget extends StatelessWidget {
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
+        /// разлогиниваем, если юзер ввел слишком много неправильных паролей
+        if (state.tryCount == 0) {
+          context.read<UserCubit>().signOut();
+          if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          } else if (Platform.isIOS) {
+            exit(0);
+          }
+        }
         if (state.authStatus == UserAuthStatuses.loadingAuth ||
             // state.authStatus == UserAuthStatuses.successAuth ||
             state.getAllUserAgreementsStatus ==

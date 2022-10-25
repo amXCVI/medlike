@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart';
-import 'package:medlike/modules/about_clinic/detail_clinic/detail_clinic_page.dart';
+import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/clinic_detail_with_bottom_sheets_page.dart';
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
@@ -20,6 +20,7 @@ import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
 import 'package:medlike/modules/medcard/profiles_list/profiles_list_page.dart';
+import 'package:medlike/modules/require_update_app/require_update_app_page.dart';
 import 'package:medlike/modules/settings/agreements/agreements_page.dart';
 import 'package:medlike/modules/settings/settings_page.dart';
 import 'package:medlike/modules/settings/support/support_page.dart';
@@ -52,8 +53,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser], initial: true),
 
     AdaptiveRoute(path: AppRoutes.myAppointments, page: AppointmentsPage, guards: [CheckIsAuthUser]),
-
-    AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: ProfilesListPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: SubscribeProfilesListPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeClinics, page: ClinicsListPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeServices, page: ServicesListPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeResearches, page: ResearchesListPage, guards: [CheckIsAuthUser]),
@@ -73,7 +73,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.settingsSupport, page: SupportPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(path: AppRoutes.clinicInfoDetails, page: DetailClinicPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.clinicInfoDetails, page: ClinicDetailWithBottomSheetsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoPrice, page: PricePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
@@ -81,6 +81,8 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.health, page: CardsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
+
+    AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

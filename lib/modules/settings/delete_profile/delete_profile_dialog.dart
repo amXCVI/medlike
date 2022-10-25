@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 
 class DeleteProfileDialog extends StatelessWidget {
@@ -18,7 +19,7 @@ class DeleteProfileDialog extends StatelessWidget {
           .deleteUserAccount(userId: selectedUserId)
           .then((value) {
         UserSecureStorage.cleanStorage();
-        context.read<UserCubit>().signOut();
+        context.read<UserCubit>().forceLogout();
         context.router
             .replaceAll([StartPhoneNumberRoute(isDeletingProfile: true)]);
       });
@@ -60,18 +61,25 @@ class DeleteProfileDialog extends StatelessWidget {
           builder: (context, state) {
             return InkWell(
               onTap: () {
+                if (state.deletingUserAccountStatus ==
+                    DeletingUserAccountStatuses.loading) {
+                  return;
+                }
                 confirmDeleteAccount(state.selectedUserId as String);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 16.0, horizontal: 20.0),
-                child: Text(
-                  'Удалить'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: AppColors.mainError),
-                ),
+                child: state.deletingUserAccountStatus ==
+                        DeletingUserAccountStatuses.loading
+                    ? const CircularLoader(radius: 12)
+                    : Text(
+                        'Удалить'.toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall
+                            ?.copyWith(color: AppColors.mainError),
+                      ),
               ),
             );
           },

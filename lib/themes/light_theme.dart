@@ -95,7 +95,7 @@ final lightTheme = ThemeData(
       color: AppColors.mainText,
     ),
     labelSmall: TextStyle(
-      /// Текст в тостах // не используется
+      /// Текст в тостах
       fontFamily: 'AquawaxPro',
       fontSize: 14.0,
       fontWeight: FontWeight.w400,

@@ -2,33 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/modules/health/health_page/health_item.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:collection/collection.dart';
 
 class HealthList extends StatelessWidget {
   const HealthList({
     Key? key,
     required this.diariesCategoriesList,
     required this.diariesItems,
-    required this.firstDate,
-    required this.lastDate,
     required this.onLoadDada
   }) : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryFlatModel> diariesItems;
   final Function onLoadDada;
-  final DateTime firstDate;
-  final DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
-    DiaryFlatModel? getDiaryEntries(int index) {
+    DiaryFlatModel? getDiaryEntries(int index, DateTime periodStart, DateTime periodEnd) {
       for(int i = 0; i < diariesItems.length; i++) {
         if(diariesItems[i].syn == diariesCategoriesList[index].synonim) {
-          return diariesItems[i];
+          return ValueHelper.filterByPeriod(
+            diariesList: diariesItems[i],
+            start: periodStart,
+            end: periodEnd
+          );
         }
       }
 
@@ -40,14 +43,30 @@ class HealthList extends StatelessWidget {
       child: ListView.builder(
         itemCount: diariesCategoriesList.length,
         itemBuilder: (ctx, index) {
+          final diary = diariesItems.firstWhereOrNull(
+            (el) => el.syn == diariesCategoriesList[index].synonim
+          );
+
+          final date = diary?.currentValue.date ?? DateTime.now();
+          DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(date);
+          DateTime dateTo = date_utils.DateUtils.lastDayOfWeek(date);
+
           return HealthItem(
             iconPath: diariesCategoriesList[index].categoryImg, 
             title: diariesCategoriesList[index].name,
             measureItem: diariesCategoriesList[index].measureItem,
             decimalDigits: diariesCategoriesList[index].decimalDigits,
-            data: getDiaryEntries(index),
-            firstDate: firstDate,
-            lastDate: lastDate,
+            minValue: diariesCategoriesList[index].minValue,
+            maxValue: diariesCategoriesList[index].maxValue,
+            data: getDiaryEntries(index, dateFrom, dateTo),
+            firstDate: dateFrom,
+            lastDate: dateTo,
+            index: index,
+            setSelected: (status) {
+              context.read<PromptCubit>().select(
+                selectedId: index
+              );
+            },
             onLoadDada: onLoadDada,
             onNavigate: (String title, String syn) {
               final date = DateTime.now();
@@ -66,6 +85,8 @@ class HealthList extends StatelessWidget {
                   categoryModel: diariesCategoriesList[index]
                 )
               );
+
+              context.read<PromptCubit>().unselect();
             },
           );
         }

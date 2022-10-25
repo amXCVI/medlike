@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/main_page/slider/slide_item.dart';
-import 'package:medlike/modules/main_page/slider/slider_page_indicators.dart';
 import 'package:medlike/modules/main_page/slider/slider_skeleton.dart';
 
 class SliderWidget extends StatefulWidget {
@@ -23,8 +22,11 @@ class _SliderWidgetState extends State<SliderWidget> {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
         if (state.getMainscreenPromotionsListStatus ==
-            GetMainscreenPromotionsListStatuses.failed) {
-          return const Text('');
+                GetMainscreenPromotionsListStatuses.failed ||
+            state.getMainscreenPromotionsListStatus ==
+                    GetMainscreenPromotionsListStatuses.success &&
+                state.mainscreenPromotionsList!.isEmpty) {
+          return const SizedBox();
         } else if (state.getMainscreenPromotionsListStatus ==
             GetMainscreenPromotionsListStatuses.success) {
           return Stack(
@@ -38,8 +40,9 @@ class _SliderWidgetState extends State<SliderWidget> {
                             ))
                         .toList(),
                     options: CarouselOptions(
+                      viewportFraction: 0.93,
+                      height: 176,
                       aspectRatio: 16 / 9,
-                      viewportFraction: 1,
                       initialPage: 0,
                       enableInfiniteScroll: true,
                       reverse: false,
@@ -48,7 +51,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       autoPlayAnimationDuration:
                           const Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
+                      enlargeCenterPage: false,
                       onPageChanged: (page, reason) {
                         setState(() {
                           activePage = page;
@@ -57,21 +60,22 @@ class _SliderWidgetState extends State<SliderWidget> {
                       scrollDirection: Axis.horizontal,
                     )),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width / 16 * 9 - 32,
-                  width: MediaQuery.of(context).size.width,
-                  child: SliderPageIndicators(
-                    indicators: state.mainscreenPromotionsList!
-                        .asMap()
-                        .map((index, item) => MapEntry(index, ''))
-                        .keys
-                        .toList(),
-                    activeIndicator: activePage,
-                  ),
-                ),
-              ),
+              /// Белые точки с кол-вом слайдов и отметкой активной страницы
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: SizedBox(
+              //     height: MediaQuery.of(context).size.width / 16 * 9 - 32,
+              //     width: MediaQuery.of(context).size.width,
+              //     child: SliderPageIndicators(
+              //       indicators: state.mainscreenPromotionsList!
+              //           .asMap()
+              //           .map((index, item) => MapEntry(index, ''))
+              //           .keys
+              //           .toList(),
+              //       activeIndicator: activePage,
+              //     ),
+              //   ),
+              // ),
             ],
           );
         } else {

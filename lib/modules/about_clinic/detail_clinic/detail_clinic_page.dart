@@ -15,6 +15,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
+/// Страница о клинике в старом дизайне
 class DetailClinicPage extends StatefulWidget {
   const DetailClinicPage({
     Key? key,
@@ -37,9 +38,9 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
     selectedBuilding = widget.selectedClinic.buildings[0];
   }
 
-  void handleSelectedBuilding(String buildingId) {
+  void handleSelectedBuilding(BuildingLatLngModel building) {
     BuildingModel newSelectedBuilding = widget.selectedClinic.buildings
-        .firstWhere((element) => element.buildingId == buildingId);
+        .firstWhere((element) => element.buildingId == building.buildingId);
     setState(() {
       selectedBuilding = newSelectedBuilding;
     });
@@ -62,7 +63,7 @@ class _DetailClinicPageState extends State<DetailClinicPage> {
             buildingId: selectedBuilding.id,
             clinicId: widget.selectedClinic.id));
       } else {
-        context.router.push(const ProfilesListRoute());
+        context.router.push(const SubscribeProfilesListRoute());
       }
     }
 

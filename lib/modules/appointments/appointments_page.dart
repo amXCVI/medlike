@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/appointments/appointments_calendar.dart';
 import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
@@ -21,6 +22,7 @@ class AppointmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> _onLoadDada({bool isRefresh = true}) async {
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
+      context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
     }
 
     _onLoadDada(isRefresh: isRefresh as bool);
@@ -49,7 +51,7 @@ class AppointmentsPage extends StatelessWidget {
                       return const Text('');
                     } else if (state.getAppointmentsStatus ==
                         GetAppointmentsStatuses.success) {
-                      return AppointmentsList(
+                      return ClinicsBuilder(
                         appointmentsList: state.filteredAppointmentsList
                             as List<AppointmentModel>,
                         onRefreshData: _onLoadDada,
@@ -64,6 +66,38 @@ class AppointmentsPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({
+    Key? key,
+    required this.appointmentsList,
+    required this.onRefreshData,
+  }) : super(key: key);
+
+  final List<AppointmentModel> appointmentsList;
+  final Function onRefreshData;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.failed) {
+          return const Text('');
+        } else if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.success) {
+          return AppointmentsList(
+            appointmentsList: appointmentsList,
+            clinicsList: state.clinicsList!,
+            onRefreshData: onRefreshData,
+          );
+        } else {
+          return const AppointmentsListSkeleton();
+        }
+      },
     );
   }
 }

@@ -19,7 +19,7 @@ class SettingsList extends StatelessWidget {
     }
 
     void handleTapAgreements() {
-      context.router.push(const AgreementsRoute());
+      context.router.push(AgreementsRoute());
     }
 
     void handleTapOnChangePassword() {

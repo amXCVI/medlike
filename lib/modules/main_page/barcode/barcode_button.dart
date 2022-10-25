@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/main_page/barcode_skeleton.dart';
+import 'package:medlike/modules/main_page/barcode/barcode_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/barcode_helper.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
@@ -39,7 +39,7 @@ class BarcodeButton extends StatelessWidget {
                                       const Divider(),
                                       const SizedBox(height: 24),
                                       SvgPicture.string(buildBarcode(
-                                        Barcode.gs128(),
+                                        Barcode.pdf417(),
                                         state.selectedUserId == null ||
                                                 state.selectedUserId!.isEmpty
                                             ? state.userProfiles![0].barCode
@@ -57,7 +57,7 @@ class BarcodeButton extends StatelessWidget {
                                       )),
                                       const SizedBox(height: 16),
                                       Text(
-                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрих-код\nмедицинскому сотруднику',
+                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрихкод\nмедицинскому сотруднику',
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall

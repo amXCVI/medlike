@@ -19,12 +19,13 @@ class AgreementsChecker extends StatelessWidget {
     }
 
     void onTapDocsLink() {
-      context.router.push(const AgreementsRoute());
+      context.router.push(AgreementsRoute(isAppointmentAgreements: true));
     }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        const SizedBox(width: 16.0),
         CustomCheckbox(
           value: isChecked,
           onChanged: (e) {

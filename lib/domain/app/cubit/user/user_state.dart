@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 part of 'user_cubit.dart';
 
 /// Статусы при авторизации. Для авторизации с номером-паролем
@@ -15,7 +17,8 @@ enum SendingResetPasswordCodeStatuses { initial, loading, success, failed }
 
 enum ResetPasswordStatuses { initial, loading, success, failed }
 
-enum CheckUserAccountStatuses { initial, loading, success, failed }
+// Специальный 5-ый статус для сброса номера в поле
+enum CheckUserAccountStatuses { initial, loading, success, failed, continued }
 
 enum GetUserAgreementsStatuses { initial, loading, success, failed }
 
@@ -33,12 +36,25 @@ enum AcceptedAgreementsStatuses { initial, loading, success, failed }
 
 enum SendingEmailToSupportStatuses { initial, loading, success, failed }
 
+enum GetLastNotReadEventStatuses { initial, loading, success, failed }
+
+enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
+
+enum NotificationEventType { 
+  AppointmentCompleted, 
+  AppointmentCanceled, 
+  NewMedcardEventPdf, 
+  NewMedcardEventJson, 
+  AppointmentScheduled
+}
+
 class UserState {
   final UserAuthStatuses? authStatus;
   final UserAuthScreens? authScreen;
   final String? userPhoneNumber;
   final String? token;
   final String? refreshToken;
+  final int? tryCount;
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
   final String? selectedUserId;
@@ -46,6 +62,7 @@ class UserState {
   final SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus;
   final ResetPasswordStatuses? resetPasswordStatus;
   final CheckUserAccountStatuses? checkUserAccountStatus;
+  final bool? isFound;
   final GetUserAgreementsStatuses? getUserAgreementsStatus;
   final List<UserAgreementsModel>? userAgreementsList;
   final GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus;
@@ -56,6 +73,10 @@ class UserState {
   final GetAllUserAgreementsStatuses? getAllUserAgreementsStatus;
   final AcceptedAgreementsStatuses? acceptedAgreementsStatus;
   final SendingEmailToSupportStatuses? sendingEmailToSupportStatus;
+  final GetLastNotReadEventStatuses? getLastNotReadEventStatus;
+  final NotificationModel? lastNotification;
+  final bool? isLastNotificationShow;
+  final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -63,6 +84,7 @@ class UserState {
     this.userPhoneNumber,
     this.token,
     this.refreshToken,
+    this.tryCount,
     this.getUserProfileStatus,
     this.userProfiles,
     this.selectedUserId = '',
@@ -71,6 +93,7 @@ class UserState {
         SendingResetPasswordCodeStatuses.initial,
     this.resetPasswordStatus,
     this.checkUserAccountStatus,
+    this.isFound,
     this.getUserAgreementsStatus,
     this.userAgreementsList,
     this.getUserAgreementDocumentStatus =
@@ -82,6 +105,10 @@ class UserState {
     this.getAllUserAgreementsStatus = GetAllUserAgreementsStatuses.initial,
     this.acceptedAgreementsStatus,
     this.sendingEmailToSupportStatus,
+    this.getLastNotReadEventStatus,
+    this.lastNotification,
+    this.isLastNotificationShow,
+    this.updatingNotificationStatusStatus,
   });
 
   UserState copyWith({
@@ -90,6 +117,7 @@ class UserState {
     String? userPhoneNumber,
     String? token,
     String? refreshToken,
+    int? tryCount,
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
     String? selectedUserId,
@@ -97,6 +125,7 @@ class UserState {
     SendingResetPasswordCodeStatuses? sendingResetPasswordCodeStatus,
     ResetPasswordStatuses? resetPasswordStatus,
     CheckUserAccountStatuses? checkUserAccountStatus,
+    bool? isFound,
     GetUserAgreementsStatuses? getUserAgreementsStatus,
     List<UserAgreementsModel>? userAgreementsList,
     GetUserAgreementDocumentStatuses? getUserAgreementDocumentStatus,
@@ -107,6 +136,10 @@ class UserState {
     GetAllUserAgreementsStatuses? getAllUserAgreementsStatus,
     AcceptedAgreementsStatuses? acceptedAgreementsStatus,
     SendingEmailToSupportStatuses? sendingEmailToSupportStatus,
+    GetLastNotReadEventStatuses? getLastNotReadEventStatus,
+    NotificationModel? lastNotification,
+    bool? isLastNotificationShow,
+    UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -114,6 +147,7 @@ class UserState {
       userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
+      tryCount: tryCount ?? this.tryCount,
       getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       userProfiles: userProfiles ?? this.userProfiles,
       selectedUserId: selectedUserId ?? this.selectedUserId,
@@ -123,6 +157,7 @@ class UserState {
       resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
       checkUserAccountStatus:
           checkUserAccountStatus ?? this.checkUserAccountStatus,
+      isFound: isFound ?? this.isFound,
       getUserAgreementsStatus:
           getUserAgreementsStatus ?? this.getUserAgreementsStatus,
       userAgreementsList: userAgreementsList ?? userAgreementsList,
@@ -141,6 +176,12 @@ class UserState {
           acceptedAgreementsStatus ?? this.acceptedAgreementsStatus,
       sendingEmailToSupportStatus:
           sendingEmailToSupportStatus ?? this.sendingEmailToSupportStatus,
+      getLastNotReadEventStatus:
+          getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
+      lastNotification: lastNotification ?? this.lastNotification,
+      isLastNotificationShow: isLastNotificationShow ?? this.isLastNotificationShow,
+      updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
+          this.updatingNotificationStatusStatus,
     );
   }
 

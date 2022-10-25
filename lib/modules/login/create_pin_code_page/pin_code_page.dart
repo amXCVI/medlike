@@ -15,7 +15,9 @@ class CreatePinCodePage extends StatelessWidget {
       appBarTitle: 'Пин-код',
       actions: const [UnauthSupportButton()],
       isChildrenPage: true,
-      bottomNavigationBar: const SizedBox(),
+      bottomNavigationBar: const SizedBox(
+        height: 1,
+      ),
     );
   }
 }

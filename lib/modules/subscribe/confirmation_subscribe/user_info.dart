@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
@@ -44,7 +45,9 @@ class UserInfo extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    getAgeByBirthday(userProfile.birthday as DateTime),
+                    DateFormat("dd.MM.yyyy")
+                            .format(userProfile.birthday as DateTime) +
+                        ' (${getAgeByBirthday(userProfile.birthday as DateTime)})',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: false,

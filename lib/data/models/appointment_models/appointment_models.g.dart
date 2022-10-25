@@ -70,7 +70,7 @@ Map<String, dynamic> _$$_PatientInfoModelToJson(_$_PatientInfoModel instance) =>
 
 _$_ClinicInfoModel _$$_ClinicInfoModelFromJson(Map<String, dynamic> json) =>
     _$_ClinicInfoModel(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String?,
       address: json['address'] as String?,
     );
@@ -104,8 +104,8 @@ Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
 
 _$_ResearchesModel _$$_ResearchesModelFromJson(Map<String, dynamic> json) =>
     _$_ResearchesModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
+      id: json['id'] as String?,
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$$_ResearchesModelToJson(_$_ResearchesModel instance) =>

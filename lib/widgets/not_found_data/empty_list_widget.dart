@@ -9,31 +9,30 @@ class EmptyListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Center(
-          child: SizedBox(
-            height: 100,
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            imgPath,
+            width: 265,
+            alignment: Alignment.center,
           ),
-        ),
-        Image.asset(
-          imgPath,
-          width: 265,
-          alignment: Alignment.center,
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Color.fromRGBO(158, 157, 157, 1)),
-        )
-      ],
+          SizedBox(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+          ),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Color.fromRGBO(158, 157, 157, 1)),
+          )
+        ],
+      ),
     );
   }
 }

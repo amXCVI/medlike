@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/cabinet_item.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/doctor_item.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/widgets/info_place/info_place.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
@@ -44,21 +46,35 @@ class ResearchCabinetsList extends StatefulWidget {
 class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
   @override
   Widget build(BuildContext context) {
-    void _handleTapOnDoctor(Doctor doctor) {
-      context.read<SubscribeCubit>().setSelectedDoctor(doctor);
-      context.router.push(ScheduleRoute(
-        pageTitle: widget.nextPageTitle,
-        pageSubtitle: widget.nextPageSubtitle,
-        userId: widget.userId,
-        buildingId: widget.buildingId,
-        clinicId: widget.clinicId,
-        categoryTypeId: widget.categoryTypeId,
-        researchIds: widget.researchIds,
-        doctorId: doctor.id,
-        specialisationId: doctor.specializationId,
-        isAny: false,
-        isFavorite: doctor.isFavorite,
-      ));
+    void _handleTapOnDoctor({Doctor? doctor}) {
+      if (doctor != null) {
+        context.read<SubscribeCubit>().setSelectedDoctor(doctor);
+        context.router.push(ScheduleRoute(
+          pageTitle:
+              '${doctor.lastName} ${doctor.firstName} ${doctor.middleName}',
+          pageSubtitle: doctor.specialization,
+          userId: widget.userId,
+          buildingId: widget.buildingId,
+          clinicId: widget.clinicId,
+          categoryTypeId: widget.categoryTypeId,
+          researchIds: widget.researchIds,
+          doctorId: doctor.id,
+          specialisationId: doctor.specializationId,
+          isAny: false,
+          isFavorite: doctor.isFavorite,
+        ));
+      } else {
+        context.router.push(ScheduleRoute(
+          pageTitle: widget.nextPageTitle,
+          pageSubtitle: widget.nextPageSubtitle,
+          userId: widget.userId,
+          buildingId: widget.buildingId,
+          clinicId: widget.clinicId,
+          categoryTypeId: widget.categoryTypeId,
+          researchIds: widget.researchIds,
+          isAny: true,
+        ));
+      }
     }
 
     void _handleTapOnCabinet(Cabinet cabinet) {
@@ -75,16 +91,33 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
       ));
     }
 
+    void _onCloseInfoPlace() {
+      context.read<TourCubit>().closeCabinetsInfoPlace();
+    }
+
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
       child: DefaultScrollbar(
         child: ListView(shrinkWrap: true, children: [
+          BlocBuilder<TourCubit, TourState>(
+            builder: (context, state) {
+              return state.tourStatuses == TourStatuses.first &&
+                      state.isCabinetsInfoPlaceShow != true
+                  ? InfoPlace(
+                      text:
+                          'При записи на кабинет специалист подбирается автоматически, закрепленный за выбранным кабинетом',
+                      onClosePlace: _onCloseInfoPlace,
+                      margin: const EdgeInsets.all(16.0),
+                    )
+                  : const SizedBox();
+            },
+          ),
           // Не показывать вариант "Любой", если меньше двух вариантов
           widget.doctorsList.length + widget.cabinetsList.length > 1
               ? SubscribeRowItem(
                   title: 'Любой',
                   onTap: () {
-                    // _handleTapOnDoctor(allDoctorsObject);
+                    _handleTapOnDoctor();
                   },
                   customIcon: CircleAvatar(
                     backgroundColor: Colors.white,
@@ -98,7 +131,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
               .map((item) => DoctorItem(
                     doctorItem: item,
                     onTap: () {
-                      _handleTapOnDoctor(item);
+                      _handleTapOnDoctor(doctor: item);
                     },
                   ))
               .toList(),

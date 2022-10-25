@@ -15,15 +15,19 @@ class PinCodeView extends StatefulWidget {
     required this.setPinCode,
     required this.handleBiometricMethod,
     this.isForcedShowingBiometricModal = false,
+    this.height,
     this.signInTitle,
     required this.pinCodeTitle,
+    this.isInit = false,
     this.noUsedBiometric,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
   final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
+  final double? height;
   final String? signInTitle;
   final String pinCodeTitle;
+  final bool isInit;
   final bool? noUsedBiometric;
 
   @override
@@ -60,7 +64,7 @@ class _PinCodeViewState extends State<PinCodeView> {
       setState(() {
         isSupportedAndEnabledBiometric = false;
       });
-    } else {
+    } else if(!widget.isInit) {
       isSupportedAndEnabledBiometric = true;
     }
 
@@ -144,14 +148,22 @@ class _PinCodeViewState extends State<PinCodeView> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.height - 160,
+      height: widget.height ?? (MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+        ? MediaQuery.of(context).size.height - 140
+        : MediaQuery.of(context).size.height - 130),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+                ? MainAxisAlignment.start
+                : MainAxisAlignment.start,
         children: [
-          const Expanded(child: SizedBox()),
+          MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+              ? const SizedBox(height: 12)
+              : const SizedBox(), //const Expanded(child: SizedBox()),
           Expanded(
             child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                       child: Text(
@@ -162,7 +174,11 @@ class _PinCodeViewState extends State<PinCodeView> {
                         ?.copyWith(color: AppColors.mainText),
                     textAlign: TextAlign.center,
                   )),
-                  const SizedBox(height: 28),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.width <
+                              AppConstants.smScreenWidth
+                          ? 8
+                          : 28),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -218,7 +234,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                                     )
                                   : item.buttonType ==
                                           PinCodeKeyboardTypes.biometric
-                                      ? isSupportedAndEnabledBiometric
+                                      ? isSupportedAndEnabledBiometric && !widget.isInit
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(12.0),
@@ -259,7 +275,9 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
-          isSupportedAndEnabledBiometric && isShowingBiometricModal ||
+          (isSupportedAndEnabledBiometric 
+            && isShowingBiometricModal 
+            && !widget.isInit) ||
                   widget.isForcedShowingBiometricModal
               ? BiometricAuthenticationWidget(
                   onSuccess: onSuccessAuthBiometric,

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_file_item.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/not_found_data/empty_list_widget.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class MedcardList extends StatelessWidget {
@@ -33,19 +33,9 @@ class MedcardList extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => onRefreshData(isRefresh: true),
       child: medcardDocsList.isEmpty
-          ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 65),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Нет результатов',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppColors.lightText, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
+          ? const EmptyListWidget(
+              label: 'Здесь будет список ваших медицинских результатов',
+              imgPath: 'assets/images/empty_medcard.png',
             )
           : DefaultScrollbar(
               child: ListView(

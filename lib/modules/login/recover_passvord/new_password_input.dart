@@ -25,7 +25,9 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   late TextEditingController _codeInputController = TextEditingController()
     ..text = '';
 
-  bool _isObscure = false;
+  bool _isObscure = true;
+  bool _validatePassword = true;
+  bool _validateConfirm = true;
   late int _step = 0;
   late String _password = '';
   late String _confirmPassword = '';
@@ -37,6 +39,18 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
     super.initState();
   }
 
+  bool validatePassword(String value) {
+    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,16}$');
+    return regex.hasMatch(value);
+  }
+
+  void resetValidation() {
+    setState(() {
+      _validatePassword = true;
+      _validateConfirm = true;
+    });
+  }
+
   void getUserPhoneNumber() async {
     String? phoneNumber =
         await UserSecureStorage.getField(AppConstants.userPhoneNumber);
@@ -46,13 +60,28 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   }
 
   void _handleSubmittedPassword(String value) {
+    final status = validatePassword(value);
     if (_step == 0) {
+      setState(() {
+        _validatePassword = status;
+      });
+      if(!status) {
+        return;
+      }
       setState(() {
         _password = value;
         _step = 1;
         _codeInputController = TextEditingController()..text = '';
       });
     } else {
+      final confirmStatus = value == _password;
+      setState(() {
+        _validatePassword = status;
+        _validateConfirm = confirmStatus;
+      });
+      if(!status || !confirmStatus) {
+        return;
+      }
       setState(() {
         _confirmPassword = value;
       });
@@ -89,6 +118,8 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
 
   @override
   Widget build(BuildContext context) {
+    final validate = _validatePassword && _validateConfirm;
+
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (_userPhoneNumber != 'null') {
@@ -148,34 +179,65 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
             const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: TextField(
-                controller: _codeInputController,
-                autofocus: false,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: SvgPicture.asset(_isObscure
-                        ? 'assets/icons/login/show_password_symbols.svg'
-                        : 'assets/icons/login/not_show_password_symbols.svg'),
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                  ),
-                  prefixIcon: const SizedBox(width: 40),
-                ),
-                style: Theme.of(context).textTheme.labelLarge,
-                obscureText: _isObscure,
-                enableSuggestions: false,
-                autocorrect: false,
-                textAlign: TextAlign.center,
-                showCursor: true,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (value) {
-                  _handleSubmittedPassword(value);
+              child: Focus(
+                onFocusChange: (value) {
+                  if(value) {
+                    resetValidation();
+                  }
                 },
+                child: TextField(
+                  controller: _codeInputController,
+                  onChanged: (value) => resetValidation(),
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: '********',
+                    hintStyle: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(color: AppColors.lightText),
+                    suffixIcon: IconButton(
+                      icon: SvgPicture.asset(_isObscure
+                          ? 'assets/icons/login/show_password_symbols.svg'
+                          : 'assets/icons/login/not_show_password_symbols.svg'),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
+                    prefixIcon: const SizedBox(width: 40),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: validate ? AppColors.mainText : AppColors.mainError, 
+                        width: 1.0
+                      ),
+                    )
+                  ),
+                  style: Theme.of(context).textTheme.labelLarge,
+                  obscureText: _isObscure,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  textAlign: TextAlign.center,
+                  showCursor: true,
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (value) {
+                    _handleSubmittedPassword(value);
+                  },
+                ),
               ),
             ),
+            const SizedBox(height: 12),
+            Text(
+              !_validateConfirm ? 'Пароли не совпадают' 
+                : 'от 8 символов, большие и маленькие буквы, цифры',
+              textAlign: TextAlign.center,
+              style:  Theme.of(context)
+                .textTheme
+                .labelSmall
+                ?.copyWith(
+                  color: validate ? AppColors.lightText : AppColors.mainError
+                ),
+            )
           ],
         );
       },

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
+import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class FavoriteDoctorButton extends StatefulWidget {
   const FavoriteDoctorButton({
@@ -29,6 +31,7 @@ class FavoriteDoctorButton extends StatefulWidget {
 class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
     with TickerProviderStateMixin {
   late final AnimationController _lottieAnimationController;
+  final _key = GlobalKey();
 
   @override
   void initState() {
@@ -38,6 +41,29 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
     if (widget.isFavorite) {
       _lottieAnimationController.forward();
     }
+
+    Future.delayed(const Duration(
+      milliseconds: 100
+    ), () {
+      final state = context.read<TourCubit>().state;
+      final tooltip = TourTooltip.of(context).create(
+          'Добавьте врача в избранные',
+          width: 221,
+          height: 44,
+          onDismiss: () {
+            context.read<TourCubit>().checkFavorite();
+          }
+        );
+
+        if(state.tourStatuses == TourStatuses.first
+          && state.isFavoriteShown != true
+        ) {
+          tooltip.show(
+            widgetKey: _key,
+            offset: const Offset(0, 16)
+          );
+        }
+    });
   }
 
   @override
@@ -65,15 +91,20 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
       }
     }
 
-    return IconButton(
-      onPressed: _handleTapOnFavoriteDoctor,
-      icon: Lottie.asset(
-        'assets/animations/favorite_doctor_button.json',
-        controller: _lottieAnimationController,
-        alignment: Alignment.center,
-        repeat: false,
-      ),
-      tooltip: widget.isFavorite.toString(),
+    return BlocBuilder<TourCubit, TourState>(
+      builder: (cxt, state) {
+        return IconButton(
+          key: _key,
+          onPressed: _handleTapOnFavoriteDoctor,
+          icon: Lottie.asset(
+            'assets/animations/favorite_doctor_button.json',
+            controller: _lottieAnimationController,
+            alignment: Alignment.center,
+            repeat: false,
+          ),
+          tooltip: widget.isFavorite ? 'Удалить из избранных' : 'Добавить в избранные',
+        );   
+      },
     );
   }
 }
