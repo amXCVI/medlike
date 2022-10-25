@@ -81,7 +81,14 @@ class AppointmentItem extends StatelessWidget {
             ],
           ),
           AppointmentItemRecommendations(
-              recommendations: appointmentItem.recommendations ?? ''),
+            recommendations: appointmentItem.recommendations ?? '',
+            serviceName: appointmentItem.categoryType == 1 ||
+                    appointmentItem.categoryType == 0
+                ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+                : '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.researches.map(
+                      (e) => e.name as String,
+                    ).join(', ')}',
+          ),
           const SizedBox(height: 8.0),
           Row(
             children: [

@@ -67,6 +67,12 @@ class _PricePageState extends State<PricePage> {
   }
 
   void handleTapOnFilterItem(String filterValue) {
+    if (selectedFilters.isEmpty) {
+      setState(() {
+        selectedFilters.add(filterValue);
+      });
+      return;
+    }
     if (filterValue.isEmpty) {
       if (selectedFilters.contains(filterValue)) {
         setState(() {

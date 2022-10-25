@@ -68,6 +68,7 @@ class ClinicsBuilder extends StatelessWidget {
                       state.getAppointmentInfoStatus !=
                           GetAppointmentInfoStatuses.loading
                   ? AppointmentRecommendations(
+                serviceName: state.appointmentInfoData!.serviceName,
                       recommendations: state
                           .appointmentInfoData!.recommendations
                           .asMap()

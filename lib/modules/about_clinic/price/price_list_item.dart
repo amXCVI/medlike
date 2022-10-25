@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
-import 'package:medlike/modules/about_clinic/price/recommendations_bottom_sheet.dart';
+import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class PriceListItem extends StatelessWidget {

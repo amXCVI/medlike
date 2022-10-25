@@ -1,41 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 
-class AppointmentRecommendations extends StatefulWidget {
+class AppointmentRecommendations extends StatelessWidget {
   const AppointmentRecommendations(
-      {Key? key, required this.recommendations})
+      {Key? key, required this.recommendations, required this.serviceName})
       : super(key: key);
 
   final String recommendations;
-
-  @override
-  State<AppointmentRecommendations> createState() =>
-      _AppointmentRecommendationsState();
-}
-
-class _AppointmentRecommendationsState
-    extends State<AppointmentRecommendations> {
-  bool isOpenRow = false;
+  final String serviceName;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.recommendations.length > 2) {
+    if (recommendations.length > 2) {
       return GestureDetector(
-        onTap: () => setState(() {
-          isOpenRow = !isOpenRow;
-        }),
+        onTap: () {
+          showModalBottomSheet(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  topLeft: Radius.circular(12),
+                ),
+              ),
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => RecommendationBottomSheet(
+                    serviceName: serviceName,
+                    recommendationsText: recommendations.substring(
+                        1, recommendations.length - 1),
+                  ));
+        },
         child: Row(
           children: [
             Expanded(
               child: Text(
-                widget.recommendations.substring(1, widget.recommendations.length - 1),
+                recommendations.substring(1, recommendations.length - 1),
                 overflow: TextOverflow.ellipsis,
-                maxLines: isOpenRow ? 100 : 2,
+                maxLines: 2,
                 softWrap: true,
               ),
-            ), RotatedBox(
-                quarterTurns: isOpenRow ? 135 : 0,
-                child: SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'))
+            ),
+            SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
           ],
         ),
       );
