@@ -568,6 +568,15 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         CreatingAppointmentStatuses.success) {
       return;
     }
+
+    /// Если черновик приема создан, но не оплачен
+    if (state.creatingAppointmentStatus ==
+        CreatingAppointmentStatuses.createdDraft) {
+      registerOrder(
+          userId: userId,
+          appointmentIds: [state.createdAppointmentId as String].toList());
+      return;
+    }
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
@@ -615,54 +624,21 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       CreateNewAppointmentResponseModel response =
           await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
+        createdAppointmentId: response.result,
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
       ));
       if (state.selectedPayType == AppConstants.cardPayType) {
         registerOrder(
             userId: userId, appointmentIds: [response.result].toList());
-      }
-      Future.delayed(const Duration(seconds: 2), () {
-        /// похоже, null в стейт поместить нельзя. С доктором не сработало
-        /// хотя ошибок нет в линтере.
         emit(state.copyWith(
-          creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
-          selectedUser: null,
-          selectedDoctor: const Doctor(
-            id: '',
-            lastName: '',
-            firstName: '',
-            middleName: '',
-            specializationId: '',
-            specialization: '',
-            price: 0,
-            categoryType: -1,
-            isFavorite: false,
-            categories: [],
-          ),
-          selectedBuilding: null,
-          selectedCabinet: null,
-          selectedCalendarItem: null,
-          selectedResearchesIds: null,
-          selectedService: null,
-          selectedSpecialisation: null,
-          selectedTimetableCell: null,
-          selectedDate: DateTime.now(),
-          appointmentInfoData: null,
-          researchesList: [],
-          filteredResearchesList: [],
-          specialisationsList: [],
-          filteredSpecialisationsList: [],
-          doctorsList: [],
-          filteredDoctorsList: [],
-          cabinetsList: [],
-          filteredCabinetsList: [],
-          calendarList: [],
-          timetableCellsList: [],
-          timetableLogsList: [],
-          selectedPayType: null,
-          paymentUrl: null,
+          creatingAppointmentStatus: CreatingAppointmentStatuses.createdDraft,
         ));
-      });
+      } else {
+        emit(state.copyWith(
+          creatingAppointmentStatus: CreatingAppointmentStatuses.finished,
+        ));
+        resetSubscribeStoryState();
+      }
     } catch (e) {
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.failed,
@@ -672,6 +648,50 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
       });
     }
+  }
+
+  /// Обнуление стейта с записью. Прием создан, переходим в Мои приемы
+  void resetSubscribeStoryState() {
+    /// похоже, null в стейт поместить нельзя. С доктором не сработало
+    /// хотя ошибок нет в линтере.
+    emit(state.copyWith(
+      selectedUser: null,
+      selectedDoctor: const Doctor(
+        id: '',
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        specializationId: '',
+        specialization: '',
+        price: 0,
+        categoryType: -1,
+        isFavorite: false,
+        categories: [],
+      ),
+      selectedBuilding: null,
+      selectedCabinet: null,
+      selectedCalendarItem: null,
+      selectedResearchesIds: null,
+      selectedService: null,
+      selectedSpecialisation: null,
+      selectedTimetableCell: null,
+      selectedDate: DateTime.now(),
+      appointmentInfoData: null,
+      researchesList: [],
+      filteredResearchesList: [],
+      specialisationsList: [],
+      filteredSpecialisationsList: [],
+      doctorsList: [],
+      filteredDoctorsList: [],
+      cabinetsList: [],
+      filteredCabinetsList: [],
+      calendarList: [],
+      timetableCellsList: [],
+      timetableLogsList: [],
+      selectedPayType: null,
+      paymentUrl: null,
+      createdAppointmentId: null,
+    ));
   }
 
   /// Регистрация заказа (в сбере???)
