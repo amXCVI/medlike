@@ -20,6 +20,7 @@ class AppRoutes {
   static const subscribeFavoriteDoctors = '/subscribe_favorite_doctors';
   static const subscribeSchedule = '/subscribe_schedule';
   static const subscribeConfirmation = '/subscribe_confirm';
+  static const subscribePayment = '/subscribe_payment_page';
   static const myAppointments = '/my_appointments';
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
