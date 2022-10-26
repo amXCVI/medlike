@@ -33,12 +33,6 @@
     <link rel="manifest" href="manifest.json">
     <script src="bundle.js"></script>
     <script>
-        async function testJS() {
-            console.log("testJS invoked");
-            return "foo: 42";
-        }
-    </script>
-    <script>
         var bridge = window.webBridgeInstance;
         async function sendBotEvent(eventObject) {
             return new Promise((resolve, reject) => {
@@ -58,10 +52,21 @@
             });
         }
 
-        bridge?.sendClientEvent({
-            method: 'ready',
-            params: {}
-        })
+        async function sendClientEvent() {
+            return new Promise((resolve, reject) => {
+            console.log('sending an event "ready" from the flutter component');
+            bridge.sendClientEvent({
+                method: 'ready',
+                params: {}
+            })
+                .then((res) => {
+                    resolve(res)
+                })
+                .catchIt((err) => {
+                    reject(err)
+                })
+            });
+        }
   </script>
     <script>
       window.flutterConfiguration = {

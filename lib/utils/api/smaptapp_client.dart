@@ -20,6 +20,9 @@ class Promise<T> {
 @JS('sendBotEvent')
 external Promise<dynamic> sendBotEvent(Object objectParams);
 
+@JS('sendClientEvent')
+external Promise<dynamic> sendClientEvent();
+
 //? {
 //?    String method,
 //?    Object? params,
@@ -29,6 +32,16 @@ external Promise<dynamic> sendBotEvent(Object objectParams);
 //? }
 
 class SmartAppClient {
+  Future<dynamic> sendClientReadyFunction() async {
+    return await promiseToFuture(sendClientEvent().then(js.allowInterop((data) {
+      print('SUCCESS_EVENT_READY: $data');
+      return data;
+    }), js.allowInterop((err) {
+      print('ERROR_EVENT_READY: $err');
+      return err;
+    })));
+  }
+
   Future<dynamic> get(String endpoint, {Options? options}) async {
     // await testJS().then(allowInterop((arg) {
     //   print('@@@@@@@@@$arg');
@@ -62,7 +75,8 @@ class SmartAppClient {
     })));
   }
 
-  Future<dynamic> post(String endpoint, {Object? data, Options? options}) async {
+  Future<dynamic> post(String endpoint,
+      {Object? data, Options? options}) async {
     return await promiseToFuture(sendBotEvent({
       'method': 'post_$endpoint',
       'params': {
