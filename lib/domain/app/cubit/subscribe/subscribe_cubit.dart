@@ -656,6 +656,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
     /// похоже, null в стейт поместить нельзя. С доктором не сработало
     /// хотя ошибок нет в линтере.
     emit(state.copyWith(
+      creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
       selectedUser: null,
       selectedDoctor: const Doctor(
         id: '',
