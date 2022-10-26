@@ -28,8 +28,7 @@ class AppointmentItemRecommendations extends StatelessWidget {
                 isScrollControlled: true,
                 builder: (context) => RecommendationBottomSheet(
                       serviceName: serviceName,
-                      recommendationsText: recommendations.substring(
-                          1, recommendations.length - 1),
+                      recommendationsText: recommendations,
                     ))
           },
           child: Row(
@@ -44,6 +43,7 @@ class AppointmentItemRecommendations extends StatelessWidget {
                 maxLines: 1,
                 softWrap: true,
               )),
+              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
             ],
           ),
         ),
