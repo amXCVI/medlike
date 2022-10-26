@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -36,9 +37,15 @@ class _PaymentPageState extends State<PaymentPage> {
                 context.read<SubscribeCubit>().resetSubscribeStoryState();
                 context.router.push(AppointmentsRoute(isRefresh: true));
                 return NavigationDecision.prevent;
-              } else {
-                return NavigationDecision.navigate;
               }
+              if (request.url.contains("result=false")) {
+                context.router.pop();
+                AppToast.showAppToast(
+                    msg:
+                        "Ошибка оплаты. Попробуйте оплатить прием позднее или наличными");
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
             },
           ),
         );
