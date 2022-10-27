@@ -90,18 +90,27 @@ CalendarBuilders calendarBuilder({
     if (isLoading) {
       return const CalendarSkeletonItem();
     } else {
-      return Center(
-        child: Text(
-          date.day.toString(),
-          style: isSameDay(selectedDay, date)
-              ? Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(fontWeight: FontWeight.w500, color: Colors.white)
-              : Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(color: AppColors.lightText),
+      return Container(
+        decoration: BoxDecoration(
+          color: hasAvailableCellsDatesList
+                  .contains(DateFormat("yyyy-MM-dd").format(date))
+              ? AppColors.circleBgFirst
+              : Theme.of(context).backgroundColor,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            date.day.toString(),
+            style: isSameDay(selectedDay, date)
+                ? Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(fontWeight: FontWeight.w500, color: Colors.white)
+                : Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: AppColors.lightText),
+          ),
         ),
       );
     }
