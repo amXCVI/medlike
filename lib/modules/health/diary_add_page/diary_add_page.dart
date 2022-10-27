@@ -188,7 +188,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 date!.month,
                 date!.day,
                 time!.hour,
-                time!.minute
+                time!.minute,
+                DateTime.now().second
               );
 
               final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);
