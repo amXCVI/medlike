@@ -23,15 +23,13 @@ class PasswordPageBottomNavigationBar extends StatelessWidget {
       }
     }
 
-    print(MediaQuery.of(context).size.height);
-
     return Padding(
       padding: EdgeInsets.only(
         left: 24, 
         top: 0, 
         right: 24, 
-        bottom: MediaQuery.of(context).size.height < AppConstants.mdScreenHeight 
-          ? 0 : 24
+        bottom: MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight 
+          ? 8 : 24
       ),
       child: TextButton(
         onPressed: _handleTapCannotLogin,
