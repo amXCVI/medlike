@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 
@@ -28,12 +29,17 @@ class _ConfirmationActionButtonLabelState
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
+
+        if (state.creatingAppointmentStatus ==
+            CreatingAppointmentStatuses.finished) {}
+
         if (state.creatingAppointmentStatus ==
                 CreatingAppointmentStatuses.finished &&
-            state.registerOrderStatus != RegisterOrderStatuses.loading) {
+            state.selectedPayType == AppConstants.noPayedPayType) {
           Future.delayed(const Duration(seconds: 1), () {
             context.router.push(AppointmentsRoute(isRefresh: true));
           });
+          context.read<SubscribeCubit>().resetSubscribeStoryState();
         }
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
