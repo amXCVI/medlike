@@ -25,14 +25,24 @@ class AgreementsChecker extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(width: 16.0),
-        CustomCheckbox(
-          value: isChecked,
-          onChanged: (e) {
-            setIsCheckedValue(e);
-          },
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTapChecker,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 16, 
+              top: 10,
+              bottom: 10,
+              right: 15
+            ),
+            child: CustomCheckbox(
+              value: isChecked,
+              onChanged: (e) {
+                setIsCheckedValue(e);
+              },
+            ),
+          ),
         ),
-        const SizedBox(width: 15),
         Expanded(
           child: Text.rich(
             overflow: TextOverflow.ellipsis,
