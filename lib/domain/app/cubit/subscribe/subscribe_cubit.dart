@@ -638,7 +638,6 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         emit(state.copyWith(
           creatingAppointmentStatus: CreatingAppointmentStatuses.finished,
         ));
-        resetSubscribeStoryState();
       }
     } catch (e) {
       emit(state.copyWith(

@@ -10,16 +10,18 @@ import 'package:medlike/themes/colors.dart';
 class PaymentWidget extends StatelessWidget {
   const PaymentWidget({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    void _handleSelectPayType(String payType) {
+    void _handleSelectPayType(String payType,
+        GetAppointmentInfoStatuses getAppointmentInfoDataStatus) {
+      if (getAppointmentInfoDataStatus == GetAppointmentInfoStatuses.loading) {
+        return;
+      }
       context.read<SubscribeCubit>().setPayType(payType: payType);
     }
 
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
-
         return state.appointmentInfoData != null &&
                 state.appointmentInfoData!.payType.toLowerCase() !=
                     AppConstants.noPayedPayType
@@ -39,11 +41,17 @@ class PaymentWidget extends StatelessWidget {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              _handleSelectPayType(AppConstants.noPayedPayType);
+                              _handleSelectPayType(
+                                AppConstants.noPayedPayType,
+                                state.getAppointmentInfoStatus
+                                    as GetAppointmentInfoStatuses,
+                              );
                             },
                             child: PaymentItem(
                               isSelected: state.selectedPayType ==
                                   AppConstants.noPayedPayType,
+                              isDisabled: state.getAppointmentInfoStatus ==
+                                  GetAppointmentInfoStatuses.loading,
                               title: 'Клиника',
                               subtitle: 'Регистратура',
                               icon: SvgPicture.asset(
@@ -57,11 +65,17 @@ class PaymentWidget extends StatelessWidget {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              _handleSelectPayType(AppConstants.cardPayType);
+                              _handleSelectPayType(
+                                AppConstants.cardPayType,
+                                state.getAppointmentInfoStatus
+                                    as GetAppointmentInfoStatuses,
+                              );
                             },
                             child: PaymentItem(
                               isSelected: state.selectedPayType ==
                                   AppConstants.cardPayType,
+                              isDisabled: state.getAppointmentInfoStatus ==
+                                  GetAppointmentInfoStatuses.loading,
                               title: 'Карта',
                               price: state.appointmentInfoData!.price,
                               icon: SvgPicture.asset(
@@ -83,15 +97,16 @@ class PaymentWidget extends StatelessWidget {
 }
 
 class PaymentItem extends StatelessWidget {
-  const PaymentItem(
-      {Key? key,
-      required this.isSelected,
-      required this.title,
-      this.subtitle,
-      this.price,
-      required this.icon,
-      required this.activeIcon})
-      : super(key: key);
+  const PaymentItem({
+    Key? key,
+    required this.isSelected,
+    required this.title,
+    this.subtitle,
+    this.price,
+    required this.icon,
+    required this.activeIcon,
+    required this.isDisabled,
+  }) : super(key: key);
 
   final bool isSelected;
   final String title;
@@ -99,6 +114,7 @@ class PaymentItem extends StatelessWidget {
   final int? price;
   final Widget icon;
   final Widget activeIcon;
+  final bool isDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +126,7 @@ class PaymentItem extends StatelessWidget {
       child: Container(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: isDisabled ? AppColors.circleBgFirst : Theme.of(context).backgroundColor,
             border: Border.all(
                 color: isSelected
                     ? Theme.of(context).primaryColor
