@@ -90,6 +90,7 @@ class _DiaryPageState extends State<DiaryPage> {
         }
 
         void onLoadDate(bool isRight) {
+          // Туда нам надо
           final dates = ValueHelper.getAnotherPeriodTiming(dateFrom, grouping, isRight);
 
           context.read<DiaryCubit>().setTimePeriod(
