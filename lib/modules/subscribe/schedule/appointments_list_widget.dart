@@ -20,7 +20,7 @@ class AppointmentsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AppointmentsCubit>().getAppointmentsList(false);
-    context.read<ClinicsCubit>().getAllClinicsList(false);
+    //context.read<ClinicsCubit>().getAllClinicsList(false);
 
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
