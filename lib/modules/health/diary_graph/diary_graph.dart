@@ -115,6 +115,24 @@ class _DiaryGraphState extends State<DiaryGraph> {
     }
   }
 
+  void onMarkerRender(MarkerRenderArgs args) {
+    List<ChartData> chartData = widget.items.map((e) => 
+      ChartData(
+        e.date, 
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null,
+        e.isAbnormal
+      )
+    ).toList();
+
+    if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
+      if(chartData[args.pointIndex!].isAbnormal) {
+        args.color = AppColors.mainError;
+        args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -339,14 +357,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             ),
             series: data,
       
-            onMarkerRender: (args) {
-              if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
-                if(chartData[args.pointIndex!].isAbnormal) {
-                  args.color = AppColors.mainError;
-                  args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
-                }
-              }
-            },
+            onMarkerRender: onMarkerRender,
             margin: const EdgeInsets.symmetric(horizontal: 10),
             onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
           ),
@@ -424,15 +435,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             enableAxisAnimation: true,
             series: data,
             
-            onMarkerRender: (args) {
-              if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
-          
-                if(chartData[args.pointIndex!].isAbnormal) {
-                  args.color = AppColors.mainError;
-                  args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
-                }
-              }
-            },
+            onMarkerRender: onMarkerRender,
           
             onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
           )
