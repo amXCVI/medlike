@@ -79,30 +79,35 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
             );
           },
         ),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            const SizedBox(height: 20),
-            UserInfo(userId: widget.userId),
-            const SizedBox(height: 19),
-            const DashDivider(),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            right: 44
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              const SizedBox(height: 20),
+              UserInfo(userId: widget.userId),
+              const SizedBox(height: 19),
+              const DashDivider(),
 
-            /// Карточки с выбором способа оплаты.
-            /// Не работает оплата картой, поэтому закомментировано
-            /// Раскомментировать в кубите
-            /// получение информации о приеме
-            const SizedBox(height: 24),
-            const PaymentWidget(),
-            const AppointmentInfo(),
-            const SizedBox(height: 24),
-            const DashDivider(),
-            const SizedBox(height: 24),
-            AgreementsChecker(
-              isChecked: isCheckedAgreements,
-              setIsCheckedValue: setIsCheckedValue,
-            ),
-            const SizedBox(height: 44),
-          ],
+              /// Карточки с выбором способа оплаты.
+              /// Не работает оплата картой, поэтому закомментировано
+              /// Раскомментировать в кубите
+              /// получение информации о приеме
+              const SizedBox(height: 24),
+              const PaymentWidget(),
+              const AppointmentInfo(),
+              const SizedBox(height: 24),
+              const DashDivider(),
+              const SizedBox(height: 24),
+              AgreementsChecker(
+                isChecked: isCheckedAgreements,
+                setIsCheckedValue: setIsCheckedValue,
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
