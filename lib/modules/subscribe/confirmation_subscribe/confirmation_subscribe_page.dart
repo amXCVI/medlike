@@ -80,8 +80,8 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
           },
         ),
         child: Padding(
-          padding: const EdgeInsets.only(
-            right: 44
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16
           ),
           child: ListView(
             shrinkWrap: true,
@@ -105,6 +105,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                 isChecked: isCheckedAgreements,
                 setIsCheckedValue: setIsCheckedValue,
               ),
+              const SizedBox(width: 15),
               const SizedBox(height: 24),
             ],
           ),
