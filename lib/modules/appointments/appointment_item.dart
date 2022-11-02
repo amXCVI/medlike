@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
+import 'package:medlike/widgets/buttons/simple_button.dart';
 
 class AppointmentItem extends StatelessWidget {
   const AppointmentItem(
@@ -135,7 +138,39 @@ class AppointmentItem extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          if (appointmentItem.status == 4)
+            const SizedBox(height: 14.0),
+          if (appointmentItem.status == 4)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SimpleButton(
+                    isPrimary: true,
+                    labelText: 'Подтвердить',
+                    onTap: () {
+                      context.read<AppointmentsCubit>().confirmAppointment(
+                        appointmentId: appointmentItem.id,
+                        userId: appointmentItem.patientInfo.id as String);
+                    },
+                  )
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: SimpleButton(
+                    labelText: 'Отменить',
+                    onTap: () {
+                      context.read<AppointmentsCubit>().deleteAppointment(
+                          appointmentId: appointmentItem.id,
+                          userId: appointmentItem.patientInfo.id as String);
+                    }
+                  )
+                )
+              ],
+            )
         ],
       ),
     );
