@@ -68,7 +68,8 @@ class DioInterceptors extends Interceptor {
           UserSecureStorage.setField(AppConstants.isAuth, 'false');
           AppToast.showAppToast(
               msg: 'Время вашей сессии истекло. Авторизуйтесь заново');
-          throw InvalidRefreshTokenError();
+          
+          return super.onError(InvalidRefreshTokenError(requestOptions: requestOptions), handler);
         }
         return _dio
             .post('${ApiConstants.baseUrl}/api/v1.0/auth/token/refresh', data: {
@@ -108,10 +109,8 @@ class DioInterceptors extends Interceptor {
           AppToast.showAppToast(
               msg:
                   'Время вашей сессии истекло. Пожалуйста, авторизуйтесь заново');
-          if(e is InvalidRefreshTokenError) {
-            throw InvalidRefreshTokenError();
-          }
-          return e;
+
+            return super.onError(InvalidRefreshTokenError(requestOptions: requestOptions), handler);
         });
       case 460:
         UserSecureStorage.setField(AppConstants.isActualAppVersion, 'false');

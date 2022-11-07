@@ -1,6 +1,9 @@
-class InvalidRefreshTokenError implements Exception {
-  String _message = '';
-  InvalidRefreshTokenError([String message = 'Invalid refresh token']) {
+import 'package:dio/dio.dart';
+
+class InvalidRefreshTokenError extends DioError {
+  String _message = 'InvalidRefreshTokenError';
+
+  InvalidRefreshTokenError({required requestOptions}) : super(requestOptions: requestOptions) {
     _message = message;
   }
 

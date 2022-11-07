@@ -11,7 +11,9 @@ part 'clinics_state.dart';
 
 class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent> 
   with RefreshErrorHandler<ClinicsState, UserCubit> {
-  ClinicsCubit(this.clinicsRepository, mediator) : super(const ClinicsState(), mediator);
+  ClinicsCubit(this.clinicsRepository, mediator) : super(const ClinicsState(), mediator) {
+    mediator.register(this);
+  }
 
   final ClinicsRepository clinicsRepository;
 

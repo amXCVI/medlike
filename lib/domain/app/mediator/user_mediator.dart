@@ -15,9 +15,8 @@ mixin RefreshErrorHandler<S, T extends MediatorCubit> on MediatorCubit<S, UserMe
   @override
   void onError(Object error, StackTrace stacktrace) {
     if(error is InvalidRefreshTokenError) {
-      mediator?.sendTo<T>(this, UserMediatorEvent.logout);
+      mediator!.sendTo<T>(this, UserMediatorEvent.logout);
     }
-    print('error in bloc $error $stacktrace');
 
     super.onError(error, stacktrace);
   }
