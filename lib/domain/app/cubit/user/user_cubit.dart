@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,6 +7,8 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
@@ -17,8 +18,19 @@ import 'package:device_info_plus/device_info_plus.dart';
 
 part 'user_state.dart';
 
-class UserCubit extends Cubit<UserState> {
-  UserCubit(this.userRepository) : super(UserState());
+class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
+  UserCubit(this.userRepository, mediator) : super(UserState(), mediator) {
+    mediator.register(this);
+  }
+
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    print(from);
+    print(event);
+    if(event == UserMediatorEvent.logout) {
+      forceLogout();
+    }
+  }
 
   final UserRepository userRepository;
 

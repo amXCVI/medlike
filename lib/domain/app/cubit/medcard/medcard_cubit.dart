@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
@@ -14,8 +16,16 @@ import 'package:path_provider/path_provider.dart';
 
 part 'medcard_state.dart';
 
-class MedcardCubit extends Cubit<MedcardState> {
-  MedcardCubit(this.medcardRepository) : super(const MedcardState());
+class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent> 
+  with RefreshErrorHandler<MedcardState, UserCubit> {
+  MedcardCubit(this.medcardRepository, mediator) : super(const MedcardState(), mediator) {
+    mediator.register(this);
+  }
+
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    throw UnimplementedError();
+  }
 
   final MedcardRepository medcardRepository;
 
@@ -45,6 +55,7 @@ class MedcardCubit extends Cubit<MedcardState> {
         filteredMedcardDocsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getMedcardDocsListStatus: GetMedcardDocsListStatuses.failed));
     }
@@ -77,6 +88,7 @@ class MedcardCubit extends Cubit<MedcardState> {
         filteredMedcardUserFilesList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getMedcardUserFilesListStatus:
               GetMedcardUserFilesListStatuses.failed));
@@ -123,6 +135,7 @@ class MedcardCubit extends Cubit<MedcardState> {
         downloadingFileId: '',
       ));
     } catch (e) {
+      addError(e);
       AppToast.showAppToast(
           msg:
               'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
@@ -156,6 +169,7 @@ class MedcardCubit extends Cubit<MedcardState> {
       );
       emit(state.copyWith(downloadingFileId: ''));
     } catch (e) {
+      addError(e);
       AppToast.showAppToast(
           msg:
               'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
@@ -200,6 +214,7 @@ class MedcardCubit extends Cubit<MedcardState> {
         downloadingFileId: '',
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
         downloadingFileId: '',
@@ -214,8 +229,7 @@ class MedcardCubit extends Cubit<MedcardState> {
     required String categoryValue,
   }) {
     Map<String, MedcardFilterItemModel> medcardFilters =
-        state.medcardSelectedFilters as Map<String, MedcardFilterItemModel> ??
-            <String, MedcardFilterItemModel>{};
+        state.medcardSelectedFilters as Map<String, MedcardFilterItemModel>;
     medcardFilters.remove(categoryValue);
     medcardFilters[categoryValue] = filterItem;
 
@@ -255,6 +269,7 @@ class MedcardCubit extends Cubit<MedcardState> {
       ));
       AppToast.showAppToast(msg: response.information ?? 'Файл успешно удален');
     } catch (e) {
+      addError(e);
       emit(state.copyWith(deletingUserFile: ''));
     }
   }

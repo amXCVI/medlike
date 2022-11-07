@@ -1,14 +1,19 @@
-import 'package:bloc/bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:meta/meta.dart';
 import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 part 'clinics_state.dart';
 
-class ClinicsCubit extends Cubit<ClinicsState> {
-  ClinicsCubit(this.clinicsRepository) : super(const ClinicsState());
+class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent> 
+  with RefreshErrorHandler<ClinicsState, UserCubit> {
+  ClinicsCubit(this.clinicsRepository, mediator) : super(const ClinicsState(), mediator) {
+    mediator.register(this);
+  }
 
   final ClinicsRepository clinicsRepository;
 
@@ -65,6 +70,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         clinicsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getAllClinicsListStatus: GetAllClinicsListStatuses.failed));
     }
@@ -83,6 +89,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         filteredPriceList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(getPriceListStatus: GetPriceListStatuses.failed));
     }
   }
@@ -112,6 +119,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         promotionsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getPromotionsListStatus: GetPromotionsListStatuses.failed));
     }
@@ -138,6 +146,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         mainscreenPromotionsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getMainscreenPromotionsListStatus:
               GetMainscreenPromotionsListStatuses.failed));
@@ -159,6 +168,7 @@ class ClinicsCubit extends Cubit<ClinicsState> {
         recommendationsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getRecommendationsListStatus: GetRecommendationsListStatuses.failed));
     }
