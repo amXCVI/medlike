@@ -16,9 +16,10 @@ import 'package:path_provider/path_provider.dart';
 
 part 'medcard_state.dart';
 
-class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent> 
-  with RefreshErrorHandler<MedcardState, UserCubit> {
-  MedcardCubit(this.medcardRepository, mediator) : super(const MedcardState(), mediator) {
+class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
+    with RefreshErrorHandler<MedcardState, UserCubit> {
+  MedcardCubit(this.medcardRepository, mediator)
+      : super(const MedcardState(), mediator) {
     mediator.register(this);
   }
 
@@ -201,7 +202,61 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     ));
     try {
       MedcardUserFileModel response = await medcardRepository.uploadFile(
-          userId: userId, file: file, fileName: fileName);
+          userId: userId,
+          file: file,
+          fileName: fileName,
+          fileType: MediaType.parse(lookupMimeType(file.path) as String).type,
+      );
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
+        medcardUserFilesList:
+            [...?state.medcardUserFilesList, response].toList(),
+        filteredMedcardUserFilesList: [
+          ...?state.filteredMedcardUserFilesList
+              ?.where((e) => e.id != AppConstants.uploadingFileId),
+          response
+        ].toList(),
+        downloadingFileId: '',
+      ));
+    } catch (e) {
+      addError(e);
+      emit(state.copyWith(
+        uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
+        downloadingFileId: '',
+      ));
+      rethrow;
+    }
+  }
+
+  Future<void> uploadFileFromDioForWeb({
+    required Uint8List fileBytes,
+    required String userId,
+    required String fileName,
+    required int size,
+    required String fileType,
+  }) async {
+    emit(state.copyWith(
+      uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.loading,
+      filteredMedcardUserFilesList: [
+        ...?state.medcardUserFilesList,
+        MedcardUserFileModel(
+          type: MediaType(fileType, fileType).type,
+          hasPreview: false,
+          id: AppConstants.uploadingFileId,
+          length: size,
+          uploadDate: DateTime.now(),
+          filename: fileName,
+        )
+      ].toList(),
+      downloadingFileId: AppConstants.uploadingFileId,
+    ));
+    try {
+      MedcardUserFileModel response = await medcardRepository.uploadFile(
+          userId: userId,
+          fileBytes: fileBytes,
+          fileName: fileName,
+          fileType: fileType,
+      );
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
         medcardUserFilesList:

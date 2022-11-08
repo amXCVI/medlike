@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:freezed_annotation'
     '/freezed_annotation.dart';
 
@@ -157,4 +160,20 @@ class UserAgreementItemModel with _$UserAgreementItemModel {
 
   factory UserAgreementItemModel.fromJson(Map<String, Object?> json) =>
       _$UserAgreementItemModelFromJson(json);
+}
+
+class SupportAttachedFileModel {
+  final Uint8List fileBytes;
+  final File? file;
+  final String fileName;
+  final int size;
+  final String fileType;
+
+  SupportAttachedFileModel({
+    required this.fileBytes,
+    this.file,
+    required this.fileName,
+    required this.size,
+    required this.fileType,
+  });
 }

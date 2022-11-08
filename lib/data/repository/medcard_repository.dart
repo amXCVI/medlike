@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -13,7 +14,8 @@ class MedcardRepository {
   Future<List<MedcardDocsModel>> getMedcardDocsList(
       {required String userId, required String filters}) async {
     try {
-      final response = await _dioClient.get('/api/v1.0/profile/$userId/mdocs?$filters');
+      final response =
+          await _dioClient.get('/api/v1.0/profile/$userId/mdocs?$filters');
       final List clinicsList = response.data;
       return clinicsList.map((e) => MedcardDocsModel.fromJson(e)).toList();
     } catch (err) {
@@ -47,14 +49,29 @@ class MedcardRepository {
 
   Future<MedcardUserFileModel> uploadFile({
     required String userId,
-    required File file,
+    File? file,
+    Uint8List? fileBytes,
     required String fileName,
+    required String fileType,
   }) async {
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(file.path,
+    FormData formData;
+    if (file != null) {
+      formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(
+          file.path,
           filename: fileName,
-          contentType: MediaType.parse(lookupMimeType(file.path) as String)),
-    });
+          contentType: MediaType.parse(lookupMimeType(file.path) as String),
+        ),
+      });
+    } else {
+      formData = FormData.fromMap({
+        "file": MultipartFile.fromBytes(
+          fileBytes!,
+          filename: fileName,
+          contentType: MediaType(fileType, fileType),
+        )
+      });
+    }
 
     try {
       var response = await _dioClient.post('/api/v1.0/profile/$userId/files',

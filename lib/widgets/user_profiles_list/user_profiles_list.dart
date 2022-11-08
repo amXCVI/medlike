@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profile_item.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profile_skeleton.dart';
@@ -26,17 +27,24 @@ class UserProfilesList extends StatelessWidget {
         return;
       }
       try {
-        FilePickerResult? filePickerResult =
-            (await FilePicker.platform.pickFiles(
-          type: FileType.image,
+        List<PlatformFile>? _paths;
+
+        _paths = (await FilePicker.platform.pickFiles(
+          type: FileType.custom,
           allowMultiple: false,
-          onFileLoading: (FilePickerStatus status) => {},
-        ));
+          allowedExtensions: ['jpg', 'jpeg', 'png'],
+        ))
+            ?.files;
 
         context.read<UserCubit>().uploadUserAvatar(
-              file: filePickerResult?.files.first,
+              file: SupportAttachedFileModel(
+                fileBytes: _paths!.first.bytes!,
+                fileName: _paths.first.name,
+                size: _paths.first.size,
+                fileType: _paths.first.extension!,
+              ),
               userId: userId,
-              fileName: filePickerResult!.files.first.name,
+              fileName: _paths.first.name,
             );
       } catch (e) {
         rethrow;
@@ -69,18 +77,19 @@ class UserProfilesList extends StatelessWidget {
                             },
                             child: UserProfileItem(
                               userProfileDate: item,
-                              isSelectedItem: selectableItems ?
-                                          state.selectedUserId == null ||
-                                      state.selectedUserId!.isEmpty
-                                  ? state.userProfiles![0].id == item.id
-                                  : state.userProfiles
-                                              ?.firstWhere((element) =>
-                                                  element.id ==
-                                                  state.selectedUserId)
-                                              .id as String ==
-                                          item.id
-                                      ? true
-                                      : false : false,
+                              isSelectedItem: selectableItems
+                                  ? state.selectedUserId == null ||
+                                          state.selectedUserId!.isEmpty
+                                      ? state.userProfiles![0].id == item.id
+                                      : state.userProfiles
+                                                  ?.firstWhere((element) =>
+                                                      element.id ==
+                                                      state.selectedUserId)
+                                                  .id as String ==
+                                              item.id
+                                          ? true
+                                          : false
+                                  : false,
                               onLoadAvatar: () {
                                 handleLoadAvatar(item.id);
                               },

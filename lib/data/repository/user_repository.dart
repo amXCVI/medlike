@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -9,7 +8,6 @@ import 'package:medlike/data/models/notification_models/notification_models.dart
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:mime/mime.dart';
 
 enum UserAuthenticationStatus {
   unknown,
@@ -168,13 +166,14 @@ class UserRepository {
 
   Future<UserUploadAvatarResponseModel> uploadUserAvatar({
     required String userId,
-    PlatformFile? file,
+    required SupportAttachedFileModel file,
   }) async {
     FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(file?.path ?? '',
-          filename: file?.name ?? '',
-          contentType:
-              MediaType.parse(lookupMimeType(file?.path as String) as String)),
+      "file": await MultipartFile.fromBytes(
+        file.fileBytes,
+        filename: file.fileName,
+        contentType: MediaType("image", file.fileType),
+      ),
     });
 
     try {
@@ -248,12 +247,16 @@ class UserRepository {
     required String subject,
     required String message,
     required String techInfo,
-    List<File>? files,
+    List<SupportAttachedFileModel>? files,
   }) async {
     List uploadFilesList = [];
-    if (files != null) {
-      for (var file in files) {
-        var multipartFile = await MultipartFile.fromFile(file.path);
+    if (files!.isNotEmpty) {
+      for (var e in files) {
+        var multipartFile = await MultipartFile.fromBytes(
+          e.fileBytes,
+          filename: e.fileName,
+          contentType: MediaType(e.fileType, e.fileType),
+        );
         uploadFilesList.add(multipartFile);
       }
     }

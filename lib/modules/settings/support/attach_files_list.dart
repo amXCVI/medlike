@@ -1,27 +1,24 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/file_icons_helper.dart';
 import 'package:medlike/utils/helpers/file_size_helpers.dart';
-import 'package:mime/mime.dart';
-import 'package:http_parser/http_parser.dart';
 
 class AttachFilesList extends StatelessWidget {
   const AttachFilesList(
       {Key? key, required this.filesList, required this.handleDeleteFile})
       : super(key: key);
 
-  final List<File> filesList;
-  final void Function(File file) handleDeleteFile;
+  final List<SupportAttachedFileModel> filesList;
+  final void Function(SupportAttachedFileModel file) handleDeleteFile;
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,13 +82,8 @@ class AttachFilesList extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  FileIconsHelper.notImageFileTypesList.contains(
-                          MediaType.parse(lookupMimeType(e.path) as String)
-                              .toString()
-                              .toUpperCase()
-                              .split('/')
-                              .last
-                              .toLowerCase())
+                  FileIconsHelper.notImageFileTypesList.contains(e.fileType) ||
+                          e.file == null
                       ? Container(
                           width: 40,
                           height: 40,
@@ -100,21 +92,18 @@ class AttachFilesList extends StatelessWidget {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(20.0))),
                           child: SvgPicture.asset(
-                              FileIconsHelper.getCustomFileIcon(MediaType.parse(
-                                      lookupMimeType(e.path) as String)
-                                  .toString()
-                                  .toUpperCase()
-                                  .split('/')
-                                  .last)),
+                              FileIconsHelper.getCustomFileIcon(e.fileType)),
                         )
-                      : CircleAvatar(radius: 20, backgroundImage: FileImage(e)),
+                      : CircleAvatar(
+                          radius: 20,
+                          backgroundImage: FileImage(e.file as File)),
                   const SizedBox(width: 24),
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          e.path.split('/').last,
+                          e.fileName,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           softWrap: true,
@@ -122,7 +111,7 @@ class AttachFilesList extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${MediaType.parse(lookupMimeType(e.path) as String).toString().toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(e.lengthSync())}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
+                          '${e.fileType.toUpperCase().split('/').last}・${FileSizeHelper.converterBytesToKbOrMb(e.size)}・${(DateFormat("dd.MM.yyyy").format(DateTime.now()))}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           softWrap: true,

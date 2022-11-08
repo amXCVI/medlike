@@ -2,16 +2,20 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/support/attach_files_list.dart';
 import 'package:medlike/modules/settings/support/support_form.dart';
 import 'package:medlike/utils/helpers/file_constraints_helper.dart';
 import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:mime/mime.dart';
 import 'package:tap_canvas/tap_canvas.dart';
+import 'package:http_parser/http_parser.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({Key? key}) : super(key: key);
@@ -30,14 +34,14 @@ class _SupportPageState extends State<SupportPage> {
   late final TextEditingController _controllerEmail =
       TextEditingController(text: '');
 
-  List<File> filesList = [];
+  List<SupportAttachedFileModel> filesList = [];
 
   @override
   void initState() {
     super.initState();
   }
 
-  void handleDeleteFile(File file) {
+  void handleDeleteFile(SupportAttachedFileModel file) {
     setState(() {
       filesList.remove(file);
     });
@@ -66,8 +70,15 @@ class _SupportPageState extends State<SupportPage> {
       if (!checkConstraints(attachedFile)) {
         return;
       }
-      setState(() {
-        filesList.add(attachedFile);
+      setState(() async {
+        filesList.add(SupportAttachedFileModel(
+          fileBytes: await pickedFile.readAsBytes(),
+          fileName: pickedFile.path.split('/').last,
+          size: File(pickedFile.path).lengthSync(),
+          fileType: MediaType.parse(lookupMimeType(pickedFile.path) as String)
+              .toString(),
+          file: attachedFile,
+        ));
       });
     }
 
@@ -76,8 +87,36 @@ class _SupportPageState extends State<SupportPage> {
       if (!checkConstraints(attachedFile)) {
         return;
       }
+      if (filePickerResult.files.first != null) {
+        setState(() {
+          filesList.add(SupportAttachedFileModel(
+            fileBytes: filePickerResult.files.first.bytes as Uint8List,
+            fileName: filePickerResult.files.first.path!.split('/').last,
+            size:
+                File(filePickerResult.files.first.path as String).lengthSync(),
+            fileType: MediaType.parse(
+                    lookupMimeType(filePickerResult.files.first.path as String)
+                        as String)
+                .toString(),
+            file: attachedFile,
+          ));
+        });
+      }
+    }
+
+    void attachWebFile({
+      required Uint8List fileBytes,
+      required String fileName,
+      required int size,
+      required String fileType,
+    }) async {
       setState(() {
-        filesList.add(attachedFile);
+        filesList.add(SupportAttachedFileModel(
+          fileBytes: fileBytes,
+          fileName: fileName,
+          size: size,
+          fileType: fileType,
+        ));
       });
     }
 
@@ -107,6 +146,7 @@ class _SupportPageState extends State<SupportPage> {
         rightBottomWidget: AttachFileButton(
           attachPickedFile: attachPickedFile,
           attachFilePickerResult: attachFilePickerResult,
+          attachFile: attachWebFile,
         ),
         child: ListView(
           children: [

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,7 +37,7 @@ class _FilesPageState extends State<FilesPage> {
       context.read<MedcardCubit>().filterUserFilesList(filterStr);
     }
 
-    void uploadFile(File file) {
+    void uploadFile({required File file}) {
       context
           .read<MedcardCubit>()
           .uploadFileFromDio(
@@ -50,13 +51,33 @@ class _FilesPageState extends State<FilesPage> {
 
     void attachPickedFile({required PickedFile pickedFile}) {
       File attachedFile = File(pickedFile.path);
-      uploadFile(attachedFile);
+      uploadFile(file: attachedFile);
     }
 
     void attachFilePickerResult({required FilePickerResult filePickerResult}) {
       _listController.jumpTo(_listController.position.maxScrollExtent);
       File attachedFile = File(filePickerResult.files.first.path as String);
-      uploadFile(attachedFile);
+      uploadFile(file: attachedFile);
+    }
+
+    void attachWebFile({
+      required Uint8List fileBytes,
+      required String fileName,
+      required int size,
+      required String fileType,
+    }) {
+      context
+          .read<MedcardCubit>()
+          .uploadFileFromDioForWeb(
+            userId: widget.userId,
+            fileName: fileName,
+            fileBytes: fileBytes,
+            size: size,
+            fileType: fileType,
+          )
+          .then((value) => {
+                _listController.jumpTo(_listController.position.maxScrollExtent)
+              });
     }
 
     _onLoadDada();
@@ -69,6 +90,7 @@ class _FilesPageState extends State<FilesPage> {
       rightBottomWidget: AttachFileButton(
         attachPickedFile: attachPickedFile,
         attachFilePickerResult: attachFilePickerResult,
+        attachFile: attachWebFile,
       ),
       child: BlocBuilder<MedcardCubit, MedcardState>(
         builder: (context, state) {

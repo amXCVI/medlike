@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -28,7 +27,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void receive(String from, UserMediatorEvent event) {
     print(from);
     print(event);
-    if(event == UserMediatorEvent.logout) {
+    if (event == UserMediatorEvent.logout) {
       forceLogout();
     }
   }
@@ -50,9 +49,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-      authScreen: UserAuthScreens.inputPassword,
-      checkUserAccountStatus: CheckUserAccountStatuses.continued
-    ));
+        authScreen: UserAuthScreens.inputPassword,
+        checkUserAccountStatus: CheckUserAccountStatuses.continued));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
@@ -99,9 +97,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         refreshToken: response.refreshToken,
         tryCount: 5,
       ));
-      addFirebaseDeviceId();
-      await FirebaseAnalyticsService.registerAppLoginEvent();
 
+      if (!kIsWeb) {
+        addFirebaseDeviceId();
+        await FirebaseAnalyticsService.registerAppLoginEvent();
+      }
       getUserProfiles(true);
       return true;
     } catch (e) {
@@ -381,14 +381,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       );
       if (!response.found) {
         AppToast.showAppToast(
-          msg: 'Не найден пользователь с введенным номером телефона'
-        );
+            msg: 'Не найден пользователь с введенным номером телефона');
       }
 
       emit(state.copyWith(
-        checkUserAccountStatus: CheckUserAccountStatuses.success,
-        isFound: response.found
-      ));
+          checkUserAccountStatus: CheckUserAccountStatuses.success,
+          isFound: response.found));
       return response;
     } catch (e) {
       emit(state.copyWith(
@@ -449,7 +447,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Загрузить аватар пользователя
   Future<void> uploadUserAvatar({
-    PlatformFile? file,
+    required SupportAttachedFileModel file,
     required String userId,
     required String fileName,
   }) async {
@@ -486,18 +484,24 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       deletingUserAccountStatus: DeletingUserAccountStatuses.loading,
     ));
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
     String techInfo = '';
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+    if (kIsWeb) {
+      techInfo = 'Web-приложение;'
           'Окружение: ${ApiConstants.env}\n';
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      techInfo = 'Устройство: ${iosInfo.name}\n'
-          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n';
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+            'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        techInfo = 'Устройство: ${iosInfo.name}\n'
+            'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      }
     }
 
     try {
@@ -589,26 +593,29 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     required String email,
     required String subject,
     required String message,
-    List<File>? files,
+    List<SupportAttachedFileModel>? files,
   }) async {
     emit(state.copyWith(
       sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
     ));
 
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
+    if (kIsWeb) {
+      techInfo = 'Web-приложение;'
           'Окружение: ${ApiConstants.env}\n';
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      techInfo = 'Устройство: ${iosInfo.name}\n'
-          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
-          'Окружение: ${ApiConstants.env}\n';
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+            'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        techInfo = 'Устройство: ${iosInfo.name}\n'
+            'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      }
     }
 
     try {
@@ -641,21 +648,25 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       sendingEmailToSupportStatus: SendingEmailToSupportStatuses.loading,
     ));
 
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
-          'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+    if (kIsWeb) {
+      techInfo = 'Web-приложение;'
           'Окружение: ${ApiConstants.env}\n';
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
-          'Устройство: ${iosInfo.name}\n'
-          'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'Окружение: ${ApiConstants.env}\n';
+    } else {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+            'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+            'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+            'Устройство: ${iosInfo.name}\n'
+            'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
+            'Окружение: ${ApiConstants.env}\n';
+      }
     }
 
     try {
