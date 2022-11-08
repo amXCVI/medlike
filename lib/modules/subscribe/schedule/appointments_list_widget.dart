@@ -108,6 +108,12 @@ class AppointmentsList extends StatelessWidget {
     return null;
   }
 
+  String getTitle(AppointmentModel appointmentItem) {
+    return appointmentItem.doctorInfo.specialization != null ? 
+      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -146,7 +152,7 @@ class AppointmentsList extends StatelessWidget {
                       appointmentItem.categoryType == 1 ||
                               appointmentItem.categoryType == 0
                           ? Text(
-                              '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+                              getTitle(appointmentItem)
                                   .characters
                                   .replaceAll(
                                       Characters(''), Characters('\u{200B}'))
