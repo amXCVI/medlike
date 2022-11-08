@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/support/attach_files_list.dart';
 import 'package:medlike/modules/settings/support/support_form.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/file_constraints_helper.dart';
 import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:tap_canvas/tap_canvas.dart';
@@ -55,9 +55,7 @@ class _SupportPageState extends State<SupportPage> {
               message: _controllerMessage.text,
               files: filesList,
             )
-            .then((value) => {
-                  context.router.replaceAll([const MainRoute()])
-                });
+            .then((value) => {context.router.pop()});
       } else {
         return;
       }
@@ -65,6 +63,9 @@ class _SupportPageState extends State<SupportPage> {
 
     void attachPickedFile({required PickedFile pickedFile}) {
       File attachedFile = File(pickedFile.path);
+      if (!checkConstraints(attachedFile)) {
+        return;
+      }
       setState(() {
         filesList.add(attachedFile);
       });
@@ -72,6 +73,9 @@ class _SupportPageState extends State<SupportPage> {
 
     void attachFilePickerResult({required FilePickerResult filePickerResult}) {
       File attachedFile = File(filePickerResult.files.first.path as String);
+      if (!checkConstraints(attachedFile)) {
+        return;
+      }
       setState(() {
         filesList.add(attachedFile);
       });
@@ -112,7 +116,8 @@ class _SupportPageState extends State<SupportPage> {
               controllerMessage: _controllerMessage,
               controllerEmail: _controllerEmail,
             ),
-            AttachFilesList(filesList: filesList, handleDeleteFile: handleDeleteFile),
+            AttachFilesList(
+                filesList: filesList, handleDeleteFile: handleDeleteFile),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/main_page/appointments/appointments_widget.dart';
 import 'package:medlike/modules/main_page/grid/grid_item.dart';
@@ -18,6 +19,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<UserCubit>().getUserProfiles(false);
+    context.read<ClinicsCubit>().getAllClinicsList(false);
 
     return WillPopScope(
       onWillPop: () async {
@@ -44,7 +46,7 @@ class MainPage extends StatelessWidget {
           child: ListView(
             children: [
               const SizedBox(height: 16),
-              NotificationsWidget(),
+              const NotificationsWidget(),
               const AppointmentsWidget(),
               const SliderWidget(),
               const SizedBox(height: 8),

@@ -107,37 +107,39 @@ class SlideItem extends StatelessWidget {
                 ],
               ),
             ),
-            promotionItem.defaultPrice != 0
-                ? Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            '${promotionItem.defaultPrice / 100}',
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    promotionItem.defaultPrice != 0
+                        ? Text(
+                            '${(promotionItem.defaultPrice / 100) % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
                             style: const TextStyle(
                               color: Colors.white,
                               decoration: TextDecoration.lineThrough,
                               fontSize: 19,
                               fontWeight: FontWeight.w400,
                             ),
-                          ),
-                          Text(
-                            '${promotionItem.promoPrice / 100}',
+                          )
+                        : const SizedBox(),
+                    promotionItem.promoPrice != 0
+                        ? Text(
+                            '${(promotionItem.promoPrice / 100) % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
                               fontWeight: FontWeight.w500,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

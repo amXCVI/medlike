@@ -50,4 +50,21 @@ class ClinicsRepository {
       rethrow;
     }
   }
+
+  Future<List<RecommendationByServiceModel>> getRecommendationsByServiceIds({
+    required List<String> serviceIds,
+  }) async {
+    try {
+      List<String> servicesList =
+          serviceIds.map((e) => 'serviceIds=$e').toList();
+      final response = await _dioClient.get(
+          '/api/v1.0/schedule/appointments/recommendations?${servicesList.join('&')}');
+      final List recommendationsList = response.data;
+      return recommendationsList
+          .map((e) => RecommendationByServiceModel.fromJson(e))
+          .toList();
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

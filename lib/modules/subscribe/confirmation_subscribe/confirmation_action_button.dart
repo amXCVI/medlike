@@ -3,64 +3,64 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/widgets/fluttertoast/toast.dart';
 
-class ConfirmationActionButtonLabel extends StatelessWidget {
+class ConfirmationActionButtonLabel extends StatefulWidget {
   const ConfirmationActionButtonLabel({Key? key}) : super(key: key);
 
-  _launchURL(String url) async {
-    // if (await canLaunchUrl(Uri.parse(url))) {
-    //   await launchUrl(
-    //       Uri.parse(url),
-    //     webViewConfiguration: const WebViewConfiguration(
-    //       enableJavaScript: true,
-    //     ),
-    //     mode: LaunchMode.inAppWebView,
-    //   );
-    // } else {
-    AppToast.showAppToast(msg: 'Не удалось откыть страницу оплаты');
-    // }
+  @override
+  State<ConfirmationActionButtonLabel> createState() =>
+      _ConfirmationActionButtonLabelState();
+}
+
+class _ConfirmationActionButtonLabelState
+    extends State<ConfirmationActionButtonLabel> {
+  bool isOpenedPaymentPage = false;
+
+  void setIsOpenedPaymentPage() {
+    setState(() {
+      isOpenedPaymentPage = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
+
         if (state.creatingAppointmentStatus ==
-                CreatingAppointmentStatuses.success &&
-            state.registerOrderStatus != RegisterOrderStatuses.loading) {
+            CreatingAppointmentStatuses.finished) {}
+
+        if (state.creatingAppointmentStatus ==
+                CreatingAppointmentStatuses.finished &&
+            state.selectedPayType == AppConstants.noPayedPayType) {
           Future.delayed(const Duration(seconds: 1), () {
             context.router.push(AppointmentsRoute(isRefresh: true));
           });
+          context.read<SubscribeCubit>().resetSubscribeStoryState();
         }
 
-        if (state.registerOrderStatus == RegisterOrderStatuses.success) {
-          _launchURL('${state.paymentUrl}');
-          // return SizedBox(
-          //   height: MediaQuery.of(context).size.height,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: WebView(
-          //     initialUrl: state.paymentUrl,
-          //     javascriptMode: JavascriptMode.unrestricted,
-          //     navigationDelegate: (NavigationRequest request) {
-          //       print(request.url);
-          //       if (request.url.contains("medlike:")) {
-          //         print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          //         // launch(request.url);
-          //         return NavigationDecision.prevent;
-          //       } else {
-          //         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-          //         return NavigationDecision.navigate;
-          //       }
-          //     },
-          //   ),
-          // );
-        }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (state.registerOrderStatus == RegisterOrderStatuses.success &&
+              !isOpenedPaymentPage) {
+            setIsOpenedPaymentPage();
+            context.router.push(const PaymentRoute());
+          }
+        });
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (state.registerOrderStatus == RegisterOrderStatuses.loading) {
+            setState(() {
+              isOpenedPaymentPage = false;
+            });
+          }
+        });
 
         return state.creatingAppointmentStatus ==
-                CreatingAppointmentStatuses.success
+                    CreatingAppointmentStatuses.finished &&
+                state.createdAppointmentId == null
             ? SvgPicture.asset(
                 'assets/icons/subscribe/success_creating_appointment_icon.svg')
             : state.creatingAppointmentStatus ==

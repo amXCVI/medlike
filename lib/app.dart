@@ -18,6 +18,7 @@ import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
@@ -32,18 +33,20 @@ class App extends StatelessWidget {
     checkIsSavedPinCode: CheckIsSavedPinCode(),
   );
 
+  final mediator = UserMediator();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => UserCubit(UserRepository())),
+        BlocProvider(create: (context) => UserCubit(UserRepository(), mediator)),
         BlocProvider(
-            create: (context) => SubscribeCubit(SubscribeRepository())),
-        BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository())),
+            create: (context) => SubscribeCubit(SubscribeRepository(), mediator)),
+        BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
         BlocProvider(
-            create: (context) => AppointmentsCubit(AppointmentsRepository())),
-        BlocProvider(create: (context) => MedcardCubit(MedcardRepository())),
-        BlocProvider(create: (context) => DiaryCubit(DiaryRepository())),
+            create: (context) => AppointmentsCubit(AppointmentsRepository(), mediator)),
+        BlocProvider(create: (context) => MedcardCubit(MedcardRepository(), mediator)),
+        BlocProvider(create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(create: (context) => PromptCubit()),
         BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],

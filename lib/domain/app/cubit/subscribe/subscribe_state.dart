@@ -22,7 +22,14 @@ enum GetAppointmentInfoStatuses { initial, loading, success, failed }
 
 enum CheckAndLockAvailableCellStatuses { initial, loading, success, failed }
 
-enum CreatingAppointmentStatuses { initial, loading, success, failed }
+enum CreatingAppointmentStatuses {
+  initial,
+  loading,
+  success,
+  failed,
+  finished,
+  createdDraft
+}
 
 enum GetAvailableDoctorStatuses { initial, loading, success, failed }
 
@@ -32,7 +39,7 @@ enum SetDoctorToFavoritesStatuses { initial, loading, success, failed }
 
 enum DeleteDoctorFromFavoritesStatuses { initial, loading, success, failed }
 
-enum RegisterOrderStatuses { initial, loading, success, failed }
+enum RegisterOrderStatuses { initial, loading, success, failed, finished }
 
 @immutable
 class SubscribeState {
@@ -85,6 +92,8 @@ class SubscribeState {
 
   final GetAppointmentInfoStatuses? getAppointmentInfoStatus;
   final AppointmentInfoModel? appointmentInfoData;
+
+  final String? createdAppointmentId;
 
   final CheckAndLockAvailableCellStatuses? checkAndLockAvailableCellStatus;
 
@@ -152,6 +161,7 @@ class SubscribeState {
     this.selectedPayType = AppConstants.noPayedPayType,
     this.registerOrderStatus,
     this.paymentUrl,
+    this.createdAppointmentId,
   })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
         startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
@@ -204,6 +214,7 @@ class SubscribeState {
     String? selectedPayType,
     RegisterOrderStatuses? registerOrderStatus,
     String? paymentUrl,
+    String? createdAppointmentId,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -272,6 +283,7 @@ class SubscribeState {
       selectedPayType: selectedPayType ?? this.selectedPayType,
       registerOrderStatus: registerOrderStatus ?? this.registerOrderStatus,
       paymentUrl: paymentUrl ?? this.paymentUrl,
+      createdAppointmentId: createdAppointmentId ?? this.createdAppointmentId,
     );
   }
 

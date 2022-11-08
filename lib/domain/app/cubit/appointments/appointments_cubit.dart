@@ -1,7 +1,9 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
@@ -9,8 +11,11 @@ import 'package:table_calendar/table_calendar.dart';
 
 part 'appointments_state.dart';
 
-class AppointmentsCubit extends Cubit<AppointmentsState> {
-  AppointmentsCubit(this.appointmentsRepository) : super(AppointmentsState());
+class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEvent> 
+  with RefreshErrorHandler<AppointmentsState, UserCubit> {
+  AppointmentsCubit(this.appointmentsRepository, mediator) : super(AppointmentsState(), mediator) {
+    mediator.register(this);
+  }
 
   final AppointmentsRepository appointmentsRepository;
 
@@ -86,7 +91,7 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
           lastAppointment: response));
     } catch (e) {
       emit(state.copyWith(
-          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+          getLastAppointmentStatus: GetLastAppointmentStatuses.failed));
     }
   }
 

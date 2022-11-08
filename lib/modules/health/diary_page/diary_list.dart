@@ -8,6 +8,7 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:medlike/widgets/dismissible_action/dismissible_action.dart';
 
 class DiaryList extends StatelessWidget {
   const DiaryList({
@@ -91,29 +92,28 @@ class DiaryTile extends StatelessWidget {
 
     final dates = ValueHelper.getPeriodTiming(item.date, grouping);
 
+    void onDismiss() {
+      context
+        .read<DiaryCubit>()
+        .deleteDiaryEntry(
+          date: item.date,
+          syn: syn,
+          updateFrom: dates[0],
+          updateTo: dates[1]
+        );
+    } 
+
     return Slidable(
         key: ValueKey(item.hashCode),
         endActionPane: ActionPane(
-          motion: const ScrollMotion(),
+          motion: const BehindMotion(),
+          dismissible: DismissiblePane(onDismissed: onDismiss),
           children: [
-            SlidableAction(
-              flex: 2,
-              onPressed: (ctx) {},
-              backgroundColor: const Color(0xFFFE4A49),
-              icon: Icons.delete,
-              label: 'Delete',
-            ),
+            DismissibleAction(
+              onDismiss: onDismiss,
+              verticalPadding: 0,
+            )
           ],
-          dismissible: DismissiblePane(onDismissed: () {
-            context
-              .read<DiaryCubit>()
-              .deleteDiaryEntry(
-                date: item.date,
-                syn: syn,
-                updateFrom: dates[0],
-                updateTo: dates[1]
-              );
-          }),
         ),
         child: Container(
           decoration: const BoxDecoration(

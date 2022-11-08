@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +8,8 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
@@ -18,8 +19,19 @@ import 'package:device_info_plus/device_info_plus.dart';
 
 part 'user_state.dart';
 
-class UserCubit extends Cubit<UserState> {
-  UserCubit(this.userRepository) : super(UserState());
+class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
+  UserCubit(this.userRepository, mediator) : super(UserState(), mediator) {
+    mediator.register(this);
+  }
+
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    print(from);
+    print(event);
+    if(event == UserMediatorEvent.logout) {
+      forceLogout();
+    }
+  }
 
   final UserRepository userRepository;
 
@@ -46,6 +58,8 @@ class UserCubit extends Cubit<UserState> {
 
   /// Сохраняем номер телефона в кубит
   void cleanPhoneNumber(String phone) {
+    emit(state.copyWith(
+        checkUserAccountStatus: CheckUserAccountStatuses.loading));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
@@ -474,29 +488,16 @@ class UserCubit extends Cubit<UserState> {
     ));
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-    UserProfile? selectedUser =
-        state.selectedUserId == null || state.selectedUserId!.isEmpty
-            ? state.userProfiles![0]
-            : state.userProfiles
-                ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+          'Окружение: ${ApiConstants.env}\n';
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       techInfo = 'Устройство: ${iosInfo.name}\n'
           'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Окружение: ${ApiConstants.baseUrl}\n';
     }
 
     try {
@@ -596,29 +597,18 @@ class UserCubit extends Cubit<UserState> {
 
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String techInfo = '';
-    UserProfile? selectedUser =
-        state.selectedUserId == null || state.selectedUserId!.isEmpty
-            ? state.userProfiles![0]
-            : state.userProfiles
-                ?.firstWhere((element) => element.id == state.selectedUserId);
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'ФИО пользлвателя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
+          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Окружение: ${ApiConstants.env}\n';
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       techInfo = 'Устройство: ${iosInfo.name}\n'
           'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'ФИО пользователя: ${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}\n'
-          'Телефон пользователя: ${state.userPhoneNumber}\n'
           'Окружение: ${ApiConstants.baseUrl}\n'
-          'Клиника: \n'
-          'Идентификация бэка: \n';
+          'Окружение: ${ApiConstants.env}\n';
     }
 
     try {
@@ -627,9 +617,6 @@ class UserCubit extends Cubit<UserState> {
         subject: subject,
         message: message,
         techInfo: techInfo,
-        personFio:
-            '${selectedUser!.firstName} ${selectedUser.middleName} ${selectedUser.lastName}',
-        personPhone: '${state.userPhoneNumber}',
         files: files,
       );
       emit(state.copyWith(
@@ -659,25 +646,22 @@ class UserCubit extends Cubit<UserState> {
 
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
-          'Версия Android: ${androidInfo.version.codename}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'Пользователь не авторизован\n'
-          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n';
+      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+          'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+          'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
+          'Окружение: ${ApiConstants.env}\n';
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      techInfo = 'Устройство: ${iosInfo.name}\n'
+      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+          'Устройство: ${iosInfo.name}\n'
           'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'Пользователь не авторизован\n'
-          'Телефон пользователя: ${state.userPhoneNumber ?? 'Не обнаружен'}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n';
+          'Окружение: ${ApiConstants.env}\n';
     }
 
     try {
       await userRepository.sendUnauthEmail(
         email: email,
         message: message,
-        subject: '',
         techInfo: techInfo,
         personFio: 'Пользователь не авторизован',
         personPhone: '${state.userPhoneNumber}',
@@ -698,7 +682,8 @@ class UserCubit extends Cubit<UserState> {
   /// Получить последнее непочитанное уведомление
   Future<void> getLastNotReadNotification(bool isRefresh) async {
     if (!isRefresh &&
-        state.getLastNotReadEventStatus == GetLastNotReadEventStatuses.success &&
+        state.getLastNotReadEventStatus ==
+            GetLastNotReadEventStatuses.success &&
         state.lastNotification != null) {
       return;
     }
@@ -727,10 +712,9 @@ class UserCubit extends Cubit<UserState> {
   /// Пометить событие как прочитанное
   Future<void> updateNotificationStatus(String eventId) async {
     emit(state.copyWith(
-      updatingNotificationStatusStatus:
-          UpdatingNotificationStatusStatuses.loading,
-      isLastNotificationShow: false
-    ));
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.loading,
+        isLastNotificationShow: false));
     try {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(

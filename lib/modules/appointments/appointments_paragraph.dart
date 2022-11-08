@@ -10,7 +10,6 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
 
-
 class AppointmentsParagraph extends StatelessWidget {
   const AppointmentsParagraph({
     Key? key,
@@ -26,8 +25,8 @@ class AppointmentsParagraph extends StatelessWidget {
   final Function onRefreshData;
 
   ClinicModel? getClinic(AppointmentModel item) {
-    for(var clinic in clinicsList) {
-      if(clinic.id == item.clinicInfo.id) {
+    for (var clinic in clinicsList) {
+      if (clinic.id == item.clinicInfo.id) {
         return clinic;
       }
     }
@@ -41,7 +40,7 @@ class AppointmentsParagraph extends StatelessWidget {
       context
           .read<AppointmentsCubit>()
           .deleteAppointment(appointmentId: appointmentId, userId: userId);
-    }    
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -130,15 +129,11 @@ class AppointmentsParagraph extends StatelessWidget {
                                 ],
                               ),
                               child: SliderChild(
-                                item: item,
-                                getClinic: getClinic, 
-                                index: appointmentsList.indexOf(item)
-                              )
-                            )
+                                  item: item,
+                                  getClinic: getClinic,
+                                  index: appointmentsList.indexOf(item)))
                           : AppointmentItem(
-                              appointmentItem: item,
-                              clinic: getClinic(item)!
-                            )),
+                              appointmentItem: item, clinic: getClinic(item)!)),
                 ),
               )
               .toList(),
@@ -149,15 +144,15 @@ class AppointmentsParagraph extends StatelessWidget {
 }
 
 class SliderChild extends StatefulWidget {
-  const SliderChild({
-    Key? key,
-    required this.item,
-    required this.getClinic,
-    required this.index
-  }) : super(key: key);
+  const SliderChild(
+      {Key? key,
+      required this.item,
+      required this.getClinic,
+      required this.index})
+      : super(key: key);
 
   final AppointmentModel item;
-  final ClinicModel? Function(AppointmentModel) getClinic; 
+  final ClinicModel? Function(AppointmentModel) getClinic;
   final int index;
 
   @override
@@ -168,18 +163,18 @@ class _SliderChildState extends State<SliderChild> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      const Duration(milliseconds: 100),
-      () {
-        final state = context.read<TourCubit>().state;
-        if(state.tourStatuses == TourStatuses.first
-          && state.isAppointmentShown != true
-          && widget.index == 0
-        ) {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      try {
+        final TourState? state = context.read<TourCubit>().state;
+        if (state!.tourStatuses == TourStatuses.first &&
+            state.isAppointmentShown != true &&
+            widget.index == 0) {
           onShow(context);
         }
+      } catch (err) {
+        print(err);
       }
-    );
+    });
   }
 
   void onShow(BuildContext context) {
@@ -189,21 +184,16 @@ class _SliderChildState extends State<SliderChild> {
       context.read<TourCubit>().checkAppointment();
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TourCubit, TourState>(
-      buildWhen: (_, state) {
-        
-        return true;
-      },
-      builder: (context, state) {
-        return AppointmentItem(
-          appointmentItem: widget.item,
-          clinic: widget.getClinic(widget.item)!,
-        );
-      }
-    );
+    return BlocBuilder<TourCubit, TourState>(buildWhen: (_, state) {
+      return true;
+    }, builder: (context, state) {
+      return AppointmentItem(
+        appointmentItem: widget.item,
+        clinic: widget.getClinic(widget.item)!,
+      );
+    });
   }
 }

@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
@@ -7,6 +6,9 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -15,8 +17,9 @@ import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
 
-class SubscribeCubit extends Cubit<SubscribeState> {
-  SubscribeCubit(this.subscribeRepository) : super(SubscribeState());
+class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent> 
+  with RefreshErrorHandler<SubscribeState, UserCubit> {
+  SubscribeCubit(this.subscribeRepository, mediator) : super(SubscribeState(), mediator);
 
   final SubscribeRepository subscribeRepository;
 
@@ -42,6 +45,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         availableClinicsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getAvailableClinicsStatus: GetAvailableClinicsListStatuses.failed));
     }
@@ -70,6 +74,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         servicesList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getServicesListStatus: GetServicesListStatuses.failed));
     }
@@ -101,6 +106,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         selectedResearchesIds: <String>[],
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getResearchesListStatus: GetResearchesListStatuses.failed));
     }
@@ -156,6 +162,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredSpecialisationsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getSpecialisationsListStatus: GetSpecialisationsListStatuses.failed));
     }
@@ -207,6 +214,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredDoctorsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(getDoctorsListStatus: GetDoctorsListStatuses.failed));
     }
   }
@@ -259,6 +267,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredCabinetsList: response.cabinets,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getCabinetsListStatus: GetCabinetsListStatuses.failed));
     }
@@ -308,6 +317,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         filteredFavoriteDoctorsList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getFavoriteDoctorsListStatus: GetFavoriteDoctorsListStatuses.failed));
     }
@@ -396,6 +406,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
               }.toList(),
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(getCalendarStatus: GetCalendarStatuses.failed));
     }
   }
@@ -444,6 +455,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         timetableLogsList: response.logs,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getTimetableCellsStatus: GetTimetableCellsStatuses.failed));
     }
@@ -493,11 +505,13 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       emit(state.copyWith(
         getAppointmentInfoStatus: GetAppointmentInfoStatuses.success,
         appointmentInfoData: response,
-        selectedPayType: AppConstants.noPayedPayType,
+        //! Если выключается оплата картой -- раскомментировать !//
+        // selectedPayType: AppConstants.noPayedPayType,
         //! Пока убрана оплата картой. При включении функционала раскомментировать !//
-        // selectedPayType: response.payType,
+        selectedPayType: response.payType,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getAppointmentInfoStatus: GetAppointmentInfoStatuses.failed));
     }
@@ -528,6 +542,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             .toList(),
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           checkAndLockAvailableCellStatus:
               CheckAndLockAvailableCellStatuses.failed));
@@ -566,6 +581,15 @@ class SubscribeCubit extends Cubit<SubscribeState> {
   }) async {
     if (state.creatingAppointmentStatus ==
         CreatingAppointmentStatuses.success) {
+      return;
+    }
+
+    /// Если черновик приема создан, но не оплачен
+    if (state.creatingAppointmentStatus ==
+        CreatingAppointmentStatuses.createdDraft) {
+      registerOrder(
+          userId: userId,
+          appointmentIds: [state.createdAppointmentId as String].toList());
       return;
     }
     emit(state.copyWith(
@@ -615,55 +639,22 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       CreateNewAppointmentResponseModel response =
           await subscribeRepository.createNewAppointment(data: data);
       emit(state.copyWith(
+        createdAppointmentId: response.result,
         creatingAppointmentStatus: CreatingAppointmentStatuses.success,
       ));
       if (state.selectedPayType == AppConstants.cardPayType) {
         registerOrder(
             userId: userId, appointmentIds: [response.result].toList());
-      }
-      Future.delayed(const Duration(seconds: 2), () {
-        /// похоже, null в стейт поместить нельзя. С доктором не сработало
-        /// хотя ошибок нет в линтере.
         emit(state.copyWith(
-          creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
-          selectedUser: null,
-          selectedDoctor: const Doctor(
-            id: '',
-            lastName: '',
-            firstName: '',
-            middleName: '',
-            specializationId: '',
-            specialization: '',
-            price: 0,
-            categoryType: -1,
-            isFavorite: false,
-            categories: [],
-          ),
-          selectedBuilding: null,
-          selectedCabinet: null,
-          selectedCalendarItem: null,
-          selectedResearchesIds: null,
-          selectedService: null,
-          selectedSpecialisation: null,
-          selectedTimetableCell: null,
-          selectedDate: DateTime.now(),
-          appointmentInfoData: null,
-          researchesList: [],
-          filteredResearchesList: [],
-          specialisationsList: [],
-          filteredSpecialisationsList: [],
-          doctorsList: [],
-          filteredDoctorsList: [],
-          cabinetsList: [],
-          filteredCabinetsList: [],
-          calendarList: [],
-          timetableCellsList: [],
-          timetableLogsList: [],
-          selectedPayType: null,
-          paymentUrl: null,
+          creatingAppointmentStatus: CreatingAppointmentStatuses.createdDraft,
         ));
-      });
+      } else {
+        emit(state.copyWith(
+          creatingAppointmentStatus: CreatingAppointmentStatuses.finished,
+        ));
+      }
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         creatingAppointmentStatus: CreatingAppointmentStatuses.failed,
       ));
@@ -672,6 +663,51 @@ class SubscribeCubit extends Cubit<SubscribeState> {
             creatingAppointmentStatus: CreatingAppointmentStatuses.initial));
       });
     }
+  }
+
+  /// Обнуление стейта с записью. Прием создан, переходим в Мои приемы
+  void resetSubscribeStoryState() {
+    /// похоже, null в стейт поместить нельзя. С доктором не сработало
+    /// хотя ошибок нет в линтере.
+    emit(state.copyWith(
+      creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
+      selectedUser: null,
+      selectedDoctor: const Doctor(
+        id: '',
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        specializationId: '',
+        specialization: '',
+        price: 0,
+        categoryType: -1,
+        isFavorite: false,
+        categories: [],
+      ),
+      selectedBuilding: null,
+      selectedCabinet: null,
+      selectedCalendarItem: null,
+      selectedResearchesIds: null,
+      selectedService: null,
+      selectedSpecialisation: null,
+      selectedTimetableCell: null,
+      selectedDate: DateTime.now(),
+      appointmentInfoData: null,
+      researchesList: [],
+      filteredResearchesList: [],
+      specialisationsList: [],
+      filteredSpecialisationsList: [],
+      doctorsList: [],
+      filteredDoctorsList: [],
+      cabinetsList: [],
+      filteredCabinetsList: [],
+      calendarList: [],
+      timetableCellsList: [],
+      timetableLogsList: [],
+      selectedPayType: null,
+      paymentUrl: null,
+      createdAppointmentId: null,
+    ));
   }
 
   /// Регистрация заказа (в сбере???)
@@ -719,6 +755,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
         selectedDoctor: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           getAvailableDoctorStatus: GetAvailableDoctorStatuses.failed));
     }
@@ -754,6 +791,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       );
       AppToast.showAppToast(msg: 'Врач добавлен в избранные');
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.failed));
     }
@@ -789,6 +827,7 @@ class SubscribeCubit extends Cubit<SubscribeState> {
       ));
       AppToast.showAppToast(msg: 'Врач удален из избранного');
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
           deleteDoctorFromFavoritesStatus:
               DeleteDoctorFromFavoritesStatuses.failed));

@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_action_button.dart';
+import 'package:medlike/modules/subscribe/confirmation_subscribe/payment_widget.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -56,7 +57,8 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                 state.getAppointmentInfoStatus ==
                     GetAppointmentInfoStatuses.loading ||
                 state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.loading;
+                    CreatingAppointmentStatuses.loading ||
+                state.registerOrderStatus == RegisterOrderStatuses.loading;
             return SizedBox(
               width: 200,
               child: AnimatedFractionallySizedBox(
@@ -77,30 +79,36 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
             );
           },
         ),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            const SizedBox(height: 20),
-            UserInfo(userId: widget.userId),
-            const SizedBox(height: 19),
-            const DashDivider(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              const SizedBox(height: 20),
+              UserInfo(userId: widget.userId),
+              const SizedBox(height: 19),
+              const DashDivider(),
 
-            /// Карточки с выбором способа оплаты.
-            /// Не работает оплата картой, поэтому закомментировано
-            /// Раскомментировать в кубите
-            /// получение информации о приеме
-            // const SizedBox(height: 24),
-            // const PaymentWidget(),
-            const AppointmentInfo(),
-            const SizedBox(height: 24),
-            const DashDivider(),
-            const SizedBox(height: 24),
-            AgreementsChecker(
-              isChecked: isCheckedAgreements,
-              setIsCheckedValue: setIsCheckedValue,
-            ),
-            const SizedBox(height: 44),
-          ],
+              /// Карточки с выбором способа оплаты.
+              /// Не работает оплата картой, поэтому закомментировано
+              /// Раскомментировать в кубите
+              /// получение информации о приеме
+              const SizedBox(height: 24),
+              const PaymentWidget(),
+              const AppointmentInfo(),
+              const SizedBox(height: 24),
+              const DashDivider(),
+              const SizedBox(height: 24),
+              AgreementsChecker(
+                isChecked: isCheckedAgreements,
+                setIsCheckedValue: setIsCheckedValue,
+              ),
+              const SizedBox(width: 15),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );

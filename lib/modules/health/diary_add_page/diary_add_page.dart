@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_form.dart';
 import 'package:medlike/modules/health/diary_add_page/form_field.dart';
+import 'package:medlike/themes/colors.dart';
 
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:auto_route/auto_route.dart';
@@ -62,6 +63,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
   DateTime? date;
   DateTime? time;
+  bool isDisabledButton = false;
 
   @override
   void initState() {
@@ -81,6 +83,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
     }
 
     final initDate = widget.initialDate ?? DateTime.now();
+    if(widget.initialDate != null) {
+      isDisabledButton = true;
+    }
 
     dateController.text = ValueHelper.getDatepickerString(initDate, true)!;
     timeController.text = ValueHelper.getDatepickerString(initDate, false)!;
@@ -130,6 +135,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         onChange: (text) {
           onFocus(index, false);
           setState(() {
+            if(_formKey.currentState!.validate()) {
+              isDisabledButton = false;
+            }
             isEmpties[index] = text == '';
           });
         },
@@ -138,6 +146,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onDateChange(DateTime date, String text) {
       setState(() {
+        if(_formKey.currentState!.validate()) {
+          isDisabledButton = false;
+        }
         dateController.text = text;
         this.date = date;
         _initialDate = date;
@@ -146,11 +157,16 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onTimeChange(DateTime time, String text) {
       setState(() {
+        if(_formKey.currentState!.validate()) {
+          isDisabledButton = false;
+        }
         timeController.text = text;
         this.time = time;
         _initialTime = time;
       });
     }
+
+    final noError = _formKey.currentState?.validate() ?? true;
 
     return BlocBuilder<DiaryCubit, DiaryState>(
       builder: (context, state) {
@@ -171,7 +187,11 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
           ),
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
-            onPressed: () {
+            backgroundColor: !isDisabledButton
+              ? Theme.of(context).primaryColor
+              : AppColors.lightText,
+            onPressed: isDisabledButton || !noError
+              ? () {} : () {
               isValidate.asMap().map((k, v) {
                 setState(() {
                   isValidate[k] = true;
@@ -180,6 +200,9 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               });
 
               if (!_formKey.currentState!.validate()) {
+                setState(() {
+                  isDisabledButton = true;
+                });
                 return;
               }
 
@@ -188,7 +211,8 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                 date!.month,
                 date!.day,
                 time!.hour,
-                time!.minute
+                time!.minute,
+                DateTime.now().second
               );
 
               final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);

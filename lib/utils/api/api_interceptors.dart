@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
+import 'package:medlike/domain/app/exceptions/invalid_refresh_token_error.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
@@ -25,8 +26,8 @@ class DioInterceptors extends Interceptor {
     options.headers = {
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
-      'Project': 'Zapolyarye',
-      'VerApp': '2.0',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
       'Platform': '1', //Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
@@ -67,8 +68,8 @@ class DioInterceptors extends Interceptor {
           UserSecureStorage.setField(AppConstants.isAuth, 'false');
           AppToast.showAppToast(
               msg: 'Время вашей сессии истекло. Авторизуйтесь заново');
-          //TODO: logout user here
-          // return err;
+          
+          return super.onError(InvalidRefreshTokenError(requestOptions: requestOptions), handler);
         }
         return _dio
             .post('${ApiConstants.baseUrl}/api/v1.0/auth/token/refresh', data: {
@@ -108,8 +109,8 @@ class DioInterceptors extends Interceptor {
           AppToast.showAppToast(
               msg:
                   'Время вашей сессии истекло. Пожалуйста, авторизуйтесь заново');
-          //TODO: logout user here
-          return e;
+
+            return super.onError(InvalidRefreshTokenError(requestOptions: requestOptions), handler);
         });
       case 460:
         UserSecureStorage.setField(AppConstants.isActualAppVersion, 'false');

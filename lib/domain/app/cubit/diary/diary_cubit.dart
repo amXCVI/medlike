@@ -2,13 +2,19 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/domain/app/mediator/base_mediator.dart';
+import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'diary_state.dart';
 
-class DiaryCubit extends Cubit<DiaryState> {
-  DiaryCubit(this.diaryRepository) : super(DiaryState());
+class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
+  with RefreshErrorHandler<DiaryState, UserCubit> {
+  DiaryCubit(this.diaryRepository, mediator) : super(DiaryState(), mediator) {
+    mediator.register(this);
+  }
 
   final DiaryRepository diaryRepository;
 
@@ -32,6 +38,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         diariesCategoriesList: response,
       ));
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.failed)
       );
@@ -90,6 +97,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         );
       }
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         getDiaryStatuses: GetDiaryStatuses.failed,
         updateDiaryStatuses: UpdateDiaryStatuses.failed)
@@ -164,6 +172,7 @@ class DiaryCubit extends Cubit<DiaryState> {
       }
 
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
       ));
@@ -206,6 +215,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         AppToast.showAppToast(msg: 'Запись отредактирована');
       }
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
         getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
@@ -245,6 +255,7 @@ class DiaryCubit extends Cubit<DiaryState> {
         AppToast.showAppToast(msg: 'Запись удалена');
       }
     } catch (e) {
+      addError(e);
       emit(state.copyWith(
         updateDiaryStatuses: UpdateDiaryStatuses.failed,
         getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий

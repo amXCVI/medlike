@@ -22,7 +22,7 @@ class AppointmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future<void> _onLoadDada({bool isRefresh = true}) async {
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
-      context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
+      //context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
     }
 
     _onLoadDada(isRefresh: isRefresh as bool);

@@ -10,7 +10,6 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
-import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class NotificationsWidgetView extends StatefulWidget {
@@ -79,9 +78,20 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
               final description = widget.appointment != null
                   ? getAppointmentsDesc(widget.appointment!)
                   : notificationItem.description;
-              return Padding(
-                padding: const EdgeInsets.only(
-                    top: 0, left: 16.0, bottom: 32.0, right: 16.0),
+              return Container(
+                margin: const EdgeInsets.only(
+                  top: 0, left: 16.0, bottom: 32.0, right: 16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 20,
+                      offset: Offset(0, 8),
+                    ),
+                  ],
+                  color: Theme.of(context).backgroundColor,
+                ),
                 child: Slidable(
                   key: UniqueKey(),
                   endActionPane: ActionPane(
@@ -92,7 +102,6 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         onPressed: (ctx) {},
                         backgroundColor: const Color(0xFFFE4A49),
                         icon: Icons.delete,
-                        label: 'Delete',
                       ),
                     ],
                     dismissible: DismissiblePane(onDismissed: () {
@@ -101,20 +110,9 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                           .updateNotificationStatus(notificationItem.id);
                     }),
                   ),
-                  child: Container(
+                  child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 16.0, left: 16.0, bottom: 4.0, right: 16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 20,
-                          offset: Offset(0, 8),
-                        ),
-                      ],
-                      color: Theme.of(context).backgroundColor,
-                    ),
+                        top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -269,20 +267,6 @@ class NotificationBottom extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         dateWidget,
-        isLoading
-            ? const CircularLoader(radius: 10)
-            : TextButton(
-                onPressed: () {
-                  handleCleanLastNotification(notificationItem.id);
-                },
-                child: Text('ОЧИСТИТЬ'.toUpperCase(),
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1,
-                      height: 1,
-                    )))
       ],
     );
   }

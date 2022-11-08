@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/swipe_detector/swipe_detector.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
@@ -56,7 +57,6 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
   void performSwipe(ChartSwipeDirection direction) {
     widget.onLoadDate!(direction == ChartSwipeDirection.end);
-
     if (seriesController != null) {
       seriesController!
         .updateDataSource(addedDataIndexes: []);
@@ -112,6 +112,24 @@ class _DiaryGraphState extends State<DiaryGraph> {
         );
       Offset pointLocation = seriesController!.pointToPixel(chartPoint);
       widget.onSelect(details.pointIndex!, pointLocation);
+    }
+  }
+
+  void onMarkerRender(MarkerRenderArgs args) {
+    List<ChartData> chartData = widget.items.map((e) => 
+      ChartData(
+        e.date, 
+        e.innerData[0], 
+        e.innerData.length > 1 ? e.innerData[1] : null,
+        e.isAbnormal
+      )
+    ).toList();
+
+    if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
+      if(chartData[args.pointIndex!].isAbnormal) {
+        args.color = AppColors.mainError;
+        args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
+      }
     }
   }
 
@@ -339,14 +357,7 @@ class _DiaryGraphState extends State<DiaryGraph> {
             ),
             series: data,
       
-            onMarkerRender: (args) {
-              if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
-                if(chartData[args.pointIndex!].isAbnormal) {
-                  args.color = AppColors.mainError;
-                  args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
-                }
-              }
-            },
+            onMarkerRender: onMarkerRender,
             margin: const EdgeInsets.symmetric(horizontal: 10),
             onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
           ),
@@ -356,67 +367,79 @@ class _DiaryGraphState extends State<DiaryGraph> {
 
     return TapOutsideDetectorWidget(
       onTappedOutside: () => context.read<PromptCubit>().unselect(),
-      child: SizedBox(
-        height: 200,
-        width: MediaQuery.of(context).size.width,
-        child: SfCartesianChart(
-          onPlotAreaSwipe: (ChartSwipeDirection direction) =>
-            performSwipe(direction),
-          margin: EdgeInsets.zero,
-          plotAreaBorderWidth: 1,
-          plotAreaBorderColor: AppColors.mainSeparatorAlpha,
-          primaryXAxis: DateTimeAxis(
-            plotBands: [
-              if(widget.selected != null && seriesController != null) PlotBand(
-                start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
-                end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
-                shouldRenderAboveSeries: false,
-                borderWidth: 1,
-                borderColor: Colors.grey.shade300,
-                color: Colors.grey.shade300
+      child: SwipeDetector(
+        onSwipeLeft: () {
+          performSwipe(ChartSwipeDirection.end);
+        },
+        onSwipeRight: () {
+          performSwipe(ChartSwipeDirection.start);
+        },
+        swipeConfiguration: SwipeConfiguration(
+          verticalSwipeMaxWidthThreshold: 250.0,
+          verticalSwipeMinDisplacement: 30.0,
+          verticalSwipeMinVelocity: 100.0,
+
+          //Horizontal swipe configuration options
+          horizontalSwipeMaxHeightThreshold: 250.0,
+          horizontalSwipeMinDisplacement: 10.0,
+          horizontalSwipeMinVelocity: 50.0
+        ),
+        child: SizedBox(
+          height: 200,
+          width: MediaQuery.of(context).size.width,
+          child: SfCartesianChart(
+            /*
+            onPlotAreaSwipe: (ChartSwipeDirection direction) =>
+              performSwipe(direction),
+            */
+            margin: EdgeInsets.zero,
+            plotAreaBorderWidth: 1,
+            plotAreaBorderColor: AppColors.mainSeparatorAlpha,
+            primaryXAxis: DateTimeAxis(
+              plotBands: [
+                if(widget.selected != null && seriesController != null) PlotBand(
+                  start: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                  end: seriesController!.pixelToPoint(Offset(widget.selected!, 0)).x,
+                  shouldRenderAboveSeries: false,
+                  borderWidth: 1,
+                  borderColor: Colors.grey.shade300,
+                  color: Colors.grey.shade300
+                )
+              ],
+              interval: interval,
+              intervalType: type,
+              minimum: widget.firstDate,
+              maximum: widget.lastDate,
+              axisLine: const AxisLine(
+                width: 1,
+                color: Color.fromRGBO(158, 157, 157, 0.4)
+              ),
+              axisLabelFormatter: labelFormatter,
+              majorGridLines: const MajorGridLines(
+                dashArray: <double>[5,3]
               )
-            ],
-            interval: interval,
-            intervalType: type,
-            minimum: widget.firstDate,
-            maximum: widget.lastDate,
-            axisLine: const AxisLine(
-              width: 1,
-              color: Color.fromRGBO(158, 157, 157, 0.4)
             ),
-            axisLabelFormatter: labelFormatter,
-            majorGridLines: const MajorGridLines(
-              dashArray: <double>[5,3]
-            )
-          ),
-          primaryYAxis: NumericAxis(
-            minimum: widget.minValue[0],
-            maximum: widget.maxValue[0],
-            opposedPosition: true,
-            axisLine: const AxisLine(
-              width: 1,
-              color: Color.fromRGBO(158, 157, 157, 0.4)
+            primaryYAxis: NumericAxis(
+              minimum: widget.minValue[0],
+              maximum: widget.maxValue[0],
+              opposedPosition: true,
+              axisLine: const AxisLine(
+                width: 1,
+                color: Color.fromRGBO(158, 157, 157, 0.4)
+              ),
+              majorGridLines: const MajorGridLines(
+                dashArray: <double>[5,3]
+              )
             ),
-            majorGridLines: const MajorGridLines(
-              dashArray: <double>[5,3]
-            )
-          ),
-          //trackballBehavior: _trackballBehavior,
-          enableAxisAnimation: true,
-          series: data,
+            //trackballBehavior: _trackballBehavior,
+            enableAxisAnimation: true,
+            series: data,
+            
+            onMarkerRender: onMarkerRender,
           
-          onMarkerRender: (args) {
-            if(args.pointIndex != null && chartData[args.pointIndex!].y != null) {
-    
-              if(chartData[args.pointIndex!].isAbnormal) {
-                args.color = AppColors.mainError;
-                args.borderColor = const Color.fromRGBO(254, 235, 240, 1);
-              }
-            }
-          },
-    
-          onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
-        )
+            onChartTouchInteractionUp: (args) => onChartTap(args, chartData, 15)
+          )
+        ),
       ),
     );
   }

@@ -88,15 +88,20 @@ class _CheckPinCodeState extends State<CheckPinCode> {
       }
     }
 
-    return ListView(
-      children: [
-        PinCodeView(
-          pinCodeTitle: 'Введите пин - код',
-          setPinCode: _checkPinCode,
-          key: const Key('2'),
-          handleBiometricMethod: onSuccessBiometricAuthenticate,
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return ListView(
+          children: [
+            PinCodeView(
+              pinCodeTitle: 'Введите пин - код',
+              setPinCode: _checkPinCode,
+              key: const Key('2'),
+              height: constraints.maxHeight,
+              handleBiometricMethod: onSuccessBiometricAuthenticate,
+            ),
+          ],
+        );
+      }
     );
   }
 }

@@ -12,6 +12,7 @@ class PinCodeView extends StatefulWidget {
     required this.setPinCode,
     required this.handleBiometricMethod,
     this.isForcedShowingBiometricModal = false,
+    this.height,
     this.signInTitle,
     this.isInit = false,
     required this.pinCodeTitle,
@@ -20,6 +21,7 @@ class PinCodeView extends StatefulWidget {
   final Future<bool> Function(List<int> pin) setPinCode;
   final void Function(bool) handleBiometricMethod;
   final bool isForcedShowingBiometricModal;
+  final double? height;
   final String? signInTitle;
   final bool isInit;
   final String pinCodeTitle;
@@ -143,23 +145,27 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight;
+
     return SizedBox(
       width: 300,
-      height: MediaQuery.of(context).size.width < AppConstants.smScreenWidth
-          ? MediaQuery.of(context).size.height - 140
-          : MediaQuery.of(context).size.height - 160,
+      height: isSmallScreen
+        ? widget.height
+        : MediaQuery.of(context).size.height - 160,
       child: Column(
         mainAxisAlignment:
-            MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+            isSmallScreen
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.spaceBetween,
         children: [
-          MediaQuery.of(context).size.width < AppConstants.smScreenWidth
+          isSmallScreen
               ? const SizedBox(height: 12)
               : const Expanded(child: SizedBox()),
           Expanded(
             child: Center(
               child: Column(
+                mainAxisAlignment: 
+                  isSmallScreen ? MainAxisAlignment.center : MainAxisAlignment.start,
                 children: [
                   Center(
                       child: Text(

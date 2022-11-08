@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
+import 'package:medlike/widgets/buttons/simple_button.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem({
-    Key? key, 
-    required this.appointmentItem,
-    required this.clinic
-  }) : super(key: key);
+  const AppointmentItem(
+      {Key? key, required this.appointmentItem, required this.clinic})
+      : super(key: key);
 
   final AppointmentModel appointmentItem;
   final ClinicModel clinic;
@@ -64,6 +65,7 @@ class AppointmentItem extends StatelessWidget {
                 )
               : const SizedBox(height: 15.0),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset('assets/icons/appointments/solid.svg'),
               const SizedBox(width: 8.0),
@@ -71,7 +73,9 @@ class AppointmentItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 100,
                 child: Text(
                     ClinicAddressHelper.getShortAddress(
-                        appointmentItem.clinicInfo.address!),
+                            appointmentItem.clinicInfo.address!) +
+                        ', ' +
+                        appointmentItem.researchPlace,
                     overflow: TextOverflow.fade,
                     maxLines: 2,
                     softWrap: true,
@@ -80,7 +84,14 @@ class AppointmentItem extends StatelessWidget {
             ],
           ),
           AppointmentItemRecommendations(
-              recommendations: appointmentItem.recommendations ?? ''),
+            recommendations: appointmentItem.recommendations ?? '',
+            serviceName: appointmentItem.categoryType == 1 ||
+                    appointmentItem.categoryType == 0
+                ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+                : '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.researches.map(
+                      (e) => e.name as String,
+                    ).join(', ')}',
+          ),
           const SizedBox(height: 8.0),
           Row(
             children: [
@@ -97,12 +108,10 @@ class AppointmentItem extends StatelessWidget {
                       children: [
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
-                        Text(
-                          getAppointmentTime(
-                            appointmentItem.appointmentDateTime, 
+                        Text(getAppointmentTime(
+                            appointmentItem.appointmentDateTime,
                             clinic.timeZoneOffset ?? 3 // Стандарт МСК +3
-                          )
-                        ),
+                            )),
                       ],
                     ),
                   ),
@@ -129,7 +138,39 @@ class AppointmentItem extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          if (appointmentItem.status == 4)
+            const SizedBox(height: 14.0),
+          if (appointmentItem.status == 4)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SimpleButton(
+                    isPrimary: true,
+                    labelText: 'Подтвердить',
+                    onTap: () {
+                      context.read<AppointmentsCubit>().confirmAppointment(
+                        appointmentId: appointmentItem.id,
+                        userId: appointmentItem.patientInfo.id as String);
+                    },
+                  )
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: SimpleButton(
+                    labelText: 'Отменить',
+                    onTap: () {
+                      context.read<AppointmentsCubit>().deleteAppointment(
+                          appointmentId: appointmentItem.id,
+                          userId: appointmentItem.patientInfo.id as String);
+                    }
+                  )
+                )
+              ],
+            )
         ],
       ),
     );
