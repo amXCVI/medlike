@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/modules/login/biometric_authentication/biometric_authentication_widget.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 
 class PinCodeView extends StatefulWidget {
   const PinCodeView({
@@ -40,6 +42,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   late bool isSupportedAndEnabledBiometric = false;
   late bool isShowingBiometricModal = true;
   late bool isFaceId = false;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
@@ -74,6 +77,10 @@ class _PinCodeViewState extends State<PinCodeView> {
       setState(() {
         isFaceId = true;
       });
+    }
+
+    if(widget.isForcedShowingBiometricModal) {
+      _authenticate();
     }
   }
 
@@ -113,6 +120,8 @@ class _PinCodeViewState extends State<PinCodeView> {
       setState(() {
         pointsArray = initPointsArray;
       });
+
+      _authenticate();
     } else {
       if (firstEmptyIndex != -1 && firstEmptyIndex != 0) {
         setState(() {
@@ -141,6 +150,41 @@ class _PinCodeViewState extends State<PinCodeView> {
       }
 
       return;
+    }
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticate(
+        localizedReason: 'Прикоснитесь к сенсору устройства',
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+          sensitiveTransaction: true,
+          biometricOnly: true,
+        ),
+        authMessages: <AuthMessages>[
+          AndroidAuthMessages(
+            biometricRequiredTitle: 'Прикоснитесь к сенсору устройства',
+            cancelButton: 'Отмена',
+            signInTitle:  widget.signInTitle ?? 'Авторизация',
+            biometricHint: '',
+          ),
+          const IOSAuthMessages(
+            cancelButton: 'Отмена',
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      print(e);
+      return;
+    }
+
+    if (authenticated) {
+      onSuccessAuthBiometric();
+    } else {
+      onCancelBiometricAuthMethod();
     }
   }
 
@@ -278,16 +322,6 @@ class _PinCodeViewState extends State<PinCodeView> {
               ),
             ),
           ),
-          (isSupportedAndEnabledBiometric 
-            && isShowingBiometricModal 
-            && !widget.isInit) ||
-                  widget.isForcedShowingBiometricModal
-              ? BiometricAuthenticationWidget(
-                  onSuccess: onSuccessAuthBiometric,
-                  onCancel: onCancelBiometricAuthMethod,
-                  signInTitle: widget.signInTitle,
-                )
-              : const SizedBox(),
         ],
       ),
     );
