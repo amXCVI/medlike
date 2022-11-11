@@ -4,8 +4,11 @@ library main;
 import 'package:js/js.dart';
 import 'dart:js_util';
 import 'package:dio/dio.dart';
+import 'package:medlike/constants/app_constants.dart';
 
 import 'dart:js' as js;
+
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 typedef Callback<T> = dynamic Function(T arg);
 
@@ -121,6 +124,20 @@ class SmartAppClient {
     }).then(js.allowInterop((data) {
       return data;
     }), js.allowInterop((err) {
+      return err;
+    })));
+  }
+
+  static Future<dynamic> getSmartAppToken() async {
+    return await promiseToFuture(sendBotEvent({
+      'method': 'get_open_id_token',
+    }).then(js.allowInterop((data) {
+      print('SUCCESS GET SMARTAPP TOKEN: $data');
+      UserSecureStorage.setField(
+          AppConstants.smartappToken, data.open_id_token);
+      return data;
+    }), js.allowInterop((err) {
+      print('ERROR GET SMARTAPP TOKEN: $err');
       return err;
     })));
   }

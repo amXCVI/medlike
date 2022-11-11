@@ -148,7 +148,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
-    addFirebaseDeviceId();
+    if (!kIsWeb) {
+      addFirebaseDeviceId();
+    }
   }
 
   /// Сохраняет deviceId устройства на бэке
@@ -235,7 +237,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
-      addFirebaseDeviceId();
+      if (!kIsWeb) {
+        addFirebaseDeviceId();
+      }
+
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код');

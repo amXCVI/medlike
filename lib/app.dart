@@ -23,6 +23,7 @@ import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 
 class App extends StatelessWidget {
@@ -37,16 +38,28 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      SmartAppClient.getSmartAppToken();
+    } catch (err) {
+      rethrow;
+    }
+
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => UserCubit(UserRepository(), mediator)),
         BlocProvider(
-            create: (context) => SubscribeCubit(SubscribeRepository(), mediator)),
-        BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
+            create: (context) => UserCubit(UserRepository(), mediator)),
         BlocProvider(
-            create: (context) => AppointmentsCubit(AppointmentsRepository(), mediator)),
-        BlocProvider(create: (context) => MedcardCubit(MedcardRepository(), mediator)),
-        BlocProvider(create: (context) => DiaryCubit(DiaryRepository(), mediator)),
+            create: (context) =>
+                SubscribeCubit(SubscribeRepository(), mediator)),
+        BlocProvider(
+            create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
+        BlocProvider(
+            create: (context) =>
+                AppointmentsCubit(AppointmentsRepository(), mediator)),
+        BlocProvider(
+            create: (context) => MedcardCubit(MedcardRepository(), mediator)),
+        BlocProvider(
+            create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(create: (context) => PromptCubit()),
         BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],
@@ -56,9 +69,12 @@ class App extends StatelessWidget {
           theme: AppTheme.lightAppTheme,
           routerDelegate: AutoRouterDelegate(
             _router,
-            navigatorObservers: () => kIsWeb ? [] : [
-              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-            ],
+            navigatorObservers: () => kIsWeb
+                ? []
+                : [
+                    FirebaseAnalyticsObserver(
+                        analytics: FirebaseAnalytics.instance),
+                  ],
           ),
           routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
