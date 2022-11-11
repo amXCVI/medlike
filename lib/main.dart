@@ -17,6 +17,7 @@ void main() async {
   await FCMService.initializeLocalNotifications();
   await FCMService.onBackgroundMsg();
   await FCMService.onMessage();
+  await FCMService.getFCMToken();
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
