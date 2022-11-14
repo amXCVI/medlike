@@ -20,6 +20,10 @@ class AppointmentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final title = appointmentItem.doctorInfo.specialization != null ? 
+      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       child: Column(
@@ -28,7 +32,7 @@ class AppointmentItem extends StatelessWidget {
         children: [
           appointmentItem.categoryType == 1 || appointmentItem.categoryType == 0
               ? Text(
-                  '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}',
+                  title,
                   style: Theme.of(context).textTheme.titleMedium)
               : Text.rich(TextSpan(children: [
                   WidgetSpan(
@@ -98,7 +102,6 @@ class AppointmentItem extends StatelessWidget {
               RichText(
                 text: WidgetSpan(
                   child: Container(
-                    // Туда нам надо
                     decoration: BoxDecoration(
                       color: AppColors.circleBgFirst,
                       borderRadius: BorderRadius.circular(8),

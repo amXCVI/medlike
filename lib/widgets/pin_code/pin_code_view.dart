@@ -14,8 +14,8 @@ class PinCodeView extends StatefulWidget {
     this.isForcedShowingBiometricModal = false,
     this.height,
     this.signInTitle,
-    this.isInit = false,
     required this.pinCodeTitle,
+    this.isInit = false,
     this.noUsedBiometric,
   }) : super(key: key);
   final Future<bool> Function(List<int> pin) setPinCode;
@@ -23,8 +23,8 @@ class PinCodeView extends StatefulWidget {
   final bool isForcedShowingBiometricModal;
   final double? height;
   final String? signInTitle;
-  final bool isInit;
   final String pinCodeTitle;
+  final bool isInit;
   final bool? noUsedBiometric;
 
   @override
@@ -37,6 +37,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   late bool isSupportedAndEnabledBiometric = false;
   late bool isShowingBiometricModal = true;
   late bool isFaceId = false;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
@@ -236,7 +237,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                                     )
                                   : item.buttonType ==
                                           PinCodeKeyboardTypes.biometric
-                                      ? isSupportedAndEnabledBiometric  && !widget.isInit
+                                      ? isSupportedAndEnabledBiometric && !widget.isInit
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(12.0),
