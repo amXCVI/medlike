@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/agreements/agreements_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:medlike/widgets/web_agreements/web_agreements_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -62,22 +64,29 @@ class _AgreementsPageState extends State<AgreementsPage> {
                 SizedBox(
                     //? Задается высота для webview. Без этого не получилось сделать
                     height: MediaQuery.of(context).size.height,
-                    child: WebView(
-                      onWebViewCreated: (WebViewController webViewController) {
-                        _controller.complete(webViewController);
-                        _con = webViewController;
-                        _con.loadHtmlString(state.userAgreementDocument!.body);
-                      },
-                      navigationDelegate: (NavigationRequest request) async {
-                        if (request.url == 'about:blank') {
-                          return NavigationDecision.navigate;
-                        } else {
-                          _launchURL(request.url);
-                          return NavigationDecision.prevent;
-                        }
-                      },
-                      gestureNavigationEnabled: true,
-                    ))
+                    child: kIsWeb
+                        ? WebAgreementsWidget(
+                            htmlBody: state.userAgreementDocument!.body,
+                          )
+                        : WebView(
+                            onWebViewCreated:
+                                (WebViewController webViewController) {
+                              _controller.complete(webViewController);
+                              _con = webViewController;
+                              _con.loadHtmlString(
+                                  state.userAgreementDocument!.body);
+                            },
+                            navigationDelegate:
+                                (NavigationRequest request) async {
+                              if (request.url == 'about:blank') {
+                                return NavigationDecision.navigate;
+                              } else {
+                                _launchURL(request.url);
+                                return NavigationDecision.prevent;
+                              }
+                            },
+                            gestureNavigationEnabled: true,
+                          ))
               ],
             );
           } else {
