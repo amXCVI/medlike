@@ -372,4 +372,23 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future<AuthTokenResponse> smartappAuth(
+      {required String smartappToken}) async {
+    try {
+      final response = await _dioClient.post('/api/v1.0/auth/token-smartapp',
+          data: {},
+          options: Options(
+            headers: {'Authorization': 'Bearer $smartappToken'},
+          ));
+      if (response.statusCode == 200) {
+        return AuthTokenResponse.fromJson(response.data);
+      } else {
+        return const AuthTokenResponse(
+            token: '', refreshToken: '', tryCount: 1);
+      }
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

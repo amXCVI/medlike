@@ -1,5 +1,6 @@
 class AppRoutes {
   static const home = '/';
+  static const smartappLoginPage = '/smartapp_login_page';
   static const loginPhone = '/login_phone';
   static const loginPassword = '/login_password';
   static const loginPinCodeCreate = '/login_pin_code';

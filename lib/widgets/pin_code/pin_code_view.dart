@@ -37,7 +37,6 @@ class _PinCodeViewState extends State<PinCodeView> {
   late bool isSupportedAndEnabledBiometric = false;
   late bool isShowingBiometricModal = true;
   late bool isFaceId = false;
-  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {

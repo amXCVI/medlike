@@ -14,6 +14,7 @@ import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
+import 'package:medlike/modules/login/smartapp_login/smartapp_login_page.dart';
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_page.dart';
 import 'package:medlike/modules/login/unauth_support/unauth_support_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
@@ -42,6 +43,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
+    AdaptiveRoute(path: AppRoutes.smartappLoginPage, page: SmartappLoginPage, initial: true),
     AdaptiveRoute(path: AppRoutes.loginPhone, page: StartPhoneNumberPage),
     AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordPage),
     AdaptiveRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
@@ -51,7 +53,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
     AdaptiveRoute(path: AppRoutes.loginUnauthSupport, page: UnauthSupportPage),
 
-    AdaptiveRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser], initial: true),
+    AdaptiveRoute(path: AppRoutes.main, page: MainPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.myAppointments, page: AppointmentsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: SubscribeProfilesListPage, guards: [CheckIsAuthUser]),

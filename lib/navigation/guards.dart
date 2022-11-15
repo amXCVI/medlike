@@ -8,20 +8,16 @@ class CheckIsAuthUser extends AutoRouteGuard {
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
     final token =
         '${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    final isSavedPinCode =
-        '${await UserSecureStorage.getField(AppConstants.isSavedPinCodeForAuth)}' ==
-            'true';
     final isAuth =
         '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
     /// Должен быть токен, он не пустой, и пин-код для быстрого входа в приложение сохранен
     if (token != 'null' &&
         token.toString().isNotEmpty &&
-        isAuth &&
-        isSavedPinCode) {
+        isAuth) {
       resolver.next(true);
     } else {
-      router.navigateNamed(AppRoutes.loginPinCodeCheck);
+      router.navigateNamed(AppRoutes.smartappLoginPage);
     }
   }
 }
@@ -29,16 +25,13 @@ class CheckIsAuthUser extends AutoRouteGuard {
 class CheckIsSavedPinCode extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    final isSavedPinCode =
-        '${await UserSecureStorage.getField(AppConstants.isSavedPinCodeForAuth)}' ==
-            'true';
     final token =
         '${await UserSecureStorage.getField(AppConstants.accessToken)}';
 
-    if (token != 'null' && token.toString().isNotEmpty && isSavedPinCode) {
+    if (token != 'null' && token.toString().isNotEmpty) {
       resolver.next(true);
     } else {
-      router.navigateNamed(AppRoutes.loginPhone);
+      router.navigateNamed(AppRoutes.smartappLoginPage);
     }
   }
 }

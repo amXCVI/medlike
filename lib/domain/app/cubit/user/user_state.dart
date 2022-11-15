@@ -40,11 +40,13 @@ enum GetLastNotReadEventStatuses { initial, loading, success, failed }
 
 enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
 
-enum NotificationEventType { 
-  AppointmentCompleted, 
-  AppointmentCanceled, 
-  NewMedcardEventPdf, 
-  NewMedcardEventJson, 
+enum GetSmartappTokenStatuses { initial, loading, success, failed }
+
+enum NotificationEventType {
+  AppointmentCompleted,
+  AppointmentCanceled,
+  NewMedcardEventPdf,
+  NewMedcardEventJson,
   AppointmentScheduled
 }
 
@@ -77,6 +79,7 @@ class UserState {
   final NotificationModel? lastNotification;
   final bool? isLastNotificationShow;
   final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
+  final GetSmartappTokenStatuses? getSmartappTokenStatus;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -109,6 +112,7 @@ class UserState {
     this.lastNotification,
     this.isLastNotificationShow,
     this.updatingNotificationStatusStatus,
+    this.getSmartappTokenStatus,
   });
 
   UserState copyWith({
@@ -140,6 +144,7 @@ class UserState {
     NotificationModel? lastNotification,
     bool? isLastNotificationShow,
     UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
+    GetSmartappTokenStatuses? getSmartappTokenStatus,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -179,9 +184,12 @@ class UserState {
       getLastNotReadEventStatus:
           getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
       lastNotification: lastNotification ?? this.lastNotification,
-      isLastNotificationShow: isLastNotificationShow ?? this.isLastNotificationShow,
+      isLastNotificationShow:
+          isLastNotificationShow ?? this.isLastNotificationShow,
       updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
           this.updatingNotificationStatusStatus,
+      getSmartappTokenStatus:
+          getSmartappTokenStatus ?? this.getSmartappTokenStatus,
     );
   }
 

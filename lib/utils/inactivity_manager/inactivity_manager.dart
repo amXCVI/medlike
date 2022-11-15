@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class InactivityManager extends StatefulWidget {
@@ -78,8 +76,8 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   @override
   Widget build(BuildContext context) {
     if (isLogoutApp) {
-      print('LOGOUT');
-      context.read<UserCubit>().signOut();
+      /// Убираем логаут по истеечнии времени
+      // context.read<UserCubit>().signOut();
       _initializeTimer();
     }
 

@@ -11,7 +11,6 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -112,6 +111,42 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     }
   }
 
+  /// Авторизация по токену Смартапп
+  Future<bool> smartappAuth({required String smartappToken}) async {
+    emit(state.copyWith(
+      getSmartappTokenStatus: GetSmartappTokenStatuses.loading,
+    ));
+    try {
+      final response =
+          await userRepository.smartappAuth(smartappToken: smartappToken);
+      if (response.token.isEmpty) {
+        emit(state.copyWith(
+          tryCount: response.tryCount,
+          getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
+        ));
+        return false;
+      }
+      UserSecureStorage.setField(AppConstants.accessToken, response.token);
+      UserSecureStorage.setField(
+          AppConstants.refreshToken, response.refreshToken);
+      // UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+      emit(state.copyWith(
+        getSmartappTokenStatus: GetSmartappTokenStatuses.success,
+        token: response.token,
+        refreshToken: response.refreshToken,
+        tryCount: 5,
+      ));
+
+      getUserProfiles(true);
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
+      ));
+      return false;
+    }
+  }
+
   /// Лайтовый выход из приложения. Заблокировать сессию
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
@@ -131,7 +166,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
 
-    FCMService.cleanFCMToken();
+    // FCMService.cleanFCMToken();
 
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,

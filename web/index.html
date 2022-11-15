@@ -20,19 +20,40 @@
     <script src="./bridge-bundle.js"></script>
     <script>
         var bridge = window.webBridgeInstance;
+        console.log('bridge: ', bridge);
         async function sendBotEvent(eventObject) {
+        console.log('sendBotEvent start', eventObject);
             return new Promise((resolve, reject) => {
             bridge.sendBotEvent(eventObject)
                 .then((res) => {
+                    console.log('sent event object: ', eventObject);
+                    console.log('bridge.sendBotEvent success', res);
                     resolve(res)
                 })
                 .catch((err) => {
+                    console.log('sending event object: ', eventObject);
+                    console.log('bridge.sendBotEvent error', err);
                     reject(err)
                 })
             });
         }
 
-
+        async function sendClientEvent(eventObject) {
+        console.log('sendClientEvent start', eventObject);
+            return new Promise((resolve, reject) => {
+            bridge.sendClientEvent(eventObject)
+                .then((res) => {
+                    console.log('sent client event object: ', eventObject);
+                    console.log('bridge.sendClientEvent success', res);
+                    resolve(res)
+                })
+                .catch((err) => {
+                    console.log('sending client event object: ', eventObject);
+                    console.log('bridge.sendClientEvent error', err);
+                    reject(err)
+                })
+            });
+        }
 
         bridge?.sendClientEvent({
             method: 'ready',

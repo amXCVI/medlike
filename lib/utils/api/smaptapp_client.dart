@@ -1,6 +1,8 @@
 @JS()
 library main;
 
+import 'dart:convert';
+
 import 'package:js/js.dart';
 import 'dart:js_util';
 import 'package:dio/dio.dart';
@@ -24,7 +26,7 @@ class Promise<T> {
 external Promise<dynamic> sendBotEvent(Object objectParams);
 
 @JS('sendClientEvent')
-external Promise<dynamic> sendClientEvent();
+external Promise<dynamic> sendClientEvent(Object objectParams);
 
 //? {
 //?    String method,
@@ -35,16 +37,6 @@ external Promise<dynamic> sendClientEvent();
 //? }
 
 class SmartAppClient {
-  Future<dynamic> sendClientReadyFunction() async {
-    return await promiseToFuture(sendClientEvent().then(js.allowInterop((data) {
-      print('SUCCESS_EVENT_READY: $data');
-      return data;
-    }), js.allowInterop((err) {
-      print('ERROR_EVENT_READY: $err');
-      return err;
-    })));
-  }
-
   Future<dynamic> get(String endpoint, {Options? options}) async {
     // await testJS().then(allowInterop((arg) {
     //   print('@@@@@@@@@$arg');
@@ -129,10 +121,32 @@ class SmartAppClient {
   }
 
   static Future<dynamic> getSmartAppToken() async {
-    return await promiseToFuture(sendBotEvent({
+    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'get_open_id_token',
-    }).then(js.allowInterop((data) {
-      print('SUCCESS GET SMARTAPP TOKEN: $data');
+      'params': {},
+    })).then(js.allowInterop((data) {
+      print('SUCCESS GET SMARTAPP TOKEN: ${data.toString()}');
+      print('data.open_id_token: ${data.open_id_token}');
+      print('data.user: ${data.user}');
+
+      UserSecureStorage.setField(
+          AppConstants.smartappToken, data.open_id_token);
+      return data;
+    }), js.allowInterop((err) {
+      print('ERROR GET SMARTAPP TOKEN: $err');
+      return err;
+    })));
+  }
+
+  static Future<dynamic> getSmartAppClientToken() async {
+    return await promiseToFuture(sendClientEvent(const JsonEncoder().convert({
+      'method': 'get_open_id_token',
+      'params': {},
+    })).then(js.allowInterop((data) {
+      print('SUCCESS GET SMARTAPP TOKEN: ${data.toString()}');
+      print('data.open_id_token: ${data.open_id_token}');
+      print('data.user: ${data.user}');
+
       UserSecureStorage.setField(
           AppConstants.smartappToken, data.open_id_token);
       return data;
