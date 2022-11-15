@@ -30,10 +30,12 @@ class FilesList extends StatelessWidget {
   Widget build(BuildContext context) {
     void handleTapOnUserFile(MedcardUserFileModel file) {
       context.read<MedcardCubit>().downloadAndOpenUserFileByUrl(
-          fileUrl:
-              '${ApiConstants.baseUrl}/api/v1.0/profile/files/${file.id}?userId=$userId',
-          fileName: file.filename,
-          fileId: file.id);
+            fileUrl:
+                '${ApiConstants.baseUrl}/api/v1.0/profile/files/${file.id}?userId=$userId',
+            fileName: file.filename,
+            fileId: file.id,
+            fileType: file.type,
+          );
     }
 
     void handleDeleteFile(String fileId) {

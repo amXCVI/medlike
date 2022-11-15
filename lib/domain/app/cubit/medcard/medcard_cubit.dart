@@ -170,20 +170,34 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     required String fileUrl,
     required String fileName,
     required String fileId,
+    required String fileType,
   }) async {
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(downloadingFileId: fileId));
-      var response = await medcardRepository.downloadFile(url: fileUrl);
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      var dir = await getApplicationDocumentsDirectory();
-      File file = File("${dir.path}/$fileName");
-
-      await file.writeAsBytes(bytes, flush: true);
-      completer.complete(file);
-      OpenFile.open(
-        "${dir.path}/$fileName",
-      );
+      final response = await medcardRepository.downloadFile(url: fileUrl);
+      if (kIsWeb) {
+        final bytes = response.bodyBytes;
+        final blob = html.Blob([bytes], fileType);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.document.createElement('a') as html.AnchorElement
+          ..href = url
+          ..style.display = 'none'
+          ..download = fileName;
+        html.document.body?.children.add(anchor);
+        anchor.click();
+        html.document.body?.children.remove(anchor);
+        html.Url.revokeObjectUrl(url);
+      }  else {
+        var bytes = await consolidateHttpClientResponseBytes(response);
+        var dir = await getApplicationDocumentsDirectory();
+        File file = File("${dir.path}/$fileName");
+        await file.writeAsBytes(bytes, flush: true);
+        completer.complete(file);
+        OpenFile.open(
+          "${dir.path}/$fileName",
+        );
+      }
       emit(state.copyWith(downloadingFileId: ''));
     } catch (e) {
       addError(e);
