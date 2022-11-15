@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
+import 'dart:html' as html;
 
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -121,16 +122,31 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.loading,
         downloadingFileId: fileId,
       ));
-      var response = await medcardRepository.downloadFile(url: fileUrl);
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      var dir = await getApplicationDocumentsDirectory();
-      File file = File("${dir.path}/$fileName.pdf");
+      if (kIsWeb) {
+        final response = await medcardRepository.downloadFile(url: fileUrl);
+        final bytes = response.bodyBytes;
+        final blob = html.Blob([bytes], 'application/pdf');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.document.createElement('a') as html.AnchorElement
+          ..href = url
+          ..style.display = 'none'
+          ..download = fileName;
+        html.document.body?.children.add(anchor);
+        anchor.click();
+        html.document.body?.children.remove(anchor);
+        html.Url.revokeObjectUrl(url);
+      } else {
+        var response = await medcardRepository.downloadFile(url: fileUrl);
+        var bytes = await consolidateHttpClientResponseBytes(response);
+        var dir = await getApplicationDocumentsDirectory();
+        File file = File("${dir.path}/$fileName.pdf");
 
-      await file.writeAsBytes(bytes, flush: true);
-      completer.complete(file);
-      OpenFile.open(
-        "${dir.path}/$fileName.pdf",
-      );
+        await file.writeAsBytes(bytes, flush: true);
+        completer.complete(file);
+        OpenFile.open(
+          "${dir.path}/$fileName.pdf",
+        );
+      }
       emit(state.copyWith(
         downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.success,
         downloadingFileId: '',
@@ -202,10 +218,10 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     ));
     try {
       MedcardUserFileModel response = await medcardRepository.uploadFile(
-          userId: userId,
-          file: file,
-          fileName: fileName,
-          fileType: MediaType.parse(lookupMimeType(file.path) as String).type,
+        userId: userId,
+        file: file,
+        fileName: fileName,
+        fileType: MediaType.parse(lookupMimeType(file.path) as String).type,
       );
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,
@@ -252,10 +268,10 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     ));
     try {
       MedcardUserFileModel response = await medcardRepository.uploadFile(
-          userId: userId,
-          fileBytes: fileBytes,
-          fileName: fileName,
-          fileType: fileType,
+        userId: userId,
+        fileBytes: fileBytes,
+        fileName: fileName,
+        fileType: fileType,
       );
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.success,

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
@@ -37,10 +38,11 @@ class MedcardRepository {
 
   Future<dynamic> downloadFile({required String url}) async {
     try {
-      var request = await HttpClient().getUrl(Uri.parse(url));
-      request.headers.add('Authorization',
-          'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}');
-      var response = await request.close();
+      var client = http.Client();
+      var response = await client.get(Uri.parse(url), headers: {
+        'Authorization':
+            'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+      });
       return response;
     } catch (error) {
       rethrow;
