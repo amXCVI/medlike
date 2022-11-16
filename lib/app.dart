@@ -32,6 +32,7 @@ class App extends StatelessWidget {
   final _router = AppRouter(
     checkIsAuthUser: CheckIsAuthUser(),
     checkIsSavedPinCode: CheckIsSavedPinCode(),
+    checkIsAuthSmartappUser: CheckIsAuthSmartappUser(),
   );
 
   final mediator = UserMediator();

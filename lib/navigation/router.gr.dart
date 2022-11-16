@@ -82,18 +82,24 @@ class AppRouter extends _i38.RootStackRouter {
   AppRouter(
       {_i39.GlobalKey<_i39.NavigatorState>? navigatorKey,
       required this.checkIsSavedPinCode,
+      required this.checkIsAuthSmartappUser,
       required this.checkIsAuthUser})
       : super(navigatorKey);
 
   final _i40.CheckIsSavedPinCode checkIsSavedPinCode;
+
+  final _i40.CheckIsAuthSmartappUser checkIsAuthSmartappUser;
 
   final _i40.CheckIsAuthUser checkIsAuthUser;
 
   @override
   final Map<String, _i38.PageFactory> pagesMap = {
     SmartappLoginRoute.name: (routeData) {
+      final args = routeData.argsAs<SmartappLoginRouteArgs>(
+          orElse: () => const SmartappLoginRouteArgs());
       return _i38.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i1.SmartappLoginPage());
+          routeData: routeData,
+          child: _i1.SmartappLoginPage(key: args.key, resolver: args.resolver));
     },
     StartPhoneNumberRoute.name: (routeData) {
       final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
@@ -390,11 +396,11 @@ class AppRouter extends _i38.RootStackRouter {
         _i38.RouteConfig(UnauthSupportRoute.name,
             path: '/login_unauth_support'),
         _i38.RouteConfig(MainRoute.name,
-            path: '/main', guards: [checkIsAuthUser]),
+            path: '/main', guards: [checkIsAuthSmartappUser]),
         _i38.RouteConfig(AppointmentsRoute.name,
-            path: '/my_appointments', guards: [checkIsAuthUser]),
+            path: '/my_appointments', guards: [checkIsAuthSmartappUser]),
         _i38.RouteConfig(SubscribeProfilesListRoute.name,
-            path: '/subscribe_profiles', guards: [checkIsAuthUser]),
+            path: '/subscribe_profiles', guards: [checkIsAuthSmartappUser]),
         _i38.RouteConfig(ClinicsListRoute.name,
             path: '/subscribe_clinics', guards: [checkIsAuthUser]),
         _i38.RouteConfig(ServicesListRoute.name,
@@ -416,7 +422,7 @@ class AppRouter extends _i38.RootStackRouter {
         _i38.RouteConfig(PaymentRoute.name,
             path: '/subscribe_payment_page', guards: [checkIsAuthUser]),
         _i38.RouteConfig(MedcardProfilesListRoute.name,
-            path: '/medcard', guards: [checkIsAuthUser]),
+            path: '/medcard', guards: [checkIsAuthSmartappUser]),
         _i38.RouteConfig(MedcardRoute.name,
             path: '/medcard_files_list', guards: [checkIsAuthUser]),
         _i38.RouteConfig(FilesRoute.name,
@@ -435,7 +441,7 @@ class AppRouter extends _i38.RootStackRouter {
         _i38.RouteConfig(SalesRoute.name,
             path: '/clinic_info_sales', guards: [checkIsAuthUser]),
         _i38.RouteConfig(HealthRoute.name,
-            path: '/health_profiles', guards: [checkIsAuthUser]),
+            path: '/health_profiles', guards: [checkIsAuthSmartappUser]),
         _i38.RouteConfig(CardsRoute.name,
             path: '/health', guards: [checkIsAuthUser]),
         _i38.RouteConfig(DiaryRoute.name,
@@ -449,11 +455,26 @@ class AppRouter extends _i38.RootStackRouter {
 
 /// generated route for
 /// [_i1.SmartappLoginPage]
-class SmartappLoginRoute extends _i38.PageRouteInfo<void> {
-  const SmartappLoginRoute()
-      : super(SmartappLoginRoute.name, path: '/smartapp_login_page');
+class SmartappLoginRoute extends _i38.PageRouteInfo<SmartappLoginRouteArgs> {
+  SmartappLoginRoute({_i39.Key? key, _i38.NavigationResolver? resolver})
+      : super(SmartappLoginRoute.name,
+            path: '/smartapp_login_page',
+            args: SmartappLoginRouteArgs(key: key, resolver: resolver));
 
   static const String name = 'SmartappLoginRoute';
+}
+
+class SmartappLoginRouteArgs {
+  const SmartappLoginRouteArgs({this.key, this.resolver});
+
+  final _i39.Key? key;
+
+  final _i38.NavigationResolver? resolver;
+
+  @override
+  String toString() {
+    return 'SmartappLoginRouteArgs{key: $key, resolver: $resolver}';
+  }
 }
 
 /// generated route for
