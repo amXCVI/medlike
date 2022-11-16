@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,20 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4',
-    appId: '1:1083145779008:android:487e71139690f03c742ca5',
-    messagingSenderId: '1083145779008',
-    projectId: 'z-clinic-flutter-project',
-    storageBucket: 'z-clinic-flutter-project.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
-    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
-    messagingSenderId: '1083145779008',
-    projectId: 'z-clinic-flutter-project',
-    storageBucket: 'z-clinic-flutter-project.appspot.com',
-    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
-    iosBundleId: 'com.example.medlike',
+    apiKey: 'AIzaSyBxQuPP34JvaQNWnDbe0-a7dWSuAJ5ZGnU',
+    appId: '1:287955580453:android:9b53b01b573d22453cf1cc',
+    messagingSenderId: '287955580453',
+    projectId: 'z-clinic-46d2c',
+    storageBucket: 'z-clinic-46d2c.appspot.com',
   );
 }
