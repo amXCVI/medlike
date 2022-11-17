@@ -34,9 +34,14 @@ class _WebFutureImageState extends State<WebFutureImage> {
       future: imageFuture,
       builder: (BuildContext context, AsyncSnapshot<Uint8List> bytesBuffer) {
         if (bytesBuffer.hasData) {
-          return Image.memory(bytesBuffer.data!);
+          return Center(
+            child: Image.memory(
+              bytesBuffer.data!,
+              fit: BoxFit.cover,
+            ),
+          );
         } else {
-          return CircularLoader(radius: widget.radius ?? 20); // placeholder
+          return Center(child: CircularLoader(radius: widget.radius ?? 20));
         }
       },
     );

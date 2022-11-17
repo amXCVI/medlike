@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class SlideItem extends StatelessWidget {
   const SlideItem({Key? key, required this.promotionItem}) : super(key: key);
@@ -43,17 +44,12 @@ class SlideItem extends StatelessWidget {
               builder: (context, state) {
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(12.0),
-                  child: Image.network(
-                    '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem.id}/banner',
-                    headers: {
-                      'Authorization': 'Bearer ${state.token}',
-                    },
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.width / 16 * 9,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      context.read<UserCubit>().saveAccessToken();
-                      return Container();
-                    },
+                    child: WebFutureImage(
+                      imageUrl:
+                          '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem.id}/banner',
+                    ),
                   ),
                 );
               },
