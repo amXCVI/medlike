@@ -16,9 +16,10 @@ import 'package:path_provider/path_provider.dart';
 
 part 'medcard_state.dart';
 
-class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent> 
-  with RefreshErrorHandler<MedcardState, UserCubit> {
-  MedcardCubit(this.medcardRepository, mediator) : super(const MedcardState(), mediator) {
+class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
+    with RefreshErrorHandler<MedcardState, UserCubit> {
+  MedcardCubit(this.medcardRepository, mediator)
+      : super(const MedcardState(), mediator) {
     mediator.register(this);
   }
 
@@ -215,6 +216,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
     } catch (e) {
       addError(e);
+      /// Если попытались загрузить неверный тип файла, или еще какая-то ошибка
+      /// дергаем список всех файлов заново
+      getUserFilesList(isRefresh: true, userId: userId);
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
         downloadingFileId: '',
