@@ -42,7 +42,7 @@ class Api {
   static SmartAppClient smartAppClient = SmartAppClient();
 
   // dynamic get dio => kIsWeb ? smartAppClient : _dio;
-  dynamic get dio => _dio;
+  Dio get dio => _dio;
 
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class CircleUserAvatar extends StatelessWidget {
   const CircleUserAvatar({
@@ -30,10 +31,9 @@ class CircleUserAvatar extends StatelessWidget {
             backgroundColor: Theme.of(context).backgroundColor,
             radius: radius + 2,
             child: userAvatar != null
-                ? CircleAvatar(
-                    radius: radius,
-                    backgroundImage: NetworkImage(
-                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar'),
+                ? WebFutureImage(
+                    imageUrl:
+                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar',
                   )
                 : CircleAvatar(
                     radius: radius,
