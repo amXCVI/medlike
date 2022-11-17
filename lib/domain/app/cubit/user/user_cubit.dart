@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -10,8 +9,6 @@ import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
-import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -98,10 +95,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         tryCount: 5,
       ));
 
-      if (!kIsWeb) {
-        addFirebaseDeviceId();
-        await FirebaseAnalyticsService.registerAppLoginEvent();
-      }
       getUserProfiles(true);
       return true;
     } catch (e) {
@@ -131,8 +124,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
 
-    FCMService.cleanFCMToken();
-
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
@@ -148,15 +139,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
-    if (!kIsWeb) {
-      addFirebaseDeviceId();
-    }
-  }
-
-  /// Сохраняет deviceId устройства на бэке
-  void addFirebaseDeviceId() async {
-    String fcmToken = await FirebaseMessaging.instance.getToken() as String;
-    userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
 
   /// Получает список профилей из всех МО
@@ -225,9 +207,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         AppConstants.authPinCode, sha256.convert(pinCode).toString());
     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true');
     UserSecureStorage.setField(AppConstants.isAuth, 'true');
-
-    await FirebaseAnalyticsService.registerCustomEvent(
-        name: 'авторизация по пин-коду');
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного
@@ -237,9 +216,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
-      if (!kIsWeb) {
-        addFirebaseDeviceId();
-      }
 
       return true;
     } else {
