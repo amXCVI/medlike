@@ -300,6 +300,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
     } catch (e) {
       addError(e);
+      /// Если попытались загрузить неверный тип файла, или еще какая-то ошибка
+      /// дергаем список всех файлов заново
+      getUserFilesList(isRefresh: true, userId: userId);
       emit(state.copyWith(
         uploadMedcardDocumentStatus: UploadMedcardDocumentStatuses.failed,
         downloadingFileId: '',
