@@ -121,19 +121,21 @@ class SmartAppClient {
     })));
   }
 
-  static Future<dynamic> getSmartAppToken() async {
+  static Future<String> getSmartAppToken() async {
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'get_open_id_token',
       'params': {},
     })).then(js.allowInterop((data) {
-      print('>>>> Ответ из смартаппа пришел');
-      String smartappToken =
-          SmartappSendBotEventResponseModel.fromJson(data).payload.result;
-      print('>>>> Ответ прочитан и преобразован в объект');
+      print('>>>> Ответ из смартаппа пришел: $data');
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> res: $jsonResponseObject');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      print('>>>> Ответ прочитан и преобразован в объект: $parsedResponse');
+      String smartappToken = parsedResponse.payload.result;
       print('SUCCESS GET SMARTAPP TOKEN: $smartappToken');
 
-      UserSecureStorage.setField(
-          AppConstants.smartappToken, smartappToken);
+      UserSecureStorage.setField(AppConstants.smartappToken, smartappToken);
       print('>>>> Токен записан в localStorage');
       return smartappToken;
     }), js.allowInterop((err) {

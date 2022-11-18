@@ -24,7 +24,7 @@ class SmartappLoginPage extends StatelessWidget {
         print('start auth with smartapp token');
         context
             .read<UserCubit>()
-            .smartappAuth(smartappToken: data.open_id_token)
+            .smartappAuth(smartappToken: data)
             .then((value) {
           if (value) {
             /// Если авторизация успешна, переходим на главную

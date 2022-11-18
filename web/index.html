@@ -29,12 +29,12 @@
                 .then((res) => {
                     console.log('sent event object: ', eventObject);
                     console.log('bridge.sendBotEvent success', res);
-                    resolve(res)
+                    resolve(JSON.stringify(res))
                 })
                 .catch((err) => {
                     console.log('sending event object: ', eventObject);
                     console.log('bridge.sendBotEvent error', err);
-                    reject(err)
+                    reject(JSON.stringify(err))
                 })
             });
         }

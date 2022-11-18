@@ -9,11 +9,11 @@ part of 'smartapp_models.dart';
 _$_SmartappSendBotEventResponseModel
     _$$_SmartappSendBotEventResponseModelFromJson(Map<String, dynamic> json) =>
         _$_SmartappSendBotEventResponseModel(
-          files: json['files'] as List<dynamic>,
+          files: json['files'] as List<dynamic>?,
           payload: SmartappSendBotEventPayloadModel.fromJson(
               json['payload'] as Map<String, dynamic>),
-          ref: json['ref'] as String,
-          type: json['type'] as String,
+          ref: json['ref'] as String?,
+          type: json['type'] as String?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventResponseModelToJson(
@@ -29,7 +29,7 @@ _$_SmartappSendBotEventPayloadModel
     _$$_SmartappSendBotEventPayloadModelFromJson(Map<String, dynamic> json) =>
         _$_SmartappSendBotEventPayloadModel(
           result: json['result'],
-          status: json['status'] as String,
+          status: json['status'] as String?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadModelToJson(
