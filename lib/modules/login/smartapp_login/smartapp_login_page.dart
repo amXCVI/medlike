@@ -21,33 +21,19 @@ class SmartappLoginPage extends StatelessWidget {
       /// Запрашиваем токен в Смартаппе
       SmartAppClient.getSmartAppToken().then((data) {
         /// Если токен пришел, авторизовываемся у себя через него
+        print('start auth with smartapp token');
         context
             .read<UserCubit>()
             .smartappAuth(smartappToken: data.open_id_token)
             .then((value) {
           if (value) {
             /// Если авторизация успешна, переходим на главную
+            print(
+                '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
             context.router.replaceAll([const MainRoute()]);
-          }
-        });
-      }).catchError((onError) {
-        print('ERROR: $onError');
-      });
-    }
-
-    void getSmartappTokenClient() {
-      print('start getting smartapp token');
-
-      /// Запрашиваем токен в Смартаппе
-      SmartAppClient.getSmartAppClientToken().then((data) {
-        /// Если токен пришел, авторизовываемся у себя через него
-        context
-            .read<UserCubit>()
-            .smartappAuth(smartappToken: data.open_id_token)
-            .then((value) {
-          if (value) {
-            /// Если авторизация успешна, переходим на главную
-            context.router.replaceAll([const MainRoute()]);
+          } else {
+            print(
+                'Не удалось авторизоваться через smartapp token. Проверьте пользователя');
           }
         });
       }).catchError((onError) {
@@ -78,6 +64,7 @@ class SmartappLoginPage extends StatelessWidget {
         UserSecureStorage.setField(AppConstants.smartappToken, 'value');
         UserSecureStorage.setField(AppConstants.isAuth, 'true');
         resolver!.next(true);
+        return;
       }
     }).catchError((onError) {
       // AppToast.showAppToast(
@@ -91,13 +78,7 @@ class SmartappLoginPage extends StatelessWidget {
         MaterialButton(
           color: AppColors.mainSeparatorAlpha,
           onPressed: getSmartappToken,
-          child: const Text('get smartapp token (sendBotEvent)'),
-        ),
-        const SizedBox(height: 24),
-        MaterialButton(
-          color: AppColors.mainSeparatorAlpha,
-          onPressed: getSmartappTokenClient,
-          child: const Text('get smartapp token (sendClientEvent)'),
+          child: const Text('auth with smartapp token (sendBotEvent)'),
         ),
         const SizedBox(height: 24),
         MaterialButton(

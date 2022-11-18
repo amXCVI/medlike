@@ -7,6 +7,7 @@ import 'package:js/js.dart';
 import 'dart:js_util';
 import 'package:dio/dio.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
 
 import 'dart:js' as js;
 
@@ -125,33 +126,19 @@ class SmartAppClient {
       'method': 'get_open_id_token',
       'params': {},
     })).then(js.allowInterop((data) {
-      print('SUCCESS GET SMARTAPP TOKEN: ${data.toString()}');
-      print('data.open_id_token: ${data.open_id_token}');
-      print('data.user: ${data.user}');
+      print('>>>> Ответ из смартаппа пришел');
+      String smartappToken =
+          SmartappSendBotEventResponseModel.fromJson(data).payload.result;
+      print('>>>> Ответ прочитан и преобразован в объект');
+      print('SUCCESS GET SMARTAPP TOKEN: $smartappToken');
 
       UserSecureStorage.setField(
-          AppConstants.smartappToken, data.open_id_token);
-      return data;
+          AppConstants.smartappToken, smartappToken);
+      print('>>>> Токен записан в localStorage');
+      return smartappToken;
     }), js.allowInterop((err) {
       print('ERROR GET SMARTAPP TOKEN: $err');
-      return err;
-    })));
-  }
-
-  static Future<dynamic> getSmartAppClientToken() async {
-    return await promiseToFuture(sendClientEvent(const JsonEncoder().convert({
-      'method': 'get_open_id_token',
-      'params': {},
-    })).then(js.allowInterop((data) {
-      print('SUCCESS GET SMARTAPP TOKEN: ${data.toString()}');
-      print('data.open_id_token: ${data.open_id_token}');
-      print('data.user: ${data.user}');
-
-      UserSecureStorage.setField(
-          AppConstants.smartappToken, data.open_id_token);
-      return data;
-    }), js.allowInterop((err) {
-      print('ERROR GET SMARTAPP TOKEN: $err');
+      print('>>>> Ошибка при получении токена смартапп');
       return err;
     })));
   }
