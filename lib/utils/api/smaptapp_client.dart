@@ -8,10 +8,12 @@ import 'dart:js_util';
 import 'package:dio/dio.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 
 import 'dart:js' as js;
 
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 typedef Callback<T> = dynamic Function(T arg);
 
@@ -38,6 +40,16 @@ external Promise<dynamic> sendClientEvent(Object objectParams);
 //? }
 
 class SmartAppClient {
+  Options defaultOptions = Options(headers: {
+    'Accept': 'application/json; charset=utf-8',
+    'Content-Type': 'application/json',
+    'Project': ApiConstants.env,
+    'VerApp': ApiConstants.appVersion,
+    'Platform': '1', //Platform.isAndroid ? '1' : '2',
+    'Authorization':
+        'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}',
+  });
+
   Future<dynamic> get(String endpoint, {Options? options}) async {
     // await testJS().then(allowInterop((arg) {
     //   print('@@@@@@@@@$arg');
@@ -56,15 +68,24 @@ class SmartAppClient {
     // print(result);
 
     return await promiseToFuture(sendBotEvent({
-      'method': 'get_$endpoint',
+      'method': 'proxy_request',
       'params': {
         'url': endpoint,
-        'method': 'get',
-        'options': options,
+        'headers': options!.headers ?? defaultOptions.headers,
+        'method': 'GET',
+        'body': {},
+        'params': '',
       },
     }).then(js.allowInterop((data) {
-      print('SUCCESS: $data');
-      return data;
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> Ответ из смартаппа: $jsonResponseObject');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
+      return parsedResponse.payload.result;
     }), js.allowInterop((err) {
       print('ERROR: $err');
       return err;
@@ -72,51 +93,82 @@ class SmartAppClient {
   }
 
   Future<dynamic> post(String endpoint,
-      {Object? data, Options? options}) async {
+      {Map<String, dynamic>? data, Options? options}) async {
     return await promiseToFuture(sendBotEvent({
-      'method': 'post_$endpoint',
+      'method': 'proxy_request',
       'params': {
         'url': endpoint,
-        'method': 'post',
-        'options': options,
-        'data': data,
+        'headers': options!.headers ?? defaultOptions.headers,
+        'method': 'POST',
+        'body': data,
+        'params': '',
       },
     }).then(js.allowInterop((data) {
-      return data;
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> Ответ из смартаппа: $jsonResponseObject');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
+      return parsedResponse.payload.result;
     }), js.allowInterop((err) {
+      print('ERROR: $err');
       return err;
     })));
   }
 
   Future<dynamic> delete(String endpoint,
-      {Object? data, Options? options}) async {
+      {Map<String, dynamic>? data, Options? options}) async {
     return await promiseToFuture(sendBotEvent({
-      'method': 'delete_$endpoint',
+      'method': 'proxy_request',
       'params': {
         'url': endpoint,
-        'method': 'delete',
-        'options': options,
-        'data': data,
+        'headers': options!.headers ?? defaultOptions.headers,
+        'method': 'DELETE',
+        'body': data,
+        'params': '',
       },
     }).then(js.allowInterop((data) {
-      return data;
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> Ответ из смартаппа: $jsonResponseObject');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
+      return parsedResponse.payload.result;
     }), js.allowInterop((err) {
+      print('ERROR: $err');
       return err;
     })));
   }
 
-  Future<dynamic> put(String endpoint, {Object? data, Options? options}) async {
+  Future<dynamic> put(String endpoint,
+      {Map<String, dynamic>? data, Options? options}) async {
     return await promiseToFuture(sendBotEvent({
-      'method': 'put_$endpoint',
+      'method': 'proxy_request',
       'params': {
         'url': endpoint,
-        'method': 'put',
-        'options': options,
-        'data': data,
+        'headers': options!.headers ?? defaultOptions.headers,
+        'method': 'POST',
+        'body': data,
+        'params': '',
       },
     }).then(js.allowInterop((data) {
-      return data;
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> Ответ из смартаппа: $jsonResponseObject');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
+      return parsedResponse.payload.result;
     }), js.allowInterop((err) {
+      print('ERROR: $err');
       return err;
     })));
   }
