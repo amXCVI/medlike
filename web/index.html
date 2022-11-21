@@ -22,6 +22,7 @@
         var bridge = window.webBridgeInstance;
 
         async function sendBotEvent(jsonEventObject) {
+            console.log(jsonEventObject);
             const eventObject = JSON.parse(jsonEventObject);
             console.log('sendBotEvent start', eventObject);
             return new Promise((resolve, reject) => {
