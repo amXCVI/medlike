@@ -31,16 +31,20 @@ class _CheckPinCodeState extends State<CheckPinCode> {
               await UserSecureStorage.getField(
                       AppConstants.useBiometricMethodAuthentication)
                   .then((resAuthMethod) => {
-                        if (!resBiometricSupported || resAuthMethod == 'false')
+                        if (resBiometricSupported &&
+                            (resAuthMethod ==
+                                    SelectedAuthMethods.touchId.toString() ||
+                                resAuthMethod ==
+                                    SelectedAuthMethods.faceId.toString()))
                           {
                             setState(() {
-                              isBiometricAuthenticate = false;
+                              isBiometricAuthenticate = true;
                             })
                           }
                         else
                           {
                             setState(() {
-                              isBiometricAuthenticate = true;
+                              isBiometricAuthenticate = false;
                             })
                           }
                       })
@@ -89,19 +93,19 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     }
 
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return ListView(
-          children: [
-            PinCodeView(
-              pinCodeTitle: 'Введите пин - код',
-              setPinCode: _checkPinCode,
-              key: const Key('2'),
-              height: constraints.maxHeight,
-              handleBiometricMethod: onSuccessBiometricAuthenticate,
-            ),
-          ],
-        );
-      }
-    );
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return ListView(
+        children: [
+          PinCodeView(
+            pinCodeTitle: 'Введите пин - код',
+            setPinCode: _checkPinCode,
+            key: const Key('2'),
+            height: constraints.maxHeight,
+            handleBiometricMethod: onSuccessBiometricAuthenticate,
+            isForcedShowingBiometricModal: isBiometricAuthenticate,
+          ),
+        ],
+      );
+    });
   }
 }
