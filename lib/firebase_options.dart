@@ -50,20 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4',
-    appId: '1:1083145779008:android:487e71139690f03c742ca5',
-    messagingSenderId: '1083145779008',
-    projectId: 'z-clinic-flutter-project',
-    storageBucket: 'z-clinic-flutter-project.appspot.com',
+    apiKey: 'AIzaSyBxQuPP34JvaQNWnDbe0-a7dWSuAJ5ZGnU',
+    appId: '1:287955580453:android:9b53b01b573d22453cf1cc',
+    messagingSenderId: '287955580453',
+    projectId: 'z-clinic-46d2c',
+    storageBucket: 'z-clinic-46d2c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
-    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
-    messagingSenderId: '1083145779008',
-    projectId: 'z-clinic-flutter-project',
-    storageBucket: 'z-clinic-flutter-project.appspot.com',
-    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDbV0y5JOVJYRm00A00rsVEZlC-SqiQZx0',
+    appId: '1:287955580453:ios:066476695468d5033cf1cc',
+    messagingSenderId: '287955580453',
+    projectId: 'z-clinic-46d2c',
+    storageBucket: 'z-clinic-46d2c.appspot.com',
+    androidClientId: '287955580453-em5f05oaqgvhrjqn5438rur34v4rifd9.apps.googleusercontent.com',
+    iosClientId: '287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com',
     iosBundleId: 'com.example.medlike',
   );
 }

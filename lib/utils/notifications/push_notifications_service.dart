@@ -51,7 +51,7 @@ class FCMService {
     const InitializationSettings _initializationSettings =
         InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/launcher_icon"),
-      iOS: IOSInitializationSettings(),
+      iOS: DarwinInitializationSettings(),
     );
     await FCMService._localNotificationsPlugin
         .initialize(_initializationSettings);
@@ -65,7 +65,7 @@ class FCMService {
       priority: Priority.high,
       importance: Importance.max,
     ),
-    iOS: IOSNotificationDetails(),
+    iOS: DarwinNotificationDetails(),
   );
 
   static FirebaseMessaging _getFMInstance() {

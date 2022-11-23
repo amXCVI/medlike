@@ -120,7 +120,7 @@ class DioInterceptors extends Interceptor {
           AppToast.showAppToast(msg: 'Слишком долгое время ответа сервера');
           return super.onError(err, handler);
         }
-        String? errStr = DefaultErrorModel.fromJson(err.response!.data).message;
+        String? errStr = DefaultErrorModel.fromJson(err.response?.data).message;
         if (errStr == null) {
           return super.onError(err, handler);
         }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -30,6 +31,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if(event == UserMediatorEvent.logout) {
       forceLogout();
     }
+  }
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    if (error is DioError 
+      && error.message == 'CertificateNotVerifiedException: Connection is not secure'
+    ) {
+      AppToast.showAppToast(msg: 'Просроченный ssl-сертификат. Пожалуйста, обратитесь к администратору');
+      throw('Просроченный ssl-сертификат');
+    }
+
+    super.onError(error, stacktrace);
   }
 
   final UserRepository userRepository;
@@ -107,6 +120,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
+      addError(e);
       return false;
     }
   }
@@ -189,6 +203,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
+      addError(e);
     }
   }
 
@@ -266,6 +281,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.failed,
       ));
+      addError(e);
     }
   }
 
@@ -289,6 +305,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -330,6 +347,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         resetPasswordStatus: ResetPasswordStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -364,6 +382,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         changePasswordStatus: ChangePasswordStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -393,6 +412,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -414,6 +434,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserAgreementsStatus: GetUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -442,6 +463,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -473,6 +495,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -511,6 +534,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         deletingUserAccountStatus: DeletingUserAccountStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -532,6 +556,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -560,6 +585,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -580,6 +606,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -627,6 +654,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -674,6 +702,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -704,6 +733,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -728,6 +758,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
