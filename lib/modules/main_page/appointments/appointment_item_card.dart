@@ -118,7 +118,8 @@ class AppointmentItemCard extends StatelessWidget {
                                 getAppointmentTime(
                                   appointmentItem.appointmentDateTime, 
                                   clinic.timeZoneOffset ?? 3, 
-                                  formatSting: 'dd.MM.yy, HH:mm'
+                                  formatSting: 'dd.MM.yy, HH:mm',
+                                  isMSK: true
                                 )
                               ),
                             ],

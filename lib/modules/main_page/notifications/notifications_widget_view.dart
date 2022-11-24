@@ -52,9 +52,12 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
     String getAppointmentsDesc(AppointmentModel appointmentItem) {
       final initials =
           '${appointmentItem.doctorInfo.lastName} ${appointmentItem.doctorInfo.firstName![0]}. ${appointmentItem.doctorInfo.middleName![0]}.';
-      final date = getAppointmentTime(appointmentItem.appointmentDateTime,
-          widget.clinic?.timeZoneOffset ?? 3,
-          formatSting: 'dd.MM.yyyy, HH:mm');
+      final date = getAppointmentTime(
+        appointmentItem.appointmentDateTime,
+        widget.clinic?.timeZoneOffset ?? 3,
+        formatSting: 'dd.MM.yyyy, HH:mm',
+        isMSK: true
+      );
 
       return '$initials, ${appointmentItem.researches[0].name}, $date';
     }

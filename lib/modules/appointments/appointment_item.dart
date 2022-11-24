@@ -112,9 +112,10 @@ class AppointmentItem extends StatelessWidget {
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
                         Text(getAppointmentTime(
-                            appointmentItem.appointmentDateTime,
-                            clinic.timeZoneOffset ?? 3 // Стандарт МСК +3
-                            )),
+                          appointmentItem.appointmentDateTime,
+                          clinic.timeZoneOffset ?? 3, // Стандарт МСК
+                          isMSK: true
+                        )),
                       ],
                     ),
                   ),

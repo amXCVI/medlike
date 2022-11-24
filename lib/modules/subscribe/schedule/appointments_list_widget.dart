@@ -225,8 +225,9 @@ class AppointmentsList extends StatelessWidget {
                                     const SizedBox(width: 8.0),
                                     Text(
                                       getAppointmentTime(
-                                        appointmentItem.appointmentDateTime, 
-                                        getClinic(appointmentItem)!.timeZoneOffset ?? 3 // Стандарт МСК +3
+                                        appointmentItem.appointmentDateTime,
+                                        getClinic(appointmentItem)!.timeZoneOffset ?? 3, // Стандарт МСК
+                                        isMSK: true
                                       ),
                                     )
                                   ],
