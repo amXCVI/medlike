@@ -11,9 +11,11 @@ import 'package:table_calendar/table_calendar.dart';
 
 part 'appointments_state.dart';
 
-class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEvent> 
-  with RefreshErrorHandler<AppointmentsState, UserCubit> {
-  AppointmentsCubit(this.appointmentsRepository, mediator) : super(AppointmentsState(), mediator) {
+class AppointmentsCubit
+    extends MediatorCubit<AppointmentsState, UserMediatorEvent>
+    with RefreshErrorHandler<AppointmentsState, UserCubit> {
+  AppointmentsCubit(this.appointmentsRepository, mediator)
+      : super(AppointmentsState(), mediator) {
     mediator.register(this);
   }
 
@@ -96,9 +98,10 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
   }
 
   /// Отменить прием
-  void deleteAppointment({
+  Future<void> deleteAppointment({
     required String appointmentId,
     required String userId,
+    bool doNotShowNotification = false,
   }) async {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
@@ -116,7 +119,7 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
       emit(state.copyWith(
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
-      if (response) {
+      if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
     } catch (e) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
@@ -34,8 +36,47 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _createNewAppointment() {
+    void _createNewAppointment(
+        String selectedPayType, String? createdAppointmentId) async {
       HapticFeedback.heavyImpact();
+
+      /// Если оплата картой
+      if (selectedPayType == AppConstants.cardPayType) {
+        context.read<SubscribeCubit>().createNewAppointment(
+              userId: widget.userId,
+              userName:
+                  context.read<UserCubit>().getShortUserName(widget.userId),
+            );
+        return;
+      }
+
+      /// Если оплата наличкой, но черновик приема ранее был создан
+      /// Отменяем прием
+      /// Разблокируем ячейку
+      /// Создаем новый прием за наличку
+      if (selectedPayType == AppConstants.noPayedPayType &&
+          createdAppointmentId != null) {
+        await context
+            .read<AppointmentsCubit>()
+            .deleteAppointment(
+              appointmentId: createdAppointmentId,
+              userId: widget.userId,
+              doNotShowNotification: true,
+            )
+            .then((value) => context
+                .read<SubscribeCubit>()
+                .unlockCell(userId: widget.userId)
+                .then((value) =>
+                    context.read<SubscribeCubit>().createNewAppointment(
+                          userId: widget.userId,
+                          userName: context
+                              .read<UserCubit>()
+                              .getShortUserName(widget.userId),
+                        )));
+        return;
+      }
+
+      /// Оплата наличкой в кассе
       context.read<SubscribeCubit>().createNewAppointment(
             userId: widget.userId,
             userName: context.read<UserCubit>().getShortUserName(widget.userId),
@@ -68,7 +109,14 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                     ? 0.25
                     : 1,
                 child: FloatingActionButton.extended(
-                  onPressed: isDisabledButton ? () {} : _createNewAppointment,
+                  onPressed: () {
+                    isDisabledButton
+                        ? {}
+                        : _createNewAppointment(
+                            state.selectedPayType!,
+                            state.createdAppointmentId,
+                          );
+                  },
                   backgroundColor: !isDisabledButton
                       ? Theme.of(context).primaryColor
                       : AppColors.lightText,
@@ -80,9 +128,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
           },
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView(
             shrinkWrap: true,
             children: [

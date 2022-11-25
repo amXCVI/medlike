@@ -17,9 +17,10 @@ import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
 
-class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent> 
-  with RefreshErrorHandler<SubscribeState, UserCubit> {
-  SubscribeCubit(this.subscribeRepository, mediator) : super(SubscribeState(), mediator);
+class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
+    with RefreshErrorHandler<SubscribeState, UserCubit> {
+  SubscribeCubit(this.subscribeRepository, mediator)
+      : super(SubscribeState(), mediator);
 
   final SubscribeRepository subscribeRepository;
 
@@ -550,7 +551,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   }
 
   /// разблокируем ячейку
-  void unlockCell({
+  Future<void> unlockCell({
     required String userId,
   }) async {
     emit(state.copyWith(
@@ -569,6 +570,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         timetableCellsList: null,
         getTimetableCellsStatus: GetTimetableCellsStatuses.refunded,
         selectedTimetableCell: null,
+        createdAppointmentId: null,
       ));
     } catch (e) {
       emit(state.copyWith(unlockCellStatus: UnlockCellStatuses.failed));
@@ -586,7 +588,8 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
 
     /// Если черновик приема создан, но не оплачен
     if (state.creatingAppointmentStatus ==
-        CreatingAppointmentStatuses.createdDraft) {
+            CreatingAppointmentStatuses.createdDraft &&
+        state.selectedPayType == AppConstants.cardPayType) {
       registerOrder(
           userId: userId,
           appointmentIds: [state.createdAppointmentId as String].toList());
@@ -633,7 +636,8 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         'Price': state.appointmentInfoData?.price,
         'PayType': state.selectedPayType,
         'ScheduleId': state.selectedTimetableCell?.scheduleId,
-        'isDraft': false
+        'isDraft':
+            state.selectedPayType == AppConstants.noPayedPayType ? false : true,
       };
 
       CreateNewAppointmentResponseModel response =
