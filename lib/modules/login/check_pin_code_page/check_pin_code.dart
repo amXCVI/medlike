@@ -55,8 +55,10 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     setState(() {
       isBiometricAuthenticate = false;
     });
-    context.read<UserCubit>().signInBiometric();
-    context.router.replaceAll([const MainRoute()]);
+    if (result) {
+      context.read<UserCubit>().signInBiometric();
+      context.router.replaceAll([const MainRoute()]);
+    }
   }
 
   void onCancelBiometricAuthenticate() {
