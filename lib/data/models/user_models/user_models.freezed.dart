@@ -144,7 +144,9 @@ class _$_AuthTokenRequest implements _AuthTokenRequest {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthTokenRequestToJson(this);
+    return _$$_AuthTokenRequestToJson(
+      this,
+    );
   }
 }
 
@@ -157,9 +159,9 @@ abstract class _AuthTokenRequest implements AuthTokenRequest {
       _$_AuthTokenRequest.fromJson;
 
   @override
-  String get phone => throw _privateConstructorUsedError;
+  String get phone;
   @override
-  String get password => throw _privateConstructorUsedError;
+  String get password;
   @override
   @JsonKey(ignore: true)
   _$$_AuthTokenRequestCopyWith<_$_AuthTokenRequest> get copyWith =>
@@ -316,7 +318,9 @@ class _$_AuthTokenResponse implements _AuthTokenResponse {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthTokenResponseToJson(this);
+    return _$$_AuthTokenResponseToJson(
+      this,
+    );
   }
 }
 
@@ -330,11 +334,11 @@ abstract class _AuthTokenResponse implements AuthTokenResponse {
       _$_AuthTokenResponse.fromJson;
 
   @override
-  String get token => throw _privateConstructorUsedError;
+  String get token;
   @override
-  String get refreshToken => throw _privateConstructorUsedError;
+  String get refreshToken;
   @override
-  int? get tryCount => throw _privateConstructorUsedError;
+  int? get tryCount;
   @override
   @JsonKey(ignore: true)
   _$$_AuthTokenResponseCopyWith<_$_AuthTokenResponse> get copyWith =>
@@ -475,7 +479,9 @@ class _$_AuthTokenResponseError implements _AuthTokenResponseError {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AuthTokenResponseErrorToJson(this);
+    return _$$_AuthTokenResponseErrorToJson(
+      this,
+    );
   }
 }
 
@@ -488,9 +494,9 @@ abstract class _AuthTokenResponseError implements AuthTokenResponseError {
       _$_AuthTokenResponseError.fromJson;
 
   @override
-  String get message => throw _privateConstructorUsedError;
+  String get message;
   @override
-  int get tryCount => throw _privateConstructorUsedError;
+  int get tryCount;
   @override
   @JsonKey(ignore: true)
   _$$_AuthTokenResponseErrorCopyWith<_$_AuthTokenResponseError> get copyWith =>
@@ -634,7 +640,9 @@ class _$_RefreshTokenResponseModel implements _RefreshTokenResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RefreshTokenResponseModelToJson(this);
+    return _$$_RefreshTokenResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -647,9 +655,9 @@ abstract class _RefreshTokenResponseModel implements RefreshTokenResponseModel {
       _$_RefreshTokenResponseModel.fromJson;
 
   @override
-  String get token => throw _privateConstructorUsedError;
+  String get token;
   @override
-  String get refreshToken => throw _privateConstructorUsedError;
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_RefreshTokenResponseModelCopyWith<_$_RefreshTokenResponseModel>
@@ -813,7 +821,9 @@ class _$_UserProfileClinicBuilding implements _UserProfileClinicBuilding {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileClinicBuildingToJson(this);
+    return _$$_UserProfileClinicBuildingToJson(
+      this,
+    );
   }
 }
 
@@ -827,11 +837,11 @@ abstract class _UserProfileClinicBuilding implements UserProfileClinicBuilding {
       _$_UserProfileClinicBuilding.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  List<String> get category => throw _privateConstructorUsedError;
+  List<String> get category;
   @override
-  bool? get telemed => throw _privateConstructorUsedError;
+  bool? get telemed;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileClinicBuildingCopyWith<_$_UserProfileClinicBuilding>
@@ -1003,7 +1013,9 @@ class _$_UserProfileClinic implements _UserProfileClinic {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileClinicToJson(this);
+    return _$$_UserProfileClinicToJson(
+      this,
+    );
   }
 }
 
@@ -1017,12 +1029,11 @@ abstract class _UserProfileClinic implements UserProfileClinic {
       _$_UserProfileClinic.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  int? get timeZoneOffset => throw _privateConstructorUsedError;
+  int? get timeZoneOffset;
   @override
-  List<UserProfileClinicBuilding>? get buildings =>
-      throw _privateConstructorUsedError;
+  List<UserProfileClinicBuilding>? get buildings;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileClinicCopyWith<_$_UserProfileClinic> get copyWith =>
@@ -1277,7 +1288,9 @@ class _$_UserProfile implements _UserProfile {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfileToJson(this);
+    return _$$_UserProfileToJson(
+      this,
+    );
   }
 }
 
@@ -1296,21 +1309,21 @@ abstract class _UserProfile implements UserProfile {
       _$_UserProfile.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String? get barCode => throw _privateConstructorUsedError;
+  String? get barCode;
   @override
-  String? get firstName => throw _privateConstructorUsedError;
+  String? get firstName;
   @override
-  String? get middleName => throw _privateConstructorUsedError;
+  String? get middleName;
   @override
-  String? get lastName => throw _privateConstructorUsedError;
+  String? get lastName;
   @override
-  DateTime? get birthday => throw _privateConstructorUsedError;
+  DateTime? get birthday;
   @override
-  String? get avatar => throw _privateConstructorUsedError;
+  String? get avatar;
   @override
-  List<UserProfileClinic> get clinics => throw _privateConstructorUsedError;
+  List<UserProfileClinic> get clinics;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileCopyWith<_$_UserProfile> get copyWith =>
@@ -1437,7 +1450,9 @@ class _$_UserProfilesList implements _UserProfilesList {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserProfilesListToJson(this);
+    return _$$_UserProfilesListToJson(
+      this,
+    );
   }
 }
 
@@ -1450,7 +1465,7 @@ abstract class _UserProfilesList implements UserProfilesList {
       _$_UserProfilesList.fromJson;
 
   @override
-  List<UserProfile> get userProfilesList => throw _privateConstructorUsedError;
+  List<UserProfile> get userProfilesList;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfilesListCopyWith<_$_UserProfilesList> get copyWith =>
@@ -1592,7 +1607,9 @@ class _$_CheckUserAccountResponse implements _CheckUserAccountResponse {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckUserAccountResponseToJson(this);
+    return _$$_CheckUserAccountResponseToJson(
+      this,
+    );
   }
 }
 
@@ -1605,9 +1622,9 @@ abstract class _CheckUserAccountResponse implements CheckUserAccountResponse {
       _$_CheckUserAccountResponse.fromJson;
 
   @override
-  bool get found => throw _privateConstructorUsedError;
+  bool get found;
   @override
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @override
   @JsonKey(ignore: true)
   _$$_CheckUserAccountResponseCopyWith<_$_CheckUserAccountResponse>
@@ -1779,7 +1796,9 @@ class _$_UserAgreementsModel implements _UserAgreementsModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserAgreementsModelToJson(this);
+    return _$$_UserAgreementsModelToJson(
+      this,
+    );
   }
 }
 
@@ -1794,13 +1813,13 @@ abstract class _UserAgreementsModel implements UserAgreementsModel {
       _$_UserAgreementsModel.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  int get version => throw _privateConstructorUsedError;
+  int get version;
   @override
-  bool get accepted => throw _privateConstructorUsedError;
+  bool get accepted;
   @override
   @JsonKey(ignore: true)
   _$$_UserAgreementsModelCopyWith<_$_UserAgreementsModel> get copyWith =>
@@ -1926,7 +1945,9 @@ class _$_UserAgreementDocumentModel implements _UserAgreementDocumentModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserAgreementDocumentModelToJson(this);
+    return _$$_UserAgreementDocumentModelToJson(
+      this,
+    );
   }
 }
 
@@ -1939,7 +1960,7 @@ abstract class _UserAgreementDocumentModel
       _$_UserAgreementDocumentModel.fromJson;
 
   @override
-  String get body => throw _privateConstructorUsedError;
+  String get body;
   @override
   @JsonKey(ignore: true)
   _$$_UserAgreementDocumentModelCopyWith<_$_UserAgreementDocumentModel>
@@ -2086,7 +2107,9 @@ class _$_UserUploadAvatarResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserUploadAvatarResponseModelToJson(this);
+    return _$$_UserUploadAvatarResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -2100,9 +2123,9 @@ abstract class _UserUploadAvatarResponseModel
       _$_UserUploadAvatarResponseModel.fromJson;
 
   @override
-  String get result => throw _privateConstructorUsedError;
+  String get result;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_UserUploadAvatarResponseModelCopyWith<_$_UserUploadAvatarResponseModel>
@@ -2276,7 +2299,9 @@ class _$_UserAgreementItemModel implements _UserAgreementItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserAgreementItemModelToJson(this);
+    return _$$_UserAgreementItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -2291,13 +2316,13 @@ abstract class _UserAgreementItemModel implements UserAgreementItemModel {
       _$_UserAgreementItemModel.fromJson;
 
   @override
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  int get version => throw _privateConstructorUsedError;
+  int get version;
   @override
-  bool get accepted => throw _privateConstructorUsedError;
+  bool get accepted;
   @override
   @JsonKey(ignore: true)
   _$$_UserAgreementItemModelCopyWith<_$_UserAgreementItemModel> get copyWith =>

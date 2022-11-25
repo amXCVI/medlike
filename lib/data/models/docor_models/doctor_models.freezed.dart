@@ -252,7 +252,9 @@ class _$_DoctorsResponseModel implements _DoctorsResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DoctorsResponseModelToJson(this);
+    return _$$_DoctorsResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -273,19 +275,18 @@ abstract class _DoctorsResponseModel implements DoctorsResponseModel {
 
   @override
   @JsonKey(name: 'navigationItems')
-  List<NavigationItem>? get navigationItems =>
-      throw _privateConstructorUsedError;
+  List<NavigationItem>? get navigationItems;
   @override
   @JsonKey(name: 'doctors')
-  List<Doctor>? get doctors => throw _privateConstructorUsedError;
+  List<Doctor>? get doctors;
   @override
   @JsonKey(name: 'researches')
-  List<Research>? get researches => throw _privateConstructorUsedError;
+  List<Research>? get researches;
   @override
   @JsonKey(name: 'cabinets')
-  List<Cabinet>? get cabinets => throw _privateConstructorUsedError;
+  List<Cabinet>? get cabinets;
   @override
-  int? get price => throw _privateConstructorUsedError;
+  int? get price;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorsResponseModelCopyWith<_$_DoctorsResponseModel> get copyWith =>
@@ -443,7 +444,9 @@ class _$_Cabinet implements _Cabinet {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CabinetToJson(this);
+    return _$$_CabinetToJson(
+      this,
+    );
   }
 }
 
@@ -456,12 +459,12 @@ abstract class _Cabinet implements Cabinet {
   factory _Cabinet.fromJson(Map<String, dynamic> json) = _$_Cabinet.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @JsonKey(name: 'cabinet_name')
-  String? get cabinetName => throw _privateConstructorUsedError;
+  String? get cabinetName;
   @override
-  int? get price => throw _privateConstructorUsedError;
+  int? get price;
   @override
   @JsonKey(ignore: true)
   _$$_CabinetCopyWith<_$_Cabinet> get copyWith =>
@@ -605,7 +608,9 @@ class _$_NavigationItemCabinet implements _NavigationItemCabinet {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NavigationItemCabinetToJson(this);
+    return _$$_NavigationItemCabinetToJson(
+      this,
+    );
   }
 }
 
@@ -619,10 +624,10 @@ abstract class _NavigationItemCabinet implements NavigationItemCabinet {
       _$_NavigationItemCabinet.fromJson;
 
   @override
-  String get oid => throw _privateConstructorUsedError;
+  String get oid;
   @override
   @JsonKey(name: 'cabinet_name')
-  String? get cabinetName => throw _privateConstructorUsedError;
+  String? get cabinetName;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationItemCabinetCopyWith<_$_NavigationItemCabinet> get copyWith =>
@@ -866,7 +871,9 @@ class _$_NavigationItem implements _NavigationItem {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NavigationItemToJson(this);
+    return _$$_NavigationItemToJson(
+      this,
+    );
   }
 }
 
@@ -885,20 +892,19 @@ abstract class _NavigationItem implements NavigationItem {
       _$_NavigationItem.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  int? get count => throw _privateConstructorUsedError;
+  int? get count;
   @override
-  int? get categoryType => throw _privateConstructorUsedError;
+  int? get categoryType;
   @override
-  bool? get personalSchedule => throw _privateConstructorUsedError;
+  bool? get personalSchedule;
   @override
-  bool? get cabinetSchedule => throw _privateConstructorUsedError;
+  bool? get cabinetSchedule;
   @override
-  List<NavigationItemCabinet>? get cabinets =>
-      throw _privateConstructorUsedError;
+  List<NavigationItemCabinet>? get cabinets;
   @override
   @JsonKey(ignore: true)
   _$$_NavigationItemCopyWith<_$_NavigationItem> get copyWith =>
@@ -1189,7 +1195,9 @@ class _$_Doctor implements _Doctor {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DoctorToJson(this);
+    return _$$_DoctorToJson(
+      this,
+    );
   }
 }
 
@@ -1209,25 +1217,25 @@ abstract class _Doctor implements Doctor {
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get lastName => throw _privateConstructorUsedError;
+  String get lastName;
   @override
-  String get firstName => throw _privateConstructorUsedError;
+  String get firstName;
   @override
-  String get middleName => throw _privateConstructorUsedError;
+  String get middleName;
   @override
-  String get specializationId => throw _privateConstructorUsedError;
+  String get specializationId;
   @override
-  String get specialization => throw _privateConstructorUsedError;
+  String get specialization;
   @override
-  int get price => throw _privateConstructorUsedError;
+  int get price;
   @override
-  int get categoryType => throw _privateConstructorUsedError;
+  int get categoryType;
   @override
-  bool get isFavorite => throw _privateConstructorUsedError;
+  bool get isFavorite;
   @override
-  List<int> get categories => throw _privateConstructorUsedError;
+  List<int> get categories;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorCopyWith<_$_Doctor> get copyWith =>
@@ -1441,7 +1449,9 @@ class _$_Research implements _Research {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResearchToJson(this);
+    return _$$_ResearchToJson(
+      this,
+    );
   }
 }
 
@@ -1457,17 +1467,17 @@ abstract class _Research implements Research {
   factory _Research.fromJson(Map<String, dynamic> json) = _$_Research.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  int get price => throw _privateConstructorUsedError;
+  int get price;
   @override
-  int get categoryType => throw _privateConstructorUsedError;
+  int get categoryType;
   @override
-  int get scheduleType => throw _privateConstructorUsedError;
+  int get scheduleType;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
   @JsonKey(ignore: true)
   _$$_ResearchCopyWith<_$_Research> get copyWith =>
@@ -1704,7 +1714,9 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FavoriteDoctorToJson(this);
+    return _$$_FavoriteDoctorToJson(
+      this,
+    );
   }
 }
 
@@ -1722,19 +1734,19 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
       _$_FavoriteDoctor.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get lastName => throw _privateConstructorUsedError;
+  String get lastName;
   @override
-  String get firstName => throw _privateConstructorUsedError;
+  String get firstName;
   @override
-  String get middleName => throw _privateConstructorUsedError;
+  String get middleName;
   @override
-  String get specializationId => throw _privateConstructorUsedError;
+  String get specializationId;
   @override
-  String get specialization => throw _privateConstructorUsedError;
+  String get specialization;
   @override
-  int get categoryType => throw _privateConstructorUsedError;
+  int get categoryType;
   @override
   @JsonKey(ignore: true)
   _$$_FavoriteDoctorCopyWith<_$_FavoriteDoctor> get copyWith =>
