@@ -62,7 +62,7 @@ class UnauthSupportForm extends StatelessWidget {
                   if (!regex.hasMatch(value!) ||
                       value == null ||
                       value.isEmpty) {
-                    return 'Пожалуйста, введите правильный адрес электронной почты';
+                    return 'Заполните обязательное поле';
                   } else {
                     return null;
                   }

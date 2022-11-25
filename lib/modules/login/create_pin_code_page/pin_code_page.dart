@@ -11,7 +11,8 @@ class CreatePinCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight;
+    final isSmallScreen =
+        MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight;
 
     return DefaultScaffold(
       child: InitialPinCode(noUsedBiometric: noUsedBiometric),

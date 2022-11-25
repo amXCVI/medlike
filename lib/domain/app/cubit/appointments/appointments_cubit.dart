@@ -11,9 +11,11 @@ import 'package:table_calendar/table_calendar.dart';
 
 part 'appointments_state.dart';
 
-class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEvent> 
-  with RefreshErrorHandler<AppointmentsState, UserCubit> {
-  AppointmentsCubit(this.appointmentsRepository, mediator) : super(AppointmentsState(), mediator) {
+class AppointmentsCubit
+    extends MediatorCubit<AppointmentsState, UserMediatorEvent>
+    with RefreshErrorHandler<AppointmentsState, UserCubit> {
+  AppointmentsCubit(this.appointmentsRepository, mediator)
+      : super(AppointmentsState(), mediator) {
     mediator.register(this);
   }
 
@@ -41,7 +43,10 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
       filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
-          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+        getAppointmentsStatus: GetAppointmentsStatuses.failed,
+        appointmentsList: [],
+        filteredAppointmentsList: [],
+      ));
     }
   }
 

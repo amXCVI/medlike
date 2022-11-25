@@ -16,7 +16,7 @@ class CheckPinCode extends StatefulWidget {
 }
 
 class _CheckPinCodeState extends State<CheckPinCode> {
-  late bool isBiometricAuthenticate;
+  late bool isBiometricAuthenticate = false;
   int countAttempts = 0;
 
   @override
@@ -55,8 +55,10 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     setState(() {
       isBiometricAuthenticate = false;
     });
-    context.read<UserCubit>().signInBiometric();
-    context.router.replaceAll([const MainRoute()]);
+    if (result) {
+      context.read<UserCubit>().signInBiometric();
+      context.router.replaceAll([const MainRoute()]);
+    }
   }
 
   void onCancelBiometricAuthenticate() {
@@ -74,8 +76,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
-      bool isSuccess =
-          await context.read<UserCubit>().checkPinCodeToStorage(pinCode);
+      bool isSuccess = await context.read<UserCubit>().checkPinCodeToStorage(
+          pinCode, AppConstants.countLoginAttemps - countAttempts - 1);
       if (isSuccess) {
         context.router.replaceAll([const MainRoute()]);
         return true;
