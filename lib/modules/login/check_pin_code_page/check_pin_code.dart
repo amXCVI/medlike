@@ -16,7 +16,7 @@ class CheckPinCode extends StatefulWidget {
 }
 
 class _CheckPinCodeState extends State<CheckPinCode> {
-  late bool isBiometricAuthenticate;
+  late bool isBiometricAuthenticate = false;
   int countAttempts = 0;
 
   @override

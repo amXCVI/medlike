@@ -144,6 +144,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
+    UserSecureStorage.deleteField(AppConstants.authPinCode);
 
     FCMService.cleanFCMToken();
 
