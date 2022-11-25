@@ -17,9 +17,10 @@ import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
 
-class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent> 
-  with RefreshErrorHandler<SubscribeState, UserCubit> {
-  SubscribeCubit(this.subscribeRepository, mediator) : super(SubscribeState(), mediator);
+class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
+    with RefreshErrorHandler<SubscribeState, UserCubit> {
+  SubscribeCubit(this.subscribeRepository, mediator)
+      : super(SubscribeState(), mediator);
 
   final SubscribeRepository subscribeRepository;
 
@@ -629,7 +630,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
                     })
                 .toList()
             : [],
-        'CategoryType': state.selectedService?.id,
+        'CategoryType': state.selectedService?.categoryType,
         'Price': state.appointmentInfoData?.price,
         'PayType': state.selectedPayType,
         'ScheduleId': state.selectedTimetableCell?.scheduleId,
