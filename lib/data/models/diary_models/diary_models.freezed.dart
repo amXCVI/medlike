@@ -447,7 +447,9 @@ class _$_Category implements _Category {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryToJson(this);
+    return _$$_CategoryToJson(
+      this,
+    );
   }
 }
 
@@ -473,37 +475,37 @@ abstract class _Category implements DiaryCategoryModel {
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  String get synonim => throw _privateConstructorUsedError;
+  String get synonim;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  List<double> get minValue => throw _privateConstructorUsedError;
+  List<double> get minValue;
   @override
-  List<double> get maxValue => throw _privateConstructorUsedError;
+  List<double> get maxValue;
   @override
-  List<double> get minNormalValue => throw _privateConstructorUsedError;
+  List<double> get minNormalValue;
   @override
-  List<double> get maxNormalValue => throw _privateConstructorUsedError;
+  List<double> get maxNormalValue;
   @override
-  String get categoryImg => throw _privateConstructorUsedError;
+  String get categoryImg;
   @override
-  String get filterImg => throw _privateConstructorUsedError;
+  String get filterImg;
   @override
-  int get paramCount => throw _privateConstructorUsedError;
+  int get paramCount;
   @override
-  int get order => throw _privateConstructorUsedError;
+  int get order;
   @override
-  String get measureItem => throw _privateConstructorUsedError;
+  String get measureItem;
   @override
-  List<String> get paramName => throw _privateConstructorUsedError;
+  List<String> get paramName;
   @override
-  dynamic get values => throw _privateConstructorUsedError;
+  dynamic get values;
   @override
-  List<dynamic> get appleSynCompare => throw _privateConstructorUsedError;
+  List<dynamic> get appleSynCompare;
   @override
-  int get decimalDigits => throw _privateConstructorUsedError;
+  int get decimalDigits;
   @override
-  bool get avgByMaxCount => throw _privateConstructorUsedError;
+  bool get avgByMaxCount;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryCopyWith<_$_Category> get copyWith =>
@@ -710,7 +712,9 @@ class _$_Diary extends _Diary {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DiaryToJson(this);
+    return _$$_DiaryToJson(
+      this,
+    );
   }
 }
 
@@ -726,15 +730,15 @@ abstract class _Diary extends DiaryModel {
   factory _Diary.fromJson(Map<String, dynamic> json) = _$_Diary.fromJson;
 
   @override
-  String get syn => throw _privateConstructorUsedError;
+  String get syn;
   @override
-  DateTime get firstValue => throw _privateConstructorUsedError;
+  DateTime get firstValue;
   @override
-  List<dynamic> get currentValue => throw _privateConstructorUsedError;
+  List<dynamic> get currentValue;
   @override
-  List<DiaryItem> get values => throw _privateConstructorUsedError;
+  List<DiaryItem> get values;
   @override
-  int get grouping => throw _privateConstructorUsedError;
+  int get grouping;
   @override
   @JsonKey(ignore: true)
   _$$_DiaryCopyWith<_$_Diary> get copyWith =>
@@ -874,7 +878,9 @@ class _$_DiaryItem extends _DiaryItem {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DiaryItemToJson(this);
+    return _$$_DiaryItemToJson(
+      this,
+    );
   }
 }
 
@@ -888,9 +894,9 @@ abstract class _DiaryItem extends DiaryItem {
       _$_DiaryItem.fromJson;
 
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  List<List<dynamic>> get data => throw _privateConstructorUsedError;
+  List<List<dynamic>> get data;
   @override
   @JsonKey(ignore: true)
   _$$_DiaryItemCopyWith<_$_DiaryItem> get copyWith =>

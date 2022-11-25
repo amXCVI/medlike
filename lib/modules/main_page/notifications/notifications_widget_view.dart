@@ -56,7 +56,6 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
         appointmentItem.appointmentDateTime,
         widget.clinic?.timeZoneOffset ?? 3,
         formatSting: 'dd.MM.yyyy, HH:mm',
-        isMSK: true
       );
 
       return '$initials, ${appointmentItem.researches[0].name}, $date';
@@ -99,6 +98,11 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                   key: UniqueKey(),
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
+                    dismissible: DismissiblePane(onDismissed: () {
+                      context
+                          .read<UserCubit>()
+                          .updateNotificationStatus(notificationItem.id);
+                    }),
                     children: [
                       SlidableAction(
                         flex: 2,
@@ -107,11 +111,6 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         icon: Icons.delete,
                       ),
                     ],
-                    dismissible: DismissiblePane(onDismissed: () {
-                      context
-                          .read<UserCubit>()
-                          .updateNotificationStatus(notificationItem.id);
-                    }),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
