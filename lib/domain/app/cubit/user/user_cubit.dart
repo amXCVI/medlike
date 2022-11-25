@@ -245,7 +245,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного
-  Future<bool> checkPinCodeToStorage(List<int> pinCode) async {
+  Future<bool> checkPinCodeToStorage(List<int> pinCode, int count) async {
     String sha256savedCode =
         '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
@@ -254,7 +254,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       addFirebaseDeviceId();
       return true;
     } else {
-      AppToast.showAppToast(msg: 'Неверный пин-код');
+      AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');
       return false;
     }
   }

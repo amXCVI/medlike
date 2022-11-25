@@ -76,8 +76,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
-      bool isSuccess =
-          await context.read<UserCubit>().checkPinCodeToStorage(pinCode);
+      bool isSuccess = await context.read<UserCubit>().checkPinCodeToStorage(
+          pinCode, AppConstants.countLoginAttemps - countAttempts - 1);
       if (isSuccess) {
         context.router.replaceAll([const MainRoute()]);
         return true;
