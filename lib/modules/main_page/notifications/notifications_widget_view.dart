@@ -56,7 +56,6 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
         appointmentItem.appointmentDateTime,
         widget.clinic?.timeZoneOffset ?? 3,
         formatSting: 'dd.MM.yyyy, HH:mm',
-        isMSK: true
       );
 
       return '$initials, ${appointmentItem.researches[0].name}, $date';
@@ -81,6 +80,86 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
               final description = widget.appointment != null
                   ? getAppointmentsDesc(widget.appointment!)
                   : notificationItem.description;
+
+              final content = Padding(
+                padding: const EdgeInsets.only(
+                    top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title.characters
+                              .replaceAll(
+                                  Characters(''), Characters('\u{200B}'))
+                              .toString(),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        BlocBuilder<TourCubit, TourState>(
+                          buildWhen: (_, state) {
+                            final tooltip = TourTooltip.of(context).create(
+                                'Отслеживайте события по всем своим закрепленным пользователям',
+                                onDismiss: () {
+                              context.read<TourCubit>().checkNotification();
+                            });
+
+                            if (state.tourStatuses == TourStatuses.first &&
+                                state.isNotificationShown != true) {
+                              tooltip.show(
+                                  widgetKey: _key,
+                                  offset: const Offset(24, 0));
+                            }
+
+                            return true;
+                          },
+                          builder: (ctx, state) {
+                            return Container(
+                              key: _key,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 12.0),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.mainError,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(24))),
+                              child: Text(
+                                (notificationItem.eventsCount).toString(),
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      description.characters
+                          .replaceAll(
+                              Characters(''), Characters('\u{200B}'))
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: AppColors.lightText),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
+                    const SizedBox(height: 14),
+                    NotificationBottom(
+                      notificationItem: notificationItem,
+                      appointment: widget.appointment,
+                      isLoading: state.updatingNotificationStatusStatus ==
+                          UpdatingNotificationStatusStatuses.loading,
+                    )
+                  ],
+                ),
+              );
+
               return Container(
                 margin: const EdgeInsets.only(
                   top: 0, left: 16.0, bottom: 32.0, right: 16.0),
@@ -95,10 +174,16 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                   ],
                   color: Theme.of(context).backgroundColor,
                 ),
-                child: Slidable(
+
+                child: widget.appointment == null ? content : Slidable(
                   key: UniqueKey(),
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
+                    dismissible: DismissiblePane(onDismissed: () {
+                      context
+                          .read<UserCubit>()
+                          .updateNotificationStatus(notificationItem.id);
+                    }),
                     children: [
                       SlidableAction(
                         flex: 2,
@@ -107,90 +192,8 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         icon: Icons.delete,
                       ),
                     ],
-                    dismissible: DismissiblePane(onDismissed: () {
-                      context
-                          .read<UserCubit>()
-                          .updateNotificationStatus(notificationItem.id);
-                    }),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              title.characters
-                                  .replaceAll(
-                                      Characters(''), Characters('\u{200B}'))
-                                  .toString(),
-                              style: Theme.of(context).textTheme.titleMedium,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            BlocBuilder<TourCubit, TourState>(
-                              buildWhen: (_, state) {
-                                final tooltip = TourTooltip.of(context).create(
-                                    'Отслеживайте события по всем своим закрепленным пользователям',
-                                    onDismiss: () {
-                                  context.read<TourCubit>().checkNotification();
-                                });
-
-                                if (state.tourStatuses == TourStatuses.first &&
-                                    state.isNotificationShown != true) {
-                                  tooltip.show(
-                                      widgetKey: _key,
-                                      offset: const Offset(24, 0));
-                                }
-
-                                return true;
-                              },
-                              builder: (ctx, state) {
-                                return Container(
-                                  key: _key,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2.0, horizontal: 12.0),
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.mainError,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(24))),
-                                  child: Text(
-                                    (notificationItem.eventsCount).toString(),
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                );
-                              },
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          description.characters
-                              .replaceAll(
-                                  Characters(''), Characters('\u{200B}'))
-                              .toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: AppColors.lightText),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                        ),
-                        const SizedBox(height: 14),
-                        NotificationBottom(
-                          notificationItem: notificationItem,
-                          appointment: widget.appointment,
-                          isLoading: state.updatingNotificationStatusStatus ==
-                              UpdatingNotificationStatusStatuses.loading,
-                        )
-                      ],
-                    ),
-                  ),
+                  child: content
                 ),
               );
             }

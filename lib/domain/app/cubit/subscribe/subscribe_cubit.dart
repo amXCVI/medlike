@@ -632,7 +632,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
                     })
                 .toList()
             : [],
-        'CategoryType': state.selectedService?.id,
+        'CategoryType': state.selectedService?.categoryType,
         'Price': state.appointmentInfoData?.price,
         'PayType': state.selectedPayType,
         'ScheduleId': state.selectedTimetableCell?.scheduleId,

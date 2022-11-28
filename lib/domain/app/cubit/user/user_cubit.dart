@@ -28,18 +28,20 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void receive(String from, UserMediatorEvent event) {
     print(from);
     print(event);
-    if(event == UserMediatorEvent.logout) {
+    if (event == UserMediatorEvent.logout) {
       forceLogout();
     }
   }
 
   @override
   void onError(Object error, StackTrace stacktrace) {
-    if (error is DioError 
-      && error.message == 'CertificateNotVerifiedException: Connection is not secure'
-    ) {
-      AppToast.showAppToast(msg: 'Просроченный ssl-сертификат. Пожалуйста, обратитесь к администратору');
-      throw('Просроченный ssl-сертификат');
+    if (error is DioError &&
+        error.message ==
+            'CertificateNotVerifiedException: Connection is not secure') {
+      AppToast.showAppToast(
+          msg:
+              'Просроченный ssl-сертификат. Пожалуйста, обратитесь к администратору');
+      throw ('Просроченный ssl-сертификат');
     }
 
     super.onError(error, stacktrace);
@@ -62,9 +64,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-      authScreen: UserAuthScreens.inputPassword,
-      checkUserAccountStatus: CheckUserAccountStatuses.continued
-    ));
+        authScreen: UserAuthScreens.inputPassword,
+        checkUserAccountStatus: CheckUserAccountStatuses.continued));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
@@ -143,6 +144,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
+    UserSecureStorage.deleteField(AppConstants.authPinCode);
 
     FCMService.cleanFCMToken();
 
@@ -243,7 +245,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного
-  Future<bool> checkPinCodeToStorage(List<int> pinCode) async {
+  Future<bool> checkPinCodeToStorage(List<int> pinCode, int count) async {
     String sha256savedCode =
         '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
@@ -252,7 +254,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       addFirebaseDeviceId();
       return true;
     } else {
-      AppToast.showAppToast(msg: 'Неверный пин-код');
+      AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');
       return false;
     }
   }
@@ -399,13 +401,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       );
       if (!response.found) {
         AppToast.showAppToast(
-          msg: 'Не найден пользователь с введенным номером телефона'
-        );
+            msg: 'Не найден пользователь с введенным номером телефона');
       }
 
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.success,
-        isFound: response.found
+        isFound: response.found,
       ));
       return response;
     } catch (e) {
@@ -611,6 +612,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     }
   }
 
+  /// Отправить сообщение в техподдержку от авторизованного пользователя
   Future<void> sendEmailToSupport({
     required String email,
     required String subject,
@@ -625,15 +627,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     String techInfo = '';
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      techInfo = 'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
+      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+          'Устройство: ${androidInfo.brand} ${androidInfo.model}\n'
           'Версия Android: ${androidInfo.version.release}, SDK: ${androidInfo.version.sdkInt}, security path: ${androidInfo.version.securityPatch}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
           'Окружение: ${ApiConstants.env}\n';
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      techInfo = 'Устройство: ${iosInfo.name}\n'
+      techInfo = 'Версия приложения: ${ApiConstants.appVersion}\n'
+          'Устройство: ${iosInfo.name}\n'
           'Версия ${iosInfo.systemName} ${iosInfo.systemVersion}\n'
-          'Окружение: ${ApiConstants.baseUrl}\n'
           'Окружение: ${ApiConstants.env}\n';
     }
 

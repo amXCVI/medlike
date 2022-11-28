@@ -114,7 +114,6 @@ class AppointmentItem extends StatelessWidget {
                         Text(getAppointmentTime(
                           appointmentItem.appointmentDateTime,
                           clinic.timeZoneOffset ?? 3, // Стандарт МСК
-                          isMSK: true
                         )),
                       ],
                     ),

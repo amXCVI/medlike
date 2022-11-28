@@ -52,21 +52,21 @@ Future<int> getTimeZoneOffset() async {
 /// с таймзоной клиники в случае её отличия от
 /// таймзоны МСК
 String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
-  {String? formatSting, bool? isMSK}
+  {String? formatSting, bool? isTimeCell}
 ) {
   int tz = DateTime.now().timeZoneOffset.inHours;
-  if(isMSK == true) {
-    dateTime = dateTime.add(Duration(
-      hours: timeZoneOffset - 3
-    ));
-  }
+  DateTime timeOfClinic = dateTime.toUtc().add(
+    Duration(
+      hours: isTimeCell != true ? timeZoneOffset : 0
+    )
+  );
 
-  final timeString = DateFormat(formatSting ?? 'HH:mm').format(dateTime);
+  final timeString = DateFormat(formatSting ?? 'HH:mm').format(timeOfClinic);
 
   if (timeZoneOffset == tz) {
     return timeString;
   } else {
-    final sign = timeZoneOffset < 0 ? '-' : '+';
-    return '$timeString (МСК $sign${timeZoneOffset - 3})';
+    final sign = timeZoneOffset - tz < 0 ? '-' : '+';
+    return '$timeString (МСК $sign${(timeZoneOffset - tz).abs()})';
   }
 }

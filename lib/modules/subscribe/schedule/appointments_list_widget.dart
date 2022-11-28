@@ -227,7 +227,6 @@ class AppointmentsList extends StatelessWidget {
                                       getAppointmentTime(
                                         appointmentItem.appointmentDateTime,
                                         getClinic(appointmentItem)!.timeZoneOffset ?? 3, // Стандарт МСК
-                                        isMSK: true
                                       ),
                                     )
                                   ],

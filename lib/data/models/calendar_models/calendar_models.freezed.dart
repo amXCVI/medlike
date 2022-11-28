@@ -163,7 +163,9 @@ class _$_CalendarModel implements _CalendarModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CalendarModelToJson(this);
+    return _$$_CalendarModelToJson(
+      this,
+    );
   }
 }
 
@@ -177,11 +179,11 @@ abstract class _CalendarModel implements CalendarModel {
       _$_CalendarModel.fromJson;
 
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  bool get hasAvailableCells => throw _privateConstructorUsedError;
+  bool get hasAvailableCells;
   @override
-  bool get hasLogs => throw _privateConstructorUsedError;
+  bool get hasLogs;
   @override
   @JsonKey(ignore: true)
   _$$_CalendarModelCopyWith<_$_CalendarModel> get copyWith =>
@@ -383,7 +385,9 @@ class _$_TimetableCellModel implements _TimetableCellModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableCellModelToJson(this);
+    return _$$_TimetableCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -399,15 +403,15 @@ abstract class _TimetableCellModel implements TimetableCellModel {
       _$_TimetableCellModel.fromJson;
 
   @override
-  DateTime get time => throw _privateConstructorUsedError;
+  DateTime get time;
   @override
-  String get scheduleId => throw _privateConstructorUsedError;
+  String get scheduleId;
   @override
-  String get cabinetName => throw _privateConstructorUsedError;
+  String get cabinetName;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
-  bool get doctorAvailable => throw _privateConstructorUsedError;
+  bool get doctorAvailable;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableCellModelCopyWith<_$_TimetableCellModel> get copyWith =>
@@ -546,7 +550,9 @@ class _$_TimetableLogModel implements _TimetableLogModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableLogModelToJson(this);
+    return _$$_TimetableLogModelToJson(
+      this,
+    );
   }
 }
 
@@ -559,9 +565,9 @@ abstract class _TimetableLogModel implements TimetableLogModel {
       _$_TimetableLogModel.fromJson;
 
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableLogModelCopyWith<_$_TimetableLogModel> get copyWith =>
@@ -714,7 +720,9 @@ class _$_TimetableResponseModel implements _TimetableResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableResponseModelToJson(this);
+    return _$$_TimetableResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -727,9 +735,9 @@ abstract class _TimetableResponseModel implements TimetableResponseModel {
       _$_TimetableResponseModel.fromJson;
 
   @override
-  List<TimetableCellModel> get cells => throw _privateConstructorUsedError;
+  List<TimetableCellModel> get cells;
   @override
-  List<TimetableLogModel> get logs => throw _privateConstructorUsedError;
+  List<TimetableLogModel> get logs;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableResponseModelCopyWith<_$_TimetableResponseModel> get copyWith =>
@@ -871,7 +879,9 @@ class _$_CheckAndLockCellModel implements _CheckAndLockCellModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckAndLockCellModelToJson(this);
+    return _$$_CheckAndLockCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -884,9 +894,9 @@ abstract class _CheckAndLockCellModel implements CheckAndLockCellModel {
       _$_CheckAndLockCellModel.fromJson;
 
   @override
-  int get duration => throw _privateConstructorUsedError;
+  int get duration;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_CheckAndLockCellModelCopyWith<_$_CheckAndLockCellModel> get copyWith =>
@@ -1024,7 +1034,9 @@ class _$_UnlockCellModel implements _UnlockCellModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UnlockCellModelToJson(this);
+    return _$$_UnlockCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -1037,9 +1049,9 @@ abstract class _UnlockCellModel implements UnlockCellModel {
       _$_UnlockCellModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_UnlockCellModelCopyWith<_$_UnlockCellModel> get copyWith =>

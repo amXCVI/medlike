@@ -43,7 +43,10 @@ class AppointmentsCubit
       filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
-          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+        getAppointmentsStatus: GetAppointmentsStatuses.failed,
+        appointmentsList: [],
+        filteredAppointmentsList: [],
+      ));
     }
   }
 

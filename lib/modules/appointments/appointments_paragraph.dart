@@ -76,7 +76,8 @@ class AppointmentsParagraph extends StatelessWidget {
                         color: Theme.of(context).backgroundColor,
                       ),
                       child: AppointmentStatuses.cancellableStatusIds
-                              .contains(item.status)
+                              .contains(item.status) 
+                          && item.status != 4
                           ? Slidable(
                               key: UniqueKey(),
                               endActionPane: ActionPane(
