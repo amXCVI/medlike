@@ -52,12 +52,12 @@ Future<int> getTimeZoneOffset() async {
 /// с таймзоной клиники в случае её отличия от
 /// таймзоны МСК
 String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
-  {String? formatSting}
+  {String? formatSting, bool? isTimeCell}
 ) {
   int tz = DateTime.now().timeZoneOffset.inHours;
   DateTime timeOfClinic = dateTime.toUtc().add(
     Duration(
-      hours: timeZoneOffset
+      hours: isTimeCell != true ? timeZoneOffset : 0
     )
   );
 
