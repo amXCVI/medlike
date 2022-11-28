@@ -487,9 +487,7 @@ class _$_AppointmentModel implements _AppointmentModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AppointmentModelToJson(
-      this,
-    );
+    return _$$_AppointmentModelToJson(this);
   }
 }
 
@@ -518,41 +516,41 @@ abstract class _AppointmentModel implements AppointmentModel {
       _$_AppointmentModel.fromJson;
 
   @override
-  int get status;
+  int get status => throw _privateConstructorUsedError;
   @override
-  bool get needConfirmation;
+  bool get needConfirmation => throw _privateConstructorUsedError;
   @override
-  String? get comment;
+  String? get comment => throw _privateConstructorUsedError;
   @override
-  String get researchPlace;
+  String get researchPlace => throw _privateConstructorUsedError;
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
-  DateTime get appointmentDateTime;
+  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
   @override
-  PatientInfoModel get patientInfo;
+  PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
   @override
-  ClinicInfoModel get clinicInfo;
+  ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
   @override
-  DoctorInfoModel get doctorInfo;
+  DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
   @override
-  List<ResearchesModel> get researches;
+  List<ResearchesModel> get researches => throw _privateConstructorUsedError;
   @override
-  int get categoryType;
+  int get categoryType => throw _privateConstructorUsedError;
   @override
-  bool get isVideo;
+  bool get isVideo => throw _privateConstructorUsedError;
   @override
-  String get payType;
+  String get payType => throw _privateConstructorUsedError;
   @override
-  bool get isDraft;
+  bool get isDraft => throw _privateConstructorUsedError;
   @override
-  String? get orderId;
+  String? get orderId => throw _privateConstructorUsedError;
   @override
-  String get scheduleId;
+  String get scheduleId => throw _privateConstructorUsedError;
   @override
-  int get paymentStatus;
+  int get paymentStatus => throw _privateConstructorUsedError;
   @override
-  String? get recommendations;
+  String? get recommendations => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentModelCopyWith<_$_AppointmentModel> get copyWith =>
@@ -689,9 +687,7 @@ class _$_PatientInfoModel implements _PatientInfoModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PatientInfoModelToJson(
-      this,
-    );
+    return _$$_PatientInfoModelToJson(this);
   }
 }
 
@@ -704,9 +700,9 @@ abstract class _PatientInfoModel implements PatientInfoModel {
       _$_PatientInfoModel.fromJson;
 
   @override
-  String? get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String? get name;
+  String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_PatientInfoModelCopyWith<_$_PatientInfoModel> get copyWith =>
@@ -859,9 +855,7 @@ class _$_ClinicInfoModel implements _ClinicInfoModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClinicInfoModelToJson(
-      this,
-    );
+    return _$$_ClinicInfoModelToJson(this);
   }
 }
 
@@ -875,11 +869,11 @@ abstract class _ClinicInfoModel implements ClinicInfoModel {
       _$_ClinicInfoModel.fromJson;
 
   @override
-  String? get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String? get name;
+  String? get name => throw _privateConstructorUsedError;
   @override
-  String? get address;
+  String? get address => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ClinicInfoModelCopyWith<_$_ClinicInfoModel> get copyWith =>
@@ -1097,9 +1091,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DoctorInfoModelToJson(
-      this,
-    );
+    return _$$_DoctorInfoModelToJson(this);
   }
 }
 
@@ -1116,17 +1108,17 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
       _$_DoctorInfoModel.fromJson;
 
   @override
-  String? get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String? get firstName;
+  String? get firstName => throw _privateConstructorUsedError;
   @override
-  String? get middleName;
+  String? get middleName => throw _privateConstructorUsedError;
   @override
-  String? get lastName;
+  String? get lastName => throw _privateConstructorUsedError;
   @override
-  String? get specializationId;
+  String? get specializationId => throw _privateConstructorUsedError;
   @override
-  String? get specialization;
+  String? get specialization => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>
@@ -1263,9 +1255,7 @@ class _$_ResearchesModel implements _ResearchesModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResearchesModelToJson(
-      this,
-    );
+    return _$$_ResearchesModelToJson(this);
   }
 }
 
@@ -1278,9 +1268,9 @@ abstract class _ResearchesModel implements ResearchesModel {
       _$_ResearchesModel.fromJson;
 
   @override
-  String? get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String? get name;
+  String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ResearchesModelCopyWith<_$_ResearchesModel> get copyWith =>
@@ -1486,9 +1476,7 @@ class _$_AppointmentInfoModel implements _AppointmentInfoModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AppointmentInfoModelToJson(
-      this,
-    );
+    return _$$_AppointmentInfoModelToJson(this);
   }
 }
 
@@ -1505,15 +1493,16 @@ abstract class _AppointmentInfoModel implements AppointmentInfoModel {
       _$_AppointmentInfoModel.fromJson;
 
   @override
-  int get price;
+  int get price => throw _privateConstructorUsedError;
   @override
-  bool get noPayment;
+  bool get noPayment => throw _privateConstructorUsedError;
   @override
-  String get serviceName;
+  String get serviceName => throw _privateConstructorUsedError;
   @override
-  String get payType;
+  String get payType => throw _privateConstructorUsedError;
   @override
-  List<RecommendationItemModel> get recommendations;
+  List<RecommendationItemModel> get recommendations =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentInfoModelCopyWith<_$_AppointmentInfoModel> get copyWith =>
@@ -1674,9 +1663,7 @@ class _$_RecommendationItemModel implements _RecommendationItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecommendationItemModelToJson(
-      this,
-    );
+    return _$$_RecommendationItemModelToJson(this);
   }
 }
 
@@ -1690,11 +1677,11 @@ abstract class _RecommendationItemModel implements RecommendationItemModel {
       _$_RecommendationItemModel.fromJson;
 
   @override
-  String get serviceId;
+  String get serviceId => throw _privateConstructorUsedError;
   @override
-  String get serviceName;
+  String get serviceName => throw _privateConstructorUsedError;
   @override
-  String get recommendation;
+  String get recommendation => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_RecommendationItemModelCopyWith<_$_RecommendationItemModel>
@@ -1842,9 +1829,7 @@ class _$_CreateNewAppointmentResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateNewAppointmentResponseModelToJson(
-      this,
-    );
+    return _$$_CreateNewAppointmentResponseModelToJson(this);
   }
 }
 
@@ -1859,9 +1844,9 @@ abstract class _CreateNewAppointmentResponseModel
       _$_CreateNewAppointmentResponseModel.fromJson;
 
   @override
-  String get result;
+  String get result => throw _privateConstructorUsedError;
   @override
-  String get information;
+  String get information => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CreateNewAppointmentResponseModelCopyWith<
@@ -2021,9 +2006,7 @@ class _$_RegisterOrderResponseModel implements _RegisterOrderResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterOrderResponseModelToJson(
-      this,
-    );
+    return _$$_RegisterOrderResponseModelToJson(this);
   }
 }
 
@@ -2038,11 +2021,11 @@ abstract class _RegisterOrderResponseModel
       _$_RegisterOrderResponseModel.fromJson;
 
   @override
-  bool get result;
+  bool get result => throw _privateConstructorUsedError;
   @override
-  String get paymentUrl;
+  String get paymentUrl => throw _privateConstructorUsedError;
   @override
-  String? get error;
+  String? get error => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterOrderResponseModelCopyWith<_$_RegisterOrderResponseModel>

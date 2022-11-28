@@ -181,9 +181,7 @@ class _$_FilterDateItemModel implements _FilterDateItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FilterDateItemModelToJson(
-      this,
-    );
+    return _$$_FilterDateItemModelToJson(this);
   }
 }
 
@@ -198,13 +196,13 @@ abstract class _FilterDateItemModel implements FilterDateItemModel {
       _$_FilterDateItemModel.fromJson;
 
   @override
-  String get label;
+  String get label => throw _privateConstructorUsedError;
   @override
-  DateTime get startDate;
+  DateTime get startDate => throw _privateConstructorUsedError;
   @override
-  DateTime get endDate;
+  DateTime get endDate => throw _privateConstructorUsedError;
   @override
-  Duration get duration;
+  Duration get duration => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_FilterDateItemModelCopyWith<_$_FilterDateItemModel> get copyWith =>
@@ -347,9 +345,7 @@ class _$_FilterCategoryItemModel implements _FilterCategoryItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FilterCategoryItemModelToJson(
-      this,
-    );
+    return _$$_FilterCategoryItemModelToJson(this);
   }
 }
 
@@ -362,9 +358,9 @@ abstract class _FilterCategoryItemModel implements FilterCategoryItemModel {
       _$_FilterCategoryItemModel.fromJson;
 
   @override
-  String get label;
+  String get label => throw _privateConstructorUsedError;
   @override
-  String get categoryName;
+  String get categoryName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_FilterCategoryItemModelCopyWith<_$_FilterCategoryItemModel>
@@ -566,9 +562,7 @@ class _$_MedcardFiltersItemModel implements _MedcardFiltersItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFiltersItemModelToJson(
-      this,
-    );
+    return _$$_MedcardFiltersItemModelToJson(this);
   }
 }
 
@@ -584,15 +578,15 @@ abstract class _MedcardFiltersItemModel implements MedcardFiltersItemModel {
       _$_MedcardFiltersItemModel.fromJson;
 
   @override
-  String get label;
+  String get label => throw _privateConstructorUsedError;
   @override
-  String? get categoryName;
+  String? get categoryName => throw _privateConstructorUsedError;
   @override
-  DateTime? get startDate;
+  DateTime? get startDate => throw _privateConstructorUsedError;
   @override
-  DateTime? get endDate;
+  DateTime? get endDate => throw _privateConstructorUsedError;
   @override
-  Duration? get duration;
+  Duration? get duration => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFiltersItemModelCopyWith<_$_MedcardFiltersItemModel>
@@ -808,9 +802,7 @@ class _$_MedcardDocsModel implements _MedcardDocsModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardDocsModelToJson(
-      this,
-    );
+    return _$$_MedcardDocsModelToJson(this);
   }
 }
 
@@ -827,17 +819,17 @@ abstract class _MedcardDocsModel implements MedcardDocsModel {
       _$_MedcardDocsModel.fromJson;
 
   @override
-  String get mdocId;
+  String get mdocId => throw _privateConstructorUsedError;
   @override
-  String get section;
+  String get section => throw _privateConstructorUsedError;
   @override
-  String get prescId;
+  String get prescId => throw _privateConstructorUsedError;
   @override
-  String get nameDoc;
+  String get nameDoc => throw _privateConstructorUsedError;
   @override
-  DateTime get dateSign;
+  DateTime get dateSign => throw _privateConstructorUsedError;
   @override
-  DateTime get lastModifiedDate;
+  DateTime get lastModifiedDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardDocsModelCopyWith<_$_MedcardDocsModel> get copyWith =>
@@ -1055,9 +1047,7 @@ class _$_MedcardUserFileModel implements _MedcardUserFileModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardUserFileModelToJson(
-      this,
-    );
+    return _$$_MedcardUserFileModelToJson(this);
   }
 }
 
@@ -1074,17 +1064,17 @@ abstract class _MedcardUserFileModel implements MedcardUserFileModel {
       _$_MedcardUserFileModel.fromJson;
 
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
-  String get filename;
+  String get filename => throw _privateConstructorUsedError;
   @override
-  String get type;
+  String get type => throw _privateConstructorUsedError;
   @override
-  DateTime get uploadDate;
+  DateTime get uploadDate => throw _privateConstructorUsedError;
   @override
-  int get length;
+  int get length => throw _privateConstructorUsedError;
   @override
-  bool get hasPreview;
+  bool get hasPreview => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardUserFileModelCopyWith<_$_MedcardUserFileModel> get copyWith =>
@@ -1229,9 +1219,7 @@ class _$_DeleteUserFileResponseModel implements _DeleteUserFileResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeleteUserFileResponseModelToJson(
-      this,
-    );
+    return _$$_DeleteUserFileResponseModelToJson(this);
   }
 }
 
@@ -1245,9 +1233,9 @@ abstract class _DeleteUserFileResponseModel
       _$_DeleteUserFileResponseModel.fromJson;
 
   @override
-  bool get result;
+  bool get result => throw _privateConstructorUsedError;
   @override
-  String? get information;
+  String? get information => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
@@ -1404,9 +1392,7 @@ class _$_MedcardFilterItemModel implements _MedcardFilterItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFilterItemModelToJson(
-      this,
-    );
+    return _$$_MedcardFilterItemModelToJson(this);
   }
 }
 
@@ -1420,11 +1406,11 @@ abstract class _MedcardFilterItemModel implements MedcardFilterItemModel {
       _$_MedcardFilterItemModel.fromJson;
 
   @override
-  String get label;
+  String get label => throw _privateConstructorUsedError;
   @override
-  String get value;
+  String get value => throw _privateConstructorUsedError;
   @override
-  String get categoryLabel;
+  String get categoryLabel => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFilterItemModelCopyWith<_$_MedcardFilterItemModel> get copyWith =>
@@ -1586,9 +1572,7 @@ class _$_MedcardFilterModel implements _MedcardFilterModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFilterModelToJson(
-      this,
-    );
+    return _$$_MedcardFilterModelToJson(this);
   }
 }
 
@@ -1603,11 +1587,12 @@ abstract class _MedcardFilterModel implements MedcardFilterModel {
       _$_MedcardFilterModel.fromJson;
 
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
-  String get value;
+  String get value => throw _privateConstructorUsedError;
   @override
-  List<MedcardFilterItemModel> get filters;
+  List<MedcardFilterItemModel> get filters =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFilterModelCopyWith<_$_MedcardFilterModel> get copyWith =>

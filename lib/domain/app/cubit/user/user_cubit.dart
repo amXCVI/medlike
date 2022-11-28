@@ -260,13 +260,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Запрашивает смс для сброса пароля
-  void getNewSmsForRecoverPassword({required String phoneNumber}) async {
+  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword({required String phoneNumber}) async {
     CheckUserAccountResponse checkUser =
         await checkUserAccount(phoneNumber: phoneNumber);
-    if (!checkUser.found) {
-      AppToast.showAppToast(
-          msg: 'Не найден пользователь с введенным номером телефона');
-      return;
+    if (checkUser.found != true) {
+      return const CheckUserAccountResponse(
+        found: false,
+        message:  'Не найден пользователь с введенным номером телефона'
+      );
     }
     emit(state.copyWith(
       getNewSmsCodeStatus: GetNewSmsCodeStatuses.loading,
@@ -285,6 +286,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
       addError(e);
     }
+    return null;
   }
 
   /// Проверяет код из смс для сброса пароля
@@ -399,16 +401,21 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       CheckUserAccountResponse response = await userRepository.checkUserAccount(
         phoneNumber: phoneNumber,
       );
-      if (!response.found) {
-        AppToast.showAppToast(
-            msg: 'Не найден пользователь с введенным номером телефона');
+
+      if(response.found != true) {
+        return const CheckUserAccountResponse(
+          found: false,
+          message:  'Не найден пользователь с введенным номером телефона'
+        );
       }
 
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.success,
-        isFound: response.found,
+        isFound: response.found
       ));
       return response;
+    } on DioError catch(e) {
+      return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.failed,
