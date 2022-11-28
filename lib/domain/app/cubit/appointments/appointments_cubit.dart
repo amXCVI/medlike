@@ -101,9 +101,10 @@ class AppointmentsCubit
   }
 
   /// Отменить прием
-  void deleteAppointment({
+  Future<void> deleteAppointment({
     required String appointmentId,
     required String userId,
+    bool doNotShowNotification = false,
   }) async {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
@@ -121,7 +122,7 @@ class AppointmentsCubit
       emit(state.copyWith(
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
-      if (response) {
+      if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
     } catch (e) {

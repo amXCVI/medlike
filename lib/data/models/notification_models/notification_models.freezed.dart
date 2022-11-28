@@ -261,9 +261,7 @@ class _$_NotificationModel implements _NotificationModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotificationModelToJson(
-      this,
-    );
+    return _$$_NotificationModelToJson(this);
   }
 }
 
@@ -282,21 +280,21 @@ abstract class _NotificationModel implements NotificationModel {
       _$_NotificationModel.fromJson;
 
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String get description => throw _privateConstructorUsedError;
   @override
-  DateTime get eventDate;
+  DateTime get eventDate => throw _privateConstructorUsedError;
   @override
-  int get eventsCount;
+  int get eventsCount => throw _privateConstructorUsedError;
   @override
-  String get userId;
+  String get userId => throw _privateConstructorUsedError;
   @override
-  String get eventType;
+  String get eventType => throw _privateConstructorUsedError;
   @override
-  String get entityId;
+  String get entityId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>

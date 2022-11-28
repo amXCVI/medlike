@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
@@ -34,12 +35,27 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _createNewAppointment() {
+    void _createNewAppointment(
+        String selectedPayType, String? createdAppointmentId) async {
       HapticFeedback.heavyImpact();
-      context.read<SubscribeCubit>().createNewAppointment(
-            userId: widget.userId,
-            userName: context.read<UserCubit>().getShortUserName(widget.userId),
-          );
+
+      /// Если оплата картой
+      if (selectedPayType == AppConstants.cardPayType) {
+        context.read<SubscribeCubit>().createNewAppointment(
+              userId: widget.userId,
+              userName:
+                  context.read<UserCubit>().getShortUserName(widget.userId),
+            );
+        return;
+
+        /// Оплата наличкой в кассе
+      } else {
+        context.read<SubscribeCubit>().createNewAppointment(
+              userId: widget.userId,
+              userName:
+                  context.read<UserCubit>().getShortUserName(widget.userId),
+            );
+      }
     }
 
     return WillPopScope(
@@ -68,21 +84,26 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                     ? 0.25
                     : 1,
                 child: FloatingActionButton.extended(
-                  onPressed: isDisabledButton ? () {} : _createNewAppointment,
+                  onPressed: () {
+                    isDisabledButton
+                        ? {}
+                        : _createNewAppointment(
+                            state.selectedPayType!,
+                            state.createdAppointmentId,
+                          );
+                  },
                   backgroundColor: !isDisabledButton
                       ? Theme.of(context).primaryColor
                       : AppColors.lightText,
                   extendedPadding: const EdgeInsets.all(15),
-                  label: const ConfirmationActionButtonLabel(),
+                  label: ConfirmationActionButtonLabel(userId: widget.userId),
                 ),
               ),
             );
           },
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView(
             shrinkWrap: true,
             children: [
