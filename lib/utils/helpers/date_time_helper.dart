@@ -54,6 +54,8 @@ Future<int> getTimeZoneOffset() async {
 String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
   {String? formatSting, bool? isTimeCell}
 ) {
+  const mskTime = 3;
+
   int tz = DateTime.now().timeZoneOffset.inHours;
   DateTime timeOfClinic = dateTime.toUtc().add(
     Duration(
@@ -65,8 +67,10 @@ String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
 
   if (timeZoneOffset == tz) {
     return timeString;
+  } else if(timeZoneOffset == mskTime) {
+    return '$timeString (МСК)';
   } else {
-    final sign = timeZoneOffset - tz < 0 ? '-' : '+';
-    return '$timeString (МСК $sign${(timeZoneOffset - tz).abs()})';
+    final sign = timeZoneOffset - mskTime < 0 ? '-' : '+';
+    return '$timeString (МСК $sign${(timeZoneOffset - mskTime).abs()})';
   }
 }
