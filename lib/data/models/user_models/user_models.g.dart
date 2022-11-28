@@ -139,7 +139,7 @@ Map<String, dynamic> _$$_UserProfilesListToJson(_$_UserProfilesList instance) =>
 _$_CheckUserAccountResponse _$$_CheckUserAccountResponseFromJson(
         Map<String, dynamic> json) =>
     _$_CheckUserAccountResponse(
-      found: json['found'] as bool,
+      found: json['found'] as bool?,
       message: json['message'] as String?,
     );
 

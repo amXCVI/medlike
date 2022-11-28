@@ -6,7 +6,9 @@ import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class PhoneNumberInput extends StatefulWidget {
-  const PhoneNumberInput({Key? key}) : super(key: key);
+  const PhoneNumberInput({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PhoneNumberInput> createState() => _PhoneNumberInputState();
@@ -14,6 +16,7 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final FocusNode _focus = FocusNode();
+  String? error;
 
   late final TextEditingController _controller =
       TextEditingController(text: '');
@@ -26,14 +29,22 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     }
   }
 
-  void _savePhoneNumber(String phone) {
+  void _savePhoneNumber(String phone) async {
     RegExp exp = RegExp(r"[^0-9]+");
     String phoneString = phone.replaceAll(exp, '');
     if (phoneString.length != 11) {
       return;
     }
 
-    context.read<UserCubit>().checkUserAccount(phoneNumber: phoneString);
+    final response = await context.read<UserCubit>().checkUserAccount(
+      phoneNumber: phoneString
+    );
+
+    if(response.message != null) {
+      setState(() {
+        error = response.message;
+      });
+    }
 
     context.read<UserCubit>().tempSavePhoneNumber(phoneString);
     //dispose();
@@ -49,6 +60,13 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
   }
 
   void _onFocus() {
+    if(error != null) {
+      setState(() {
+        error = null;
+      });
+      _focus.nextFocus();
+    }
+
     if (_controller.text.isEmpty) {
       Future.delayed(const Duration(milliseconds: 100), () {
         _controller.text = '+7';
@@ -87,13 +105,18 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               onTappedOutside: _onUnFocus,
               onTappedInside: _onFocus,
               child: TextField(
-                key: UniqueKey(),
+                key: const ValueKey('number_field'),
                 controller: _controller,
                 onChanged: (text) => _onChangePhone(text),
                 autofocus: false,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [phoneMaskFormatter],
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: error == null 
+                      ? const BorderSide(color: Colors.black, width: 1.0)
+                      : const BorderSide(color: AppColors.mainError, width: 1.0),
+                  ),
                   hintText: '+7 (XXX) XXX XX XX',
                   hintStyle: Theme.of(context)
                       .textTheme
@@ -111,6 +134,14 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
                 focusNode: _focus,
               ),
             ),
+          ),
+          if(error != null) Text(
+            error!,
+            style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: AppColors.mainError),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 32),
         ],
