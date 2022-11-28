@@ -20,10 +20,10 @@ class MedcardProfilesListPage extends StatelessWidget {
 
       if (isChildren) {
         context.router
-            .push(MedcardRoute(userId: userId, isChildrenPage: isChildren));
+            .push(MedcardRoute(userId: userId, isChildrenPage: false));
       } else {
         context.router
-            .replace(MedcardRoute(userId: userId, isChildrenPage: isChildren));
+            .replace(MedcardRoute(userId: userId, isChildrenPage: true));
       }
     }
 
