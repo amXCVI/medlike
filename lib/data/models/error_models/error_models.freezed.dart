@@ -129,9 +129,7 @@ class _$_DefaultErrorModel implements _DefaultErrorModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DefaultErrorModelToJson(
-      this,
-    );
+    return _$$_DefaultErrorModelToJson(this);
   }
 }
 
@@ -143,7 +141,7 @@ abstract class _DefaultErrorModel implements DefaultErrorModel {
       _$_DefaultErrorModel.fromJson;
 
   @override
-  String? get message;
+  String? get message => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DefaultErrorModelCopyWith<_$_DefaultErrorModel> get copyWith =>

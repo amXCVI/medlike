@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
@@ -48,39 +47,15 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                   context.read<UserCubit>().getShortUserName(widget.userId),
             );
         return;
-      }
 
-      /// Если оплата наличкой, но черновик приема ранее был создан
-      /// Отменяем прием
-      /// Разблокируем ячейку
-      /// Создаем новый прием за наличку
-      if (selectedPayType == AppConstants.noPayedPayType &&
-          createdAppointmentId != null) {
-        await context
-            .read<AppointmentsCubit>()
-            .deleteAppointment(
-              appointmentId: createdAppointmentId,
+        /// Оплата наличкой в кассе
+      } else {
+        context.read<SubscribeCubit>().createNewAppointment(
               userId: widget.userId,
-              doNotShowNotification: true,
-            )
-            .then((value) => context
-                .read<SubscribeCubit>()
-                .unlockCell(userId: widget.userId)
-                .then((value) =>
-                    context.read<SubscribeCubit>().createNewAppointment(
-                          userId: widget.userId,
-                          userName: context
-                              .read<UserCubit>()
-                              .getShortUserName(widget.userId),
-                        )));
-        return;
+              userName:
+                  context.read<UserCubit>().getShortUserName(widget.userId),
+            );
       }
-
-      /// Оплата наличкой в кассе
-      context.read<SubscribeCubit>().createNewAppointment(
-            userId: widget.userId,
-            userName: context.read<UserCubit>().getShortUserName(widget.userId),
-          );
     }
 
     return WillPopScope(
@@ -121,7 +96,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                       ? Theme.of(context).primaryColor
                       : AppColors.lightText,
                   extendedPadding: const EdgeInsets.all(15),
-                  label: const ConfirmationActionButtonLabel(),
+                  label: ConfirmationActionButtonLabel(userId: widget.userId),
                 ),
               ),
             );

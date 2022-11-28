@@ -586,15 +586,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       return;
     }
 
-    /// Если черновик приема создан, но не оплачен
-    if (state.creatingAppointmentStatus ==
-            CreatingAppointmentStatuses.createdDraft &&
-        state.selectedPayType == AppConstants.cardPayType) {
-      registerOrder(
-          userId: userId,
-          appointmentIds: [state.createdAppointmentId as String].toList());
-      return;
-    }
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
