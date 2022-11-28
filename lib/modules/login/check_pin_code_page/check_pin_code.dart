@@ -73,6 +73,16 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     });
   }
 
+  void _checkSavedPinCode(BuildContext context) async {
+    String sha256savedCode =
+        '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
+    if (sha256savedCode.isEmpty || sha256savedCode == 'null') {
+      context.router.replace(StartPhoneNumberRoute());
+    } else {
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
@@ -93,6 +103,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
         return false;
       }
     }
+
+    _checkSavedPinCode(context);
 
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
