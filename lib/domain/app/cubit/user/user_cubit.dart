@@ -145,6 +145,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
     UserSecureStorage.deleteField(AppConstants.authPinCode);
+    UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
     FCMService.cleanFCMToken();
 
@@ -260,14 +261,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Запрашивает смс для сброса пароля
-  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword({required String phoneNumber}) async {
+  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword(
+      {required String phoneNumber}) async {
     CheckUserAccountResponse checkUser =
         await checkUserAccount(phoneNumber: phoneNumber);
     if (checkUser.found != true) {
       return const CheckUserAccountResponse(
-        found: false,
-        message:  'Не найден пользователь с введенным номером телефона'
-      );
+          found: false,
+          message: 'Не найден пользователь с введенным номером телефона');
     }
     emit(state.copyWith(
       getNewSmsCodeStatus: GetNewSmsCodeStatuses.loading,
@@ -402,19 +403,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         phoneNumber: phoneNumber,
       );
 
-      if(response.found != true) {
+      if (response.found != true) {
         return const CheckUserAccountResponse(
-          found: false,
-          message:  'Не найден пользователь с введенным номером телефона'
-        );
+            found: false,
+            message: 'Не найден пользователь с введенным номером телефона');
       }
 
       emit(state.copyWith(
-        checkUserAccountStatus: CheckUserAccountStatuses.success,
-        isFound: response.found
-      ));
+          checkUserAccountStatus: CheckUserAccountStatuses.success,
+          isFound: response.found));
       return response;
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
@@ -610,6 +609,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.success,
       ));
+      await UserSecureStorage.setField(
+          AppConstants.isAcceptedAgreements, 'true');
     } catch (e) {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.failed,

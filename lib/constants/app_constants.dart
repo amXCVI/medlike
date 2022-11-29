@@ -9,6 +9,9 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для пользовательских соглашений. Подписаны или нет.
+  static const String isAcceptedAgreements = 'isAcceptedAgreements';
+
   // Ключ для сохранения статуса пользования приложением
   static const String demoTourStatus = 'demoTourStatus';
 
@@ -35,7 +38,7 @@ class AppConstants {
   // Время таймаута. Приложение автоматически выкидывает пользователя после бездействия
   static const int timeoutDurationMinutes = 5;
 
-   // Время блокировки приложения
+  // Время блокировки приложения
   static const String timeoutStart = 'timeoutStart';
 
   // Id документа, который проверяется и подтверждается при первой авторизации
