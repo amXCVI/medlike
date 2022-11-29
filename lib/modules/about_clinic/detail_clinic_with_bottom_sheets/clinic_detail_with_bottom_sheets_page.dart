@@ -103,6 +103,7 @@ class _ClinicDetailWithBottomSheetsPageState
                   buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,
                   selectedBuilding: selectedBuilding ?? clinicBuildings[0],
+                  timeZoneOffset: widget.selectedClinic.timeZoneOffset ?? 3,
                 ),
                 collapsed: CollapsedSlidingPanel(
                   buildingsList: clinicBuildings ?? [],

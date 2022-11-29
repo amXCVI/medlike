@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
+import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/address.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/contacts_list.dart';
@@ -19,11 +20,13 @@ class ExpandedSlidingPanel extends StatelessWidget {
     required this.buildingsList,
     required this.onChangeBuildingIndex,
     required this.selectedBuilding,
+    required this.timeZoneOffset,
   }) : super(key: key);
 
   final List<BuildingLatLngModel> buildingsList;
   final void Function(BuildingLatLngModel) onChangeBuildingIndex;
   final BuildingLatLngModel selectedBuilding;
+  final int timeZoneOffset;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +39,22 @@ class ExpandedSlidingPanel extends StatelessWidget {
     }
 
     void _handleTapSubscribe(
-        int profilesCount, String userId, String clinicId) {
+        int profilesCount, String userId, BuildingLatLngModel buildingLatLng) {
       if (profilesCount == 1) {
-        context.router.push(ClinicsListRoute(
+        context.read<SubscribeCubit>().setSelectedBuilding(AvailableClinic(
+              name: buildingLatLng.name,
+              departmentName: buildingLatLng.departmentName,
+              address: buildingLatLng.address,
+              id: buildingLatLng.id,
+              buildingId: buildingLatLng.buildingId,
+              phone: buildingLatLng.phone,
+              workTime: buildingLatLng.workTime,
+              timeZoneOffset: timeZoneOffset,
+            ));
+        context.router.push(ServicesListRoute(
           userId: userId,
+          clinicId: buildingLatLng.id,
+          buildingId: buildingLatLng.buildingId,
         ));
       } else {
         context.router.push(const SubscribeProfilesListRoute());
@@ -162,7 +177,7 @@ class ExpandedSlidingPanel extends StatelessWidget {
                   _handleTapSubscribe(
                     state.userProfiles!.length,
                     state.userProfiles![0].id,
-                    buildingsList[buildingsList.indexOf(selectedBuilding)].id,
+                    buildingsList[buildingsList.indexOf(selectedBuilding)],
                   );
                 },
               );
