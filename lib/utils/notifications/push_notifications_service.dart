@@ -91,7 +91,7 @@ class FCMService {
     );
   }
 
-  static Future<void> onMessage() async {
+  static Future<void> onMessage(Function(RemoteMessage message)? onShowMessage) async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       await FCMService._localNotificationsPlugin.show(
         0,
@@ -100,6 +100,10 @@ class FCMService {
         FCMService.platformChannelSpecifics,
         payload: "new follower",
       );
+
+      if(onShowMessage != null) {
+        onShowMessage(message);
+      }
     });
   }
 

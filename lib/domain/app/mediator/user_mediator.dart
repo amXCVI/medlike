@@ -4,7 +4,8 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 enum UserMediatorEvent {
-  logout
+  logout,
+  pushNotification
 }
 
 mixin RefreshErrorHandler<S, T extends MediatorCubit> on MediatorCubit<S, UserMediatorEvent> {

@@ -30,6 +30,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
+    } else if(event == UserMediatorEvent.pushNotification) {
+      getLastNotReadNotification(true);
     }
   }
 
