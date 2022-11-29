@@ -93,7 +93,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
         return true;
       } else {
         if (countAttempts + 1 == AppConstants.countLoginAttemps) {
-          context.read<UserCubit>().signOut();
+          context.read<UserCubit>().forceLogout();
           context.router.replaceAll([StartPhoneNumberRoute()]);
           return false;
         }
