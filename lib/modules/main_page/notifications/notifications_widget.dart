@@ -4,6 +4,7 @@ import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/main_page/notifications/appontment_confirm_view.dart';
 import 'package:medlike/modules/main_page/notifications/notifications_widget_view.dart';
 
 class NotificationsWidget extends StatefulWidget {
@@ -67,14 +68,19 @@ class ClinicsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
-        if((state.getAllClinicsListStatus != GetAllClinicsListStatuses.success
-          && lastAppointment != null) || !isLoaded) {
+        if(!isLoaded || state.getAllClinicsListStatus != GetAllClinicsListStatuses.success) {
           return const SizedBox();
         }
-        return NotificationsWidgetView(
-          appointment: lastAppointment,
-          clinic: getClinic(lastAppointment, state.clinicsList),
-        );
+        if(lastAppointment != null) { 
+          return AppointmentConfirmView(
+            clinic: getClinic(lastAppointment, state.clinicsList), 
+            appointment: lastAppointment!,
+          );
+        } else {
+          return NotificationsWidgetView(
+            clinic: getClinic(lastAppointment, state.clinicsList),
+          );
+        }
       },
     );
   }
