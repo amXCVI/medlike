@@ -14,7 +14,6 @@ class PriceFiltersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       color: AppColors.secondBackground,
       height: 107 + 20,
@@ -23,7 +22,7 @@ class PriceFiltersWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0),
-            child: Text('Период',
+            child: Text('Категория',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.mainText,
                     )),

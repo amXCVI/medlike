@@ -21,7 +21,7 @@ class PricePage extends StatefulWidget {
 class _PricePageState extends State<PricePage> {
   late bool isFilteringMode = false;
   late bool isShowingFilters = false;
-  List<String> selectedFilters = [];
+  List<String> selectedFilters = [''];
   GlobalKey widgetOverBodyGlobalKey = GlobalKey();
 
   @override
@@ -66,48 +66,60 @@ class _PricePageState extends State<PricePage> {
     });
   }
 
+  // void handleTapOnFilterItem(String filterValue) {
+  //   if (selectedFilters.isEmpty) {
+  //     setState(() {
+  //       selectedFilters.add(filterValue);
+  //     });
+  //     return;
+  //   }
+  //   if (filterValue.isEmpty) {
+  //     if (selectedFilters.contains(filterValue)) {
+  //       setState(() {
+  //         selectedFilters.remove(filterValue);
+  //       });
+  //     } else {
+  //       setState(() {
+  //         selectedFilters.clear();
+  //         selectedFilters.add(filterValue);
+  //       });
+  //     }
+  //     return;
+  //   }
+  //   if (selectedFilters.contains(filterValue)) {
+  //     if (selectedFilters.first.isEmpty) {
+  //       setState(() {
+  //         selectedFilters.remove(filterValue);
+  //       });
+  //     } else {
+  //       setState(() {
+  //         selectedFilters.remove(filterValue);
+  //       });
+  //     }
+  //   } else {
+  //     if (selectedFilters.first.isNotEmpty) {
+  //       setState(() {
+  //         selectedFilters.add(filterValue);
+  //       });
+  //     } else {
+  //       setState(() {
+  //         selectedFilters.remove(selectedFilters.first);
+  //         selectedFilters.add(filterValue);
+  //       });
+  //     }
+  //   }
+  // }
+
   void handleTapOnFilterItem(String filterValue) {
-    if (selectedFilters.isEmpty) {
+    if (selectedFilters.contains(filterValue)) {
       setState(() {
-        selectedFilters.add(filterValue);
+        selectedFilters = [''];
       });
       return;
     }
-    if (filterValue.isEmpty) {
-      if (selectedFilters.contains(filterValue)) {
-        setState(() {
-          selectedFilters.remove(filterValue);
-        });
-      } else {
-        setState(() {
-          selectedFilters.clear();
-          selectedFilters.add(filterValue);
-        });
-      }
-      return;
-    }
-    if (selectedFilters.contains(filterValue)) {
-      if (selectedFilters.first.isEmpty) {
-        setState(() {
-          selectedFilters.remove(filterValue);
-        });
-      } else {
-        setState(() {
-          selectedFilters.remove(filterValue);
-        });
-      }
-    } else {
-      if (selectedFilters.first.isNotEmpty) {
-        setState(() {
-          selectedFilters.add(filterValue);
-        });
-      } else {
-        setState(() {
-          selectedFilters.remove(selectedFilters.first);
-          selectedFilters.add(filterValue);
-        });
-      }
-    }
+    setState(() {
+      selectedFilters = [filterValue];
+    });
   }
 
   @override

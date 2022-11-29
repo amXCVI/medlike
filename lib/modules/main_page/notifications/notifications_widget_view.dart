@@ -58,7 +58,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
         formatSting: 'dd.MM.yyyy, HH:mm',
       );
 
-      return '$initials, ${appointmentItem.researches[0].name}, $date';
+      return '$initials, ${appointmentItem.researches.isNotEmpty ? appointmentItem.researches[0].name : ''}, $date';
     }
 
     return BlocBuilder<TourCubit, TourState>(
@@ -109,8 +109,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                             if (state.tourStatuses == TourStatuses.first &&
                                 state.isNotificationShown != true) {
                               tooltip.show(
-                                  widgetKey: _key,
-                                  offset: const Offset(24, 0));
+                                  widgetKey: _key, offset: const Offset(24, 0));
                             }
 
                             return true;
@@ -122,8 +121,8 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                                   vertical: 2.0, horizontal: 12.0),
                               decoration: const BoxDecoration(
                                   color: AppColors.mainError,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(24))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24))),
                               child: Text(
                                 (notificationItem.eventsCount).toString(),
                                 style: const TextStyle(
@@ -139,8 +138,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                     const SizedBox(height: 6),
                     Text(
                       description.characters
-                          .replaceAll(
-                              Characters(''), Characters('\u{200B}'))
+                          .replaceAll(Characters(''), Characters('\u{200B}'))
                           .toString(),
                       style: Theme.of(context)
                           .textTheme
@@ -162,7 +160,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
 
               return Container(
                 margin: const EdgeInsets.only(
-                  top: 0, left: 16.0, bottom: 32.0, right: 16.0),
+                    top: 0, left: 16.0, bottom: 32.0, right: 16.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: const [
@@ -174,27 +172,27 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                   ],
                   color: Theme.of(context).backgroundColor,
                 ),
-
-                child: widget.appointment == null ? content : Slidable(
-                  key: UniqueKey(),
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    dismissible: DismissiblePane(onDismissed: () {
-                      context
-                          .read<UserCubit>()
-                          .updateNotificationStatus(notificationItem.id);
-                    }),
-                    children: [
-                      SlidableAction(
-                        flex: 2,
-                        onPressed: (ctx) {},
-                        backgroundColor: const Color(0xFFFE4A49),
-                        icon: Icons.delete,
-                      ),
-                    ],
-                  ),
-                  child: content
-                ),
+                child: widget.appointment == null
+                    ? content
+                    : Slidable(
+                        key: UniqueKey(),
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          dismissible: DismissiblePane(onDismissed: () {
+                            context
+                                .read<UserCubit>()
+                                .updateNotificationStatus(notificationItem.id);
+                          }),
+                          children: [
+                            SlidableAction(
+                              flex: 2,
+                              onPressed: (ctx) {},
+                              backgroundColor: const Color(0xFFFE4A49),
+                              icon: Icons.delete,
+                            ),
+                          ],
+                        ),
+                        child: content),
               );
             }
           },

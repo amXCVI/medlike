@@ -20,9 +20,11 @@ class AppointmentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = appointmentItem.doctorInfo.specialization != null ? 
-      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
-      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+    final title = appointmentItem.doctorInfo.specialization != null
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+        : CategoryTypes.getCategoryTypeByCategoryTypeId(
+                appointmentItem.categoryType)
+            .russianCategoryTypeName;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -31,9 +33,7 @@ class AppointmentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           appointmentItem.categoryType == 1 || appointmentItem.categoryType == 0
-              ? Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium)
+              ? Text(title, style: Theme.of(context).textTheme.titleMedium)
               : Text.rich(TextSpan(children: [
                   WidgetSpan(
                       child: Text(
@@ -77,7 +77,7 @@ class AppointmentItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 100,
                 child: Text(
                     ClinicAddressHelper.getShortAddress(
-                            appointmentItem.clinicInfo.address!) +
+                            appointmentItem.clinicInfo.address ?? '') +
                         ', ' +
                         appointmentItem.researchPlace,
                     overflow: TextOverflow.fade,
@@ -142,36 +142,32 @@ class AppointmentItem extends StatelessWidget {
               ),
             ],
           ),
-          if (appointmentItem.status == 4)
-            const SizedBox(height: 14.0),
+          if (appointmentItem.status == 4) const SizedBox(height: 14.0),
           if (appointmentItem.status == 4)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: SimpleButton(
-                    isPrimary: true,
-                    labelText: 'Подтвердить',
-                    onTap: () {
-                      context.read<AppointmentsCubit>().confirmAppointment(
+                    child: SimpleButton(
+                  isPrimary: true,
+                  labelText: 'Подтвердить',
+                  onTap: () {
+                    context.read<AppointmentsCubit>().confirmAppointment(
                         appointmentId: appointmentItem.id,
                         userId: appointmentItem.patientInfo.id as String);
-                    },
-                  )
-                ),
+                  },
+                )),
                 const SizedBox(
                   width: 12,
                 ),
                 Expanded(
-                  child: SimpleButton(
-                    labelText: 'Отменить',
-                    onTap: () {
-                      context.read<AppointmentsCubit>().deleteAppointment(
-                          appointmentId: appointmentItem.id,
-                          userId: appointmentItem.patientInfo.id as String);
-                    }
-                  )
-                )
+                    child: SimpleButton(
+                        labelText: 'Отменить',
+                        onTap: () {
+                          context.read<AppointmentsCubit>().deleteAppointment(
+                              appointmentId: appointmentItem.id,
+                              userId: appointmentItem.patientInfo.id as String);
+                        }))
               ],
             )
         ],

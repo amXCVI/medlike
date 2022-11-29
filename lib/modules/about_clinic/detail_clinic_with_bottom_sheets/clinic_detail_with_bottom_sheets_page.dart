@@ -34,10 +34,12 @@ class _ClinicDetailWithBottomSheetsPageState
   }
 
   void onTapBuilding(BuildingLatLngModel building) {
-    _panelController.open();
-    setState(() {
-      selectedBuilding = building;
-    });
+    if (!_panelController.isPanelOpen) {
+      setState(() {
+        selectedBuilding = building;
+        _panelController.open();
+      });
+    }
   }
 
   /// Ф-я для свайпа строений клиники
@@ -101,6 +103,7 @@ class _ClinicDetailWithBottomSheetsPageState
                   buildingsList: clinicBuildings,
                   onChangeBuildingIndex: onChangeBuildingIndex,
                   selectedBuilding: selectedBuilding ?? clinicBuildings[0],
+                  timeZoneOffset: widget.selectedClinic.timeZoneOffset ?? 3,
                 ),
                 collapsed: CollapsedSlidingPanel(
                   buildingsList: clinicBuildings ?? [],
