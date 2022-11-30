@@ -611,7 +611,8 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
                     'CabinetName': state.selectedTimetableCell?.cabinetName
                   }
                 : {},
-        'Researches': state.selectedResearchesIds != null
+        'Researches': state.selectedResearchesIds != null &&
+                state.selectedResearchesIds!.isNotEmpty
             ? state.selectedResearchesIds
                 ?.map((e) => {
                       'Id': state.researchesList
@@ -682,7 +683,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       selectedBuilding: null,
       selectedCabinet: null,
       selectedCalendarItem: null,
-      selectedResearchesIds: null,
+      selectedResearchesIds: [],
       selectedService: null,
       selectedSpecialisation: null,
       selectedTimetableCell: null,
