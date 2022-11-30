@@ -32,15 +32,20 @@ class AppointmentItem extends StatelessWidget {
         children: [
           appointmentItem.categoryType == 1 || appointmentItem.categoryType == 0
               ? Text(title, style: Theme.of(context).textTheme.titleMedium)
-              : Text.rich(TextSpan(children: [
-                  WidgetSpan(
-                      child: Text(
-                          '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ',
-                          style: Theme.of(context).textTheme.titleMedium)),
-                  ...appointmentItem.researches.map((e) => WidgetSpan(
-                      child: Text(e.name as String,
-                          style: Theme.of(context).textTheme.titleMedium)))
-                ])),
+              : RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: CategoryTypes.getCategoryTypeByCategoryTypeId(
+                                  appointmentItem.categoryType)
+                              .russianCategoryTypeName,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      ...appointmentItem.researches.map((e) => TextSpan(
+                          text: ', ${e.name}',
+                          style: Theme.of(context).textTheme.titleMedium))
+                    ],
+                  ),
+                ),
           appointmentItem.doctorInfo.id != null &&
                   appointmentItem.doctorInfo.id!.isNotEmpty
               ? Padding(
@@ -66,25 +71,27 @@ class AppointmentItem extends StatelessWidget {
                   ),
                 )
               : const SizedBox(height: 15.0),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SvgPicture.asset('assets/icons/appointments/solid.svg'),
-              const SizedBox(width: 8.0),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 100,
-                child: Text(
-                    ClinicAddressHelper.getShortAddress(
-                            appointmentItem.clinicInfo.address ?? '') +
-                        ', ' +
-                        appointmentItem.researchPlace,
-                    overflow: TextOverflow.fade,
-                    maxLines: 2,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ],
-          ),
+          appointmentItem.clinicInfo.address != null
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset('assets/icons/appointments/solid.svg'),
+                    const SizedBox(width: 8.0),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 100,
+                      child: Text(
+                          ClinicAddressHelper.getShortAddress(
+                                  appointmentItem.clinicInfo.address ?? '') +
+                              ', ' +
+                              appointmentItem.researchPlace,
+                          overflow: TextOverflow.fade,
+                          maxLines: 2,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           AppointmentItemRecommendations(
             recommendations: appointmentItem.recommendations ?? '',
             serviceName: appointmentItem.categoryType == 1 ||
