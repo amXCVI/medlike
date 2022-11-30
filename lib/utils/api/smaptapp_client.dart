@@ -51,13 +51,12 @@ class SmartAppClient {
   });
 
   Future<dynamic> get(String endpoint, {Options? options}) async {
-
     print('GET $endpoint');
 
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
-        'url': '${ApiConstants.baseUrlNornickTest}$endpoint',
+        'url': '${ApiConstants.baseUrl}$endpoint',
         'headers': options != null ? options.headers : defaultOptions.headers,
         'method': 'GET',
         'body': {},
@@ -85,7 +84,7 @@ class SmartAppClient {
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
-        'url': '${ApiConstants.baseUrlNornickTest}$endpoint',
+        'url': '${ApiConstants.baseUrl}$endpoint',
         'headers': options != null ? options.headers : defaultOptions.headers,
         'method': 'POST',
         'body': data,
@@ -112,7 +111,7 @@ class SmartAppClient {
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
-        'url': '${ApiConstants.baseUrlNornickTest}$endpoint',
+        'url': '${ApiConstants.baseUrl}$endpoint',
         'headers': options != null ? options.headers : defaultOptions.headers,
         'method': 'DELETE',
         'body': data,
@@ -139,7 +138,7 @@ class SmartAppClient {
     return await promiseToFuture(sendBotEvent({
       'method': 'proxy_request',
       'params': {
-        'url': '${ApiConstants.baseUrlNornickTest}$endpoint',
+        'url': '${ApiConstants.baseUrl}$endpoint',
         'headers': options != null ? options.headers : defaultOptions.headers,
         'method': 'PUT',
         'body': data,
