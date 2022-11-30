@@ -23,6 +23,7 @@ import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
+import 'package:medlike/utils/notifications/push_notifications_service.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -36,14 +37,22 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appointmentCubit = AppointmentsCubit(AppointmentsRepository(), mediator);
+    final userCubit = UserCubit(UserRepository(), mediator);
+
+    FCMService.onMessage(((message) {
+      mediator.sendTo<AppointmentsCubit>(userCubit, UserMediatorEvent.pushNotification);
+      mediator.sendTo<UserCubit>(appointmentCubit, UserMediatorEvent.pushNotification);
+    }));
+
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => UserCubit(UserRepository(), mediator)),
+        BlocProvider(create: (context) => userCubit),
         BlocProvider(
             create: (context) => SubscribeCubit(SubscribeRepository(), mediator)),
         BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
         BlocProvider(
-            create: (context) => AppointmentsCubit(AppointmentsRepository(), mediator)),
+            create: (context) => appointmentCubit),
         BlocProvider(create: (context) => MedcardCubit(MedcardRepository(), mediator)),
         BlocProvider(create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(create: (context) => PromptCubit()),

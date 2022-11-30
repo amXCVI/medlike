@@ -14,12 +14,14 @@ class Api {
     receiveTimeout: 30000,
   );
 
-  final Dio _dio = Dio()
-    ..options = options
-    ..interceptors.add(DioInterceptors());
-    
+  late Dio _dio;
 
   Api() {
+    _dio = Dio()
+    ..options = options
+    ..interceptors.add(DioInterceptors());
+
+
     initSSLCert();
   }
 

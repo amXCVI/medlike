@@ -30,6 +30,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
+    } else if(event == UserMediatorEvent.pushNotification) {
+      getLastNotReadNotification(true);
     }
   }
 
@@ -77,18 +79,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
-  Future<bool> handleSubmitPassword(String password) async {
+  Future<AuthTokenResponseError?> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
         state.userPhoneNumber.toString().length == 11) {
       return signIn(state.userPhoneNumber.toString(), password);
     } else {
       emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
-      return Future(() => false);
+      return Future(() => null);
     }
   }
 
   /// Авторизация по номеру телефона и паролю
-  Future<bool> signIn(String phone, String password) async {
+  Future<AuthTokenResponseError?> signIn(String phone, String password) async {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -100,7 +102,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tryCount: response.tryCount,
           authStatus: UserAuthStatuses.failureAuth,
         ));
-        return false;
+        return Future(() => null);
       }
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
@@ -116,13 +118,20 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
-      return true;
+      return Future(() => null);
+    } on DioError catch (e) {
+      emit(state.copyWith(
+        authStatus: UserAuthStatuses.failureAuth,
+        tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
+      ));
+      addError(e);
+      return AuthTokenResponseError.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
       addError(e);
-      return false;
+      rethrow;
     }
   }
 

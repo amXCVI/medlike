@@ -21,6 +21,15 @@ class AppointmentsCubit
 
   final AppointmentsRepository appointmentsRepository;
 
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    print(from);
+    print(event);
+    if (event == UserMediatorEvent.pushNotification) {
+      getLastAppointment(true);
+    }
+  }
+
   void getAppointmentsList(bool isRefresh) async {
     if (state.getAppointmentsStatus == GetAppointmentsStatuses.loading ||
         (!isRefresh &&
