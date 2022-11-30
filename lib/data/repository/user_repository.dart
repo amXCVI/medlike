@@ -379,7 +379,7 @@ class UserRepository {
       final response = await _dioClient.post('/api/v1.0/auth/token-smartapp',
           data: {},
           options: Options(
-            headers: {'Authorization': 'Bearer $smartappToken'},
+            headers: {'Authorization': smartappToken},
           ));
       if (response.statusCode == 200) {
         return AuthTokenResponse.fromJson(response.data);

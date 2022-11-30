@@ -46,8 +46,7 @@ class SmartAppClient {
     'Project': ApiConstants.env,
     'VerApp': ApiConstants.appVersion,
     'Platform': '1', //Platform.isAndroid ? '1' : '2',
-    'Authorization':
-        'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}',
+    'Authorization': '${UserSecureStorage.getField(AppConstants.accessToken)}',
   });
 
   Future<dynamic> get(String endpoint, {Options? options}) async {
