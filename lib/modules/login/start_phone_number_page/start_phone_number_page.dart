@@ -85,12 +85,12 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
       },
       listener: (context, state) {
-        if(state.checkUserAccountStatus == CheckUserAccountStatuses.success &&
-          state.isFound == true &&
-          context.router.current.path == AppRoutes.loginPhone
-        ) {
+        if (state.checkUserAccountStatus == CheckUserAccountStatuses.success &&
+            state.isFound == true &&
+            context.router.current.path == AppRoutes.loginPhone) {
           context.read<UserCubit>().savePhoneNumber(state.userPhoneNumber!);
-          context.router.push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
+          context.router
+              .push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
         }
       },
       child: WillPopScope(
@@ -102,6 +102,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
           child: DefaultScaffold(
             child: const StartPhoneNumberView(),
             appBarTitle: AppConstants.appName,
+            isChildrenPage: false,
             onPressedAppLogo: () {},
             actions: const [UnauthSupportButton()],
             bottomNavigationBar: const LoginPageBottomNavigationBar(),

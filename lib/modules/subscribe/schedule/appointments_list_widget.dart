@@ -38,13 +38,12 @@ class AppointmentsListWidget extends StatelessWidget {
             GetAppointmentsStatuses.success) {
           return ClinicsBuilder(
             appointmentsList: state.appointmentsList!
-                    .where((item) =>
-                        AppointmentStatuses.cancellableStatusIds
-                            .contains(item.status) &&
-                        DateFormat('dd.MM.yyyy')
-                                .format(item.appointmentDateTime) ==
-                            DateFormat('dd.MM.yyyy').format(selectedDate))
-                    .toList(),
+                .where((item) =>
+                    AppointmentStatuses.cancellableStatusIds
+                        .contains(item.status) &&
+                    DateFormat('dd.MM.yyyy').format(item.appointmentDateTime) ==
+                        DateFormat('dd.MM.yyyy').format(selectedDate))
+                .toList(),
             selectedDate: selectedDate,
           );
         } else {
@@ -56,11 +55,9 @@ class AppointmentsListWidget extends StatelessWidget {
 }
 
 class ClinicsBuilder extends StatelessWidget {
-  const ClinicsBuilder({
-    Key? key, 
-    required this.appointmentsList, 
-    required this.selectedDate
-  }) : super(key: key);
+  const ClinicsBuilder(
+      {Key? key, required this.appointmentsList, required this.selectedDate})
+      : super(key: key);
 
   final List<AppointmentModel> appointmentsList;
   final DateTime selectedDate;
@@ -69,11 +66,10 @@ class ClinicsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
-        if (state.getAllClinicsListStatus ==
-          GetAllClinicsListStatuses.failed) {
+        if (state.getAllClinicsListStatus == GetAllClinicsListStatuses.failed) {
           return const Text('');
         } else if (state.getAllClinicsListStatus ==
-          GetAllClinicsListStatuses.success) {
+            GetAllClinicsListStatuses.success) {
           return AppointmentsList(
             appointmentsList: appointmentsList,
             clinicsList: state.clinicsList!,
@@ -88,20 +84,20 @@ class ClinicsBuilder extends StatelessWidget {
 }
 
 class AppointmentsList extends StatelessWidget {
-  const AppointmentsList({
-    Key? key, 
-    required this.appointmentsList,
-    required this.clinicsList, 
-    required this.selectedDate
-  }) : super(key: key);
+  const AppointmentsList(
+      {Key? key,
+      required this.appointmentsList,
+      required this.clinicsList,
+      required this.selectedDate})
+      : super(key: key);
 
   final List<AppointmentModel> appointmentsList;
   final List<ClinicModel> clinicsList;
   final DateTime selectedDate;
 
   ClinicModel? getClinic(AppointmentModel item) {
-    for(var clinic in clinicsList) {
-      if(clinic.id == item.clinicInfo.id) {
+    for (var clinic in clinicsList) {
+      if (clinic.id == item.clinicInfo.id) {
         return clinic;
       }
     }
@@ -109,9 +105,11 @@ class AppointmentsList extends StatelessWidget {
   }
 
   String getTitle(AppointmentModel appointmentItem) {
-    return appointmentItem.doctorInfo.specialization != null ? 
-      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
-      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+    return appointmentItem.doctorInfo.specialization != null
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+        : CategoryTypes.getCategoryTypeByCategoryTypeId(
+                appointmentItem.categoryType)
+            .russianCategoryTypeName;
   }
 
   @override
@@ -186,17 +184,15 @@ class AppointmentsList extends StatelessWidget {
                                 CircleAvatar(
                                   radius: 15,
                                   child: Text(
-                                      '${appointmentItem.doctorInfo.lastName}'[
-                                          0]),
+                                      appointmentItem.doctorInfo.lastName![0]),
                                   backgroundColor: AppColors.mainBrand[100],
                                 ),
                                 const SizedBox(width: 8.0),
                                 Text(
-                                  '${appointmentItem.doctorInfo.lastName}' +
+                                  '${appointmentItem.doctorInfo.lastName} ' +
                                       '${appointmentItem.doctorInfo.firstName}'[
                                           0] +
-                                      '. ${appointmentItem.doctorInfo.middleName}'[
-                                          0] +
+                                      '. ${appointmentItem.doctorInfo.middleName![0]}' +
                                       '.',
                                   style: Theme.of(context)
                                       .textTheme
@@ -206,7 +202,7 @@ class AppointmentsList extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : const SizedBox(),
+                          : const SizedBox(height: 26),
                       const SizedBox(height: 8),
                       Row(
                         children: [
@@ -226,7 +222,9 @@ class AppointmentsList extends StatelessWidget {
                                     Text(
                                       getAppointmentTime(
                                         appointmentItem.appointmentDateTime,
-                                        getClinic(appointmentItem)!.timeZoneOffset ?? 3, // Стандарт МСК
+                                        getClinic(appointmentItem)!
+                                                .timeZoneOffset ??
+                                            3, // Стандарт МСК
                                       ),
                                     )
                                   ],

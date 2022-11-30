@@ -83,13 +83,30 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     }
   }
 
+  Future<bool> _checkIsAcceptedUserAgreements() async {
+    bool res = await context.read<UserCubit>().checkUserAgreements();
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
       bool isSuccess = await context.read<UserCubit>().checkPinCodeToStorage(
           pinCode, AppConstants.countLoginAttemps - countAttempts - 1);
       if (isSuccess) {
-        context.router.replaceAll([const MainRoute()]);
+        if (await UserSecureStorage.getField(
+                AppConstants.isAcceptedAgreements) ==
+            'true') {
+          context.router.replaceAll([const MainRoute()]);
+        } else {
+          _checkIsAcceptedUserAgreements().then((res) => {
+                if (!res)
+                  context.router.replaceAll([AuthUserAgreementsRoute()])
+                else
+                  context.router.replaceAll([const MainRoute()]),
+              });
+        }
+
         return true;
       } else {
         if (countAttempts + 1 == AppConstants.countLoginAttemps) {
