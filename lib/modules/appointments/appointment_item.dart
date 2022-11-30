@@ -11,12 +11,10 @@ import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem(
-      {Key? key, required this.appointmentItem, required this.clinic})
+  const AppointmentItem({Key? key, required this.appointmentItem})
       : super(key: key);
 
-  final AppointmentModel appointmentItem;
-  final ClinicModel clinic;
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +111,7 @@ class AppointmentItem extends StatelessWidget {
                         const SizedBox(width: 8.0),
                         Text(getAppointmentTime(
                           appointmentItem.appointmentDateTime,
-                          clinic.timeZoneOffset ?? 3, // Стандарт МСК
+                          appointmentItem.timeZoneOffset, // Стандарт МСК
                         )),
                       ],
                     ),

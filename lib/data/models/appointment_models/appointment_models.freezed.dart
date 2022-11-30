@@ -25,7 +25,7 @@ mixin _$AppointmentModel {
   String? get comment => throw _privateConstructorUsedError;
   String get researchPlace => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
-  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
+  String get appointmentDateTime => throw _privateConstructorUsedError;
   PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
   ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
   DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
@@ -56,7 +56,7 @@ abstract class $AppointmentModelCopyWith<$Res> {
       String? comment,
       String researchPlace,
       String id,
-      DateTime appointmentDateTime,
+      String appointmentDateTime,
       PatientInfoModel patientInfo,
       ClinicInfoModel clinicInfo,
       DoctorInfoModel doctorInfo,
@@ -129,7 +129,7 @@ class _$AppointmentModelCopyWithImpl<$Res>
       appointmentDateTime: appointmentDateTime == freezed
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       patientInfo: patientInfo == freezed
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
@@ -216,7 +216,7 @@ abstract class _$$_AppointmentModelCopyWith<$Res>
       String? comment,
       String researchPlace,
       String id,
-      DateTime appointmentDateTime,
+      String appointmentDateTime,
       PatientInfoModel patientInfo,
       ClinicInfoModel clinicInfo,
       DoctorInfoModel doctorInfo,
@@ -294,7 +294,7 @@ class __$$_AppointmentModelCopyWithImpl<$Res>
       appointmentDateTime: appointmentDateTime == freezed
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       patientInfo: patientInfo == freezed
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
@@ -385,7 +385,7 @@ class _$_AppointmentModel implements _AppointmentModel {
   @override
   final String id;
   @override
-  final DateTime appointmentDateTime;
+  final String appointmentDateTime;
   @override
   final PatientInfoModel patientInfo;
   @override
@@ -498,7 +498,7 @@ abstract class _AppointmentModel implements AppointmentModel {
       required final String? comment,
       required final String researchPlace,
       required final String id,
-      required final DateTime appointmentDateTime,
+      required final String appointmentDateTime,
       required final PatientInfoModel patientInfo,
       required final ClinicInfoModel clinicInfo,
       required final DoctorInfoModel doctorInfo,
@@ -526,7 +526,7 @@ abstract class _AppointmentModel implements AppointmentModel {
   @override
   String get id => throw _privateConstructorUsedError;
   @override
-  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
+  String get appointmentDateTime => throw _privateConstructorUsedError;
   @override
   PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
   @override
@@ -555,6 +555,586 @@ abstract class _AppointmentModel implements AppointmentModel {
   @JsonKey(ignore: true)
   _$$_AppointmentModelCopyWith<_$_AppointmentModel> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+AppointmentModelWithTimeZoneOffset _$AppointmentModelWithTimeZoneOffsetFromJson(
+    Map<String, dynamic> json) {
+  return _AppointmentModelWithTimeZoneOffset.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AppointmentModelWithTimeZoneOffset {
+  int get status => throw _privateConstructorUsedError;
+  bool get needConfirmation => throw _privateConstructorUsedError;
+  String? get comment => throw _privateConstructorUsedError;
+  String get researchPlace => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
+  int get timeZoneOffset => throw _privateConstructorUsedError;
+  PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
+  ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
+  DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
+  List<ResearchesModel> get researches => throw _privateConstructorUsedError;
+  int get categoryType => throw _privateConstructorUsedError;
+  bool get isVideo => throw _privateConstructorUsedError;
+  String get payType => throw _privateConstructorUsedError;
+  bool get isDraft => throw _privateConstructorUsedError;
+  String? get orderId => throw _privateConstructorUsedError;
+  String get scheduleId => throw _privateConstructorUsedError;
+  int get paymentStatus => throw _privateConstructorUsedError;
+  String? get recommendations => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AppointmentModelWithTimeZoneOffsetCopyWith<
+          AppointmentModelWithTimeZoneOffset>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
+  factory $AppointmentModelWithTimeZoneOffsetCopyWith(
+          AppointmentModelWithTimeZoneOffset value,
+          $Res Function(AppointmentModelWithTimeZoneOffset) then) =
+      _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>;
+  $Res call(
+      {int status,
+      bool needConfirmation,
+      String? comment,
+      String researchPlace,
+      String id,
+      DateTime appointmentDateTime,
+      int timeZoneOffset,
+      PatientInfoModel patientInfo,
+      ClinicInfoModel clinicInfo,
+      DoctorInfoModel doctorInfo,
+      List<ResearchesModel> researches,
+      int categoryType,
+      bool isVideo,
+      String payType,
+      bool isDraft,
+      String? orderId,
+      String scheduleId,
+      int paymentStatus,
+      String? recommendations});
+
+  $PatientInfoModelCopyWith<$Res> get patientInfo;
+  $ClinicInfoModelCopyWith<$Res> get clinicInfo;
+  $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+}
+
+/// @nodoc
+class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
+    implements $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
+  _$AppointmentModelWithTimeZoneOffsetCopyWithImpl(this._value, this._then);
+
+  final AppointmentModelWithTimeZoneOffset _value;
+  // ignore: unused_field
+  final $Res Function(AppointmentModelWithTimeZoneOffset) _then;
+
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? needConfirmation = freezed,
+    Object? comment = freezed,
+    Object? researchPlace = freezed,
+    Object? id = freezed,
+    Object? appointmentDateTime = freezed,
+    Object? timeZoneOffset = freezed,
+    Object? patientInfo = freezed,
+    Object? clinicInfo = freezed,
+    Object? doctorInfo = freezed,
+    Object? researches = freezed,
+    Object? categoryType = freezed,
+    Object? isVideo = freezed,
+    Object? payType = freezed,
+    Object? isDraft = freezed,
+    Object? orderId = freezed,
+    Object? scheduleId = freezed,
+    Object? paymentStatus = freezed,
+    Object? recommendations = freezed,
+  }) {
+    return _then(_value.copyWith(
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int,
+      needConfirmation: needConfirmation == freezed
+          ? _value.needConfirmation
+          : needConfirmation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      comment: comment == freezed
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      researchPlace: researchPlace == freezed
+          ? _value.researchPlace
+          : researchPlace // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      appointmentDateTime: appointmentDateTime == freezed
+          ? _value.appointmentDateTime
+          : appointmentDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
+      patientInfo: patientInfo == freezed
+          ? _value.patientInfo
+          : patientInfo // ignore: cast_nullable_to_non_nullable
+              as PatientInfoModel,
+      clinicInfo: clinicInfo == freezed
+          ? _value.clinicInfo
+          : clinicInfo // ignore: cast_nullable_to_non_nullable
+              as ClinicInfoModel,
+      doctorInfo: doctorInfo == freezed
+          ? _value.doctorInfo
+          : doctorInfo // ignore: cast_nullable_to_non_nullable
+              as DoctorInfoModel,
+      researches: researches == freezed
+          ? _value.researches
+          : researches // ignore: cast_nullable_to_non_nullable
+              as List<ResearchesModel>,
+      categoryType: categoryType == freezed
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as int,
+      isVideo: isVideo == freezed
+          ? _value.isVideo
+          : isVideo // ignore: cast_nullable_to_non_nullable
+              as bool,
+      payType: payType == freezed
+          ? _value.payType
+          : payType // ignore: cast_nullable_to_non_nullable
+              as String,
+      isDraft: isDraft == freezed
+          ? _value.isDraft
+          : isDraft // ignore: cast_nullable_to_non_nullable
+              as bool,
+      orderId: orderId == freezed
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      scheduleId: scheduleId == freezed
+          ? _value.scheduleId
+          : scheduleId // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: paymentStatus == freezed
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as int,
+      recommendations: recommendations == freezed
+          ? _value.recommendations
+          : recommendations // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  @override
+  $PatientInfoModelCopyWith<$Res> get patientInfo {
+    return $PatientInfoModelCopyWith<$Res>(_value.patientInfo, (value) {
+      return _then(_value.copyWith(patientInfo: value));
+    });
+  }
+
+  @override
+  $ClinicInfoModelCopyWith<$Res> get clinicInfo {
+    return $ClinicInfoModelCopyWith<$Res>(_value.clinicInfo, (value) {
+      return _then(_value.copyWith(clinicInfo: value));
+    });
+  }
+
+  @override
+  $DoctorInfoModelCopyWith<$Res> get doctorInfo {
+    return $DoctorInfoModelCopyWith<$Res>(_value.doctorInfo, (value) {
+      return _then(_value.copyWith(doctorInfo: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
+    implements $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
+  factory _$$_AppointmentModelWithTimeZoneOffsetCopyWith(
+          _$_AppointmentModelWithTimeZoneOffset value,
+          $Res Function(_$_AppointmentModelWithTimeZoneOffset) then) =
+      __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int status,
+      bool needConfirmation,
+      String? comment,
+      String researchPlace,
+      String id,
+      DateTime appointmentDateTime,
+      int timeZoneOffset,
+      PatientInfoModel patientInfo,
+      ClinicInfoModel clinicInfo,
+      DoctorInfoModel doctorInfo,
+      List<ResearchesModel> researches,
+      int categoryType,
+      bool isVideo,
+      String payType,
+      bool isDraft,
+      String? orderId,
+      String scheduleId,
+      int paymentStatus,
+      String? recommendations});
+
+  @override
+  $PatientInfoModelCopyWith<$Res> get patientInfo;
+  @override
+  $ClinicInfoModelCopyWith<$Res> get clinicInfo;
+  @override
+  $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+}
+
+/// @nodoc
+class __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
+    extends _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
+    implements _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
+  __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl(
+      _$_AppointmentModelWithTimeZoneOffset _value,
+      $Res Function(_$_AppointmentModelWithTimeZoneOffset) _then)
+      : super(_value, (v) => _then(v as _$_AppointmentModelWithTimeZoneOffset));
+
+  @override
+  _$_AppointmentModelWithTimeZoneOffset get _value =>
+      super._value as _$_AppointmentModelWithTimeZoneOffset;
+
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? needConfirmation = freezed,
+    Object? comment = freezed,
+    Object? researchPlace = freezed,
+    Object? id = freezed,
+    Object? appointmentDateTime = freezed,
+    Object? timeZoneOffset = freezed,
+    Object? patientInfo = freezed,
+    Object? clinicInfo = freezed,
+    Object? doctorInfo = freezed,
+    Object? researches = freezed,
+    Object? categoryType = freezed,
+    Object? isVideo = freezed,
+    Object? payType = freezed,
+    Object? isDraft = freezed,
+    Object? orderId = freezed,
+    Object? scheduleId = freezed,
+    Object? paymentStatus = freezed,
+    Object? recommendations = freezed,
+  }) {
+    return _then(_$_AppointmentModelWithTimeZoneOffset(
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int,
+      needConfirmation: needConfirmation == freezed
+          ? _value.needConfirmation
+          : needConfirmation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      comment: comment == freezed
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      researchPlace: researchPlace == freezed
+          ? _value.researchPlace
+          : researchPlace // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      appointmentDateTime: appointmentDateTime == freezed
+          ? _value.appointmentDateTime
+          : appointmentDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      timeZoneOffset: timeZoneOffset == freezed
+          ? _value.timeZoneOffset
+          : timeZoneOffset // ignore: cast_nullable_to_non_nullable
+              as int,
+      patientInfo: patientInfo == freezed
+          ? _value.patientInfo
+          : patientInfo // ignore: cast_nullable_to_non_nullable
+              as PatientInfoModel,
+      clinicInfo: clinicInfo == freezed
+          ? _value.clinicInfo
+          : clinicInfo // ignore: cast_nullable_to_non_nullable
+              as ClinicInfoModel,
+      doctorInfo: doctorInfo == freezed
+          ? _value.doctorInfo
+          : doctorInfo // ignore: cast_nullable_to_non_nullable
+              as DoctorInfoModel,
+      researches: researches == freezed
+          ? _value._researches
+          : researches // ignore: cast_nullable_to_non_nullable
+              as List<ResearchesModel>,
+      categoryType: categoryType == freezed
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as int,
+      isVideo: isVideo == freezed
+          ? _value.isVideo
+          : isVideo // ignore: cast_nullable_to_non_nullable
+              as bool,
+      payType: payType == freezed
+          ? _value.payType
+          : payType // ignore: cast_nullable_to_non_nullable
+              as String,
+      isDraft: isDraft == freezed
+          ? _value.isDraft
+          : isDraft // ignore: cast_nullable_to_non_nullable
+              as bool,
+      orderId: orderId == freezed
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      scheduleId: scheduleId == freezed
+          ? _value.scheduleId
+          : scheduleId // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: paymentStatus == freezed
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as int,
+      recommendations: recommendations == freezed
+          ? _value.recommendations
+          : recommendations // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AppointmentModelWithTimeZoneOffset
+    implements _AppointmentModelWithTimeZoneOffset {
+  const _$_AppointmentModelWithTimeZoneOffset(
+      {required this.status,
+      required this.needConfirmation,
+      required this.comment,
+      required this.researchPlace,
+      required this.id,
+      required this.appointmentDateTime,
+      required this.timeZoneOffset,
+      required this.patientInfo,
+      required this.clinicInfo,
+      required this.doctorInfo,
+      required final List<ResearchesModel> researches,
+      required this.categoryType,
+      required this.isVideo,
+      required this.payType,
+      required this.isDraft,
+      required this.orderId,
+      required this.scheduleId,
+      required this.paymentStatus,
+      required this.recommendations})
+      : _researches = researches;
+
+  factory _$_AppointmentModelWithTimeZoneOffset.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_AppointmentModelWithTimeZoneOffsetFromJson(json);
+
+  @override
+  final int status;
+  @override
+  final bool needConfirmation;
+  @override
+  final String? comment;
+  @override
+  final String researchPlace;
+  @override
+  final String id;
+  @override
+  final DateTime appointmentDateTime;
+  @override
+  final int timeZoneOffset;
+  @override
+  final PatientInfoModel patientInfo;
+  @override
+  final ClinicInfoModel clinicInfo;
+  @override
+  final DoctorInfoModel doctorInfo;
+  final List<ResearchesModel> _researches;
+  @override
+  List<ResearchesModel> get researches {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_researches);
+  }
+
+  @override
+  final int categoryType;
+  @override
+  final bool isVideo;
+  @override
+  final String payType;
+  @override
+  final bool isDraft;
+  @override
+  final String? orderId;
+  @override
+  final String scheduleId;
+  @override
+  final int paymentStatus;
+  @override
+  final String? recommendations;
+
+  @override
+  String toString() {
+    return 'AppointmentModelWithTimeZoneOffset(status: $status, needConfirmation: $needConfirmation, comment: $comment, researchPlace: $researchPlace, id: $id, appointmentDateTime: $appointmentDateTime, timeZoneOffset: $timeZoneOffset, patientInfo: $patientInfo, clinicInfo: $clinicInfo, doctorInfo: $doctorInfo, researches: $researches, categoryType: $categoryType, isVideo: $isVideo, payType: $payType, isDraft: $isDraft, orderId: $orderId, scheduleId: $scheduleId, paymentStatus: $paymentStatus, recommendations: $recommendations)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AppointmentModelWithTimeZoneOffset &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality()
+                .equals(other.needConfirmation, needConfirmation) &&
+            const DeepCollectionEquality().equals(other.comment, comment) &&
+            const DeepCollectionEquality()
+                .equals(other.researchPlace, researchPlace) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.appointmentDateTime, appointmentDateTime) &&
+            const DeepCollectionEquality()
+                .equals(other.timeZoneOffset, timeZoneOffset) &&
+            const DeepCollectionEquality()
+                .equals(other.patientInfo, patientInfo) &&
+            const DeepCollectionEquality()
+                .equals(other.clinicInfo, clinicInfo) &&
+            const DeepCollectionEquality()
+                .equals(other.doctorInfo, doctorInfo) &&
+            const DeepCollectionEquality()
+                .equals(other._researches, _researches) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryType, categoryType) &&
+            const DeepCollectionEquality().equals(other.isVideo, isVideo) &&
+            const DeepCollectionEquality().equals(other.payType, payType) &&
+            const DeepCollectionEquality().equals(other.isDraft, isDraft) &&
+            const DeepCollectionEquality().equals(other.orderId, orderId) &&
+            const DeepCollectionEquality()
+                .equals(other.scheduleId, scheduleId) &&
+            const DeepCollectionEquality()
+                .equals(other.paymentStatus, paymentStatus) &&
+            const DeepCollectionEquality()
+                .equals(other.recommendations, recommendations));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(status),
+        const DeepCollectionEquality().hash(needConfirmation),
+        const DeepCollectionEquality().hash(comment),
+        const DeepCollectionEquality().hash(researchPlace),
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(appointmentDateTime),
+        const DeepCollectionEquality().hash(timeZoneOffset),
+        const DeepCollectionEquality().hash(patientInfo),
+        const DeepCollectionEquality().hash(clinicInfo),
+        const DeepCollectionEquality().hash(doctorInfo),
+        const DeepCollectionEquality().hash(_researches),
+        const DeepCollectionEquality().hash(categoryType),
+        const DeepCollectionEquality().hash(isVideo),
+        const DeepCollectionEquality().hash(payType),
+        const DeepCollectionEquality().hash(isDraft),
+        const DeepCollectionEquality().hash(orderId),
+        const DeepCollectionEquality().hash(scheduleId),
+        const DeepCollectionEquality().hash(paymentStatus),
+        const DeepCollectionEquality().hash(recommendations)
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AppointmentModelWithTimeZoneOffsetCopyWith<
+          _$_AppointmentModelWithTimeZoneOffset>
+      get copyWith => __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<
+          _$_AppointmentModelWithTimeZoneOffset>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AppointmentModelWithTimeZoneOffsetToJson(this);
+  }
+}
+
+abstract class _AppointmentModelWithTimeZoneOffset
+    implements AppointmentModelWithTimeZoneOffset {
+  const factory _AppointmentModelWithTimeZoneOffset(
+          {required final int status,
+          required final bool needConfirmation,
+          required final String? comment,
+          required final String researchPlace,
+          required final String id,
+          required final DateTime appointmentDateTime,
+          required final int timeZoneOffset,
+          required final PatientInfoModel patientInfo,
+          required final ClinicInfoModel clinicInfo,
+          required final DoctorInfoModel doctorInfo,
+          required final List<ResearchesModel> researches,
+          required final int categoryType,
+          required final bool isVideo,
+          required final String payType,
+          required final bool isDraft,
+          required final String? orderId,
+          required final String scheduleId,
+          required final int paymentStatus,
+          required final String? recommendations}) =
+      _$_AppointmentModelWithTimeZoneOffset;
+
+  factory _AppointmentModelWithTimeZoneOffset.fromJson(
+          Map<String, dynamic> json) =
+      _$_AppointmentModelWithTimeZoneOffset.fromJson;
+
+  @override
+  int get status => throw _privateConstructorUsedError;
+  @override
+  bool get needConfirmation => throw _privateConstructorUsedError;
+  @override
+  String? get comment => throw _privateConstructorUsedError;
+  @override
+  String get researchPlace => throw _privateConstructorUsedError;
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
+  @override
+  int get timeZoneOffset => throw _privateConstructorUsedError;
+  @override
+  PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
+  @override
+  ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
+  @override
+  DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
+  @override
+  List<ResearchesModel> get researches => throw _privateConstructorUsedError;
+  @override
+  int get categoryType => throw _privateConstructorUsedError;
+  @override
+  bool get isVideo => throw _privateConstructorUsedError;
+  @override
+  String get payType => throw _privateConstructorUsedError;
+  @override
+  bool get isDraft => throw _privateConstructorUsedError;
+  @override
+  String? get orderId => throw _privateConstructorUsedError;
+  @override
+  String get scheduleId => throw _privateConstructorUsedError;
+  @override
+  int get paymentStatus => throw _privateConstructorUsedError;
+  @override
+  String? get recommendations => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AppointmentModelWithTimeZoneOffsetCopyWith<
+          _$_AppointmentModelWithTimeZoneOffset>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 PatientInfoModel _$PatientInfoModelFromJson(Map<String, dynamic> json) {

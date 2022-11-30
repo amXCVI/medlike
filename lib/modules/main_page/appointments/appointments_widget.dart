@@ -76,16 +76,7 @@ class ClinicsBuilder extends StatelessWidget {
       : super(key: key);
 
   final Function(DateTime) handleTapOnAppointment;
-  final List<AppointmentModel> appointmentsList;
-
-  ClinicModel? getClinic(AppointmentModel item, List<ClinicModel> clinicsList) {
-    for (var clinic in clinicsList) {
-      if (clinic.id == item.clinicInfo.id) {
-        return clinic;
-      }
-    }
-    return null;
-  }
+  final List<AppointmentModelWithTimeZoneOffset> appointmentsList;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +98,6 @@ class ClinicsBuilder extends StatelessWidget {
                     .contains(item.status))
                 .map((appointmentItem) => AppointmentItemCard(
                       appointmentItem: appointmentItem,
-                      clinic: getClinic(appointmentItem, state.clinicsList!)!,
                       handleTapOnAppointment: handleTapOnAppointment,
                     ))
                 .toList()
