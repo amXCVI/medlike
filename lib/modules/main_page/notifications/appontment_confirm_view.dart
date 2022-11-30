@@ -14,7 +14,7 @@ class AppointmentConfirmView extends StatefulWidget {
       {Key? key, required this.appointment, this.clinic})
       : super(key: key);
 
-  final AppointmentModel appointment;
+  final AppointmentModelWithTimeZoneOffset appointment;
   final ClinicModel? clinic;
 
   @override
@@ -44,7 +44,8 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
 
   @override
   Widget build(BuildContext context) {
-    String getAppointmentsDesc(AppointmentModel appointmentItem) {
+    String getAppointmentsDesc(
+        AppointmentModelWithTimeZoneOffset appointmentItem) {
       print(appointmentItem);
       final date = getAppointmentTime(
         appointmentItem.appointmentDateTime,
@@ -174,7 +175,7 @@ class NotificationBottom extends StatelessWidget {
       {Key? key, required this.appointment, required this.isLoading})
       : super(key: key);
 
-  final AppointmentModel appointment;
+  final AppointmentModelWithTimeZoneOffset appointment;
   final bool isLoading;
 
   @override

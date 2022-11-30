@@ -5,7 +5,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
-import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
@@ -15,23 +14,12 @@ class AppointmentsParagraph extends StatelessWidget {
     Key? key,
     required this.statusItem,
     required this.appointmentsList,
-    required this.clinicsList,
     required this.onRefreshData,
   }) : super(key: key);
 
   final StatusItem statusItem;
-  final List<AppointmentModel> appointmentsList;
-  final List<ClinicModel> clinicsList;
+  final List<AppointmentModelWithTimeZoneOffset> appointmentsList;
   final Function onRefreshData;
-
-  ClinicModel? getClinic(AppointmentModel item) {
-    for (var clinic in clinicsList) {
-      if (clinic.id == item.clinicInfo.id) {
-        return clinic;
-      }
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +64,8 @@ class AppointmentsParagraph extends StatelessWidget {
                         color: Theme.of(context).backgroundColor,
                       ),
                       child: AppointmentStatuses.cancellableStatusIds
-                              .contains(item.status) 
-                          && item.status != 4
+                                  .contains(item.status) &&
+                              item.status != 4
                           ? Slidable(
                               key: UniqueKey(),
                               endActionPane: ActionPane(
@@ -113,14 +101,6 @@ class AppointmentsParagraph extends StatelessWidget {
                                               SvgPicture.asset(
                                                   'assets/icons/appointments/ic_delete_appointment.svg'),
                                               const SizedBox(width: 20.0),
-                                              // Text(
-                                              //   'Отменить прием',
-                                              //   style: Theme.of(context)
-                                              //       .textTheme
-                                              //       .labelSmall
-                                              //       ?.copyWith(
-                                              //           color: Colors.white),
-                                              // ),
                                             ],
                                           ),
                                         ),
@@ -131,10 +111,8 @@ class AppointmentsParagraph extends StatelessWidget {
                               ),
                               child: SliderChild(
                                   item: item,
-                                  getClinic: getClinic,
                                   index: appointmentsList.indexOf(item)))
-                          : AppointmentItem(
-                              appointmentItem: item, clinic: getClinic(item)!)),
+                          : AppointmentItem(appointmentItem: item)),
                 ),
               )
               .toList(),
@@ -145,15 +123,10 @@ class AppointmentsParagraph extends StatelessWidget {
 }
 
 class SliderChild extends StatefulWidget {
-  const SliderChild(
-      {Key? key,
-      required this.item,
-      required this.getClinic,
-      required this.index})
+  const SliderChild({Key? key, required this.item, required this.index})
       : super(key: key);
 
-  final AppointmentModel item;
-  final ClinicModel? Function(AppointmentModel) getClinic;
+  final AppointmentModelWithTimeZoneOffset item;
   final int index;
 
   @override
@@ -191,10 +164,7 @@ class _SliderChildState extends State<SliderChild> {
     return BlocBuilder<TourCubit, TourState>(buildWhen: (_, state) {
       return true;
     }, builder: (context, state) {
-      return AppointmentItem(
-        appointmentItem: widget.item,
-        clinic: widget.getClinic(widget.item)!,
-      );
+      return AppointmentItem(appointmentItem: widget.item);
     });
   }
 }

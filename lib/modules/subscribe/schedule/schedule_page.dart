@@ -88,6 +88,11 @@ class SchedulePage extends StatelessWidget {
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
       context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
+      if (selectedDay.hasLogs) {
+        context
+            .read<AppointmentsCubit>()
+            .filterAppointmentsList(selectedDay.date);
+      }
       if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
         _getCellsList();
       } else {
