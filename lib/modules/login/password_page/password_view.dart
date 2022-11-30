@@ -13,11 +13,18 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_login_animation/default_login_animation.dart';
 
-class PasswordPageWidget extends StatelessWidget {
+class PasswordPageWidget extends StatefulWidget {
   const PasswordPageWidget({Key? key, required this.phoneNumber})
       : super(key: key);
 
   final String phoneNumber;
+
+  @override
+  State<PasswordPageWidget> createState() => _PasswordPageWidgetState();
+}
+
+class _PasswordPageWidgetState extends State<PasswordPageWidget> {
+  String? error;
 
   Future<bool> getIsSavedPinCode() async {
     String? isSavedPinCodeForAuth =
@@ -40,21 +47,26 @@ class PasswordPageWidget extends StatelessWidget {
       await context
           .read<UserCubit>()
           .handleSubmitPassword(password)
-          .then((value) => {
-                if (value)
+          .then((value) {
+                if (value == null)
                   {
-                    checkIsAcceptedUserAgreements().then((res) => {
+                    checkIsAcceptedUserAgreements().then((res) {
                           if (!res)
                             {
                               context.router
-                                  .replaceAll([AuthUserAgreementsRoute()])
+                                  .replaceAll([AuthUserAgreementsRoute()]);
                             }
                           else
                             {
                               context.router.navigateNamed(
-                                            AppRoutes.loginPinCodeCreate),
+                                            AppRoutes.loginPinCodeCreate);
                             }
-                        })
+                        });
+                  } else {
+                    setState(() {
+                      error = value.tryCount == -1 ? 
+                        value.message : '${value.message}. Осталось попыток: ${value.tryCount}';
+                    });
                   }
               });
     }
@@ -83,8 +95,14 @@ class PasswordPageWidget extends StatelessWidget {
               children: [
                 const DefaultLoginAnimation(),
                 PasswordInput(
-                  phoneNumber: phoneNumber,
+                  phoneNumber: widget.phoneNumber,
                   onAuth: _authenticateWithPhoneAndPassword,
+                  errorReset: (() {
+                    setState(() {
+                      error = null;
+                    });
+                  }),
+                  errorMsg: error
                 ),
               ],
             ),
