@@ -6,30 +6,29 @@ List<MedcardFilterModel> medcardFiltersList = [
       title: 'Период',
       value: '2',
       filters: <MedcardFilterItemModel>[
-        MedcardFilterItemModel(
+        const MedcardFilterItemModel(
             categoryLabel: 'Период',
-            value:
-                'dateBegin=1900-01-01&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+            value: 'dateBegin=&dateEnd=',
             label: 'Весь'),
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -366)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -366)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Год'),
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -31)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -31)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Месяц'),
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -7)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -7)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Неделя'),
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -1)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now())}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -1)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Сегодня'),
       ]),
   const MedcardFilterModel(
@@ -39,12 +38,16 @@ List<MedcardFilterModel> medcardFiltersList = [
         MedcardFilterItemModel(
             categoryLabel: 'Категория', value: '', label: 'Все'),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория', value: 'category=lab', label: 'Анализы'),
+            categoryLabel: 'Категория',
+            value: 'category=lab',
+            label: 'Анализы'),
         MedcardFilterItemModel(
             categoryLabel: 'Категория',
             value: 'category=instrumental',
             label: 'Диагностика'),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория', value: 'category=consult`', label: 'Осмотры'),
+            categoryLabel: 'Категория',
+            value: 'category=consult`',
+            label: 'Осмотры'),
       ]),
 ];
