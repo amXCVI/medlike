@@ -77,7 +77,7 @@ class _PasswordInputState extends State<PasswordInput> {
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: widget.errorMsg == null 
-                      ? const BorderSide(color: Colors.black, width: 1.0)
+                      ? const BorderSide(color: AppColors.lightText, width: 1.0)
                       : const BorderSide(color: AppColors.mainError, width: 1.0),
                   ),
                   hintText: '********',

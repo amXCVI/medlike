@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
@@ -300,7 +301,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Проверяет код из смс для сброса пароля
-  Future<bool> sendResetPasswordCode(
+  Future<DefaultErrorModel?> sendResetPasswordCode(
       {required String phoneNumber, required String smsToken}) async {
     emit(state.copyWith(
       sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.loading,
@@ -314,7 +315,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         sendingResetPasswordCodeStatus:
             SendingResetPasswordCodeStatuses.success,
       ));
-      return true;
+      return null;
+    } on DioError catch (e) {
+      addError(e);
+      return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.failed,
