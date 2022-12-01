@@ -114,7 +114,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: error == null 
-                      ? const BorderSide(color: Colors.black, width: 1.0)
+                      ? const BorderSide(color: AppColors.lightText, width: 1.0)
                       : const BorderSide(color: AppColors.mainError, width: 1.0),
                   ),
                   hintText: '+7 (XXX) XXX XX XX',

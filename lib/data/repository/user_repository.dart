@@ -81,7 +81,7 @@ class UserRepository {
   Future<bool> sendResetPasswordCode(
       {required String smsToken, required String phoneNumber}) async {
     try {
-      final response = await _dioClient.post('/api/v1.0/auth/sms/check',
+      final response = await _noErrorClient.post('/api/v1.0/auth/sms/check',
           data: {'Token': smsToken, 'UserName': phoneNumber});
       if (response.statusCode == 200) {
         return true;

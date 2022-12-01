@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
+import 'package:tap_canvas/tap_canvas.dart';
 
 class SmsCodeInput extends StatefulWidget {
   const SmsCodeInput({Key? key, required this.phoneNumber}) : super(key: key);
@@ -24,6 +25,8 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
   late final TextEditingController _codeInputController =
       TextEditingController()..text = '';
 
+  String? errorMsg;
+
   void getNewSmsCode() {
     String phoneString = widget.phoneNumber;
     context
@@ -33,11 +36,24 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
   void sendSmsToken(String smsToken) async {
     String phoneString = widget.phoneNumber;
-    bool response = await context
+    final response = await context
         .read<UserCubit>()
         .sendResetPasswordCode(phoneNumber: phoneString, smsToken: smsToken);
-    if (response) {
+    if (response == null) {
       context.router.push(RecoverPasswordNewRoute(smsToken: smsToken));
+    } else {
+      setState(() {
+        errorMsg = response.message;
+      });
+    }
+  }
+
+
+  void _onFocus() {
+    if(errorMsg != null) {
+      setState(() {
+        errorMsg = null;
+      });
     }
   }
 
@@ -57,27 +73,31 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
         return Column(
           children: [
-            TextField(
-              controller: _phoneInputController,
-              autofocus: false,
-              keyboardType: TextInputType.number,
-              inputFormatters: [phoneMaskFormatter],
-              decoration: InputDecoration(
-                hintText: '+7 (###) ###-##-##',
-                hintStyle: Theme.of(context)
+            TapOutsideDetectorWidget(
+              onTappedOutside: () {},
+              onTappedInside: _onFocus,
+              child: TextField(
+                controller: _phoneInputController,
+                autofocus: false,
+                keyboardType: TextInputType.number,
+                inputFormatters: [phoneMaskFormatter],
+                decoration: InputDecoration(
+                  hintText: '+7 (###) ###-##-##',
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(color: AppColors.lightText),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
+                style: Theme.of(context)
                     .textTheme
                     .labelLarge
                     ?.copyWith(color: AppColors.lightText),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
+                textAlign: TextAlign.center,
+                showCursor: false,
+                readOnly: true,
               ),
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: AppColors.lightText),
-              textAlign: TextAlign.center,
-              showCursor: false,
-              readOnly: true,
             ),
             const SizedBox(height: 12),
             Text('Введите код из SMS',
@@ -93,6 +113,11 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                 autofocus: false,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: errorMsg == null 
+                      ? const BorderSide(color: AppColors.lightText, width: 1.0)
+                      : const BorderSide(color: AppColors.mainError, width: 1.0),
+                  ),
                   suffixIcon: IconButton(
                     icon: SvgPicture.asset(
                         'assets/icons/login/trailing_password_icon.svg'),
@@ -109,6 +134,14 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                   sendSmsToken(value);
                 },
               ),
+            ),
+            if(errorMsg != null) Text(
+              errorMsg!,
+              style: Theme.of(context)
+                .textTheme
+                .labelSmall
+                ?.copyWith(color: AppColors.mainError),
+              textAlign: TextAlign.center,
             ),
           ],
         );
