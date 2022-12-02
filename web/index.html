@@ -1,143 +1,182 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-    <meta charset="UTF-8">
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-    <meta name="description" content="A new Flutter project.">
+	<meta charset="UTF-8">
+	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+	<meta name="description" content="A new Flutter project.">
 
-    <!-- iOS meta tags & icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="medlike">
-    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+	<!-- iOS meta tags & icons -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="medlike">
+	<link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png"/>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="favicon.png" />
 
-    <title>medlike</title>
-    <link rel="manifest" href="manifest.json">
-    <script src="./bridge-bundle.js"></script>
-    <script>
-        var bridge = window.webBridgeInstance;
+	<title>medlike</title>
+	<link rel="manifest" href="manifest.json">
+	<script src="./bridge-bundle.js"></script>
+	<script>
+		var bridge = window.webBridgeInstance;
+		async function sendBotEvent(jsonEventObject) {
+			console.log(jsonEventObject);
+			const eventObject = JSON.parse(jsonEventObject);
+			console.log('sendBotEvent start', eventObject);
+			return new Promise((resolve, reject) => {
+				bridge.sendBotEvent(eventObject)
+					.then((res) => {
+						console.log('sent event object: ', eventObject);
+						console.log('bridge.sendBotEvent success', res);
+						resolve(JSON.stringify(res))
+					})
+					.catch((err) => {
+						console.log('sending event object: ', eventObject);
+						console.log('bridge.sendBotEvent error', err);
+						reject(JSON.stringify(err))
+					})
+			});
+		}
 
-        async function sendBotEvent(jsonEventObject) {
-            console.log(jsonEventObject);
-            const eventObject = JSON.parse(jsonEventObject);
-            console.log('sendBotEvent start', eventObject);
-            return new Promise((resolve, reject) => {
-            bridge.sendBotEvent(eventObject)
-                .then((res) => {
-                    console.log('sent event object: ', eventObject);
-                    console.log('bridge.sendBotEvent success', res);
-                    resolve(JSON.stringify(res))
-                })
-                .catch((err) => {
-                    console.log('sending event object: ', eventObject);
-                    console.log('bridge.sendBotEvent error', err);
-                    reject(JSON.stringify(err))
-                })
-            });
-        }
+		bridge?.sendClientEvent({
+			method: 'ready',
+			params: {}
+		})
+	</script>
 
-        async function sendClientEvent(jsonEventObject) {
-            const eventObject = JSON.parse(jsonEventObject);
-            console.log('sendClientEvent start', eventObject);
-            return new Promise((resolve, reject) => {
-            bridge.sendClientEvent(eventObject)
-                .then((res) => {
-                    console.log('sent client event object: ', eventObject);
-                    console.log('bridge.sendClientEvent success', res);
-                    resolve(res)
-                })
-                .catch((err) => {
-                    console.log('sending client event object: ', eventObject);
-                    console.log('bridge.sendClientEvent error', err);
-                    reject(err)
-                })
-            });
-        }
+	<!-- <script>
+		async function postData(url = '', data = {}, headers = {}, method = 'GET') {
+			// Default options are marked with *
+			const response = method === 'GET' ? await fetch(url, {
+				method: method, // *GET, POST, PUT, DELETE, etc.
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: headers,
+				redirect: 'follow', // manual, *follow, error
+				referrerPolicy: 'no-referrer', // no-referrer, *client
+				// body: data // body data type must match "Content-Type" header
+			}) : await fetch(url, {
+				method: method, // *GET, POST, PUT, DELETE, etc.
+				cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: 'same-origin', // include, *same-origin, omit
+				headers: headers,
+				redirect: 'follow', // manual, *follow, error
+				referrerPolicy: 'no-referrer', // no-referrer, *client
+				body: JSON.stringify(data) // body data type must match "Content-Type" header
+			});
+			return await response.json(); // parses JSON response into native JavaScript objects
+		}
 
-        bridge?.sendClientEvent({
-            method: 'ready',
-            params: {}
-        })
-    </script>
-    <script>
-      window.flutterConfiguration = {
-        canvasKitBaseUrl: "./canvaskit/"
-      };
-    </script>
-<!--    <script src="./flutter.js" defer></script>-->
+		async function sendBotEvent(jsonEventObject) {
+			console.log(jsonEventObject);
+			const eventObject = JSON.parse(jsonEventObject);
+			console.log('sendBotEvent start', eventObject);
+			return new Promise((resolve, reject) => {
+
+
+				postData(eventObject.params.url, eventObject.params.body, eventObject.params.headers, eventObject.params.method)
+					.then((res) => {
+						const resObject = {
+							ref: '_',
+							type: 'smartapp_rpc',
+							files: [],
+							payload: {
+								status: 'ok',
+								result: {
+									status: 'success',
+									statusCode: 200,
+									content: res,
+								}
+							}
+						}
+						resolve(JSON.stringify(resObject));
+					})
+					.catch((err) => {
+						console.log('@@@@@@@@@@@@@@@')
+						console.log(err);
+					})
+			});
+		}
+	</script> -->
+	<script>
+		window.flutterConfiguration = {
+			canvasKitBaseUrl: "./canvaskit/"
+		};
+	</script>
+	<!--    <script src="./flutter.js" defer></script>-->
 </head>
+
 <body>
-<!-- This script installs service_worker.js to provide PWA functionality to
+	<!-- This script installs service_worker.js to provide PWA functionality to
      application. For more information, see:
      https://developers.google.com/web/fundamentals/primers/service-workers -->
-<script>
-    var serviceWorkerVersion = null;
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = './main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
+	<script>
+		var serviceWorkerVersion = null;
+		var scriptLoaded = false;
+		function loadMainDartJs() {
+			if (scriptLoaded) {
+				return;
+			}
+			scriptLoaded = true;
+			var scriptTag = document.createElement('script');
+			scriptTag.src = './main.dart.js';
+			scriptTag.type = 'application/javascript';
+			document.body.append(scriptTag);
+		}
 
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = './flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
+		if ('serviceWorker' in navigator) {
+			// Service workers are supported. Use them.
+			window.addEventListener('load', function () {
+				// Wait for registration to finish before dropping the <script> tag.
+				// Otherwise, the browser will load the script multiple times,
+				// potentially different versions.
+				var serviceWorkerUrl = './flutter_service_worker.js?v=' + serviceWorkerVersion;
+				navigator.serviceWorker.register(serviceWorkerUrl)
+					.then((reg) => {
+						function waitForActivation(serviceWorker) {
+							serviceWorker.addEventListener('statechange', () => {
+								if (serviceWorker.state == 'activated') {
+									console.log('Installed new service worker.');
+									loadMainDartJs();
+								}
+							});
+						}
+						if (!reg.active && (reg.installing || reg.waiting)) {
+							// No active web worker and we have installed or are installing
+							// one for the first time. Simply wait for it to activate.
+							waitForActivation(reg.installing || reg.waiting);
+						} else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+							// When the app updates the serviceWorkerVersion changes, so we
+							// need to ask the service worker to update.
+							console.log('New service worker available.');
+							reg.update();
+							waitForActivation(reg.installing);
+						} else {
+							// Existing service worker is still good.
+							console.log('Loading app from service worker.');
+							loadMainDartJs();
+						}
+					});
 
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
-    }
+				// If service worker doesn't succeed in a reasonable amount of time,
+				// fallback to plaint <script> tag.
+				setTimeout(() => {
+					if (!scriptLoaded) {
+						console.warn(
+							'Failed to load app from service worker. Falling back to plain <script> tag.',
+						);
+						loadMainDartJs();
+					}
+				}, 4000);
+			});
+		} else {
+			// Service workers not supported. Just drop the <script> tag.
+			loadMainDartJs();
+		}
 
-</script>
+	</script>
 </body>
+
 </html>

@@ -40,23 +40,25 @@ external Promise<dynamic> sendClientEvent(Object objectParams);
 //? }
 
 class SmartAppClient {
-  Options defaultOptions = Options(headers: {
-    'Accept': 'application/json; charset=utf-8',
-    'Content-Type': 'application/json',
-    'Project': ApiConstants.env,
-    'VerApp': ApiConstants.appVersion,
-    'Platform': '1', //Platform.isAndroid ? '1' : '2',
-    'Authorization': '${UserSecureStorage.getField(AppConstants.accessToken)}',
-  });
-
   Future<dynamic> get(String endpoint, {Options? options}) async {
     print('GET $endpoint');
+
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
 
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
         'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultOptions.headers,
+        'headers': options != null ? options.headers : defaultHeaders,
         'method': 'GET',
         'body': {},
         'params': '',
@@ -75,9 +77,9 @@ class SmartAppClient {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
-      Response<String> response = Response(
+      dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: json.decode(parsedResponse.payload.result.content),
+        data: parsedResponse.payload.result.content,
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
@@ -91,11 +93,23 @@ class SmartAppClient {
   Future<dynamic> post(String endpoint,
       {Map<String, dynamic>? data, Options? options}) async {
     print('POST $endpoint');
+
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
+
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
         'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultOptions.headers,
+        'headers': options != null ? options.headers : defaultHeaders,
         'method': 'POST',
         'body': data,
         'params': '',
@@ -114,9 +128,9 @@ class SmartAppClient {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
-      Response<String> response = Response(
+      dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: json.decode(parsedResponse.payload.result.content),
+        data: parsedResponse.payload.result.content,
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
@@ -129,11 +143,22 @@ class SmartAppClient {
 
   Future<dynamic> delete(String endpoint,
       {Map<String, dynamic>? data, Options? options}) async {
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
+
     return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
       'method': 'proxy_request',
       'params': {
         'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultOptions.headers,
+        'headers': options != null ? options.headers : defaultHeaders,
         'method': 'DELETE',
         'body': data,
         'params': '',
@@ -152,9 +177,9 @@ class SmartAppClient {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
-      Response<String> response = Response(
+      dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: json.decode(parsedResponse.payload.result.content),
+        data: parsedResponse.payload.result.content,
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
@@ -167,11 +192,22 @@ class SmartAppClient {
 
   Future<dynamic> put(String endpoint,
       {Map<String, dynamic>? data, Options? options}) async {
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
+
     return await promiseToFuture(sendBotEvent({
       'method': 'proxy_request',
       'params': {
         'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultOptions.headers,
+        'headers': options != null ? options.headers : defaultHeaders,
         'method': 'PUT',
         'body': data,
         'params': '',
@@ -189,9 +225,9 @@ class SmartAppClient {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
-      Response<String> response = Response(
+      dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: json.decode(parsedResponse.payload.result.content),
+        data: parsedResponse.payload.result.content,
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
