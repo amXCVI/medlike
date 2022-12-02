@@ -113,6 +113,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     try {
       final AuthTokenResponse response =
           await userRepository.smartappAuth(smartappToken: smartappToken);
+      print(
+          '################## Декодированные внутренние токены: ##################');
+      print(response);
+      print(response.token);
+      print(response.refreshToken);
       if (response.token.isEmpty) {
         emit(state.copyWith(
           tryCount: response.tryCount,
