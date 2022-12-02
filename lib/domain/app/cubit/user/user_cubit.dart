@@ -111,7 +111,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       getSmartappTokenStatus: GetSmartappTokenStatuses.loading,
     ));
     try {
-      final response =
+      final AuthTokenResponse response =
           await userRepository.smartappAuth(smartappToken: smartappToken);
       if (response.token.isEmpty) {
         emit(state.copyWith(
@@ -137,6 +137,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
       ));
+      print(e);
       return false;
     }
   }
