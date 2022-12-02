@@ -27,11 +27,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   @override
   void receive(String from, UserMediatorEvent event) {
-    print(from);
-    print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
-    } else if(event == UserMediatorEvent.pushNotification) {
+    } else if (event == UserMediatorEvent.pushNotification) {
       getLastNotReadNotification(true);
     }
   }
@@ -427,6 +425,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           isFound: response.found));
       return response;
     } on DioError catch (e) {
+      print(e);
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(

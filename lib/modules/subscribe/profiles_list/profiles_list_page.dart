@@ -15,9 +15,11 @@ class SubscribeProfilesListPage extends StatelessWidget {
       context.read<UserCubit>().setSelectedUserId(userId);
 
       if (isChildren) {
-        context.router.push(ClinicsListRoute(userId: userId));
+        context.router
+            .push(ClinicsListRoute(userId: userId, isChildrenPage: true));
       } else {
-        context.router.replace(ClinicsListRoute(userId: userId));
+        context.router
+            .replace(ClinicsListRoute(userId: userId, isChildrenPage: false));
       }
     }
 

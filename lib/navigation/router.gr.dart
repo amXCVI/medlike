@@ -162,7 +162,10 @@ class AppRouter extends _i37.RootStackRouter {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
       return _i37.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i12.ClinicsListPage(key: args.key, userId: args.userId));
+          child: _i12.ClinicsListPage(
+              key: args.key,
+              userId: args.userId,
+              isChildrenPage: args.isChildrenPage));
     },
     ServicesListRoute.name: (routeData) {
       final args = routeData.argsAs<ServicesListRouteArgs>();
@@ -656,24 +659,29 @@ class SubscribeProfilesListRoute extends _i37.PageRouteInfo<void> {
 /// generated route for
 /// [_i12.ClinicsListPage]
 class ClinicsListRoute extends _i37.PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({_i38.Key? key, required String userId})
+  ClinicsListRoute(
+      {_i38.Key? key, required String userId, required bool isChildrenPage})
       : super(ClinicsListRoute.name,
             path: '/subscribe_clinics',
-            args: ClinicsListRouteArgs(key: key, userId: userId));
+            args: ClinicsListRouteArgs(
+                key: key, userId: userId, isChildrenPage: isChildrenPage));
 
   static const String name = 'ClinicsListRoute';
 }
 
 class ClinicsListRouteArgs {
-  const ClinicsListRouteArgs({this.key, required this.userId});
+  const ClinicsListRouteArgs(
+      {this.key, required this.userId, required this.isChildrenPage});
 
   final _i38.Key? key;
 
   final String userId;
 
+  final bool isChildrenPage;
+
   @override
   String toString() {
-    return 'ClinicsListRouteArgs{key: $key, userId: $userId}';
+    return 'ClinicsListRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
   }
 }
 
