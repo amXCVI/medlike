@@ -21,7 +21,8 @@ class SmartappLoginPage extends StatelessWidget {
       /// Запрашиваем токен в Смартаппе
       SmartAppClient.getSmartAppToken().then((data) {
         /// Если токен пришел, авторизовываемся у себя через него
-        print('start auth with smartapp token');
+        print(
+            'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
         context
             .read<UserCubit>()
             .smartappAuth(smartappToken: data)

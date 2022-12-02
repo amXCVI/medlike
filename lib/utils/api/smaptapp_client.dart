@@ -64,9 +64,13 @@ class SmartAppClient {
     })).then(js.allowInterop((data) {
       print('>>>> SUCCESS: $data');
       dynamic jsonResponseObject = json.decode(data);
-      print('>>>> Ответ из смартаппа: $jsonResponseObject');
+      print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      print('>>>> Ответ из смартаппа декодирован');
+      print('<<<< ${parsedResponse.payload}');
+      print('<<<< ${parsedResponse.payload.result}');
+      print('<<<< ${parsedResponse.payload.result.content}');
       if (parsedResponse.payload.status != 'ok') {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
@@ -172,7 +176,6 @@ class SmartAppClient {
       print('>>>> Ответ прочитан и преобразован в объект: $parsedResponse');
       String smartappToken = parsedResponse.payload.result;
       print('SUCCESS GET SMARTAPP TOKEN: $smartappToken');
-
       UserSecureStorage.setField(AppConstants.smartappToken, smartappToken);
       print('>>>> Токен записан в localStorage');
       return smartappToken;

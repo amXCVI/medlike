@@ -381,6 +381,8 @@ class UserRepository {
           options: Options(
             headers: {'Authorization': smartappToken},
           ));
+      print(
+          '!!!! Авторизация на бэке прошла, внутренние токены получены: ${response.data}');
       if (response.statusCode == 200) {
         return AuthTokenResponse.fromJson(response.data);
       } else {

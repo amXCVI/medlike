@@ -12,8 +12,8 @@ _$_SmartappSendBotEventResponseModel
           files: json['files'] as List<dynamic>?,
           payload: SmartappSendBotEventPayloadModel.fromJson(
               json['payload'] as Map<String, dynamic>),
-          ref: json['ref'] as String?,
-          type: json['type'] as String?,
+          ref: json['ref'] as String,
+          type: json['type'] as String,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventResponseModelToJson(
@@ -31,6 +31,7 @@ _$_SmartappSendBotEventPayloadModel
           result: SmartappSendBotEventPayloadResultModel.fromJson(
               json['result'] as Map<String, dynamic>),
           status: json['status'] as String?,
+          status_code: json['status_code'] as int?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadModelToJson(
@@ -38,6 +39,7 @@ Map<String, dynamic> _$$_SmartappSendBotEventPayloadModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'status': instance.status,
+      'status_code': instance.status_code,
     };
 
 _$_SmartappSendBotEventPayloadResultModel
