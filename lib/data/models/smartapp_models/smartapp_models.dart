@@ -24,7 +24,6 @@ class SmartappSendBotEventPayloadModel with _$SmartappSendBotEventPayloadModel {
   const factory SmartappSendBotEventPayloadModel({
     required SmartappSendBotEventPayloadResultModel result,
     required String? status,
-    required int? status_code,
   }) = _SmartappSendBotEventPayloadModel;
 
   factory SmartappSendBotEventPayloadModel.fromJson(
@@ -38,7 +37,7 @@ class SmartappSendBotEventPayloadResultModel
   const factory SmartappSendBotEventPayloadResultModel({
     required dynamic content,
     required String status,
-    required int status_code,
+    required int statusCode,
   }) = _SmartappSendBotEventPayloadResultModel;
 
   factory SmartappSendBotEventPayloadResultModel.fromJson(

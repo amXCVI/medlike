@@ -31,7 +31,6 @@ _$_SmartappSendBotEventPayloadModel
           result: SmartappSendBotEventPayloadResultModel.fromJson(
               json['result'] as Map<String, dynamic>),
           status: json['status'] as String?,
-          status_code: json['status_code'] as int?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadModelToJson(
@@ -39,7 +38,6 @@ Map<String, dynamic> _$$_SmartappSendBotEventPayloadModelToJson(
     <String, dynamic>{
       'result': instance.result,
       'status': instance.status,
-      'status_code': instance.status_code,
     };
 
 _$_SmartappSendBotEventPayloadResultModel
@@ -48,7 +46,7 @@ _$_SmartappSendBotEventPayloadResultModel
         _$_SmartappSendBotEventPayloadResultModel(
           content: json['content'],
           status: json['status'] as String,
-          status_code: json['status_code'] as int,
+          statusCode: json['statusCode'] as int,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
@@ -56,7 +54,7 @@ Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
     <String, dynamic>{
       'content': instance.content,
       'status': instance.status,
-      'status_code': instance.status_code,
+      'statusCode': instance.statusCode,
     };
 
 _$_SmartappSendBotEventTokenResponseModel

@@ -259,7 +259,6 @@ mixin _$SmartappSendBotEventPayloadModel {
   SmartappSendBotEventPayloadResultModel get result =>
       throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  int? get status_code => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -273,10 +272,7 @@ abstract class $SmartappSendBotEventPayloadModelCopyWith<$Res> {
           SmartappSendBotEventPayloadModel value,
           $Res Function(SmartappSendBotEventPayloadModel) then) =
       _$SmartappSendBotEventPayloadModelCopyWithImpl<$Res>;
-  $Res call(
-      {SmartappSendBotEventPayloadResultModel result,
-      String? status,
-      int? status_code});
+  $Res call({SmartappSendBotEventPayloadResultModel result, String? status});
 
   $SmartappSendBotEventPayloadResultModelCopyWith<$Res> get result;
 }
@@ -294,7 +290,6 @@ class _$SmartappSendBotEventPayloadModelCopyWithImpl<$Res>
   $Res call({
     Object? result = freezed,
     Object? status = freezed,
-    Object? status_code = freezed,
   }) {
     return _then(_value.copyWith(
       result: result == freezed
@@ -305,10 +300,6 @@ class _$SmartappSendBotEventPayloadModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      status_code: status_code == freezed
-          ? _value.status_code
-          : status_code // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 
@@ -329,10 +320,7 @@ abstract class _$$_SmartappSendBotEventPayloadModelCopyWith<$Res>
           $Res Function(_$_SmartappSendBotEventPayloadModel) then) =
       __$$_SmartappSendBotEventPayloadModelCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {SmartappSendBotEventPayloadResultModel result,
-      String? status,
-      int? status_code});
+  $Res call({SmartappSendBotEventPayloadResultModel result, String? status});
 
   @override
   $SmartappSendBotEventPayloadResultModelCopyWith<$Res> get result;
@@ -355,7 +343,6 @@ class __$$_SmartappSendBotEventPayloadModelCopyWithImpl<$Res>
   $Res call({
     Object? result = freezed,
     Object? status = freezed,
-    Object? status_code = freezed,
   }) {
     return _then(_$_SmartappSendBotEventPayloadModel(
       result: result == freezed
@@ -366,10 +353,6 @@ class __$$_SmartappSendBotEventPayloadModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      status_code: status_code == freezed
-          ? _value.status_code
-          : status_code // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -379,7 +362,7 @@ class __$$_SmartappSendBotEventPayloadModelCopyWithImpl<$Res>
 class _$_SmartappSendBotEventPayloadModel
     implements _SmartappSendBotEventPayloadModel {
   const _$_SmartappSendBotEventPayloadModel(
-      {required this.result, required this.status, required this.status_code});
+      {required this.result, required this.status});
 
   factory _$_SmartappSendBotEventPayloadModel.fromJson(
           Map<String, dynamic> json) =>
@@ -389,12 +372,10 @@ class _$_SmartappSendBotEventPayloadModel
   final SmartappSendBotEventPayloadResultModel result;
   @override
   final String? status;
-  @override
-  final int? status_code;
 
   @override
   String toString() {
-    return 'SmartappSendBotEventPayloadModel(result: $result, status: $status, status_code: $status_code)';
+    return 'SmartappSendBotEventPayloadModel(result: $result, status: $status)';
   }
 
   @override
@@ -403,9 +384,7 @@ class _$_SmartappSendBotEventPayloadModel
         (other.runtimeType == runtimeType &&
             other is _$_SmartappSendBotEventPayloadModel &&
             const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.status_code, status_code));
+            const DeepCollectionEquality().equals(other.status, status));
   }
 
   @JsonKey(ignore: true)
@@ -413,8 +392,7 @@ class _$_SmartappSendBotEventPayloadModel
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(status_code));
+      const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
@@ -433,8 +411,7 @@ abstract class _SmartappSendBotEventPayloadModel
     implements SmartappSendBotEventPayloadModel {
   const factory _SmartappSendBotEventPayloadModel(
       {required final SmartappSendBotEventPayloadResultModel result,
-      required final String? status,
-      required final int? status_code}) = _$_SmartappSendBotEventPayloadModel;
+      required final String? status}) = _$_SmartappSendBotEventPayloadModel;
 
   factory _SmartappSendBotEventPayloadModel.fromJson(
       Map<String, dynamic> json) = _$_SmartappSendBotEventPayloadModel.fromJson;
@@ -444,8 +421,6 @@ abstract class _SmartappSendBotEventPayloadModel
       throw _privateConstructorUsedError;
   @override
   String? get status => throw _privateConstructorUsedError;
-  @override
-  int? get status_code => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventPayloadModelCopyWith<
@@ -463,7 +438,7 @@ SmartappSendBotEventPayloadResultModel
 mixin _$SmartappSendBotEventPayloadResultModel {
   dynamic get content => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
-  int get status_code => throw _privateConstructorUsedError;
+  int get statusCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -478,7 +453,7 @@ abstract class $SmartappSendBotEventPayloadResultModelCopyWith<$Res> {
           SmartappSendBotEventPayloadResultModel value,
           $Res Function(SmartappSendBotEventPayloadResultModel) then) =
       _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>;
-  $Res call({dynamic content, String status, int status_code});
+  $Res call({dynamic content, String status, int statusCode});
 }
 
 /// @nodoc
@@ -494,7 +469,7 @@ class _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
   $Res call({
     Object? content = freezed,
     Object? status = freezed,
-    Object? status_code = freezed,
+    Object? statusCode = freezed,
   }) {
     return _then(_value.copyWith(
       content: content == freezed
@@ -505,9 +480,9 @@ class _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      status_code: status_code == freezed
-          ? _value.status_code
-          : status_code // ignore: cast_nullable_to_non_nullable
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -521,7 +496,7 @@ abstract class _$$_SmartappSendBotEventPayloadResultModelCopyWith<$Res>
           $Res Function(_$_SmartappSendBotEventPayloadResultModel) then) =
       __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>;
   @override
-  $Res call({dynamic content, String status, int status_code});
+  $Res call({dynamic content, String status, int statusCode});
 }
 
 /// @nodoc
@@ -542,7 +517,7 @@ class __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
   $Res call({
     Object? content = freezed,
     Object? status = freezed,
-    Object? status_code = freezed,
+    Object? statusCode = freezed,
   }) {
     return _then(_$_SmartappSendBotEventPayloadResultModel(
       content: content == freezed
@@ -553,9 +528,9 @@ class __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
-      status_code: status_code == freezed
-          ? _value.status_code
-          : status_code // ignore: cast_nullable_to_non_nullable
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -566,7 +541,7 @@ class __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
 class _$_SmartappSendBotEventPayloadResultModel
     implements _SmartappSendBotEventPayloadResultModel {
   const _$_SmartappSendBotEventPayloadResultModel(
-      {required this.content, required this.status, required this.status_code});
+      {required this.content, required this.status, required this.statusCode});
 
   factory _$_SmartappSendBotEventPayloadResultModel.fromJson(
           Map<String, dynamic> json) =>
@@ -577,11 +552,11 @@ class _$_SmartappSendBotEventPayloadResultModel
   @override
   final String status;
   @override
-  final int status_code;
+  final int statusCode;
 
   @override
   String toString() {
-    return 'SmartappSendBotEventPayloadResultModel(content: $content, status: $status, status_code: $status_code)';
+    return 'SmartappSendBotEventPayloadResultModel(content: $content, status: $status, statusCode: $statusCode)';
   }
 
   @override
@@ -592,7 +567,7 @@ class _$_SmartappSendBotEventPayloadResultModel
             const DeepCollectionEquality().equals(other.content, content) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality()
-                .equals(other.status_code, status_code));
+                .equals(other.statusCode, statusCode));
   }
 
   @JsonKey(ignore: true)
@@ -601,7 +576,7 @@ class _$_SmartappSendBotEventPayloadResultModel
       runtimeType,
       const DeepCollectionEquality().hash(content),
       const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(status_code));
+      const DeepCollectionEquality().hash(statusCode));
 
   @JsonKey(ignore: true)
   @override
@@ -621,7 +596,7 @@ abstract class _SmartappSendBotEventPayloadResultModel
   const factory _SmartappSendBotEventPayloadResultModel(
           {required final dynamic content,
           required final String status,
-          required final int status_code}) =
+          required final int statusCode}) =
       _$_SmartappSendBotEventPayloadResultModel;
 
   factory _SmartappSendBotEventPayloadResultModel.fromJson(
@@ -633,7 +608,7 @@ abstract class _SmartappSendBotEventPayloadResultModel
   @override
   String get status => throw _privateConstructorUsedError;
   @override
-  int get status_code => throw _privateConstructorUsedError;
+  int get statusCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventPayloadResultModelCopyWith<
