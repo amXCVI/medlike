@@ -270,8 +270,10 @@ class AppRouter extends _i38.RootStackRouter {
               key: args.key, userId: args.userId));
     },
     PaymentRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentRouteArgs>();
       return _i38.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i22.PaymentPage());
+          routeData: routeData,
+          child: _i22.PaymentPage(key: args.key, userId: args.userId));
     },
     MedcardProfilesListRoute.name: (routeData) {
       return _i38.AdaptivePage<dynamic>(
@@ -1102,11 +1104,26 @@ class ConfirmationSubscribeRouteArgs {
 
 /// generated route for
 /// [_i22.PaymentPage]
-class PaymentRoute extends _i38.PageRouteInfo<void> {
-  const PaymentRoute()
-      : super(PaymentRoute.name, path: '/subscribe_payment_page');
+class PaymentRoute extends _i38.PageRouteInfo<PaymentRouteArgs> {
+  PaymentRoute({_i39.Key? key, required String userId})
+      : super(PaymentRoute.name,
+            path: '/subscribe_payment_page',
+            args: PaymentRouteArgs(key: key, userId: userId));
 
   static const String name = 'PaymentRoute';
+}
+
+class PaymentRouteArgs {
+  const PaymentRouteArgs({this.key, required this.userId});
+
+  final _i39.Key? key;
+
+  final String userId;
+
+  @override
+  String toString() {
+    return 'PaymentRouteArgs{key: $key, userId: $userId}';
+  }
 }
 
 /// generated route for
@@ -1447,12 +1464,6 @@ class DiaryAddRouteArgs {
 /// generated route for
 /// [_i37.RequireUpdateAppPage]
 class RequireUpdateAppRoute extends _i38.PageRouteInfo<void> {
-    as _i5;
-import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart'
-    as _i15;
-import 'package:medlike/modules/subscribe/schedule/schedule_page.dart' as _i20;
-import 'package:medlike/modules/subscribe/services_list/services_list_page.dart'
-      required this.checkIsAuthSmartappUser,
   const RequireUpdateAppRoute()
       : super(RequireUpdateAppRoute.name, path: '/require_updater_page');
 

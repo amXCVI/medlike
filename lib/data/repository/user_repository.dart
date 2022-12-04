@@ -17,7 +17,7 @@ enum UserAuthenticationStatus {
 
 class UserRepository {
   final _dioClient = Api().dio;
-  final _noErrorClient = Api().dio..interceptors.removeAt(0);
+  final _noErrorClient = Api().dio;
 
   Future<AuthTokenResponse> signIn(
       {required String phone, required String password}) async {

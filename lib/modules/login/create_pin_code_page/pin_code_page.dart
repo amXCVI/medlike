@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -66,6 +67,11 @@ class _CreatePinCodePageState extends State<CreatePinCodePage> {
     Future<bool> _checkRepeatPinCode(List<int> repeatPinCode) async {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
+        if (kIsWeb) {
+          context.router.replaceAll([const MainRoute()]);
+          return true;
+        }
+
         if (widget.noUsedBiometric == null || widget.noUsedBiometric == false) {
           setState(() {
             isForcedShowingBiometricModal = true;
