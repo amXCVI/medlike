@@ -37,13 +37,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appointmentCubit = AppointmentsCubit(AppointmentsRepository(), mediator);
+    final appointmentCubit =
+        AppointmentsCubit(AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
-
-    FCMService.onMessage(((message) {
-      mediator.sendTo<AppointmentsCubit>(userCubit, UserMediatorEvent.pushNotification);
-      mediator.sendTo<UserCubit>(appointmentCubit, UserMediatorEvent.pushNotification);
-    }));
 
     try {
       SmartAppClient.getSmartAppToken();
@@ -64,11 +60,11 @@ class App extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 AppointmentsCubit(AppointmentsRepository(), mediator)),
+        BlocProvider(create: (context) => appointmentCubit),
         BlocProvider(
-            create: (context) => appointmentCubit),
-        BlocProvider(create: (context) => MedcardCubit(MedcardRepository(), mediator)),
-        BlocProvider(create: (context) => DiaryCubit(DiaryRepository(), mediator)),
             create: (context) => MedcardCubit(MedcardRepository(), mediator)),
+        BlocProvider(
+            create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(
             create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(create: (context) => PromptCubit()),

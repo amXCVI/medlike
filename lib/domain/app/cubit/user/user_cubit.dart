@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -29,7 +28,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
-    } else if(event == UserMediatorEvent.pushNotification) {
+    } else if (event == UserMediatorEvent.pushNotification) {
       getLastNotReadNotification(true);
     }
   }
@@ -399,9 +398,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       CheckUserAccountResponse response = await userRepository.checkUserAccount(
         phoneNumber: phoneNumber,
       );
-      if (!response.found) {
-        AppToast.showAppToast(
-            msg: 'Не найден пользователь с введенным номером телефона');
 
       if (response.found != true) {
         return const CheckUserAccountResponse(
