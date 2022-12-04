@@ -17,7 +17,7 @@ class CheckPinCode extends StatefulWidget {
 }
 
 class _CheckPinCodeState extends State<CheckPinCode> {
-  late bool isBiometricAuthenticate;
+  late bool isBiometricAuthenticate = false;
   int countAttempts = 0;
 
   @override
@@ -34,16 +34,20 @@ class _CheckPinCodeState extends State<CheckPinCode> {
               await UserSecureStorage.getField(
                       AppConstants.useBiometricMethodAuthentication)
                   .then((resAuthMethod) => {
-                        if (!resBiometricSupported || resAuthMethod == 'false')
+                        if (resBiometricSupported &&
+                            (resAuthMethod ==
+                                    SelectedAuthMethods.touchId.toString() ||
+                                resAuthMethod ==
+                                    SelectedAuthMethods.faceId.toString()))
                           {
                             setState(() {
-                              isBiometricAuthenticate = false;
+                              isBiometricAuthenticate = true;
                             })
                           }
                         else
                           {
                             setState(() {
-                              isBiometricAuthenticate = true;
+                              isBiometricAuthenticate = false;
                             })
                           }
                       })
@@ -54,8 +58,10 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     setState(() {
       isBiometricAuthenticate = false;
     });
-    context.read<UserCubit>().signInBiometric();
-    context.router.replaceAll([const MainRoute()]);
+    if (result) {
+      context.read<UserCubit>().signInBiometric();
+      context.router.replaceAll([const MainRoute()]);
+    }
   }
 
   void onCancelBiometricAuthenticate() {
@@ -70,17 +76,44 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     });
   }
 
+  void _checkSavedPinCode(BuildContext context) async {
+    String sha256savedCode =
+        '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
+    if (sha256savedCode.isEmpty || sha256savedCode == 'null') {
+      context.router.replace(StartPhoneNumberRoute());
+    } else {
+      return;
+    }
+  }
+
+  Future<bool> _checkIsAcceptedUserAgreements() async {
+    bool res = await context.read<UserCubit>().checkUserAgreements();
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
-      bool isSuccess =
-          await context.read<UserCubit>().checkPinCodeToStorage(pinCode);
+      bool isSuccess = await context.read<UserCubit>().checkPinCodeToStorage(
+          pinCode, AppConstants.countLoginAttemps - countAttempts - 1);
       if (isSuccess) {
-        context.router.replaceAll([const MainRoute()]);
+        if (await UserSecureStorage.getField(
+                AppConstants.isAcceptedAgreements) ==
+            'true') {
+          context.router.replaceAll([const MainRoute()]);
+        } else {
+          _checkIsAcceptedUserAgreements().then((res) => {
+                if (!res)
+                  context.router.replaceAll([AuthUserAgreementsRoute()])
+                else
+                  context.router.replaceAll([const MainRoute()]),
+              });
+        }
+
         return true;
       } else {
         if (countAttempts + 1 == AppConstants.countLoginAttemps) {
-          context.read<UserCubit>().signOut();
+          context.read<UserCubit>().forceLogout();
           context.router.replaceAll([StartPhoneNumberRoute()]);
           return false;
         }
@@ -91,20 +124,22 @@ class _CheckPinCodeState extends State<CheckPinCode> {
       }
     }
 
+    _checkSavedPinCode(context);
+
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return ListView(
-          children: [
-            PinCodeView(
-              pinCodeTitle: 'Введите пин - код',
-              setPinCode: _checkPinCode,
-              key: const Key('2'),
-              height: constraints.maxHeight,
-              handleBiometricMethod: onSuccessBiometricAuthenticate,
-            ),
-          ],
-        );
-      }
-    );
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return ListView(
+        children: [
+          PinCodeView(
+            pinCodeTitle: 'Введите пин - код',
+            setPinCode: _checkPinCode,
+            key: const Key('2'),
+            height: constraints.maxHeight,
+            handleBiometricMethod: onSuccessBiometricAuthenticate,
+            isForcedShowingBiometricModal: isBiometricAuthenticate ?? false,
+          ),
+        ],
+      );
+    });
   }
 }

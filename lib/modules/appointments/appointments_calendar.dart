@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/calendar/calendar.dart';
 
 class AppointmentsCalendar extends StatelessWidget {
@@ -36,7 +37,8 @@ class AppointmentsCalendar extends StatelessWidget {
               state.getAppointmentsStatus == GetAppointmentsStatuses.success
                   ? state.appointmentsList!
                       .map((e) => CalendarModel(
-                            date: e.appointmentDateTime,
+                            date: getAppointmentTimeObject(
+                                e.appointmentDateTime, e.timeZoneOffset),
                             hasAvailableCells: false,
                             hasLogs: true,
                           ))

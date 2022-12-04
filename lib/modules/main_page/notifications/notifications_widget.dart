@@ -4,6 +4,7 @@ import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/main_page/notifications/appontment_confirm_view.dart';
 import 'package:medlike/modules/main_page/notifications/notifications_widget_view.dart';
 
 class NotificationsWidget extends StatefulWidget {
@@ -30,7 +31,6 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
@@ -45,18 +45,17 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
 }
 
 class ClinicsBuilder extends StatelessWidget {
-  const ClinicsBuilder({
-    Key? key,
-    required this.isLoaded, 
-    required this.lastAppointment
-  }) : super(key: key);
+  const ClinicsBuilder(
+      {Key? key, required this.isLoaded, required this.lastAppointment})
+      : super(key: key);
 
-  final AppointmentModel? lastAppointment;
+  final AppointmentModelWithTimeZoneOffset? lastAppointment;
   final bool isLoaded;
 
-  ClinicModel? getClinic(AppointmentModel? item, List<ClinicModel>? clinicsList) {
-    for(var clinic in clinicsList ?? []) {
-      if(clinic.id == item?.clinicInfo.id) {
+  ClinicModel? getClinic(AppointmentModelWithTimeZoneOffset? item,
+      List<ClinicModel>? clinicsList) {
+    for (var clinic in clinicsList ?? []) {
+      if (clinic.id == item?.clinicInfo.id) {
         return clinic;
       }
     }
@@ -67,14 +66,21 @@ class ClinicsBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
-        if((state.getAllClinicsListStatus != GetAllClinicsListStatuses.success
-          && lastAppointment != null) || !isLoaded) {
+        if (!isLoaded ||
+            state.getAllClinicsListStatus !=
+                GetAllClinicsListStatuses.success) {
           return const SizedBox();
         }
-        return NotificationsWidgetView(
-          appointment: lastAppointment,
-          clinic: getClinic(lastAppointment, state.clinicsList),
-        );
+        if (lastAppointment != null) {
+          return AppointmentConfirmView(
+            clinic: getClinic(lastAppointment, state.clinicsList),
+            appointment: lastAppointment!,
+          );
+        } else {
+          return NotificationsWidgetView(
+            clinic: getClinic(lastAppointment, state.clinicsList),
+          );
+        }
       },
     );
   }

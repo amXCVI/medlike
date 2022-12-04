@@ -17,9 +17,10 @@ import 'package:meta/meta.dart';
 
 part 'subscribe_state.dart';
 
-class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent> 
-  with RefreshErrorHandler<SubscribeState, UserCubit> {
-  SubscribeCubit(this.subscribeRepository, mediator) : super(SubscribeState(), mediator);
+class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
+    with RefreshErrorHandler<SubscribeState, UserCubit> {
+  SubscribeCubit(this.subscribeRepository, mediator)
+      : super(SubscribeState(), mediator);
 
   final SubscribeRepository subscribeRepository;
 
@@ -550,7 +551,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   }
 
   /// разблокируем ячейку
-  void unlockCell({
+  Future<void> unlockCell({
     required String userId,
   }) async {
     emit(state.copyWith(
@@ -569,6 +570,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         timetableCellsList: null,
         getTimetableCellsStatus: GetTimetableCellsStatuses.refunded,
         selectedTimetableCell: null,
+        createdAppointmentId: null,
       ));
     } catch (e) {
       emit(state.copyWith(unlockCellStatus: UnlockCellStatuses.failed));
@@ -584,14 +586,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       return;
     }
 
-    /// Если черновик приема создан, но не оплачен
-    if (state.creatingAppointmentStatus ==
-        CreatingAppointmentStatuses.createdDraft) {
-      registerOrder(
-          userId: userId,
-          appointmentIds: [state.createdAppointmentId as String].toList());
-      return;
-    }
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
@@ -617,7 +611,8 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
                     'CabinetName': state.selectedTimetableCell?.cabinetName
                   }
                 : {},
-        'Researches': state.selectedResearchesIds != null
+        'Researches': state.selectedResearchesIds != null &&
+                state.selectedResearchesIds!.isNotEmpty
             ? state.selectedResearchesIds
                 ?.map((e) => {
                       'Id': state.researchesList
@@ -629,11 +624,12 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
                     })
                 .toList()
             : [],
-        'CategoryType': state.selectedService?.id,
+        'CategoryType': state.selectedService?.categoryType,
         'Price': state.appointmentInfoData?.price,
         'PayType': state.selectedPayType,
         'ScheduleId': state.selectedTimetableCell?.scheduleId,
-        'isDraft': false
+        'isDraft':
+            state.selectedPayType == AppConstants.noPayedPayType ? false : true,
       };
 
       CreateNewAppointmentResponseModel response =
@@ -687,7 +683,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       selectedBuilding: null,
       selectedCabinet: null,
       selectedCalendarItem: null,
-      selectedResearchesIds: null,
+      selectedResearchesIds: [],
       selectedService: null,
       selectedSpecialisation: null,
       selectedTimetableCell: null,

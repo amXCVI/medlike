@@ -13,7 +13,7 @@ class AppointmentModel with _$AppointmentModel {
     required String? comment,
     required String researchPlace,
     required String id,
-    required DateTime appointmentDateTime,
+    required String appointmentDateTime,
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,
     required DoctorInfoModel doctorInfo,
@@ -30,6 +30,36 @@ class AppointmentModel with _$AppointmentModel {
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
       _$AppointmentModelFromJson(json);
+}
+
+@freezed
+class AppointmentModelWithTimeZoneOffset
+    with _$AppointmentModelWithTimeZoneOffset {
+  const factory AppointmentModelWithTimeZoneOffset({
+    required int status,
+    required bool needConfirmation,
+    required String? comment,
+    required String researchPlace,
+    required String id,
+    required DateTime appointmentDateTime,
+    required int timeZoneOffset,
+    required PatientInfoModel patientInfo,
+    required ClinicInfoModel clinicInfo,
+    required DoctorInfoModel doctorInfo,
+    required List<ResearchesModel> researches,
+    required int categoryType,
+    required bool isVideo,
+    required String payType,
+    required bool isDraft,
+    required String? orderId,
+    required String scheduleId,
+    required int paymentStatus,
+    required String? recommendations,
+  }) = _AppointmentModelWithTimeZoneOffset;
+
+  factory AppointmentModelWithTimeZoneOffset.fromJson(
+          Map<String, Object?> json) =>
+      _$AppointmentModelWithTimeZoneOffsetFromJson(json);
 }
 
 @freezed
@@ -108,13 +138,15 @@ class RecommendationItemModel with _$RecommendationItemModel {
 }
 
 @freezed
-class CreateNewAppointmentResponseModel with _$CreateNewAppointmentResponseModel {
+class CreateNewAppointmentResponseModel
+    with _$CreateNewAppointmentResponseModel {
   const factory CreateNewAppointmentResponseModel({
     required String result,
     required String information,
   }) = _CreateNewAppointmentResponseModel;
 
-  factory CreateNewAppointmentResponseModel.fromJson(Map<String, Object?> json) =>
+  factory CreateNewAppointmentResponseModel.fromJson(
+          Map<String, Object?> json) =>
       _$CreateNewAppointmentResponseModelFromJson(json);
 }
 

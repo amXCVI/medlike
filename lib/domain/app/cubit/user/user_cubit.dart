@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
@@ -26,7 +29,23 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
+    } else if(event == UserMediatorEvent.pushNotification) {
+      getLastNotReadNotification(true);
     }
+  }
+
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    if (error is DioError &&
+        error.message ==
+            'CertificateNotVerifiedException: Connection is not secure') {
+      AppToast.showAppToast(
+          msg:
+              'Просроченный ssl-сертификат. Пожалуйста, обратитесь к администратору');
+      throw ('Просроченный ssl-сертификат');
+    }
+
+    super.onError(error, stacktrace);
   }
 
   final UserRepository userRepository;
@@ -59,18 +78,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Юзер ввел пароль и нажал Go на клавиатуре
-  Future<bool> handleSubmitPassword(String password) async {
+  Future<AuthTokenResponseError?> handleSubmitPassword(String password) async {
     if (state.userPhoneNumber != null &&
         state.userPhoneNumber.toString().length == 11) {
       return signIn(state.userPhoneNumber.toString(), password);
     } else {
       emit(state.copyWith(authScreen: UserAuthScreens.inputPhone));
-      return Future(() => false);
+      return Future(() => null);
     }
   }
 
   /// Авторизация по номеру телефона и паролю
-  Future<bool> signIn(String phone, String password) async {
+  Future<AuthTokenResponseError?> signIn(String phone, String password) async {
     emit(state.copyWith(
         authStatus: UserAuthStatuses.loadingAuth,
         authScreen: state.authScreen));
@@ -82,7 +101,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tryCount: response.tryCount,
           authStatus: UserAuthStatuses.failureAuth,
         ));
-        return false;
+        return Future(() => null);
       }
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
@@ -96,12 +115,20 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
 
       getUserProfiles(true);
-      return true;
+      return Future(() => null);
+    } on DioError catch (e) {
+      emit(state.copyWith(
+        authStatus: UserAuthStatuses.failureAuth,
+        tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
+      ));
+      addError(e);
+      return AuthTokenResponseError.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
       ));
-      return false;
+      addError(e);
+      rethrow;
     }
   }
 
@@ -123,6 +150,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
+    UserSecureStorage.deleteField(AppConstants.authPinCode);
+    UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
@@ -174,6 +203,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
+      addError(e);
     }
   }
 
@@ -210,7 +240,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Сравнить хэш введенного кода с ъэшем сохраненного
-  Future<bool> checkPinCodeToStorage(List<int> pinCode) async {
+  Future<bool> checkPinCodeToStorage(List<int> pinCode, int count) async {
     String sha256savedCode =
         '${await UserSecureStorage.getField(AppConstants.authPinCode)}';
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
@@ -219,19 +249,20 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       return true;
     } else {
-      AppToast.showAppToast(msg: 'Неверный пин-код');
+      AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');
       return false;
     }
   }
 
   /// Запрашивает смс для сброса пароля
-  void getNewSmsForRecoverPassword({required String phoneNumber}) async {
+  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword(
+      {required String phoneNumber}) async {
     CheckUserAccountResponse checkUser =
         await checkUserAccount(phoneNumber: phoneNumber);
-    if (!checkUser.found) {
-      AppToast.showAppToast(
-          msg: 'Не найден пользователь с введенным номером телефона');
-      return;
+    if (checkUser.found != true) {
+      return const CheckUserAccountResponse(
+          found: false,
+          message: 'Не найден пользователь с введенным номером телефона');
     }
     emit(state.copyWith(
       getNewSmsCodeStatus: GetNewSmsCodeStatuses.loading,
@@ -248,11 +279,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.failed,
       ));
+      addError(e);
     }
+    return null;
   }
 
   /// Проверяет код из смс для сброса пароля
-  Future<bool> sendResetPasswordCode(
+  Future<DefaultErrorModel?> sendResetPasswordCode(
       {required String phoneNumber, required String smsToken}) async {
     emit(state.copyWith(
       sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.loading,
@@ -266,11 +299,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         sendingResetPasswordCodeStatus:
             SendingResetPasswordCodeStatuses.success,
       ));
-      return true;
+      return null;
+    } on DioError catch (e) {
+      addError(e);
+      return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -312,6 +349,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         resetPasswordStatus: ResetPasswordStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -346,6 +384,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         changePasswordStatus: ChangePasswordStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -363,16 +402,24 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       if (!response.found) {
         AppToast.showAppToast(
             msg: 'Не найден пользователь с введенным номером телефона');
+
+      if (response.found != true) {
+        return const CheckUserAccountResponse(
+            found: false,
+            message: 'Не найден пользователь с введенным номером телефона');
       }
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
           isFound: response.found));
       return response;
+    } on DioError catch (e) {
+      return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         checkUserAccountStatus: CheckUserAccountStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -394,6 +441,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserAgreementsStatus: GetUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -422,6 +470,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserAgreementDocumentStatus: GetUserAgreementDocumentStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -453,6 +502,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         uploadUserAvatarStatus: UploadUserAvatarStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -497,6 +547,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         deletingUserAccountStatus: DeletingUserAccountStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -518,6 +569,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -546,6 +598,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getAllUserAgreementsStatus: GetAllUserAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -562,14 +615,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.success,
       ));
+      await UserSecureStorage.setField(
+          AppConstants.isAcceptedAgreements, 'true');
     } catch (e) {
       emit(state.copyWith(
         acceptedAgreementsStatus: AcceptedAgreementsStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
 
+  /// Отправить сообщение в техподдержку от авторизованного пользователя
   Future<void> sendEmailToSupport({
     required String email,
     required String subject,
@@ -616,6 +673,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -667,6 +725,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         sendingEmailToSupportStatus: SendingEmailToSupportStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -697,6 +756,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }
@@ -721,6 +781,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.failed,
       ));
+      addError(e);
       rethrow;
     }
   }

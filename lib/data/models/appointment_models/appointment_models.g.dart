@@ -13,8 +13,7 @@ _$_AppointmentModel _$$_AppointmentModelFromJson(Map<String, dynamic> json) =>
       comment: json['comment'] as String?,
       researchPlace: json['researchPlace'] as String,
       id: json['id'] as String,
-      appointmentDateTime:
-          DateTime.parse(json['appointmentDateTime'] as String),
+      appointmentDateTime: json['appointmentDateTime'] as String,
       patientInfo: PatientInfoModel.fromJson(
           json['patientInfo'] as Map<String, dynamic>),
       clinicInfo:
@@ -41,7 +40,61 @@ Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
       'comment': instance.comment,
       'researchPlace': instance.researchPlace,
       'id': instance.id,
+      'appointmentDateTime': instance.appointmentDateTime,
+      'patientInfo': instance.patientInfo,
+      'clinicInfo': instance.clinicInfo,
+      'doctorInfo': instance.doctorInfo,
+      'researches': instance.researches,
+      'categoryType': instance.categoryType,
+      'isVideo': instance.isVideo,
+      'payType': instance.payType,
+      'isDraft': instance.isDraft,
+      'orderId': instance.orderId,
+      'scheduleId': instance.scheduleId,
+      'paymentStatus': instance.paymentStatus,
+      'recommendations': instance.recommendations,
+    };
+
+_$_AppointmentModelWithTimeZoneOffset
+    _$$_AppointmentModelWithTimeZoneOffsetFromJson(Map<String, dynamic> json) =>
+        _$_AppointmentModelWithTimeZoneOffset(
+          status: json['status'] as int,
+          needConfirmation: json['needConfirmation'] as bool,
+          comment: json['comment'] as String?,
+          researchPlace: json['researchPlace'] as String,
+          id: json['id'] as String,
+          appointmentDateTime:
+              DateTime.parse(json['appointmentDateTime'] as String),
+          timeZoneOffset: json['timeZoneOffset'] as int,
+          patientInfo: PatientInfoModel.fromJson(
+              json['patientInfo'] as Map<String, dynamic>),
+          clinicInfo: ClinicInfoModel.fromJson(
+              json['clinicInfo'] as Map<String, dynamic>),
+          doctorInfo: DoctorInfoModel.fromJson(
+              json['doctorInfo'] as Map<String, dynamic>),
+          researches: (json['researches'] as List<dynamic>)
+              .map((e) => ResearchesModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          categoryType: json['categoryType'] as int,
+          isVideo: json['isVideo'] as bool,
+          payType: json['payType'] as String,
+          isDraft: json['isDraft'] as bool,
+          orderId: json['orderId'] as String?,
+          scheduleId: json['scheduleId'] as String,
+          paymentStatus: json['paymentStatus'] as int,
+          recommendations: json['recommendations'] as String?,
+        );
+
+Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
+        _$_AppointmentModelWithTimeZoneOffset instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'needConfirmation': instance.needConfirmation,
+      'comment': instance.comment,
+      'researchPlace': instance.researchPlace,
+      'id': instance.id,
       'appointmentDateTime': instance.appointmentDateTime.toIso8601String(),
+      'timeZoneOffset': instance.timeZoneOffset,
       'patientInfo': instance.patientInfo,
       'clinicInfo': instance.clinicInfo,
       'doctorInfo': instance.doctorInfo,

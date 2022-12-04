@@ -6,22 +6,22 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentItemCard extends StatelessWidget {
-  const AppointmentItemCard({
-    Key? key,
-    required this.appointmentItem,
-    required this.clinic,
-    required this.handleTapOnAppointment
-  }) : super(key: key);
+  const AppointmentItemCard(
+      {Key? key,
+      required this.appointmentItem,
+      required this.handleTapOnAppointment})
+      : super(key: key);
 
-  final AppointmentModel appointmentItem;
-  final ClinicModel clinic;
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
   final void Function(DateTime) handleTapOnAppointment;
 
   @override
   Widget build(BuildContext context) {
-    final title = appointmentItem.doctorInfo.specialization != null ? 
-      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
-      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+    final title = appointmentItem.doctorInfo.specialization != null
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+        : CategoryTypes.getCategoryTypeByCategoryTypeId(
+                appointmentItem.categoryType)
+            .russianCategoryTypeName;
 
     return GestureDetector(
       onTap: () {
@@ -48,8 +48,7 @@ class AppointmentItemCard extends StatelessWidget {
               appointmentItem.categoryType == 1 ||
                       appointmentItem.categoryType == 0
                   ? Text(
-                      title
-                          .characters
+                      title.characters
                           .replaceAll(Characters(''), Characters('\u{200B}'))
                           .toString(),
                       style: Theme.of(context).textTheme.titleMedium,
@@ -114,13 +113,11 @@ class AppointmentItemCard extends StatelessWidget {
                               SvgPicture.asset(
                                   'assets/icons/appointments/clock.svg'),
                               const SizedBox(width: 8.0),
-                              Text(
-                                getAppointmentTime(
-                                  appointmentItem.appointmentDateTime, 
-                                  clinic.timeZoneOffset ?? 3, 
-                                  formatSting: 'dd.MM.yy, HH:mm'
-                                )
-                              ),
+                              Text(getAppointmentTime(
+                                appointmentItem.appointmentDateTime,
+                                appointmentItem.timeZoneOffset,
+                                formatSting: 'dd.MM.yy, HH:mm',
+                              )),
                             ],
                           ),
                         ),

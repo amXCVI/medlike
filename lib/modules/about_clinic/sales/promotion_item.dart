@@ -94,7 +94,7 @@ class PromotionItem extends StatelessWidget {
                                   'assets/icons/clinics/majesticons_rubel-circle.svg'),
                               const SizedBox(width: 8.0),
                               Text(
-                                '${(promotionItem.defaultPrice / 100) % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
+                                '${promotionItem.defaultPrice % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
                                 style: const TextStyle(
                                   color: AppColors.lightText,
                                   fontSize: 14,
@@ -119,7 +119,7 @@ class PromotionItem extends StatelessWidget {
                         ? Row(
                             children: [
                               Text(
-                                '${(promotionItem.promoPrice / 100) % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
+                                '${promotionItem.promoPrice % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
                                 style: const TextStyle(
                                   color: AppColors.mainBrandColor,
                                   fontSize: 17,

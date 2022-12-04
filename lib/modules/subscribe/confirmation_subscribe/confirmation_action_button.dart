@@ -8,7 +8,10 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 
 class ConfirmationActionButtonLabel extends StatefulWidget {
-  const ConfirmationActionButtonLabel({Key? key}) : super(key: key);
+  const ConfirmationActionButtonLabel({Key? key, required this.userId})
+      : super(key: key);
+
+  final String userId;
 
   @override
   State<ConfirmationActionButtonLabel> createState() =>
@@ -29,7 +32,6 @@ class _ConfirmationActionButtonLabelState
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
-
         if (state.creatingAppointmentStatus ==
             CreatingAppointmentStatuses.finished) {}
 
@@ -46,7 +48,7 @@ class _ConfirmationActionButtonLabelState
           if (state.registerOrderStatus == RegisterOrderStatuses.success &&
               !isOpenedPaymentPage) {
             setIsOpenedPaymentPage();
-            context.router.push(const PaymentRoute());
+            context.router.push(PaymentRoute(userId: widget.userId));
           }
         });
 

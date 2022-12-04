@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 
 class BiometricAuthentication extends StatefulWidget {
   const BiometricAuthentication({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   late bool isEnabled = false;
   late bool isBiometricAuthenticate = true;
   late bool isFaceId = false;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   void initState() {
@@ -52,7 +56,58 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
     }
   }
 
+  Future<bool> _authenticate() async {
+    bool authenticated = false;
+    try {
+      authenticated = await auth.authenticate(
+        localizedReason: 'Прикоснитесь к сенсору устройства',
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+          sensitiveTransaction: true,
+          biometricOnly: true,
+        ),
+        authMessages: <AuthMessages>[
+          const AndroidAuthMessages(
+            biometricRequiredTitle: 'Прикоснитесь к сенсору устройства',
+            cancelButton: 'Отмена',
+            signInTitle: 'Авторизация',
+            biometricHint: '',
+          ),
+          const IOSAuthMessages(
+            cancelButton: 'Отмена',
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      print(e);
+      return false;
+    }
+
+    if (authenticated) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void _onChanged(bool value) {
+    if (value) {
+      _authenticate().then((authRes) => {
+            if (!authRes)
+              setState(() {
+                isEnabled = false;
+              })
+            else
+              setState(() {
+                isEnabled = true;
+              })
+          });
+    } else {
+      setState(() {
+        isEnabled = false;
+      });
+    }
     if (value && isFaceId) {
       UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
           SelectedAuthMethods.faceId.toString());
@@ -63,9 +118,6 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
       UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
           SelectedAuthMethods.pinCode.toString());
     }
-    setState(() {
-      isEnabled = value;
-    });
   }
 
   @override

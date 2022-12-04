@@ -107,7 +107,7 @@ class UserProfilesList with _$UserProfilesList {
 @freezed
 class CheckUserAccountResponse with _$CheckUserAccountResponse {
   const factory CheckUserAccountResponse({
-    required bool found,
+    required bool? found,
     required String? message,
   }) = _CheckUserAccountResponse;
 

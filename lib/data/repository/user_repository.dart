@@ -17,14 +17,17 @@ enum UserAuthenticationStatus {
 
 class UserRepository {
   final _dioClient = Api().dio;
+  final _noErrorClient = Api().dio..interceptors.removeAt(0);
 
   Future<AuthTokenResponse> signIn(
       {required String phone, required String password}) async {
     try {
-      final response = await _dioClient.post('/api/v1.0/auth/token',
+      final response = await _noErrorClient.post('/api/v1.0/auth/token',
           data: {'UserName': phone, 'Password': password});
       return AuthTokenResponse.fromJson(response.data);
     } catch (err) {
+      rethrow;
+      /*
       if ((err as DioError).response?.statusCode != 400 &&
           (err as DioError).response?.statusCode != 406) {
         rethrow;
@@ -32,7 +35,12 @@ class UserRepository {
       int tryCount =
           AuthTokenResponseError.fromJson((err as DioError).response!.data)
               .tryCount;
+      String message = 
+          AuthTokenResponseError.fromJson((err as DioError).response!.data)
+              .message;
+
       return AuthTokenResponse(token: '', refreshToken: '', tryCount: tryCount);
+      */
     }
   }
 
@@ -71,7 +79,7 @@ class UserRepository {
   Future<bool> sendResetPasswordCode(
       {required String smsToken, required String phoneNumber}) async {
     try {
-      final response = await _dioClient.post('/api/v1.0/auth/sms/check',
+      final response = await _noErrorClient.post('/api/v1.0/auth/sms/check',
           data: {'Token': smsToken, 'UserName': phoneNumber});
       if (response.statusCode == 200) {
         return true;
@@ -132,7 +140,7 @@ class UserRepository {
   }) async {
     try {
       final response =
-          await _dioClient.get('/api/v1.0/auth/check/$phoneNumber');
+          await _noErrorClient.get('/api/v1.0/auth/check/$phoneNumber');
       return CheckUserAccountResponse.fromJson(response.data);
     } catch (err) {
       rethrow;

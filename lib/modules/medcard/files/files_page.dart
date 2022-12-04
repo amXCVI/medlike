@@ -55,7 +55,9 @@ class _FilesPageState extends State<FilesPage> {
     }
 
     void attachFilePickerResult({required FilePickerResult filePickerResult}) {
-      _listController.jumpTo(_listController.position.maxScrollExtent);
+      try {
+        _listController.jumpTo(_listController.position.maxScrollExtent ?? 0);
+      } catch (err) {}
       File attachedFile = File(filePickerResult.files.first.path as String);
       uploadFile(file: attachedFile);
     }
