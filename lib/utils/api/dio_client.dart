@@ -14,23 +14,10 @@ class Api {
     receiveTimeout: 30000,
   );
 
-  late Dio _dio;
+  final Dio _dio = Dio(options);
 
   Api() {
-    _dio = Dio()
-    ..options = options
-    ..interceptors.add(DioInterceptors());
-
-
-    initSSLCert();
-  }
-
-  void initSSLCert() async {
-    if(!kIsWeb) {
-      _dio.interceptors.add(CertificatePinningInterceptor(
-        allowedSHAFingerprints: ApiConstants.sha256
-      ));
-    }
+    _dio.interceptors.add(DioInterceptors());
 
     if (_dio.httpClientAdapter is DefaultHttpClientAdapter) {
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -46,11 +33,6 @@ class Api {
             return client;
           };
         }
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      return client;
-    };
-  }
 
         return client;
       };
@@ -61,6 +43,4 @@ class Api {
 
   // dynamic get dio => kIsWeb ? smartAppClient : _dio;
   dynamic get dio => _dio;
-
 }
-
