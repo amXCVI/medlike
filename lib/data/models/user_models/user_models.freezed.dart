@@ -1464,7 +1464,7 @@ CheckUserAccountResponse _$CheckUserAccountResponseFromJson(
 
 /// @nodoc
 mixin _$CheckUserAccountResponse {
-  bool get found => throw _privateConstructorUsedError;
+  bool? get found => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1478,7 +1478,7 @@ abstract class $CheckUserAccountResponseCopyWith<$Res> {
   factory $CheckUserAccountResponseCopyWith(CheckUserAccountResponse value,
           $Res Function(CheckUserAccountResponse) then) =
       _$CheckUserAccountResponseCopyWithImpl<$Res>;
-  $Res call({bool found, String? message});
+  $Res call({bool? found, String? message});
 }
 
 /// @nodoc
@@ -1499,7 +1499,7 @@ class _$CheckUserAccountResponseCopyWithImpl<$Res>
       found: found == freezed
           ? _value.found
           : found // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -1516,7 +1516,7 @@ abstract class _$$_CheckUserAccountResponseCopyWith<$Res>
           $Res Function(_$_CheckUserAccountResponse) then) =
       __$$_CheckUserAccountResponseCopyWithImpl<$Res>;
   @override
-  $Res call({bool found, String? message});
+  $Res call({bool? found, String? message});
 }
 
 /// @nodoc
@@ -1540,7 +1540,7 @@ class __$$_CheckUserAccountResponseCopyWithImpl<$Res>
       found: found == freezed
           ? _value.found
           : found // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -1559,7 +1559,7 @@ class _$_CheckUserAccountResponse implements _CheckUserAccountResponse {
       _$$_CheckUserAccountResponseFromJson(json);
 
   @override
-  final bool found;
+  final bool? found;
   @override
   final String? message;
 
@@ -1598,14 +1598,14 @@ class _$_CheckUserAccountResponse implements _CheckUserAccountResponse {
 
 abstract class _CheckUserAccountResponse implements CheckUserAccountResponse {
   const factory _CheckUserAccountResponse(
-      {required final bool found,
+      {required final bool? found,
       required final String? message}) = _$_CheckUserAccountResponse;
 
   factory _CheckUserAccountResponse.fromJson(Map<String, dynamic> json) =
       _$_CheckUserAccountResponse.fromJson;
 
   @override
-  bool get found => throw _privateConstructorUsedError;
+  bool? get found => throw _privateConstructorUsedError;
   @override
   String? get message => throw _privateConstructorUsedError;
   @override

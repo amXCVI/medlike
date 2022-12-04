@@ -1447,6 +1447,12 @@ class DiaryAddRouteArgs {
 /// generated route for
 /// [_i37.RequireUpdateAppPage]
 class RequireUpdateAppRoute extends _i38.PageRouteInfo<void> {
+    as _i5;
+import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart'
+    as _i15;
+import 'package:medlike/modules/subscribe/schedule/schedule_page.dart' as _i20;
+import 'package:medlike/modules/subscribe/services_list/services_list_page.dart'
+      required this.checkIsAuthSmartappUser,
   const RequireUpdateAppRoute()
       : super(RequireUpdateAppRoute.name, path: '/require_updater_page');
 

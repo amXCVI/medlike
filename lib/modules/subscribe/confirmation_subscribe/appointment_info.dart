@@ -133,7 +133,8 @@ class ClinicsBuilder extends StatelessWidget {
                         title: 'Время',
                         value: getAppointmentTime(
                           state.selectedTimetableCell!.time, 
-                          getClinic(state.selectedTimetableCell, clinicsList)!.timeZoneOffset ?? 3
+                          getClinic(state.selectedTimetableCell, clinicsList)!.timeZoneOffset ?? 3,
+                          isTimeCell: true
                         )
                     )                       
                   )

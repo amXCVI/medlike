@@ -11,18 +11,18 @@ import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem(
-      {Key? key, required this.appointmentItem, required this.clinic})
+  const AppointmentItem({Key? key, required this.appointmentItem})
       : super(key: key);
 
-  final AppointmentModel appointmentItem;
-  final ClinicModel clinic;
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
 
   @override
   Widget build(BuildContext context) {
-    final title = appointmentItem.doctorInfo.specialization != null ? 
-      '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
-      : CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName;
+    final title = appointmentItem.doctorInfo.specialization != null
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+        : CategoryTypes.getCategoryTypeByCategoryTypeId(
+                appointmentItem.categoryType)
+            .russianCategoryTypeName;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -31,18 +31,21 @@ class AppointmentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           appointmentItem.categoryType == 1 || appointmentItem.categoryType == 0
-              ? Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium)
-              : Text.rich(TextSpan(children: [
-                  WidgetSpan(
-                      child: Text(
-                          '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ',
-                          style: Theme.of(context).textTheme.titleMedium)),
-                  ...appointmentItem.researches.map((e) => WidgetSpan(
-                      child: Text(e.name as String,
-                          style: Theme.of(context).textTheme.titleMedium)))
-                ])),
+              ? Text(title, style: Theme.of(context).textTheme.titleMedium)
+              : RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: CategoryTypes.getCategoryTypeByCategoryTypeId(
+                                  appointmentItem.categoryType)
+                              .russianCategoryTypeName,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      ...appointmentItem.researches.map((e) => TextSpan(
+                          text: ', ${e.name}',
+                          style: Theme.of(context).textTheme.titleMedium))
+                    ],
+                  ),
+                ),
           appointmentItem.doctorInfo.id != null &&
                   appointmentItem.doctorInfo.id!.isNotEmpty
               ? Padding(
@@ -68,25 +71,27 @@ class AppointmentItem extends StatelessWidget {
                   ),
                 )
               : const SizedBox(height: 15.0),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SvgPicture.asset('assets/icons/appointments/solid.svg'),
-              const SizedBox(width: 8.0),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 100,
-                child: Text(
-                    ClinicAddressHelper.getShortAddress(
-                            appointmentItem.clinicInfo.address!) +
-                        ', ' +
-                        appointmentItem.researchPlace,
-                    overflow: TextOverflow.fade,
-                    maxLines: 2,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodySmall),
-              ),
-            ],
-          ),
+          appointmentItem.clinicInfo.address != null
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset('assets/icons/appointments/solid.svg'),
+                    const SizedBox(width: 8.0),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 100,
+                      child: Text(
+                          ClinicAddressHelper.getShortAddress(
+                                  appointmentItem.clinicInfo.address ?? '') +
+                              ', ' +
+                              appointmentItem.researchPlace,
+                          overflow: TextOverflow.fade,
+                          maxLines: 2,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           AppointmentItemRecommendations(
             recommendations: appointmentItem.recommendations ?? '',
             serviceName: appointmentItem.categoryType == 1 ||
@@ -112,9 +117,9 @@ class AppointmentItem extends StatelessWidget {
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
                         Text(getAppointmentTime(
-                            appointmentItem.appointmentDateTime,
-                            clinic.timeZoneOffset ?? 3 // Стандарт МСК +3
-                            )),
+                          appointmentItem.appointmentDateTime,
+                          appointmentItem.timeZoneOffset, // Стандарт МСК
+                        )),
                       ],
                     ),
                   ),
@@ -142,36 +147,32 @@ class AppointmentItem extends StatelessWidget {
               ),
             ],
           ),
-          if (appointmentItem.status == 4)
-            const SizedBox(height: 14.0),
+          if (appointmentItem.status == 4) const SizedBox(height: 14.0),
           if (appointmentItem.status == 4)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: SimpleButton(
-                    isPrimary: true,
-                    labelText: 'Подтвердить',
-                    onTap: () {
-                      context.read<AppointmentsCubit>().confirmAppointment(
+                    child: SimpleButton(
+                  isPrimary: true,
+                  labelText: 'Подтвердить',
+                  onTap: () {
+                    context.read<AppointmentsCubit>().confirmAppointment(
                         appointmentId: appointmentItem.id,
                         userId: appointmentItem.patientInfo.id as String);
-                    },
-                  )
-                ),
+                  },
+                )),
                 const SizedBox(
                   width: 12,
                 ),
                 Expanded(
-                  child: SimpleButton(
-                    labelText: 'Отменить',
-                    onTap: () {
-                      context.read<AppointmentsCubit>().deleteAppointment(
-                          appointmentId: appointmentItem.id,
-                          userId: appointmentItem.patientInfo.id as String);
-                    }
-                  )
-                )
+                    child: SimpleButton(
+                        labelText: 'Отменить',
+                        onTap: () {
+                          context.read<AppointmentsCubit>().deleteAppointment(
+                              appointmentId: appointmentItem.id,
+                              userId: appointmentItem.patientInfo.id as String);
+                        }))
               ],
             )
         ],

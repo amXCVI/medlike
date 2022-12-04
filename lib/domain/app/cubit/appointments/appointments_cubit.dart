@@ -11,13 +11,24 @@ import 'package:table_calendar/table_calendar.dart';
 
 part 'appointments_state.dart';
 
-class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEvent> 
-  with RefreshErrorHandler<AppointmentsState, UserCubit> {
-  AppointmentsCubit(this.appointmentsRepository, mediator) : super(AppointmentsState(), mediator) {
+class AppointmentsCubit
+    extends MediatorCubit<AppointmentsState, UserMediatorEvent>
+    with RefreshErrorHandler<AppointmentsState, UserCubit> {
+  AppointmentsCubit(this.appointmentsRepository, mediator)
+      : super(AppointmentsState(), mediator) {
     mediator.register(this);
   }
 
   final AppointmentsRepository appointmentsRepository;
+
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    print(from);
+    print(event);
+    if (event == UserMediatorEvent.pushNotification) {
+      getLastAppointment(true);
+    }
+  }
 
   void getAppointmentsList(bool isRefresh) async {
     if (state.getAppointmentsStatus == GetAppointmentsStatuses.loading ||
@@ -35,13 +46,60 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
 
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.success,
-        appointmentsList: response,
-        filteredAppointmentsList: response,
+        appointmentsList: response
+            .map((e) => AppointmentModelWithTimeZoneOffset(
+                status: e.status,
+                needConfirmation: e.needConfirmation,
+                comment: e.comment,
+                researchPlace: e.researchPlace,
+                id: e.id,
+                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                timeZoneOffset: int.parse(
+                    e.appointmentDateTime.split('+').last.substring(0, 2)),
+                patientInfo: e.patientInfo,
+                clinicInfo: e.clinicInfo,
+                doctorInfo: e.doctorInfo,
+                researches: e.researches,
+                categoryType: e.categoryType,
+                isVideo: e.isVideo,
+                payType: e.payType,
+                isDraft: e.isDraft,
+                orderId: e.orderId,
+                scheduleId: e.scheduleId,
+                paymentStatus: e.paymentStatus,
+                recommendations: e.recommendations))
+            .toList(),
+        filteredAppointmentsList: response
+            .map((e) => AppointmentModelWithTimeZoneOffset(
+                status: e.status,
+                needConfirmation: e.needConfirmation,
+                comment: e.comment,
+                researchPlace: e.researchPlace,
+                id: e.id,
+                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                timeZoneOffset: int.parse(
+                    e.appointmentDateTime.split('+').last.substring(0, 2)),
+                patientInfo: e.patientInfo,
+                clinicInfo: e.clinicInfo,
+                doctorInfo: e.doctorInfo,
+                researches: e.researches,
+                categoryType: e.categoryType,
+                isVideo: e.isVideo,
+                payType: e.payType,
+                isDraft: e.isDraft,
+                orderId: e.orderId,
+                scheduleId: e.scheduleId,
+                paymentStatus: e.paymentStatus,
+                recommendations: e.recommendations))
+            .toList(),
       ));
       filterAppointmentsList(state.selectedDate);
     } catch (e) {
       emit(state.copyWith(
-          getAppointmentsStatus: GetAppointmentsStatuses.failed));
+        getAppointmentsStatus: GetAppointmentsStatuses.failed,
+        appointmentsList: [],
+        filteredAppointmentsList: [],
+      ));
     }
   }
 
@@ -60,11 +118,13 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
 
   /// Отбираем приемы по выделенному дню
   void filterAppointmentsList(DateTime selectedDate) {
-    final List<AppointmentModel> filteredAppointmentsList;
+    final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
     if (state.appointmentsList == null) return;
     filteredAppointmentsList = state.appointmentsList!
-        .where((element) =>
-            isSameDay(element.appointmentDateTime, state.selectedDate))
+        .where((element) => isSameDay(
+            element.appointmentDateTime
+                .add(Duration(hours: element.timeZoneOffset)),
+            state.selectedDate))
         .toList();
     emit(state.copyWith(
       filteredAppointmentsList: filteredAppointmentsList,
@@ -88,7 +148,27 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
 
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.success,
-          lastAppointment: response));
+          lastAppointment: AppointmentModelWithTimeZoneOffset(
+              status: response.status,
+              needConfirmation: response.needConfirmation,
+              comment: response.comment,
+              researchPlace: response.researchPlace,
+              id: response.id,
+              appointmentDateTime: DateTime.parse(response.appointmentDateTime),
+              timeZoneOffset: int.parse(
+                  response.appointmentDateTime.split('+').last.substring(0, 2)),
+              patientInfo: response.patientInfo,
+              clinicInfo: response.clinicInfo,
+              doctorInfo: response.doctorInfo,
+              researches: response.researches,
+              categoryType: response.categoryType,
+              isVideo: response.isVideo,
+              payType: response.payType,
+              isDraft: response.isDraft,
+              orderId: response.orderId,
+              scheduleId: response.scheduleId,
+              paymentStatus: response.paymentStatus,
+              recommendations: response.recommendations)));
     } catch (e) {
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.failed));
@@ -96,9 +176,10 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
   }
 
   /// Отменить прием
-  void deleteAppointment({
+  Future<void> deleteAppointment({
     required String appointmentId,
     required String userId,
+    bool doNotShowNotification = false,
   }) async {
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
@@ -116,7 +197,7 @@ class AppointmentsCubit extends MediatorCubit<AppointmentsState, UserMediatorEve
       emit(state.copyWith(
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
-      if (response) {
+      if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
     } catch (e) {

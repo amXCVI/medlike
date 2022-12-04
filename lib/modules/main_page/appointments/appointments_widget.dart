@@ -58,9 +58,9 @@ class AppointmentsWidget extends StatelessWidget {
                         },
                         child: const NotFoundAppointment())
                     : ClinicsBuilder(
-                      handleTapOnAppointment: handleTapOnAppointment,
-                      appointmentsList: state.appointmentsList!,
-                    )
+                        handleTapOnAppointment: handleTapOnAppointment,
+                        appointmentsList: state.appointmentsList!,
+                      )
           ],
         );
       },
@@ -69,57 +69,50 @@ class AppointmentsWidget extends StatelessWidget {
 }
 
 class ClinicsBuilder extends StatelessWidget {
-  const ClinicsBuilder({
-    Key? key,
-    required this.handleTapOnAppointment,
-    required this.appointmentsList
-  }) : super(key: key);
+  const ClinicsBuilder(
+      {Key? key,
+      required this.handleTapOnAppointment,
+      required this.appointmentsList})
+      : super(key: key);
 
   final Function(DateTime) handleTapOnAppointment;
-  final List<AppointmentModel> appointmentsList;
-
-  ClinicModel? getClinic(AppointmentModel item, List<ClinicModel> clinicsList) {
-    for(var clinic in clinicsList) {
-      if(clinic.id == item.clinicInfo.id) {
-        return clinic;
-      }
-    }
-    return null;
-  }
+  final List<AppointmentModelWithTimeZoneOffset> appointmentsList;
 
   @override
   Widget build(BuildContext context) {
+    appointmentsList
+        .sort((a, b) => a.appointmentDateTime.compareTo(b.appointmentDateTime));
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
-        if(state.getAllClinicsListStatus == GetAllClinicsListStatuses.loading) {
+        if (state.getAllClinicsListStatus ==
+            GetAllClinicsListStatuses.loading) {
           return const AppointmentsWidgetSkeleton();
-        } else if(state.getAllClinicsListStatus == GetAllClinicsListStatuses.failed) {
+        } else if (state.getAllClinicsListStatus ==
+            GetAllClinicsListStatuses.failed) {
           return const Text('');
         }
         return CarouselSlider(
-            items: [
-              ...appointmentsList
-                  .where((item) => AppointmentStatuses
-                      .cancellableStatusIds
-                      .contains(item.status))
-                  .map((appointmentItem) => AppointmentItemCard(
-                        appointmentItem: appointmentItem,
-                        clinic: getClinic(appointmentItem, state.clinicsList!)!,
-                        handleTapOnAppointment: handleTapOnAppointment,
-                      ))
-                  .toList()
-                  .reversed,
-            ],
-            options: CarouselOptions(
-              height: 182,
-              viewportFraction: 0.93,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              enlargeCenterPage: false,
-            ),
-          );
+          items: [
+            ...appointmentsList.reversed
+                .where((item) => AppointmentStatuses.cancellableStatusIds
+                    .contains(item.status))
+                .map((appointmentItem) => AppointmentItemCard(
+                      appointmentItem: appointmentItem,
+                      handleTapOnAppointment: handleTapOnAppointment,
+                    ))
+                .toList()
+                .reversed,
+          ],
+          options: CarouselOptions(
+            height: 182,
+            viewportFraction: 0.93,
+            initialPage: 0,
+            enableInfiniteScroll: false,
+            reverse: false,
+            autoPlay: false,
+            enlargeCenterPage: false,
+          ),
+        );
       },
     );
   }

@@ -112,24 +112,53 @@ class SlideItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     promotionItem.defaultPrice != 0
-                        ? Text(
-                            '${(promotionItem.defaultPrice / 100) % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 19,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '${(promotionItem.defaultPrice) % 100 > 0 ? promotionItem.defaultPrice / 100 : (promotionItem.defaultPrice / 100).round()}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              const Text(
+                                ' ₽',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Arial',
+                                ),
+                              ),
+                            ],
                           )
                         : const SizedBox(),
                     promotionItem.promoPrice != 0
-                        ? Text(
-                            '${(promotionItem.promoPrice / 100) % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '${(promotionItem.promoPrice) % 100 > 0 ? promotionItem.promoPrice / 100 : (promotionItem.promoPrice / 100).round()}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const Text(
+                                ' ₽',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Arial',
+                                ),
+                              ),
+                            ],
                           )
                         : const SizedBox(),
                   ],

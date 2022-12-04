@@ -50,17 +50,40 @@ Future<int> getTimeZoneOffset() async {
 
 /// Ф-я возвращает строку времени приёма
 /// с таймзоной клиники в случае её отличия от
-/// таймзоны МСК +03:00
+/// таймзоны МСК
 String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
-  {String? formatSting}
-) {
-  final timeString = DateFormat(formatSting ?? 'HH:mm').format(dateTimeToUTC(
-      dateTime, int.parse(DateTime.now().timeZoneOffset.inHours.toString())));
+    {String? formatSting, bool? isTimeCell}) {
+  const mskTime = 3;
 
-  if (timeZoneOffset == DateTime.now().timeZoneOffset.inHours) {
+  int tz = DateTime.now().timeZoneOffset.inHours;
+  DateTime timeOfClinic = dateTime
+      .toUtc()
+      .add(Duration(hours: isTimeCell != true ? timeZoneOffset : 0));
+
+  final timeString = DateFormat(formatSting ?? 'HH:mm').format(timeOfClinic);
+
+  if (timeZoneOffset == tz) {
     return timeString;
+  } else if (timeZoneOffset == mskTime) {
+    return '$timeString (МСК)';
   } else {
-    final sign = timeZoneOffset < 0 ? '-' : '+';
-    return '$timeString (МСК $sign$timeZoneOffset)';
+    final sign = timeZoneOffset - mskTime < 0 ? '-' : '+';
+    return '$timeString (МСК $sign${(timeZoneOffset - mskTime).abs()})';
   }
+}
+
+/// Ф-я возвращает объект даты с прибавленной таймзоной клиники
+/// Уродское решение
+/// Не могу сообразить, как сделать правильно
+/// 022-12-02T00:00:00+03:00 превращается в 2022-12-01 21:00:01.000Z после парсинга
+/// И это неправильно. Должно быть как-то по-дпугому
+DateTime getAppointmentTimeObject(DateTime dateTime, int timeZoneOffset,
+    {String? formatSting, bool? isTimeCell}) {
+  const mskTime = 3;
+
+  DateTime timeOfClinic = dateTime
+      .toUtc()
+      .add(Duration(hours: isTimeCell != true ? timeZoneOffset : mskTime));
+
+  return timeOfClinic;
 }

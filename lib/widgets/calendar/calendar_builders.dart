@@ -98,6 +98,7 @@ CalendarBuilders calendarBuilder({
               : Theme.of(context).backgroundColor,
           shape: BoxShape.circle,
         ),
+        margin: const EdgeInsets.symmetric(vertical: 3),
         child: Center(
           child: Text(
             date.day.toString(),

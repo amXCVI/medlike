@@ -8,12 +8,10 @@ class AppointmentsList extends StatelessWidget {
   const AppointmentsList({
     Key? key,
     required this.appointmentsList,
-    required this.clinicsList,
     required this.onRefreshData,
   }) : super(key: key);
 
-  final List<AppointmentModel> appointmentsList;
-  final List<ClinicModel> clinicsList;
+  final List<AppointmentModelWithTimeZoneOffset> appointmentsList;
   final dynamic onRefreshData;
 
   @override
@@ -22,7 +20,6 @@ class AppointmentsList extends StatelessWidget {
       ...AppointmentStatuses.statusesList
           .map((paragraph) => AppointmentsParagraph(
                 statusItem: paragraph,
-                clinicsList: clinicsList,
                 appointmentsList: appointmentsList
                     .where((element) => element.status == paragraph.statusId)
                     .toList(),
@@ -30,8 +27,7 @@ class AppointmentsList extends StatelessWidget {
               ))
           .toList(),
       appointmentsList.isEmpty
-          ? const NotFoundData(
-              text: 'Здесь будет список ваших приемов')
+          ? const NotFoundData(text: 'Здесь будет список ваших приемов')
           : const SizedBox(height: 20)
     ]);
   }

@@ -45,4 +45,3 @@ class Api {
   // Dio get dio => _dio;
 
 }
-
