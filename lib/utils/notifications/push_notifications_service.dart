@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -57,6 +58,19 @@ class FCMService {
         .initialize(_initializationSettings);
   }
 
+  static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
+    const InitializationSettings _initializationSettings =
+        InitializationSettings(
+      android: AndroidInitializationSettings("@mipmap/launcher_icon"),
+      iOS: DarwinInitializationSettings(),
+    );
+
+    _localNotificationsPlugin.initialize(
+      _initializationSettings,
+      onDidReceiveNotificationResponse: onSelectNotification,
+    );
+  }
+
   static NotificationDetails platformChannelSpecifics =
       const NotificationDetails(
     android: AndroidNotificationDetails(
@@ -93,12 +107,14 @@ class FCMService {
 
   static Future<void> onMessage(Function(RemoteMessage message)? onShowMessage) async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print("Message payload ${message.data}");
+
       await FCMService._localNotificationsPlugin.show(
         0,
         message.data['title'],
         message.data['message'],
         FCMService.platformChannelSpecifics,
-        payload: "new follower",
+        payload: jsonEncode(message.data),
       );
 
       if(onShowMessage != null) {
