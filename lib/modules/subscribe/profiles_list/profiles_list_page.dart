@@ -29,10 +29,16 @@ class SubscribeProfilesListPage extends StatelessWidget {
 
     _onRefreshData();
 
-    return ProfilesListPage(
-      title: 'Запись на прием',
-      routeName: AppRoutes.subscribeProfiles,
-      handleTapOnUserProfile: _handleTapOnUserProfile,
+    return WillPopScope(
+      onWillPop: () async {
+        context.router.replaceAll([const MainRoute()]);
+        return false;
+      },
+      child: ProfilesListPage(
+        title: 'Запись на прием',
+        routeName: AppRoutes.subscribeProfiles,
+        handleTapOnUserProfile: _handleTapOnUserProfile,
+      ),
     );
   }
 }

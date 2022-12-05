@@ -28,9 +28,15 @@ class MedcardProfilesListPage extends StatelessWidget {
 
     _onRefreshData();
 
-    return ProfilesListPage(
-        title: 'Медкарта',
-        routeName: AppRoutes.medcard,
-        handleTapOnUserProfile: _handleTapOnUserProfile);
+    return WillPopScope(
+      onWillPop: () async {
+        context.router.replaceAll([const MainRoute()]);
+        return false;
+      },
+      child: ProfilesListPage(
+          title: 'Медкарта',
+          routeName: AppRoutes.medcard,
+          handleTapOnUserProfile: _handleTapOnUserProfile),
+    );
   }
 }
