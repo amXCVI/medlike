@@ -31,7 +31,9 @@ class SmartappLoginPage extends StatelessWidget {
             /// Если авторизация успешна, переходим на главную
             print(
                 '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
-            context.router.replaceAll([const MainRoute()]);
+            Future.delayed(const Duration(seconds: 2), () {
+              context.router.replaceAll([const MainRoute()]);
+            });
           } else {
             print(
                 'Не удалось авторизоваться через smartapp token. Проверьте пользователя');

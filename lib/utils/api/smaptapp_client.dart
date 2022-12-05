@@ -50,7 +50,7 @@ class SmartAppClient {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': '4',
       'Authorization': token,
     };
 
@@ -64,25 +64,22 @@ class SmartAppClient {
         'params': '',
       },
     })).then(js.allowInterop((data) {
-      print('>>>> SUCCESS: $data');
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      print('>>>> Ответ из смартаппа декодирован');
-      print('<<<< payload: ${parsedResponse.payload}');
-      print('<<<< result: ${parsedResponse.payload.result}');
-      print('<<<< content: ${parsedResponse.payload.result.content}');
       if (parsedResponse.payload.status != 'ok') {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
       dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: parsedResponse.payload.result.content,
+        // data: parsedResponse.payload.result.content,
+        data: json.decode(parsedResponse.payload.result.content),
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
+      print('<<<< response.data: ${response.data}');
       return response;
     }), js.allowInterop((err) {
       print('ERROR_GET: $err');
@@ -101,7 +98,7 @@ class SmartAppClient {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': '4',
       'Authorization': token,
     };
 
@@ -115,25 +112,22 @@ class SmartAppClient {
         'params': '',
       },
     })).then(js.allowInterop((data) {
-      print('>>>> SUCCESS: $data');
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      print('>>>> Ответ из смартаппа декодирован');
-      print('<<<< payload: ${parsedResponse.payload}');
-      print('<<<< result: ${parsedResponse.payload.result}');
-      print('<<<< content: ${parsedResponse.payload.result.content}');
       if (parsedResponse.payload.status != 'ok') {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
       dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: parsedResponse.payload.result.content,
+        // data: parsedResponse.payload.result.content,
+        data: json.decode(parsedResponse.payload.result.content),
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
+      print('<<<< response.data: ${response.data}');
       return response;
     }), js.allowInterop((err) {
       print('ERROR: $err');
@@ -143,6 +137,7 @@ class SmartAppClient {
 
   Future<dynamic> delete(String endpoint,
       {Map<String, dynamic>? data, Options? options}) async {
+    print('DELETE $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
     Map<String, dynamic> defaultHeaders = {
@@ -150,7 +145,7 @@ class SmartAppClient {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': '4',
       'Authorization': token,
     };
 
@@ -168,10 +163,6 @@ class SmartAppClient {
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      print('>>>> Ответ из смартаппа декодирован');
-      print('<<<< ${parsedResponse.payload}');
-      print('<<<< ${parsedResponse.payload.result}');
-      print('<<<< ${parsedResponse.payload.result.content}');
       SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
       if (parsedResponse.payload.status != 'ok') {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
@@ -179,10 +170,12 @@ class SmartAppClient {
       }
       dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: parsedResponse.payload.result.content,
+        // data: parsedResponse.payload.result.content,
+        data: json.decode(parsedResponse.payload.result.content),
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
+      print('<<<< response.data: ${response.data}');
       return response;
     }), js.allowInterop((err) {
       print('ERROR: $err');
@@ -192,6 +185,7 @@ class SmartAppClient {
 
   Future<dynamic> put(String endpoint,
       {Map<String, dynamic>? data, Options? options}) async {
+    print('PUT $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
     Map<String, dynamic> defaultHeaders = {
@@ -199,7 +193,7 @@ class SmartAppClient {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': '4', //Platform.isAndroid ? '1' : '2',
       'Authorization': token,
     };
 
@@ -217,23 +211,60 @@ class SmartAppClient {
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      print('>>>> Ответ из смартаппа декодирован');
-      print('<<<< ${parsedResponse.payload}');
-      print('<<<< ${parsedResponse.payload.result}');
-      print('<<<< ${parsedResponse.payload.result.content}');
       if (parsedResponse.payload.status != 'ok') {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
       dynamic response = Response(
         requestOptions: RequestOptions(path: endpoint),
-        data: parsedResponse.payload.result.content,
+        // data: parsedResponse.payload.result.content,
+        data: json.decode(parsedResponse.payload.result.content),
         statusCode: parsedResponse.payload.result.statusCode,
       );
       print('<<<< coздан объект Response');
+      print('<<<< response.data: ${response.data}');
       return response;
     }), js.allowInterop((err) {
       print('ERROR: $err');
+      return err;
+    })));
+  }
+
+  Future<dynamic> getImage(String endpoint, {Options? options}) async {
+    print('GET_IMAGE $endpoint');
+
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '4', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
+
+    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
+      'method': 'proxy_request',
+      'params': {
+        'url': '${ApiConstants.baseUrl}$endpoint',
+        'headers': options != null ? options.headers : defaultHeaders,
+        'method': 'GET_IMAGE',
+        'body': {},
+        'params': '',
+      },
+    })).then(js.allowInterop((data) {
+      print('>>>> SUCCESS: $data');
+      dynamic response = Response(
+        requestOptions: RequestOptions(path: endpoint),
+        data: data,
+        statusCode: 200,
+      );
+      print('<<<< coздан объект Response');
+      print(response.data);
+      return response;
+    }), js.allowInterop((err) {
+      print('ERROR_GET: $err');
       return err;
     })));
   }

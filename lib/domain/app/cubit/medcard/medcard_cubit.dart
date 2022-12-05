@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'dart:html' as html;
@@ -124,7 +125,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
       if (kIsWeb) {
         final response = await medcardRepository.downloadFile(url: fileUrl);
-        final bytes = response.bodyBytes;
+        final bytes = base64Decode(response.data);
+        print('################## bytes stream pdf file ###################');
+        print(response.data);
         final blob = html.Blob([bytes], 'application/pdf');
         final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.document.createElement('a') as html.AnchorElement
@@ -188,7 +191,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         anchor.click();
         html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
-      }  else {
+      } else {
         var bytes = await consolidateHttpClientResponseBytes(response);
         var dir = await getApplicationDocumentsDirectory();
         File file = File("${dir.path}/$fileName");
@@ -300,6 +303,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
     } catch (e) {
       addError(e);
+
       /// Если попытались загрузить неверный тип файла, или еще какая-то ошибка
       /// дергаем список всех файлов заново
       getUserFilesList(isRefresh: true, userId: userId);
