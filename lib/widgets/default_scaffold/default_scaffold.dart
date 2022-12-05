@@ -4,6 +4,7 @@ import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 import 'package:medlike/widgets/default_scaffold/app_version_checker.dart';
+import 'package:medlike/widgets/default_scaffold/push_redirecter.dart';
 import 'package:medlike/widgets/default_scaffold/unauth_checker.dart';
 
 class DefaultScaffold extends StatefulWidget {
@@ -128,6 +129,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         ),
         const UnAuthChecker(),
         const AppVersionChecker(),
+        const PushRedirecter()
       ]),
       floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
