@@ -425,7 +425,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           isFound: response.found));
       return response;
     } on DioError catch (e) {
-      print(e);
+      addError(e);
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
