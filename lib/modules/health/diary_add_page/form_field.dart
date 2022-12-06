@@ -53,7 +53,11 @@ class _FormFieldState extends State<FormField> {
           keyboardType: TextInputType.number,
           autovalidateMode: AutovalidateMode.always,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('^\\d+\\.?\\d{0,${widget.decimalDigits})}')),
+            FilteringTextInputFormatter.allow(
+              widget.decimalDigits == 0 
+                ? RegExp('^\\d+') 
+                : RegExp('^\\d+\\.?\\d{0,${widget.decimalDigits}}')
+            ),
           ],
           decoration: InputDecoration(
             labelText: widget.labelText,
