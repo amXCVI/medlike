@@ -27,7 +27,7 @@ class ClinicsListPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         if (isChildrenPage) {
-          context.router.pop();
+          context.router.replace(const SubscribeProfilesListRoute());
         } else {
           context.router.replaceAll([const MainRoute()]);
         }

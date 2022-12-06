@@ -76,7 +76,7 @@ class _MedcardPageState extends State<MedcardPage> {
           handleResetFilters();
         } else {
           if (widget.isChildrenPage) {
-            context.router.pop();
+            context.router.replace(const MedcardProfilesListRoute());
           } else {
             context.router.replaceAll([const MainRoute()]);
           }
