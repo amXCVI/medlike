@@ -19,26 +19,31 @@
 	<title>medlike</title>
 	<link rel="manifest" href="manifest.json">
 	<script src="./bridge-bundle.js"></script>
-			<script>
-				var bridge = window.webBridgeInstance;
-				async function sendBotEvent(jsonEventObject) {
-					console.log(jsonEventObject);
-					const eventObject = JSON.parse(jsonEventObject);
-					console.log('sendBotEvent start', eventObject);
-					return new Promise((resolve, reject) => {
-						bridge.sendBotEvent(eventObject)
-							.then((res) => {
-								console.log('sent event object: ', eventObject);
-								console.log('bridge.sendBotEvent success', res);
-								resolve(JSON.stringify(res))
-							})
-							.catch((err) => {
-								console.log('sending event object: ', eventObject);
-								console.log('bridge.sendBotEvent error', err);
-								reject(JSON.stringify(err))
-							})
-					});
-				}
+	<script>
+		var bridge = window.webBridgeInstance;
+		async function sendBotEvent(jsonEventObject, files) {
+			console.log(jsonEventObject);
+			const eventObject = JSON.parse(jsonEventObject);
+			console.log('sendBotEvent start', eventObject);
+			return new Promise((resolve, reject) => {
+				bridge.sendBotEvent({...eventObject, files: files})
+					.then((res) => {
+						console.log('sent event object: ', eventObject);
+						console.log('bridge.sendBotEvent success', res);
+						try {
+							resolve(JSON.stringify(res.payload.result.content));
+						} catch(err) {
+							resolve(res.payload.result.content);
+						}
+						
+					})
+					.catch((err) => {
+						console.log('sending event object: ', eventObject);
+						console.log('bridge.sendBotEvent error', err);
+						reject(JSON.stringify(err))
+					})
+			});
+		}
 
 				bridge?.sendClientEvent({
 					method: 'ready',
@@ -46,7 +51,7 @@
 				})
 			</script>
 
-	<script>
+	<!-- <script>
 		function base64Encode(buf) {
 			let string = '';
 			(new Uint8Array(buf)).forEach(
@@ -73,7 +78,7 @@
 
 				case method === 'GET_IMAGE':
 					response = await fetch(url, {
-						method: 'GET', // *GET
+						method: 'GET', // *GET_IMAGES
 						cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
 						credentials: 'same-origin', // include, *same-origin, omit
 						headers: headers,
@@ -129,12 +134,12 @@
 
 					})
 					.catch((err) => {
-						console.log('@@@@@@@@@@@@@@@')
+						console.log('Ошибка на этапо запроса к боту. Содержимое ошибки ниже')
 						console.log(err);
 					})
 			});
 		}
-	</script>
+	</script> -->
 	<script>
 		window.flutterConfiguration = {
 			canvasKitBaseUrl: "./canvaskit/"
