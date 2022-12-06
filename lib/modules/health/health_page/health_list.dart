@@ -47,7 +47,7 @@ class HealthList extends StatelessWidget {
             (el) => el.syn == diariesCategoriesList[index].synonim
           );
 
-          final date = diary?.currentValue.date ?? DateTime.now();
+          final date = diary?.currentValue?.date ?? DateTime.now();
           DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(date);
           DateTime dateTo = date_utils.DateUtils.lastDayOfWeek(date);
 

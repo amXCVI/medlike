@@ -35,7 +35,7 @@ class HealthValue extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          data == null ? const Text(
+          data?.currentValue == null ? const Text(
             '–',
             style: TextStyle(
               fontWeight: FontWeight.w700,
@@ -43,13 +43,13 @@ class HealthValue extends StatelessWidget {
               color: Color.fromRGBO(158, 157, 157, 1),
             ),
           ) : RowData(
-            innerData: data!.currentValue.innerData,
+            innerData: data!.currentValue!.innerData,
             measureItem: measureItem,
             decimalDigits: decimalDigits
           ),
           const SizedBox(height: 2),
           Text(
-            data == null ? 'Нет данных' : getTime(data!.currentValue.date),
+            data?.currentValue == null ? 'Нет данных' : getTime(data!.currentValue!.date),
             style: const TextStyle(
               fontSize: 14,
               color: Color.fromRGBO(158, 157, 157, 1),

@@ -43,11 +43,11 @@ class DataItem {
   DateTime date;
   List<double> innerData;
 
-  static List<DataItem> toFlat(List<DiaryItem> items) {
+  static List<DataItem> toFlat(List<DiaryItem>? items) {
     List<DataItem> result = [];
 
-    for(int i = 0; i < items.length; i++) {
-      result.addAll(items[i].value.map(
+    for(int i = 0; i < (items?.length ?? 0); i++) {
+      result.addAll(items![i].value.map(
         (e) => DataItem(
           isAbnormal: e.isAbnormal, 
           isChangeable: e.isChangeable, 
@@ -115,17 +115,21 @@ abstract class DiaryModel with _$DiaryModel {
   const factory DiaryModel({
     required String syn,
     required DateTime firstValue,
-    required List<dynamic> currentValue,
+    required List<dynamic>? currentValue,
     required List<DiaryItem> values,
     required int grouping,
   }) = _Diary;
 
-  CurrentValue get getCurrentValue {
+  CurrentValue? get getCurrentValue {
+    if(currentValue == null) {
+      return null;
+    }
+
     return CurrentValue(
-      isAbnormal: currentValue[1][1] == 1, 
-      isChangeable: currentValue[1][0] == 1, 
-      date: DateTime.parse(currentValue[0] as String), 
-      innerData: currentValue[2] as List<dynamic>
+      isAbnormal: currentValue![1][1] == 1, 
+      isChangeable: currentValue![1][0] == 1, 
+      date: DateTime.parse(currentValue![0] as String), 
+      innerData: currentValue![2] as List<dynamic>
     );
   }
 
@@ -143,7 +147,7 @@ class DiaryFlatModel {
 
   final String syn;
   final DateTime firstValue;
-  final CurrentValue currentValue;
+  final CurrentValue? currentValue;
   final List<DataItem> values;
   final int grouping;
 

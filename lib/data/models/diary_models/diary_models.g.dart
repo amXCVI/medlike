@@ -57,7 +57,7 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
 _$_Diary _$$_DiaryFromJson(Map<String, dynamic> json) => _$_Diary(
       syn: json['syn'] as String,
       firstValue: DateTime.parse(json['firstValue'] as String),
-      currentValue: json['currentValue'] as List<dynamic>,
+      currentValue: json['currentValue'] as List<dynamic>?,
       values: (json['values'] as List<dynamic>)
           .map((e) => DiaryItem.fromJson(e as Map<String, dynamic>))
           .toList(),
