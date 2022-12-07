@@ -501,7 +501,7 @@ class PasswordRouteArgs {
 /// generated route for
 /// [_i3.CreatePinCodePage]
 class CreatePinCodeRoute extends _i37.PageRouteInfo<CreatePinCodeRouteArgs> {
-  CreatePinCodeRoute({_i38.Key? key, bool? noUsedBiometric})
+  CreatePinCodeRoute({_i38.Key? key, bool noUsedBiometric = false})
       : super(CreatePinCodeRoute.name,
             path: '/login_pin_code',
             args: CreatePinCodeRouteArgs(
@@ -511,11 +511,11 @@ class CreatePinCodeRoute extends _i37.PageRouteInfo<CreatePinCodeRouteArgs> {
 }
 
 class CreatePinCodeRouteArgs {
-  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric});
+  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric = false});
 
   final _i38.Key? key;
 
-  final bool? noUsedBiometric;
+  final bool noUsedBiometric;
 
   @override
   String toString() {
