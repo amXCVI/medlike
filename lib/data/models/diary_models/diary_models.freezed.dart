@@ -518,7 +518,7 @@ DiaryModel _$DiaryModelFromJson(Map<String, dynamic> json) {
 mixin _$DiaryModel {
   String get syn => throw _privateConstructorUsedError;
   DateTime get firstValue => throw _privateConstructorUsedError;
-  List<dynamic> get currentValue => throw _privateConstructorUsedError;
+  List<dynamic>? get currentValue => throw _privateConstructorUsedError;
   List<DiaryItem> get values => throw _privateConstructorUsedError;
   int get grouping => throw _privateConstructorUsedError;
 
@@ -536,7 +536,7 @@ abstract class $DiaryModelCopyWith<$Res> {
   $Res call(
       {String syn,
       DateTime firstValue,
-      List<dynamic> currentValue,
+      List<dynamic>? currentValue,
       List<DiaryItem> values,
       int grouping});
 }
@@ -569,7 +569,7 @@ class _$DiaryModelCopyWithImpl<$Res> implements $DiaryModelCopyWith<$Res> {
       currentValue: currentValue == freezed
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<dynamic>?,
       values: values == freezed
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
@@ -590,7 +590,7 @@ abstract class _$$_DiaryCopyWith<$Res> implements $DiaryModelCopyWith<$Res> {
   $Res call(
       {String syn,
       DateTime firstValue,
-      List<dynamic> currentValue,
+      List<dynamic>? currentValue,
       List<DiaryItem> values,
       int grouping});
 }
@@ -624,7 +624,7 @@ class __$$_DiaryCopyWithImpl<$Res> extends _$DiaryModelCopyWithImpl<$Res>
       currentValue: currentValue == freezed
           ? _value._currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<dynamic>?,
       values: values == freezed
           ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
@@ -643,7 +643,7 @@ class _$_Diary extends _Diary {
   const _$_Diary(
       {required this.syn,
       required this.firstValue,
-      required final List<dynamic> currentValue,
+      required final List<dynamic>? currentValue,
       required final List<DiaryItem> values,
       required this.grouping})
       : _currentValue = currentValue,
@@ -657,11 +657,13 @@ class _$_Diary extends _Diary {
   final String syn;
   @override
   final DateTime firstValue;
-  final List<dynamic> _currentValue;
+  final List<dynamic>? _currentValue;
   @override
-  List<dynamic> get currentValue {
+  List<dynamic>? get currentValue {
+    final value = _currentValue;
+    if (value == null) return null;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_currentValue);
+    return EqualUnmodifiableListView(value);
   }
 
   final List<DiaryItem> _values;
@@ -718,7 +720,7 @@ abstract class _Diary extends DiaryModel {
   const factory _Diary(
       {required final String syn,
       required final DateTime firstValue,
-      required final List<dynamic> currentValue,
+      required final List<dynamic>? currentValue,
       required final List<DiaryItem> values,
       required final int grouping}) = _$_Diary;
   const _Diary._() : super._();
@@ -730,7 +732,7 @@ abstract class _Diary extends DiaryModel {
   @override
   DateTime get firstValue => throw _privateConstructorUsedError;
   @override
-  List<dynamic> get currentValue => throw _privateConstructorUsedError;
+  List<dynamic>? get currentValue => throw _privateConstructorUsedError;
   @override
   List<DiaryItem> get values => throw _privateConstructorUsedError;
   @override
