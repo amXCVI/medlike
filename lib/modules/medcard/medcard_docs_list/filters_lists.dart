@@ -36,18 +36,24 @@ List<MedcardFilterModel> medcardFiltersList = [
       value: '1',
       filters: <MedcardFilterItemModel>[
         MedcardFilterItemModel(
-            categoryLabel: 'Категория', value: '', label: 'Все'),
+          categoryLabel: 'Категория',
+          value: '',
+          label: 'Все',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=lab',
-            label: 'Анализы'),
+          categoryLabel: 'Категория',
+          value: 'category=lab',
+          label: 'Анализы',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=instrumental',
-            label: 'Диагностика'),
+          categoryLabel: 'Категория',
+          value: 'category=instrumental',
+          label: 'Диагностика',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=consult`',
-            label: 'Осмотры'),
+          categoryLabel: 'Категория',
+          value: 'category=consult',
+          label: 'Осмотры',
+        ),
       ]),
 ];
