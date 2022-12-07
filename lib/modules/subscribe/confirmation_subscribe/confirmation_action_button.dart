@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -41,7 +40,9 @@ class _ConfirmationActionButtonLabelState
           Future.delayed(const Duration(seconds: 1), () {
             context.router.push(AppointmentsRoute(isRefresh: true));
           });
-          context.read<SubscribeCubit>().resetSubscribeStoryState();
+          Future.delayed(const Duration(seconds: 3), () {
+            context.read<SubscribeCubit>().resetSubscribeStoryState();
+          });
         }
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -61,10 +62,14 @@ class _ConfirmationActionButtonLabelState
         });
 
         return state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.finished &&
-                state.createdAppointmentId == null
-            ? SvgPicture.asset(
-                'assets/icons/subscribe/success_creating_appointment_icon.svg')
+                CreatingAppointmentStatuses.finished
+            ? Lottie.asset(
+                'assets/animations/check_white.json',
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                repeat: false,
+              )
             : state.creatingAppointmentStatus ==
                         CreatingAppointmentStatuses.loading ||
                     state.registerOrderStatus ==
