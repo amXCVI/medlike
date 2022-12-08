@@ -22,20 +22,18 @@
 	<script>
 		var bridge = window.webBridgeInstance;
 		async function sendBotEvent(jsonEventObject, files) {
-			console.log(jsonEventObject);
 			const eventObject = JSON.parse(jsonEventObject);
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
-				bridge.sendBotEvent({...eventObject, files: files})
+				bridge.sendBotEvent({ ...eventObject, files: files })
 					.then((res) => {
-						console.log('sent event object: ', eventObject);
 						console.log('bridge.sendBotEvent success', res);
 						try {
 							resolve(JSON.stringify(res));
-						} catch(err) {
+						} catch (err) {
 							resolve(res);
 						}
-						
+
 					})
 					.catch((err) => {
 						console.log('sending event object: ', eventObject);
@@ -45,11 +43,11 @@
 			});
 		}
 
-				bridge?.sendClientEvent({
-					method: 'ready',
-					params: {}
-				})
-			</script>
+		bridge?.sendClientEvent({
+			method: 'ready',
+			params: {}
+		})
+	</script>
 
 	<!-- <script>
 		function base64Encode(buf) {
@@ -104,7 +102,8 @@
 			}
 		}
 
-		async function sendBotEvent(jsonEventObject) {
+		async function sendBotEvent(jsonEventObject, files) {
+			console.log('!!!!!!!!!!!!!!!, files', files);
 			const eventObject = JSON.parse(jsonEventObject);
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
@@ -139,7 +138,7 @@
 					})
 			});
 		}
-	</script> -->
+	</script>  -->
 	<script>
 		window.flutterConfiguration = {
 			canvasKitBaseUrl: "./canvaskit/"
