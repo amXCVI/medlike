@@ -13,6 +13,7 @@ import 'package:medlike/utils/api/api_constants.dart';
 import 'dart:js' as js;
 
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 typedef Callback<T> = dynamic Function(T arg);
 
@@ -65,24 +66,24 @@ class SmartAppClient {
     })).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
-      // SmartappSendBotEventResponseModel parsedResponse =
-      //     SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      // if (parsedResponse.payload.status != 'ok') {
-      //   AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
-      //   throw ('Где-то ошибка, смотри логи'); //! Заменить??????
-      // }
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
       dynamic response;
       try {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: json.decode(data),
-          statusCode: 200,
+          data: json.decode(parsedResponse.payload.result.content),
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: data,
-          statusCode: 200,
+          data: parsedResponse.payload.result.content,
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       }
       print('<<<< coздан объект Response');
@@ -121,24 +122,24 @@ class SmartAppClient {
     })).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
-      // SmartappSendBotEventResponseModel parsedResponse =
-      //     SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      // if (parsedResponse.payload.status != 'ok') {
-      //   AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
-      //   throw ('Где-то ошибка, смотри логи'); //! Заменить??????
-      // }
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
       dynamic response;
       try {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: json.decode(data),
-          statusCode: 200,
+          data: json.decode(parsedResponse.payload.result.content),
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: data,
-          statusCode: 200,
+          data: parsedResponse.payload.result.content,
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       }
       print('<<<< coздан объект Response');
@@ -176,25 +177,25 @@ class SmartAppClient {
     })).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
-      // SmartappSendBotEventResponseModel parsedResponse =
-      //     SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      // SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      // if (parsedResponse.payload.status != 'ok') {
-      //   AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
-      //   throw ('Где-то ошибка, смотри логи'); //! Заменить??????
-      // }
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
       dynamic response;
       try {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: json.decode(data),
-          statusCode: 200,
+          data: json.decode(parsedResponse.payload.result.content),
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: data,
-          statusCode: 200,
+          data: parsedResponse.payload.result.content,
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       }
       print('<<<< coздан объект Response');
@@ -232,24 +233,24 @@ class SmartAppClient {
     }).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по $endpoint: $jsonResponseObject');
-      // SmartappSendBotEventResponseModel parsedResponse =
-      //     SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
-      // if (parsedResponse.payload.status != 'ok') {
-      //   AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
-      //   throw ('Где-то ошибка, смотри логи'); //! Заменить??????
-      // }
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
       dynamic response;
       try {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: json.decode(data),
-          statusCode: 200,
+          data: json.decode(parsedResponse.payload.result.content),
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
-          data: data,
-          statusCode: 200,
+          data: parsedResponse.payload.result.content,
+          statusCode: parsedResponse.payload.result.statusCode,
         );
       }
       print('<<<< coздан объект Response');
@@ -364,7 +365,12 @@ class SmartAppClient {
       'params': {},
     })).then(js.allowInterop((data) {
       print('>>>> Ответ из смартаппа пришел: $data');
-      dynamic jsonResponseObject = json.decode(data);
+      dynamic jsonResponseObject;
+      try {
+        jsonResponseObject = json.decode(data);
+      } catch (err) {
+        jsonResponseObject = data;
+      }
       print('>>>> res: $jsonResponseObject');
       SmartappSendBotEventTokenResponseModel parsedResponse =
           SmartappSendBotEventTokenResponseModel.fromJson(jsonResponseObject);

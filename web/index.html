@@ -31,9 +31,9 @@
 						console.log('sent event object: ', eventObject);
 						console.log('bridge.sendBotEvent success', res);
 						try {
-							resolve(JSON.stringify(res.payload.result.content));
+							resolve(JSON.stringify(res));
 						} catch(err) {
-							resolve(res.payload.result.content);
+							resolve(res);
 						}
 						
 					})
