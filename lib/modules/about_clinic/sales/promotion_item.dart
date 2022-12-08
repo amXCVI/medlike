@@ -6,6 +6,7 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class PromotionItem extends StatelessWidget {
   const PromotionItem({
@@ -40,17 +41,9 @@ class PromotionItem extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(12.0),
                     topLeft: Radius.circular(12.0)),
-                child: Image.network(
-                  '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem.id}/banner',
-                  headers: {
-                    'Authorization': 'Bearer ${state.token}',
-                  },
-                  height: MediaQuery.of(context).size.width / 16 * 9,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    context.read<UserCubit>().saveAccessToken();
-                    return Container();
-                  },
+                child: WebFutureImage(
+                  imageUrl:
+                      '${ApiConstants.baseUrl}/api/v1.0/promotions/${promotionItem.id}/banner',
                 ),
               );
             },
