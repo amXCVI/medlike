@@ -1413,7 +1413,7 @@ mixin _$MainscreenPromotionModel {
   String get description => throw _privateConstructorUsedError;
   int get defaultPrice => throw _privateConstructorUsedError;
   int get promoPrice => throw _privateConstructorUsedError;
-  String get fileName => throw _privateConstructorUsedError;
+  String? get fileName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1433,7 +1433,7 @@ abstract class $MainscreenPromotionModelCopyWith<$Res> {
       String description,
       int defaultPrice,
       int promoPrice,
-      String fileName});
+      String? fileName});
 }
 
 /// @nodoc
@@ -1483,7 +1483,7 @@ class _$MainscreenPromotionModelCopyWithImpl<$Res>
       fileName: fileName == freezed
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -1503,7 +1503,7 @@ abstract class _$$_MainscreenPromotionModelCopyWith<$Res>
       String description,
       int defaultPrice,
       int promoPrice,
-      String fileName});
+      String? fileName});
 }
 
 /// @nodoc
@@ -1556,7 +1556,7 @@ class __$$_MainscreenPromotionModelCopyWithImpl<$Res>
       fileName: fileName == freezed
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -1589,7 +1589,7 @@ class _$_MainscreenPromotionModel implements _MainscreenPromotionModel {
   @override
   final int promoPrice;
   @override
-  final String fileName;
+  final String? fileName;
 
   @override
   String toString() {
@@ -1645,7 +1645,7 @@ abstract class _MainscreenPromotionModel implements MainscreenPromotionModel {
       required final String description,
       required final int defaultPrice,
       required final int promoPrice,
-      required final String fileName}) = _$_MainscreenPromotionModel;
+      required final String? fileName}) = _$_MainscreenPromotionModel;
 
   factory _MainscreenPromotionModel.fromJson(Map<String, dynamic> json) =
       _$_MainscreenPromotionModel.fromJson;
@@ -1663,7 +1663,7 @@ abstract class _MainscreenPromotionModel implements MainscreenPromotionModel {
   @override
   int get promoPrice => throw _privateConstructorUsedError;
   @override
-  String get fileName => throw _privateConstructorUsedError;
+  String? get fileName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_MainscreenPromotionModelCopyWith<_$_MainscreenPromotionModel>

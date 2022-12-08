@@ -76,13 +76,13 @@ class PriceItemModel with _$PriceItemModel {
 @freezed
 class ClinicPromotionModel with _$ClinicPromotionModel {
   const factory ClinicPromotionModel({
-  required String id,
-  required String name,
-  required String description,
-  required DateTime dateFrom,
-  required DateTime dateTo,
-  required int defaultPrice,
-  required int promoPrice,
+    required String id,
+    required String name,
+    required String description,
+    required DateTime dateFrom,
+    required DateTime dateTo,
+    required int defaultPrice,
+    required int promoPrice,
   }) = _ClinicPromotionModel;
 
   factory ClinicPromotionModel.fromJson(Map<String, Object?> json) =>
@@ -92,13 +92,13 @@ class ClinicPromotionModel with _$ClinicPromotionModel {
 @freezed
 class MainscreenPromotionModel with _$MainscreenPromotionModel {
   const factory MainscreenPromotionModel({
-  required String id,
-  required String clinicId,
-  required String name,
-  required String description,
-  required int defaultPrice,
-  required int promoPrice,
-  required String fileName,
+    required String id,
+    required String clinicId,
+    required String name,
+    required String description,
+    required int defaultPrice,
+    required int promoPrice,
+    required String? fileName,
   }) = _MainscreenPromotionModel;
 
   factory MainscreenPromotionModel.fromJson(Map<String, Object?> json) =>

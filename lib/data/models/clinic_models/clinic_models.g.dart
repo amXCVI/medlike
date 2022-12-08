@@ -135,7 +135,7 @@ _$_MainscreenPromotionModel _$$_MainscreenPromotionModelFromJson(
       description: json['description'] as String,
       defaultPrice: json['defaultPrice'] as int,
       promoPrice: json['promoPrice'] as int,
-      fileName: json['fileName'] as String,
+      fileName: json['fileName'] as String?,
     );
 
 Map<String, dynamic> _$$_MainscreenPromotionModelToJson(
