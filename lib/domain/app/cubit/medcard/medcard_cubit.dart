@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'dart:html' as html;
@@ -13,8 +12,6 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'medcard_state.dart';
 
@@ -124,10 +121,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         downloadingFileId: fileId,
       ));
       if (kIsWeb) {
-        final response = await medcardRepository.downloadFile(url: fileUrl);
-        final bytes = base64Decode(response.data);
+        // final response = await medcardRepository.downloadFile(url: fileUrl);
+        final bytes = await medcardRepository.downloadFile(url: fileUrl);
         print('################## bytes stream pdf file ###################');
-        print(response.data);
         final blob = html.Blob([bytes], 'application/pdf');
         final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.document.createElement('a') as html.AnchorElement
@@ -139,16 +135,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
       } else {
-        var response = await medcardRepository.downloadFile(url: fileUrl);
-        var bytes = await consolidateHttpClientResponseBytes(response);
-        var dir = await getApplicationDocumentsDirectory();
-        File file = File("${dir.path}/$fileName.pdf");
-
-        await file.writeAsBytes(bytes, flush: true);
-        completer.complete(file);
-        OpenFile.open(
-          "${dir.path}/$fileName.pdf",
-        );
+        AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
       }
       emit(state.copyWith(
         downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.success,
@@ -178,9 +165,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(downloadingFileId: fileId));
-      final response = await medcardRepository.downloadFile(url: fileUrl);
+      // final response = await medcardRepository.downloadFile(url: fileUrl);
       if (kIsWeb) {
-        final bytes = response.bodyBytes;
+        final bytes = await medcardRepository.downloadFile(url: fileUrl);
         final blob = html.Blob([bytes], fileType);
         final url = html.Url.createObjectUrlFromBlob(blob);
         final anchor = html.document.createElement('a') as html.AnchorElement
@@ -192,14 +179,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         html.document.body?.children.remove(anchor);
         html.Url.revokeObjectUrl(url);
       } else {
-        var bytes = await consolidateHttpClientResponseBytes(response);
-        var dir = await getApplicationDocumentsDirectory();
-        File file = File("${dir.path}/$fileName");
-        await file.writeAsBytes(bytes, flush: true);
-        completer.complete(file);
-        OpenFile.open(
-          "${dir.path}/$fileName",
-        );
+        AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
       }
       emit(state.copyWith(downloadingFileId: ''));
     } catch (e) {

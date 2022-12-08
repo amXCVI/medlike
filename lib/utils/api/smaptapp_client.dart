@@ -26,7 +26,7 @@ class Promise<T> {
 }
 
 @JS('sendBotEvent')
-external Promise<dynamic> sendBotEvent(Object objectParams);
+external Promise<dynamic> sendBotEvent(Object objectParams, dynamic? data);
 
 @JS('sendClientEvent')
 external Promise<dynamic> sendClientEvent(Object objectParams);
@@ -46,16 +46,19 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
-      'method': 'proxy_request',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-        'method': 'GET',
-        'body': {},
-        'params': '',
-      },
-    })).then(js.allowInterop((data) {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'proxy_request',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+          'method': 'GET',
+          'body': {},
+          'params': '',
+        },
+      }),
+      null,
+    ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по GET $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
@@ -100,16 +103,19 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
-      'method': 'proxy_request',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-        'method': 'POST',
-        'body': data,
-        'params': '',
-      },
-    })).then(js.allowInterop((data) {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'proxy_request',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+          'method': 'POST',
+          'body': data,
+          'params': '',
+        },
+      }),
+      null,
+    ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по POST $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
@@ -153,16 +159,19 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
-      'method': 'proxy_request',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-        'method': 'DELETE',
-        'body': data,
-        'params': '',
-      },
-    })).then(js.allowInterop((data) {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'proxy_request',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+          'method': 'DELETE',
+          'body': data,
+          'params': '',
+        },
+      }),
+      null,
+    ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print(
           '>>>> Ответ из смартаппа  по DELETE $endpoint: $jsonResponseObject');
@@ -208,16 +217,19 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent({
-      'method': 'proxy_request',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-        'method': 'PUT',
-        'body': data,
-        'params': '',
+    return await promiseToFuture(sendBotEvent(
+      {
+        'method': 'proxy_request',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+          'method': 'PUT',
+          'body': data,
+          'params': '',
+        },
       },
-    }).then(js.allowInterop((data) {
+      null,
+    ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по PUT $endpoint: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
@@ -261,13 +273,16 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
-      'method': 'get_file',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-      },
-    })).then(js.allowInterop((data) {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'get_file',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+        },
+      }),
+      null,
+    ).then(js.allowInterop((data) {
       print('>>>> Ответ из смартаппа  по GET_IMAGE $endpoint: $data');
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа кодирован в json');
@@ -316,16 +331,19 @@ class SmartAppClient {
       'Authorization': token,
     };
 
-    return await promiseToFuture(sendBotEvent({
-      'method': 'proxy_request',
-      'params': {
-        'url': '${ApiConstants.baseUrl}$endpoint',
-        'headers': options != null ? options.headers : defaultHeaders,
-        'method': 'POST_FORM_DATA',
-        'body': data,
-        'params': '',
+    return await promiseToFuture(sendBotEvent(
+      {
+        'method': 'proxy_request',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+          'method': 'POST_FORM_DATA',
+          'body': {},
+          'params': '',
+        }
       },
-    }).then(js.allowInterop((data) {
+      data,
+    ).then(js.allowInterop((data) {
       print('>>>> Ответ из смартаппа  по $endpoint: $data');
       dynamic response;
       try {
@@ -351,10 +369,13 @@ class SmartAppClient {
   }
 
   static Future<String> getSmartAppToken() async {
-    return await promiseToFuture(sendBotEvent(const JsonEncoder().convert({
-      'method': 'get_open_id_token',
-      'params': {},
-    })).then(js.allowInterop((data) {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'get_open_id_token',
+        'params': {},
+      }),
+      null,
+    ).then(js.allowInterop((data) {
       print('>>>> Ответ из смартаппа пришел: $data');
       dynamic jsonResponseObject;
       try {

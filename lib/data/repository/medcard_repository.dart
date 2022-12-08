@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
@@ -35,14 +36,20 @@ class MedcardRepository {
     }
   }
 
-  Future<dynamic> downloadFile({required String url}) async {
+  Future<Uint8List> downloadFile({required String url}) async {
     try {
-      var response = await _dioClient.getImage(url,
-          options: Options(headers: {
+      var response = await _dioClient.getImage(
+        url,
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {
             'Authorization':
                 'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-          }));
-      return response;
+          },
+        ),
+      );
+      Uint8List decodedbytes1 = base64Decode(response.data);
+      return decodedbytes1;
     } catch (error) {
       rethrow;
     }
@@ -75,15 +82,16 @@ class MedcardRepository {
     }
 
     try {
-      var response = await _dioClient.post('/api/v1.0/profile/$userId/files',
-          data: formData,
-          options: Options(
-            contentType: 'multipart/form-data',
-            headers: {
-              'Authorization':
-                  'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-            },
-          ));
+      var response =
+          await _dioClient.postFormData('/api/v1.0/profile/$userId/files',
+              data: formData,
+              options: Options(
+                contentType: 'multipart/form-data',
+                headers: {
+                  'Authorization':
+                      'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+                },
+              ));
       return MedcardUserFileModel.fromJson(response.data);
     } catch (error) {
       rethrow;

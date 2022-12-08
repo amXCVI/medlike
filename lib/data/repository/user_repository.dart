@@ -185,16 +185,17 @@ class UserRepository {
     });
 
     try {
-      var response = await _dioClient.post('/api/v1.0/profile/$userId/avatar',
-          data: formData,
-          options: Options(
-            contentType: 'multipart/form-data',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization':
-                  'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-            },
-          ));
+      var response =
+          await _dioClient.postFormData('/api/v1.0/profile/$userId/avatar',
+              data: formData,
+              options: Options(
+                contentType: 'multipart/form-data',
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'Authorization':
+                      'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+                },
+              ));
       return UserUploadAvatarResponseModel.fromJson(response.data);
     } catch (error) {
       rethrow;
