@@ -15,7 +15,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.actions,
     this.filteringFunction,
     this.onPressedAppLogo,
-  })  : preferredSize = const Size.fromHeight(kToolbarHeight),
+  })  : preferredSize = const Size.fromHeight(80),
         super(key: key);
   @override
   final Size preferredSize; // default is 56.0
@@ -49,6 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     setState(() {
       searchQuery = newQuery;
     });
+
     /// Здесь можно задать минимальо необходимое кол-во букв для начала поиска
     if (newQuery.isNotEmpty || newQuery.isEmpty) {
       _handleSearch();
@@ -82,81 +83,172 @@ class _CustomAppBarState extends State<CustomAppBar> {
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
       centerTitle: true,
-      title: _isSearchMode
-          ? TextField(
-              controller: _searchQueryController,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: "Поиск...",
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.lightText),
-              ),
-              style: Theme.of(context).textTheme.labelLarge,
-              onChanged: (query) => updateSearchQuery(query),
-              textInputAction: TextInputAction.search,
-              onSubmitted: (value) {
-                _handleSearch();
-              },
-            )
-          : Column(
-              children: [
-                Text(
-                  widget.title.characters
-                      .replaceAll(Characters(''), Characters('\u{200B}'))
-                      .toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                widget.subtitle.isNotEmpty
-                    ? Text(
-                        widget.subtitle,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      )
-                    : const SizedBox(),
-              ],
-            ),
-      leading: widget.isChildrenPage
-          ? IconButton(
-              onPressed: () {
-                RouteData.of(context).router.popTop();
-              },
-              icon: SvgPicture.asset(
-                  'assets/icons/app_bar/app_bar_back_icon.svg'))
-          : IconButton(
-              onPressed: () {
-                widget.onPressedAppLogo != null
-                    ? widget.onPressedAppLogo!()
-                    : RouteData.of(context)
-                        .router
-                        .navigateNamed(AppRoutes.main);
-                HapticFeedback.lightImpact();
-              },
-              icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
-                  width: 28.0),
-            ),
-      actions: widget.isSearch
-          ? [
-              IconButton(
+      automaticallyImplyLeading: false,
+      flexibleSpace: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          widget.isChildrenPage
+              ? IconButton(
                   onPressed: () {
-                    if (_isSearchMode) {
-                      _stopSearching();
-                      Navigator.pop(context);
-                    } else {
-                      _startSearch();
-                    }
+                    RouteData.of(context).router.popTop();
                   },
-                  icon: SvgPicture.asset(_isSearchMode
-                      ? 'assets/icons/app_bar/close_search.svg'
-                      : 'assets/icons/app_bar/search_icon.svg'))
-            ]
-          : widget.actions,
+                  icon: SvgPicture.asset(
+                      'assets/icons/app_bar/app_bar_back_icon.svg'))
+              : IconButton(
+                  onPressed: () {
+                    widget.onPressedAppLogo != null
+                        ? widget.onPressedAppLogo!()
+                        : RouteData.of(context)
+                            .router
+                            .navigateNamed(AppRoutes.main);
+                    HapticFeedback.lightImpact();
+                  },
+                  icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
+                      width: 28.0),
+                ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: _isSearchMode
+                ? [
+                    SizedBox(
+                      width: 250,
+                      child: TextField(
+                        controller: _searchQueryController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: "Поиск...",
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.copyWith(color: AppColors.lightText),
+                        ),
+                        style: Theme.of(context).textTheme.labelLarge,
+                        onChanged: (query) => updateSearchQuery(query),
+                        textInputAction: TextInputAction.search,
+                        onSubmitted: (value) {
+                          _handleSearch();
+                        },
+                      ),
+                    ),
+                  ]
+                : [
+                    Text(
+                      widget.title.characters
+                          .replaceAll(Characters(''), Characters('\u{200B}'))
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(fontWeight: FontWeight.w500),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    widget.subtitle.isNotEmpty
+                        ? Text(
+                            widget.subtitle,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          )
+                        : const SizedBox(),
+                    const SizedBox(height: 10),
+                  ],
+          ),
+          Row(
+            children: widget.isSearch
+                ? [
+                    IconButton(
+                        onPressed: () {
+                          if (_isSearchMode) {
+                            _stopSearching();
+                            Navigator.pop(context);
+                          } else {
+                            _startSearch();
+                          }
+                        },
+                        icon: SvgPicture.asset(_isSearchMode
+                            ? 'assets/icons/app_bar/close_search.svg'
+                            : 'assets/icons/app_bar/search_icon.svg'))
+                  ]
+                : widget.actions,
+          )
+        ],
+      ),
+      // title: _isSearchMode
+      //     ? TextField(
+      //         controller: _searchQueryController,
+      //         autofocus: true,
+      //         decoration: InputDecoration(
+      //           hintText: "Поиск...",
+      //           border: InputBorder.none,
+      //           focusedBorder: InputBorder.none,
+      //           hintStyle: Theme.of(context)
+      //               .textTheme
+      //               .labelLarge
+      //               ?.copyWith(color: AppColors.lightText),
+      //         ),
+      //         style: Theme.of(context).textTheme.labelLarge,
+      //         onChanged: (query) => updateSearchQuery(query),
+      //         textInputAction: TextInputAction.search,
+      //         onSubmitted: (value) {
+      //           _handleSearch();
+      //         },
+      //       )
+      //     : Column(
+      //         children: [
+      //           Text(
+      //             widget.title.characters
+      //                 .replaceAll(Characters(''), Characters('\u{200B}'))
+      //                 .toString(),
+      //             style: Theme.of(context)
+      //                 .textTheme
+      //                 .headlineMedium
+      //                 ?.copyWith(fontWeight: FontWeight.w500),
+      //             overflow: TextOverflow.ellipsis,
+      //           ),
+      //           widget.subtitle.isNotEmpty
+      //               ? Text(
+      //                   widget.subtitle,
+      //                   style: Theme.of(context).textTheme.headlineSmall,
+      //                 )
+      //               : const SizedBox(),
+      //         ],
+      //       ),
+      // leading: widget.isChildrenPage
+      //     ? IconButton(
+      //         onPressed: () {
+      //           RouteData.of(context).router.popTop();
+      //         },
+      //         icon: SvgPicture.asset(
+      //             'assets/icons/app_bar/app_bar_back_icon.svg'))
+      //     : IconButton(
+      //         onPressed: () {
+      //           widget.onPressedAppLogo != null
+      //               ? widget.onPressedAppLogo!()
+      //               : RouteData.of(context)
+      //                   .router
+      //                   .navigateNamed(AppRoutes.main);
+      //           HapticFeedback.lightImpact();
+      //         },
+      //         icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
+      //             width: 28.0),
+      //       ),
+      // actions: widget.isSearch
+      //     ? [
+      //         IconButton(
+      //             onPressed: () {
+      //               if (_isSearchMode) {
+      //                 _stopSearching();
+      //                 Navigator.pop(context);
+      //               } else {
+      //                 _startSearch();
+      //               }
+      //             },
+      //             icon: SvgPicture.asset(_isSearchMode
+      //                 ? 'assets/icons/app_bar/close_search.svg'
+      //                 : 'assets/icons/app_bar/search_icon.svg'))
+      //       ]
+      //     : widget.actions,
     );
   }
 }

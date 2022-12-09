@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/smaptapp_client.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class SmartappLoginPage extends StatelessWidget {
   const SmartappLoginPage({Key? key, this.resolver}) : super(key: key);
@@ -72,6 +75,7 @@ class SmartappLoginPage extends StatelessWidget {
     }
 
     void goToLoginPage() {
+      UserSecureStorage.setField(AppConstants.smartappToken, 'smartappToken');
       context.router.replaceAll([StartPhoneNumberRoute()]);
     }
 
@@ -91,32 +95,39 @@ class SmartappLoginPage extends StatelessWidget {
         return;
       }
     }).catchError((onError) {
-      // AppToast.showAppToast(
-      //     msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
+      AppToast.showAppToast(
+          msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
     });
 
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MaterialButton(
-          color: AppColors.mainSeparatorAlpha,
-          onPressed: getSmartappTokenForce,
-          child: const Text('auth with smartapp token (sendBotEvent)'),
+      child: GestureDetector(
+        onDoubleTap: goToLoginPage,
+        child: const CircularLoader(
+          radius: 50,
         ),
-        const SizedBox(height: 24),
-        MaterialButton(
-          color: AppColors.mainSeparatorAlpha,
-          onPressed: goToLoginPage,
-          child: const Text('go to login page'),
-        ),
-        const SizedBox(height: 24),
-        MaterialButton(
-          color: AppColors.mainSeparatorAlpha,
-          onPressed: goToMainPage,
-          child: const Text('go to main page'),
-        ),
-      ],
-    ));
+      ),
+
+      // Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      // children: [
+      //   MaterialButton(
+      //     color: AppColors.mainSeparatorAlpha,
+      //     onPressed: getSmartappTokenForce,
+      //     child: const Text('auth with smartapp token (sendBotEvent)'),
+      //   ),
+      //   const SizedBox(height: 24),
+      //   MaterialButton(
+      //     color: AppColors.mainSeparatorAlpha,
+      //     onPressed: goToLoginPage,
+      //     child: const Text('go to login page'),
+      //   ),
+      //   const SizedBox(height: 24),
+      //   MaterialButton(
+      //     color: AppColors.mainSeparatorAlpha,
+      //     onPressed: goToMainPage,
+      //     child: const Text('go to main page'),
+      //   ),
+      // ],),
+    );
   }
 }

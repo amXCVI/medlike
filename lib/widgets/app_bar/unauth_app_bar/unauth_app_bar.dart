@@ -13,14 +13,30 @@ class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      leading: Image.asset('assets/icons/ic_logo_launch.png', width: 28,),
-      title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
-      centerTitle: true,
-      actions: [
-        IconButton(
-            onPressed: () {},
-            icon: Image.asset('assets/icons/ic_feedback_navbar_outline.png'))
-      ],
+      automaticallyImplyLeading: false,
+      flexibleSpace: Row(
+        children: [
+          Image.asset(
+            'assets/icons/ic_logo_launch.png',
+            width: 28,
+          ),
+          Text(title, style: Theme.of(context).textTheme.headlineMedium),
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset('assets/icons/ic_feedback_navbar_outline.png'))
+        ],
+      ),
+      // leading: Image.asset(
+      //   'assets/icons/ic_logo_launch.png',
+      //   width: 28,
+      // ),
+      // title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
+      // centerTitle: true,
+      // actions: [
+      //   IconButton(
+      //       onPressed: () {},
+      //       icon: Image.asset('assets/icons/ic_feedback_navbar_outline.png'))
+      // ],
     );
   }
 }
