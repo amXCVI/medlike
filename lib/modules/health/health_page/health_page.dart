@@ -21,9 +21,9 @@ class HealthPage extends StatelessWidget {
       context.read<DiaryCubit>().setUserId(userId);
       _loadData('None');
       if (isChildren) {
-        context.router.pushNamed(AppRoutes.health);
+        context.router.push(CardsRoute(isChildrenPage: true));
       } else {
-        context.router.replaceNamed(AppRoutes.health);
+        context.router.replace(CardsRoute(isChildrenPage: false));
       }
     }
 

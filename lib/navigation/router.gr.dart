@@ -334,8 +334,11 @@ class AppRouter extends _i37.RootStackRouter {
           routeData: routeData, child: const _i32.HealthPage());
     },
     CardsRoute.name: (routeData) {
+      final args = routeData.argsAs<CardsRouteArgs>();
       return _i37.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i33.CardsPage());
+          routeData: routeData,
+          child: _i33.CardsPage(
+              key: args.key, isChildrenPage: args.isChildrenPage));
     },
     DiaryRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryRouteArgs>();
@@ -498,7 +501,7 @@ class PasswordRouteArgs {
 /// generated route for
 /// [_i3.CreatePinCodePage]
 class CreatePinCodeRoute extends _i37.PageRouteInfo<CreatePinCodeRouteArgs> {
-  CreatePinCodeRoute({_i38.Key? key, bool? noUsedBiometric})
+  CreatePinCodeRoute({_i38.Key? key, bool noUsedBiometric = false})
       : super(CreatePinCodeRoute.name,
             path: '/login_pin_code',
             args: CreatePinCodeRouteArgs(
@@ -508,11 +511,11 @@ class CreatePinCodeRoute extends _i37.PageRouteInfo<CreatePinCodeRouteArgs> {
 }
 
 class CreatePinCodeRouteArgs {
-  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric});
+  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric = false});
 
   final _i38.Key? key;
 
-  final bool? noUsedBiometric;
+  final bool noUsedBiometric;
 
   @override
   String toString() {
@@ -1311,10 +1314,26 @@ class HealthRoute extends _i37.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i33.CardsPage]
-class CardsRoute extends _i37.PageRouteInfo<void> {
-  const CardsRoute() : super(CardsRoute.name, path: '/health');
+class CardsRoute extends _i37.PageRouteInfo<CardsRouteArgs> {
+  CardsRoute({_i38.Key? key, required bool isChildrenPage})
+      : super(CardsRoute.name,
+            path: '/health',
+            args: CardsRouteArgs(key: key, isChildrenPage: isChildrenPage));
 
   static const String name = 'CardsRoute';
+}
+
+class CardsRouteArgs {
+  const CardsRouteArgs({this.key, required this.isChildrenPage});
+
+  final _i38.Key? key;
+
+  final bool isChildrenPage;
+
+  @override
+  String toString() {
+    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage}';
+  }
 }
 
 /// generated route for

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -30,7 +31,7 @@ class AppointmentsCubit
     }
   }
 
-  void getAppointmentsList(bool isRefresh) async {
+  Future<void> getAppointmentsList(bool isRefresh) async {
     if (state.getAppointmentsStatus == GetAppointmentsStatuses.loading ||
         (!isRefresh &&
             state.getAppointmentsStatus == GetAppointmentsStatuses.success &&
@@ -94,12 +95,14 @@ class AppointmentsCubit
             .toList(),
       ));
       filterAppointmentsList(state.selectedDate);
+      return;
     } catch (e) {
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.failed,
         appointmentsList: [],
         filteredAppointmentsList: [],
       ));
+      return;
     }
   }
 
@@ -125,6 +128,19 @@ class AppointmentsCubit
             element.appointmentDateTime
                 .add(Duration(hours: element.timeZoneOffset)),
             state.selectedDate))
+        .toList();
+    emit(state.copyWith(
+      filteredAppointmentsList: filteredAppointmentsList,
+    ));
+  }
+
+  /// Отбираем только будущие приемы, для экрана записи
+  void getFutureAppointmentsList() {
+    final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
+    if (state.appointmentsList == null) return;
+    filteredAppointmentsList = state.filteredAppointmentsList!
+        .where((element) =>
+            AppointmentStatuses.cancellableStatusIds.contains(element.status))
         .toList();
     emit(state.copyWith(
       filteredAppointmentsList: filteredAppointmentsList,
