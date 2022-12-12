@@ -1020,3 +1020,312 @@ abstract class _SmartappSendBotEventTokenPayloadModel
           _$_SmartappSendBotEventTokenPayloadModel>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+SmartappGetFileResponseModel _$SmartappGetFileResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _SmartappGetFileResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SmartappGetFileResponseModel {
+  String get type => throw _privateConstructorUsedError;
+  String get filename => throw _privateConstructorUsedError;
+  String get size => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_async_file')
+  String? get isAsyncFile => throw _privateConstructorUsedError;
+  @JsonKey(name: '_file_id')
+  String? get fileId => throw _privateConstructorUsedError;
+  @JsonKey(name: '_file_mimetype')
+  String? get fileMimetype => throw _privateConstructorUsedError;
+  @JsonKey(name: '_file_url')
+  String? get fileUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: '_file_hash')
+  String? get fileHash => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SmartappGetFileResponseModelCopyWith<SmartappGetFileResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SmartappGetFileResponseModelCopyWith<$Res> {
+  factory $SmartappGetFileResponseModelCopyWith(
+          SmartappGetFileResponseModel value,
+          $Res Function(SmartappGetFileResponseModel) then) =
+      _$SmartappGetFileResponseModelCopyWithImpl<$Res>;
+  $Res call(
+      {String type,
+      String filename,
+      String size,
+      @JsonKey(name: 'is_async_file') String? isAsyncFile,
+      @JsonKey(name: '_file_id') String? fileId,
+      @JsonKey(name: '_file_mimetype') String? fileMimetype,
+      @JsonKey(name: '_file_url') String? fileUrl,
+      @JsonKey(name: '_file_hash') String? fileHash});
+}
+
+/// @nodoc
+class _$SmartappGetFileResponseModelCopyWithImpl<$Res>
+    implements $SmartappGetFileResponseModelCopyWith<$Res> {
+  _$SmartappGetFileResponseModelCopyWithImpl(this._value, this._then);
+
+  final SmartappGetFileResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(SmartappGetFileResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? type = freezed,
+    Object? filename = freezed,
+    Object? size = freezed,
+    Object? isAsyncFile = freezed,
+    Object? fileId = freezed,
+    Object? fileMimetype = freezed,
+    Object? fileUrl = freezed,
+    Object? fileHash = freezed,
+  }) {
+    return _then(_value.copyWith(
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      filename: filename == freezed
+          ? _value.filename
+          : filename // ignore: cast_nullable_to_non_nullable
+              as String,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAsyncFile: isAsyncFile == freezed
+          ? _value.isAsyncFile
+          : isAsyncFile // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileId: fileId == freezed
+          ? _value.fileId
+          : fileId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileMimetype: fileMimetype == freezed
+          ? _value.fileMimetype
+          : fileMimetype // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileUrl: fileUrl == freezed
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileHash: fileHash == freezed
+          ? _value.fileHash
+          : fileHash // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_SmartappGetFileResponseModelCopyWith<$Res>
+    implements $SmartappGetFileResponseModelCopyWith<$Res> {
+  factory _$$_SmartappGetFileResponseModelCopyWith(
+          _$_SmartappGetFileResponseModel value,
+          $Res Function(_$_SmartappGetFileResponseModel) then) =
+      __$$_SmartappGetFileResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String type,
+      String filename,
+      String size,
+      @JsonKey(name: 'is_async_file') String? isAsyncFile,
+      @JsonKey(name: '_file_id') String? fileId,
+      @JsonKey(name: '_file_mimetype') String? fileMimetype,
+      @JsonKey(name: '_file_url') String? fileUrl,
+      @JsonKey(name: '_file_hash') String? fileHash});
+}
+
+/// @nodoc
+class __$$_SmartappGetFileResponseModelCopyWithImpl<$Res>
+    extends _$SmartappGetFileResponseModelCopyWithImpl<$Res>
+    implements _$$_SmartappGetFileResponseModelCopyWith<$Res> {
+  __$$_SmartappGetFileResponseModelCopyWithImpl(
+      _$_SmartappGetFileResponseModel _value,
+      $Res Function(_$_SmartappGetFileResponseModel) _then)
+      : super(_value, (v) => _then(v as _$_SmartappGetFileResponseModel));
+
+  @override
+  _$_SmartappGetFileResponseModel get _value =>
+      super._value as _$_SmartappGetFileResponseModel;
+
+  @override
+  $Res call({
+    Object? type = freezed,
+    Object? filename = freezed,
+    Object? size = freezed,
+    Object? isAsyncFile = freezed,
+    Object? fileId = freezed,
+    Object? fileMimetype = freezed,
+    Object? fileUrl = freezed,
+    Object? fileHash = freezed,
+  }) {
+    return _then(_$_SmartappGetFileResponseModel(
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      filename: filename == freezed
+          ? _value.filename
+          : filename // ignore: cast_nullable_to_non_nullable
+              as String,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      isAsyncFile: isAsyncFile == freezed
+          ? _value.isAsyncFile
+          : isAsyncFile // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileId: fileId == freezed
+          ? _value.fileId
+          : fileId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileMimetype: fileMimetype == freezed
+          ? _value.fileMimetype
+          : fileMimetype // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileUrl: fileUrl == freezed
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileHash: fileHash == freezed
+          ? _value.fileHash
+          : fileHash // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SmartappGetFileResponseModel implements _SmartappGetFileResponseModel {
+  const _$_SmartappGetFileResponseModel(
+      {required this.type,
+      required this.filename,
+      required this.size,
+      @JsonKey(name: 'is_async_file') this.isAsyncFile,
+      @JsonKey(name: '_file_id') this.fileId,
+      @JsonKey(name: '_file_mimetype') this.fileMimetype,
+      @JsonKey(name: '_file_url') this.fileUrl,
+      @JsonKey(name: '_file_hash') this.fileHash});
+
+  factory _$_SmartappGetFileResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$$_SmartappGetFileResponseModelFromJson(json);
+
+  @override
+  final String type;
+  @override
+  final String filename;
+  @override
+  final String size;
+  @override
+  @JsonKey(name: 'is_async_file')
+  final String? isAsyncFile;
+  @override
+  @JsonKey(name: '_file_id')
+  final String? fileId;
+  @override
+  @JsonKey(name: '_file_mimetype')
+  final String? fileMimetype;
+  @override
+  @JsonKey(name: '_file_url')
+  final String? fileUrl;
+  @override
+  @JsonKey(name: '_file_hash')
+  final String? fileHash;
+
+  @override
+  String toString() {
+    return 'SmartappGetFileResponseModel(type: $type, filename: $filename, size: $size, isAsyncFile: $isAsyncFile, fileId: $fileId, fileMimetype: $fileMimetype, fileUrl: $fileUrl, fileHash: $fileHash)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SmartappGetFileResponseModel &&
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.filename, filename) &&
+            const DeepCollectionEquality().equals(other.size, size) &&
+            const DeepCollectionEquality()
+                .equals(other.isAsyncFile, isAsyncFile) &&
+            const DeepCollectionEquality().equals(other.fileId, fileId) &&
+            const DeepCollectionEquality()
+                .equals(other.fileMimetype, fileMimetype) &&
+            const DeepCollectionEquality().equals(other.fileUrl, fileUrl) &&
+            const DeepCollectionEquality().equals(other.fileHash, fileHash));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(filename),
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(isAsyncFile),
+      const DeepCollectionEquality().hash(fileId),
+      const DeepCollectionEquality().hash(fileMimetype),
+      const DeepCollectionEquality().hash(fileUrl),
+      const DeepCollectionEquality().hash(fileHash));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SmartappGetFileResponseModelCopyWith<_$_SmartappGetFileResponseModel>
+      get copyWith => __$$_SmartappGetFileResponseModelCopyWithImpl<
+          _$_SmartappGetFileResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SmartappGetFileResponseModelToJson(this);
+  }
+}
+
+abstract class _SmartappGetFileResponseModel
+    implements SmartappGetFileResponseModel {
+  const factory _SmartappGetFileResponseModel(
+          {required final String type,
+          required final String filename,
+          required final String size,
+          @JsonKey(name: 'is_async_file') final String? isAsyncFile,
+          @JsonKey(name: '_file_id') final String? fileId,
+          @JsonKey(name: '_file_mimetype') final String? fileMimetype,
+          @JsonKey(name: '_file_url') final String? fileUrl,
+          @JsonKey(name: '_file_hash') final String? fileHash}) =
+      _$_SmartappGetFileResponseModel;
+
+  factory _SmartappGetFileResponseModel.fromJson(Map<String, dynamic> json) =
+      _$_SmartappGetFileResponseModel.fromJson;
+
+  @override
+  String get type => throw _privateConstructorUsedError;
+  @override
+  String get filename => throw _privateConstructorUsedError;
+  @override
+  String get size => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'is_async_file')
+  String? get isAsyncFile => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: '_file_id')
+  String? get fileId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: '_file_mimetype')
+  String? get fileMimetype => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: '_file_url')
+  String? get fileUrl => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: '_file_hash')
+  String? get fileHash => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SmartappGetFileResponseModelCopyWith<_$_SmartappGetFileResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}

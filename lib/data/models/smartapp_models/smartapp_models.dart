@@ -72,3 +72,20 @@ class SmartappSendBotEventTokenPayloadModel
           Map<String, Object?> json) =>
       _$SmartappSendBotEventTokenPayloadModelFromJson(json);
 }
+
+@freezed
+class SmartappGetFileResponseModel with _$SmartappGetFileResponseModel {
+  const factory SmartappGetFileResponseModel({
+    required String type,
+    required String filename,
+    required String size,
+    @JsonKey(name: 'is_async_file') String? isAsyncFile,
+    @JsonKey(name: '_file_id') String? fileId,
+    @JsonKey(name: '_file_mimetype') String? fileMimetype,
+    @JsonKey(name: '_file_url') String? fileUrl,
+    @JsonKey(name: '_file_hash') String? fileHash,
+  }) = _SmartappGetFileResponseModel;
+
+  factory SmartappGetFileResponseModel.fromJson(Map<String, Object?> json) =>
+      _$SmartappGetFileResponseModelFromJson(json);
+}

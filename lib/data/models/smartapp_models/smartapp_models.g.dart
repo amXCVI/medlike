@@ -91,3 +91,29 @@ Map<String, dynamic> _$$_SmartappSendBotEventTokenPayloadModelToJson(
       'result': instance.result,
       'status': instance.status,
     };
+
+_$_SmartappGetFileResponseModel _$$_SmartappGetFileResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_SmartappGetFileResponseModel(
+      type: json['type'] as String,
+      filename: json['filename'] as String,
+      size: json['size'] as String,
+      isAsyncFile: json['is_async_file'] as String?,
+      fileId: json['_file_id'] as String?,
+      fileMimetype: json['_file_mimetype'] as String?,
+      fileUrl: json['_file_url'] as String?,
+      fileHash: json['_file_hash'] as String?,
+    );
+
+Map<String, dynamic> _$$_SmartappGetFileResponseModelToJson(
+        _$_SmartappGetFileResponseModel instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'filename': instance.filename,
+      'size': instance.size,
+      'is_async_file': instance.isAsyncFile,
+      '_file_id': instance.fileId,
+      '_file_mimetype': instance.fileMimetype,
+      '_file_url': instance.fileUrl,
+      '_file_hash': instance.fileHash,
+    };
