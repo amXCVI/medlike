@@ -118,6 +118,11 @@ class SchedulePage extends StatelessWidget {
       return Future(() => null);
     }
 
+     _onRefreshData();
+
+    final clinicsList = context.read<ClinicsCubit>().state.clinicsList;
+    final clinic = clinicsList?.firstWhere(((el) => el.id == clinicId));
+
     void _handleTapOnCell(TimetableCellModel selectedCell) {
       context.read<SubscribeCubit>().setSelectedTimetableCell(selectedCell);
       context.read<SubscribeCubit>().getAppointmentInfoData(
@@ -140,13 +145,9 @@ class SchedulePage extends StatelessWidget {
       }
       context.router.push(ConfirmationSubscribeRoute(
         userId: userId,
+        timeZoneHours: clinic?.timeZoneOffset ?? 0 
       ));
     }
-
-    _onRefreshData();
-
-    final clinicsList = context.read<ClinicsCubit>().state.clinicsList;
-    final clinic = clinicsList?.firstWhere(((el) => el.id == clinicId));
 
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {

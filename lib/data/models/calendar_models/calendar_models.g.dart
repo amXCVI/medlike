@@ -23,7 +23,7 @@ Map<String, dynamic> _$$_CalendarModelToJson(_$_CalendarModel instance) =>
 _$_TimetableCellModel _$$_TimetableCellModelFromJson(
         Map<String, dynamic> json) =>
     _$_TimetableCellModel(
-      time: DateTime.parse(json['time'] as String),
+      time: const TimestampConverter().fromJson(json['time'] as String),
       scheduleId: json['scheduleId'] as String,
       cabinetName: json['cabinetName'] as String,
       buildingId: json['buildingId'] as String,
@@ -33,7 +33,7 @@ _$_TimetableCellModel _$$_TimetableCellModelFromJson(
 Map<String, dynamic> _$$_TimetableCellModelToJson(
         _$_TimetableCellModel instance) =>
     <String, dynamic>{
-      'time': instance.time.toIso8601String(),
+      'time': const TimestampConverter().toJson(instance.time),
       'scheduleId': instance.scheduleId,
       'cabinetName': instance.cabinetName,
       'buildingId': instance.buildingId,

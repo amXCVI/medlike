@@ -258,7 +258,9 @@ class AppRouter extends _i37.RootStackRouter {
       return _i37.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i20.ConfirmationSubscribePage(
-              key: args.key, userId: args.userId));
+              key: args.key,
+              userId: args.userId,
+              timeZoneHours: args.timeZoneHours));
     },
     PaymentRoute.name: (routeData) {
       final args = routeData.argsAs<PaymentRouteArgs>();
@@ -1052,24 +1054,29 @@ class ScheduleRouteArgs {
 /// [_i20.ConfirmationSubscribePage]
 class ConfirmationSubscribeRoute
     extends _i37.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
-  ConfirmationSubscribeRoute({_i38.Key? key, required String userId})
+  ConfirmationSubscribeRoute(
+      {_i38.Key? key, required String userId, required int timeZoneHours})
       : super(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm',
-            args: ConfirmationSubscribeRouteArgs(key: key, userId: userId));
+            args: ConfirmationSubscribeRouteArgs(
+                key: key, userId: userId, timeZoneHours: timeZoneHours));
 
   static const String name = 'ConfirmationSubscribeRoute';
 }
 
 class ConfirmationSubscribeRouteArgs {
-  const ConfirmationSubscribeRouteArgs({this.key, required this.userId});
+  const ConfirmationSubscribeRouteArgs(
+      {this.key, required this.userId, required this.timeZoneHours});
 
   final _i38.Key? key;
 
   final String userId;
 
+  final int timeZoneHours;
+
   @override
   String toString() {
-    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId}';
+    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId, timeZoneHours: $timeZoneHours}';
   }
 }
 
