@@ -1,5 +1,6 @@
 import 'package:freezed_annotation'
     '/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 part 'calendar_models.freezed.dart';
 
@@ -20,7 +21,7 @@ class CalendarModel with _$CalendarModel {
 @freezed
 class TimetableCellModel with _$TimetableCellModel {
   const factory TimetableCellModel({
-    required DateTime time,
+    @TimestampConverter() required DateTime time,
     required String scheduleId,
     required String cabinetName,
     required String buildingId,
@@ -73,4 +74,17 @@ class UnlockCellModel with _$UnlockCellModel {
 
   factory UnlockCellModel.fromJson(Map<String, Object?> json) =>
       _$UnlockCellModelFromJson(json);
+}
+
+class TimestampConverter implements JsonConverter<DateTime, String> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(String timestamp) {
+    var df = DateFormat("yyyy-mm-ddTHH:mm:ssz");
+    return df.parse(timestamp);
+  }
+
+  @override
+  String toJson(DateTime date) => date.toIso8601String();
 }

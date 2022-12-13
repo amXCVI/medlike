@@ -14,10 +14,14 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
 
 class ConfirmationSubscribePage extends StatefulWidget {
-  const ConfirmationSubscribePage({Key? key, required this.userId})
-      : super(key: key);
+  const ConfirmationSubscribePage({
+    Key? key, 
+    required this.userId,
+    required this.timeZoneHours
+  }) : super(key: key);
 
   final String userId;
+  final int timeZoneHours;
 
   @override
   State<ConfirmationSubscribePage> createState() =>
@@ -45,6 +49,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
               userId: widget.userId,
               userName:
                   context.read<UserCubit>().getShortUserName(widget.userId),
+              timezoneHours: widget.timeZoneHours
             );
         return;
 
@@ -54,6 +59,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
               userId: widget.userId,
               userName:
                   context.read<UserCubit>().getShortUserName(widget.userId),
+              timezoneHours: widget.timeZoneHours
             );
       }
     }

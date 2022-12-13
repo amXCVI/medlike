@@ -290,8 +290,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
             .contains(filterStr.toLowerCase()))
         .toList();
 
-    print(filteredDoctorsList);
-
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
       filteredCabinetsList: filteredCabinetsList,
@@ -445,13 +443,10 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         ),
       );
 
-      /// Здесь ячейки приводятся к внутреннему формату. Добавляется таймзона (часы)
-      int timeZoneOffset = await getTimeZoneOffset();
       emit(state.copyWith(
         getTimetableCellsStatus: GetTimetableCellsStatuses.success,
         timetableCellsList: response.cells.map((e) {
-          DateTime time = dateTimeToUTC(e.time, timeZoneOffset);
-          return e.copyWith(time: time);
+          return e.copyWith(time: e.time);
         }).toList(),
         timetableLogsList: response.logs,
       ));
@@ -580,6 +575,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void createNewAppointment({
     required String userId,
     required String userName,
+    required int timezoneHours
   }) async {
     if (state.creatingAppointmentStatus ==
         CreatingAppointmentStatuses.success) {
@@ -589,10 +585,13 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
+
+
+    final time = state.selectedTimetableCell?.time as DateTime;
+
     try {
       dynamic data = {
-        'AppointmentDateTime': DateFormat("yyyy-MM-ddTHH:mm:ss")
-            .format(state.selectedTimetableCell?.time as DateTime),
+        'AppointmentDateTime': dateTimeToServerFormat(time, timezoneHours),
         'ClinicInfo': {
           'Id': state.selectedBuilding?.id,
           'Name': state.selectedBuilding?.name,

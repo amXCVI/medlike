@@ -46,7 +46,6 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
   Widget build(BuildContext context) {
     String getAppointmentsDesc(
         AppointmentModelWithTimeZoneOffset appointmentItem) {
-      print(appointmentItem);
       final date = getAppointmentTime(
         appointmentItem.appointmentDateTime,
         widget.clinic?.timeZoneOffset ?? 3,
