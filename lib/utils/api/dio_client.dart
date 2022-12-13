@@ -15,6 +15,7 @@ class Api {
   );
 
   late Dio _dio;
+  static bool isContextSet = false;
 
   Api() {
     _dio = Dio()
@@ -33,7 +34,10 @@ class Api {
         (HttpClient client) {
       if(!kIsWeb) {
         var sccontext = SecurityContext.defaultContext;
-        sccontext.setTrustedCertificatesBytes(sslCert1.buffer.asInt8List());
+        if(Api.isContextSet == false) {
+          sccontext.setTrustedCertificatesBytes(sslCert1.buffer.asInt8List());
+          Api.isContextSet = true;
+        }
 
         HttpClient client = HttpClient(context: sccontext);
         return client;
