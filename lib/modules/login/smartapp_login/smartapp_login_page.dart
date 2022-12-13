@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class SmartappLoginPage extends StatelessWidget {
@@ -83,51 +83,56 @@ class SmartappLoginPage extends StatelessWidget {
       context.router.replaceAll([const MainRoute()]);
     }
 
-    getSmartappToken().then((bool value) {
-      if (value) {
-        if (resolver != null) {
-          resolver!.next(true);
-          return;
-        }
-        Future.delayed(const Duration(seconds: 1), () {
-          context.router.replaceAll([const MainRoute()]);
+    UserSecureStorage.getField(AppConstants.isAuth).then((isAuth) {
+      if (isAuth != 'true') {
+        getSmartappToken().then((bool value) {
+          if (value) {
+            if (resolver != null) {
+              resolver!.next(true);
+              return;
+            }
+            Future.delayed(const Duration(seconds: 1), () {
+              context.router.replaceAll([const MainRoute()]);
+            });
+            return;
+          }
+        }).catchError((onError) {
+          AppToast.showAppToast(
+              msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
         });
-        return;
       }
-    }).catchError((onError) {
-      AppToast.showAppToast(
-          msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
     });
 
     return Center(
-      child: GestureDetector(
-        onDoubleTap: goToLoginPage,
-        child: const CircularLoader(
-          radius: 50,
-        ),
-      ),
+      // child: GestureDetector(
+      //   onDoubleTap: goToLoginPage,
+      //   child: const CircularLoader(
+      //     radius: 50,
+      //   ),
+      // ),
 
-      // Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      // children: [
-      //   MaterialButton(
-      //     color: AppColors.mainSeparatorAlpha,
-      //     onPressed: getSmartappTokenForce,
-      //     child: const Text('auth with smartapp token (sendBotEvent)'),
-      //   ),
-      //   const SizedBox(height: 24),
-      //   MaterialButton(
-      //     color: AppColors.mainSeparatorAlpha,
-      //     onPressed: goToLoginPage,
-      //     child: const Text('go to login page'),
-      //   ),
-      //   const SizedBox(height: 24),
-      //   MaterialButton(
-      //     color: AppColors.mainSeparatorAlpha,
-      //     onPressed: goToMainPage,
-      //     child: const Text('go to main page'),
-      //   ),
-      // ],),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MaterialButton(
+            color: AppColors.mainSeparatorAlpha,
+            onPressed: getSmartappTokenForce,
+            child: const Text('auth with smartapp token (sendBotEvent)'),
+          ),
+          const SizedBox(height: 24),
+          MaterialButton(
+            color: AppColors.mainSeparatorAlpha,
+            onPressed: goToLoginPage,
+            child: const Text('go to login page'),
+          ),
+          const SizedBox(height: 24),
+          MaterialButton(
+            color: AppColors.mainSeparatorAlpha,
+            onPressed: goToMainPage,
+            child: const Text('go to main page'),
+          ),
+        ],
+      ),
     );
   }
 }

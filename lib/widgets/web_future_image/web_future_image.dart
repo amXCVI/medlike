@@ -3,14 +3,18 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
 import 'package:medlike/data/repository/images_repository.dart';
-import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
 class WebFutureImage extends StatefulWidget {
-  const WebFutureImage({Key? key, required this.imageUrl, this.radius})
-      : super(key: key);
+  const WebFutureImage({
+    Key? key,
+    required this.imageUrl,
+    this.radius,
+    this.isWithButton = false,
+  }) : super(key: key);
 
   final String imageUrl;
   final double? radius;
+  final bool isWithButton;
 
   @override
   State<WebFutureImage> createState() => _WebFutureImageState();
@@ -49,7 +53,11 @@ class _WebFutureImageState extends State<WebFutureImage> {
             ),
           );
         } else {
-          return Center(child: CircularLoader(radius: widget.radius ?? 20));
+          return Center(
+              child: MaterialButton(
+            onPressed: _getData,
+            child: const Text('GET IMAGE'),
+          ));
         }
       },
     );

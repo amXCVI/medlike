@@ -1,11 +1,9 @@
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:meta/meta.dart';
-import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 part 'clinics_state.dart';
 
@@ -34,21 +32,10 @@ class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
       final List<ClinicModel> response;
       response = await clinicsRepository.getAllClinicsList();
 
-      /// Далее все строения получают адрес с широтой и долготой.
-      /// И Дальше используются уже они
-      /// Возможно, не самое красивое решение, сделал так из-за того, что планировал
-      /// использовать сервис с ограничениями по кол-ву запросов в минуту
-      final YandexGeocoder geocoder =
-          YandexGeocoder(apiKey: AppConstants.yandexMapApiKey);
       for (var clinic in response) {
         for (var e in clinic.buildings) {
           {
             Future.delayed((const Duration()), () async {
-              final GeocodeResponse geocodeFromAddress =
-                  await geocoder.getGeocode(GeocodeRequest(
-                geocode: AddressGeocode(address: e.address),
-                lang: Lang.ru,
-              ));
               BuildingLatLngModel building = BuildingLatLngModel(
                 name: e.name,
                 departmentName: e.departmentName,
@@ -57,8 +44,8 @@ class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
                 buildingId: e.buildingId,
                 phone: e.phone,
                 workTime: e.workTime,
-                latitude: geocodeFromAddress.firstPoint?.latitude ?? 47.23617,
-                longitude: geocodeFromAddress.firstPoint?.longitude ?? 38.89688,
+                latitude: 0,
+                longitude: 0,
               );
               addBuildingWithAddress(building);
             });

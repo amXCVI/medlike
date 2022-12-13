@@ -154,6 +154,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
           AppConstants.refreshToken, response.refreshToken);
+      UserSecureStorage.setField(AppConstants.isAuth, 'true');
       print('######## Внутренние токены записаны в localStorage ###########');
       // UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
       emit(state.copyWith(
