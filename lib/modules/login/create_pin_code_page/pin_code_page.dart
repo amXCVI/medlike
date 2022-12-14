@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -31,19 +32,33 @@ class _CreatePinCodePageState extends State<CreatePinCodePage> {
   }
 
   void onSuccessBiometricAuthenticate(bool result) {
-    context.read<UserCubit>().signInBiometric();
+    try {
+      context.read<UserCubit>().signInBiometric();
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+    }
     context.router.replaceAll([const MainRoute()]);
   }
 
   void onSuccessBiometricDataSaved(bool result) {
-    if (result) {
-      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
-          SelectedAuthMethods.touchId.toString());
+    try {
+      if (result) {
+        UserSecureStorage.setField(
+            AppConstants.useBiometricMethodAuthentication,
+            SelectedAuthMethods.touchId.toString());
+      }
+
+      setState(() {
+        isForcedShowingBiometricModal = false;
+      });
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
     }
 
-    setState(() {
-      isForcedShowingBiometricModal = false;
-    });
     context.router.replaceAll([const MainRoute()]);
   }
 
