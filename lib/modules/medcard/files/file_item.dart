@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/file_icons_helper.dart';
@@ -29,16 +30,20 @@ class FileItem extends StatelessWidget {
       onTap: onTap,
       isRightArrow: false,
       customRightAction:
-          isDownloading ? const CircularLoader(radius: 15) : const SizedBox(),
-      customIcon: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            color: AppColors.mainBrand[50],
-            borderRadius: const BorderRadius.all(Radius.circular(20.0))),
-        child: SvgPicture.asset(FileIconsHelper.getCustomFileIcon(
-            fileItem.type.split('/').last.toUpperCase())),
-      ),
+          isDownloading && fileItem.id != AppConstants.uploadingFileId
+              ? const CircularLoader(radius: 15)
+              : const SizedBox(),
+      customIcon: isDownloading && fileItem.id == AppConstants.uploadingFileId
+          ? const CircularLoader(radius: 15)
+          : Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                  color: AppColors.mainBrand[50],
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0))),
+              child: SvgPicture.asset(FileIconsHelper.getCustomFileIcon(
+                  fileItem.type.split('/').last.toUpperCase())),
+            ),
       isFirstSymbolForIcon: false,
     );
   }
