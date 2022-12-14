@@ -10,15 +10,17 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentsListWidget extends StatelessWidget {
-  const AppointmentsListWidget({Key? key, required this.selectedDate})
+  const AppointmentsListWidget(
+      {Key? key, required this.selectedDate, required this.userId})
       : super(key: key);
 
   final DateTime selectedDate;
+  final String userId;
 
   void _getFilteredData(BuildContext context) async {
     await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) =>
-            context.read<AppointmentsCubit>().getFutureAppointmentsList());
+        (value) => context.read<AppointmentsCubit>().getFutureAppointmentsList(
+            userId: userId, selectedDate: selectedDate));
   }
 
   @override

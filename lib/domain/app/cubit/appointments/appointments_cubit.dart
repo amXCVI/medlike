@@ -55,7 +55,8 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: const TimestampConverter().fromJson(e.appointmentDateTime),
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -78,7 +79,8 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: const TimestampConverter().fromJson(e.appointmentDateTime),
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -136,12 +138,18 @@ class AppointmentsCubit
   }
 
   /// Отбираем только будущие приемы, для экрана записи
-  void getFutureAppointmentsList() {
+  /// Отбираем приемы по выбранному для записи пользователю
+  /// Отбираем прием по выбранной дате
+  /// Итоговый список для показа на экране записи на прием
+  void getFutureAppointmentsList(
+      {required String userId, required DateTime selectedDate}) {
     final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
     if (state.appointmentsList == null) return;
-    filteredAppointmentsList = state.filteredAppointmentsList!
+    filteredAppointmentsList = state.appointmentsList!
         .where((element) =>
-            AppointmentStatuses.cancellableStatusIds.contains(element.status))
+            AppointmentStatuses.cancellableStatusIds.contains(element.status) &&
+            element.patientInfo.id == userId &&
+            isSameDay(element.appointmentDateTime, selectedDate))
         .toList();
     emit(state.copyWith(
       filteredAppointmentsList: filteredAppointmentsList,
@@ -171,7 +179,8 @@ class AppointmentsCubit
               comment: response.comment,
               researchPlace: response.researchPlace,
               id: response.id,
-              appointmentDateTime: const TimestampConverter().fromJson(response.appointmentDateTime),
+              appointmentDateTime: const TimestampConverter()
+                  .fromJson(response.appointmentDateTime),
               timeZoneOffset: int.parse(
                   response.appointmentDateTime.split('+').last.substring(0, 2)),
               patientInfo: response.patientInfo,
