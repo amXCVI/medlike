@@ -23,6 +23,7 @@ mixin _$NotificationModel {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get eventDate => throw _privateConstructorUsedError;
   int get eventsCount => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
@@ -44,7 +45,7 @@ abstract class $NotificationModelCopyWith<$Res> {
       {String id,
       String title,
       String description,
-      DateTime eventDate,
+      @TimestampConverter() DateTime eventDate,
       int eventsCount,
       String userId,
       String eventType,
@@ -119,7 +120,7 @@ abstract class _$$_NotificationModelCopyWith<$Res>
       {String id,
       String title,
       String description,
-      DateTime eventDate,
+      @TimestampConverter() DateTime eventDate,
       int eventsCount,
       String userId,
       String eventType,
@@ -192,7 +193,7 @@ class _$_NotificationModel implements _NotificationModel {
       {required this.id,
       required this.title,
       required this.description,
-      required this.eventDate,
+      @TimestampConverter() required this.eventDate,
       required this.eventsCount,
       required this.userId,
       required this.eventType,
@@ -208,6 +209,7 @@ class _$_NotificationModel implements _NotificationModel {
   @override
   final String description;
   @override
+  @TimestampConverter()
   final DateTime eventDate;
   @override
   final int eventsCount;
@@ -270,7 +272,7 @@ abstract class _NotificationModel implements NotificationModel {
       {required final String id,
       required final String title,
       required final String description,
-      required final DateTime eventDate,
+      @TimestampConverter() required final DateTime eventDate,
       required final int eventsCount,
       required final String userId,
       required final String eventType,
@@ -286,6 +288,7 @@ abstract class _NotificationModel implements NotificationModel {
   @override
   String get description => throw _privateConstructorUsedError;
   @override
+  @TimestampConverter()
   DateTime get eventDate => throw _privateConstructorUsedError;
   @override
   int get eventsCount => throw _privateConstructorUsedError;
