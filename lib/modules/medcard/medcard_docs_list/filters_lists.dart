@@ -28,7 +28,7 @@ List<MedcardFilterModel> medcardFiltersList = [
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -1)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 0)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Сегодня'),
       ]),
   const MedcardFilterModel(
