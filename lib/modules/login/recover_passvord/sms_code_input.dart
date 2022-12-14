@@ -20,8 +20,7 @@ class SmsCodeInput extends StatefulWidget {
 class _SmsCodeInputState extends State<SmsCodeInput> {
   late final TextEditingController _phoneInputController =
       TextEditingController()
-        ..text = phoneMaskFormatter
-            .maskText(widget.phoneNumber.replaceFirst(RegExp("[7]"), ''));
+        ..text = phoneMaskFormatter.maskText(widget.phoneNumber.substring(1));
   late final TextEditingController _codeInputController =
       TextEditingController()..text = '';
 
@@ -48,9 +47,8 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
     }
   }
 
-
   void _onFocus() {
-    if(errorMsg != null) {
+    if (errorMsg != null) {
       setState(() {
         errorMsg = null;
       });
@@ -63,13 +61,8 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        if (state.userPhoneNumber != null &&
-            state.userPhoneNumber!.isNotEmpty) {
-          _phoneInputController.text = phoneMaskFormatter
-              .maskText(state.userPhoneNumber!.replaceAll(RegExp("[+7]"), ''));
-        } else {
-          context.router.push(StartPhoneNumberRoute());
-        }
+        print('!!!!!!!!!!!');
+        print(widget.phoneNumber);
 
         return Column(
           children: [
@@ -114,9 +107,11 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: errorMsg == null 
-                      ? const BorderSide(color: AppColors.lightText, width: 1.0)
-                      : const BorderSide(color: AppColors.mainError, width: 1.0),
+                    borderSide: errorMsg == null
+                        ? const BorderSide(
+                            color: AppColors.lightText, width: 1.0)
+                        : const BorderSide(
+                            color: AppColors.mainError, width: 1.0),
                   ),
                   suffixIcon: IconButton(
                     icon: SvgPicture.asset(
@@ -135,14 +130,15 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                 },
               ),
             ),
-            if(errorMsg != null) Text(
-              errorMsg!,
-              style: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(color: AppColors.mainError),
-              textAlign: TextAlign.center,
-            ),
+            if (errorMsg != null)
+              Text(
+                errorMsg!,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: AppColors.mainError),
+                textAlign: TextAlign.center,
+              ),
           ],
         );
       },
