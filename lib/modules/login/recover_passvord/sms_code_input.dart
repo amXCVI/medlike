@@ -61,9 +61,6 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        print('!!!!!!!!!!!');
-        print(widget.phoneNumber);
-
         return Column(
           children: [
             TapOutsideDetectorWidget(
