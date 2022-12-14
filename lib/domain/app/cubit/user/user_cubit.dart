@@ -426,8 +426,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       return response;
     } on DioError catch (e) {
       addError(e);
-      if (e.type == DioErrorType.other) {
-        rethrow;
+      if(e.type == DioErrorType.other) {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }

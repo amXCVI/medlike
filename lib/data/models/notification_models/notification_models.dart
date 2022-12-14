@@ -1,5 +1,6 @@
 import 'package:freezed_annotation'
     '/freezed_annotation.dart';
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
 
 part 'notification_models.freezed.dart';
 
@@ -11,7 +12,7 @@ class NotificationModel with _$NotificationModel {
     required String id,
     required String title,
     required String description,
-    required DateTime eventDate,
+    @TimestampConverter() required DateTime eventDate,
     required int eventsCount,
     required String userId,
     required String eventType,

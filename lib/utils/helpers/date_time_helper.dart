@@ -7,7 +7,6 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 /// (Запись на прием, показатели здоровья)
 /// Часовой пояс брать из UserSecureStorage
 DateTime dateTimeToUTC(DateTime date, int timeZoneOffset) {
-  // Странно
   return date.add(Duration(hours: timeZoneOffset));
 }
 
@@ -56,11 +55,8 @@ String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
   const mskTime = 3;
 
   int tz = DateTime.now().timeZoneOffset.inHours;
-  DateTime timeOfClinic = dateTime
-      .toUtc()
-      .add(Duration(hours: isTimeCell != true ? timeZoneOffset : 0));
 
-  final timeString = DateFormat(formatSting ?? 'HH:mm').format(timeOfClinic);
+  final timeString = DateFormat(formatSting ?? 'HH:mm').format(dateTime);
 
   if (timeZoneOffset == tz) {
     return timeString;

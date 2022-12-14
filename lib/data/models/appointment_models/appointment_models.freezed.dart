@@ -569,6 +569,7 @@ mixin _$AppointmentModelWithTimeZoneOffset {
   String? get comment => throw _privateConstructorUsedError;
   String get researchPlace => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get appointmentDateTime => throw _privateConstructorUsedError;
   int get timeZoneOffset => throw _privateConstructorUsedError;
   PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
@@ -603,7 +604,7 @@ abstract class $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
       String? comment,
       String researchPlace,
       String id,
-      DateTime appointmentDateTime,
+      @TimestampConverter() DateTime appointmentDateTime,
       int timeZoneOffset,
       PatientInfoModel patientInfo,
       ClinicInfoModel clinicInfo,
@@ -770,7 +771,7 @@ abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
       String? comment,
       String researchPlace,
       String id,
-      DateTime appointmentDateTime,
+      @TimestampConverter() DateTime appointmentDateTime,
       int timeZoneOffset,
       PatientInfoModel patientInfo,
       ClinicInfoModel clinicInfo,
@@ -919,7 +920,7 @@ class _$_AppointmentModelWithTimeZoneOffset
       required this.comment,
       required this.researchPlace,
       required this.id,
-      required this.appointmentDateTime,
+      @TimestampConverter() required this.appointmentDateTime,
       required this.timeZoneOffset,
       required this.patientInfo,
       required this.clinicInfo,
@@ -950,6 +951,7 @@ class _$_AppointmentModelWithTimeZoneOffset
   @override
   final String id;
   @override
+  @TimestampConverter()
   final DateTime appointmentDateTime;
   @override
   final int timeZoneOffset;
@@ -1072,7 +1074,7 @@ abstract class _AppointmentModelWithTimeZoneOffset
           required final String? comment,
           required final String researchPlace,
           required final String id,
-          required final DateTime appointmentDateTime,
+          @TimestampConverter() required final DateTime appointmentDateTime,
           required final int timeZoneOffset,
           required final PatientInfoModel patientInfo,
           required final ClinicInfoModel clinicInfo,
@@ -1103,6 +1105,7 @@ abstract class _AppointmentModelWithTimeZoneOffset
   @override
   String get id => throw _privateConstructorUsedError;
   @override
+  @TimestampConverter()
   DateTime get appointmentDateTime => throw _privateConstructorUsedError;
   @override
   int get timeZoneOffset => throw _privateConstructorUsedError;

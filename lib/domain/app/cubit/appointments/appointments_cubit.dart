@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -54,7 +55,7 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                appointmentDateTime: const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -77,7 +78,7 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                appointmentDateTime: const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -170,7 +171,7 @@ class AppointmentsCubit
               comment: response.comment,
               researchPlace: response.researchPlace,
               id: response.id,
-              appointmentDateTime: DateTime.parse(response.appointmentDateTime),
+              appointmentDateTime: const TimestampConverter().fromJson(response.appointmentDateTime),
               timeZoneOffset: int.parse(
                   response.appointmentDateTime.split('+').last.substring(0, 2)),
               patientInfo: response.patientInfo,
