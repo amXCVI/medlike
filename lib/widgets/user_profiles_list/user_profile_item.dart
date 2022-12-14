@@ -10,11 +10,13 @@ class UserProfileItem extends StatelessWidget {
     required this.userProfileDate,
     required this.isSelectedItem,
     this.onLoadAvatar,
+    this.isLoadingAvatar = false,
   }) : super(key: key);
 
   final UserProfile userProfileDate;
   final bool isSelectedItem;
   final void Function()? onLoadAvatar;
+  final bool isLoadingAvatar;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class UserProfileItem extends StatelessWidget {
               userProfileDate: userProfileDate,
               isSelectedItem: isSelectedItem,
               onLoadAvatar: onLoadAvatar,
+              isLoadingAvatar: isLoadingAvatar,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
