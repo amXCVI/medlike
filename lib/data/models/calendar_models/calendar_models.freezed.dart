@@ -194,6 +194,7 @@ TimetableCellModel _$TimetableCellModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TimetableCellModel {
+  @TimestampConverter()
   DateTime get time => throw _privateConstructorUsedError;
   String get scheduleId => throw _privateConstructorUsedError;
   String get cabinetName => throw _privateConstructorUsedError;
@@ -212,7 +213,7 @@ abstract class $TimetableCellModelCopyWith<$Res> {
           TimetableCellModel value, $Res Function(TimetableCellModel) then) =
       _$TimetableCellModelCopyWithImpl<$Res>;
   $Res call(
-      {DateTime time,
+      {@TimestampConverter() DateTime time,
       String scheduleId,
       String cabinetName,
       String buildingId,
@@ -269,7 +270,7 @@ abstract class _$$_TimetableCellModelCopyWith<$Res>
       __$$_TimetableCellModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {DateTime time,
+      {@TimestampConverter() DateTime time,
       String scheduleId,
       String cabinetName,
       String buildingId,
@@ -324,7 +325,7 @@ class __$$_TimetableCellModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TimetableCellModel implements _TimetableCellModel {
   const _$_TimetableCellModel(
-      {required this.time,
+      {@TimestampConverter() required this.time,
       required this.scheduleId,
       required this.cabinetName,
       required this.buildingId,
@@ -334,6 +335,7 @@ class _$_TimetableCellModel implements _TimetableCellModel {
       _$$_TimetableCellModelFromJson(json);
 
   @override
+  @TimestampConverter()
   final DateTime time;
   @override
   final String scheduleId;
@@ -389,7 +391,7 @@ class _$_TimetableCellModel implements _TimetableCellModel {
 
 abstract class _TimetableCellModel implements TimetableCellModel {
   const factory _TimetableCellModel(
-      {required final DateTime time,
+      {@TimestampConverter() required final DateTime time,
       required final String scheduleId,
       required final String cabinetName,
       required final String buildingId,
@@ -399,6 +401,7 @@ abstract class _TimetableCellModel implements TimetableCellModel {
       _$_TimetableCellModel.fromJson;
 
   @override
+  @TimestampConverter()
   DateTime get time => throw _privateConstructorUsedError;
   @override
   String get scheduleId => throw _privateConstructorUsedError;

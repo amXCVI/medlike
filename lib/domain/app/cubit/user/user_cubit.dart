@@ -426,6 +426,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       return response;
     } on DioError catch (e) {
       addError(e);
+      if(e.type == DioErrorType.other) {
+        rethrow;
+        return const CheckUserAccountResponse(
+          found: false,
+          message: 'Ошибка соединения с сервером');
+      }
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(

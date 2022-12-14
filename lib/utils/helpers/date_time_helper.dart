@@ -7,6 +7,7 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 /// (Запись на прием, показатели здоровья)
 /// Часовой пояс брать из UserSecureStorage
 DateTime dateTimeToUTC(DateTime date, int timeZoneOffset) {
+  // Странно
   return date.add(Duration(hours: timeZoneOffset));
 }
 
@@ -15,7 +16,6 @@ DateTime dateTimeToUTC(DateTime date, int timeZoneOffset) {
 /// Используется в тех местах, где критично точное местное время
 /// (Запись на прием, показатели здоровья)
 /// Часовой пояс брать из UserSecureStorage
-//? кажется, нигде не используется )
 String dateTimeToServerFormat(DateTime date, int timeZoneOffset) {
   Duration duration = Duration(hours: timeZoneOffset);
   if (duration.isNegative) {
