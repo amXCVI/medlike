@@ -88,7 +88,8 @@ class SchedulePage extends StatelessWidget {
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
       context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
-      context.read<AppointmentsCubit>().getFutureAppointmentsList();
+      context.read<AppointmentsCubit>().getFutureAppointmentsList(
+          userId: userId, selectedDate: selectedDay.date);
       if (selectedDay.hasLogs) {
         context
             .read<AppointmentsCubit>()
@@ -119,7 +120,7 @@ class SchedulePage extends StatelessWidget {
       return Future(() => null);
     }
 
-     _onRefreshData();
+    _onRefreshData();
 
     final clinicsList = context.read<ClinicsCubit>().state.clinicsList;
     final clinic = clinicsList?.firstWhere(((el) => el.id == clinicId));
@@ -145,9 +146,7 @@ class SchedulePage extends StatelessWidget {
             );
       }
       context.router.push(ConfirmationSubscribeRoute(
-        userId: userId,
-        timeZoneHours: clinic?.timeZoneOffset ?? 0 
-      ));
+          userId: userId, timeZoneHours: clinic?.timeZoneOffset ?? 0));
     }
 
     return BlocBuilder<SubscribeCubit, SubscribeState>(
@@ -233,7 +232,10 @@ class SchedulePage extends StatelessWidget {
                                       ?.copyWith(color: AppColors.lightText),
                                 ),
                               )),
-                  AppointmentsListWidget(selectedDate: state.selectedDate),
+                  AppointmentsListWidget(
+                    selectedDate: state.selectedDate,
+                    userId: userId,
+                  ),
                 ],
               ),
             ),
