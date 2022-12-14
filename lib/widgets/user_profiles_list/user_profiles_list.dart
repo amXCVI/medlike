@@ -69,21 +69,23 @@ class UserProfilesList extends StatelessWidget {
                             },
                             child: UserProfileItem(
                               userProfileDate: item,
-                              isSelectedItem: selectableItems ?
-                                          state.selectedUserId == null ||
-                                      state.selectedUserId!.isEmpty
-                                  ? state.userProfiles![0].id == item.id
-                                  : state.userProfiles
-                                              ?.firstWhere((element) =>
-                                                  element.id ==
-                                                  state.selectedUserId)
-                                              .id as String ==
-                                          item.id
-                                      ? true
-                                      : false : false,
+                              isSelectedItem: selectableItems
+                                  ? state.selectedUserId == null ||
+                                          state.selectedUserId!.isEmpty
+                                      ? state.userProfiles![0].id == item.id
+                                      : state.userProfiles
+                                                  ?.firstWhere((element) =>
+                                                      element.id ==
+                                                      state.selectedUserId)
+                                                  .id as String ==
+                                              item.id
+                                          ? true
+                                          : false
+                                  : false,
                               onLoadAvatar: () {
                                 handleLoadAvatar(item.id);
                               },
+                              isLoadingAvatar: item.avatar == 'loading',
                             ),
                           ))
                       .toList());
