@@ -165,9 +165,12 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
 
       await file.writeAsBytes(bytes, flush: true);
       completer.complete(file);
-      OpenFile.open(
-        "${dir.path}/$fileName",
-      );
+      if (state.downloadingFileId!.isNotEmpty) {
+        OpenFile.open(
+          "${dir.path}/$fileName",
+        );
+      }
+
       emit(state.copyWith(downloadingFileId: ''));
     } catch (e) {
       addError(e);
@@ -216,6 +219,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
     } catch (e) {
       addError(e);
+
       /// Если попытались загрузить неверный тип файла, или еще какая-то ошибка
       /// дергаем список всех файлов заново
       getUserFilesList(isRefresh: true, userId: userId);
@@ -261,6 +265,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
           ?.where((e) => e.id != fileId)
           .toList(),
     ));
+    if (fileId == state.downloadingFileId) {
+      emit(state.copyWith(downloadingFileId: ''));
+    }
     try {
       final DeleteUserFileResponseModel response;
       response = await medcardRepository.deleteUserFile(
