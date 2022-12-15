@@ -197,6 +197,7 @@ class SchedulePage extends StatelessWidget {
                           onChangeSelectedDate: _setSelectedDate,
                           onChangeStartDate: _setStartDate,
                           onChangeEndDate: _setEndDate,
+                          firstDay: DateTime.now(),
                         ),
                   state.getTimetableCellsStatus ==
                               GetTimetableCellsStatuses.success &&
