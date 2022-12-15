@@ -88,7 +88,7 @@ class SchedulePage extends StatelessWidget {
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
       context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
-      context.read<AppointmentsCubit>().getFutureAppointmentsList(
+      context.read<AppointmentsCubit>().getAppointmentsListForSelectedDay(
           userId: userId, selectedDate: selectedDay.date);
       if (selectedDay.hasLogs) {
         context

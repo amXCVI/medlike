@@ -19,8 +19,10 @@ class AppointmentsListWidget extends StatelessWidget {
 
   void _getFilteredData(BuildContext context) async {
     await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) => context.read<AppointmentsCubit>().getFutureAppointmentsList(
-            userId: userId, selectedDate: selectedDate));
+        (value) => context
+            .read<AppointmentsCubit>()
+            .getAppointmentsListForSelectedDay(
+                userId: userId, selectedDate: selectedDate));
   }
 
   @override
@@ -35,7 +37,7 @@ class AppointmentsListWidget extends StatelessWidget {
         } else if (state.getAppointmentsStatus ==
             GetAppointmentsStatuses.success) {
           return AppointmentsList(
-            appointmentsList: state.filteredAppointmentsList
+            appointmentsList: state.selectedDayAppointmentsList
                 as List<AppointmentModelWithTimeZoneOffset>,
             selectedDate: selectedDate,
           );

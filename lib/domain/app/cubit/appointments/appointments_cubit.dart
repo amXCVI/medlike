@@ -141,7 +141,7 @@ class AppointmentsCubit
   /// Отбираем приемы по выбранному для записи пользователю
   /// Отбираем прием по выбранной дате
   /// Итоговый список для показа на экране записи на прием
-  void getFutureAppointmentsList(
+  void getAppointmentsListForSelectedDay(
       {required String userId, required DateTime selectedDate}) {
     final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
     if (state.appointmentsList == null) return;
@@ -152,7 +152,7 @@ class AppointmentsCubit
             isSameDay(element.appointmentDateTime, selectedDate))
         .toList();
     emit(state.copyWith(
-      filteredAppointmentsList: filteredAppointmentsList,
+      selectedDayAppointmentsList: filteredAppointmentsList,
     ));
   }
 
