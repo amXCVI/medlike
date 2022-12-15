@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
@@ -36,6 +37,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
 
     if(state != AppLifecycleState.resumed) {
       await UserSecureStorage.setField(AppConstants.timeoutStart, DateTime.now().toString());
+      context.read<PromptCubit>().unselect();
     } else {
       final time = DateTime.tryParse(
         await UserSecureStorage.getField(AppConstants.timeoutStart) ?? ''
@@ -54,6 +56,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   }
 
   void _logOutUser() {
+    context.read<PromptCubit>().unselect();
     setState(() {
       isLogoutApp = true;
     });
