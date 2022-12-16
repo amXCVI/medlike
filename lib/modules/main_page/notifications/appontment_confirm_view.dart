@@ -11,11 +11,10 @@ import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class AppointmentConfirmView extends StatefulWidget {
   const AppointmentConfirmView(
-      {Key? key, required this.appointment, this.clinic})
+      {Key? key, required this.appointment})
       : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointment;
-  final ClinicModel? clinic;
 
   @override
   State<AppointmentConfirmView> createState() => _AppointmentConfirmViewState();
@@ -48,7 +47,7 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
         AppointmentModelWithTimeZoneOffset appointmentItem) {
       final date = getAppointmentTime(
         appointmentItem.appointmentDateTime,
-        widget.clinic?.timeZoneOffset ?? 3,
+        appointmentItem.timeZoneOffset,
         formatSting: 'dd.MM.yyyy, HH:mm',
       );
 
