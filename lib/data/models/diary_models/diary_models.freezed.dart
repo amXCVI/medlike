@@ -517,6 +517,7 @@ DiaryModel _$DiaryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DiaryModel {
   String get syn => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get firstValue => throw _privateConstructorUsedError;
   List<dynamic>? get currentValue => throw _privateConstructorUsedError;
   List<DiaryItem> get values => throw _privateConstructorUsedError;
@@ -535,7 +536,7 @@ abstract class $DiaryModelCopyWith<$Res> {
       _$DiaryModelCopyWithImpl<$Res>;
   $Res call(
       {String syn,
-      DateTime firstValue,
+      @TimestampConverter() DateTime firstValue,
       List<dynamic>? currentValue,
       List<DiaryItem> values,
       int grouping});
@@ -589,7 +590,7 @@ abstract class _$$_DiaryCopyWith<$Res> implements $DiaryModelCopyWith<$Res> {
   @override
   $Res call(
       {String syn,
-      DateTime firstValue,
+      @TimestampConverter() DateTime firstValue,
       List<dynamic>? currentValue,
       List<DiaryItem> values,
       int grouping});
@@ -642,7 +643,7 @@ class __$$_DiaryCopyWithImpl<$Res> extends _$DiaryModelCopyWithImpl<$Res>
 class _$_Diary extends _Diary {
   const _$_Diary(
       {required this.syn,
-      required this.firstValue,
+      @TimestampConverter() required this.firstValue,
       required final List<dynamic>? currentValue,
       required final List<DiaryItem> values,
       required this.grouping})
@@ -656,6 +657,7 @@ class _$_Diary extends _Diary {
   @override
   final String syn;
   @override
+  @TimestampConverter()
   final DateTime firstValue;
   final List<dynamic>? _currentValue;
   @override
@@ -719,7 +721,7 @@ class _$_Diary extends _Diary {
 abstract class _Diary extends DiaryModel {
   const factory _Diary(
       {required final String syn,
-      required final DateTime firstValue,
+      @TimestampConverter() required final DateTime firstValue,
       required final List<dynamic>? currentValue,
       required final List<DiaryItem> values,
       required final int grouping}) = _$_Diary;
@@ -730,6 +732,7 @@ abstract class _Diary extends DiaryModel {
   @override
   String get syn => throw _privateConstructorUsedError;
   @override
+  @TimestampConverter()
   DateTime get firstValue => throw _privateConstructorUsedError;
   @override
   List<dynamic>? get currentValue => throw _privateConstructorUsedError;
@@ -749,6 +752,7 @@ DiaryItem _$DiaryItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DiaryItem {
+  @TimestampConverter()
   DateTime get date => throw _privateConstructorUsedError;
   List<List<dynamic>> get data => throw _privateConstructorUsedError;
 
@@ -762,7 +766,7 @@ mixin _$DiaryItem {
 abstract class $DiaryItemCopyWith<$Res> {
   factory $DiaryItemCopyWith(DiaryItem value, $Res Function(DiaryItem) then) =
       _$DiaryItemCopyWithImpl<$Res>;
-  $Res call({DateTime date, List<List<dynamic>> data});
+  $Res call({@TimestampConverter() DateTime date, List<List<dynamic>> data});
 }
 
 /// @nodoc
@@ -797,7 +801,7 @@ abstract class _$$_DiaryItemCopyWith<$Res> implements $DiaryItemCopyWith<$Res> {
           _$_DiaryItem value, $Res Function(_$_DiaryItem) then) =
       __$$_DiaryItemCopyWithImpl<$Res>;
   @override
-  $Res call({DateTime date, List<List<dynamic>> data});
+  $Res call({@TimestampConverter() DateTime date, List<List<dynamic>> data});
 }
 
 /// @nodoc
@@ -832,7 +836,8 @@ class __$$_DiaryItemCopyWithImpl<$Res> extends _$DiaryItemCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_DiaryItem extends _DiaryItem {
   const _$_DiaryItem(
-      {required this.date, required final List<List<dynamic>> data})
+      {@TimestampConverter() required this.date,
+      required final List<List<dynamic>> data})
       : _data = data,
         super._();
 
@@ -840,6 +845,7 @@ class _$_DiaryItem extends _DiaryItem {
       _$$_DiaryItemFromJson(json);
 
   @override
+  @TimestampConverter()
   final DateTime date;
   final List<List<dynamic>> _data;
   @override
@@ -882,7 +888,7 @@ class _$_DiaryItem extends _DiaryItem {
 
 abstract class _DiaryItem extends DiaryItem {
   const factory _DiaryItem(
-      {required final DateTime date,
+      {@TimestampConverter() required final DateTime date,
       required final List<List<dynamic>> data}) = _$_DiaryItem;
   const _DiaryItem._() : super._();
 
@@ -890,6 +896,7 @@ abstract class _DiaryItem extends DiaryItem {
       _$_DiaryItem.fromJson;
 
   @override
+  @TimestampConverter()
   DateTime get date => throw _privateConstructorUsedError;
   @override
   List<List<dynamic>> get data => throw _privateConstructorUsedError;

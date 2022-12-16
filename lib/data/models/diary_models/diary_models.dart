@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
 
 part 'diary_models.freezed.dart';
 part 'diary_models.g.dart';
@@ -114,7 +115,7 @@ abstract class DiaryModel with _$DiaryModel {
 
   const factory DiaryModel({
     required String syn,
-    required DateTime firstValue,
+    @TimestampConverter() required DateTime firstValue,
     required List<dynamic>? currentValue,
     required List<DiaryItem> values,
     required int grouping,
@@ -128,7 +129,7 @@ abstract class DiaryModel with _$DiaryModel {
     return CurrentValue(
       isAbnormal: currentValue![1][1] == 1, 
       isChangeable: currentValue![1][0] == 1, 
-      date: DateTime.parse(currentValue![0] as String), 
+      date: const TimestampConverter().fromJson(currentValue![0] as String), 
       innerData: currentValue![2] as List<dynamic>
     );
   }
@@ -173,7 +174,7 @@ abstract class DiaryItem with _$DiaryItem {
   const DiaryItem._();
 
   const factory DiaryItem({
-    required DateTime date,
+    @TimestampConverter() required DateTime date,
     required List<List<dynamic>> data,
   }) = _DiaryItem;
 
