@@ -13,6 +13,7 @@ class AppointmentsState {
   final GetAppointmentsStatuses? getAppointmentsStatus;
   final List<AppointmentModelWithTimeZoneOffset>? appointmentsList;
   final List<AppointmentModelWithTimeZoneOffset>? filteredAppointmentsList;
+  final List<AppointmentModelWithTimeZoneOffset>? selectedDayAppointmentsList;
   final PutAppointmentsStatuses? putAppointmentStatus;
   final DeleteAppointmentStatuses? deleteAppointmentStatus;
   final GetLastAppointmentStatuses? getLastAppointmentStatus;
@@ -26,6 +27,7 @@ class AppointmentsState {
     this.appointmentsList,
     this.lastAppointment,
     this.filteredAppointmentsList,
+    this.selectedDayAppointmentsList,
     this.putAppointmentStatus,
     this.deleteAppointmentStatus,
     this.getLastAppointmentStatus,
@@ -42,6 +44,7 @@ class AppointmentsState {
     GetAppointmentsStatuses? getAppointmentsStatus,
     List<AppointmentModelWithTimeZoneOffset>? appointmentsList,
     List<AppointmentModelWithTimeZoneOffset>? filteredAppointmentsList,
+    List<AppointmentModelWithTimeZoneOffset>? selectedDayAppointmentsList,
     PutAppointmentsStatuses? putAppointmentStatus,
     DeleteAppointmentStatuses? deleteAppointmentStatus,
     GetLastAppointmentStatuses? getLastAppointmentStatus,
@@ -56,6 +59,8 @@ class AppointmentsState {
       appointmentsList: appointmentsList ?? this.appointmentsList,
       filteredAppointmentsList:
           filteredAppointmentsList ?? this.filteredAppointmentsList,
+      selectedDayAppointmentsList:
+          selectedDayAppointmentsList ?? this.selectedDayAppointmentsList,
       putAppointmentStatus: putAppointmentStatus ?? this.putAppointmentStatus,
       deleteAppointmentStatus:
           deleteAppointmentStatus ?? this.deleteAppointmentStatus,

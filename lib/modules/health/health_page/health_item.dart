@@ -69,11 +69,11 @@ class _HealthItemState extends State<HealthItem> {
 
     return BlocBuilder<PromptCubit, PromptState>(
       builder: (context, state) {
-        final isPrompted = widget.index == state.selectedId 
-          && state.promptStatuses == PromptStatuses.selected;
+        final isPrompted = widget.index == state.selectedId &&
+            state.promptStatuses == PromptStatuses.selected;
 
         return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.only(top: 16),
           child: Container(
             decoration: const BoxDecoration(
               boxShadow: [
@@ -153,9 +153,9 @@ class _HealthItemState extends State<HealthItem> {
                                       maxValue: widget.maxValue,
                                       selected: isPrompted ? offset?.dx : null,
                                       onSelect: (id, newOffset) {
-                                        context.read<PromptCubit>().select(
-                                          selectedId: widget.index
-                                        );
+                                        context
+                                            .read<PromptCubit>()
+                                            .select(selectedId: widget.index);
 
                                         final box = _keyContext.currentContext
                                             ?.findRenderObject() as RenderBox;
@@ -199,10 +199,12 @@ class _HealthItemState extends State<HealthItem> {
                                         setState(() {
                                           item = null;
                                           offset = null;
-                                          
+
                                           /// TODO: отрефакторить Health и Diary
                                           //widget.setSelected(false);
-                                          context.read<PromptCubit>().unselect();
+                                          context
+                                              .read<PromptCubit>()
+                                              .unselect();
                                         });
                                       },
                                       grouping: 'Week',
