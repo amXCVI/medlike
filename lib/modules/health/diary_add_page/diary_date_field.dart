@@ -16,7 +16,8 @@ class DiaryDateField extends StatelessWidget {
     required this.type,
     required this.initialDate,
     required this.onChange,
-    required this.controller
+    required this.controller,
+    this.validator
   }) : super(key: key);
 
   final String labelText;
@@ -24,6 +25,7 @@ class DiaryDateField extends StatelessWidget {
   final DateTime? initialDate;
   final TextEditingController controller;
   final void Function(DateTime, String) onChange;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class DiaryDateField extends StatelessWidget {
       onChange: () {},
       controller: controller,
       isEmpty: true,
+      validator: validator,
     );
   }
 }

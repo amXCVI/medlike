@@ -188,7 +188,19 @@ class ValueHelper {
     if(isDate) {
       return DateFormat('dd MMMM yyyy г.', 'ru_RU').format(date);
     } else {
-      return DateFormat('kk:mm').format(date);
+      return DateFormat('HH:mm').format(date);
+    }
+  }
+
+  static DateTime? getDatepickerTime(String? date, bool isDate) {
+    if(date == null) {
+      return null;
+    }
+
+    if(isDate) {
+      return DateFormat('dd MMMM yyyy г.', 'ru_RU').parse(date);
+    } else {
+      return DateFormat('HH:mm').parse(date);
     }
   }
 

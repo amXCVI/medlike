@@ -184,6 +184,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               onTimeChange: onTimeChange,
               dateController: dateController,
               timeController: timeController,
+              setEnabled: (status) => setState(() => isDisabledButton = !status),
             ),
           ),
           appBarTitle: widget.title,
