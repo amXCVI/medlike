@@ -46,7 +46,7 @@ class HealthList extends StatelessWidget {
 
             final date = diary?.currentValue?.date ?? DateTime.now();
             DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(date);
-            DateTime dateTo = date_utils.DateUtils.lastDayOfWeek(date);
+            DateTime dateTo = date_utils.DateUtils.lastDayOfWeekWithHours(date);
 
             return HealthItem(
               iconPath: diariesCategoriesList[index].categoryImg,

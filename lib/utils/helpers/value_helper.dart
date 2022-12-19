@@ -24,7 +24,7 @@ class ValueHelper {
       case 'Hour':
         final fromHour = date.subtract(Duration(
           minutes: date.minute,
-          seconds: date.second,
+          seconds: date.second ,
           milliseconds: date.millisecond,
           microseconds: date.microsecond
         ));
@@ -32,7 +32,7 @@ class ValueHelper {
         final toHour = date.add(Duration(
           hours: 1,
           minutes: -date.minute,
-          seconds: -date.second,
+          seconds: -date.second + 1,
           milliseconds: -date.millisecond,
           microseconds: -date.microsecond
         ));
@@ -50,7 +50,7 @@ class ValueHelper {
           days: 1,
           hours: -date.hour,
           minutes: -date.minute,
-          seconds: -date.second,
+          seconds: -date.second + 1,
           milliseconds: -date.millisecond,
           microseconds: -date.microsecond
         ));
@@ -58,18 +58,18 @@ class ValueHelper {
         return [firstHour, lastHour];
       case 'Week':
         final monday = DateUtils.firstDayOfWeek(date);
-        final sunday =  DateUtils.lastDayOfWeek(date);
+        final sunday =  DateUtils.lastDayOfWeekWithHours(date);
 
         return [monday, sunday];
       case 'Month':
         final first = DateUtils.firstDayOfMonth(date);
-        final last =  DateUtils.lastDayOfMonth(date);
+        final last =  DateUtils.lastDayOfMonthWithHours(date);
 
         return [first, last];
       default:
         /// Дублирует неделю, но отдельно на всякий случай
         final monday = DateUtils.firstDayOfWeek(date);
-        final sunday =  DateUtils.lastDayOfWeek(date);
+        final sunday =  DateUtils.lastDayOfWeekWithHours(date);
 
         return [monday, sunday];
     }
