@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/themes/colors.dart';
 
-/// TODO: слить с form field
 class FieldWrapper extends StatelessWidget {
   const FieldWrapper({
     Key? key,
@@ -10,7 +9,7 @@ class FieldWrapper extends StatelessWidget {
     required this.onChange,
     required this.isEmpty,
     required this.controller,
-    //required this.validator
+    this.validator
   }) : super(key: key);
 
   final String labelText;
@@ -18,7 +17,7 @@ class FieldWrapper extends StatelessWidget {
   final Function onChange;
   final bool isEmpty;
   final TextEditingController controller;
-  //final String? Function(String?) validator;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +73,7 @@ class FieldWrapper extends StatelessWidget {
           fontSize: 16
         ),
         onTap: onTap,
+        validator: validator,
       ),
     );
   }

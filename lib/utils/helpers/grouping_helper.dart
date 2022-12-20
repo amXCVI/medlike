@@ -85,15 +85,6 @@ class GroupingHelper {
     ));
   }
 
-  static List<DataItem> groupBySixHours(List<DataItem> items) {
-    return _groupBy(items, (item) => DateTime(
-      item.date.year,
-      item.date.month,
-      item.date.day,
-      (item.date.hour / 6).ceil()
-    ));
-  }
-
   static List<DataItem> groupByDay(List<DataItem> items) {
     return _groupBy(items, (item) => DateTime(
       item.date.year,

@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
@@ -290,8 +289,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
             .contains(filterStr.toLowerCase()))
         .toList();
 
-    print(filteredDoctorsList);
-
     emit(state.copyWith(
       filteredDoctorsList: filteredDoctorsList,
       filteredCabinetsList: filteredCabinetsList,
@@ -445,13 +442,10 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         ),
       );
 
-      /// Здесь ячейки приводятся к внутреннему формату. Добавляется таймзона (часы)
-      int timeZoneOffset = await getTimeZoneOffset();
       emit(state.copyWith(
         getTimetableCellsStatus: GetTimetableCellsStatuses.success,
         timetableCellsList: response.cells.map((e) {
-          DateTime time = dateTimeToUTC(e.time, timeZoneOffset);
-          return e.copyWith(time: time);
+          return e.copyWith(time: e.time);
         }).toList(),
         timetableLogsList: response.logs,
       ));
@@ -567,7 +561,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
 
         /// обнуляю загруженные данные по текущему дню
         /// актуально при возврате со страницы подтверждения приема
-        timetableCellsList: null,
+        timetableCellsList: [],
         getTimetableCellsStatus: GetTimetableCellsStatuses.refunded,
         selectedTimetableCell: null,
         createdAppointmentId: null,
@@ -577,10 +571,10 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     }
   }
 
-  void createNewAppointment({
-    required String userId,
-    required String userName,
-  }) async {
+  void createNewAppointment(
+      {required String userId,
+      required String userName,
+      required int timezoneHours}) async {
     if (state.creatingAppointmentStatus ==
         CreatingAppointmentStatuses.success) {
       return;
@@ -589,10 +583,12 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
+
+    final time = state.selectedTimetableCell?.time as DateTime;
+
     try {
       dynamic data = {
-        'AppointmentDateTime': DateFormat("yyyy-MM-ddTHH:mm:ss")
-            .format(state.selectedTimetableCell?.time as DateTime),
+        'AppointmentDateTime': dateTimeToServerFormat(time, timezoneHours),
         'ClinicInfo': {
           'Id': state.selectedBuilding?.id,
           'Name': state.selectedBuilding?.name,
@@ -665,45 +661,46 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void resetSubscribeStoryState() {
     /// похоже, null в стейт поместить нельзя. С доктором не сработало
     /// хотя ошибок нет в линтере.
-    emit(state.copyWith(
-      creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
-      selectedUser: null,
-      selectedDoctor: const Doctor(
-        id: '',
-        lastName: '',
-        firstName: '',
-        middleName: '',
-        specializationId: '',
-        specialization: '',
-        price: 0,
-        categoryType: -1,
-        isFavorite: false,
-        categories: [],
-      ),
-      selectedBuilding: null,
-      selectedCabinet: null,
-      selectedCalendarItem: null,
-      selectedResearchesIds: [],
-      selectedService: null,
-      selectedSpecialisation: null,
-      selectedTimetableCell: null,
-      selectedDate: DateTime.now(),
-      appointmentInfoData: null,
-      researchesList: [],
-      filteredResearchesList: [],
-      specialisationsList: [],
-      filteredSpecialisationsList: [],
-      doctorsList: [],
-      filteredDoctorsList: [],
-      cabinetsList: [],
-      filteredCabinetsList: [],
-      calendarList: [],
-      timetableCellsList: [],
-      timetableLogsList: [],
-      selectedPayType: null,
-      paymentUrl: null,
-      createdAppointmentId: null,
-    ));
+    emit(state.clearState());
+    // emit(state.copyWith(
+    //   creatingAppointmentStatus: CreatingAppointmentStatuses.initial,
+    //   selectedUser: null,
+    //   selectedDoctor: const Doctor(
+    //     id: '',
+    //     lastName: '',
+    //     firstName: '',
+    //     middleName: '',
+    //     specializationId: '',
+    //     specialization: '',
+    //     price: 0,
+    //     categoryType: -1,
+    //     isFavorite: false,
+    //     categories: [],
+    //   ),
+    //   selectedBuilding: null,
+    //   selectedCabinet: null,
+    //   selectedCalendarItem: null,
+    //   selectedResearchesIds: [],
+    //   selectedService: null,
+    //   selectedSpecialisation: null,
+    //   selectedTimetableCell: null,
+    //   selectedDate: DateTime.now(),
+    //   appointmentInfoData: null,
+    //   researchesList: [],
+    //   filteredResearchesList: [],
+    //   specialisationsList: [],
+    //   filteredSpecialisationsList: [],
+    //   doctorsList: [],
+    //   filteredDoctorsList: [],
+    //   cabinetsList: [],
+    //   filteredCabinetsList: [],
+    //   calendarList: [],
+    //   timetableCellsList: [],
+    //   timetableLogsList: [],
+    //   selectedPayType: null,
+    //   paymentUrl: null,
+    //   createdAppointmentId: null,
+    // ));
   }
 
   /// Регистрация заказа (в сбере???)

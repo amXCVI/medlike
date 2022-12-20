@@ -15,7 +15,6 @@ DateTime dateTimeToUTC(DateTime date, int timeZoneOffset) {
 /// Используется в тех местах, где критично точное местное время
 /// (Запись на прием, показатели здоровья)
 /// Часовой пояс брать из UserSecureStorage
-//? кажется, нигде не используется )
 String dateTimeToServerFormat(DateTime date, int timeZoneOffset) {
   Duration duration = Duration(hours: timeZoneOffset);
   if (duration.isNegative) {
@@ -56,11 +55,8 @@ String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
   const mskTime = 3;
 
   int tz = DateTime.now().timeZoneOffset.inHours;
-  DateTime timeOfClinic = dateTime
-      .toUtc()
-      .add(Duration(hours: isTimeCell != true ? timeZoneOffset : 0));
 
-  final timeString = DateFormat(formatSting ?? 'HH:mm').format(timeOfClinic);
+  final timeString = DateFormat(formatSting ?? 'HH:mm').format(dateTime);
 
   if (timeZoneOffset == tz) {
     return timeString;

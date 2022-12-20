@@ -11,7 +11,8 @@ _$_NotificationModel _$$_NotificationModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      eventDate: DateTime.parse(json['eventDate'] as String),
+      eventDate:
+          const TimestampConverter().fromJson(json['eventDate'] as String),
       eventsCount: json['eventsCount'] as int,
       userId: json['userId'] as String,
       eventType: json['eventType'] as String,
@@ -24,7 +25,7 @@ Map<String, dynamic> _$$_NotificationModelToJson(
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'eventDate': instance.eventDate.toIso8601String(),
+      'eventDate': const TimestampConverter().toJson(instance.eventDate),
       'eventsCount': instance.eventsCount,
       'userId': instance.userId,
       'eventType': instance.eventType,

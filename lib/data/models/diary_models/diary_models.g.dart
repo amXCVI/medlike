@@ -56,8 +56,9 @@ Map<String, dynamic> _$$_CategoryToJson(_$_Category instance) =>
 
 _$_Diary _$$_DiaryFromJson(Map<String, dynamic> json) => _$_Diary(
       syn: json['syn'] as String,
-      firstValue: DateTime.parse(json['firstValue'] as String),
-      currentValue: json['currentValue'] as List<dynamic>,
+      firstValue:
+          const TimestampConverter().fromJson(json['firstValue'] as String),
+      currentValue: json['currentValue'] as List<dynamic>?,
       values: (json['values'] as List<dynamic>)
           .map((e) => DiaryItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -66,14 +67,14 @@ _$_Diary _$$_DiaryFromJson(Map<String, dynamic> json) => _$_Diary(
 
 Map<String, dynamic> _$$_DiaryToJson(_$_Diary instance) => <String, dynamic>{
       'syn': instance.syn,
-      'firstValue': instance.firstValue.toIso8601String(),
+      'firstValue': const TimestampConverter().toJson(instance.firstValue),
       'currentValue': instance.currentValue,
       'values': instance.values,
       'grouping': instance.grouping,
     };
 
 _$_DiaryItem _$$_DiaryItemFromJson(Map<String, dynamic> json) => _$_DiaryItem(
-      date: DateTime.parse(json['date'] as String),
+      date: const TimestampConverter().fromJson(json['date'] as String),
       data: (json['data'] as List<dynamic>)
           .map((e) => e as List<dynamic>)
           .toList(),
@@ -81,6 +82,6 @@ _$_DiaryItem _$$_DiaryItemFromJson(Map<String, dynamic> json) => _$_DiaryItem(
 
 Map<String, dynamic> _$$_DiaryItemToJson(_$_DiaryItem instance) =>
     <String, dynamic>{
-      'date': instance.date.toIso8601String(),
+      'date': const TimestampConverter().toJson(instance.date),
       'data': instance.data,
     };

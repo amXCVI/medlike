@@ -1,6 +1,8 @@
 import 'package:freezed_annotation'
     '/freezed_annotation.dart';
 
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
+
 part 'appointment_models.freezed.dart';
 
 part 'appointment_models.g.dart';
@@ -41,7 +43,7 @@ class AppointmentModelWithTimeZoneOffset
     required String? comment,
     required String researchPlace,
     required String id,
-    required DateTime appointmentDateTime,
+    @TimestampConverter() required DateTime appointmentDateTime,
     required int timeZoneOffset,
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,

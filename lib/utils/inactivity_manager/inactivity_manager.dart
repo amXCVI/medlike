@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class InactivityManager extends StatefulWidget {
@@ -14,7 +16,8 @@ class InactivityManager extends StatefulWidget {
   State<InactivityManager> createState() => _InactivityManagerState();
 }
 
-class _InactivityManagerState extends State<InactivityManager> with WidgetsBindingObserver {
+class _InactivityManagerState extends State<InactivityManager>
+    with WidgetsBindingObserver {
   late Timer _timer = Timer(const Duration(hours: 1), () {});
   late bool isLogoutApp = false;
 
@@ -29,16 +32,16 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     const dur = Duration(
-      minutes: kDebugMode ? 60 : AppConstants.timeoutDurationMinutes
-    );
+        minutes: kDebugMode ? 60 : AppConstants.timeoutDurationMinutes);
 
-    if(state != AppLifecycleState.resumed) {
-      await UserSecureStorage.setField(AppConstants.timeoutStart, DateTime.now().toString());
+    if (state != AppLifecycleState.resumed) {
+      await UserSecureStorage.setField(
+          AppConstants.timeoutStart, DateTime.now().toString());
+      context.read<PromptCubit>().unselect();
     } else {
       final time = DateTime.tryParse(
-        await UserSecureStorage.getField(AppConstants.timeoutStart) ?? ''
-      );
-      if(time == null || DateTime.now().difference(time) >= dur) {
+          await UserSecureStorage.getField(AppConstants.timeoutStart) ?? '');
+      if (time == null || DateTime.now().difference(time) >= dur) {
         _logOutUser();
       }
     }
@@ -52,6 +55,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   }
 
   void _logOutUser() {
+    context.read<PromptCubit>().unselect();
     setState(() {
       isLogoutApp = true;
     });

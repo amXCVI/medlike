@@ -316,6 +316,63 @@ class SmartAppClient {
     })));
   }
 
+  Future<dynamic> getFile(String endpoint, {Options? options}) async {
+    print('GET_IMAGE $endpoint');
+
+    final token =
+        'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '4', //Platform.isAndroid ? '1' : '2',
+      'Authorization': token,
+    };
+
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'get_file',
+        'params': {
+          'url': '${ApiConstants.baseUrl}$endpoint',
+          'headers': options != null ? options.headers : defaultHeaders,
+        },
+      }),
+      null,
+    ).then(js.allowInterop((data) {
+      print('>>>> Ответ из смартаппа  по GET_IMAGE $endpoint: $data');
+      dynamic jsonResponseObject = json.decode(data);
+      print('>>>> Ответ из смартаппа кодирован в json');
+      SmartappSendBotEventResponseModel parsedResponse =
+          SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
+      print('>>>> Ответ из смартаппа кодирован в объект');
+      if (parsedResponse.payload.status != 'ok') {
+        AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
+        throw ('Где-то ошибка, смотри логи'); //! Заменить??????
+      }
+      dynamic response;
+      try {
+        response = Response(
+          requestOptions: RequestOptions(path: endpoint),
+          data: json.decode(parsedResponse.payload.result.content),
+          statusCode: parsedResponse.payload.result.statusCode,
+        );
+      } catch (err) {
+        response = Response(
+          requestOptions: RequestOptions(path: endpoint),
+          data: parsedResponse.payload.result.content,
+          statusCode: parsedResponse.payload.result.statusCode,
+        );
+      }
+      print('<<<< coздан объект Response');
+      print('<<<< response.data: ${response.data}');
+      return response;
+    }), js.allowInterop((err) {
+      print('ERROR_GET: $err');
+      return err;
+    })));
+  }
+
   Future<dynamic> postFormData(String endpoint,
       {FormData? data, Options? options}) async {
     print('POST_FORM_DATA $endpoint');

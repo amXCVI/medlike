@@ -125,9 +125,11 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
               ),
               child: DefaultClipRRect(child: widget.child)),
         ),
+
         /// Блокировка экрана по неактивности пользователя
         // const UnAuthChecker(),
         const AppVersionChecker(),
+        // const PushRedirecter()
       ]),
       floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

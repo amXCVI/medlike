@@ -40,7 +40,8 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   }
 
   bool validatePassword(String value) {
-    RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,16}$');
+    RegExp regex = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,16}$');
     return regex.hasMatch(value);
   }
 
@@ -65,7 +66,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
       setState(() {
         _validatePassword = status;
       });
-      if(!status) {
+      if (!status) {
         return;
       }
       setState(() {
@@ -79,7 +80,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
         _validatePassword = status;
         _validateConfirm = confirmStatus;
       });
-      if(!status || !confirmStatus) {
+      if (!status || !confirmStatus) {
         return;
       }
       setState(() {
@@ -123,8 +124,8 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (_userPhoneNumber != 'null') {
-          _phoneInputController.text = phoneMaskFormatter
-              .maskText(_userPhoneNumber.replaceAll(RegExp("[+7]"), ''));
+          _phoneInputController.text =
+              phoneMaskFormatter.maskText(_userPhoneNumber.substring(1));
         } else {
           AppToast.showAppToast(
               msg:
@@ -181,7 +182,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Focus(
                 onFocusChange: (value) {
-                  if(value) {
+                  if (value) {
                     resetValidation();
                   }
                 },
@@ -190,29 +191,29 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
                   onChanged: (value) => resetValidation(),
                   autofocus: false,
                   decoration: InputDecoration(
-                    hintText: '********',
-                    hintStyle: Theme.of(context)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(color: AppColors.lightText),
-                    suffixIcon: IconButton(
-                      icon: SvgPicture.asset(_isObscure
-                          ? 'assets/icons/login/show_password_symbols.svg'
-                          : 'assets/icons/login/not_show_password_symbols.svg'),
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
-                    ),
-                    prefixIcon: const SizedBox(width: 40),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: validate ? AppColors.mainText : AppColors.mainError, 
-                        width: 1.0
+                      hintText: '********',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelLarge
+                          ?.copyWith(color: AppColors.lightText),
+                      suffixIcon: IconButton(
+                        icon: SvgPicture.asset(_isObscure
+                            ? 'assets/icons/login/show_password_symbols.svg'
+                            : 'assets/icons/login/not_show_password_symbols.svg'),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
                       ),
-                    )
-                  ),
+                      prefixIcon: const SizedBox(width: 40),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: validate
+                                ? AppColors.mainText
+                                : AppColors.mainError,
+                            width: 1.0),
+                      )),
                   style: Theme.of(context).textTheme.labelLarge,
                   obscureText: _isObscure,
                   enableSuggestions: false,
@@ -228,15 +229,12 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
             ),
             const SizedBox(height: 12),
             Text(
-              !_validateConfirm ? 'Пароли не совпадают' 
-                : 'от 8 символов, большие и маленькие буквы, цифры',
+              !_validateConfirm
+                  ? 'Пароли не совпадают'
+                  : 'от 8 символов, большие и маленькие буквы, цифры',
               textAlign: TextAlign.center,
-              style:  Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(
-                  color: validate ? AppColors.lightText : AppColors.mainError
-                ),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: validate ? AppColors.lightText : AppColors.mainError),
             )
           ],
         );

@@ -11,9 +11,10 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i38;
+import 'package:flutter/cupertino.dart' as _i41;
 import 'package:flutter/material.dart' as _i39;
-import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i41;
-import 'package:medlike/data/models/diary_models/diary_models.dart' as _i42;
+import 'package:medlike/data/models/clinic_models/clinic_models.dart' as _i42;
+import 'package:medlike/data/models/diary_models/diary_models.dart' as _i43;
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart'
     as _i29;
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/clinic_detail_with_bottom_sheets_page.dart'
@@ -174,7 +175,10 @@ class AppRouter extends _i38.RootStackRouter {
       final args = routeData.argsAs<ClinicsListRouteArgs>();
       return _i38.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: _i13.ClinicsListPage(key: args.key, userId: args.userId));
+          child: _i13.ClinicsListPage(
+              key: args.key,
+              userId: args.userId,
+              isChildrenPage: args.isChildrenPage));
     },
     ServicesListRoute.name: (routeData) {
       final args = routeData.argsAs<ServicesListRouteArgs>();
@@ -267,7 +271,9 @@ class AppRouter extends _i38.RootStackRouter {
       return _i38.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i21.ConfirmationSubscribePage(
-              key: args.key, userId: args.userId));
+              key: args.key,
+              userId: args.userId,
+              timeZoneHours: args.timeZoneHours));
     },
     PaymentRoute.name: (routeData) {
       final args = routeData.argsAs<PaymentRouteArgs>();
@@ -343,8 +349,11 @@ class AppRouter extends _i38.RootStackRouter {
           routeData: routeData, child: const _i33.HealthPage());
     },
     CardsRoute.name: (routeData) {
+      final args = routeData.argsAs<CardsRouteArgs>();
       return _i38.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i34.CardsPage());
+          routeData: routeData,
+          child: _i34.CardsPage(
+              key: args.key, isChildrenPage: args.isChildrenPage));
     },
     DiaryRoute.name: (routeData) {
       final args = routeData.argsAs<DiaryRouteArgs>();
@@ -458,7 +467,7 @@ class AppRouter extends _i38.RootStackRouter {
 /// generated route for
 /// [_i1.SmartappLoginPage]
 class SmartappLoginRoute extends _i38.PageRouteInfo<SmartappLoginRouteArgs> {
-  SmartappLoginRoute({_i39.Key? key, _i38.NavigationResolver? resolver})
+  SmartappLoginRoute({_i41.Key? key, _i38.NavigationResolver? resolver})
       : super(SmartappLoginRoute.name,
             path: '/smartapp_login_page',
             args: SmartappLoginRouteArgs(key: key, resolver: resolver));
@@ -469,7 +478,7 @@ class SmartappLoginRoute extends _i38.PageRouteInfo<SmartappLoginRouteArgs> {
 class SmartappLoginRouteArgs {
   const SmartappLoginRouteArgs({this.key, this.resolver});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final _i38.NavigationResolver? resolver;
 
@@ -483,7 +492,7 @@ class SmartappLoginRouteArgs {
 /// [_i2.StartPhoneNumberPage]
 class StartPhoneNumberRoute
     extends _i38.PageRouteInfo<StartPhoneNumberRouteArgs> {
-  StartPhoneNumberRoute({_i39.Key? key, bool isDeletingProfile = false})
+  StartPhoneNumberRoute({_i41.Key? key, bool isDeletingProfile = false})
       : super(StartPhoneNumberRoute.name,
             path: '/login_phone',
             args: StartPhoneNumberRouteArgs(
@@ -495,7 +504,7 @@ class StartPhoneNumberRoute
 class StartPhoneNumberRouteArgs {
   const StartPhoneNumberRouteArgs({this.key, this.isDeletingProfile = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final bool isDeletingProfile;
 
@@ -508,7 +517,7 @@ class StartPhoneNumberRouteArgs {
 /// generated route for
 /// [_i3.PasswordPage]
 class PasswordRoute extends _i38.PageRouteInfo<PasswordRouteArgs> {
-  PasswordRoute({_i39.Key? key, required String phoneNumber})
+  PasswordRoute({_i41.Key? key, required String phoneNumber})
       : super(PasswordRoute.name,
             path: '/login_password',
             args: PasswordRouteArgs(key: key, phoneNumber: phoneNumber));
@@ -519,7 +528,7 @@ class PasswordRoute extends _i38.PageRouteInfo<PasswordRouteArgs> {
 class PasswordRouteArgs {
   const PasswordRouteArgs({this.key, required this.phoneNumber});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String phoneNumber;
 
@@ -532,7 +541,7 @@ class PasswordRouteArgs {
 /// generated route for
 /// [_i4.CreatePinCodePage]
 class CreatePinCodeRoute extends _i38.PageRouteInfo<CreatePinCodeRouteArgs> {
-  CreatePinCodeRoute({_i39.Key? key, bool? noUsedBiometric})
+  CreatePinCodeRoute({_i41.Key? key, bool noUsedBiometric = false})
       : super(CreatePinCodeRoute.name,
             path: '/login_pin_code',
             args: CreatePinCodeRouteArgs(
@@ -542,11 +551,11 @@ class CreatePinCodeRoute extends _i38.PageRouteInfo<CreatePinCodeRouteArgs> {
 }
 
 class CreatePinCodeRouteArgs {
-  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric});
+  const CreatePinCodeRouteArgs({this.key, this.noUsedBiometric = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
-  final bool? noUsedBiometric;
+  final bool noUsedBiometric;
 
   @override
   String toString() {
@@ -567,7 +576,7 @@ class CheckPinCodeRoute extends _i38.PageRouteInfo<void> {
 /// [_i6.RecoverPasswordSmsPage]
 class RecoverPasswordSmsRoute
     extends _i38.PageRouteInfo<RecoverPasswordSmsRouteArgs> {
-  RecoverPasswordSmsRoute({_i39.Key? key, required String phoneNumber})
+  RecoverPasswordSmsRoute({_i41.Key? key, required String phoneNumber})
       : super(RecoverPasswordSmsRoute.name,
             path: '/login_recover_password_sms',
             args: RecoverPasswordSmsRouteArgs(
@@ -579,7 +588,7 @@ class RecoverPasswordSmsRoute
 class RecoverPasswordSmsRouteArgs {
   const RecoverPasswordSmsRouteArgs({this.key, required this.phoneNumber});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String phoneNumber;
 
@@ -593,7 +602,7 @@ class RecoverPasswordSmsRouteArgs {
 /// [_i7.RecoverPasswordNewPage]
 class RecoverPasswordNewRoute
     extends _i38.PageRouteInfo<RecoverPasswordNewRouteArgs> {
-  RecoverPasswordNewRoute({_i39.Key? key, required String smsToken})
+  RecoverPasswordNewRoute({_i41.Key? key, required String smsToken})
       : super(RecoverPasswordNewRoute.name,
             path: '/login_recover_password_new',
             args: RecoverPasswordNewRouteArgs(key: key, smsToken: smsToken));
@@ -604,7 +613,7 @@ class RecoverPasswordNewRoute
 class RecoverPasswordNewRouteArgs {
   const RecoverPasswordNewRouteArgs({this.key, required this.smsToken});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String smsToken;
 
@@ -618,7 +627,7 @@ class RecoverPasswordNewRouteArgs {
 /// [_i8.AuthUserAgreementsPage]
 class AuthUserAgreementsRoute
     extends _i38.PageRouteInfo<AuthUserAgreementsRouteArgs> {
-  AuthUserAgreementsRoute({_i39.Key? key, bool isFullScreen = false})
+  AuthUserAgreementsRoute({_i41.Key? key, bool isFullScreen = false})
       : super(AuthUserAgreementsRoute.name,
             path: '/login_auth_user_agreements',
             args: AuthUserAgreementsRouteArgs(
@@ -630,7 +639,7 @@ class AuthUserAgreementsRoute
 class AuthUserAgreementsRouteArgs {
   const AuthUserAgreementsRouteArgs({this.key, this.isFullScreen = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final bool isFullScreen;
 
@@ -660,7 +669,7 @@ class MainRoute extends _i38.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.AppointmentsPage]
 class AppointmentsRoute extends _i38.PageRouteInfo<AppointmentsRouteArgs> {
-  AppointmentsRoute({_i39.Key? key, bool? isRefresh = false})
+  AppointmentsRoute({_i41.Key? key, bool? isRefresh = false})
       : super(AppointmentsRoute.name,
             path: '/my_appointments',
             args: AppointmentsRouteArgs(key: key, isRefresh: isRefresh));
@@ -671,7 +680,7 @@ class AppointmentsRoute extends _i38.PageRouteInfo<AppointmentsRouteArgs> {
 class AppointmentsRouteArgs {
   const AppointmentsRouteArgs({this.key, this.isRefresh = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final bool? isRefresh;
 
@@ -693,24 +702,29 @@ class SubscribeProfilesListRoute extends _i38.PageRouteInfo<void> {
 /// generated route for
 /// [_i13.ClinicsListPage]
 class ClinicsListRoute extends _i38.PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({_i39.Key? key, required String userId})
+  ClinicsListRoute(
+      {_i41.Key? key, required String userId, required bool isChildrenPage})
       : super(ClinicsListRoute.name,
             path: '/subscribe_clinics',
-            args: ClinicsListRouteArgs(key: key, userId: userId));
+            args: ClinicsListRouteArgs(
+                key: key, userId: userId, isChildrenPage: isChildrenPage));
 
   static const String name = 'ClinicsListRoute';
 }
 
 class ClinicsListRouteArgs {
-  const ClinicsListRouteArgs({this.key, required this.userId});
+  const ClinicsListRouteArgs(
+      {this.key, required this.userId, required this.isChildrenPage});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
+  final bool isChildrenPage;
+
   @override
   String toString() {
-    return 'ClinicsListRouteArgs{key: $key, userId: $userId}';
+    return 'ClinicsListRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
   }
 }
 
@@ -718,7 +732,7 @@ class ClinicsListRouteArgs {
 /// [_i14.ServicesListPage]
 class ServicesListRoute extends _i38.PageRouteInfo<ServicesListRouteArgs> {
   ServicesListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -740,7 +754,7 @@ class ServicesListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -758,7 +772,7 @@ class ServicesListRouteArgs {
 /// [_i15.ResearchesListPage]
 class ResearchesListRoute extends _i38.PageRouteInfo<ResearchesListRouteArgs> {
   ResearchesListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -783,7 +797,7 @@ class ResearchesListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -804,7 +818,7 @@ class ResearchesListRouteArgs {
 class SpecialisationsListRoute
     extends _i38.PageRouteInfo<SpecialisationsListRouteArgs> {
   SpecialisationsListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -829,7 +843,7 @@ class SpecialisationsListRouteArgs {
       required this.clinicId,
       required this.categoryTypeId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -849,7 +863,7 @@ class SpecialisationsListRouteArgs {
 /// [_i17.DoctorsListPage]
 class DoctorsListRoute extends _i38.PageRouteInfo<DoctorsListRouteArgs> {
   DoctorsListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -880,7 +894,7 @@ class DoctorsListRouteArgs {
       required this.specialisationId,
       required this.specialisationName});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -905,7 +919,7 @@ class DoctorsListRouteArgs {
 class ResearchCabinetsListRoute
     extends _i38.PageRouteInfo<ResearchCabinetsListRouteArgs> {
   ResearchCabinetsListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId,
@@ -933,7 +947,7 @@ class ResearchCabinetsListRouteArgs {
       required this.categoryTypeId,
       required this.researchIds});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -956,7 +970,7 @@ class ResearchCabinetsListRouteArgs {
 class FavoriteDoctorsListRoute
     extends _i38.PageRouteInfo<FavoriteDoctorsListRouteArgs> {
   FavoriteDoctorsListRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String userId,
       required String buildingId,
       required String clinicId})
@@ -978,7 +992,7 @@ class FavoriteDoctorsListRouteArgs {
       required this.buildingId,
       required this.clinicId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -996,7 +1010,7 @@ class FavoriteDoctorsListRouteArgs {
 /// [_i20.SchedulePage]
 class ScheduleRoute extends _i38.PageRouteInfo<ScheduleRouteArgs> {
   ScheduleRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String pageTitle,
       String pageSubtitle = '',
       required String userId,
@@ -1045,7 +1059,7 @@ class ScheduleRouteArgs {
       required this.isAny,
       this.isFavorite = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String pageTitle;
 
@@ -1081,31 +1095,36 @@ class ScheduleRouteArgs {
 /// [_i21.ConfirmationSubscribePage]
 class ConfirmationSubscribeRoute
     extends _i38.PageRouteInfo<ConfirmationSubscribeRouteArgs> {
-  ConfirmationSubscribeRoute({_i39.Key? key, required String userId})
+  ConfirmationSubscribeRoute(
+      {_i41.Key? key, required String userId, required int timeZoneHours})
       : super(ConfirmationSubscribeRoute.name,
             path: '/subscribe_confirm',
-            args: ConfirmationSubscribeRouteArgs(key: key, userId: userId));
+            args: ConfirmationSubscribeRouteArgs(
+                key: key, userId: userId, timeZoneHours: timeZoneHours));
 
   static const String name = 'ConfirmationSubscribeRoute';
 }
 
 class ConfirmationSubscribeRouteArgs {
-  const ConfirmationSubscribeRouteArgs({this.key, required this.userId});
+  const ConfirmationSubscribeRouteArgs(
+      {this.key, required this.userId, required this.timeZoneHours});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
+  final int timeZoneHours;
+
   @override
   String toString() {
-    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId}';
+    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId, timeZoneHours: $timeZoneHours}';
   }
 }
 
 /// generated route for
 /// [_i22.PaymentPage]
 class PaymentRoute extends _i38.PageRouteInfo<PaymentRouteArgs> {
-  PaymentRoute({_i39.Key? key, required String userId})
+  PaymentRoute({_i41.Key? key, required String userId})
       : super(PaymentRoute.name,
             path: '/subscribe_payment_page',
             args: PaymentRouteArgs(key: key, userId: userId));
@@ -1116,7 +1135,7 @@ class PaymentRoute extends _i38.PageRouteInfo<PaymentRouteArgs> {
 class PaymentRouteArgs {
   const PaymentRouteArgs({this.key, required this.userId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -1139,7 +1158,7 @@ class MedcardProfilesListRoute extends _i38.PageRouteInfo<void> {
 /// [_i24.MedcardPage]
 class MedcardRoute extends _i38.PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute(
-      {_i39.Key? key, required String userId, required bool isChildrenPage})
+      {_i41.Key? key, required String userId, required bool isChildrenPage})
       : super(MedcardRoute.name,
             path: '/medcard_files_list',
             args: MedcardRouteArgs(
@@ -1152,7 +1171,7 @@ class MedcardRouteArgs {
   const MedcardRouteArgs(
       {this.key, required this.userId, required this.isChildrenPage});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -1167,7 +1186,7 @@ class MedcardRouteArgs {
 /// generated route for
 /// [_i25.FilesPage]
 class FilesRoute extends _i38.PageRouteInfo<FilesRouteArgs> {
-  FilesRoute({_i39.Key? key, required String userId})
+  FilesRoute({_i41.Key? key, required String userId})
       : super(FilesRoute.name,
             path: '/medcard_user_files_list',
             args: FilesRouteArgs(key: key, userId: userId));
@@ -1178,7 +1197,7 @@ class FilesRoute extends _i38.PageRouteInfo<FilesRouteArgs> {
 class FilesRouteArgs {
   const FilesRouteArgs({this.key, required this.userId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String userId;
 
@@ -1199,7 +1218,7 @@ class SettingsRoute extends _i38.PageRouteInfo<void> {
 /// generated route for
 /// [_i27.AgreementsPage]
 class AgreementsRoute extends _i38.PageRouteInfo<AgreementsRouteArgs> {
-  AgreementsRoute({_i39.Key? key, bool isAppointmentAgreements = false})
+  AgreementsRoute({_i41.Key? key, bool isAppointmentAgreements = false})
       : super(AgreementsRoute.name,
             path: '/settings_agreements',
             args: AgreementsRouteArgs(
@@ -1211,7 +1230,7 @@ class AgreementsRoute extends _i38.PageRouteInfo<AgreementsRouteArgs> {
 class AgreementsRouteArgs {
   const AgreementsRouteArgs({this.key, this.isAppointmentAgreements = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final bool isAppointmentAgreements;
 
@@ -1232,7 +1251,7 @@ class SupportRoute extends _i38.PageRouteInfo<void> {
 /// generated route for
 /// [_i29.AllClinicsListPage]
 class AllClinicsListRoute extends _i38.PageRouteInfo<AllClinicsListRouteArgs> {
-  AllClinicsListRoute({_i39.Key? key, bool isFromMainPage = false})
+  AllClinicsListRoute({_i41.Key? key, bool isFromMainPage = false})
       : super(AllClinicsListRoute.name,
             path: '/clinic_info',
             args: AllClinicsListRouteArgs(
@@ -1244,7 +1263,7 @@ class AllClinicsListRoute extends _i38.PageRouteInfo<AllClinicsListRouteArgs> {
 class AllClinicsListRouteArgs {
   const AllClinicsListRouteArgs({this.key, this.isFromMainPage = false});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final bool isFromMainPage;
 
@@ -1259,7 +1278,7 @@ class AllClinicsListRouteArgs {
 class ClinicDetailWithBottomSheetsRoute
     extends _i38.PageRouteInfo<ClinicDetailWithBottomSheetsRouteArgs> {
   ClinicDetailWithBottomSheetsRoute(
-      {_i39.Key? key, required _i41.ClinicModel selectedClinic})
+      {_i41.Key? key, required _i42.ClinicModel selectedClinic})
       : super(ClinicDetailWithBottomSheetsRoute.name,
             path: '/clinic_info_details',
             args: ClinicDetailWithBottomSheetsRouteArgs(
@@ -1272,9 +1291,9 @@ class ClinicDetailWithBottomSheetsRouteArgs {
   const ClinicDetailWithBottomSheetsRouteArgs(
       {this.key, required this.selectedClinic});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
-  final _i41.ClinicModel selectedClinic;
+  final _i42.ClinicModel selectedClinic;
 
   @override
   String toString() {
@@ -1285,7 +1304,7 @@ class ClinicDetailWithBottomSheetsRouteArgs {
 /// generated route for
 /// [_i31.PricePage]
 class PriceRoute extends _i38.PageRouteInfo<PriceRouteArgs> {
-  PriceRoute({_i39.Key? key, required String clinicId})
+  PriceRoute({_i41.Key? key, required String clinicId})
       : super(PriceRoute.name,
             path: '/clinic_info_price',
             args: PriceRouteArgs(key: key, clinicId: clinicId));
@@ -1296,7 +1315,7 @@ class PriceRoute extends _i38.PageRouteInfo<PriceRouteArgs> {
 class PriceRouteArgs {
   const PriceRouteArgs({this.key, required this.clinicId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String clinicId;
 
@@ -1309,7 +1328,7 @@ class PriceRouteArgs {
 /// generated route for
 /// [_i32.SalesPage]
 class SalesRoute extends _i38.PageRouteInfo<SalesRouteArgs> {
-  SalesRoute({_i39.Key? key, required String clinicId})
+  SalesRoute({_i41.Key? key, required String clinicId})
       : super(SalesRoute.name,
             path: '/clinic_info_sales',
             args: SalesRouteArgs(key: key, clinicId: clinicId));
@@ -1320,7 +1339,7 @@ class SalesRoute extends _i38.PageRouteInfo<SalesRouteArgs> {
 class SalesRouteArgs {
   const SalesRouteArgs({this.key, required this.clinicId});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String clinicId;
 
@@ -1340,19 +1359,35 @@ class HealthRoute extends _i38.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i34.CardsPage]
-class CardsRoute extends _i38.PageRouteInfo<void> {
-  const CardsRoute() : super(CardsRoute.name, path: '/health');
+class CardsRoute extends _i38.PageRouteInfo<CardsRouteArgs> {
+  CardsRoute({_i41.Key? key, required bool isChildrenPage})
+      : super(CardsRoute.name,
+            path: '/health',
+            args: CardsRouteArgs(key: key, isChildrenPage: isChildrenPage));
 
   static const String name = 'CardsRoute';
+}
+
+class CardsRouteArgs {
+  const CardsRouteArgs({this.key, required this.isChildrenPage});
+
+  final _i41.Key? key;
+
+  final bool isChildrenPage;
+
+  @override
+  String toString() {
+    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage}';
+  }
 }
 
 /// generated route for
 /// [_i35.DiaryPage]
 class DiaryRoute extends _i38.PageRouteInfo<DiaryRouteArgs> {
   DiaryRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String title,
-      required _i42.DiaryCategoryModel categoryModel,
+      required _i43.DiaryCategoryModel categoryModel,
       required String syn})
       : super(DiaryRoute.name,
             path: '/diary',
@@ -1372,11 +1407,11 @@ class DiaryRouteArgs {
       required this.categoryModel,
       required this.syn});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String title;
 
-  final _i42.DiaryCategoryModel categoryModel;
+  final _i43.DiaryCategoryModel categoryModel;
 
   final String syn;
 
@@ -1390,7 +1425,7 @@ class DiaryRouteArgs {
 /// [_i36.DiaryAddPage]
 class DiaryAddRoute extends _i38.PageRouteInfo<DiaryAddRouteArgs> {
   DiaryAddRoute(
-      {_i39.Key? key,
+      {_i41.Key? key,
       required String title,
       required String measureItem,
       required int decimalDigits,
@@ -1433,7 +1468,7 @@ class DiaryAddRouteArgs {
       this.initialValues,
       this.initialDate});
 
-  final _i39.Key? key;
+  final _i41.Key? key;
 
   final String title;
 

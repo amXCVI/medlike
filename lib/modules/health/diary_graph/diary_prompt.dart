@@ -24,7 +24,7 @@ class DiaryPrompt extends StatelessWidget {
     );
 
     return Container(
-      height: 60,
+      height: 65,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: const Color.fromRGBO(238, 238, 238, 1)

@@ -12,9 +12,10 @@ import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 
 class CreatePinCodePage extends StatefulWidget {
-  const CreatePinCodePage({Key? key, this.noUsedBiometric}) : super(key: key);
+  const CreatePinCodePage({Key? key, this.noUsedBiometric = false})
+      : super(key: key);
 
-  final bool? noUsedBiometric;
+  final bool noUsedBiometric;
 
   @override
   State<CreatePinCodePage> createState() => _CreatePinCodePageState();
@@ -31,19 +32,33 @@ class _CreatePinCodePageState extends State<CreatePinCodePage> {
   }
 
   void onSuccessBiometricAuthenticate(bool result) {
-    context.read<UserCubit>().signInBiometric();
+    try {
+      context.read<UserCubit>().signInBiometric();
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
+    }
     context.router.replaceAll([const MainRoute()]);
   }
 
   void onSuccessBiometricDataSaved(bool result) {
-    if (result) {
-      UserSecureStorage.setField(AppConstants.useBiometricMethodAuthentication,
-          SelectedAuthMethods.touchId.toString());
+    try {
+      if (result) {
+        UserSecureStorage.setField(
+            AppConstants.useBiometricMethodAuthentication,
+            SelectedAuthMethods.touchId.toString());
+      }
+
+      setState(() {
+        isForcedShowingBiometricModal = false;
+      });
+    } catch (err) {
+      if (kDebugMode) {
+        print(err);
+      }
     }
 
-    setState(() {
-      isForcedShowingBiometricModal = false;
-    });
     context.router.replaceAll([const MainRoute()]);
   }
 
@@ -92,6 +107,8 @@ class _CreatePinCodePageState extends State<CreatePinCodePage> {
           setState(() {
             step -= 1;
           });
+        } else if (widget.noUsedBiometric) {
+          context.router.replace(const SettingsRoute());
         } else {
           context.read<UserCubit>().signOut();
           context.router.replaceAll([StartPhoneNumberRoute()]);

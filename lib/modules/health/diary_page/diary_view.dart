@@ -77,7 +77,7 @@ class _DiaryViewState extends State<DiaryView> {
         chartItems = GroupingHelper.groupByHour(items);
         break;
       case 'Week':
-        chartItems = GroupingHelper.groupBySixHours(items);
+        chartItems = GroupingHelper.groupByDay(items);
         break;
       case 'Month':
       default:
@@ -113,7 +113,7 @@ class _DiaryViewState extends State<DiaryView> {
                         left: centerOffset?.dx ?? offset.dx,
                         child: DiaryPrompt(
                           key: _widgetKey,
-                          item: widget.diaryModel.values[selectedId], 
+                          item: chartItems[selectedId], 
                           decimalDigits: widget.decimalDigits, 
                           measureItem: widget.measureItem
                         )

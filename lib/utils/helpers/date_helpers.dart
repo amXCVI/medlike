@@ -114,6 +114,14 @@ class DateUtils {
         microseconds: -dateTime.microsecond));
   }
 
+  /// Возращает конец последнего дня недели указанной даты
+  ///
+  /// За последний день недели берется воскресенье.
+  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 12, 23, 59, 59, 0).
+  static DateTime lastDayOfWeekWithHours(DateTime dateTime) {
+    return firstDayOfNextWeek(dateTime).subtract(const Duration(seconds: 1));
+  }
+
   /// Возращает начало первого дня месяца указанной даты.
   /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 1, 0, 0, 0, 0).
   static DateTime firstDayOfMonth(DateTime dateTime) {
@@ -135,6 +143,12 @@ class DateUtils {
   /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
   static DateTime lastDayOfMonth(DateTime dateTime) {
     return firstDayOfNextMonth(dateTime).subtract(const Duration(days: 1));
+  }
+
+  /// Возращает конец последнего дня месяца указанной даты.
+  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
+  static DateTime lastDayOfMonthWithHours(DateTime dateTime) {
+    return firstDayOfNextMonth(dateTime).subtract(const Duration(seconds: 1));
   }
 
   /// Возвращает начало первого дня года указанной даты.
