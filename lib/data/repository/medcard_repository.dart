@@ -38,7 +38,7 @@ class MedcardRepository {
 
   Future<Uint8List> downloadFile({required String url}) async {
     try {
-      var response = await _dioClient.getImage(
+      var response = await _dioClient.getFile(
         url,
         options: Options(
           responseType: ResponseType.bytes,

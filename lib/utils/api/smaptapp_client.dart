@@ -317,7 +317,7 @@ class SmartAppClient {
   }
 
   Future<dynamic> getFile(String endpoint, {Options? options}) async {
-    print('GET_IMAGE $endpoint');
+    print('GET_FILE $endpoint');
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
@@ -340,7 +340,7 @@ class SmartAppClient {
       }),
       null,
     ).then(js.allowInterop((data) {
-      print('>>>> Ответ из смартаппа  по GET_IMAGE $endpoint: $data');
+      print('>>>> Ответ из смартаппа  по GET_FILE $endpoint: $data');
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа кодирован в json');
       SmartappSendBotEventResponseModel parsedResponse =
@@ -350,23 +350,23 @@ class SmartAppClient {
         AppToast.showAppToast(msg: 'Непредвиденная ошибка соединения');
         throw ('Где-то ошибка, смотри логи'); //! Заменить??????
       }
-      dynamic response;
-      try {
-        response = Response(
-          requestOptions: RequestOptions(path: endpoint),
-          data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
-        );
-      } catch (err) {
-        response = Response(
-          requestOptions: RequestOptions(path: endpoint),
-          data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
-        );
-      }
-      print('<<<< coздан объект Response');
-      print('<<<< response.data: ${response.data}');
-      return response;
+      return promiseToFuture(sendClientEvent(
+        const JsonEncoder().convert({
+          'method': 'open_file',
+          'params': {
+            'file': parsedResponse.files!.isNotEmpty
+                ? parsedResponse.files?.first
+                : 'NULL',
+          },
+        }),
+      ).then((arg) {
+        print('ОТВЕТ ИЗ BOT_X ПО ФАЙЛАМ:');
+        print(arg);
+        print(json.decode(arg));
+      }).catchIt((errorCallback) {
+        print(errorCallback);
+        return errorCallback;
+      }));
     }), js.allowInterop((err) {
       print('ERROR_GET: $err');
       return err;

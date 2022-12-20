@@ -5,6 +5,29 @@ part 'smartapp_models.freezed.dart';
 part 'smartapp_models.g.dart';
 
 @freezed
+class SmartappFileDataModel with _$SmartappFileDataModel {
+  const factory SmartappFileDataModel({
+    required dynamic caption,
+    required int chunkSize,
+    required dynamic duration,
+    required String file,
+    required String fileEncryptionAlgo,
+    required String fileHash,
+    required String fileId,
+    required String fileMimeType,
+    required String fileName,
+    required String? filePreview,
+    required String? filePreviewHeight,
+    required String? filePreviewWidth,
+    required int fileSize,
+    required String type,
+  }) = _SmartappFileDataModel;
+
+  factory SmartappFileDataModel.fromJson(Map<String, Object?> json) =>
+      _$SmartappFileDataModelFromJson(json);
+}
+
+@freezed
 class SmartappSendBotEventResponseModel
     with _$SmartappSendBotEventResponseModel {
   const factory SmartappSendBotEventResponseModel({

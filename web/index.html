@@ -43,6 +43,28 @@
 			});
 		}
 
+    async function sendClientEvent(jsonEventObject) {
+			const eventObject = JSON.parse(jsonEventObject);
+			console.log('sendClientEvent start', eventObject);
+			return new Promise((resolve, reject) => {
+				bridge.sendClientEvent(eventObject)
+					.then((res) => {
+						console.log('bridge.sendClientEvent success', res);
+						try {
+							resolve(JSON.stringify(res));
+						} catch (err) {
+							resolve(res);
+						}
+
+					})
+					.catch((err) => {
+						console.log('sending event object: ', eventObject);
+						console.log('bridge.sendClientEvent error', err);
+						reject(JSON.stringify(err))
+					})
+			});
+		}
+
 		bridge?.sendClientEvent({
 			method: 'ready',
 			params: {}

@@ -6,6 +6,44 @@ part of 'smartapp_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_SmartappFileDataModel _$$_SmartappFileDataModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_SmartappFileDataModel(
+      caption: json['caption'],
+      chunkSize: json['chunkSize'] as int,
+      duration: json['duration'],
+      file: json['file'] as String,
+      fileEncryptionAlgo: json['fileEncryptionAlgo'] as String,
+      fileHash: json['fileHash'] as String,
+      fileId: json['fileId'] as String,
+      fileMimeType: json['fileMimeType'] as String,
+      fileName: json['fileName'] as String,
+      filePreview: json['filePreview'] as String?,
+      filePreviewHeight: json['filePreviewHeight'] as String?,
+      filePreviewWidth: json['filePreviewWidth'] as String?,
+      fileSize: json['fileSize'] as int,
+      type: json['type'] as String,
+    );
+
+Map<String, dynamic> _$$_SmartappFileDataModelToJson(
+        _$_SmartappFileDataModel instance) =>
+    <String, dynamic>{
+      'caption': instance.caption,
+      'chunkSize': instance.chunkSize,
+      'duration': instance.duration,
+      'file': instance.file,
+      'fileEncryptionAlgo': instance.fileEncryptionAlgo,
+      'fileHash': instance.fileHash,
+      'fileId': instance.fileId,
+      'fileMimeType': instance.fileMimeType,
+      'fileName': instance.fileName,
+      'filePreview': instance.filePreview,
+      'filePreviewHeight': instance.filePreviewHeight,
+      'filePreviewWidth': instance.filePreviewWidth,
+      'fileSize': instance.fileSize,
+      'type': instance.type,
+    };
+
 _$_SmartappSendBotEventResponseModel
     _$$_SmartappSendBotEventResponseModelFromJson(Map<String, dynamic> json) =>
         _$_SmartappSendBotEventResponseModel(

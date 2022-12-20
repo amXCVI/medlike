@@ -45,7 +45,7 @@ class _WebFutureImageState extends State<WebFutureImage> {
       future: botXImage,
       builder: (BuildContext context,
           AsyncSnapshot<SmartappGetFileResponseModel> image) {
-        if (image.hasData) {
+        if (image.hasData || !widget.isWithButton) {
           return Center(
             child: Image.network(
               image.data!.fileUrl as String,

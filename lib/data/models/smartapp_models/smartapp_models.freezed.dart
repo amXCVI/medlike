@@ -14,6 +14,424 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+SmartappFileDataModel _$SmartappFileDataModelFromJson(
+    Map<String, dynamic> json) {
+  return _SmartappFileDataModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SmartappFileDataModel {
+  dynamic get caption => throw _privateConstructorUsedError;
+  int get chunkSize => throw _privateConstructorUsedError;
+  dynamic get duration => throw _privateConstructorUsedError;
+  String get file => throw _privateConstructorUsedError;
+  String get fileEncryptionAlgo => throw _privateConstructorUsedError;
+  String get fileHash => throw _privateConstructorUsedError;
+  String get fileId => throw _privateConstructorUsedError;
+  String get fileMimeType => throw _privateConstructorUsedError;
+  String get fileName => throw _privateConstructorUsedError;
+  String? get filePreview => throw _privateConstructorUsedError;
+  String? get filePreviewHeight => throw _privateConstructorUsedError;
+  String? get filePreviewWidth => throw _privateConstructorUsedError;
+  int get fileSize => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SmartappFileDataModelCopyWith<SmartappFileDataModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SmartappFileDataModelCopyWith<$Res> {
+  factory $SmartappFileDataModelCopyWith(SmartappFileDataModel value,
+          $Res Function(SmartappFileDataModel) then) =
+      _$SmartappFileDataModelCopyWithImpl<$Res>;
+  $Res call(
+      {dynamic caption,
+      int chunkSize,
+      dynamic duration,
+      String file,
+      String fileEncryptionAlgo,
+      String fileHash,
+      String fileId,
+      String fileMimeType,
+      String fileName,
+      String? filePreview,
+      String? filePreviewHeight,
+      String? filePreviewWidth,
+      int fileSize,
+      String type});
+}
+
+/// @nodoc
+class _$SmartappFileDataModelCopyWithImpl<$Res>
+    implements $SmartappFileDataModelCopyWith<$Res> {
+  _$SmartappFileDataModelCopyWithImpl(this._value, this._then);
+
+  final SmartappFileDataModel _value;
+  // ignore: unused_field
+  final $Res Function(SmartappFileDataModel) _then;
+
+  @override
+  $Res call({
+    Object? caption = freezed,
+    Object? chunkSize = freezed,
+    Object? duration = freezed,
+    Object? file = freezed,
+    Object? fileEncryptionAlgo = freezed,
+    Object? fileHash = freezed,
+    Object? fileId = freezed,
+    Object? fileMimeType = freezed,
+    Object? fileName = freezed,
+    Object? filePreview = freezed,
+    Object? filePreviewHeight = freezed,
+    Object? filePreviewWidth = freezed,
+    Object? fileSize = freezed,
+    Object? type = freezed,
+  }) {
+    return _then(_value.copyWith(
+      caption: caption == freezed
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      chunkSize: chunkSize == freezed
+          ? _value.chunkSize
+          : chunkSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      file: file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileEncryptionAlgo: fileEncryptionAlgo == freezed
+          ? _value.fileEncryptionAlgo
+          : fileEncryptionAlgo // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileHash: fileHash == freezed
+          ? _value.fileHash
+          : fileHash // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileId: fileId == freezed
+          ? _value.fileId
+          : fileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileMimeType: fileMimeType == freezed
+          ? _value.fileMimeType
+          : fileMimeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileName: fileName == freezed
+          ? _value.fileName
+          : fileName // ignore: cast_nullable_to_non_nullable
+              as String,
+      filePreview: filePreview == freezed
+          ? _value.filePreview
+          : filePreview // ignore: cast_nullable_to_non_nullable
+              as String?,
+      filePreviewHeight: filePreviewHeight == freezed
+          ? _value.filePreviewHeight
+          : filePreviewHeight // ignore: cast_nullable_to_non_nullable
+              as String?,
+      filePreviewWidth: filePreviewWidth == freezed
+          ? _value.filePreviewWidth
+          : filePreviewWidth // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_SmartappFileDataModelCopyWith<$Res>
+    implements $SmartappFileDataModelCopyWith<$Res> {
+  factory _$$_SmartappFileDataModelCopyWith(_$_SmartappFileDataModel value,
+          $Res Function(_$_SmartappFileDataModel) then) =
+      __$$_SmartappFileDataModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {dynamic caption,
+      int chunkSize,
+      dynamic duration,
+      String file,
+      String fileEncryptionAlgo,
+      String fileHash,
+      String fileId,
+      String fileMimeType,
+      String fileName,
+      String? filePreview,
+      String? filePreviewHeight,
+      String? filePreviewWidth,
+      int fileSize,
+      String type});
+}
+
+/// @nodoc
+class __$$_SmartappFileDataModelCopyWithImpl<$Res>
+    extends _$SmartappFileDataModelCopyWithImpl<$Res>
+    implements _$$_SmartappFileDataModelCopyWith<$Res> {
+  __$$_SmartappFileDataModelCopyWithImpl(_$_SmartappFileDataModel _value,
+      $Res Function(_$_SmartappFileDataModel) _then)
+      : super(_value, (v) => _then(v as _$_SmartappFileDataModel));
+
+  @override
+  _$_SmartappFileDataModel get _value =>
+      super._value as _$_SmartappFileDataModel;
+
+  @override
+  $Res call({
+    Object? caption = freezed,
+    Object? chunkSize = freezed,
+    Object? duration = freezed,
+    Object? file = freezed,
+    Object? fileEncryptionAlgo = freezed,
+    Object? fileHash = freezed,
+    Object? fileId = freezed,
+    Object? fileMimeType = freezed,
+    Object? fileName = freezed,
+    Object? filePreview = freezed,
+    Object? filePreviewHeight = freezed,
+    Object? filePreviewWidth = freezed,
+    Object? fileSize = freezed,
+    Object? type = freezed,
+  }) {
+    return _then(_$_SmartappFileDataModel(
+      caption: caption == freezed
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      chunkSize: chunkSize == freezed
+          ? _value.chunkSize
+          : chunkSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      file: file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileEncryptionAlgo: fileEncryptionAlgo == freezed
+          ? _value.fileEncryptionAlgo
+          : fileEncryptionAlgo // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileHash: fileHash == freezed
+          ? _value.fileHash
+          : fileHash // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileId: fileId == freezed
+          ? _value.fileId
+          : fileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileMimeType: fileMimeType == freezed
+          ? _value.fileMimeType
+          : fileMimeType // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileName: fileName == freezed
+          ? _value.fileName
+          : fileName // ignore: cast_nullable_to_non_nullable
+              as String,
+      filePreview: filePreview == freezed
+          ? _value.filePreview
+          : filePreview // ignore: cast_nullable_to_non_nullable
+              as String?,
+      filePreviewHeight: filePreviewHeight == freezed
+          ? _value.filePreviewHeight
+          : filePreviewHeight // ignore: cast_nullable_to_non_nullable
+              as String?,
+      filePreviewWidth: filePreviewWidth == freezed
+          ? _value.filePreviewWidth
+          : filePreviewWidth // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SmartappFileDataModel implements _SmartappFileDataModel {
+  const _$_SmartappFileDataModel(
+      {required this.caption,
+      required this.chunkSize,
+      required this.duration,
+      required this.file,
+      required this.fileEncryptionAlgo,
+      required this.fileHash,
+      required this.fileId,
+      required this.fileMimeType,
+      required this.fileName,
+      required this.filePreview,
+      required this.filePreviewHeight,
+      required this.filePreviewWidth,
+      required this.fileSize,
+      required this.type});
+
+  factory _$_SmartappFileDataModel.fromJson(Map<String, dynamic> json) =>
+      _$$_SmartappFileDataModelFromJson(json);
+
+  @override
+  final dynamic caption;
+  @override
+  final int chunkSize;
+  @override
+  final dynamic duration;
+  @override
+  final String file;
+  @override
+  final String fileEncryptionAlgo;
+  @override
+  final String fileHash;
+  @override
+  final String fileId;
+  @override
+  final String fileMimeType;
+  @override
+  final String fileName;
+  @override
+  final String? filePreview;
+  @override
+  final String? filePreviewHeight;
+  @override
+  final String? filePreviewWidth;
+  @override
+  final int fileSize;
+  @override
+  final String type;
+
+  @override
+  String toString() {
+    return 'SmartappFileDataModel(caption: $caption, chunkSize: $chunkSize, duration: $duration, file: $file, fileEncryptionAlgo: $fileEncryptionAlgo, fileHash: $fileHash, fileId: $fileId, fileMimeType: $fileMimeType, fileName: $fileName, filePreview: $filePreview, filePreviewHeight: $filePreviewHeight, filePreviewWidth: $filePreviewWidth, fileSize: $fileSize, type: $type)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SmartappFileDataModel &&
+            const DeepCollectionEquality().equals(other.caption, caption) &&
+            const DeepCollectionEquality().equals(other.chunkSize, chunkSize) &&
+            const DeepCollectionEquality().equals(other.duration, duration) &&
+            const DeepCollectionEquality().equals(other.file, file) &&
+            const DeepCollectionEquality()
+                .equals(other.fileEncryptionAlgo, fileEncryptionAlgo) &&
+            const DeepCollectionEquality().equals(other.fileHash, fileHash) &&
+            const DeepCollectionEquality().equals(other.fileId, fileId) &&
+            const DeepCollectionEquality()
+                .equals(other.fileMimeType, fileMimeType) &&
+            const DeepCollectionEquality().equals(other.fileName, fileName) &&
+            const DeepCollectionEquality()
+                .equals(other.filePreview, filePreview) &&
+            const DeepCollectionEquality()
+                .equals(other.filePreviewHeight, filePreviewHeight) &&
+            const DeepCollectionEquality()
+                .equals(other.filePreviewWidth, filePreviewWidth) &&
+            const DeepCollectionEquality().equals(other.fileSize, fileSize) &&
+            const DeepCollectionEquality().equals(other.type, type));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(caption),
+      const DeepCollectionEquality().hash(chunkSize),
+      const DeepCollectionEquality().hash(duration),
+      const DeepCollectionEquality().hash(file),
+      const DeepCollectionEquality().hash(fileEncryptionAlgo),
+      const DeepCollectionEquality().hash(fileHash),
+      const DeepCollectionEquality().hash(fileId),
+      const DeepCollectionEquality().hash(fileMimeType),
+      const DeepCollectionEquality().hash(fileName),
+      const DeepCollectionEquality().hash(filePreview),
+      const DeepCollectionEquality().hash(filePreviewHeight),
+      const DeepCollectionEquality().hash(filePreviewWidth),
+      const DeepCollectionEquality().hash(fileSize),
+      const DeepCollectionEquality().hash(type));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SmartappFileDataModelCopyWith<_$_SmartappFileDataModel> get copyWith =>
+      __$$_SmartappFileDataModelCopyWithImpl<_$_SmartappFileDataModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SmartappFileDataModelToJson(this);
+  }
+}
+
+abstract class _SmartappFileDataModel implements SmartappFileDataModel {
+  const factory _SmartappFileDataModel(
+      {required final dynamic caption,
+      required final int chunkSize,
+      required final dynamic duration,
+      required final String file,
+      required final String fileEncryptionAlgo,
+      required final String fileHash,
+      required final String fileId,
+      required final String fileMimeType,
+      required final String fileName,
+      required final String? filePreview,
+      required final String? filePreviewHeight,
+      required final String? filePreviewWidth,
+      required final int fileSize,
+      required final String type}) = _$_SmartappFileDataModel;
+
+  factory _SmartappFileDataModel.fromJson(Map<String, dynamic> json) =
+      _$_SmartappFileDataModel.fromJson;
+
+  @override
+  dynamic get caption => throw _privateConstructorUsedError;
+  @override
+  int get chunkSize => throw _privateConstructorUsedError;
+  @override
+  dynamic get duration => throw _privateConstructorUsedError;
+  @override
+  String get file => throw _privateConstructorUsedError;
+  @override
+  String get fileEncryptionAlgo => throw _privateConstructorUsedError;
+  @override
+  String get fileHash => throw _privateConstructorUsedError;
+  @override
+  String get fileId => throw _privateConstructorUsedError;
+  @override
+  String get fileMimeType => throw _privateConstructorUsedError;
+  @override
+  String get fileName => throw _privateConstructorUsedError;
+  @override
+  String? get filePreview => throw _privateConstructorUsedError;
+  @override
+  String? get filePreviewHeight => throw _privateConstructorUsedError;
+  @override
+  String? get filePreviewWidth => throw _privateConstructorUsedError;
+  @override
+  int get fileSize => throw _privateConstructorUsedError;
+  @override
+  String get type => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SmartappFileDataModelCopyWith<_$_SmartappFileDataModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 SmartappSendBotEventResponseModel _$SmartappSendBotEventResponseModelFromJson(
     Map<String, dynamic> json) {
   return _SmartappSendBotEventResponseModel.fromJson(json);
