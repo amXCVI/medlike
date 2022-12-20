@@ -220,12 +220,13 @@ class AppointmentsCubit
       response = await appointmentsRepository.deleteAppointment(
           appointmentId: appointmentId, userId: userId);
 
-      emit(state.copyWith(
-        deleteAppointmentStatus: DeleteAppointmentStatuses.success,
-      ));
+      await getLastAppointment(true);
       if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
+      emit(state.copyWith(
+        deleteAppointmentStatus: DeleteAppointmentStatuses.success,
+      ));
     } catch (e) {
       emit(state.copyWith(
           deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
@@ -250,12 +251,14 @@ class AppointmentsCubit
       response = await appointmentsRepository.confirmAppointment(
           appointmentId: appointmentId, userId: userId);
 
+      await getLastAppointment(true);
       emit(state.copyWith(
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
       if (response) {
         AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
+
     } catch (e) {
       emit(
           state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed));

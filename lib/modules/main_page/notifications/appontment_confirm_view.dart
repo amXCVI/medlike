@@ -10,8 +10,7 @@ import 'package:medlike/widgets/buttons/simple_button.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class AppointmentConfirmView extends StatefulWidget {
-  const AppointmentConfirmView(
-      {Key? key, required this.appointment})
+  const AppointmentConfirmView({Key? key, required this.appointment})
       : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointment;
@@ -73,8 +72,7 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
           final description = getAppointmentsDesc(widget.appointment);
 
           final content = Padding(
-            padding: const EdgeInsets.only(
-                top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -178,38 +176,52 @@ class NotificationBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-              child: SimpleButton(
-            isPrimary: true,
-            labelText: 'Подтвердить',
-            onTap: () {
-              context.read<AppointmentsCubit>().confirmAppointment(
-                  appointmentId: appointment.id,
-                  userId: appointment.patientInfo.id ?? '');
+    return BlocBuilder<AppointmentsCubit, AppointmentsState>(
+      builder: (context, state) {
+        final isDisabled = state.putAppointmentStatus == PutAppointmentsStatuses.loading
+          || state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading;
 
-              context.read<AppointmentsCubit>().getAppointmentsList(true);
-            },
-          )),
-          const SizedBox(
-            width: 12,
-          ),
-          Expanded(
-              child: SimpleButton(
-                  labelText: 'Отменить',
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SimpleButton(
+                  isPrimary: true,
+                  isDisabled: isDisabled,
+                  isLoading: state.putAppointmentStatus == PutAppointmentsStatuses.loading,
+                  labelText: 'Подтвердить',
                   onTap: () {
-                    context.read<AppointmentsCubit>().deleteAppointment(
+                    context.read<AppointmentsCubit>().confirmAppointment(
                         appointmentId: appointment.id,
                         userId: appointment.patientInfo.id ?? '');
 
                     context.read<AppointmentsCubit>().getAppointmentsList(true);
-                  }))
-        ],
-      ),
+                  },
+                )
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                  child: SimpleButton(
+                      labelText: 'Отменить',
+                      isLoading: state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading,
+                      isDisabled: isDisabled,
+                      onTap: () {
+                        context.read<AppointmentsCubit>().deleteAppointment(
+                            appointmentId: appointment.id,
+                            userId: appointment.patientInfo.id ?? '');
+
+                        context
+                            .read<AppointmentsCubit>()
+                            .getAppointmentsList(true);
+                      }))
+            ],
+          ),
+        );
+      },
     );
   }
 }

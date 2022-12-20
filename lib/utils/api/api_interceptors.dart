@@ -28,7 +28,7 @@ class DioInterceptors extends Interceptor {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': 'Android', //Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
