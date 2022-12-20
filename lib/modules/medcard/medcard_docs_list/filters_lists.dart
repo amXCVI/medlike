@@ -28,7 +28,7 @@ List<MedcardFilterModel> medcardFiltersList = [
         MedcardFilterItemModel(
             categoryLabel: 'Период',
             value:
-                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: -1)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
+                'dateBegin=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 0)))}&dateEnd=${DateFormat("yyyy-MM-dd").format(DateTime.now().add(const Duration(days: 1)))}',
             label: 'Сегодня'),
       ]),
   const MedcardFilterModel(
@@ -36,18 +36,24 @@ List<MedcardFilterModel> medcardFiltersList = [
       value: '1',
       filters: <MedcardFilterItemModel>[
         MedcardFilterItemModel(
-            categoryLabel: 'Категория', value: '', label: 'Все'),
+          categoryLabel: 'Категория',
+          value: '',
+          label: 'Все',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=lab',
-            label: 'Анализы'),
+          categoryLabel: 'Категория',
+          value: 'category=lab',
+          label: 'Анализы',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=instrumental',
-            label: 'Диагностика'),
+          categoryLabel: 'Категория',
+          value: 'category=instrumental',
+          label: 'Диагностика',
+        ),
         MedcardFilterItemModel(
-            categoryLabel: 'Категория',
-            value: 'category=consult`',
-            label: 'Осмотры'),
+          categoryLabel: 'Категория',
+          value: 'category=consult',
+          label: 'Осмотры',
+        ),
       ]),
 ];

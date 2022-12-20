@@ -287,5 +287,58 @@ class SubscribeState {
     );
   }
 
+  SubscribeState clearState() {
+    return SubscribeState(
+      selectedUser: null,
+      getAvailableClinicsStatus: null,
+      availableClinicsList: null,
+      selectedBuilding: null,
+      getServicesListStatus: null,
+      servicesList: null,
+      selectedService: null,
+      getResearchesListStatus: null,
+      researchesList: null,
+      selectedResearchesIds: null,
+      filteredResearchesList: null,
+      getSpecialisationsListStatus: null,
+      specialisationsList: null,
+      selectedSpecialisation: null,
+      filteredSpecialisationsList: null,
+      getDoctorsListStatus: null,
+      doctorsList: null,
+      selectedDoctor: null,
+      filteredDoctorsList: null,
+      getCabinetsListStatus: null,
+      cabinetsList: null,
+      selectedCabinet: null,
+      filteredCabinetsList: null,
+      getFavoriteDoctorsListStatus: null,
+      favoriteDoctorsList: null,
+      filteredFavoriteDoctorsList: null,
+      getCalendarStatus: null,
+      calendarList: null,
+      selectedCalendarItem: null,
+      startDate: startDate,
+      endDate: endDate,
+      selectedDate: selectedDate,
+      getTimetableCellsStatus: null,
+      timetableCellsList: null,
+      timetableLogsList: null,
+      selectedTimetableCell: null,
+      getAppointmentInfoStatus: null,
+      appointmentInfoData: null,
+      checkAndLockAvailableCellStatus: null,
+      creatingAppointmentStatus: null,
+      getAvailableDoctorStatus: null,
+      unlockCellStatus: null,
+      setDoctorToFavoritesStatus: null,
+      deleteDoctorFromFavoritesStatus: null,
+      selectedPayType: null,
+      registerOrderStatus: null,
+      paymentUrl: null,
+      createdAppointmentId: null,
+    );
+  }
+
   List<Object?> get props => [];
 }

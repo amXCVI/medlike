@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
@@ -7,6 +8,7 @@ import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skel
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_filters_widget.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/selected_filters_widget.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
@@ -68,50 +70,64 @@ class _MedcardPageState extends State<MedcardPage> {
       context.read<MedcardCubit>().filterMedcardDocsList(filterStr);
     }
 
-    return DefaultScaffold(
-        appBarTitle: 'Медкарта',
-        isSearch: true,
-        appBar: MedcardAppBar(
-          title: 'Медкарта',
-          filteringFunction: _onFilterList,
-          isChildrenPage: widget.isChildrenPage,
-          handleTapOnFiltersButton: handleTapOnFiltersButton,
-          handleResetFilters: handleResetFilters,
-          isFilteringMode: isFilteringMode,
-        ),
-        widgetOverBody: isFilteringMode
-            ? MedcardFiltersWidget(key: widgetOverBodyGlobalKey)
-            : GestureDetector(
-                onTap: () {
-                  handleTapOnFiltersButton();
-                  ModalRoute.of(context)
-                      ?.addLocalHistoryEntry(LocalHistoryEntry());
-                },
-                child: SelectedFiltersWidget(
-                    key: widgetOverBodyGlobalKey,
-                    isShowingWidget: isShowingFilters && !isFilteringMode),
-              ),
-        widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
-            ? widgetOverBodyGlobalKey
-            : null,
-        rightBottomWidget: FilesButton(userId: widget.userId),
-        child: BlocBuilder<MedcardCubit, MedcardState>(
-          builder: (context, state) {
-            if (state.getMedcardDocsListStatus ==
-                GetMedcardDocsListStatuses.failed) {
-              return const Text('');
-            } else if (state.getMedcardDocsListStatus ==
-                GetMedcardDocsListStatuses.success) {
-              return MedcardList(
-                medcardDocsList:
-                    state.filteredMedcardDocsList as List<MedcardDocsModel>,
-                onRefreshData: _onLoadDada,
-                downloadingFileId: state.downloadingFileId ?? '',
-              );
-            } else {
-              return const MedcardDocsListSkeleton();
-            }
-          },
-        ));
+    return WillPopScope(
+      onWillPop: () async {
+        if (isFilteringMode) {
+          handleResetFilters();
+        } else {
+          if (widget.isChildrenPage) {
+            context.router.replace(const MedcardProfilesListRoute());
+          } else {
+            context.router.replaceAll([const MainRoute()]);
+          }
+        }
+        return false;
+      },
+      child: DefaultScaffold(
+          appBarTitle: 'Медкарта',
+          isSearch: true,
+          appBar: MedcardAppBar(
+            title: 'Медкарта',
+            filteringFunction: _onFilterList,
+            isChildrenPage: true,
+            handleTapOnFiltersButton: handleTapOnFiltersButton,
+            handleResetFilters: handleResetFilters,
+            isFilteringMode: isFilteringMode,
+          ),
+          widgetOverBody: isFilteringMode
+              ? MedcardFiltersWidget(key: widgetOverBodyGlobalKey)
+              : GestureDetector(
+                  onTap: () {
+                    handleTapOnFiltersButton();
+                    ModalRoute.of(context)
+                        ?.addLocalHistoryEntry(LocalHistoryEntry());
+                  },
+                  child: SelectedFiltersWidget(
+                      key: widgetOverBodyGlobalKey,
+                      isShowingWidget: isShowingFilters && !isFilteringMode),
+                ),
+          widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
+              ? widgetOverBodyGlobalKey
+              : null,
+          rightBottomWidget: FilesButton(userId: widget.userId),
+          child: BlocBuilder<MedcardCubit, MedcardState>(
+            builder: (context, state) {
+              if (state.getMedcardDocsListStatus ==
+                  GetMedcardDocsListStatuses.failed) {
+                return const Text('');
+              } else if (state.getMedcardDocsListStatus ==
+                  GetMedcardDocsListStatuses.success) {
+                return MedcardList(
+                  medcardDocsList:
+                      state.filteredMedcardDocsList as List<MedcardDocsModel>,
+                  onRefreshData: _onLoadDada,
+                  downloadingFileId: state.downloadingFileId ?? '',
+                );
+              } else {
+                return const MedcardDocsListSkeleton();
+              }
+            },
+          )),
+    );
   }
 }

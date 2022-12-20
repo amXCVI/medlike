@@ -21,6 +21,8 @@ class Calendar extends StatefulWidget {
     required this.onChangeStartDate,
     required this.onChangeEndDate,
     required this.isLoading,
+    this.firstDay,
+    this.lastDay,
   }) : super(key: key);
 
   final bool isLoading;
@@ -31,6 +33,8 @@ class Calendar extends StatefulWidget {
   final void Function(CalendarModel selectedDay) onChangeSelectedDate;
   final void Function(DateTime date) onChangeStartDate;
   final void Function(DateTime date) onChangeEndDate;
+  final DateTime? firstDay;
+  final DateTime? lastDay;
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -82,8 +86,10 @@ class _CalendarState extends State<Calendar> {
           const DaysOfWeek(),
           TableCalendar(
             locale: Localizations.localeOf(context).languageCode,
-            firstDay: widget.selectedDate.add(const Duration(days: -365)),
-            lastDay: widget.selectedDate.add(const Duration(days: 365)),
+            firstDay: widget.firstDay ??
+                widget.selectedDate.add(const Duration(days: -365)),
+            lastDay: widget.lastDay ??
+                widget.selectedDate.add(const Duration(days: 365)),
             focusedDay: _focusedDay.value,
             onCalendarCreated: (controller) => _pageController = controller,
             onPageChanged: (focusedDay) {
@@ -98,11 +104,11 @@ class _CalendarState extends State<Calendar> {
                 _focusedDay = ValueNotifier(selectedDay);
               });
               widget.onChangeSelectedDate(widget.calendarList.firstWhere(
-                                (element) => isSameDay(element.date, selectedDay),
-                                orElse: () => CalendarModel(
-                                    hasAvailableCells: false,
-                                    hasLogs: false,
-                                    date: selectedDay)));
+                  (element) => isSameDay(element.date, selectedDay),
+                  orElse: () => CalendarModel(
+                      hasAvailableCells: false,
+                      hasLogs: false,
+                      date: selectedDay)));
             },
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
@@ -127,15 +133,13 @@ class _CalendarState extends State<Calendar> {
               selectedDay: widget.selectedDate,
               hasLogsDatesList: widget.calendarList
                   .where((element) => element.hasLogs)
-                  .map((e) => DateFormat("yyyy-MM-dd")
-                      .format(e.date)
-                      .toString())
+                  .map(
+                      (e) => DateFormat("yyyy-MM-dd").format(e.date).toString())
                   .toList(),
               hasAvailableCellsDatesList: widget.calendarList
                   .where((element) => element.hasAvailableCells)
-                  .map((e) => DateFormat("yyyy-MM-dd")
-                      .format(e.date)
-                      .toString())
+                  .map(
+                      (e) => DateFormat("yyyy-MM-dd").format(e.date).toString())
                   .toList(),
             ),
             calendarStyle: CalendarStyle(

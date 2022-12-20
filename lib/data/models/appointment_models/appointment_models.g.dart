@@ -63,8 +63,8 @@ _$_AppointmentModelWithTimeZoneOffset
           comment: json['comment'] as String?,
           researchPlace: json['researchPlace'] as String,
           id: json['id'] as String,
-          appointmentDateTime:
-              DateTime.parse(json['appointmentDateTime'] as String),
+          appointmentDateTime: const TimestampConverter()
+              .fromJson(json['appointmentDateTime'] as String),
           timeZoneOffset: json['timeZoneOffset'] as int,
           patientInfo: PatientInfoModel.fromJson(
               json['patientInfo'] as Map<String, dynamic>),
@@ -93,7 +93,8 @@ Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
       'comment': instance.comment,
       'researchPlace': instance.researchPlace,
       'id': instance.id,
-      'appointmentDateTime': instance.appointmentDateTime.toIso8601String(),
+      'appointmentDateTime':
+          const TimestampConverter().toJson(instance.appointmentDateTime),
       'timeZoneOffset': instance.timeZoneOffset,
       'patientInfo': instance.patientInfo,
       'clinicInfo': instance.clinicInfo,

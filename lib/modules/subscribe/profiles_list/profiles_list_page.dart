@@ -15,9 +15,11 @@ class SubscribeProfilesListPage extends StatelessWidget {
       context.read<UserCubit>().setSelectedUserId(userId);
 
       if (isChildren) {
-        context.router.push(ClinicsListRoute(userId: userId));
+        context.router
+            .push(ClinicsListRoute(userId: userId, isChildrenPage: true));
       } else {
-        context.router.replace(ClinicsListRoute(userId: userId));
+        context.router
+            .replace(ClinicsListRoute(userId: userId, isChildrenPage: false));
       }
     }
 
@@ -27,10 +29,16 @@ class SubscribeProfilesListPage extends StatelessWidget {
 
     _onRefreshData();
 
-    return ProfilesListPage(
-      title: 'Запись на прием',
-      routeName: AppRoutes.subscribeProfiles,
-      handleTapOnUserProfile: _handleTapOnUserProfile,
+    return WillPopScope(
+      onWillPop: () async {
+        context.router.replaceAll([const MainRoute()]);
+        return false;
+      },
+      child: ProfilesListPage(
+        title: 'Запись на прием',
+        routeName: AppRoutes.subscribeProfiles,
+        handleTapOnUserProfile: _handleTapOnUserProfile,
+      ),
     );
   }
 }

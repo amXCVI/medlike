@@ -10,15 +10,24 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
 class AppointmentsListWidget extends StatelessWidget {
-  const AppointmentsListWidget({Key? key, required this.selectedDate})
+  const AppointmentsListWidget(
+      {Key? key, required this.selectedDate, required this.userId})
       : super(key: key);
 
   final DateTime selectedDate;
+  final String userId;
+
+  void _getFilteredData(BuildContext context) async {
+    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
+        (value) => context
+            .read<AppointmentsCubit>()
+            .getAppointmentsListForSelectedDay(
+                userId: userId, selectedDate: selectedDate));
+  }
 
   @override
   Widget build(BuildContext context) {
-    context.read<AppointmentsCubit>().getAppointmentsList(false);
-
+    _getFilteredData(context);
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
         if (state.appointmentsList == null ||
@@ -28,7 +37,7 @@ class AppointmentsListWidget extends StatelessWidget {
         } else if (state.getAppointmentsStatus ==
             GetAppointmentsStatuses.success) {
           return AppointmentsList(
-            appointmentsList: state.filteredAppointmentsList
+            appointmentsList: state.selectedDayAppointmentsList
                 as List<AppointmentModelWithTimeZoneOffset>,
             selectedDate: selectedDate,
           );

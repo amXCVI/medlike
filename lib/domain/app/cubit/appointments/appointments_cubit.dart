@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -30,7 +32,7 @@ class AppointmentsCubit
     }
   }
 
-  void getAppointmentsList(bool isRefresh) async {
+  Future<void> getAppointmentsList(bool isRefresh) async {
     if (state.getAppointmentsStatus == GetAppointmentsStatuses.loading ||
         (!isRefresh &&
             state.getAppointmentsStatus == GetAppointmentsStatuses.success &&
@@ -53,7 +55,8 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -76,7 +79,8 @@ class AppointmentsCubit
                 comment: e.comment,
                 researchPlace: e.researchPlace,
                 id: e.id,
-                appointmentDateTime: DateTime.parse(e.appointmentDateTime),
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
                 timeZoneOffset: int.parse(
                     e.appointmentDateTime.split('+').last.substring(0, 2)),
                 patientInfo: e.patientInfo,
@@ -94,12 +98,14 @@ class AppointmentsCubit
             .toList(),
       ));
       filterAppointmentsList(state.selectedDate);
+      return;
     } catch (e) {
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.failed,
         appointmentsList: [],
         filteredAppointmentsList: [],
       ));
+      return;
     }
   }
 
@@ -131,6 +137,25 @@ class AppointmentsCubit
     ));
   }
 
+  /// Отбираем только будущие приемы, для экрана записи
+  /// Отбираем приемы по выбранному для записи пользователю
+  /// Отбираем прием по выбранной дате
+  /// Итоговый список для показа на экране записи на прием
+  void getAppointmentsListForSelectedDay(
+      {required String userId, required DateTime selectedDate}) {
+    final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
+    if (state.appointmentsList == null) return;
+    filteredAppointmentsList = state.appointmentsList!
+        .where((element) =>
+            AppointmentStatuses.cancellableStatusIds.contains(element.status) &&
+            element.patientInfo.id == userId &&
+            isSameDay(element.appointmentDateTime, selectedDate))
+        .toList();
+    emit(state.copyWith(
+      selectedDayAppointmentsList: filteredAppointmentsList,
+    ));
+  }
+
   /// Future<void> Для последовательного ожидания кубитов
   Future<void> getLastAppointment(bool isRefresh) async {
     if (!isRefresh &&
@@ -154,7 +179,8 @@ class AppointmentsCubit
               comment: response.comment,
               researchPlace: response.researchPlace,
               id: response.id,
-              appointmentDateTime: DateTime.parse(response.appointmentDateTime),
+              appointmentDateTime: const TimestampConverter()
+                  .fromJson(response.appointmentDateTime),
               timeZoneOffset: int.parse(
                   response.appointmentDateTime.split('+').last.substring(0, 2)),
               patientInfo: response.patientInfo,

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation'
     '/freezed_annotation.dart';
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
 
 part 'calendar_models.freezed.dart';
 
@@ -20,7 +21,7 @@ class CalendarModel with _$CalendarModel {
 @freezed
 class TimetableCellModel with _$TimetableCellModel {
   const factory TimetableCellModel({
-    required DateTime time,
+    @TimestampConverter() required DateTime time,
     required String scheduleId,
     required String cabinetName,
     required String buildingId,

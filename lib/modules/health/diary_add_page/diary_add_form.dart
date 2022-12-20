@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_date_field.dart';
+import 'package:medlike/utils/helpers/value_helper.dart';
 
 class DiaryAddForm extends StatelessWidget {
   const DiaryAddForm({
@@ -11,7 +12,8 @@ class DiaryAddForm extends StatelessWidget {
     required this.dateController,
     required this.timeController,
     this.initialDate,
-    this.initialTime
+    this.initialTime,
+    required this.setEnabled
   }) : super(key: key);
 
   final GlobalKey formKey;
@@ -20,6 +22,7 @@ class DiaryAddForm extends StatelessWidget {
   final Function(DateTime, String) onTimeChange;
   final DateTime? initialDate;
   final DateTime? initialTime;
+  final Function(bool) setEnabled;
   
   final TextEditingController dateController;
   final TextEditingController timeController;
@@ -44,6 +47,22 @@ class DiaryAddForm extends StatelessWidget {
             onChange: onTimeChange,
             initialDate: initialTime ?? DateTime.now(),
             controller: timeController,
+            validator: (timeString) {
+              final date = ValueHelper.getDatepickerTime(dateController.text, true);
+              final time = ValueHelper.getDatepickerTime(timeString, false);
+              final timeDuration = Duration(
+                hours: time?.hour ?? 0, 
+                minutes: time?.minute ?? 0, 
+                seconds: time?.second ?? 0
+              );
+              final finalDate = date?.add(timeDuration);
+              if (finalDate!.isAfter(DateTime.now())) {
+                setEnabled(false);
+                return 'Нельзя добавить показатель на будущую дату';
+              }
+              setEnabled(true);
+              return null;
+            },
           ),
         ],
       ),

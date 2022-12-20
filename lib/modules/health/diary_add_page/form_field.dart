@@ -11,6 +11,7 @@ class FormField extends StatefulWidget {
     required this.isEmpty,
     required this.onFocus,
     required this.isValidate,
+    required this.decimalDigits,
     required this.validator
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class FormField extends StatefulWidget {
   final bool isEmpty;
   final Function onFocus;
   final bool isValidate;
+  final int decimalDigits;
   final String? Function(String?) validator;
 
   @override
@@ -51,7 +53,11 @@ class _FormFieldState extends State<FormField> {
           keyboardType: TextInputType.number,
           autovalidateMode: AutovalidateMode.always,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+            FilteringTextInputFormatter.allow(
+              widget.decimalDigits == 0 
+                ? RegExp('^\\d+') 
+                : RegExp('^\\d+\\.?\\d{0,${widget.decimalDigits}}')
+            ),
           ],
           decoration: InputDecoration(
             labelText: widget.labelText,

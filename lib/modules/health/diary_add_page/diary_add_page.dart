@@ -114,6 +114,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         onFocus: () => onFocus(index, false), 
         controller: _controllers[index], 
         isEmpty: isEmpties[index],
+        decimalDigits: widget.decimalDigits,
         validator: (str) {
           final num = double.tryParse(str ?? '');
 
@@ -183,6 +184,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               onTimeChange: onTimeChange,
               dateController: dateController,
               timeController: timeController,
+              setEnabled: (status) => setState(() => isDisabledButton = !status),
             ),
           ),
           appBarTitle: widget.title,

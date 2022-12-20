@@ -19,19 +19,24 @@ class MedcardProfilesListPage extends StatelessWidget {
       context.read<UserCubit>().setSelectedUserId(userId);
 
       if (isChildren) {
-        context.router
-            .push(MedcardRoute(userId: userId, isChildrenPage: false));
+        context.router.push(MedcardRoute(userId: userId, isChildrenPage: true));
       } else {
         context.router
-            .replace(MedcardRoute(userId: userId, isChildrenPage: true));
+            .replace(MedcardRoute(userId: userId, isChildrenPage: false));
       }
     }
 
     _onRefreshData();
 
-    return ProfilesListPage(
-        title: 'Медкарта',
-        routeName: AppRoutes.medcard,
-        handleTapOnUserProfile: _handleTapOnUserProfile);
+    return WillPopScope(
+      onWillPop: () async {
+        context.router.replaceAll([const MainRoute()]);
+        return false;
+      },
+      child: ProfilesListPage(
+          title: 'Медкарта',
+          routeName: AppRoutes.medcard,
+          handleTapOnUserProfile: _handleTapOnUserProfile),
+    );
   }
 }

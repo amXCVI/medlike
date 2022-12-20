@@ -24,8 +24,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   @override
   void receive(String from, UserMediatorEvent event) {
-    print(from);
-    print(event);
     if (event == UserMediatorEvent.logout) {
       forceLogout();
     } else if (event == UserMediatorEvent.pushNotification) {
@@ -410,6 +408,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           isFound: response.found));
       return response;
     } on DioError catch (e) {
+      addError(e);
+      if(e.type == DioErrorType.other) {
+        return const CheckUserAccountResponse(
+            found: false, message: 'Ошибка соединения с сервером');
+      }
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
@@ -479,6 +482,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }) async {
     emit(state.copyWith(
       uploadUserAvatarStatus: UploadUserAvatarStatuses.loading,
+      userProfiles: state.userProfiles!
+          .map((e) => e.id == userId ? e.copyWith(avatar: 'loading') : e)
+          .toList(),
     ));
     try {
       UserUploadAvatarResponseModel response =
@@ -486,7 +492,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         userId: userId,
         file: file,
       );
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(seconds: 1), () {
         emit(state.copyWith(
             uploadUserAvatarStatus: UploadUserAvatarStatuses.success,
             userProfiles: state.userProfiles

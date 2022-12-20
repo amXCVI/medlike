@@ -145,18 +145,18 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight;
+    final isSmallScreen =
+        MediaQuery.of(context).size.height <= AppConstants.mdScreenHeight;
 
     return SizedBox(
       width: 300,
       height: isSmallScreen
-        ? widget.height
-        : MediaQuery.of(context).size.height - 160,
+          ? widget.height
+          : MediaQuery.of(context).size.height - 160,
       child: Column(
-        mainAxisAlignment:
-            isSmallScreen
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: isSmallScreen
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.spaceBetween,
         children: [
           isSmallScreen
               ? const SizedBox(height: 12)
@@ -164,8 +164,9 @@ class _PinCodeViewState extends State<PinCodeView> {
           Expanded(
             child: Center(
               child: Column(
-                mainAxisAlignment: 
-                  isSmallScreen ? MainAxisAlignment.center : MainAxisAlignment.start,
+                mainAxisAlignment: isSmallScreen
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 children: [
                   Center(
                       child: Text(
@@ -236,7 +237,8 @@ class _PinCodeViewState extends State<PinCodeView> {
                                     )
                                   : item.buttonType ==
                                           PinCodeKeyboardTypes.biometric
-                                      ? isSupportedAndEnabledBiometric && !widget.isInit
+                                      ? isSupportedAndEnabledBiometric &&
+                                              !widget.isInit
                                           ? Padding(
                                               padding:
                                                   const EdgeInsets.all(12.0),

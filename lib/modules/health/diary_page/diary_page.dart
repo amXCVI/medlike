@@ -45,7 +45,7 @@ class _DiaryPageState extends State<DiaryPage> {
   @override
   void initState() {
     final cubit = context.read<DiaryCubit>();
-    final date = cubit.state.selectedDiary!.currentValue.date;
+    final date = cubit.state.selectedDiary!.currentValue?.date ?? DateTime.now();
     final dates = ValueHelper.getPeriodTiming(date, '');
 
     cubit.setTimePeriod(

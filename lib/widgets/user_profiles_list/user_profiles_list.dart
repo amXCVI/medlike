@@ -93,6 +93,7 @@ class UserProfilesList extends StatelessWidget {
                               onLoadAvatar: () {
                                 handleLoadAvatar(item.id);
                               },
+                              isLoadingAvatar: item.avatar == 'loading',
                             ),
                           ))
                       .toList());
