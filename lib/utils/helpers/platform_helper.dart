@@ -6,6 +6,6 @@ class PlatformHelper {
   static String getPlatform() {
     return kIsWeb 
       ? 'Web'
-      : Platform.isAndroid ? 'Android' : 'iOS-Flutter';
+      : Platform.isAndroid ? 'Android' : 'FlutteriOS';
   }
 }
