@@ -779,7 +779,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
           lastNotification: null, isLastNotificationShow: false));
-      //await getLastNotReadNotification(true);
+      await getLastNotReadNotification(true);
       emit(state.copyWith(
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.success,

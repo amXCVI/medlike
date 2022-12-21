@@ -7,7 +7,7 @@ class ApiConstants {
   static String baseUrlZapolyaryeProd =
       'https://mis-api.nornik.ru/medlike/prod';
 
-  static String baseUrl = baseUrlEnv05;
+  static String baseUrl = baseUrlEnv11;
 
   // Версия приложения. Когда-нибудь нужно сделать, чтобы эта штука подтягивалась автоматически
   static String appVersion = '1.1';

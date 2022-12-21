@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:medlike/constants/notications_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
+import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class NotificationsWidgetView extends StatefulWidget {
@@ -141,7 +146,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                 margin: const EdgeInsets.only(
                     top: 0, left: 16.0, bottom: 32.0, right: 16.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                   boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
@@ -152,25 +157,57 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                   color: Theme.of(context).backgroundColor,
                 ),
 
-                child: Slidable(
-                  key: UniqueKey(),
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    dismissible: DismissiblePane(onDismissed: () {
-                      context
-                          .read<UserCubit>()
-                          .updateNotificationStatus(notificationItem.id);
-                    }),
-                    children: [
-                      SlidableAction(
-                        flex: 2,
-                        onPressed: (ctx) {},
-                        backgroundColor: const Color(0xFFFE4A49),
-                        icon: Icons.delete,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  child: Material(
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<UserCubit>()
+                            .updateNotificationStatus(notificationItem.id);
+
+                        switch(notificationItem.eventType) {
+                          case (NotificationsTypes.newMedcardEventPdf):
+                            context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
+                              fileUrl:
+                                  '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
+                              fileName: notificationItem.description,
+                              fileId: notificationItem.entityId,
+                            );
+                            break;
+                          case (NotificationsTypes.appointmentCanceled):
+                          case (NotificationsTypes.appointmentScheduled):
+                            context.router.push(
+                              MedcardRoute(
+                                userId: notificationItem.userId,
+                                isChildrenPage: true
+                              )
+                            );
+                            break;
+                        }
+                      },
+                      child: Slidable(
+                        key: UniqueKey(),
+                        endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          dismissible: DismissiblePane(onDismissed: () {
+                            context
+                                .read<UserCubit>()
+                                .updateNotificationStatus(notificationItem.id);
+                          }),
+                          children: [
+                            SlidableAction(
+                              flex: 2,
+                              onPressed: (ctx) {},
+                              backgroundColor: const Color(0xFFFE4A49),
+                              icon: Icons.delete,
+                            ),
+                          ],
+                        ),
+                        child: content
                       ),
-                    ],
+                    ),
                   ),
-                  child: content
                 ),
               );
             }
