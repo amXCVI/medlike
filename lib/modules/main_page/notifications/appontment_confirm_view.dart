@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
-import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
@@ -62,117 +61,113 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
       return '$initials, ${appointmentItem.researches.isNotEmpty ? appointmentItem.researches[0].name : ''}, $date';
     }
 
-    return BlocBuilder<TourCubit, TourState>(
-      builder: (context, tourState) {
-        return BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-          final eventsCount = state.lastNotification?.eventsCount ?? 1;
+  
+    return BlocBuilder<AppointmentsCubit, AppointmentsState>(builder: (context, state) {
+      final eventsCount = state.confirmCounter ?? 1;
 
-          const title = 'Ожидает подтверждения';
+      const title = 'Ожидает подтверждения';
 
-          final description = getAppointmentsDesc(widget.appointment);
+      final description = getAppointmentsDesc(widget.appointment);
 
-          final content = Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      final content = Padding(
+        padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      title.characters
-                          .replaceAll(Characters(''), Characters('\u{200B}'))
-                          .toString(),
-                      style: Theme.of(context).textTheme.titleMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    BlocBuilder<TourCubit, TourState>(
-                      buildWhen: (_, state) {
-                        final tooltip = TourTooltip.of(context).create(
-                            'Отслеживайте события по всем своим закрепленным пользователям',
-                            onDismiss: () {
-                          context.read<TourCubit>().checkNotification();
-                        });
-
-                        if (tourState.tourStatuses == TourStatuses.first &&
-                            state.isNotificationShown != true) {
-                          tooltip.show(
-                              widgetKey: _key, offset: const Offset(24, 0));
-                        }
-
-                        return true;
-                      },
-                      builder: (ctx, state) {
-                        return Container(
-                          key: _key,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 2.0, horizontal: 12.0),
-                          decoration: const BoxDecoration(
-                              color: AppColors.mainError,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24))),
-                          child: Text(
-                            eventsCount.toString(),
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(height: 6),
                 Text(
-                  description.characters
+                  title.characters
                       .replaceAll(Characters(''), Characters('\u{200B}'))
                       .toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.lightText),
+                  style: Theme.of(context).textTheme.titleMedium,
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
                 ),
-                const SizedBox(height: 14),
-                NotificationBottom(
-                  appointment: widget.appointment,
-                  isLoading: state.updatingNotificationStatusStatus ==
-                      UpdatingNotificationStatusStatuses.loading,
+                BlocBuilder<TourCubit, TourState>(
+                  buildWhen: (_, tourState) {
+                    final tooltip = TourTooltip.of(context).create(
+                        'Отслеживайте события по всем своим закрепленным пользователям',
+                        onDismiss: () {
+                      context.read<TourCubit>().checkNotification();
+                    });
+
+                    if (tourState.tourStatuses == TourStatuses.first &&
+                        tourState.isNotificationShown != true) {
+                      tooltip.show(
+                          widgetKey: _key, offset: const Offset(24, 0));
+                    }
+
+                    return true;
+                  },
+                  builder: (ctx, state) {
+                    return Container(
+                      key: _key,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2.0, horizontal: 12.0),
+                      decoration: const BoxDecoration(
+                          color: AppColors.mainError,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(24))),
+                      child: Text(
+                        eventsCount.toString(),
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    );
+                  },
                 )
               ],
             ),
-          );
+            const SizedBox(height: 6),
+            Text(
+              description.characters
+                  .replaceAll(Characters(''), Characters('\u{200B}'))
+                  .toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: AppColors.lightText),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            ),
+            const SizedBox(height: 14),
+            NotificationBottom(
+              appointment: widget.appointment
+            )
+          ],
+        ),
+      );
 
-          return Container(
-              margin: const EdgeInsets.only(
-                  top: 0, left: 16.0, bottom: 32.0, right: 16.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 20,
-                    offset: Offset(0, 8),
-                  ),
-                ],
-                color: Theme.of(context).backgroundColor,
+      return Container(
+          margin: const EdgeInsets.only(
+              top: 0, left: 16.0, bottom: 32.0, right: 16.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 20,
+                offset: Offset(0, 8),
               ),
-              child: content);
-        });
-      },
+            ],
+            color: Theme.of(context).backgroundColor,
+          ),
+          child: content
+        );
+      }
     );
   }
 }
 
 class NotificationBottom extends StatelessWidget {
   const NotificationBottom(
-      {Key? key, required this.appointment, required this.isLoading})
+      {Key? key, required this.appointment})
       : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointment;
-  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -196,8 +191,6 @@ class NotificationBottom extends StatelessWidget {
                     context.read<AppointmentsCubit>().confirmAppointment(
                         appointmentId: appointment.id,
                         userId: appointment.patientInfo.id ?? '');
-
-                    context.read<AppointmentsCubit>().getAppointmentsList(true);
                   },
                 )
               ),
@@ -213,10 +206,6 @@ class NotificationBottom extends StatelessWidget {
                         context.read<AppointmentsCubit>().deleteAppointment(
                             appointmentId: appointment.id,
                             userId: appointment.patientInfo.id ?? '');
-
-                        context
-                            .read<AppointmentsCubit>()
-                            .getAppointmentsList(true);
                       }))
             ],
           ),

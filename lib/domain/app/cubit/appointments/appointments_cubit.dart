@@ -96,6 +96,9 @@ class AppointmentsCubit
                 paymentStatus: e.paymentStatus,
                 recommendations: e.recommendations))
             .toList(),
+        confirmCounter: response.where(
+          (element) => element.status == 4
+        ).length
       ));
       filterAppointmentsList(state.selectedDate);
       return;
@@ -159,8 +162,7 @@ class AppointmentsCubit
   /// Future<void> Для последовательного ожидания кубитов
   Future<void> getLastAppointment(bool isRefresh) async {
     if (!isRefresh &&
-        state.getLastAppointmentStatus == GetLastAppointmentStatuses.success &&
-        state.lastAppointment != null) {
+        state.getLastAppointmentStatus == GetLastAppointmentStatuses.success) {
       return;
     }
     emit(state.copyWith(
@@ -196,6 +198,7 @@ class AppointmentsCubit
               paymentStatus: response.paymentStatus,
               recommendations: response.recommendations)));
     } catch (e) {
+      clearAppointment();
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.failed));
     }
@@ -225,11 +228,13 @@ class AppointmentsCubit
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
       emit(state.copyWith(
+        confirmCounter: (state.confirmCounter ?? 1) - 1,
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
     } catch (e) {
       emit(state.copyWith(
-          deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
+        deleteAppointmentStatus: DeleteAppointmentStatuses.failed)
+      );
     }
   }
 
@@ -253,6 +258,7 @@ class AppointmentsCubit
 
       await getLastAppointment(true);
       emit(state.copyWith(
+        confirmCounter: (state.confirmCounter ?? 1) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
       if (response) {
@@ -261,7 +267,13 @@ class AppointmentsCubit
 
     } catch (e) {
       emit(
-          state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed));
+        state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed)
+      );
     }
+  }
+
+  /// Очистить приём
+  void clearAppointment() {
+    emit(state.clearAppointment());
   }
 }

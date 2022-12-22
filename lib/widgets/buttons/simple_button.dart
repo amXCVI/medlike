@@ -28,7 +28,7 @@ class SimpleButton extends StatelessWidget {
       onTap: isDisabled ? () {} : onTap,
       child: Container(
         width: 210,
-        height: 45,
+        height: 40,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(32)),
           color: isDisabled
@@ -54,16 +54,15 @@ class SimpleButton extends StatelessWidget {
               children: [
                 Text(
                   labelText.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    height: 1.142,
-                    fontWeight: FontWeight.w700,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: textColor
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 if (isLoading)  Lottie.asset(
                   'assets/animations/loader_white.json',
-                  width: 40
+                  width: 20,
+                  height: 20
                 ),
               ],
             ),
