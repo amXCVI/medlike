@@ -131,8 +131,7 @@ class AppointmentsCubit
     if (state.appointmentsList == null) return;
     filteredAppointmentsList = state.appointmentsList!
         .where((element) => isSameDay(
-            element.appointmentDateTime
-                .add(Duration(hours: element.timeZoneOffset)),
+            element.appointmentDateTime,
             state.selectedDate))
         .toList();
     emit(state.copyWith(

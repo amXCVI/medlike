@@ -70,7 +70,7 @@ class AppointmentsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        if(appointmentsList.where((element) => element.status != 2 && element.status != 3).isNotEmpty) Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
             'Приемы на ${DateFormat('dd.MM.yyyy').format(dateTimeToUTC(selectedDate, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))}',
