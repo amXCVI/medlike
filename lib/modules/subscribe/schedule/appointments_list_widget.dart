@@ -17,17 +17,9 @@ class AppointmentsListWidget extends StatelessWidget {
   final DateTime selectedDate;
   final String userId;
 
-  void _getFilteredData(BuildContext context) async {
-    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) => context
-            .read<AppointmentsCubit>()
-            .getAppointmentsListForSelectedDay(
-                userId: userId, selectedDate: selectedDate));
-  }
 
   @override
   Widget build(BuildContext context) {
-    _getFilteredData(context);
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
         if (state.appointmentsList == null ||
