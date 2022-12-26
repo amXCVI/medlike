@@ -21,20 +21,20 @@ SmartappFileDataModel _$SmartappFileDataModelFromJson(
 
 /// @nodoc
 mixin _$SmartappFileDataModel {
-  dynamic get caption => throw _privateConstructorUsedError;
-  int get chunkSize => throw _privateConstructorUsedError;
-  dynamic get duration => throw _privateConstructorUsedError;
-  String get file => throw _privateConstructorUsedError;
-  String get fileEncryptionAlgo => throw _privateConstructorUsedError;
-  String get fileHash => throw _privateConstructorUsedError;
-  String get fileId => throw _privateConstructorUsedError;
-  String get fileMimeType => throw _privateConstructorUsedError;
-  String get fileName => throw _privateConstructorUsedError;
+  dynamic? get caption => throw _privateConstructorUsedError;
+  int? get chunkSize => throw _privateConstructorUsedError;
+  dynamic? get duration => throw _privateConstructorUsedError;
+  String? get file => throw _privateConstructorUsedError;
+  String? get fileEncryptionAlgo => throw _privateConstructorUsedError;
+  String? get fileHash => throw _privateConstructorUsedError;
+  String? get fileId => throw _privateConstructorUsedError;
+  String? get fileMimeType => throw _privateConstructorUsedError;
+  String? get fileName => throw _privateConstructorUsedError;
   String? get filePreview => throw _privateConstructorUsedError;
-  String? get filePreviewHeight => throw _privateConstructorUsedError;
-  String? get filePreviewWidth => throw _privateConstructorUsedError;
-  int get fileSize => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  dynamic? get filePreviewHeight => throw _privateConstructorUsedError;
+  dynamic? get filePreviewWidth => throw _privateConstructorUsedError;
+  int? get fileSize => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,20 +48,20 @@ abstract class $SmartappFileDataModelCopyWith<$Res> {
           $Res Function(SmartappFileDataModel) then) =
       _$SmartappFileDataModelCopyWithImpl<$Res>;
   $Res call(
-      {dynamic caption,
-      int chunkSize,
-      dynamic duration,
-      String file,
-      String fileEncryptionAlgo,
-      String fileHash,
-      String fileId,
-      String fileMimeType,
-      String fileName,
+      {dynamic? caption,
+      int? chunkSize,
+      dynamic? duration,
+      String? file,
+      String? fileEncryptionAlgo,
+      String? fileHash,
+      String? fileId,
+      String? fileMimeType,
+      String? fileName,
       String? filePreview,
-      String? filePreviewHeight,
-      String? filePreviewWidth,
-      int fileSize,
-      String type});
+      dynamic? filePreviewHeight,
+      dynamic? filePreviewWidth,
+      int? fileSize,
+      String? type});
 }
 
 /// @nodoc
@@ -94,39 +94,39 @@ class _$SmartappFileDataModelCopyWithImpl<$Res>
       caption: caption == freezed
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       chunkSize: chunkSize == freezed
           ? _value.chunkSize
           : chunkSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileEncryptionAlgo: fileEncryptionAlgo == freezed
           ? _value.fileEncryptionAlgo
           : fileEncryptionAlgo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileHash: fileHash == freezed
           ? _value.fileHash
           : fileHash // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileId: fileId == freezed
           ? _value.fileId
           : fileId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileMimeType: fileMimeType == freezed
           ? _value.fileMimeType
           : fileMimeType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileName: fileName == freezed
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       filePreview: filePreview == freezed
           ? _value.filePreview
           : filePreview // ignore: cast_nullable_to_non_nullable
@@ -134,19 +134,19 @@ class _$SmartappFileDataModelCopyWithImpl<$Res>
       filePreviewHeight: filePreviewHeight == freezed
           ? _value.filePreviewHeight
           : filePreviewHeight // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic?,
       filePreviewWidth: filePreviewWidth == freezed
           ? _value.filePreviewWidth
           : filePreviewWidth // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic?,
       fileSize: fileSize == freezed
           ? _value.fileSize
           : fileSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -159,20 +159,20 @@ abstract class _$$_SmartappFileDataModelCopyWith<$Res>
       __$$_SmartappFileDataModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {dynamic caption,
-      int chunkSize,
-      dynamic duration,
-      String file,
-      String fileEncryptionAlgo,
-      String fileHash,
-      String fileId,
-      String fileMimeType,
-      String fileName,
+      {dynamic? caption,
+      int? chunkSize,
+      dynamic? duration,
+      String? file,
+      String? fileEncryptionAlgo,
+      String? fileHash,
+      String? fileId,
+      String? fileMimeType,
+      String? fileName,
       String? filePreview,
-      String? filePreviewHeight,
-      String? filePreviewWidth,
-      int fileSize,
-      String type});
+      dynamic? filePreviewHeight,
+      dynamic? filePreviewWidth,
+      int? fileSize,
+      String? type});
 }
 
 /// @nodoc
@@ -208,39 +208,39 @@ class __$$_SmartappFileDataModelCopyWithImpl<$Res>
       caption: caption == freezed
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       chunkSize: chunkSize == freezed
           ? _value.chunkSize
           : chunkSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       file: file == freezed
           ? _value.file
           : file // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileEncryptionAlgo: fileEncryptionAlgo == freezed
           ? _value.fileEncryptionAlgo
           : fileEncryptionAlgo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileHash: fileHash == freezed
           ? _value.fileHash
           : fileHash // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileId: fileId == freezed
           ? _value.fileId
           : fileId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileMimeType: fileMimeType == freezed
           ? _value.fileMimeType
           : fileMimeType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fileName: fileName == freezed
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       filePreview: filePreview == freezed
           ? _value.filePreview
           : filePreview // ignore: cast_nullable_to_non_nullable
@@ -248,19 +248,19 @@ class __$$_SmartappFileDataModelCopyWithImpl<$Res>
       filePreviewHeight: filePreviewHeight == freezed
           ? _value.filePreviewHeight
           : filePreviewHeight // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic?,
       filePreviewWidth: filePreviewWidth == freezed
           ? _value.filePreviewWidth
           : filePreviewWidth // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as dynamic?,
       fileSize: fileSize == freezed
           ? _value.fileSize
           : fileSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -288,33 +288,33 @@ class _$_SmartappFileDataModel implements _SmartappFileDataModel {
       _$$_SmartappFileDataModelFromJson(json);
 
   @override
-  final dynamic caption;
+  final dynamic? caption;
   @override
-  final int chunkSize;
+  final int? chunkSize;
   @override
-  final dynamic duration;
+  final dynamic? duration;
   @override
-  final String file;
+  final String? file;
   @override
-  final String fileEncryptionAlgo;
+  final String? fileEncryptionAlgo;
   @override
-  final String fileHash;
+  final String? fileHash;
   @override
-  final String fileId;
+  final String? fileId;
   @override
-  final String fileMimeType;
+  final String? fileMimeType;
   @override
-  final String fileName;
+  final String? fileName;
   @override
   final String? filePreview;
   @override
-  final String? filePreviewHeight;
+  final dynamic? filePreviewHeight;
   @override
-  final String? filePreviewWidth;
+  final dynamic? filePreviewWidth;
   @override
-  final int fileSize;
+  final int? fileSize;
   @override
-  final String type;
+  final String? type;
 
   @override
   String toString() {
@@ -380,52 +380,52 @@ class _$_SmartappFileDataModel implements _SmartappFileDataModel {
 
 abstract class _SmartappFileDataModel implements SmartappFileDataModel {
   const factory _SmartappFileDataModel(
-      {required final dynamic caption,
-      required final int chunkSize,
-      required final dynamic duration,
-      required final String file,
-      required final String fileEncryptionAlgo,
-      required final String fileHash,
-      required final String fileId,
-      required final String fileMimeType,
-      required final String fileName,
+      {required final dynamic? caption,
+      required final int? chunkSize,
+      required final dynamic? duration,
+      required final String? file,
+      required final String? fileEncryptionAlgo,
+      required final String? fileHash,
+      required final String? fileId,
+      required final String? fileMimeType,
+      required final String? fileName,
       required final String? filePreview,
-      required final String? filePreviewHeight,
-      required final String? filePreviewWidth,
-      required final int fileSize,
-      required final String type}) = _$_SmartappFileDataModel;
+      required final dynamic? filePreviewHeight,
+      required final dynamic? filePreviewWidth,
+      required final int? fileSize,
+      required final String? type}) = _$_SmartappFileDataModel;
 
   factory _SmartappFileDataModel.fromJson(Map<String, dynamic> json) =
       _$_SmartappFileDataModel.fromJson;
 
   @override
-  dynamic get caption => throw _privateConstructorUsedError;
+  dynamic? get caption => throw _privateConstructorUsedError;
   @override
-  int get chunkSize => throw _privateConstructorUsedError;
+  int? get chunkSize => throw _privateConstructorUsedError;
   @override
-  dynamic get duration => throw _privateConstructorUsedError;
+  dynamic? get duration => throw _privateConstructorUsedError;
   @override
-  String get file => throw _privateConstructorUsedError;
+  String? get file => throw _privateConstructorUsedError;
   @override
-  String get fileEncryptionAlgo => throw _privateConstructorUsedError;
+  String? get fileEncryptionAlgo => throw _privateConstructorUsedError;
   @override
-  String get fileHash => throw _privateConstructorUsedError;
+  String? get fileHash => throw _privateConstructorUsedError;
   @override
-  String get fileId => throw _privateConstructorUsedError;
+  String? get fileId => throw _privateConstructorUsedError;
   @override
-  String get fileMimeType => throw _privateConstructorUsedError;
+  String? get fileMimeType => throw _privateConstructorUsedError;
   @override
-  String get fileName => throw _privateConstructorUsedError;
+  String? get fileName => throw _privateConstructorUsedError;
   @override
   String? get filePreview => throw _privateConstructorUsedError;
   @override
-  String? get filePreviewHeight => throw _privateConstructorUsedError;
+  dynamic? get filePreviewHeight => throw _privateConstructorUsedError;
   @override
-  String? get filePreviewWidth => throw _privateConstructorUsedError;
+  dynamic? get filePreviewWidth => throw _privateConstructorUsedError;
   @override
-  int get fileSize => throw _privateConstructorUsedError;
+  int? get fileSize => throw _privateConstructorUsedError;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappFileDataModelCopyWith<_$_SmartappFileDataModel> get copyWith =>
@@ -439,7 +439,7 @@ SmartappSendBotEventResponseModel _$SmartappSendBotEventResponseModelFromJson(
 
 /// @nodoc
 mixin _$SmartappSendBotEventResponseModel {
-  List<dynamic>? get files => throw _privateConstructorUsedError;
+  List<SmartappFileDataModel>? get files => throw _privateConstructorUsedError;
   SmartappSendBotEventPayloadModel get payload =>
       throw _privateConstructorUsedError;
   String get ref => throw _privateConstructorUsedError;
@@ -458,7 +458,7 @@ abstract class $SmartappSendBotEventResponseModelCopyWith<$Res> {
           $Res Function(SmartappSendBotEventResponseModel) then) =
       _$SmartappSendBotEventResponseModelCopyWithImpl<$Res>;
   $Res call(
-      {List<dynamic>? files,
+      {List<SmartappFileDataModel>? files,
       SmartappSendBotEventPayloadModel payload,
       String ref,
       String type});
@@ -486,7 +486,7 @@ class _$SmartappSendBotEventResponseModelCopyWithImpl<$Res>
       files: files == freezed
           ? _value.files
           : files // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<SmartappFileDataModel>?,
       payload: payload == freezed
           ? _value.payload
           : payload // ignore: cast_nullable_to_non_nullable
@@ -520,7 +520,7 @@ abstract class _$$_SmartappSendBotEventResponseModelCopyWith<$Res>
       __$$_SmartappSendBotEventResponseModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<dynamic>? files,
+      {List<SmartappFileDataModel>? files,
       SmartappSendBotEventPayloadModel payload,
       String ref,
       String type});
@@ -553,7 +553,7 @@ class __$$_SmartappSendBotEventResponseModelCopyWithImpl<$Res>
       files: files == freezed
           ? _value._files
           : files // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<SmartappFileDataModel>?,
       payload: payload == freezed
           ? _value.payload
           : payload // ignore: cast_nullable_to_non_nullable
@@ -575,7 +575,7 @@ class __$$_SmartappSendBotEventResponseModelCopyWithImpl<$Res>
 class _$_SmartappSendBotEventResponseModel
     implements _SmartappSendBotEventResponseModel {
   const _$_SmartappSendBotEventResponseModel(
-      {required final List<dynamic>? files,
+      {required final List<SmartappFileDataModel>? files,
       required this.payload,
       required this.ref,
       required this.type})
@@ -585,9 +585,9 @@ class _$_SmartappSendBotEventResponseModel
           Map<String, dynamic> json) =>
       _$$_SmartappSendBotEventResponseModelFromJson(json);
 
-  final List<dynamic>? _files;
+  final List<SmartappFileDataModel>? _files;
   @override
-  List<dynamic>? get files {
+  List<SmartappFileDataModel>? get files {
     final value = _files;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -642,7 +642,7 @@ class _$_SmartappSendBotEventResponseModel
 abstract class _SmartappSendBotEventResponseModel
     implements SmartappSendBotEventResponseModel {
   const factory _SmartappSendBotEventResponseModel(
-      {required final List<dynamic>? files,
+      {required final List<SmartappFileDataModel>? files,
       required final SmartappSendBotEventPayloadModel payload,
       required final String ref,
       required final String type}) = _$_SmartappSendBotEventResponseModel;
@@ -652,7 +652,7 @@ abstract class _SmartappSendBotEventResponseModel
       _$_SmartappSendBotEventResponseModel.fromJson;
 
   @override
-  List<dynamic>? get files => throw _privateConstructorUsedError;
+  List<SmartappFileDataModel>? get files => throw _privateConstructorUsedError;
   @override
   SmartappSendBotEventPayloadModel get payload =>
       throw _privateConstructorUsedError;
@@ -854,9 +854,9 @@ SmartappSendBotEventPayloadResultModel
 
 /// @nodoc
 mixin _$SmartappSendBotEventPayloadResultModel {
-  dynamic get content => throw _privateConstructorUsedError;
+  dynamic? get content => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
-  int get statusCode => throw _privateConstructorUsedError;
+  int? get statusCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -871,7 +871,7 @@ abstract class $SmartappSendBotEventPayloadResultModelCopyWith<$Res> {
           SmartappSendBotEventPayloadResultModel value,
           $Res Function(SmartappSendBotEventPayloadResultModel) then) =
       _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>;
-  $Res call({dynamic content, String status, int statusCode});
+  $Res call({dynamic? content, String status, int? statusCode});
 }
 
 /// @nodoc
@@ -893,7 +893,7 @@ class _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -901,7 +901,7 @@ class _$SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
       statusCode: statusCode == freezed
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -914,7 +914,7 @@ abstract class _$$_SmartappSendBotEventPayloadResultModelCopyWith<$Res>
           $Res Function(_$_SmartappSendBotEventPayloadResultModel) then) =
       __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>;
   @override
-  $Res call({dynamic content, String status, int statusCode});
+  $Res call({dynamic? content, String status, int? statusCode});
 }
 
 /// @nodoc
@@ -941,7 +941,7 @@ class __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as dynamic?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -949,7 +949,7 @@ class __$$_SmartappSendBotEventPayloadResultModelCopyWithImpl<$Res>
       statusCode: statusCode == freezed
           ? _value.statusCode
           : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
     ));
   }
 }
@@ -966,11 +966,11 @@ class _$_SmartappSendBotEventPayloadResultModel
       _$$_SmartappSendBotEventPayloadResultModelFromJson(json);
 
   @override
-  final dynamic content;
+  final dynamic? content;
   @override
   final String status;
   @override
-  final int statusCode;
+  final int? statusCode;
 
   @override
   String toString() {
@@ -1012,9 +1012,9 @@ class _$_SmartappSendBotEventPayloadResultModel
 abstract class _SmartappSendBotEventPayloadResultModel
     implements SmartappSendBotEventPayloadResultModel {
   const factory _SmartappSendBotEventPayloadResultModel(
-          {required final dynamic content,
+          {required final dynamic? content,
           required final String status,
-          required final int statusCode}) =
+          required final int? statusCode}) =
       _$_SmartappSendBotEventPayloadResultModel;
 
   factory _SmartappSendBotEventPayloadResultModel.fromJson(
@@ -1022,15 +1022,592 @@ abstract class _SmartappSendBotEventPayloadResultModel
       _$_SmartappSendBotEventPayloadResultModel.fromJson;
 
   @override
-  dynamic get content => throw _privateConstructorUsedError;
+  dynamic? get content => throw _privateConstructorUsedError;
   @override
   String get status => throw _privateConstructorUsedError;
   @override
-  int get statusCode => throw _privateConstructorUsedError;
+  int? get statusCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventPayloadResultModelCopyWith<
           _$_SmartappSendBotEventPayloadResultModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+SmartappSendBotEventStaticResponseModel
+    _$SmartappSendBotEventStaticResponseModelFromJson(
+        Map<String, dynamic> json) {
+  return _SmartappSendBotEventStaticResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SmartappSendBotEventStaticResponseModel {
+  List<dynamic>? get files => throw _privateConstructorUsedError;
+  SmartappSendBotEventStaticPayloadModel get payload =>
+      throw _privateConstructorUsedError;
+  String get ref => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SmartappSendBotEventStaticResponseModelCopyWith<
+          SmartappSendBotEventStaticResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SmartappSendBotEventStaticResponseModelCopyWith<$Res> {
+  factory $SmartappSendBotEventStaticResponseModelCopyWith(
+          SmartappSendBotEventStaticResponseModel value,
+          $Res Function(SmartappSendBotEventStaticResponseModel) then) =
+      _$SmartappSendBotEventStaticResponseModelCopyWithImpl<$Res>;
+  $Res call(
+      {List<dynamic>? files,
+      SmartappSendBotEventStaticPayloadModel payload,
+      String ref,
+      String type});
+
+  $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> get payload;
+}
+
+/// @nodoc
+class _$SmartappSendBotEventStaticResponseModelCopyWithImpl<$Res>
+    implements $SmartappSendBotEventStaticResponseModelCopyWith<$Res> {
+  _$SmartappSendBotEventStaticResponseModelCopyWithImpl(
+      this._value, this._then);
+
+  final SmartappSendBotEventStaticResponseModel _value;
+  // ignore: unused_field
+  final $Res Function(SmartappSendBotEventStaticResponseModel) _then;
+
+  @override
+  $Res call({
+    Object? files = freezed,
+    Object? payload = freezed,
+    Object? ref = freezed,
+    Object? type = freezed,
+  }) {
+    return _then(_value.copyWith(
+      files: files == freezed
+          ? _value.files
+          : files // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      payload: payload == freezed
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as SmartappSendBotEventStaticPayloadModel,
+      ref: ref == freezed
+          ? _value.ref
+          : ref // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+
+  @override
+  $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> get payload {
+    return $SmartappSendBotEventStaticPayloadModelCopyWith<$Res>(_value.payload,
+        (value) {
+      return _then(_value.copyWith(payload: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_SmartappSendBotEventStaticResponseModelCopyWith<$Res>
+    implements $SmartappSendBotEventStaticResponseModelCopyWith<$Res> {
+  factory _$$_SmartappSendBotEventStaticResponseModelCopyWith(
+          _$_SmartappSendBotEventStaticResponseModel value,
+          $Res Function(_$_SmartappSendBotEventStaticResponseModel) then) =
+      __$$_SmartappSendBotEventStaticResponseModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {List<dynamic>? files,
+      SmartappSendBotEventStaticPayloadModel payload,
+      String ref,
+      String type});
+
+  @override
+  $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> get payload;
+}
+
+/// @nodoc
+class __$$_SmartappSendBotEventStaticResponseModelCopyWithImpl<$Res>
+    extends _$SmartappSendBotEventStaticResponseModelCopyWithImpl<$Res>
+    implements _$$_SmartappSendBotEventStaticResponseModelCopyWith<$Res> {
+  __$$_SmartappSendBotEventStaticResponseModelCopyWithImpl(
+      _$_SmartappSendBotEventStaticResponseModel _value,
+      $Res Function(_$_SmartappSendBotEventStaticResponseModel) _then)
+      : super(_value,
+            (v) => _then(v as _$_SmartappSendBotEventStaticResponseModel));
+
+  @override
+  _$_SmartappSendBotEventStaticResponseModel get _value =>
+      super._value as _$_SmartappSendBotEventStaticResponseModel;
+
+  @override
+  $Res call({
+    Object? files = freezed,
+    Object? payload = freezed,
+    Object? ref = freezed,
+    Object? type = freezed,
+  }) {
+    return _then(_$_SmartappSendBotEventStaticResponseModel(
+      files: files == freezed
+          ? _value._files
+          : files // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      payload: payload == freezed
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as SmartappSendBotEventStaticPayloadModel,
+      ref: ref == freezed
+          ? _value.ref
+          : ref // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SmartappSendBotEventStaticResponseModel
+    implements _SmartappSendBotEventStaticResponseModel {
+  const _$_SmartappSendBotEventStaticResponseModel(
+      {required final List<dynamic>? files,
+      required this.payload,
+      required this.ref,
+      required this.type})
+      : _files = files;
+
+  factory _$_SmartappSendBotEventStaticResponseModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_SmartappSendBotEventStaticResponseModelFromJson(json);
+
+  final List<dynamic>? _files;
+  @override
+  List<dynamic>? get files {
+    final value = _files;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final SmartappSendBotEventStaticPayloadModel payload;
+  @override
+  final String ref;
+  @override
+  final String type;
+
+  @override
+  String toString() {
+    return 'SmartappSendBotEventStaticResponseModel(files: $files, payload: $payload, ref: $ref, type: $type)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SmartappSendBotEventStaticResponseModel &&
+            const DeepCollectionEquality().equals(other._files, _files) &&
+            const DeepCollectionEquality().equals(other.payload, payload) &&
+            const DeepCollectionEquality().equals(other.ref, ref) &&
+            const DeepCollectionEquality().equals(other.type, type));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_files),
+      const DeepCollectionEquality().hash(payload),
+      const DeepCollectionEquality().hash(ref),
+      const DeepCollectionEquality().hash(type));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SmartappSendBotEventStaticResponseModelCopyWith<
+          _$_SmartappSendBotEventStaticResponseModel>
+      get copyWith => __$$_SmartappSendBotEventStaticResponseModelCopyWithImpl<
+          _$_SmartappSendBotEventStaticResponseModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SmartappSendBotEventStaticResponseModelToJson(this);
+  }
+}
+
+abstract class _SmartappSendBotEventStaticResponseModel
+    implements SmartappSendBotEventStaticResponseModel {
+  const factory _SmartappSendBotEventStaticResponseModel(
+      {required final List<dynamic>? files,
+      required final SmartappSendBotEventStaticPayloadModel payload,
+      required final String ref,
+      required final String type}) = _$_SmartappSendBotEventStaticResponseModel;
+
+  factory _SmartappSendBotEventStaticResponseModel.fromJson(
+          Map<String, dynamic> json) =
+      _$_SmartappSendBotEventStaticResponseModel.fromJson;
+
+  @override
+  List<dynamic>? get files => throw _privateConstructorUsedError;
+  @override
+  SmartappSendBotEventStaticPayloadModel get payload =>
+      throw _privateConstructorUsedError;
+  @override
+  String get ref => throw _privateConstructorUsedError;
+  @override
+  String get type => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SmartappSendBotEventStaticResponseModelCopyWith<
+          _$_SmartappSendBotEventStaticResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+SmartappSendBotEventStaticPayloadModel
+    _$SmartappSendBotEventStaticPayloadModelFromJson(
+        Map<String, dynamic> json) {
+  return _SmartappSendBotEventStaticPayloadModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SmartappSendBotEventStaticPayloadModel {
+  SmartappSendBotEventStaticPayloadResultModel get result =>
+      throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SmartappSendBotEventStaticPayloadModelCopyWith<
+          SmartappSendBotEventStaticPayloadModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> {
+  factory $SmartappSendBotEventStaticPayloadModelCopyWith(
+          SmartappSendBotEventStaticPayloadModel value,
+          $Res Function(SmartappSendBotEventStaticPayloadModel) then) =
+      _$SmartappSendBotEventStaticPayloadModelCopyWithImpl<$Res>;
+  $Res call(
+      {SmartappSendBotEventStaticPayloadResultModel result, String? status});
+
+  $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> get result;
+}
+
+/// @nodoc
+class _$SmartappSendBotEventStaticPayloadModelCopyWithImpl<$Res>
+    implements $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> {
+  _$SmartappSendBotEventStaticPayloadModelCopyWithImpl(this._value, this._then);
+
+  final SmartappSendBotEventStaticPayloadModel _value;
+  // ignore: unused_field
+  final $Res Function(SmartappSendBotEventStaticPayloadModel) _then;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_value.copyWith(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as SmartappSendBotEventStaticPayloadResultModel,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+
+  @override
+  $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> get result {
+    return $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res>(
+        _value.result, (value) {
+      return _then(_value.copyWith(result: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_SmartappSendBotEventStaticPayloadModelCopyWith<$Res>
+    implements $SmartappSendBotEventStaticPayloadModelCopyWith<$Res> {
+  factory _$$_SmartappSendBotEventStaticPayloadModelCopyWith(
+          _$_SmartappSendBotEventStaticPayloadModel value,
+          $Res Function(_$_SmartappSendBotEventStaticPayloadModel) then) =
+      __$$_SmartappSendBotEventStaticPayloadModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {SmartappSendBotEventStaticPayloadResultModel result, String? status});
+
+  @override
+  $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> get result;
+}
+
+/// @nodoc
+class __$$_SmartappSendBotEventStaticPayloadModelCopyWithImpl<$Res>
+    extends _$SmartappSendBotEventStaticPayloadModelCopyWithImpl<$Res>
+    implements _$$_SmartappSendBotEventStaticPayloadModelCopyWith<$Res> {
+  __$$_SmartappSendBotEventStaticPayloadModelCopyWithImpl(
+      _$_SmartappSendBotEventStaticPayloadModel _value,
+      $Res Function(_$_SmartappSendBotEventStaticPayloadModel) _then)
+      : super(_value,
+            (v) => _then(v as _$_SmartappSendBotEventStaticPayloadModel));
+
+  @override
+  _$_SmartappSendBotEventStaticPayloadModel get _value =>
+      super._value as _$_SmartappSendBotEventStaticPayloadModel;
+
+  @override
+  $Res call({
+    Object? result = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_$_SmartappSendBotEventStaticPayloadModel(
+      result: result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as SmartappSendBotEventStaticPayloadResultModel,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SmartappSendBotEventStaticPayloadModel
+    implements _SmartappSendBotEventStaticPayloadModel {
+  const _$_SmartappSendBotEventStaticPayloadModel(
+      {required this.result, required this.status});
+
+  factory _$_SmartappSendBotEventStaticPayloadModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_SmartappSendBotEventStaticPayloadModelFromJson(json);
+
+  @override
+  final SmartappSendBotEventStaticPayloadResultModel result;
+  @override
+  final String? status;
+
+  @override
+  String toString() {
+    return 'SmartappSendBotEventStaticPayloadModel(result: $result, status: $status)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SmartappSendBotEventStaticPayloadModel &&
+            const DeepCollectionEquality().equals(other.result, result) &&
+            const DeepCollectionEquality().equals(other.status, status));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(result),
+      const DeepCollectionEquality().hash(status));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SmartappSendBotEventStaticPayloadModelCopyWith<
+          _$_SmartappSendBotEventStaticPayloadModel>
+      get copyWith => __$$_SmartappSendBotEventStaticPayloadModelCopyWithImpl<
+          _$_SmartappSendBotEventStaticPayloadModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SmartappSendBotEventStaticPayloadModelToJson(this);
+  }
+}
+
+abstract class _SmartappSendBotEventStaticPayloadModel
+    implements SmartappSendBotEventStaticPayloadModel {
+  const factory _SmartappSendBotEventStaticPayloadModel(
+          {required final SmartappSendBotEventStaticPayloadResultModel result,
+          required final String? status}) =
+      _$_SmartappSendBotEventStaticPayloadModel;
+
+  factory _SmartappSendBotEventStaticPayloadModel.fromJson(
+          Map<String, dynamic> json) =
+      _$_SmartappSendBotEventStaticPayloadModel.fromJson;
+
+  @override
+  SmartappSendBotEventStaticPayloadResultModel get result =>
+      throw _privateConstructorUsedError;
+  @override
+  String? get status => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SmartappSendBotEventStaticPayloadModelCopyWith<
+          _$_SmartappSendBotEventStaticPayloadModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+SmartappSendBotEventStaticPayloadResultModel
+    _$SmartappSendBotEventStaticPayloadResultModelFromJson(
+        Map<String, dynamic> json) {
+  return _SmartappSendBotEventStaticPayloadResultModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SmartappSendBotEventStaticPayloadResultModel {
+  String get path => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SmartappSendBotEventStaticPayloadResultModelCopyWith<
+          SmartappSendBotEventStaticPayloadResultModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> {
+  factory $SmartappSendBotEventStaticPayloadResultModelCopyWith(
+          SmartappSendBotEventStaticPayloadResultModel value,
+          $Res Function(SmartappSendBotEventStaticPayloadResultModel) then) =
+      _$SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<$Res>;
+  $Res call({String path});
+}
+
+/// @nodoc
+class _$SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<$Res>
+    implements $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> {
+  _$SmartappSendBotEventStaticPayloadResultModelCopyWithImpl(
+      this._value, this._then);
+
+  final SmartappSendBotEventStaticPayloadResultModel _value;
+  // ignore: unused_field
+  final $Res Function(SmartappSendBotEventStaticPayloadResultModel) _then;
+
+  @override
+  $Res call({
+    Object? path = freezed,
+  }) {
+    return _then(_value.copyWith(
+      path: path == freezed
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res>
+    implements $SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> {
+  factory _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith(
+          _$_SmartappSendBotEventStaticPayloadResultModel value,
+          $Res Function(_$_SmartappSendBotEventStaticPayloadResultModel) then) =
+      __$$_SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String path});
+}
+
+/// @nodoc
+class __$$_SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<$Res>
+    extends _$SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<$Res>
+    implements _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith<$Res> {
+  __$$_SmartappSendBotEventStaticPayloadResultModelCopyWithImpl(
+      _$_SmartappSendBotEventStaticPayloadResultModel _value,
+      $Res Function(_$_SmartappSendBotEventStaticPayloadResultModel) _then)
+      : super(_value,
+            (v) => _then(v as _$_SmartappSendBotEventStaticPayloadResultModel));
+
+  @override
+  _$_SmartappSendBotEventStaticPayloadResultModel get _value =>
+      super._value as _$_SmartappSendBotEventStaticPayloadResultModel;
+
+  @override
+  $Res call({
+    Object? path = freezed,
+  }) {
+    return _then(_$_SmartappSendBotEventStaticPayloadResultModel(
+      path: path == freezed
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_SmartappSendBotEventStaticPayloadResultModel
+    implements _SmartappSendBotEventStaticPayloadResultModel {
+  const _$_SmartappSendBotEventStaticPayloadResultModel({required this.path});
+
+  factory _$_SmartappSendBotEventStaticPayloadResultModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_SmartappSendBotEventStaticPayloadResultModelFromJson(json);
+
+  @override
+  final String path;
+
+  @override
+  String toString() {
+    return 'SmartappSendBotEventStaticPayloadResultModel(path: $path)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SmartappSendBotEventStaticPayloadResultModel &&
+            const DeepCollectionEquality().equals(other.path, path));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(path));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith<
+          _$_SmartappSendBotEventStaticPayloadResultModel>
+      get copyWith =>
+          __$$_SmartappSendBotEventStaticPayloadResultModelCopyWithImpl<
+                  _$_SmartappSendBotEventStaticPayloadResultModel>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SmartappSendBotEventStaticPayloadResultModelToJson(this);
+  }
+}
+
+abstract class _SmartappSendBotEventStaticPayloadResultModel
+    implements SmartappSendBotEventStaticPayloadResultModel {
+  const factory _SmartappSendBotEventStaticPayloadResultModel(
+          {required final String path}) =
+      _$_SmartappSendBotEventStaticPayloadResultModel;
+
+  factory _SmartappSendBotEventStaticPayloadResultModel.fromJson(
+          Map<String, dynamic> json) =
+      _$_SmartappSendBotEventStaticPayloadResultModel.fromJson;
+
+  @override
+  String get path => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith<
+          _$_SmartappSendBotEventStaticPayloadResultModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 

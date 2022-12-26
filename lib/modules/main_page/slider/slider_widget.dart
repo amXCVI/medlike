@@ -47,7 +47,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       enableInfiniteScroll: true,
                       reverse: false,
                       autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 3),
+                      autoPlayInterval: const Duration(seconds: 6),
                       autoPlayAnimationDuration:
                           const Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
@@ -60,6 +60,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                       scrollDirection: Axis.horizontal,
                     )),
               ),
+
               /// Белые точки с кол-вом слайдов и отметкой активной страницы
               // Align(
               //   alignment: Alignment.bottomCenter,

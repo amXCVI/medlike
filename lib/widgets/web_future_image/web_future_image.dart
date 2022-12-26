@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
 import 'package:medlike/data/repository/images_repository.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
 class WebFutureImage extends StatefulWidget {
   const WebFutureImage({
@@ -22,33 +22,27 @@ class WebFutureImage extends StatefulWidget {
 
 class _WebFutureImageState extends State<WebFutureImage> {
   late final Future<Uint8List> imageFuture;
-  late final Future<SmartappGetFileResponseModel> botXImage;
+  late final Future<String> botXImage;
 
   @override
   void initState() {
     super.initState();
-    // imageFuture = _getData();
     botXImage = _getData();
   }
 
-  // Future<Uint8List> _getData() {
-  //   return ImagesRepository.downloadImageFile(url: widget.imageUrl);
-  // }
-
-  Future<SmartappGetFileResponseModel> _getData() {
-    return ImagesRepository.downloadImageFile(url: widget.imageUrl);
+  Future<String> _getData() {
+    return ImagesRepository.getPathImageFile(url: widget.imageUrl);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: botXImage,
-      builder: (BuildContext context,
-          AsyncSnapshot<SmartappGetFileResponseModel> image) {
+      builder: (BuildContext context, AsyncSnapshot<String> image) {
         if (image.hasData || !widget.isWithButton) {
           return Center(
-            child: Image.network(
-              image.data!.fileUrl as String,
+            child: Image.asset(
+              image.data as String,
               fit: BoxFit.cover,
             ),
           );
@@ -56,7 +50,7 @@ class _WebFutureImageState extends State<WebFutureImage> {
           return Center(
               child: MaterialButton(
             onPressed: _getData,
-            child: const Text('GET IMAGE'),
+            child: const CircularLoader(),
           ));
         }
       },

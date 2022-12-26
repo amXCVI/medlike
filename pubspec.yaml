@@ -103,6 +103,9 @@ flutter:
           style: normal
           weight: 400
   assets:
+    - assets/assets/avatars/
+    - assets/assets/banners/
+    - assets/assets/others/
     - assets/icons/
     - assets/images/
     - assets/animations/

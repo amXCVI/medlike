@@ -7,20 +7,20 @@ part 'smartapp_models.g.dart';
 @freezed
 class SmartappFileDataModel with _$SmartappFileDataModel {
   const factory SmartappFileDataModel({
-    required dynamic caption,
-    required int chunkSize,
-    required dynamic duration,
-    required String file,
-    required String fileEncryptionAlgo,
-    required String fileHash,
-    required String fileId,
-    required String fileMimeType,
-    required String fileName,
+    required dynamic? caption,
+    required int? chunkSize,
+    required dynamic? duration,
+    required String? file,
+    required String? fileEncryptionAlgo,
+    required String? fileHash,
+    required String? fileId,
+    required String? fileMimeType,
+    required String? fileName,
     required String? filePreview,
-    required String? filePreviewHeight,
-    required String? filePreviewWidth,
-    required int fileSize,
-    required String type,
+    required dynamic? filePreviewHeight,
+    required dynamic? filePreviewWidth,
+    required int? fileSize,
+    required String? type,
   }) = _SmartappFileDataModel;
 
   factory SmartappFileDataModel.fromJson(Map<String, Object?> json) =>
@@ -31,7 +31,7 @@ class SmartappFileDataModel with _$SmartappFileDataModel {
 class SmartappSendBotEventResponseModel
     with _$SmartappSendBotEventResponseModel {
   const factory SmartappSendBotEventResponseModel({
-    required List<dynamic>? files,
+    required List<SmartappFileDataModel>? files,
     required SmartappSendBotEventPayloadModel payload,
     required String ref,
     required String type,
@@ -58,14 +58,54 @@ class SmartappSendBotEventPayloadModel with _$SmartappSendBotEventPayloadModel {
 class SmartappSendBotEventPayloadResultModel
     with _$SmartappSendBotEventPayloadResultModel {
   const factory SmartappSendBotEventPayloadResultModel({
-    required dynamic content,
+    required dynamic? content,
     required String status,
-    required int statusCode,
+    required int? statusCode,
   }) = _SmartappSendBotEventPayloadResultModel;
 
   factory SmartappSendBotEventPayloadResultModel.fromJson(
           Map<String, Object?> json) =>
       _$SmartappSendBotEventPayloadResultModelFromJson(json);
+}
+
+@freezed
+class SmartappSendBotEventStaticResponseModel
+    with _$SmartappSendBotEventStaticResponseModel {
+  const factory SmartappSendBotEventStaticResponseModel({
+    required List<dynamic>? files,
+    required SmartappSendBotEventStaticPayloadModel payload,
+    required String ref,
+    required String type,
+  }) = _SmartappSendBotEventStaticResponseModel;
+
+  factory SmartappSendBotEventStaticResponseModel.fromJson(
+          Map<String, Object?> json) =>
+      _$SmartappSendBotEventStaticResponseModelFromJson(json);
+}
+
+@freezed
+class SmartappSendBotEventStaticPayloadModel
+    with _$SmartappSendBotEventStaticPayloadModel {
+  const factory SmartappSendBotEventStaticPayloadModel({
+    required SmartappSendBotEventStaticPayloadResultModel result,
+    required String? status,
+  }) = _SmartappSendBotEventStaticPayloadModel;
+
+  factory SmartappSendBotEventStaticPayloadModel.fromJson(
+          Map<String, Object?> json) =>
+      _$SmartappSendBotEventStaticPayloadModelFromJson(json);
+}
+
+@freezed
+class SmartappSendBotEventStaticPayloadResultModel
+    with _$SmartappSendBotEventStaticPayloadResultModel {
+  const factory SmartappSendBotEventStaticPayloadResultModel({
+    required String path,
+  }) = _SmartappSendBotEventStaticPayloadResultModel;
+
+  factory SmartappSendBotEventStaticPayloadResultModel.fromJson(
+          Map<String, Object?> json) =>
+      _$SmartappSendBotEventStaticPayloadResultModelFromJson(json);
 }
 
 @freezed

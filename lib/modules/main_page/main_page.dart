@@ -11,10 +11,8 @@ import 'package:medlike/modules/main_page/notifications/notifications_widget.dar
 import 'package:medlike/modules/main_page/slider/slider_widget.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
-import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode/barcode_button.dart';
-import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -54,11 +52,6 @@ class MainPage extends StatelessWidget {
               const AppointmentsWidget(),
               const SliderWidget(),
               const SizedBox(height: 8),
-              WebFutureImage(
-                imageUrl:
-                    '${ApiConstants.baseUrl}/api/v1.0/promotions/8ced9223-396d-4665-91f2-76a470f5d565/banner',
-                isWithButton: true,
-              ),
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

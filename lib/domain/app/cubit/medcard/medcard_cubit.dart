@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
-import 'dart:html' as html;
 
 import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -121,19 +120,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         downloadingFileId: fileId,
       ));
       if (kIsWeb) {
-        // final response = await medcardRepository.downloadFile(url: fileUrl);
-        final bytes = await medcardRepository.downloadFile(url: fileUrl);
-        print('################## bytes stream pdf file ###################');
-        final blob = html.Blob([bytes], 'application/pdf');
-        final url = html.Url.createObjectUrlFromBlob(blob);
-        final anchor = html.document.createElement('a') as html.AnchorElement
-          ..href = url
-          ..style.display = 'none'
-          ..download = fileName;
-        html.document.body?.children.add(anchor);
-        anchor.click();
-        html.document.body?.children.remove(anchor);
-        html.Url.revokeObjectUrl(url);
+        await medcardRepository.downloadFile(url: fileUrl);
       } else {
         AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
       }
@@ -165,19 +152,8 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(downloadingFileId: fileId));
-      // final response = await medcardRepository.downloadFile(url: fileUrl);
       if (kIsWeb) {
-        final bytes = await medcardRepository.downloadFile(url: fileUrl);
-        final blob = html.Blob([bytes], fileType);
-        final url = html.Url.createObjectUrlFromBlob(blob);
-        final anchor = html.document.createElement('a') as html.AnchorElement
-          ..href = url
-          ..style.display = 'none'
-          ..download = fileName;
-        html.document.body?.children.add(anchor);
-        anchor.click();
-        html.document.body?.children.remove(anchor);
-        html.Url.revokeObjectUrl(url);
+        await medcardRepository.downloadFile(url: fileUrl);
       } else {
         AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
       }

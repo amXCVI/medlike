@@ -10,19 +10,19 @@ _$_SmartappFileDataModel _$$_SmartappFileDataModelFromJson(
         Map<String, dynamic> json) =>
     _$_SmartappFileDataModel(
       caption: json['caption'],
-      chunkSize: json['chunkSize'] as int,
+      chunkSize: json['chunkSize'] as int?,
       duration: json['duration'],
-      file: json['file'] as String,
-      fileEncryptionAlgo: json['fileEncryptionAlgo'] as String,
-      fileHash: json['fileHash'] as String,
-      fileId: json['fileId'] as String,
-      fileMimeType: json['fileMimeType'] as String,
-      fileName: json['fileName'] as String,
+      file: json['file'] as String?,
+      fileEncryptionAlgo: json['fileEncryptionAlgo'] as String?,
+      fileHash: json['fileHash'] as String?,
+      fileId: json['fileId'] as String?,
+      fileMimeType: json['fileMimeType'] as String?,
+      fileName: json['fileName'] as String?,
       filePreview: json['filePreview'] as String?,
-      filePreviewHeight: json['filePreviewHeight'] as String?,
-      filePreviewWidth: json['filePreviewWidth'] as String?,
-      fileSize: json['fileSize'] as int,
-      type: json['type'] as String,
+      filePreviewHeight: json['filePreviewHeight'],
+      filePreviewWidth: json['filePreviewWidth'],
+      fileSize: json['fileSize'] as int?,
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$_SmartappFileDataModelToJson(
@@ -47,7 +47,10 @@ Map<String, dynamic> _$$_SmartappFileDataModelToJson(
 _$_SmartappSendBotEventResponseModel
     _$$_SmartappSendBotEventResponseModelFromJson(Map<String, dynamic> json) =>
         _$_SmartappSendBotEventResponseModel(
-          files: json['files'] as List<dynamic>?,
+          files: (json['files'] as List<dynamic>?)
+              ?.map((e) =>
+                  SmartappFileDataModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
           payload: SmartappSendBotEventPayloadModel.fromJson(
               json['payload'] as Map<String, dynamic>),
           ref: json['ref'] as String,
@@ -84,7 +87,7 @@ _$_SmartappSendBotEventPayloadResultModel
         _$_SmartappSendBotEventPayloadResultModel(
           content: json['content'],
           status: json['status'] as String,
-          statusCode: json['statusCode'] as int,
+          statusCode: json['statusCode'] as int?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
@@ -93,6 +96,55 @@ Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
       'content': instance.content,
       'status': instance.status,
       'statusCode': instance.statusCode,
+    };
+
+_$_SmartappSendBotEventStaticResponseModel
+    _$$_SmartappSendBotEventStaticResponseModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_SmartappSendBotEventStaticResponseModel(
+          files: json['files'] as List<dynamic>?,
+          payload: SmartappSendBotEventStaticPayloadModel.fromJson(
+              json['payload'] as Map<String, dynamic>),
+          ref: json['ref'] as String,
+          type: json['type'] as String,
+        );
+
+Map<String, dynamic> _$$_SmartappSendBotEventStaticResponseModelToJson(
+        _$_SmartappSendBotEventStaticResponseModel instance) =>
+    <String, dynamic>{
+      'files': instance.files,
+      'payload': instance.payload,
+      'ref': instance.ref,
+      'type': instance.type,
+    };
+
+_$_SmartappSendBotEventStaticPayloadModel
+    _$$_SmartappSendBotEventStaticPayloadModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_SmartappSendBotEventStaticPayloadModel(
+          result: SmartappSendBotEventStaticPayloadResultModel.fromJson(
+              json['result'] as Map<String, dynamic>),
+          status: json['status'] as String?,
+        );
+
+Map<String, dynamic> _$$_SmartappSendBotEventStaticPayloadModelToJson(
+        _$_SmartappSendBotEventStaticPayloadModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'status': instance.status,
+    };
+
+_$_SmartappSendBotEventStaticPayloadResultModel
+    _$$_SmartappSendBotEventStaticPayloadResultModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_SmartappSendBotEventStaticPayloadResultModel(
+          path: json['path'] as String,
+        );
+
+Map<String, dynamic> _$$_SmartappSendBotEventStaticPayloadResultModelToJson(
+        _$_SmartappSendBotEventStaticPayloadResultModel instance) =>
+    <String, dynamic>{
+      'path': instance.path,
     };
 
 _$_SmartappSendBotEventTokenResponseModel

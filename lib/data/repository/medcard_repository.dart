@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
@@ -36,9 +35,9 @@ class MedcardRepository {
     }
   }
 
-  Future<Uint8List> downloadFile({required String url}) async {
+  Future<void> downloadFile({required String url}) async {
     try {
-      var response = await _dioClient.getFile(
+      await _dioClient.getFile(
         url,
         options: Options(
           responseType: ResponseType.bytes,
@@ -48,8 +47,6 @@ class MedcardRepository {
           },
         ),
       );
-      Uint8List decodedbytes1 = base64Decode(response.data);
-      return decodedbytes1;
     } catch (error) {
       rethrow;
     }
