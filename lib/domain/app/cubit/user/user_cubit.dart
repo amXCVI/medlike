@@ -177,9 +177,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняет deviceId устройства на бэке
   void addFirebaseDeviceId() async {
-    await FirebaseMessaging.instance.deleteToken();
+    //await FirebaseMessaging.instance.deleteToken();
     String fcmToken = await FirebaseMessaging.instance.getToken() as String;
-    print("FCM new Token: ${fcmToken}");
+    print("FCM Token: $fcmToken");
     userRepository.registerDeviceFirebaseToken(token: fcmToken);
   }
 
