@@ -151,8 +151,12 @@ class AppointmentItem extends StatelessWidget {
           if (appointmentItem.status == 4)
             BlocBuilder<AppointmentsCubit, AppointmentsState>(
               builder: (context, state) {
-                final isDisabled = state.putAppointmentStatus == PutAppointmentsStatuses.loading
-                  || state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading;
+                final isDeleting = state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading
+                  && state.appointmentLoadingId == appointmentItem.id;
+                final isConfirming = state.putAppointmentStatus == PutAppointmentsStatuses.loading
+                  && state.appointmentLoadingId == appointmentItem.id;
+
+                final isDisabled = isConfirming || isDeleting;
 
                 return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +164,7 @@ class AppointmentItem extends StatelessWidget {
                             Expanded(
                                 child: SimpleButton(
                               isPrimary: true,
-                              isLoading: state.putAppointmentStatus == PutAppointmentsStatuses.loading,
+                              isLoading: isConfirming,
                               isDisabled: isDisabled,
                               labelText: 'Подтвердить',
                               onTap: () {
@@ -175,7 +179,7 @@ class AppointmentItem extends StatelessWidget {
                             Expanded(
                                 child: SimpleButton(
                                     labelText: 'Отменить',
-                                    isLoading: state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading,
+                                    isLoading: isDeleting,
                                     isDisabled: isDisabled,
                                     onTap: () {
                                       context.read<AppointmentsCubit>().deleteAppointment(

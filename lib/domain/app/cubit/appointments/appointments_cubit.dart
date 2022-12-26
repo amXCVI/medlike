@@ -226,12 +226,9 @@ class AppointmentsCubit
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
       appointmentsList: list,
+      appointmentLoadingId: appointmentId
     ));
 
-    filterAppointmentsList(
-      state.selectedDate,
-      appointmentsList: list
-    );
     try {
       final bool response;
       response = await appointmentsRepository.deleteAppointment(
@@ -241,6 +238,12 @@ class AppointmentsCubit
       if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
+
+      filterAppointmentsList(
+        state.selectedDate,
+        appointmentsList: list
+      );
+
       emit(state.copyWith(
         confirmCounter: (state.confirmCounter ?? 1) - 1,
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
@@ -264,25 +267,28 @@ class AppointmentsCubit
     emit(state.copyWith(
       putAppointmentStatus: PutAppointmentsStatuses.loading,
       appointmentsList: list,
+      appointmentLoadingId: appointmentId
     ));
 
-    filterAppointmentsList(
-      state.selectedDate,
-      appointmentsList: list
-    );
     try {
       final bool response;
       response = await appointmentsRepository.confirmAppointment(
           appointmentId: appointmentId, userId: userId);
 
       await getLastAppointment(true);
+      if (response) {
+        AppToast.showAppToast(msg: 'Прием успешно подтверждён');
+      }
+
+      filterAppointmentsList(
+        state.selectedDate,
+        appointmentsList: list
+      );
+
       emit(state.copyWith(
         confirmCounter: (state.confirmCounter ?? 1) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
-      if (response) {
-        AppToast.showAppToast(msg: 'Прием успешно подтверждён');
-      }
 
     } catch (e) {
       emit(

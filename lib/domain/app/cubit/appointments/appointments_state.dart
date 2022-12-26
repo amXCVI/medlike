@@ -19,6 +19,7 @@ class AppointmentsState {
   final GetLastAppointmentStatuses? getLastAppointmentStatus;
   final AppointmentModelWithTimeZoneOffset? lastAppointment;
   final int? confirmCounter;
+  final String? appointmentLoadingId;
   final DateTime startDate;
   final DateTime endDate;
   final DateTime selectedDate;
@@ -33,6 +34,7 @@ class AppointmentsState {
     this.deleteAppointmentStatus,
     this.getLastAppointmentStatus,
     this.confirmCounter,
+    this.appointmentLoadingId,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -52,6 +54,7 @@ class AppointmentsState {
     GetLastAppointmentStatuses? getLastAppointmentStatus,
     AppointmentModelWithTimeZoneOffset? lastAppointment,
     int? confirmCounter,
+    String? appointmentLoadingId,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -71,6 +74,7 @@ class AppointmentsState {
           getLastAppointmentStatus ?? this.getLastAppointmentStatus,
       lastAppointment: lastAppointment ?? this.lastAppointment,
       confirmCounter: confirmCounter ?? this.confirmCounter,
+      appointmentLoadingId: appointmentLoadingId ?? this.appointmentLoadingId,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       selectedDate: selectedDate ?? this.selectedDate,
@@ -92,6 +96,7 @@ class AppointmentsState {
       getLastAppointmentStatus:
           getLastAppointmentStatus,
       confirmCounter: 0,
+      appointmentLoadingId: null,
       startDate: startDate,
       endDate: endDate,
       selectedDate: selectedDate,
