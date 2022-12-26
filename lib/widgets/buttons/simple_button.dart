@@ -34,7 +34,7 @@ class SimpleButton extends StatelessWidget {
           color: isDisabled
             ? AppColors.lightText
             : AppColors.mainAppBackground,
-          border: isPrimary && !isLoading ? Border.all(
+          border: isPrimary && !isDisabled ? Border.all(
             width: 1,
             color: AppColors.mainBrandColor
           ) : null,
