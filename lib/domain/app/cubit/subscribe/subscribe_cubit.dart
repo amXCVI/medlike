@@ -183,9 +183,11 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   }
 
   /// Сохранить выбранную категорию специализацию
+  /// И обнуляет список выбранных исследований
   void setSelectedSpecialisation(NavigationItem specialisation) {
     emit(state.copyWith(
       selectedSpecialisation: specialisation,
+      selectedResearchesIds: [],
     ));
   }
 
