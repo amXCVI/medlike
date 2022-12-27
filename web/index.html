@@ -18,7 +18,7 @@
 
 	<title>medlike</title>
 	<link rel="manifest" href="manifest.json">
-	<script src="./bridge-bundle.js"></script>
+	<script src="./bundle.js"></script>
 	<script>
 		var bridge = window.webBridgeInstance;
 		async function sendBotEvent(jsonEventObject, files) {
@@ -68,7 +68,9 @@
 		bridge?.sendClientEvent({
 			method: 'ready',
 			params: {}
-		})
+		});
+
+		bridge?.disableRenameParams();
 	</script>
 
 	<!-- <script>
