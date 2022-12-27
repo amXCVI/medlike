@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
 class SmartappLoginPage extends StatelessWidget {
   const SmartappLoginPage({Key? key, this.resolver}) : super(key: key);
@@ -16,7 +15,7 @@ class SmartappLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void getSmartappTokenForce() {
+    void getSmartappTokenForce() async {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
@@ -29,12 +28,15 @@ class SmartappLoginPage extends StatelessWidget {
             .smartappAuth(smartappToken: data)
             .then((value) {
           if (value) {
-            /// Если авторизация успешна, переходим на главную
+            /// Если авторизация успешна, переходим далее
             print(
                 '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
-            Future.delayed(const Duration(seconds: 2), () {
+            if (resolver != null) {
+              resolver!.next(true);
+              return;
+            } else {
               context.router.replaceAll([const MainRoute()]);
-            });
+            }
           } else {
             print(
                 'Не удалось авторизоваться через smartapp token. Проверьте пользователя');
@@ -85,54 +87,55 @@ class SmartappLoginPage extends StatelessWidget {
 
     UserSecureStorage.getField(AppConstants.isAuth).then((isAuth) {
       if (isAuth != 'true') {
-        getSmartappToken().then((bool value) {
-          if (value) {
-            if (resolver != null) {
-              resolver!.next(true);
-              return;
-            }
-            Future.delayed(const Duration(seconds: 1), () {
-              context.router.replaceAll([const MainRoute()]);
-            });
-            return;
-          }
-        }).catchError((onError) {
-          AppToast.showAppToast(
-              msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
-        });
+        getSmartappTokenForce();
+        // getSmartappToken().then((bool value) {
+        //   if (value) {
+        //     if (resolver != null) {
+        //       resolver!.next(true);
+        //       return;
+        //     }
+        //     Future.delayed(const Duration(seconds: 1), () {
+        //       context.router.replaceAll([const MainRoute()]);
+        //     });
+        //     return;
+        //   }
+        // }).catchError((onError) {
+        //   AppToast.showAppToast(
+        //       msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
+        // });
       }
     });
 
     return Center(
-      // child: GestureDetector(
-      //   onDoubleTap: goToLoginPage,
-      //   child: const CircularLoader(
-      //     radius: 50,
-      //   ),
-      // ),
-
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          MaterialButton(
-            color: AppColors.mainSeparatorAlpha,
-            onPressed: getSmartappTokenForce,
-            child: const Text('auth with smartapp token (sendBotEvent)'),
-          ),
-          const SizedBox(height: 24),
-          MaterialButton(
-            color: AppColors.mainSeparatorAlpha,
-            onPressed: goToLoginPage,
-            child: const Text('go to login page'),
-          ),
-          const SizedBox(height: 24),
-          MaterialButton(
-            color: AppColors.mainSeparatorAlpha,
-            onPressed: goToMainPage,
-            child: const Text('go to main page'),
-          ),
-        ],
+      child: GestureDetector(
+        onDoubleTap: getSmartappTokenForce,
+        child: const CircularLoader(
+          radius: 50,
+        ),
       ),
+
+      // child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     MaterialButton(
+      //       color: AppColors.mainSeparatorAlpha,
+      //       onPressed: getSmartappTokenForce,
+      //       child: const Text('auth with smartapp token (sendBotEvent)'),
+      //     ),
+      //     const SizedBox(height: 24),
+      //     MaterialButton(
+      //       color: AppColors.mainSeparatorAlpha,
+      //       onPressed: goToLoginPage,
+      //       child: const Text('go to login page'),
+      //     ),
+      //     const SizedBox(height: 24),
+      //     MaterialButton(
+      //       color: AppColors.mainSeparatorAlpha,
+      //       onPressed: goToMainPage,
+      //       child: const Text('go to main page'),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

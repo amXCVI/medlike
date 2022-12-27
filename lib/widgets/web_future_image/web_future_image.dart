@@ -47,11 +47,9 @@ class _WebFutureImageState extends State<WebFutureImage> {
             ),
           );
         } else {
-          return Center(
-              child: MaterialButton(
-            onPressed: _getData,
-            child: const CircularLoader(),
-          ));
+          return const Center(
+            child: CircularLoader(),
+          );
         }
       },
     );
