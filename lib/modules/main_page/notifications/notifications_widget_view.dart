@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/notications_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -27,6 +28,7 @@ class NotificationsWidgetView extends StatefulWidget {
 
 class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
   final _key = GlobalKey();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -75,13 +77,26 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          title.characters
-                              .replaceAll(
-                                  Characters(''), Characters('\u{200B}'))
-                              .toString(),
-                          style: Theme.of(context).textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              title.characters
+                                  .replaceAll(
+                                      Characters(''), Characters('\u{200B}'))
+                                  .toString(),
+                              style: Theme.of(context).textTheme.titleMedium,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if(isLoading) const SizedBox(
+                              width: 10,
+                            ),
+                            if(isLoading) Lottie.asset(
+                              'assets/animations/loader.json',
+                              width: 15,
+                              height: 15
+                            ),
+                          ],
                         ),
                         BlocBuilder<TourCubit, TourState>(
                           buildWhen: (_, state) {
@@ -168,6 +183,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
 
                         switch(notificationItem.eventType) {
                           case (NotificationsTypes.newMedcardEventPdf):
+                          case (NotificationsTypes.newMedcardEventJson):
                             context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
                               fileUrl:
                                   '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
@@ -177,11 +193,9 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                             break;
                           case (NotificationsTypes.appointmentCanceled):
                           case (NotificationsTypes.appointmentScheduled):
+                          case (NotificationsTypes.appointmentCompleted):
                             context.router.push(
-                              MedcardRoute(
-                                userId: notificationItem.userId,
-                                isChildrenPage: true
-                              )
+                              AppointmentsRoute()
                             );
                             break;
                         }

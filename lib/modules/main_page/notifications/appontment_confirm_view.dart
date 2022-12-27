@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/models.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
@@ -155,7 +157,19 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
             ],
             color: Theme.of(context).backgroundColor,
           ),
-          child: content
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+            child: Material(
+              child: InkWell(
+                onTap: () {
+                  context.router.push(
+                    AppointmentsRoute()
+                  );
+                },
+                child: content
+              )
+            ),
+          )
         );
       }
     );
