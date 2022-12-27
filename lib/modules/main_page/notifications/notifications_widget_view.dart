@@ -176,15 +176,14 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                   child: Material(
                     child: InkWell(
-                      onTap: () {
-                        context
-                            .read<UserCubit>()
-                            .updateNotificationStatus(notificationItem.id);
-
+                      onTap: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
                         switch(notificationItem.eventType) {
                           case (NotificationsTypes.newMedcardEventPdf):
                           case (NotificationsTypes.newMedcardEventJson):
-                            context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
+                            await context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
                               fileUrl:
                                   '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
                               fileName: notificationItem.description,
@@ -199,6 +198,14 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                             );
                             break;
                         }
+
+                        await context
+                            .read<UserCubit>()
+                            .updateNotificationStatus(notificationItem.id);
+                        setState(() {
+                          isLoading = false;
+                        });
+
                       },
                       child: Slidable(
                         key: UniqueKey(),
