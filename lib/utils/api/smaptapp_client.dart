@@ -72,13 +72,13 @@ class SmartAppClient {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       }
       return response;
@@ -129,13 +129,13 @@ class SmartAppClient {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       }
       return response;
@@ -187,13 +187,13 @@ class SmartAppClient {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       }
       return response;
@@ -243,13 +243,13 @@ class SmartAppClient {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       }
       return response;
@@ -298,13 +298,13 @@ class SmartAppClient {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: json.decode(parsedResponse.payload.result.content),
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       } catch (err) {
         response = Response(
           requestOptions: RequestOptions(path: endpoint),
           data: parsedResponse.payload.result.content,
-          statusCode: parsedResponse.payload.result.statusCode,
+          statusCode: parsedResponse.payload.result.status_code,
         );
       }
       print('<<<< coздан объект Response');
@@ -356,7 +356,7 @@ class SmartAppClient {
           payload: SmartappSendBotEventPayloadModel(
               result: SmartappSendBotEventPayloadResultModel(
                 content: 'error loading file',
-                statusCode: 500,
+                status_code: 500,
                 status: 'error',
               ),
               status: ''),

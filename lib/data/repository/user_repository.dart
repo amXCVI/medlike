@@ -382,7 +382,7 @@ class UserRepository {
     }
   }
 
-  Future<AuthTokenResponse> smartappAuth(
+  Future<AuthSmartappTokenResponse> smartappAuth(
       {required String smartappToken}) async {
     try {
       print('1111111 !!!! отправляем смартапп-токен на бэк: $smartappToken');
@@ -396,11 +396,10 @@ class UserRepository {
       if (response.statusCode == 200) {
         print(
             '33333.1111 !!!!! Распознавание объекта с внутренними токенами response.data: ${response.data}');
-        return AuthTokenResponse.fromJson(response.data);
+        return AuthSmartappTokenResponse.fromJson(response.data);
       } else {
         print('3333.2222');
-        return const AuthTokenResponse(
-            token: '', refreshToken: '', tryCount: 1);
+        return const AuthSmartappTokenResponse(token: '', refreshToken: '');
       }
     } catch (err) {
       print('ошибка авторизации на бэке через смартапп-токен.');

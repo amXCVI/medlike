@@ -32,6 +32,17 @@ class AuthTokenResponse with _$AuthTokenResponse {
 }
 
 @freezed
+class AuthSmartappTokenResponse with _$AuthSmartappTokenResponse {
+  const factory AuthSmartappTokenResponse({
+    required String token,
+    required String refreshToken,
+  }) = _AuthSmartappTokenResponse;
+
+  factory AuthSmartappTokenResponse.fromJson(Map<String, Object?> json) =>
+      _$AuthSmartappTokenResponseFromJson(json);
+}
+
+@freezed
 class AuthTokenResponseError with _$AuthTokenResponseError {
   const factory AuthTokenResponseError({
     required String message,
@@ -118,10 +129,10 @@ class CheckUserAccountResponse with _$CheckUserAccountResponse {
 @freezed
 class UserAgreementsModel with _$UserAgreementsModel {
   const factory UserAgreementsModel({
-  required int id,
-  required String type,
-  required int version,
-  required bool accepted,
+    required int id,
+    required String type,
+    required int version,
+    required bool accepted,
   }) = _UserAgreementsModel;
 
   factory UserAgreementsModel.fromJson(Map<String, Object?> json) =>
@@ -152,10 +163,10 @@ class UserUploadAvatarResponseModel with _$UserUploadAvatarResponseModel {
 @freezed
 class UserAgreementItemModel with _$UserAgreementItemModel {
   const factory UserAgreementItemModel({
-  required int id,
-  required String type,
-  required int version,
-  required bool accepted,
+    required int id,
+    required String type,
+    required int version,
+    required bool accepted,
   }) = _UserAgreementItemModel;
 
   factory UserAgreementItemModel.fromJson(Map<String, Object?> json) =>

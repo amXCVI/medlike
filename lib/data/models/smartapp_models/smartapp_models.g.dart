@@ -87,7 +87,7 @@ _$_SmartappSendBotEventPayloadResultModel
         _$_SmartappSendBotEventPayloadResultModel(
           content: json['content'],
           status: json['status'] as String,
-          statusCode: json['statusCode'] as int?,
+          status_code: json['status_code'] as int?,
         );
 
 Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
@@ -95,7 +95,7 @@ Map<String, dynamic> _$$_SmartappSendBotEventPayloadResultModelToJson(
     <String, dynamic>{
       'content': instance.content,
       'status': instance.status,
-      'statusCode': instance.statusCode,
+      'status_code': instance.status_code,
     };
 
 _$_SmartappSendBotEventStaticResponseModel

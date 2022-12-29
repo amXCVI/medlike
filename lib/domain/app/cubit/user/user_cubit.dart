@@ -135,7 +135,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       getSmartappTokenStatus: GetSmartappTokenStatuses.loading,
     ));
     try {
-      final AuthTokenResponse response =
+      final AuthSmartappTokenResponse response =
           await userRepository.smartappAuth(smartappToken: smartappToken);
       print(
           '################## Декодированные внутренние токены: ##################');
@@ -144,7 +144,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       print(response.refreshToken);
       if (response.token.isEmpty) {
         emit(state.copyWith(
-          tryCount: response.tryCount,
           getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
         ));
         return false;
@@ -453,7 +452,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       return response;
     } on DioError catch (e) {
       addError(e);
-      if(e.type == DioErrorType.other) {
+      if (e.type == DioErrorType.other) {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }

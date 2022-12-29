@@ -33,6 +33,20 @@ Map<String, dynamic> _$$_AuthTokenResponseToJson(
       'tryCount': instance.tryCount,
     };
 
+_$_AuthSmartappTokenResponse _$$_AuthSmartappTokenResponseFromJson(
+        Map<String, dynamic> json) =>
+    _$_AuthSmartappTokenResponse(
+      token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+
+Map<String, dynamic> _$$_AuthSmartappTokenResponseToJson(
+        _$_AuthSmartappTokenResponse instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'refreshToken': instance.refreshToken,
+    };
+
 _$_AuthTokenResponseError _$$_AuthTokenResponseErrorFromJson(
         Map<String, dynamic> json) =>
     _$_AuthTokenResponseError(
