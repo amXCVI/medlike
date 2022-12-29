@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -82,7 +83,11 @@ class _CreatePinCodePageState extends State<CreatePinCodePage> {
     Future<bool> _checkRepeatPinCode(List<int> repeatPinCode) async {
       if (initialPinCode.join('') == repeatPinCode.join('')) {
         _savePinCode(repeatPinCode);
-        if (widget.noUsedBiometric == null || widget.noUsedBiometric == false) {
+        final isSupportedAndEnabledBiometric = await AuthService.canCheckBiometrics();
+
+        if(!isSupportedAndEnabledBiometric) {
+           context.router.replace(const MainRoute());
+        } else if (widget.noUsedBiometric == false) {
           setState(() {
             isForcedShowingBiometricModal = true;
           });

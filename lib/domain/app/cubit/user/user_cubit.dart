@@ -424,6 +424,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
+          userPhoneNumber: phoneNumber,
           isFound: response.found));
       return response;
     } on DioError catch (e) {
