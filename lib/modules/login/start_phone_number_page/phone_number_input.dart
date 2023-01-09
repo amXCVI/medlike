@@ -33,6 +33,9 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     RegExp exp = RegExp(r"[^0-9]+");
     String phoneString = phone.replaceAll(exp, '');
     if (phoneString.length != 11) {
+      setState(() {
+        error = 'Номер телефона имеет некорректную длину';
+      });
       return;
     }
 

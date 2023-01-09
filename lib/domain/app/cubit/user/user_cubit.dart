@@ -271,13 +271,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Запрашивает смс для сброса пароля
-  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword(
+  Future<DefaultErrorModel?> getNewSmsForRecoverPassword(
       {required String phoneNumber}) async {
     CheckUserAccountResponse checkUser =
         await checkUserAccount(phoneNumber: phoneNumber);
     if (checkUser.found != true) {
-      return const CheckUserAccountResponse(
-          found: false,
+      return const DefaultErrorModel(
           message: 'Не найден пользователь с введенным номером телефона');
     }
     emit(state.copyWith(
@@ -291,6 +290,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.success,
       ));
+    } on DioError catch (e) {
+      addError(e);
+      return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.failed,
@@ -306,6 +308,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       sendingResetPasswordCodeStatus: SendingResetPasswordCodeStatuses.loading,
     ));
+    // s
     try {
       await userRepository.sendResetPasswordCode(
         phoneNumber: phoneNumber,

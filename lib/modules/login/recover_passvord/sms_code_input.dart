@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,16 +27,57 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
       TextEditingController()..text = '';
 
   String? errorMsg;
+  String? timerMsg;
+  int time = 0;
 
-  void getNewSmsCode() {
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void _startTimer() {
+    setState(() {
+      time = 5 * 60;
+    });
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        final dur = Duration(
+          seconds: time
+        );
+        timerMsg = _printDuration(dur);
+        time--;
+        if(time <= 0) {
+          timer.cancel();
+          timerMsg = null;
+        }
+      });
+      debugPrint(timer.tick.toString());
+    });
+  }
+
+  void getNewSmsCode() async {
     String phoneString = widget.phoneNumber;
-    context
+    final response = await context
         .read<UserCubit>()
         .getNewSmsForRecoverPassword(phoneNumber: phoneString);
+
+    if(response != null) {
+      setState(() {
+        errorMsg = null;
+        _startTimer();
+      });
+    }
   }
 
   void sendSmsToken(String smsToken) async {
     String phoneString = widget.phoneNumber;
+    if(timerMsg != null) {
+      return;
+    }
+
     final response = await context
         .read<UserCubit>()
         .sendResetPasswordCode(phoneNumber: phoneString, smsToken: smsToken);
@@ -57,7 +100,8 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
   @override
   Widget build(BuildContext context) {
-    getNewSmsCode();
+    /// TODO: убрать получение статуса sms из ребилда
+    /// getNewSmsCode();
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
@@ -136,6 +180,26 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                     ?.copyWith(color: AppColors.mainError),
                 textAlign: TextAlign.center,
               ),
+            if (timerMsg != null)
+              RichText(
+                text: TextSpan(
+                  text: 'Запросить код повторно можно через ',
+                  style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: AppColors.lightText),
+                  children: [
+                    TextSpan(
+                      text: timerMsg,
+                      style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: AppColors.mainText),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              )
           ],
         );
       },
