@@ -11,9 +11,14 @@ import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class SmsCodeInput extends StatefulWidget {
-  const SmsCodeInput({Key? key, required this.phoneNumber}) : super(key: key);
+  const SmsCodeInput({
+    Key? key, 
+    required this.phoneNumber,
+    required this.time
+  }) : super(key: key);
 
   final String phoneNumber;
+  final int time;
 
   @override
   State<SmsCodeInput> createState() => _SmsCodeInputState();
@@ -28,7 +33,22 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
   String? errorMsg;
   String? timerMsg;
+  Timer? timer;
   int time = 0;
+
+  @override
+  void initState() {
+    time = widget.time;
+    if(time >= 0) {
+      final dur = Duration(
+        seconds: time
+      );
+      timerMsg = _printDuration(dur);
+      _startTimer(time);
+    }
+
+    super.initState();
+  }
 
   String _printDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
@@ -37,28 +57,35 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
 
-  void _startTimer() {
-    setState(() {
-      time = 5 * 60;
-    });
+  int? _parseSeconds(String message) {
+    final numeric = RegExp(r'[0-9]+');
+    final match = numeric.firstMatch(message);
+    final matchedText = match?.group(0);
+    return int.tryParse(matchedText ?? '');
+  }
 
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        final dur = Duration(
-          seconds: time
-        );
-        timerMsg = _printDuration(dur);
-        time--;
-        if(time <= 0) {
-          timer.cancel();
-          timerMsg = null;
-        }
+  void _startTimer(int? start) {
+    setState(() {
+      time = start ?? 5 * 60;
+
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          final dur = Duration(
+            seconds: time
+          );
+          timerMsg = _printDuration(dur);
+          time--;
+          context.read<UserCubit>().setTimer(time);
+          if(time <= 0) {
+            timer.cancel();
+            timerMsg = null;
+          }
+        });
       });
-      debugPrint(timer.tick.toString());
     });
   }
 
-  void getNewSmsCode() async {
+  Future<bool> getNewSmsCode() async {
     String phoneString = widget.phoneNumber;
     final response = await context
         .read<UserCubit>()
@@ -67,16 +94,15 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
     if(response != null) {
       setState(() {
         errorMsg = null;
-        _startTimer();
+        _startTimer(_parseSeconds(response.message ?? ''));
       });
+      return false;
     }
+    return true;
   }
 
   void sendSmsToken(String smsToken) async {
     String phoneString = widget.phoneNumber;
-    if(timerMsg != null) {
-      return;
-    }
 
     final response = await context
         .read<UserCubit>()
@@ -99,10 +125,13 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    /// TODO: убрать получение статуса sms из ребилда
-    /// getNewSmsCode();
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         return Column(
@@ -155,10 +184,14 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                             color: AppColors.mainError, width: 1.0),
                   ),
                   suffixIcon: IconButton(
-                    icon: SvgPicture.asset(
-                        'assets/icons/login/trailing_password_icon.svg'),
+                    icon: time <= 0 ? SvgPicture.asset(
+                        'assets/icons/login/trailing_password_icon.svg')
+                      : SvgPicture.asset(
+                        'assets/icons/login/trailing_password_disabled.svg'),
                     onPressed: () {
-                      getNewSmsCode();
+                      if(time <= 0) {
+                        getNewSmsCode();
+                      }
                     },
                   ),
                   prefixIcon: const SizedBox(width: 40),

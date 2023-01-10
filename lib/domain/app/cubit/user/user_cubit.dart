@@ -62,6 +62,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(userPhoneNumber: phone));
   }
 
+  /// Обновляем количество секунд до 
+  void setTimer(int timer) {
+    emit(state.copyWith(timer: timer));
+  }
+
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(

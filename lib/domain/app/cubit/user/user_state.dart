@@ -55,6 +55,7 @@ class UserState {
   final String? token;
   final String? refreshToken;
   final int? tryCount;
+  final int? timer;
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
   final String? selectedUserId;
@@ -85,6 +86,7 @@ class UserState {
     this.token,
     this.refreshToken,
     this.tryCount,
+    this.timer,
     this.getUserProfileStatus,
     this.userProfiles,
     this.selectedUserId = '',
@@ -118,6 +120,7 @@ class UserState {
     String? token,
     String? refreshToken,
     int? tryCount,
+    int? timer,
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
     String? selectedUserId,
@@ -148,6 +151,7 @@ class UserState {
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
       tryCount: tryCount ?? this.tryCount,
+      timer: timer ?? this.timer,
       getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       userProfiles: userProfiles ?? this.userProfiles,
       selectedUserId: selectedUserId ?? this.selectedUserId,
