@@ -112,8 +112,7 @@ class _PinCodeViewState extends State<PinCodeView> {
         });
       }
     } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
-        isSupportedAndEnabledBiometric &&
-        !widget.isForcedShowingBiometricModal) {
+        isSupportedAndEnabledBiometric) {
       setState(() {
         isShowingBiometricModal = true;
       });

@@ -134,6 +134,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             height: constraints.maxHeight,
             handleBiometricMethod: onSuccessBiometricAuthenticate,
             isForcedShowingBiometricModal: isBiometricAuthenticate,
+            noUsedBiometric: false,
           ),
         ],
       );
