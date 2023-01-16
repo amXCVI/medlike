@@ -117,6 +117,9 @@ class DioInterceptors extends Interceptor {
               InvalidRefreshTokenError(requestOptions: requestOptions),
               handler);
         });
+      case 409:
+        /// Не посылаем AppToast
+        return super.onError(err, handler);
       case 460:
         UserSecureStorage.setField(AppConstants.isActualAppVersion, 'false');
         return;

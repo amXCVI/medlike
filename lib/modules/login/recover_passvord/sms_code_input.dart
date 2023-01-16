@@ -39,12 +39,14 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
   @override
   void initState() {
     time = widget.time;
-    if(time >= 0) {
+    if(time > 0) {
       final dur = Duration(
         seconds: time
       );
       timerMsg = _printDuration(dur);
       _startTimer(time);
+    } else {
+      getNewSmsCode();
     }
 
     super.initState();

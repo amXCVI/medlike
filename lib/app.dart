@@ -25,6 +25,7 @@ import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -67,6 +68,7 @@ class App extends StatelessWidget {
             _router,
             navigatorObservers: () => [
               FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+              SentryNavigatorObserver()
             ],
           ),
           routeInformationParser: _router.defaultRouteParser(),
