@@ -140,11 +140,15 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
           context.router.replaceAll([StartPhoneNumberRoute()]);
         }
 
-        if (state.resetPasswordStatus == ResetPasswordStatuses.success) {
+        if (state.resetPasswordStatus == ResetPasswordStatuses.success
+          && context.router.current.name != CreatePinCodeRoute.name
+        ) {
           context.router.push(CreatePinCodeRoute());
         }
 
-        if (state.changePasswordStatus == ChangePasswordStatuses.success) {
+        if (state.changePasswordStatus == ChangePasswordStatuses.success
+          && context.router.current.name != SettingsRoute.name
+        ) {
           context.router.replace(const SettingsRoute());
         }
 

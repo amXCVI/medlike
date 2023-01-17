@@ -5,6 +5,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/auth_skeletons/default_auth_skeleton.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_view.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 class RecoverPasswordNewPage extends StatelessWidget {
@@ -31,8 +32,17 @@ class RecoverPasswordNewPage extends StatelessWidget {
     }
     //! По-хорошему, нужно только один раз все обернуть в кубит.
     //! Сейчас сделано здесь, и глубже, поле ввода
-    return BlocBuilder<UserCubit, UserState>(
+
+    return BlocConsumer<UserCubit, UserState>(
+      listener: (context, state) {
+        if (context.router.current.name == AppRoutes.loginRecoverPasswordNew) {
+          context.read<UserCubit>().getPhoneNumber();
+        }
+      },
       builder: (context, state) {
+        if (state.userPhoneNumber == null) {
+          return const DefaultAuthSkeleton();
+        }
         return DefaultScaffold(
           child: state.resetPasswordStatus == ResetPasswordStatuses.loading ||
               state.changePasswordStatus == ChangePasswordStatuses.loading

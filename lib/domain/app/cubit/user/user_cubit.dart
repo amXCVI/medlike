@@ -59,7 +59,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(userPhoneNumber: phone));
+    /// Если телефон не совпадает с кубитом, то сбрасываем таймер
+    if (state.userPhoneNumber != phone) {
+      setTimer(DateTime.now());
+    }
+
+    emit(state.copyWith(
+      userPhoneNumber: phone
+    ));
   }
 
   /// Обновляем количество секунд до 
@@ -67,20 +74,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(timerEnd: time));
   }
 
-  /*
-  void decreaseTimer(int timer) {
-    final timerStartTime = state.timerStartTime?.subtract(Duration(seconds: timer));
-
-    emit(state.copyWith(timerStartTime: timerStartTime));
-  }
-  */
-
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
         authScreen: UserAuthScreens.inputPassword,
-        checkUserAccountStatus: CheckUserAccountStatuses.continued));
+        checkUserAccountStatus: CheckUserAccountStatuses.continued,
+    ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+  }
+
+  void getPhoneNumber() async {
+    String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
   /// Сохраняем номер телефона в кубит
