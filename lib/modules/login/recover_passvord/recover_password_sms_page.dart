@@ -20,7 +20,7 @@ class RecoverPasswordSmsPage extends StatelessWidget {
         return DefaultScaffold(
           child: RecoverPasswordSmsView(
             phoneNumber: phoneNumber,
-            time: state.timer ?? 0,
+            timerEnd: state.timerEnd,
           ),
           appBarTitle: 'SMS-код',
           actions: const [UnauthSupportButton()],

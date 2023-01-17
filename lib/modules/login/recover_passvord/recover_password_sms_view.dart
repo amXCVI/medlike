@@ -6,11 +6,11 @@ class RecoverPasswordSmsView extends StatelessWidget {
   const RecoverPasswordSmsView({
     Key? key, 
     required this.phoneNumber,
-    required this.time
+    this.timerEnd,
   }) : super(key: key);
 
   final String phoneNumber;
-  final int time;
+  final DateTime? timerEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class RecoverPasswordSmsView extends StatelessWidget {
           const DefaultLoginAnimation(),
           SmsCodeInput(
             phoneNumber: phoneNumber,
-            time: time
+            timerEnd: timerEnd
           ),
         ],
       ),

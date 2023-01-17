@@ -14,11 +14,11 @@ class SmsCodeInput extends StatefulWidget {
   const SmsCodeInput({
     Key? key, 
     required this.phoneNumber,
-    required this.time
+    required this.timerEnd
   }) : super(key: key);
 
   final String phoneNumber;
-  final int time;
+  final DateTime? timerEnd;
 
   @override
   State<SmsCodeInput> createState() => _SmsCodeInputState();
@@ -38,7 +38,13 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
 
   @override
   void initState() {
-    time = widget.time;
+    if(timer != null) {
+      timer?.cancel();
+    }
+    final now = DateTime.now();
+    final diff = widget.timerEnd?.difference(now) ?? const Duration(seconds: 0);
+    time = diff.inSeconds;
+
     if(time > 0) {
       final dur = Duration(
         seconds: time
@@ -77,7 +83,7 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
           );
           timerMsg = _printDuration(dur);
           time--;
-          context.read<UserCubit>().setTimer(time);
+
           if(time <= 0) {
             timer.cancel();
             timerMsg = null;
@@ -96,7 +102,14 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
     if(response != null) {
       setState(() {
         errorMsg = null;
-        _startTimer(_parseSeconds(response.message ?? ''));
+        final seconds = _parseSeconds(response.message ?? '');
+
+        if(!(timer?.isActive ?? false)) {
+          context.read<UserCubit>().setTimer(DateTime.now().add(
+            Duration(seconds: seconds ?? 0)
+          ));
+          _startTimer(seconds);
+        }
       });
       return false;
     }
