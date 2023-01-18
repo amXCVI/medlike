@@ -85,6 +85,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   void getPhoneNumber() async {
     String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    print('phone: $phone');
     emit(state.copyWith(userPhoneNumber: phone));
   }
 

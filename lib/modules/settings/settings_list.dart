@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/modules/settings/about_app/about_app_dialog.dart';
 import 'package:medlike/modules/settings/biometric_authentication/biometric_authentication.dart';
 import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.dart';
@@ -23,6 +25,9 @@ class SettingsList extends StatelessWidget {
     }
 
     void handleTapOnChangePassword() {
+      if (context.read<UserCubit>().state.userPhoneNumber == null) {
+        context.read<UserCubit>().getPhoneNumber();
+      }
       context.router.push(RecoverPasswordNewRoute(smsToken: ''));
     }
 
