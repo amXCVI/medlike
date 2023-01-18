@@ -30,6 +30,7 @@ void main() async {
       (options) {
         options.dsn = 'https://f6a923e6681b4453b447df38aa889523@o4504496183246848.ingest.sentry.io/4504496185737216';
         options.debug = true;
+        options.sendDefaultPii = true;
       },
     );
 

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/api/api_interceptors.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 
 class Api {
   static BaseOptions options = BaseOptions(
@@ -20,8 +21,10 @@ class Api {
   Api() {
     _dio = Dio()
     ..options = options
-    ..interceptors.add(DioInterceptors());
-
+    ..interceptors.add(DioInterceptors())
+    ..addSentry(
+      captureFailedRequests: true
+    );
 
     initSSLCert();
   }
