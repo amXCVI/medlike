@@ -136,7 +136,8 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             key: const Key('2'),
             height: constraints.maxHeight,
             handleBiometricMethod: onSuccessBiometricAuthenticate,
-            isForcedShowingBiometricModal: isBiometricAuthenticate ?? false,
+            isForcedShowingBiometricModal: isBiometricAuthenticate,
+            noUsedBiometric: false,
           ),
         ],
       );

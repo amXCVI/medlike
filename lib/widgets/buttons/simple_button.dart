@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:medlike/themes/colors.dart';
 
 class SimpleButton extends StatelessWidget {
@@ -7,25 +8,33 @@ class SimpleButton extends StatelessWidget {
     required this.labelText,
     required this.onTap,
     this.isPrimary = false,
+    this.isDisabled = false,
+    this.isLoading = false
   }) : super(key: key);
 
   final String labelText;
   final void Function() onTap;
   final bool isPrimary;
+  final bool isDisabled;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    final textColor = isDisabled
+      ? AppColors.mainAppBackground
+      : isPrimary ? AppColors.mainBrandColor : AppColors.mainText; 
+
     return InkWell(
-      onTap: onTap,
+      onTap: isDisabled ? () {} : onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 12
-        ),
+        width: 210,
+        height: 40,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(32)),
-          color: AppColors.mainAppBackground,
-          border: isPrimary ? Border.all(
+          color: isDisabled
+            ? AppColors.lightText
+            : AppColors.mainAppBackground,
+          border: isPrimary && !isDisabled ? Border.all(
             width: 1,
             color: AppColors.mainBrandColor
           ) : null,
@@ -40,14 +49,22 @@ class SimpleButton extends StatelessWidget {
         child: Center(
           child: FittedBox(
             fit:BoxFit.cover,
-            child: Text(
-              labelText.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                height: 1.142,
-                fontWeight: FontWeight.w700,
-                color: isPrimary ? AppColors.mainBrandColor : AppColors.mainText
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  labelText.toUpperCase(),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: textColor
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                if (isLoading)  Lottie.asset(
+                  'assets/animations/loader_white.json',
+                  width: 20,
+                  height: 20
+                ),
+              ],
             ),
           ),
         ),

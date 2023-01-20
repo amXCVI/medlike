@@ -2,18 +2,23 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class NewPasswordInput extends StatefulWidget {
-  const NewPasswordInput({Key? key, required this.token}) : super(key: key);
+  const NewPasswordInput({
+    Key? key, 
+    required this.token,
+    required this.phoneNumberFromState,
+    required this.onAuth
+  }) : super(key: key);
 
   final String token;
+  final String phoneNumberFromState;
+  final void Function({required String password}) onAuth;
 
   @override
   State<NewPasswordInput> createState() => _NewPasswordInputState();
@@ -53,14 +58,14 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   }
 
   void getUserPhoneNumber() async {
-    String? phoneNumber =
-        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    //String? phoneNumber =
+    //    await UserSecureStorage.getField(AppConstants.userPhoneNumber);
     setState(() {
-      _userPhoneNumber = phoneNumber!;
+      _userPhoneNumber = widget.phoneNumberFromState;
     });
   }
 
-  void _handleSubmittedPassword(String value) {
+  void _handleSubmittedPassword(String value) async {
     final status = validatePassword(value);
     if (_step == 0) {
       setState(() {
@@ -94,18 +99,20 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
                 'Мы потеряли ваш номер телефона :(\nПожалуйста, авторизуйтесь в приложении заново');
       }
       if (widget.token.isEmpty) {
-        context.read<UserCubit>().changePassword(
+        await context.read<UserCubit>().changePassword(
               userName: phoneString,
               newPassword: _password,
             );
+        
       } else {
-        context.read<UserCubit>().resetPassword(
+        await context.read<UserCubit>().resetPassword(
               phoneNumber: phoneString,
               smsToken: widget.token,
               password: _password,
               confirmPassword: _confirmPassword,
             );
       }
+      widget.onAuth(password: _password);
     }
   }
 
@@ -133,11 +140,15 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
           context.router.replaceAll([StartPhoneNumberRoute()]);
         }
 
-        if (state.resetPasswordStatus == ResetPasswordStatuses.success) {
+        if (state.resetPasswordStatus == ResetPasswordStatuses.success
+          && context.router.current.name != CreatePinCodeRoute.name
+        ) {
           context.router.push(CreatePinCodeRoute());
         }
 
-        if (state.changePasswordStatus == ChangePasswordStatuses.success) {
+        if (state.changePasswordStatus == ChangePasswordStatuses.success
+          && context.router.current.name != SettingsRoute.name
+        ) {
           context.router.replace(const SettingsRoute());
         }
 

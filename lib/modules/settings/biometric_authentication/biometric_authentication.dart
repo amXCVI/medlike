@@ -9,6 +9,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
+import 'package:app_settings/app_settings.dart';
 
 class BiometricAuthentication extends StatefulWidget {
   const BiometricAuthentication({Key? key}) : super(key: key);
@@ -92,6 +93,10 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   }
 
   void _onChanged(bool value) {
+    if(!isBiometricAuthenticate) {
+      AppSettings.openSecuritySettings();
+    }
+
     if (value) {
       _authenticate().then((authRes) => {
             if (!authRes)
@@ -122,8 +127,7 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
 
   @override
   Widget build(BuildContext context) {
-    return isBiometricAuthenticate
-        ? SettingsListItem(
+    return SettingsListItem(
             title: isFaceId ? 'Вход по Face ID' : 'Вход по Touch ID',
             iconSrc: isFaceId
                 ? 'assets/icons/settings/ic_faceid_setting_outline.svg'
@@ -135,12 +139,11 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
               _onChanged(!isEnabled);
             },
             rightActionWidget: CupertinoSwitch(
-              value: isEnabled,
+              value: isEnabled && isBiometricAuthenticate,
               onChanged: _onChanged,
               activeColor: Theme.of(context).primaryColor,
               trackColor: AppColors.secondBackground,
             ),
-          )
-        : const SizedBox();
+          );
   }
 }

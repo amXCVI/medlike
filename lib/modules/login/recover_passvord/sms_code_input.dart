@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,9 +11,14 @@ import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class SmsCodeInput extends StatefulWidget {
-  const SmsCodeInput({Key? key, required this.phoneNumber}) : super(key: key);
+  const SmsCodeInput({
+    Key? key, 
+    required this.phoneNumber,
+    required this.timerEnd
+  }) : super(key: key);
 
   final String phoneNumber;
+  final DateTime? timerEnd;
 
   @override
   State<SmsCodeInput> createState() => _SmsCodeInputState();
@@ -25,16 +32,93 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
       TextEditingController()..text = '';
 
   String? errorMsg;
+  String? timerMsg;
+  Timer? timer;
+  int time = 0;
 
-  void getNewSmsCode() {
+  @override
+  void initState() {
+    if(timer != null) {
+      timer?.cancel();
+    }
+    final now = DateTime.now();
+    final diff = widget.timerEnd?.difference(now) ?? const Duration(seconds: 0);
+    time = diff.inSeconds;
+
+    if(time > 0) {
+      final dur = Duration(
+        seconds: time
+      );
+      timerMsg = _printDuration(dur);
+      _startTimer(time);
+    } else {
+      getNewSmsCode();
+    }
+
+    super.initState();
+  }
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  int? _parseSeconds(String message) {
+    final numeric = RegExp(r'[0-9]+');
+    final match = numeric.firstMatch(message);
+    final matchedText = match?.group(0);
+    return int.tryParse(matchedText ?? '');
+  }
+
+  void _startTimer(int? start) {
+    setState(() {
+      time = start ?? 5 * 60;
+
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          final dur = Duration(
+            seconds: time
+          );
+          timerMsg = _printDuration(dur);
+          time--;
+
+          if(time <= 0) {
+            timer.cancel();
+            timerMsg = null;
+          }
+        });
+      });
+    });
+  }
+
+  Future<bool> getNewSmsCode() async {
     String phoneString = widget.phoneNumber;
-    context
+    final response = await context
         .read<UserCubit>()
         .getNewSmsForRecoverPassword(phoneNumber: phoneString);
+
+    if(response != null) {
+      setState(() {
+        errorMsg = null;
+        final seconds = _parseSeconds(response.message ?? '');
+
+        if(!(timer?.isActive ?? false)) {
+          context.read<UserCubit>().setTimer(DateTime.now().add(
+            Duration(seconds: seconds ?? 0)
+          ));
+          _startTimer(seconds);
+        }
+      });
+      return false;
+    }
+    return true;
   }
 
   void sendSmsToken(String smsToken) async {
     String phoneString = widget.phoneNumber;
+
     final response = await context
         .read<UserCubit>()
         .sendResetPasswordCode(phoneNumber: phoneString, smsToken: smsToken);
@@ -56,9 +140,13 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    getNewSmsCode();
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         return Column(
@@ -111,10 +199,14 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                             color: AppColors.mainError, width: 1.0),
                   ),
                   suffixIcon: IconButton(
-                    icon: SvgPicture.asset(
-                        'assets/icons/login/trailing_password_icon.svg'),
+                    icon: time <= 0 ? SvgPicture.asset(
+                        'assets/icons/login/trailing_password_icon.svg')
+                      : SvgPicture.asset(
+                        'assets/icons/login/trailing_password_disabled.svg'),
                     onPressed: () {
-                      getNewSmsCode();
+                      if(time <= 0) {
+                        getNewSmsCode();
+                      }
                     },
                   ),
                   prefixIcon: const SizedBox(width: 40),
@@ -136,6 +228,26 @@ class _SmsCodeInputState extends State<SmsCodeInput> {
                     ?.copyWith(color: AppColors.mainError),
                 textAlign: TextAlign.center,
               ),
+            if (timerMsg != null)
+              RichText(
+                text: TextSpan(
+                  text: 'Запросить код повторно можно через ',
+                  style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: AppColors.lightText),
+                  children: [
+                    TextSpan(
+                      text: timerMsg,
+                      style: Theme.of(context)
+                        .textTheme
+                        .labelSmall
+                        ?.copyWith(color: AppColors.mainText),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              )
           ],
         );
       },

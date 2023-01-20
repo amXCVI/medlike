@@ -149,31 +149,46 @@ class AppointmentItem extends StatelessWidget {
           ),
           if (appointmentItem.status == 4) const SizedBox(height: 14.0),
           if (appointmentItem.status == 4)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                    child: SimpleButton(
-                  isPrimary: true,
-                  labelText: 'Подтвердить',
-                  onTap: () {
-                    context.read<AppointmentsCubit>().confirmAppointment(
-                        appointmentId: appointmentItem.id,
-                        userId: appointmentItem.patientInfo.id as String);
-                  },
-                )),
-                const SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                    child: SimpleButton(
-                        labelText: 'Отменить',
-                        onTap: () {
-                          context.read<AppointmentsCubit>().deleteAppointment(
-                              appointmentId: appointmentItem.id,
-                              userId: appointmentItem.patientInfo.id as String);
-                        }))
-              ],
+            BlocBuilder<AppointmentsCubit, AppointmentsState>(
+              builder: (context, state) {
+                final isDeleting = state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading
+                  && state.appointmentLoadingId == appointmentItem.id;
+                final isConfirming = state.putAppointmentStatus == PutAppointmentsStatuses.loading
+                  && state.appointmentLoadingId == appointmentItem.id;
+
+                final isDisabled = isConfirming || isDeleting;
+
+                return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                                child: SimpleButton(
+                              isPrimary: true,
+                              isLoading: isConfirming,
+                              isDisabled: isDisabled,
+                              labelText: 'Подтвердить',
+                              onTap: () {
+                                context.read<AppointmentsCubit>().confirmAppointment(
+                                    appointmentId: appointmentItem.id,
+                                    userId: appointmentItem.patientInfo.id as String);
+                              },
+                            )),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Expanded(
+                                child: SimpleButton(
+                                    labelText: 'Отменить',
+                                    isLoading: isDeleting,
+                                    isDisabled: isDisabled,
+                                    onTap: () {
+                                      context.read<AppointmentsCubit>().deleteAppointment(
+                                          appointmentId: appointmentItem.id,
+                                          userId: appointmentItem.patientInfo.id as String);
+                                    }))
+                          ],
+                        );
+              },
             )
         ],
       ),

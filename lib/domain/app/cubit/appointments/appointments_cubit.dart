@@ -96,6 +96,14 @@ class AppointmentsCubit
                 paymentStatus: e.paymentStatus,
                 recommendations: e.recommendations))
             .toList(),
+        confirmCounter: 
+          response.where(
+            (e) {
+              final diff = 
+                const TimestampConverter().fromJson(e.appointmentDateTime).difference(DateTime.now());
+              return e.status == 4 && diff.inHours < 24 && diff.inHours >= 0;
+            }
+          ).length
       ));
       filterAppointmentsList(state.selectedDate);
       return;
@@ -123,13 +131,17 @@ class AppointmentsCubit
   }
 
   /// Отбираем приемы по выделенному дню
-  void filterAppointmentsList(DateTime selectedDate) {
+  void filterAppointmentsList(DateTime selectedDate,
+    {
+      List<AppointmentModelWithTimeZoneOffset>? appointmentsList
+    }) {
     final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
-    if (state.appointmentsList == null) return;
-    filteredAppointmentsList = state.appointmentsList!
+    final list = appointmentsList ?? state.appointmentsList;
+
+    if (list == null) return;
+    filteredAppointmentsList = list
         .where((element) => isSameDay(
-            element.appointmentDateTime
-                .add(Duration(hours: element.timeZoneOffset)),
+            element.appointmentDateTime,
             state.selectedDate))
         .toList();
     emit(state.copyWith(
@@ -159,8 +171,7 @@ class AppointmentsCubit
   /// Future<void> Для последовательного ожидания кубитов
   Future<void> getLastAppointment(bool isRefresh) async {
     if (!isRefresh &&
-        state.getLastAppointmentStatus == GetLastAppointmentStatuses.success &&
-        state.lastAppointment != null) {
+        state.getLastAppointmentStatus == GetLastAppointmentStatuses.success) {
       return;
     }
     emit(state.copyWith(
@@ -196,6 +207,7 @@ class AppointmentsCubit
               paymentStatus: response.paymentStatus,
               recommendations: response.recommendations)));
     } catch (e) {
+      clearAppointment();
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.failed));
     }
@@ -207,28 +219,39 @@ class AppointmentsCubit
     required String userId,
     bool doNotShowNotification = false,
   }) async {
+    final list = state.appointmentsList
+      ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+    .toList();
+
     emit(state.copyWith(
       deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
-      appointmentsList: state.appointmentsList
-          ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
-          .toList(),
+      appointmentsList: list,
+      appointmentLoadingId: appointmentId
     ));
 
-    filterAppointmentsList(state.selectedDate);
     try {
       final bool response;
       response = await appointmentsRepository.deleteAppointment(
           appointmentId: appointmentId, userId: userId);
 
-      emit(state.copyWith(
-        deleteAppointmentStatus: DeleteAppointmentStatuses.success,
-      ));
+      await getLastAppointment(true);
       if (response && !doNotShowNotification) {
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
+
+      filterAppointmentsList(
+        state.selectedDate,
+        appointmentsList: list
+      );
+
+      emit(state.copyWith(
+        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        deleteAppointmentStatus: DeleteAppointmentStatuses.success,
+      ));
     } catch (e) {
       emit(state.copyWith(
-          deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
+        deleteAppointmentStatus: DeleteAppointmentStatuses.failed)
+      );
     }
   }
 
@@ -237,28 +260,45 @@ class AppointmentsCubit
     required String appointmentId,
     required String userId,
   }) async {
+    final list = state.appointmentsList
+      ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
+    .toList();
+
     emit(state.copyWith(
       putAppointmentStatus: PutAppointmentsStatuses.loading,
-      appointmentsList: state.appointmentsList
-          ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
-          .toList(),
+      appointmentsList: list,
+      appointmentLoadingId: appointmentId
     ));
 
-    filterAppointmentsList(state.selectedDate);
     try {
       final bool response;
       response = await appointmentsRepository.confirmAppointment(
           appointmentId: appointmentId, userId: userId);
 
-      emit(state.copyWith(
-        putAppointmentStatus: PutAppointmentsStatuses.success,
-      ));
+      await getLastAppointment(true);
       if (response) {
         AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
+
+      filterAppointmentsList(
+        state.selectedDate,
+        appointmentsList: list
+      );
+
+      emit(state.copyWith(
+        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        putAppointmentStatus: PutAppointmentsStatuses.success,
+      ));
+
     } catch (e) {
       emit(
-          state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed));
+        state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed)
+      );
     }
+  }
+
+  /// Очистить приём
+  void clearAppointment() {
+    emit(state.clearAppointment());
   }
 }

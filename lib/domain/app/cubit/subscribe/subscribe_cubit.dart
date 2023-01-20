@@ -183,9 +183,11 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   }
 
   /// Сохранить выбранную категорию специализацию
+  /// И обнуляет список выбранных исследований
   void setSelectedSpecialisation(NavigationItem specialisation) {
     emit(state.copyWith(
       selectedSpecialisation: specialisation,
+      selectedResearchesIds: [],
     ));
   }
 
@@ -447,6 +449,13 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         getTimetableCellsStatus: GetTimetableCellsStatuses.success,
         timetableCellsList: response.cells.map((e) {
           return e.copyWith(time: e.time);
+        }).where((el) {
+          /// Возможно, это ужасное решение не будет нужно
+          /// если найдётя проблема наличия ячейки одновременно
+          /// в cells и logs на бэкенде
+          /// но мне так и не удалось отследить строгий путь появления
+          return response.logs.where((log) => 
+            log.date == el.time).isEmpty;
         }).toList(),
         timetableLogsList: response.logs,
       ));

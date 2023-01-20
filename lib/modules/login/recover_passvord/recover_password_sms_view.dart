@@ -3,10 +3,14 @@ import 'package:medlike/modules/login/recover_passvord/sms_code_input.dart';
 import 'package:medlike/widgets/default_login_animation/default_login_animation.dart';
 
 class RecoverPasswordSmsView extends StatelessWidget {
-  const RecoverPasswordSmsView({Key? key, required this.phoneNumber})
-      : super(key: key);
+  const RecoverPasswordSmsView({
+    Key? key, 
+    required this.phoneNumber,
+    this.timerEnd,
+  }) : super(key: key);
 
   final String phoneNumber;
+  final DateTime? timerEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,10 @@ class RecoverPasswordSmsView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const DefaultLoginAnimation(),
-          SmsCodeInput(phoneNumber: phoneNumber),
+          SmsCodeInput(
+            phoneNumber: phoneNumber,
+            timerEnd: timerEnd
+          ),
         ],
       ),
     );

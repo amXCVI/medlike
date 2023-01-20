@@ -7,6 +7,7 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
+import 'package:medlike/utils/helpers/platform_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 enum UserAuthenticationStatus {
@@ -345,7 +346,7 @@ class UserRepository {
     try {
       await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
-        "ClientPlatform": "1", // Platform.isAndroid ? "1" : "2",
+        "ClientPlatform": PlatformHelper.getPlatform(),
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
     } catch (err) {

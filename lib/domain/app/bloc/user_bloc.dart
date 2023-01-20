@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'user_event.dart';
 
@@ -23,6 +24,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             phone: event.phone, password: event.password);
         await storage.write(key: 'accessToken', value: response.token);
         await storage.write(key: 'refreshToken', value: response.refreshToken);
+        Sentry.configureScope((scope) {
+          scope.setUser(
+            SentryUser(id: event.phone)
+          );
+        });
         emit(UserLoginLoadedState(response));
       } catch (e) {
         emit(UserLoginErrorState(e.toString()));
