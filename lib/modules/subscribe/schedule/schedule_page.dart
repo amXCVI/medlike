@@ -50,6 +50,14 @@ class SchedulePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _getAppointments(DateTime selectedDate) async {
+      await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
+        (value) => context
+            .read<AppointmentsCubit>()
+            .getAppointmentsListForSelectedDay(
+                userId: userId, selectedDate: selectedDate));
+    }
+
     void _getCalendarList({bool? isRefresh}) async {
       context.read<SubscribeCubit>().getCalendarList(
             isRefresh: isRefresh ?? false,
@@ -85,6 +93,7 @@ class SchedulePage extends StatelessWidget {
     }
 
     void _setSelectedDate(CalendarModel selectedDay) {
+       _getAppointments(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
       context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
@@ -233,7 +242,7 @@ class SchedulePage extends StatelessWidget {
                                       ?.copyWith(color: AppColors.lightText),
                                 ),
                               )),
-                  AppointmentsListWidget(
+                 AppointmentsListWidget(
                     selectedDate: state.selectedDate,
                     userId: userId,
                   ),

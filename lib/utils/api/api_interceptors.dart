@@ -7,6 +7,7 @@ import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/exceptions/invalid_refresh_token_error.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/utils/helpers/platform_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -28,7 +29,7 @@ class DioInterceptors extends Interceptor {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': '1', //Platform.isAndroid ? '1' : '2',
+      'Platform': PlatformHelper.getPlatform(), //Platform.isAndroid ? '1' : '2',
       'Authorization':
           'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
@@ -116,6 +117,9 @@ class DioInterceptors extends Interceptor {
               InvalidRefreshTokenError(requestOptions: requestOptions),
               handler);
         });
+      case 409:
+        /// Не посылаем AppToast
+        return super.onError(err, handler);
       case 460:
         UserSecureStorage.setField(AppConstants.isActualAppVersion, 'false');
         return;

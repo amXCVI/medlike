@@ -56,15 +56,34 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(userPhoneNumber: phone));
+    /// Если телефон не совпадает с кубитом, то сбрасываем таймер
+    if (state.userPhoneNumber != phone) {
+      setTimer(DateTime.now());
+    }
+
+    emit(state.copyWith(
+      userPhoneNumber: phone
+    ));
+  }
+
+  /// Обновляем количество секунд до
+  void setTimer(DateTime time) {
+    emit(state.copyWith(timerEnd: time));
   }
 
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
         authScreen: UserAuthScreens.inputPassword,
-        checkUserAccountStatus: CheckUserAccountStatuses.continued));
+        checkUserAccountStatus: CheckUserAccountStatuses.continued,
+    ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+  }
+
+  void getPhoneNumber() async {
+    String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    print('phone: $phone');
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
   /// Сохраняем номер телефона в кубит
@@ -295,13 +314,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Запрашивает смс для сброса пароля
-  Future<CheckUserAccountResponse?> getNewSmsForRecoverPassword(
+  Future<DefaultErrorModel?> getNewSmsForRecoverPassword(
       {required String phoneNumber}) async {
     CheckUserAccountResponse checkUser =
         await checkUserAccount(phoneNumber: phoneNumber);
     if (checkUser.found != true) {
-      return const CheckUserAccountResponse(
-          found: false,
+      return const DefaultErrorModel(
           message: 'Не найден пользователь с введенным номером телефона');
     }
     emit(state.copyWith(
@@ -315,6 +333,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.success,
       ));
+    } on DioError catch (e) {
+      addError(e);
+      return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.failed,
@@ -448,6 +469,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
+          userPhoneNumber: phoneNumber,
           isFound: response.found));
       return response;
     } on DioError catch (e) {
@@ -816,7 +838,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       await userRepository.updateNotificationStatus(eventId);
       emit(state.copyWith(
           lastNotification: null, isLastNotificationShow: false));
-      //await getLastNotReadNotification(true);
+      await getLastNotReadNotification(true);
       emit(state.copyWith(
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.success,

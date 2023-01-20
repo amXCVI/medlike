@@ -3,10 +3,16 @@ import 'package:medlike/modules/login/recover_passvord/new_password_input.dart';
 import 'package:medlike/widgets/default_login_animation/default_login_animation.dart';
 
 class RecoverPasswordNewView extends StatelessWidget {
-  const RecoverPasswordNewView({Key? key, required this.smsToken})
-      : super(key: key);
+  const RecoverPasswordNewView({
+    Key? key, 
+    required this.smsToken,
+    required this.phoneNumberFromState,
+    required this.onAuth,
+  }) : super(key: key);
 
   final String smsToken;
+  final String phoneNumberFromState;
+  final void Function({required String password}) onAuth;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,11 @@ class RecoverPasswordNewView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const DefaultLoginAnimation(),
-          NewPasswordInput(token: smsToken),
+          NewPasswordInput(
+            token: smsToken,
+            onAuth: onAuth,
+            phoneNumberFromState: phoneNumberFromState,
+          ),
         ],
       ),
     );

@@ -24,6 +24,7 @@ import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
@@ -77,7 +78,9 @@ class App extends StatelessWidget {
           theme: AppTheme.lightAppTheme,
           routerDelegate: AutoRouterDelegate(
             _router,
-            navigatorObservers: () => [],
+            navigatorObservers: () => [
+              SentryNavigatorObserver(),
+            ],
           ),
           routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/main_page/appointments/appointments_widget.dart';
@@ -21,6 +22,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<UserCubit>().getUserProfiles(false);
     context.read<ClinicsCubit>().getAllClinicsList(false);
+    context.read<AppointmentsCubit>().getAppointmentsList(false);
 
     return WillPopScope(
       onWillPop: () async {

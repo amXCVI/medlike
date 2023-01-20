@@ -17,17 +17,9 @@ class AppointmentsListWidget extends StatelessWidget {
   final DateTime selectedDate;
   final String userId;
 
-  void _getFilteredData(BuildContext context) async {
-    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) => context
-            .read<AppointmentsCubit>()
-            .getAppointmentsListForSelectedDay(
-                userId: userId, selectedDate: selectedDate));
-  }
 
   @override
   Widget build(BuildContext context) {
-    _getFilteredData(context);
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
         if (state.appointmentsList == null ||
@@ -70,7 +62,7 @@ class AppointmentsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        if(appointmentsList.where((element) => element.status != 2 && element.status != 3).isNotEmpty) Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
           child: Text(
             'Приемы на ${DateFormat('dd.MM.yyyy').format(dateTimeToUTC(selectedDate, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))}',

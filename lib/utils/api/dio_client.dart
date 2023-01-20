@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/api/api_interceptors.dart';
-import 'package:medlike/utils/api/smaptapp_client.dart';
 
 class Api {
   static BaseOptions options = BaseOptions(
