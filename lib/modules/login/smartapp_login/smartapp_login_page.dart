@@ -15,18 +15,19 @@ class SmartappLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<bool> smartappAuth(String data) async {
+      return await context.read<UserCubit>().smartappAuth(smartappToken: data);
+    }
+
     void getSmartappTokenForce() async {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
-      SmartAppClient.getSmartAppToken().then((data) {
+      SmartAppClient.getSmartAppToken().then((data) async {
         /// Если токен пришел, авторизовываемся у себя через него
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
-        context
-            .read<UserCubit>()
-            .smartappAuth(smartappToken: data)
-            .then((value) {
+        await smartappAuth(data).then((value) async {
           if (value) {
             /// Если авторизация успешна, переходим далее
             print(
@@ -38,8 +39,21 @@ class SmartappLoginPage extends StatelessWidget {
               context.router.replaceAll([const MainRoute()]);
             }
           } else {
-            print(
-                'Не удалось авторизоваться через smartapp token. Проверьте пользователя');
+            print('Не удалось авторизоваться через smartapp token');
+            print('Повторная попытка');
+            await smartappAuth(data).then((value) {
+              if (value) {
+                print('Повторная попытка успешна!!!');
+                if (resolver != null) {
+                  resolver!.next(true);
+                  return;
+                } else {
+                  context.router.replaceAll([const MainRoute()]);
+                }
+              } else {
+                print('Повторная попытка тоже не удалась ((');
+              }
+            });
           }
         });
       }).catchError((onError) {
