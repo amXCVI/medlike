@@ -4,6 +4,19 @@ import 'package:freezed_annotation'
 part 'smartapp_models.freezed.dart';
 part 'smartapp_models.g.dart';
 
+// const response =  {
+//   ref: 'string',
+//   type: 'string',
+//   payload: {
+//     status: 'string',
+//     result: {
+//       status: 'string',
+//       status_code: 'int',
+//       content: 'data'
+//     }
+//   }
+// }
+
 @freezed
 class SmartappFileDataModel with _$SmartappFileDataModel {
   const factory SmartappFileDataModel({
@@ -60,7 +73,7 @@ class SmartappSendBotEventPayloadResultModel
   const factory SmartappSendBotEventPayloadResultModel({
     required dynamic? content,
     required String status,
-    required int? status_code,
+    required int? code,
   }) = _SmartappSendBotEventPayloadResultModel;
 
   factory SmartappSendBotEventPayloadResultModel.fromJson(

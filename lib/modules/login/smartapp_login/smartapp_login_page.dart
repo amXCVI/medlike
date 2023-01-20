@@ -65,8 +65,7 @@ class SmartappLoginPage extends StatelessWidget {
                 '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
             return true;
           } else {
-            print(
-                'Не удалось авторизоваться через smartapp token. Проверьте пользователя');
+            print('Не удалось авторизоваться через smartapp token.');
             return false;
           }
         });
