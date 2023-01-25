@@ -11,6 +11,7 @@ import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/helpers/platform_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:mime/mime.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 enum UserAuthenticationStatus {
   unknown,
@@ -340,6 +341,7 @@ class UserRepository {
   Future<void> registerDeviceFirebaseToken({
     required String token,
   }) async {
+    Sentry.captureMessage('registerDeviceFirebaseToken $token');
     try {
       await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
