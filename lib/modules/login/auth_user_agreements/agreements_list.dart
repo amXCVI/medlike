@@ -46,29 +46,34 @@ class _AgreementsListState extends State<AgreementsList> {
           return const Text('');
         } else if (state.getUserAgreementDocumentStatus ==
             GetUserAgreementDocumentStatuses.success) {
-          return ListView(
-            shrinkWrap: true,
-            children: [
-              SizedBox(
-                  //? Задается высота для webview. Без этого не получилось сделать
-                  height: MediaQuery.of(context).size.height,
-                  child: WebView(
-                    onWebViewCreated: (WebViewController webViewController) {
-                      _controller.complete(webViewController);
-                      _con = webViewController;
-                      _con.loadHtmlString(state.userAgreementDocument!.body);
-                    },
-                    navigationDelegate: (NavigationRequest request) async {
-                      if (request.url == 'about:blank') {
-                        return NavigationDecision.navigate;
-                      } else {
-                        _launchURL(request.url);
-                        return NavigationDecision.prevent;
-                      }
-                    },
-                    gestureNavigationEnabled: true,
-                  ))
-            ],
+          return LayoutBuilder(
+            /// Фикс высоты для webview
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return ListView(
+                shrinkWrap: true,
+                children: [
+                  SizedBox(
+                      //? Задается высота для webview. Без этого не получилось сделать
+                      height: constraints.maxHeight,
+                      child: WebView(
+                        onWebViewCreated: (WebViewController webViewController) {
+                          _controller.complete(webViewController);
+                          _con = webViewController;
+                          _con.loadHtmlString(state.userAgreementDocument!.body);
+                        },
+                        navigationDelegate: (NavigationRequest request) async {
+                          if (request.url == 'about:blank') {
+                            return NavigationDecision.navigate;
+                          } else {
+                            _launchURL(request.url);
+                            return NavigationDecision.prevent;
+                          }
+                        },
+                        gestureNavigationEnabled: true,
+                      ))
+                ],
+              );
+            }
           );
         } else {
           return const AgreementsListSkeleton();
