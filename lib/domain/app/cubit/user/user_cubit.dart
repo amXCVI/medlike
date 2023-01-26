@@ -59,11 +59,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    /// Если телефон не совпадает с кубитом, то сбрасываем таймер
-    if (state.userPhoneNumber != phone) {
-      setTimer(DateTime.now());
-    }
-
     emit(state.copyWith(
       userPhoneNumber: phone
     ));
@@ -85,7 +80,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   void getPhoneNumber() async {
     String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
-    print('phone: $phone');
     emit(state.copyWith(userPhoneNumber: phone));
   }
 
@@ -443,6 +437,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
             found: false,
             message: 'Не найден пользователь с введенным номером телефона');
       }
+
+      /// Если телефон не совпадает с кубитом, то сбрасываем таймер
+      if (state.userPhoneNumber != phoneNumber) {
+        setTimer(DateTime.now().subtract(
+          const Duration(minutes: 5)
+        ));
+      }
+
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
