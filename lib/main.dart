@@ -22,6 +22,7 @@ void main() async {
   await FCMService.onBackgroundMsg();
   //await FCMService.onMessage();
   await FCMService.getFCMToken();
+  await FCMService.getAPNSToken();
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 

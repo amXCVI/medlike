@@ -17,6 +17,7 @@ import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 part 'user_state.dart';
 
@@ -190,10 +191,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняет deviceId устройства на бэке
   void addFirebaseDeviceId() async {
-    //await FirebaseMessaging.instance.deleteToken();
-    String fcmToken = await FirebaseMessaging.instance.getToken() as String;
-    print("FCM Token: $fcmToken");
-    userRepository.registerDeviceFirebaseToken(token: fcmToken);
+    try {
+      await FirebaseMessaging.instance.deleteToken();
+      String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+      Sentry.configureScope((scope) {
+        scope.setExtra('fcmToken', fcmToken);
+      });
+      Sentry.captureMessage('FCM Token: $fcmToken');
+      print("FCM Token: $fcmToken");
+      userRepository.registerDeviceFirebaseToken(token: fcmToken);
+    } catch (e) {
+      Sentry.captureException(e);
+    }
   }
 
   /// Получает список профилей из всех МО

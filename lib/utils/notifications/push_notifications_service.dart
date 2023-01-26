@@ -35,12 +35,12 @@ class FCMService {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       if (kDebugMode) {
-        print('User granted permission');
+        print('APPLE: User granted permission');
       }
       // TODO: handle the received notifications
     } else {
       if (kDebugMode) {
-        print('User declined or has not accepted permission');
+        print('APPLE: User declined or has not accepted permission');
       }
     }
   }
