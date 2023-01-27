@@ -101,21 +101,8 @@ class SmartappLoginPage extends StatelessWidget {
     UserSecureStorage.getField(AppConstants.isAuth).then((isAuth) {
       if (isAuth != 'true') {
         getSmartappTokenForce();
-        // getSmartappToken().then((bool value) {
-        //   if (value) {
-        //     if (resolver != null) {
-        //       resolver!.next(true);
-        //       return;
-        //     }
-        //     Future.delayed(const Duration(seconds: 1), () {
-        //       context.router.replaceAll([const MainRoute()]);
-        //     });
-        //     return;
-        //   }
-        // }).catchError((onError) {
-        //   AppToast.showAppToast(
-        //       msg: 'Ошибка авторизации. Не удалось получить KeyCloack токен');
-        // });
+      } else {
+        context.router.replaceAll([const MainRoute()]);
       }
     });
 

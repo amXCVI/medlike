@@ -21,8 +21,9 @@
 	<script src="./bundle.js"></script>
 	<script>
 		var bridge = window.webBridgeInstance;
-		async function sendBotEvent(jsonEventObject, files) {
-			const eventObject = JSON.parse(jsonEventObject);
+		async function sendBotEvent(jsonEventObject, data) {
+			let eventObject = JSON.parse(jsonEventObject);
+			if (data) eventObject.params.body = data;
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
 				bridge.sendBotEvent(eventObject)
@@ -126,11 +127,17 @@
 			}
 		}
 
-		async function sendBotEvent(jsonEventObject, files) {
-			console.log('!!!!!!!!!!!!!!!, files', files);
-			const eventObject = JSON.parse(jsonEventObject);
+		async function sendBotEvent(jsonEventObject, data) {
+			// console.log('!!!!!!!!!!!!!!!, files', data);
+			// console.log('@@@@@@', data instanceof FormData);
+			// console.log('#####3', typeof data);
+			// const eventObject = JSON.parse(jsonEventObject);
+			let eventObject = JSON.parse(jsonEventObject);
+			if (data) eventObject.params.body = data;
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
+			console.log('!!!!!!!!!!!!!!!!!!!!!!!!');
+			console.log(eventObject);
 				postData(eventObject.params.url, eventObject.params.body, eventObject.params.headers, eventObject.params.method)
 					.then((res) => {
 						switch (true) {

@@ -38,9 +38,7 @@ class CheckIsAuthUser extends AutoRouteGuard {
         '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
     /// Должен быть токен, он не пустой, и пин-код для быстрого входа в приложение сохранен
-    if (token != 'null' &&
-        token.toString().isNotEmpty &&
-        isAuth) {
+    if (token != 'null' && token.toString().isNotEmpty && isAuth) {
       resolver.next(true);
     } else {
       router.navigateNamed(AppRoutes.smartappLoginPage);

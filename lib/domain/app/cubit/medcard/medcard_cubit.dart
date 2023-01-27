@@ -120,7 +120,7 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         downloadingFileId: fileId,
       ));
       if (kIsWeb) {
-        await medcardRepository.downloadFile(url: fileUrl);
+        await medcardRepository.downloadFile(url: fileUrl, fileName: fileName);
       } else {
         AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
       }
@@ -137,33 +137,6 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
         downloadMedcardDocumentStatus: DownloadMedcardDocumentStatuses.failed,
         downloadingFileId: '',
       ));
-      rethrow;
-    }
-    return completer.future;
-  }
-
-  /// Загрузка и открытие пользовательских файлов
-  Future<File> downloadAndOpenUserFileByUrl({
-    required String fileUrl,
-    required String fileName,
-    required String fileId,
-    required String fileType,
-  }) async {
-    Completer<File> completer = Completer();
-    try {
-      emit(state.copyWith(downloadingFileId: fileId));
-      if (kIsWeb) {
-        await medcardRepository.downloadFile(url: fileUrl);
-      } else {
-        AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
-      }
-      emit(state.copyWith(downloadingFileId: ''));
-    } catch (e) {
-      addError(e);
-      AppToast.showAppToast(
-          msg:
-              'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
-      emit(state.copyWith(downloadingFileId: ''));
       rethrow;
     }
     return completer.future;
@@ -215,6 +188,33 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       ));
       rethrow;
     }
+  }
+
+  /// Загрузка и открытие пользовательских файлов
+  Future<File> downloadAndOpenUserFileByUrl({
+    required String fileName,
+    required String fileUrl,
+    required String fileId,
+    required String fileType,
+  }) async {
+    Completer<File> completer = Completer();
+    try {
+      emit(state.copyWith(downloadingFileId: fileId));
+      if (kIsWeb) {
+        await medcardRepository.downloadFile(url: fileUrl, fileName: fileName);
+      } else {
+        AppToast.showAppToast(msg: 'Это web-версия, извиняйте');
+      }
+      emit(state.copyWith(downloadingFileId: ''));
+    } catch (e) {
+      addError(e);
+      AppToast.showAppToast(
+          msg:
+              'Произошла непредвиденная ошибка\nНе удается открыть файл $fileName');
+      emit(state.copyWith(downloadingFileId: ''));
+      rethrow;
+    }
+    return completer.future;
   }
 
   Future<void> uploadFileFromDioForWeb({

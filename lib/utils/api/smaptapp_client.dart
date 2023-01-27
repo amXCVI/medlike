@@ -89,7 +89,7 @@ class SmartAppClient {
   }
 
   Future<dynamic> post(String endpoint,
-      {Map<String, dynamic>? data, Options? options}) async {
+      {dynamic? data, Options? options}) async {
     print('POST $endpoint');
 
     final token =
@@ -102,6 +102,16 @@ class SmartAppClient {
       'Platform': '4',
       'Authorization': token,
     };
+    bool isDataRuntimeType = false;
+    try {
+      isDataRuntimeType =
+          data.runtimeType.toString() == FormData().runtimeType.toString();
+      print(data.runtimeType.toString());
+      print(isDataRuntimeType);
+    } catch (err) {
+      print("не удалось определить тип объекта data");
+      print(err);
+    }
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -110,11 +120,11 @@ class SmartAppClient {
           'url': '${ApiConstants.baseUrl}$endpoint',
           'headers': options != null ? options.headers : defaultHeaders,
           'method': 'POST',
-          'body': data,
+          'body': isDataRuntimeType ? null : data,
           'params': '',
         },
       }),
-      null,
+      isDataRuntimeType ? data : null,
     ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по POST $endpoint: $jsonResponseObject');
@@ -316,8 +326,9 @@ class SmartAppClient {
     })));
   }
 
-  Future<dynamic> getFile(String endpoint, {Options? options}) async {
-    print('GET_FILE $endpoint');
+  Future<dynamic> getFile(String endpoint, String fileName,
+      {Options? options}) async {
+    print('GET_FILE $endpoint, $fileName');
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
@@ -335,6 +346,7 @@ class SmartAppClient {
         'method': 'get_file',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
+          'name': fileName,
           'headers': options != null ? options.headers : defaultHeaders,
         },
       }),
@@ -372,11 +384,9 @@ class SmartAppClient {
       return promiseToFuture(sendClientEvent(
         const JsonEncoder().convert({
           'method': 'open_file',
-          'params': {
-            'file': parsedResponse.files!.isNotEmpty
-                ? parsedResponse.files?.first
-                : 'NULL',
-          },
+          'params': parsedResponse.files!.isNotEmpty
+              ? parsedResponse.files?.first
+              : 'NULL',
         }),
       ).then((arg) {
         print('ОТВЕТ ИЗ BOT_X ПО ФАЙЛАМ:');
@@ -500,6 +510,31 @@ class SmartAppClient {
   }
 
   static Future<String> getSmartAppToken() async {
+    // const jsons = 'abcdefgh';
+    //
+    // final enCodedJson = utf8.encode(jsons);
+    // print(enCodedJson);
+    // final gZipJson = GZipEncoder().encode(enCodedJson);
+    // print('1');
+    // final base64Json = base64.encode(gZipJson!);
+    // print('2 $base64Json');
+    //
+    // final intsList = utf8.encode(
+    //     "b'\x1f\x8b\x08\x00\x08|\xcfc\x02\xff\xf3H\xcd\xc9\xc9W(\xcf/\xcaI\x01\x00R\x9e\xd6\x8b\x0b\x00\x00\x00'");
+    // print('3 $intsList');
+    // final decodegZipJson = gzip.decode(intsList);
+    // print('4 ${decodegZipJson.toString()}');
+    // final originalJson = utf8.decode(decodegZipJson);
+    // //
+    // // print(gZipJson);
+    // print('5 $originalJson');
+    //
+    // // print('#############');
+    // // final decoded_data = GZipCodec().decode(utf8.encode('response.bodyBytes'));
+    // // print('%%%%%%%%%%%%%%');
+    // // print(utf8.decode(decoded_data, allowMalformed: true));
+    // // print('^^^^^^^^^^^^^');
+
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'get_open_id_token',

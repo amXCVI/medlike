@@ -23,7 +23,7 @@ class MedcardList extends StatelessWidget {
     void _handleTapOnMedcardFile(MedcardDocsModel doc) async {
       context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
             fileUrl: '/api/v1.0/profile/mdoc/result/pdf?PrescId=${doc.prescId}',
-            fileName: doc.nameDoc,
+            fileName: doc.nameDoc + '.pdf',
             fileId: doc.prescId,
           );
     }

@@ -35,10 +35,12 @@ class MedcardRepository {
     }
   }
 
-  Future<void> downloadFile({required String url}) async {
+  Future<void> downloadFile(
+      {required String url, required String fileName}) async {
     try {
       await _dioClient.getFile(
         url,
+        fileName,
         options: Options(
           responseType: ResponseType.bytes,
           headers: {
