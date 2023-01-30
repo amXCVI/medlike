@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -127,7 +128,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         refreshToken: response.refreshToken,
         tryCount: 5,
       ));
-      addFirebaseDeviceId();
+      /// Обновляем токен, есть вероятность, что он устарел
+      if(kDebugMode) {
+        await deleteFirebaseDeviceId();
+      }
+      await addFirebaseDeviceId();
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
@@ -186,20 +191,37 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
-    addFirebaseDeviceId();
+    /// Обновляем токен, есть вероятность, что он устарел
+    if(kDebugMode) {
+      await deleteFirebaseDeviceId();
+    }
+    await addFirebaseDeviceId();
   }
 
   /// Сохраняет deviceId устройства на бэке
-  void addFirebaseDeviceId() async {
+  Future<void> addFirebaseDeviceId() async {
     try {
-      await FirebaseMessaging.instance.deleteToken();
+
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       Sentry.configureScope((scope) {
         scope.setExtra('fcmToken', fcmToken);
       });
-      Sentry.captureMessage('FCM Token: $fcmToken');
-      print("FCM Token: $fcmToken");
       userRepository.registerDeviceFirebaseToken(token: fcmToken);
+      Sentry.captureMessage('FCM Token: $fcmToken');
+    } catch (e) {
+      Sentry.captureException(e);
+    }
+  }
+
+  /// Удаляет deviceId устройства на бэке
+  Future<void> deleteFirebaseDeviceId() async {
+    try {
+      String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+      userRepository.deleteDeviceFirebaseToken(token: fcmToken);
+      Sentry.captureMessage(
+        'Удаляем токен $fcmToken'
+      );
+      await FirebaseMessaging.instance.deleteToken();
     } catch (e) {
       Sentry.captureException(e);
     }
@@ -284,7 +306,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
-      addFirebaseDeviceId();
+      /// Обновляем токен, есть вероятность, что он устарел
+      if(kDebugMode) {
+        await deleteFirebaseDeviceId();
+      }
+      await addFirebaseDeviceId();
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');

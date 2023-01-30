@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/firebase_options.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class FCMService {
   static FirebaseMessaging? _firebaseMessaging;
@@ -96,6 +97,7 @@ class FCMService {
   }
 
   static Future<void> fcmBackgroundHandler(RemoteMessage message) async {
+    Sentry.captureMessage("Background Message payload ${message.data}");
     await FCMService._localNotificationsPlugin.show(
       0,
       message.data['title'],
@@ -107,7 +109,7 @@ class FCMService {
 
   static Future<void> onMessage(Function(RemoteMessage message)? onShowMessage) async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print("Message payload ${message.data}");
+      Sentry.captureMessage("Message payload ${message.data}");
 
       await FCMService._localNotificationsPlugin.show(
         0,

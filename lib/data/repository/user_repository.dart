@@ -341,13 +341,22 @@ class UserRepository {
   Future<void> registerDeviceFirebaseToken({
     required String token,
   }) async {
-    Sentry.captureMessage('registerDeviceFirebaseToken $token');
     try {
       await _dioClient.post('/api/v1.0/profile/devices', data: {
         "DeviceId": token,
         "ClientPlatform": PlatformHelper.getPlatform(),
         "AppBuildType": kDebugMode ? "Dev" : "Prod",
       });
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteDeviceFirebaseToken({
+    required String token,
+  }) async {
+    try {
+      await _dioClient.delete('/api/v1.0/profile/devices/$token');
     } catch (err) {
       rethrow;
     }

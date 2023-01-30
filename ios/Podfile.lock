@@ -340,7 +340,7 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   Sentry: 4c9babff9034785067c896fd580b1f7de44da020
-  sentry_flutter: d3dad547d3db4918a8051a5ef738cc195c427b4b
+  sentry_flutter: b10ae7a5ddcbc7f04648eeb2672b5747230172f1
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   TestFairy: 34488ae6a253b9b7f67da8651f3ef9c6b5bae1ad
