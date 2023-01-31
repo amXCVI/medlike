@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/agreements/agreements_list_skeleton.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -60,23 +59,14 @@ class _AgreementsListState extends State<AgreementsList> {
                         onWebViewCreated: (WebViewController webViewController) {
                           _controller.complete(webViewController);
                           _con = webViewController;
-                          const js = '''
-                            <h1>Привет</h1>
-                            <script>
-                              Print.postMessage('{"name":"Hello World"}');
-                            </script>'''; 
-                          final string = state.userAgreementDocument!.body + js;
-                          /// Принитить все строки в string
-                          _con.loadHtmlString(
-                            js
-                          );
+                          _con.loadHtmlString(state.userAgreementDocument!.body);
                         },
                         javascriptMode: JavascriptMode.unrestricted,
                         javascriptChannels: {
                           JavascriptChannel(
                             name: 'Print',
                             onMessageReceived: (JavascriptMessage message) {
-                              Sentry.captureMessage("Javasc ${message.message}");
+                              /// TODO: тот же кейс что и в agreements_page.dart
                             })
                         },
                         navigationDelegate: (NavigationRequest request) async {

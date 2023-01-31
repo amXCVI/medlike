@@ -6,7 +6,6 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/agreements/agreements_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -38,17 +37,22 @@ class _AgreementsPageState extends State<AgreementsPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    void _onLoadDada() {
-      context.read<UserCubit>().getUserAgreementDocument(
-            typeAgreement: widget.isAppointmentAgreements
-                ? 'AppointmentAgreement'
-                : 'AllAgreement',
-          );
+  void onLoadDada() {
+    context.read<UserCubit>().getUserAgreementDocument(
+        typeAgreement: widget.isAppointmentAgreements
+            ? 'AppointmentAgreement'
+            : 'AllAgreement',
+      );
     }
 
-    _onLoadDada();
+  @override
+  void initState() {
+    super.initState();
+    onLoadDada();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return DefaultScaffold(
       appBarTitle: 'Документы',
@@ -78,10 +82,6 @@ class _AgreementsPageState extends State<AgreementsPage> {
                               Print.postMessage(height);
                             </script>'''; 
 
-                        if(body != null) {
-                          Sentry.captureMessage("Body ${body}");
-                        }
-
                         _controller.complete(webViewController);
                         _con = webViewController;
                         _con.loadHtmlString(
@@ -97,7 +97,6 @@ class _AgreementsPageState extends State<AgreementsPage> {
                                 height = double.parse(message.message);
                                 body = state.userAgreementDocument!.body;
                               });
-                              Sentry.captureMessage("Javasc ${message.message}");
                             })
                         },
                       navigationDelegate: (NavigationRequest request) async {
