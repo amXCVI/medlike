@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/settings/agreements/agreements_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -23,6 +24,8 @@ class _AgreementsPageState extends State<AgreementsPage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   late WebViewController _con;
+  double? height;
+  String? body;
 
   _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
@@ -61,13 +64,42 @@ class _AgreementsPageState extends State<AgreementsPage> {
               children: [
                 SizedBox(
                     //? Задается высота для webview. Без этого не получилось сделать
-                    height: MediaQuery.of(context).size.height,
+                    height: height ?? MediaQuery.of(context).size.height,
                     child: WebView(
                       onWebViewCreated: (WebViewController webViewController) {
+                        const js = '''
+                            <script>
+                              var body = document.body,
+                              html = document.documentElement;
+
+                              var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                              html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+                              Print.postMessage(height);
+                            </script>'''; 
+
+                        if(body != null) {
+                          Sentry.captureMessage("Body ${body}");
+                        }
+
                         _controller.complete(webViewController);
                         _con = webViewController;
-                        _con.loadHtmlString(state.userAgreementDocument!.body);
+                        _con.loadHtmlString(
+                          body ?? (state.userAgreementDocument!.body + js)
+                        );
                       },
+                      javascriptMode: JavascriptMode.unrestricted,
+                        javascriptChannels: {
+                          JavascriptChannel(
+                            name: 'Print',
+                            onMessageReceived: (JavascriptMessage message) {
+                              setState(() {
+                                height = double.parse(message.message);
+                                body = state.userAgreementDocument!.body;
+                              });
+                              Sentry.captureMessage("Javasc ${message.message}");
+                            })
+                        },
                       navigationDelegate: (NavigationRequest request) async {
                         if (request.url == 'about:blank') {
                           return NavigationDecision.navigate;
