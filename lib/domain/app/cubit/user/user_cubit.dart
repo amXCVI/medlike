@@ -129,10 +129,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         tryCount: 5,
       ));
       /// Обновляем токен, есть вероятность, что он устарел
-      if(kDebugMode) {
-        await deleteFirebaseDeviceId();
-      }
-      await addFirebaseDeviceId();
+      Future.delayed(Duration.zero, () async {
+        /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
+        if(kDebugMode) {
+          await deleteFirebaseDeviceId();
+        }
+        await addFirebaseDeviceId();
+      });
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
@@ -192,10 +195,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       authStatus: UserAuthStatuses.successAuth,
     ));
     /// Обновляем токен, есть вероятность, что он устарел
-    if(kDebugMode) {
-      await deleteFirebaseDeviceId();
-    }
-    await addFirebaseDeviceId();
+    Future.delayed(Duration.zero, () async {
+      /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
+      if(kDebugMode) {
+        await deleteFirebaseDeviceId();
+      }
+      await addFirebaseDeviceId();
+    });
   }
 
   /// Сохраняет deviceId устройства на бэке
@@ -307,10 +313,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
       /// Обновляем токен, есть вероятность, что он устарел
-      if(kDebugMode) {
-        await deleteFirebaseDeviceId();
-      }
-      await addFirebaseDeviceId();
+      Future.delayed(Duration.zero, () async {
+        /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
+        if(kDebugMode) {
+          await deleteFirebaseDeviceId();
+        }
+        await addFirebaseDeviceId();
+      });
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');
