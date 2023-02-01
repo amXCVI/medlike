@@ -12,7 +12,6 @@ import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class NotificationsWidgetView extends StatefulWidget {
@@ -184,7 +183,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                                 .read<MedcardCubit>()
                                 .downloadAndOpenPdfFileByUrl(
                                   fileUrl:
-                                      '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
+                                      '/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
                                   fileName:
                                       notificationItem.description + '.pdf',
                                   fileId: notificationItem.entityId,

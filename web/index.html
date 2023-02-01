@@ -26,12 +26,15 @@
 			if (data) eventObject.params.body = data;
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
+				console.log('bridge.sendBotEvent(eventObject)', eventObject);
 				bridge.sendBotEvent(eventObject)
 					.then((res) => {
-						console.log('bridge.sendBotEvent success', res);
+						console.log('bridge.sendBotEvent method success', res);
 						try {
+							console.log('bridge.sendBotEvent success:', res);
 							resolve(JSON.stringify(res));
 						} catch (err) {
+							console.log('bridge.sendBotEvent error:', res);
 							resolve(res);
 						}
 
