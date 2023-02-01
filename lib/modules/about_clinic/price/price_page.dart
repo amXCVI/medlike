@@ -122,20 +122,24 @@ class _PricePageState extends State<PricePage> {
     });
   }
 
+  void _onFilterList(String filterStr, BuildContext context) {
+    context.read<ClinicsCubit>().filterPriceList(filterStr);
+  }
+
   @override
   Widget build(BuildContext context) {
-    void _onFilterList(String filterStr) {
-      context.read<ClinicsCubit>().filterPriceList(filterStr);
-    }
-
     return DefaultScaffold(
       appBarTitle: 'Прейскурант',
       isSearch: true,
-      filteringFunction: _onFilterList,
+      filteringFunction: (e) {
+        _onFilterList(e, context);
+      },
       isChildrenPage: true,
       appBar: MedcardAppBar(
         title: 'Прейскурант',
-        filteringFunction: _onFilterList,
+        filteringFunction: (e) {
+          _onFilterList(e, context);
+        },
         isChildrenPage: true,
         handleTapOnFiltersButton: handleTapOnFiltersButton,
         handleResetFilters: handleResetFilters,
