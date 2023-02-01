@@ -29,12 +29,8 @@ class AgreementsChecker extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTapChecker,
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: 16, 
-              top: 10,
-              bottom: 10,
-              right: 15
-            ),
+            padding:
+                const EdgeInsets.only(left: 16, top: 10, bottom: 10, right: 15),
             child: CustomCheckbox(
               value: isChecked,
               onChanged: (e) {
@@ -51,15 +47,16 @@ class AgreementsChecker extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                    text: 'Я ознакомлен со всеми',
+                    text:
+                        'Я ознакомлен со всеми документами и принимаю условия "Z-Clinic"',
                     recognizer: TapGestureRecognizer()..onTap = onTapChecker),
-                TextSpan(
-                    text: ' документами ',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
-                    recognizer: TapGestureRecognizer()..onTap = onTapDocsLink),
-                TextSpan(
-                    text: 'и принимаю условия "Z-Clinic"',
-                    recognizer: TapGestureRecognizer()..onTap = onTapChecker)
+                // TextSpan(
+                //     text: ' документами ',
+                //     style: TextStyle(color: Theme.of(context).primaryColor),
+                //     recognizer: TapGestureRecognizer()..onTap = onTapDocsLink),
+                // TextSpan(
+                //     text: 'и принимаю условия "Z-Clinic"',
+                //     recognizer: TapGestureRecognizer()..onTap = onTapChecker)
               ],
             ),
             style: Theme.of(context).textTheme.bodySmall,
