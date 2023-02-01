@@ -59,11 +59,11 @@ List<MainMenuItemJSON> mainMenuItemsList = [
     link: AppRoutes.clinicInfo,
     name: AppRoutes.clinicInfo,
   ),
-  MainMenuItemJSON(
-    svgIconPath: 'assets/icons/menu_icons/ic_setting_outline.svg',
-    svgFilledIconPath: 'assets/icons/menu_icons/ic_setting_filled.svg',
-    title: 'Настройки',
-    link: AppRoutes.settings,
-    name: AppRoutes.settings,
-  ),
+  // MainMenuItemJSON(
+  //   svgIconPath: 'assets/icons/menu_icons/ic_setting_outline.svg',
+  //   svgFilledIconPath: 'assets/icons/menu_icons/ic_setting_filled.svg',
+  //   title: 'Настройки',
+  //   link: AppRoutes.settings,
+  //   name: AppRoutes.settings,
+  // ),
 ];

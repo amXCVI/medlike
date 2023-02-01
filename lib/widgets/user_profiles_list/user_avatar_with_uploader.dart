@@ -21,7 +21,7 @@ class UserAvatarWithUploader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onLoadAvatar,
+      // onTap: onLoadAvatar,
       child: Container(
         padding: const EdgeInsets.all(2.0),
         height: 44,

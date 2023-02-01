@@ -89,11 +89,11 @@ class _FilesPageState extends State<FilesPage> {
       isSearch: true,
       filteringFunction: _onFilterList,
       appBarTitle: 'Файлы',
-      rightBottomWidget: AttachFileButton(
-        attachPickedFile: attachPickedFile,
-        attachFilePickerResult: attachFilePickerResult,
-        attachFile: attachWebFile,
-      ),
+      // rightBottomWidget: AttachFileButton(
+      //   attachPickedFile: attachPickedFile,
+      //   attachFilePickerResult: attachFilePickerResult,
+      //   attachFile: attachWebFile,
+      // ),
       child: BlocBuilder<MedcardCubit, MedcardState>(
         builder: (context, state) {
           if (state.getMedcardUserFilesListStatus ==
