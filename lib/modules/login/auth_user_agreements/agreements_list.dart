@@ -23,8 +23,9 @@ class _AgreementsListState extends State<AgreementsList> {
   late WebViewController _con;
 
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     } else {
       AppToast.showAppToast(msg: 'Не удалось откыть файл $url');
     }

@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -56,11 +57,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    /// Если телефон не совпадает с кубитом, то сбрасываем таймер
-    if (state.userPhoneNumber != phone) {
-      setTimer(DateTime.now());
-    }
-
     emit(state.copyWith(
       userPhoneNumber: phone
     ));
@@ -82,7 +78,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   void getPhoneNumber() async {
     String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
-    print('phone: $phone');
     emit(state.copyWith(userPhoneNumber: phone));
   }
 

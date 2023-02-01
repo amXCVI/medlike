@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "287955580453-9n533cfliqlou3aldj8umbok3fdlmoik.apps.googleusercontent.com",
+              "client_id": "287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "ru.nornik.zclinic"
+                "bundle_id": "com.example.medlike"
               }
             }
           ]
@@ -75,10 +75,10 @@
               "client_type": 3
             },
             {
-              "client_id": "287955580453-9n533cfliqlou3aldj8umbok3fdlmoik.apps.googleusercontent.com",
+              "client_id": "287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "ru.nornik.zclinic"
+                "bundle_id": "com.example.medlike"
               }
             }
           ]

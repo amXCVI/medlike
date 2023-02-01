@@ -25,6 +25,8 @@ class _AgreementsPageState extends State<AgreementsPage> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   late WebViewController _con;
+  double? height;
+  String? body;
 
   _launchURL(String url) async {
     if (await canLaunchUrl(Uri.parse(url))) {
@@ -37,17 +39,22 @@ class _AgreementsPageState extends State<AgreementsPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    void _onLoadDada() {
-      context.read<UserCubit>().getUserAgreementDocument(
-            typeAgreement: widget.isAppointmentAgreements
-                ? 'AppointmentAgreement'
-                : 'AllAgreement',
-          );
+  void onLoadDada() {
+    context.read<UserCubit>().getUserAgreementDocument(
+        typeAgreement: widget.isAppointmentAgreements
+            ? 'AppointmentAgreement'
+            : 'AllAgreement',
+      );
     }
 
-    _onLoadDada();
+  @override
+  void initState() {
+    super.initState();
+    onLoadDada();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return DefaultScaffold(
       appBarTitle: 'Документы',
