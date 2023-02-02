@@ -29,10 +29,12 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
       response = await diaryRepository.getDiaryCategories(
         updateSince: updateSince
       );
+      final filredSyns = state.filteredSyns?[state.userId] ?? [];
+
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
         filteredDiariesCategoriesList: response.where((element) 
-          => !state.filteredSyns.contains(element.synonim)).toList(),
+          => !filredSyns.contains(element.synonim)).toList(),
         diariesCategoriesList: response,
       ));
     } catch (e) {
@@ -126,12 +128,16 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
   }
 
   /// Фильтровать дневники
-  void setFiltered(
-    List<String> filteredSyns
-  ) {
+  void setFiltered({
+    required String userId,
+    required List<String> userFilteredSyns
+  }) {
+    final filteredSyns = state.filteredSyns;
+    filteredSyns?[userId] = userFilteredSyns;
+
     emit(state.copyWith(
       filteredDiariesCategoriesList: state.diariesCategoriesList!.where((element) 
-        => !filteredSyns.contains(element.synonim)).toList(),
+        => !userFilteredSyns.contains(element.synonim)).toList(),
       filteredSyns: filteredSyns
     ));
   } 
