@@ -161,7 +161,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
-    mediator?.sendTo<DiaryCubit>(this, UserMediatorEvent.logout);
+    //mediator?.sendTo<DiaryCubit>(this, UserMediatorEvent.logout);
 
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
