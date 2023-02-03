@@ -3,6 +3,7 @@ import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/helpers/health_filters_helper.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -16,9 +17,20 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
 
   final DiaryRepository diaryRepository;
 
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    if (event == UserMediatorEvent.logout) {
+      HealthFiltersHelper.cleanFilters();
+      emit(state.copyWith(
+        filteredSyns: {}
+      ));
+    }
+  }
+
   /// Получить список дневников
   void getDiaryCategoriesList({
     DateTime? updateSince,
+    required List<String> userIds
   }) async {
     emit(state.copyWith(
       getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.loading,
@@ -29,7 +41,20 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
       response = await diaryRepository.getDiaryCategories(
         updateSince: updateSince
       );
-      final filredSyns = state.filteredSyns?[state.userId] ?? [];
+      Map<String, List<String>>? filters;
+
+      if(state.filteredSyns == null) {
+        /// Получить фильтры из HealtFiltersHelper
+        filters = await HealthFiltersHelper.loadFilters(userIds);
+
+        emit(state.copyWith(
+          filteredSyns: filters
+        ));
+      } else {
+        filters = state.filteredSyns;
+      }
+
+      final filredSyns = filters?[state.userId] ?? [];
 
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
@@ -134,6 +159,10 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
   }) {
     final filteredSyns = state.filteredSyns;
     filteredSyns?[userId] = userFilteredSyns;
+
+    HealthFiltersHelper.setFilters(
+      filteredSyns ?? {}
+    );
 
     emit(state.copyWith(
       filteredDiariesCategoriesList: state.diariesCategoriesList!.where((element) 

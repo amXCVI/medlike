@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
@@ -11,8 +12,12 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userIds = context.read<UserCubit>().state.userProfiles?.map((e) => e.id).toList();
+
     void _loadData(String grouping) {
-      context.read<DiaryCubit>().getDiaryCategoriesList();
+      context.read<DiaryCubit>().getDiaryCategoriesList(
+        userIds: userIds ?? []
+      );
 
       context.read<DiaryCubit>().getDiariesList(grouping: 'None');
     }

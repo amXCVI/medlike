@@ -31,11 +31,10 @@ class DiaryState {
     this.pageUpdateStatuses,
     this.filteredDiariesCategoriesList,
     this.userId,
-    Map<String, List<String>>? filteredSyns,
+    this.filteredSyns,
     DateTime? dateFrom,
     DateTime? dateTo,
-  }) :
-    filteredSyns = filteredSyns ?? {};
+  });
 
   DiaryState copyWith({
     GetDiaryStatuses? getDiaryStatuses,
