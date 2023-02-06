@@ -223,6 +223,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.month,
           col: 1,
           index: values[1],
+          values: values,
           controller: controllers[1],
           setValue: setValue,
           initialDate: initialDate,
@@ -231,6 +232,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.year,
           col: 2,
           index: values[2],
+          values: values,
           controller: controllers[2],
           setValue: setValue,
           initialDate: initialDate,
@@ -242,6 +244,7 @@ class DateTimeCarousel extends StatelessWidget {
           type: ColumnType.hour,
           col: 0,
           index: values[0],
+          values: values,
           controller: controllers[0],
           setValue: setValue,
           initialDate: initialDate,
@@ -265,6 +268,7 @@ class DateTimeCarousel extends StatelessWidget {
           col: 1,
           controller: controllers[1],
           index: values[1],
+          values: values,
           setValue: setValue,
           initialDate: initialDate,
         ),
@@ -297,14 +301,14 @@ class CarouselColumn extends StatelessWidget {
     required this.controller,
     required this.setValue,
     this.initialDate,
-    this.values
+    required this.values
   }) : super(key: key);
 
   final ColumnType type;
   final int index;
   final int col;
   final CarouselController controller;
-  final List<int>? values;
+  final List<int> values;
   final void Function(int, int, ColumnType) setValue;
   final DateTime? initialDate;
 
@@ -320,15 +324,27 @@ class CarouselColumn extends StatelessWidget {
         count = 24;
         break;
       case ColumnType.day:
-        assert(values != null);
+        /// Если месяц текущий и год текущий
+        /// то количество дней в месяце = текущий день
+        if (values[1] == DateTime.now().month &&
+            values[2] == DateTime.now().year) {
+          count = DateTime.now().day;
+        } else {
+          count = getMonthDays(values[1], values[2]);
+        }
 
-        count = getMonthDays(values![1], values![2]);
         break;
       case ColumnType.month:
-        count = 12;
+        /// Если год текущий, то количество месяцев = текущий месяц
+        if (values[2] == DateTime.now().year) {
+          count = DateTime.now().month;
+        } else {
+          count = 12;
+        }
         break;
       case ColumnType.year:
-        count = 20;
+        /// Равен количеству лет с 2000 до текущего года
+        count = DateTime.now().year - 2000;
         break;
     }
 
