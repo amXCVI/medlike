@@ -8,30 +8,27 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 class DiaryRepository {
   final _dioClient = Api().dio;
 
-  Future<List<DiaryCategoryModel>> getDiaryCategories({
-    DateTime? updateSince
-  }) async {
+  Future<List<DiaryCategoryModel>> getDiaryCategories(
+      {DateTime? updateSince}) async {
     try {
       final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       Map<String, String> queryParams = {};
 
-      if(updateSince != null) {
+      if (updateSince != null) {
         queryParams.addAll({
           'updateSince': dateTimeToServerFormat(updateSince, offsetTz),
         });
       }
 
-      final response = await _dioClient.get(
-        '/api/v1.0/diary/category-list',
-        queryParameters: queryParams
-      );
+      final response = await _dioClient.get('/api/v1.0/diary/category-list',
+          queryParameters: queryParams);
 
       final List list = response.data;
-      
+
       final List<DiaryCategoryModel> diaryCategories =
-        list.map((e) => DiaryCategoryModel.fromJson(e)).toList();
-      
+          list.map((e) => DiaryCategoryModel.fromJson(e)).toList();
+
       return diaryCategories;
     } catch (err) {
       rethrow;
@@ -39,84 +36,72 @@ class DiaryRepository {
   }
 
   Future<List<DiaryModel>> getDiaries({
-    required String grouping, 
+    required String grouping,
     String? synFilter,
     String? userId,
     DateTime? dateFrom,
-    DateTime? dateTo, 
+    DateTime? dateTo,
   }) async {
     try {
       final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
       String url = '/api/v1.0/diary';
-      var queryParams = {
-        'Grouping': grouping
-      };
+      var queryParams = {'Grouping': grouping};
 
-      if(synFilter != null) {
+      if (synFilter != null) {
+        queryParams.addAll({'SynFilter': synFilter});
+      }
+
+      if (userId != null) {
+        queryParams.addAll({'UserId': userId});
+      }
+
+      if (dateFrom != null) {
         queryParams.addAll({
-          'SynFilter': synFilter
+          'DateFrom': dateTimeToServerFormat(dateFrom, offsetTz),
         });
       }
 
-      if(userId != null) {
-        queryParams.addAll({
-          'UserId': userId
-        });
+      if (dateTo != null) {
+        queryParams
+            .addAll({'DateTo': dateTimeToServerFormat(dateTo, offsetTz)});
       }
 
-      if(dateFrom != null) {
-        queryParams.addAll({
-          'DateFrom': dateTimeToServerFormat(
-            dateFrom, offsetTz
-          ),
-        });
-      }
-
-      if(dateTo != null) {
-        queryParams.addAll({
-          'DateTo': dateTimeToServerFormat(
-            dateTo, offsetTz
-          )
-        });
-      }
-      
-      final response = await _dioClient.get(url, 
-        queryParameters: queryParams);
+      final response = await _dioClient.get(url, queryParameters: queryParams);
 
       final List list = response.data;
-      
+
       final List<DiaryModel> diaries =
-        list.map((e) => DiaryModel.fromJson(e)).toList();
-      
+          list.map((e) => DiaryModel.fromJson(e)).toList();
+
       return diaries;
     } catch (err) {
       rethrow;
     }
   }
 
-  Future<bool> postDiaryEntry({
-    required DateTime date,
-    required String syn,
-    String? userId,
-    required List<double> values
-  }) async {
+  Future<bool> postDiaryEntry(
+      {required DateTime date,
+      required String syn,
+      String? userId,
+      required List<double> values}) async {
     try {
       final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
-      final response = await _dioClient.post('/api/v1.0/diary',
+      final response = await _dioClient.post(
+        '/api/v1.0/diary',
         data: {
           'dateTime': dateTimeToServerFormat(date, offsetTz),
           'synonim': syn,
-          'userID' : userId,
+          'userID': userId,
           'values': values
         },
-        options: Options(
-          headers: {
-            'Authorization':
-              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-          },
-        )
+        // options: Options(
+        //   headers: {
+        //     'Authorization':
+        //       'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        //   },
+        // )
       );
       final res = response.statusCode ?? 0;
 
@@ -126,30 +111,30 @@ class DiaryRepository {
     }
   }
 
-  Future<bool> putDiaryEntry({
-    required DateTime date,
-    required DateTime oldDate,
-    required String syn,
-    String? userId,
-    required List<double> values
-  }) async {
+  Future<bool> putDiaryEntry(
+      {required DateTime date,
+      required DateTime oldDate,
+      required String syn,
+      String? userId,
+      required List<double> values}) async {
     try {
       final offsetTz = DateTime.now().timeZoneOffset.inHours;
 
-      final response = await _dioClient.put('/api/v1.0/diary',
+      final response = await _dioClient.put(
+        '/api/v1.0/diary',
         data: {
           'DateTime': dateTimeToServerFormat(date, offsetTz),
           'OldDatetime': dateTimeToServerFormat(oldDate, offsetTz),
           'Synonim': syn,
-          'UserID' : userId,
+          'UserID': userId,
           'Values': values
         },
-        options: Options(
-          headers: {
-            'Authorization':
-              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-          },
-        )
+        // options: Options(
+        //   headers: {
+        //     'Authorization':
+        //         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        //   },
+        // )
       );
 
       final res = response.statusCode ?? 0;
@@ -173,20 +158,19 @@ class DiaryRepository {
         'Synonim': syn
       };
 
-      if(userId != null) {
-        queryParams.addAll({
-          'UserId': userId
-        });
+      if (userId != null) {
+        queryParams.addAll({'UserId': userId});
       }
 
-      final response = await _dioClient.delete('/api/v1.0/diary',
+      final response = await _dioClient.delete(
+        '/api/v1.0/diary',
         queryParameters: queryParams,
-        options: Options(
-          headers: {
-            'Authorization':
-              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
-          },
-        )
+        // options: Options(
+        //   headers: {
+        //     'Authorization':
+        //         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        //   },
+        // )
       );
 
       final res = response.statusCode ?? 0;

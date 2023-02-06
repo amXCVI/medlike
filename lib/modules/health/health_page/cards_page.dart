@@ -12,7 +12,7 @@ import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class CardsPage extends StatefulWidget {
-  const CardsPage({Key? key, required this.isChildrenPage}) : super(key: key);
+  const CardsPage({Key? key, this.isChildrenPage = false}) : super(key: key);
 
   final bool isChildrenPage;
 
@@ -91,7 +91,7 @@ class _CardsPageState extends State<CardsPage> {
               if (state.getDiaryCategoriesStatuses ==
                       GetDiaryCategoriesStatuses.failed ||
                   state.getDiaryStatuses == GetDiaryStatuses.failed) {
-                return const Text('');
+                return const Text('DATA LOAD ERROR');
               } else if (state.getDiaryCategoriesStatuses ==
                       GetDiaryCategoriesStatuses.success &&
                   state.getDiaryStatuses == GetDiaryStatuses.success) {
