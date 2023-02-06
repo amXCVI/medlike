@@ -109,7 +109,7 @@ class _MedcardPageState extends State<MedcardPage> {
           widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
               ? widgetOverBodyGlobalKey
               : null,
-          rightBottomWidget: FilesButton(userId: widget.userId),
+          // rightBottomWidget: FilesButton(userId: widget.userId),
           child: BlocBuilder<MedcardCubit, MedcardState>(
             builder: (context, state) {
               if (state.getMedcardDocsListStatus ==
