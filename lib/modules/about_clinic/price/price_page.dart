@@ -35,7 +35,9 @@ class _PricePageState extends State<PricePage> {
   }
 
   void _onLoadDada({bool isRefresh = false, List<String>? categories}) {
-    context.read<ClinicsCubit>().getPriceList(widget.clinicId, categories);
+    context
+        .read<ClinicsCubit>()
+        .getPriceList(widget.clinicId, categories, isRefresh);
   }
 
   void handleTapOnFiltersButton() {
@@ -57,7 +59,7 @@ class _PricePageState extends State<PricePage> {
 
   void handleResetFilters() {
     if (selectedFilters.isNotEmpty) {
-      context.read<ClinicsCubit>().getPriceList(widget.clinicId, []);
+      context.read<ClinicsCubit>().getPriceList(widget.clinicId, [], true);
     }
     setState(() {
       isShowingFilters = false;
