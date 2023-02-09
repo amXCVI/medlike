@@ -110,11 +110,13 @@ class DiaryTile extends StatelessWidget {
         key: ValueKey(item.hashCode),
         endActionPane: ActionPane(
           motion: const BehindMotion(),
+          /// assets/icons/settings/ic_delete_support_file.svg
           dismissible: DismissiblePane(onDismissed: onDismiss),
           children: [
             DismissibleAction(
               onDismiss: onDismiss,
               verticalPadding: 0,
+              type: DismissibleActionType.trash,
             )
           ],
         ),
