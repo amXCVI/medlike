@@ -200,8 +200,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись добавлена');
       }
 
     } catch (e) {
@@ -244,8 +242,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись отредактирована');
       }
     } catch (e) {
       addError(e);
@@ -284,8 +280,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись удалена');
       }
     } catch (e) {
       addError(e);

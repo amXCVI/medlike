@@ -49,7 +49,9 @@ class DiaryDateField extends StatelessWidget {
             );
           });
       },
-      onChange: () {},
+      onChange: () {
+        onChange(initialDate!, controller.text);
+      },
       controller: controller,
       isEmpty: true,
       validator: validator,
