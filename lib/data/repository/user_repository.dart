@@ -371,7 +371,6 @@ class UserRepository {
     try {
       final response = await _dioClient.put(
         '/api/v1.0/events/$eventId/seen',
-        data: {},
       );
       if (response.statusCode == 200) {
         return true;
@@ -386,20 +385,16 @@ class UserRepository {
   Future<AuthSmartappTokenResponse> smartappAuth(
       {required String smartappToken}) async {
     try {
-      print('1111111 !!!! отправляем смартапп-токен на бэк: $smartappToken');
       final response = await _dioClient.post('/api/v1.0/auth/token-smartapp',
           data: {},
           options: Options(
             headers: {'Authorization': smartappToken},
           ));
-      print(
-          '2222222 !!!! Авторизация на бэке прошла, внутренние токены получены: $response');
       if (response.statusCode == 200) {
         print(
-            '33333.1111 !!!!! Распознавание объекта с внутренними токенами response.data: ${response.data}');
+            '!!!!! Распознавание объекта с внутренними токенами response.data: ${response.data}');
         return AuthSmartappTokenResponse.fromJson(response.data);
       } else {
-        print('3333.2222');
         return const AuthSmartappTokenResponse(token: '', refreshToken: '');
       }
     } catch (err) {

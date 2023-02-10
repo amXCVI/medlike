@@ -238,17 +238,17 @@ class SmartAppClient {
     };
 
     return await promiseToFuture(sendBotEvent(
-      {
+      const JsonEncoder().convert({
         'method': 'proxy_request',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
           'headers': options != null ? options.headers : defaultHeaders,
           'method': 'PUT',
-          'body': data,
+          'body': data ?? '{}',
           'params': '',
         },
-      },
-      null,
+      }),
+      data,
     ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по PUT $endpoint: $jsonResponseObject');
