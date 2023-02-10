@@ -31,7 +31,13 @@ class _WebFutureImageState extends State<WebFutureImage> {
   }
 
   Future<String> _getData() {
-    return ImagesRepository.getPathImageFile(url: widget.imageUrl);
+    return ImagesRepository.getPathImageFile(url: widget.imageUrl)
+        .then((value) => value)
+        .catchError((onError) {
+      print('Не удалось загрузить изображение по widget.imageUrl');
+      print('Возможно, изображение отсутствует');
+      return ('');
+    });
   }
 
   @override
@@ -41,10 +47,12 @@ class _WebFutureImageState extends State<WebFutureImage> {
       builder: (BuildContext context, AsyncSnapshot<String> image) {
         if (image.hasData || !widget.isWithButton) {
           return Center(
-            child: Image.asset(
-              image.data as String,
-              fit: BoxFit.cover,
-            ),
+            child: image.data!.isNotEmpty
+                ? Image.asset(
+                    image.data as String,
+                    fit: BoxFit.cover,
+                  )
+                : const SizedBox(),
           );
         } else {
           return const Center(
