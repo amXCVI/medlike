@@ -70,7 +70,8 @@ class SmartAppClient {
       null,
     ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
-      print('>>>> Ответ из смартаппа  по GET $endpoint: $jsonResponseObject');
+      print(
+          '>>>> Ответ из смартаппа  по GET $endpoint${paramsStr.isNotEmpty ? '?$paramsStr' : ''}: $jsonResponseObject');
       SmartappSendBotEventResponseModel parsedResponse =
           SmartappSendBotEventResponseModel.fromJson(jsonResponseObject);
       if (parsedResponse.payload.status != 'ok') {

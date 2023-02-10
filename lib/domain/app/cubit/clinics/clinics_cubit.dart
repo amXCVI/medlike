@@ -66,9 +66,9 @@ class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
 
   void getPriceList(
       String clinicId, List<String>? categories, bool isRefresh) async {
-    if ((state.getPriceListStatus == GetPriceListStatuses.loading ||
-            state.getPriceListStatus == GetPriceListStatuses.success) &&
-        !isRefresh) {
+    if (state.getPriceListStatus == GetPriceListStatuses.loading ||
+        (state.getPriceListStatus == GetPriceListStatuses.success &&
+            !isRefresh)) {
       return null;
     }
     emit(state.copyWith(
