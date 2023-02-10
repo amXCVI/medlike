@@ -34,7 +34,15 @@ external Promise<dynamic> sendClientEvent(Object objectParams);
 class SmartAppClient {
   Future<dynamic> get(String endpoint,
       {Options? options, Map<String, String>? queryParameters}) async {
-    print('GET $endpoint?${json.encode(queryParameters)}');
+    var paramsStr = '';
+    if (queryParameters != null) {
+      paramsStr = queryParameters.keys
+          .map((key) =>
+              "${Uri.encodeComponent(key)}=${Uri.encodeComponent(queryParameters[key]!)}")
+          .join("&");
+    }
+
+    print('GET $endpoint${paramsStr.isNotEmpty ? '?$paramsStr' : ''}');
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
@@ -52,7 +60,7 @@ class SmartAppClient {
         'method': 'proxy_request',
         'params': {
           'url':
-              '${ApiConstants.baseUrl}$endpoint?${json.encode(queryParameters)}',
+              '${ApiConstants.baseUrl}$endpoint${paramsStr.isNotEmpty ? '?$paramsStr' : ''}',
           'headers': options != null ? options.headers : defaultHeaders,
           'method': 'GET',
           'body': {},

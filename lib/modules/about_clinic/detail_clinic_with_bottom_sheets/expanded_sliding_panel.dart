@@ -184,21 +184,21 @@ class ExpandedSlidingPanel extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(height: 4),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: MaterialButton(
-            onPressed: () {
-              _openMapsSheet(context,
-                  buildingsList[buildingsList.indexOf(selectedBuilding)]);
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-            height: 48,
-            child: const Text('Проложить маршрут'),
-          ),
-        ),
+        // const SizedBox(height: 4),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        //   child: MaterialButton(
+        //     onPressed: () {
+        //       _openMapsSheet(context,
+        //           buildingsList[buildingsList.indexOf(selectedBuilding)]);
+        //     },
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(24),
+        //     ),
+        //     height: 48,
+        //     child: const Text('Проложить маршрут'),
+        //   ),
+        // ),
         const SizedBox(height: 16),
       ],
     );

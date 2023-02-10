@@ -18,8 +18,8 @@ class ClinicsRepository {
       clinicId, List<String>? categories) async {
     try {
       String categoriesStr = categories!.join('&category=');
-      final response = await _dioClient
-          .get('/api/v1.0/clinics/$clinicId/prices?category=$categoriesStr');
+      final response = await _dioClient.get(
+          '/api/v1.0/clinics/$clinicId/prices?${categoriesStr.isNotEmpty ? 'category=$categoriesStr' : ''}');
       final List priceList = response.data;
       return priceList.map((e) => PriceItemModel.fromJson(e)).toList();
     } catch (err) {
