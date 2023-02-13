@@ -14,6 +14,8 @@ class MainMenu extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           shrinkWrap: true,
           children: mainMenuItemsList.map((item) {
+            print('currentRoute: ${item.name}');
+
             return MainMenuItem(
                 svgIconPath: item.svgIconPath,
                 title: item.title,

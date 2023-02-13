@@ -80,9 +80,9 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.healthProfiles, page: HealthPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(path: AppRoutes.health, page: CardsPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.healthProfilesMain , page: CardsPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.healthProfilesDiary, page: DiaryPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.healthProfilesDiaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
 

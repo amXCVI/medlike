@@ -40,7 +40,7 @@ class HealthPage extends StatelessWidget {
         },
         child: ProfilesListPage(
           title: 'Показатели здоровья',
-          routeName: AppRoutes.health,
+          routeName: AppRoutes.healthProfilesMain,
           handleTapOnUserProfile: _handleTapOnUserProfile,
         ),
       );

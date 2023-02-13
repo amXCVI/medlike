@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/constants/push_constants.dart';
 import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 
 class PushRedirecter extends StatefulWidget {
@@ -20,7 +19,7 @@ class _PushRedirecterState extends State<PushRedirecter> {
   void initState() {
     FCMService.initializeSelect(((notificationResponse) {
       final data = jsonDecode(notificationResponse.payload ?? '{}');
-      print('payload ${notificationResponse.payload} ${AppRoutes.health}');
+      print('payload ${notificationResponse.payload}');
 
       print('payload ${context.router}');
       print(context.router);

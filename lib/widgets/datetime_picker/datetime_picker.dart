@@ -3,7 +3,6 @@ import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:medlike/themes/colors.dart';
 
 enum PickerType { date, time }
-/// TODO: для времени передавать выбранную дату в пикере даты
 
 class DateTimePicker extends StatefulWidget {
   const DateTimePicker({
@@ -69,7 +68,7 @@ class _DateTimePickerState extends State<DateTimePicker> {
         ),
         width: MediaQuery.of(context).size.width - 50,
         child: DatePickerWidget(
-          looping: true, // default is not looping
+          //looping: true, // default is not looping
           firstDate: DateTime(2000), //DateTime(1960),
           lastDate: DateTime.now(),
           initialDate: dateTime,

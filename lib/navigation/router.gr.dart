@@ -440,11 +440,11 @@ class AppRouter extends _i37.RootStackRouter {
         _i37.RouteConfig(HealthRoute.name,
             path: '/health_profiles', guards: [checkIsAuthUser]),
         _i37.RouteConfig(CardsRoute.name,
-            path: '/health', guards: [checkIsAuthUser]),
+            path: '/health_profiles_main', guards: [checkIsAuthUser]),
         _i37.RouteConfig(DiaryRoute.name,
-            path: '/diary', guards: [checkIsAuthUser]),
+            path: '/health_profiles_diary', guards: [checkIsAuthUser]),
         _i37.RouteConfig(DiaryAddRoute.name,
-            path: '/diary_add', guards: [checkIsAuthUser]),
+            path: '/health_profiles_diary_add', guards: [checkIsAuthUser]),
         _i37.RouteConfig(RequireUpdateAppRoute.name,
             path: '/require_updater_page')
       ];
@@ -1324,7 +1324,7 @@ class HealthRoute extends _i37.PageRouteInfo<void> {
 class CardsRoute extends _i37.PageRouteInfo<CardsRouteArgs> {
   CardsRoute({_i38.Key? key, required bool isChildrenPage})
       : super(CardsRoute.name,
-            path: '/health',
+            path: '/health_profiles_main',
             args: CardsRouteArgs(key: key, isChildrenPage: isChildrenPage));
 
   static const String name = 'CardsRoute';
@@ -1352,7 +1352,7 @@ class DiaryRoute extends _i37.PageRouteInfo<DiaryRouteArgs> {
       required _i41.DiaryCategoryModel categoryModel,
       required String syn})
       : super(DiaryRoute.name,
-            path: '/diary',
+            path: '/health_profiles_diary',
             args: DiaryRouteArgs(
                 key: key,
                 title: title,
@@ -1399,7 +1399,7 @@ class DiaryAddRoute extends _i37.PageRouteInfo<DiaryAddRouteArgs> {
       List<double>? initialValues,
       DateTime? initialDate})
       : super(DiaryAddRoute.name,
-            path: '/diary_add',
+            path: '/health_profiles_diary_add',
             args: DiaryAddRouteArgs(
                 key: key,
                 title: title,
