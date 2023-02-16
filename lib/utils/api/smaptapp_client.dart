@@ -32,6 +32,19 @@ external Promise<dynamic> sendBotEvent(Object objectParams, dynamic? data);
 external Promise<dynamic> sendClientEvent(Object objectParams);
 
 class SmartAppClient {
+  Map<String, dynamic> _getDefaultHeaders(String token) {
+    Map<String, dynamic> defaultHeaders = {
+      'Accept': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
+      'Project': ApiConstants.env,
+      'VerApp': ApiConstants.appVersion,
+      'Platform': '6',
+      'Authorization': token,
+    };
+
+    return defaultHeaders;
+  }
+
   Future<dynamic> get(String endpoint,
       {Options? options, Map<String, String>? queryParameters}) async {
     var paramsStr = '';
@@ -46,14 +59,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -105,14 +111,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
     bool isDataRuntimeType = false;
     try {
       isDataRuntimeType =
@@ -171,14 +170,7 @@ class SmartAppClient {
     print('DELETE $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -229,14 +221,7 @@ class SmartAppClient {
     print('PUT $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4', //Platform.isAndroid ? '1' : '2',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -285,14 +270,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4', //Platform.isAndroid ? '1' : '2',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -343,14 +321,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4', //Platform.isAndroid ? '1' : '2',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -418,14 +389,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4', //Platform.isAndroid ? '1' : '2',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -474,14 +438,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = {
-      'Accept': 'application/json; charset=utf-8',
-      'contentType': 'multipart/form-data',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '4', //Platform.isAndroid ? '1' : '2',
-      'Authorization': token,
-    };
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
 
     return await promiseToFuture(sendBotEvent(
       {
