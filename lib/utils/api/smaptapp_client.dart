@@ -31,9 +31,18 @@ external Promise<dynamic> sendBotEvent(Object objectParams, dynamic? data);
 @JS('sendClientEvent')
 external Promise<dynamic> sendClientEvent(Object objectParams);
 
+@JS('navigator.userAgent')
+external String userAgent;
+
 class SmartAppClient {
-  Map<String, dynamic> _getDefaultHeaders(String token) {
+  Map<String, dynamic> _getDefaultHeaders(String token, {
+     Map<String, dynamic>? headers
+  }) {
+    print('=========== USER-AGENT ==============');
+    print(userAgent);
+
     Map<String, dynamic> defaultHeaders = {
+      'User-Agent': userAgent,
       'Accept': 'application/json; charset=utf-8',
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
@@ -41,6 +50,14 @@ class SmartAppClient {
       'Platform': '6',
       'Authorization': token,
     };
+
+    if(headers != null) {
+      return {
+        ...headers,
+        'User-Agent': userAgent,
+        'Platform': '6',
+      };
+    }
 
     return defaultHeaders;
   }
@@ -59,7 +76,10 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token, 
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -67,7 +87,7 @@ class SmartAppClient {
         'params': {
           'url':
               '${ApiConstants.baseUrl}$endpoint${paramsStr.isNotEmpty ? '?$paramsStr' : ''}',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
           'method': 'GET',
           'body': {},
           'params': '',
@@ -106,12 +126,15 @@ class SmartAppClient {
   }
 
   Future<dynamic> post(String endpoint,
-      {dynamic? data, Options? options}) async {
+      {dynamic data, Options? options}) async {
     print('POST $endpoint');
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token, 
+      headers: options?.headers
+    );
     bool isDataRuntimeType = false;
     try {
       isDataRuntimeType =
@@ -128,7 +151,7 @@ class SmartAppClient {
         'method': 'proxy_request',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
           'method': 'POST',
           'body': isDataRuntimeType ? null : data,
           'params': '',
@@ -170,14 +193,17 @@ class SmartAppClient {
     print('DELETE $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'proxy_request',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
           'method': 'DELETE',
           'body': data,
           'params': '',
@@ -221,14 +247,17 @@ class SmartAppClient {
     print('PUT $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'proxy_request',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
           'method': 'PUT',
           'body': data ?? '{}',
           'params': '',
@@ -270,14 +299,17 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'get_file',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
         },
       }),
       null,
@@ -321,7 +353,10 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -329,7 +364,7 @@ class SmartAppClient {
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
           'name': fileName,
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
         },
       }),
       null,
@@ -389,14 +424,17 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'get_static',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
         },
       }),
       null,
@@ -438,14 +476,17 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(token);
+    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+      token,
+      headers: options?.headers
+    );
 
     return await promiseToFuture(sendBotEvent(
       {
         'method': 'proxy_request',
         'params': {
           'url': '${ApiConstants.baseUrl}$endpoint',
-          'headers': options != null ? options.headers : defaultHeaders,
+          'headers': defaultHeaders,
           'method': 'POST_FORM_DATA',
           'body': {},
           'params': '',

@@ -26,6 +26,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void receive(String from, UserMediatorEvent event) {
     if (event == UserMediatorEvent.logout) {
       forceLogout();
+    } else if(event == UserMediatorEvent.smartAppWrongPhone) { 
+      forceLogout(isRelogin: true);
     } else if (event == UserMediatorEvent.pushNotification) {
       getLastNotReadNotification(true);
     }
@@ -40,6 +42,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           msg:
               'Просроченный ssl-сертификат. Пожалуйста, обратитесь к администратору');
       throw ('Просроченный ssl-сертификат');
+    } else if(error is DioError &&
+        error.message.startsWith("Неверный логин или пароль")
+    ) {
+      forceLogout(isRelogin: true);
     }
 
     super.onError(error, stacktrace);
@@ -142,7 +148,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Авторизация по токену Смартапп
-  Future<bool> smartappAuth({required String smartappToken}) async {
+  Future<bool> smartappAuth({
+    required String smartappToken,
+  }) async {
     emit(state.copyWith(
       getSmartappTokenStatus: GetSmartappTokenStatuses.loading,
     ));
@@ -152,13 +160,23 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       print(
           '################## Декодированные внутренние токены: ##################');
       print(response);
+      print(response.statusCode);
       print(response.token);
       print(response.refreshToken);
-      if (response.token.isEmpty) {
+      if(response.statusCode == 501 && response.statusCode == 406) {
+        emit(state.copyWith(
+          getSmartappTokenStatus: GetSmartappTokenStatuses.wrongJWT,
+          tokenTryCount: state.tokenTryCount + 1
+        ));
+        UserSecureStorage.deleteField(AppConstants.smartappToken);
+      } else if (response.token.isEmpty) {
         emit(state.copyWith(
           getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
+          tokenTryCount: state.tokenTryCount + 1
         ));
-        return false;
+        if(state.tokenTryCount < 2) {
+          forceLogout(isRelogin: true);
+        }
       }
       UserSecureStorage.setField(AppConstants.accessToken, response.token);
       UserSecureStorage.setField(
@@ -171,6 +189,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         token: response.token,
         refreshToken: response.refreshToken,
         tryCount: 5,
+        tokenTryCount: 0
       ));
 
       getUserProfiles(true);
@@ -197,7 +216,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Выход из приложения с удалением данных сессии
-  void forceLogout() async {
+  void forceLogout({
+    bool isRelogin = false
+  }) async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
@@ -205,12 +226,21 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.authPinCode);
     UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
-    emit(state.copyWith(
-      authStatus: UserAuthStatuses.unAuth,
-      authScreen: UserAuthScreens.inputPhone,
-      userProfiles: null,
-      selectedUserId: null,
-    ));
+    if(isRelogin) {
+      print('######## Попытка релогина! ###########');
+
+      final smartappToken = await UserSecureStorage.getField(AppConstants.smartappToken);
+      if(smartappToken != null) {
+        final isSuccess = await smartappAuth(smartappToken: smartappToken);
+        if(isSuccess) {
+          return;
+        }
+      }
+
+      emit(state.cleanState(
+        tokenTryCount: state.tokenTryCount // Если два раза запросили, блокируем будущие запросы
+      ));
+    }
   }
 
   /// Авторизация по биометрии
@@ -244,6 +274,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         await UserSecureStorage.setField(
             AppConstants.selectedUserId, defaultUserId);
       }
+      print('############# USER PROFILES LIST ################');
+      print(response);
+
+      if(response == []) {
+        forceLogout(isRelogin: true);
+        return;
+      }
 
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.success,
@@ -255,6 +292,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
+      /// В случае ошибки скорее всего пустой ЛК
+      forceLogout(isRelogin: true);
       addError(e);
     }
   }

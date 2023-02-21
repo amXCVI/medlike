@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:medlike/domain/app/exceptions/invalid_refresh_token_error.dart';
+import 'package:medlike/domain/app/exceptions/smart_app_invalid_token_error.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 enum UserMediatorEvent {
   logout,
+  smartAppWrongPhone,
   pushNotification
 }
 
@@ -20,6 +22,8 @@ mixin RefreshErrorHandler<S, T extends MediatorCubit> on MediatorCubit<S, UserMe
     
     if(error is InvalidRefreshTokenError) {
       mediator!.sendTo<T>(this, UserMediatorEvent.logout);
+    } else if(error is SmartAppInvalidTokenError) {
+      mediator!.sendTo<T>(this, UserMediatorEvent.smartAppWrongPhone);
     } else if (error is DioError
       && error.message == 'CertificateNotVerifiedException: Connection is not secure'
     ) {

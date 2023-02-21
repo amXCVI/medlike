@@ -34,6 +34,7 @@ class AuthTokenResponse with _$AuthTokenResponse {
 @freezed
 class AuthSmartappTokenResponse with _$AuthSmartappTokenResponse {
   const factory AuthSmartappTokenResponse({
+    int? statusCode,
     required String token,
     required String refreshToken,
   }) = _AuthSmartappTokenResponse;

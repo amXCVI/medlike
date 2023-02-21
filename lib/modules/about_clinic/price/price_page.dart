@@ -27,6 +27,7 @@ class _PricePageState extends State<PricePage> {
   @override
   void initState() {
     handleResetFilters();
+    /// TODO: понять что происходит
     _onLoadDada(
       isRefresh: true,
       categories: selectedFilters,

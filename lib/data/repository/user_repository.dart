@@ -393,9 +393,15 @@ class UserRepository {
       if (response.statusCode == 200) {
         print(
             '!!!!! Распознавание объекта с внутренними токенами response.data: ${response.data}');
-        return AuthSmartappTokenResponse.fromJson(response.data);
+        return AuthSmartappTokenResponse.fromJson(response.data).copyWith(
+          statusCode: 200
+        );
       } else {
-        return const AuthSmartappTokenResponse(token: '', refreshToken: '');
+        return AuthSmartappTokenResponse(
+          statusCode: response.statusCode,
+          token: '', 
+          refreshToken: ''
+        );
       }
     } catch (err) {
       print('ошибка авторизации на бэке через смартапп-токен.');

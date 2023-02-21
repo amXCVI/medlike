@@ -39,4 +39,5 @@ class AppRoutes {
   static const settingsAgreements = '/settings_agreements';
   static const settingsSupport = '/settings_support';
   static const requireUpdater = '/require_updater_page';
+  static const wrongLogin = '/wrong_login';
 }

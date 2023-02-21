@@ -36,6 +36,7 @@ import 'package:medlike/modules/subscribe/researches_list/researches_list_page.d
 import 'package:medlike/modules/subscribe/schedule/schedule_page.dart';
 import 'package:medlike/modules/subscribe/services_list/services_list_page.dart';
 import 'package:medlike/modules/subscribe/specialisations_list/specialisations_list_page.dart';
+import 'package:medlike/modules/wrong_login/wrong_login.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 
@@ -43,7 +44,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    //AdaptiveRoute(path: AppRoutes.smartappLoginPage, page: SmartappLoginPage, initial: true),
+    AdaptiveRoute(path: AppRoutes.smartappLoginPage, page: SmartappLoginPage, initial: true),
     AdaptiveRoute(path: AppRoutes.loginPhone, page: StartPhoneNumberPage),
     AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordPage),
     AdaptiveRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
@@ -87,6 +88,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),
 
     AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
+    AdaptiveRoute(path: AppRoutes.wrongLogin, page: WrongLoginPage)
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
   ],

@@ -40,7 +40,7 @@ enum GetLastNotReadEventStatuses { initial, loading, success, failed }
 
 enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
 
-enum GetSmartappTokenStatuses { initial, loading, success, failed }
+enum GetSmartappTokenStatuses { initial, loading, success, failed, wrongJWT }
 
 enum NotificationEventType {
   AppointmentCompleted,
@@ -57,6 +57,8 @@ class UserState {
   final String? token;
   final String? refreshToken;
   final int? tryCount;
+  /// Специально для смартаппа храним запрашиваем ли токен повторно
+  final int tokenTryCount;
   final DateTime? timerEnd;
   final GetUserProfilesStatusesList? getUserProfileStatus;
   final List<UserProfile>? userProfiles;
@@ -89,6 +91,7 @@ class UserState {
     this.token,
     this.refreshToken,
     this.tryCount,
+    this.tokenTryCount = 0,
     this.timerEnd,
     this.getUserProfileStatus,
     this.userProfiles,
@@ -124,6 +127,7 @@ class UserState {
     String? token,
     String? refreshToken,
     int? tryCount,
+    int? tokenTryCount,
     DateTime? timerEnd,
     GetUserProfilesStatusesList? getUserProfileStatus,
     List<UserProfile>? userProfiles,
@@ -156,6 +160,7 @@ class UserState {
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
       tryCount: tryCount ?? this.tryCount,
+      tokenTryCount: tokenTryCount ?? this.tokenTryCount,
       timerEnd: timerEnd ?? this.timerEnd,
       getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       userProfiles: userProfiles ?? this.userProfiles,
@@ -194,6 +199,14 @@ class UserState {
           this.updatingNotificationStatusStatus,
       getSmartappTokenStatus:
           getSmartappTokenStatus ?? this.getSmartappTokenStatus,
+    );
+  }
+
+  UserState cleanState({
+    int? tokenTryCount
+  }) {
+    return UserState().copyWith(
+      tokenTryCount: tokenTryCount
     );
   }
 

@@ -348,6 +348,7 @@ AuthSmartappTokenResponse _$AuthSmartappTokenResponseFromJson(
 
 /// @nodoc
 mixin _$AuthSmartappTokenResponse {
+  int? get statusCode => throw _privateConstructorUsedError;
   String get token => throw _privateConstructorUsedError;
   String get refreshToken => throw _privateConstructorUsedError;
 
@@ -362,7 +363,7 @@ abstract class $AuthSmartappTokenResponseCopyWith<$Res> {
   factory $AuthSmartappTokenResponseCopyWith(AuthSmartappTokenResponse value,
           $Res Function(AuthSmartappTokenResponse) then) =
       _$AuthSmartappTokenResponseCopyWithImpl<$Res>;
-  $Res call({String token, String refreshToken});
+  $Res call({int? statusCode, String token, String refreshToken});
 }
 
 /// @nodoc
@@ -376,10 +377,15 @@ class _$AuthSmartappTokenResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? statusCode = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
   }) {
     return _then(_value.copyWith(
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int?,
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -400,7 +406,7 @@ abstract class _$$_AuthSmartappTokenResponseCopyWith<$Res>
           $Res Function(_$_AuthSmartappTokenResponse) then) =
       __$$_AuthSmartappTokenResponseCopyWithImpl<$Res>;
   @override
-  $Res call({String token, String refreshToken});
+  $Res call({int? statusCode, String token, String refreshToken});
 }
 
 /// @nodoc
@@ -418,10 +424,15 @@ class __$$_AuthSmartappTokenResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? statusCode = freezed,
     Object? token = freezed,
     Object? refreshToken = freezed,
   }) {
     return _then(_$_AuthSmartappTokenResponse(
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int?,
       token: token == freezed
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -438,11 +449,13 @@ class __$$_AuthSmartappTokenResponseCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AuthSmartappTokenResponse implements _AuthSmartappTokenResponse {
   const _$_AuthSmartappTokenResponse(
-      {required this.token, required this.refreshToken});
+      {this.statusCode, required this.token, required this.refreshToken});
 
   factory _$_AuthSmartappTokenResponse.fromJson(Map<String, dynamic> json) =>
       _$$_AuthSmartappTokenResponseFromJson(json);
 
+  @override
+  final int? statusCode;
   @override
   final String token;
   @override
@@ -450,7 +463,7 @@ class _$_AuthSmartappTokenResponse implements _AuthSmartappTokenResponse {
 
   @override
   String toString() {
-    return 'AuthSmartappTokenResponse(token: $token, refreshToken: $refreshToken)';
+    return 'AuthSmartappTokenResponse(statusCode: $statusCode, token: $token, refreshToken: $refreshToken)';
   }
 
   @override
@@ -458,6 +471,8 @@ class _$_AuthSmartappTokenResponse implements _AuthSmartappTokenResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthSmartappTokenResponse &&
+            const DeepCollectionEquality()
+                .equals(other.statusCode, statusCode) &&
             const DeepCollectionEquality().equals(other.token, token) &&
             const DeepCollectionEquality()
                 .equals(other.refreshToken, refreshToken));
@@ -467,6 +482,7 @@ class _$_AuthSmartappTokenResponse implements _AuthSmartappTokenResponse {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(statusCode),
       const DeepCollectionEquality().hash(token),
       const DeepCollectionEquality().hash(refreshToken));
 
@@ -484,12 +500,15 @@ class _$_AuthSmartappTokenResponse implements _AuthSmartappTokenResponse {
 
 abstract class _AuthSmartappTokenResponse implements AuthSmartappTokenResponse {
   const factory _AuthSmartappTokenResponse(
-      {required final String token,
+      {final int? statusCode,
+      required final String token,
       required final String refreshToken}) = _$_AuthSmartappTokenResponse;
 
   factory _AuthSmartappTokenResponse.fromJson(Map<String, dynamic> json) =
       _$_AuthSmartappTokenResponse.fromJson;
 
+  @override
+  int? get statusCode => throw _privateConstructorUsedError;
   @override
   String get token => throw _privateConstructorUsedError;
   @override

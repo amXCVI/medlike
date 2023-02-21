@@ -9,11 +9,6 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 class CheckIsAuthSmartappUser extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    print('fuckin what??');
-
-    resolver.next(true);
-    return;
-    /*
     final token =
         '${await UserSecureStorage.getField(AppConstants.accessToken)}';
     final smartappToken =
@@ -31,7 +26,6 @@ class CheckIsAuthSmartappUser extends AutoRouteGuard {
     } else {
       router.navigate(SmartappLoginRoute(resolver: resolver));
     }
-    */
   }
 }
 
@@ -47,10 +41,7 @@ class CheckIsAuthUser extends AutoRouteGuard {
     if (token != 'null' && token.toString().isNotEmpty && isAuth) {
       resolver.next(true);
     } else {
-      //router.navigateNamed(AppRoutes.smartappLoginPage);
-      print('fuckin login');
-
-      router.navigateNamed(AppRoutes.loginPhone);
+      router.navigateNamed(AppRoutes.smartappLoginPage);
     }
   }
 }
@@ -64,9 +55,7 @@ class CheckIsSavedPinCode extends AutoRouteGuard {
     if (token != 'null' && token.toString().isNotEmpty) {
       resolver.next(true);
     } else {
-      //router.navigateNamed(AppRoutes.smartappLoginPage);
-      print('fuckin pincode');
-      router.navigateNamed(AppRoutes.loginPhone);
+      router.navigateNamed(AppRoutes.smartappLoginPage);
     }
   }
 }
