@@ -14,5 +14,5 @@ class ApiConstants {
   // Окружение
   static String env = 'Zapolyarye';
 
-  static String baseUrl = baseUrlNornickTest;
+  static String baseUrl = baseUrlEnv11;
 }

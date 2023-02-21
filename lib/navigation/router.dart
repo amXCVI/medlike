@@ -43,7 +43,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AdaptiveRoute(path: AppRoutes.smartappLoginPage, page: SmartappLoginPage, initial: true),
+    //AdaptiveRoute(path: AppRoutes.smartappLoginPage, page: SmartappLoginPage, initial: true),
     AdaptiveRoute(path: AppRoutes.loginPhone, page: StartPhoneNumberPage),
     AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordPage),
     AdaptiveRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
