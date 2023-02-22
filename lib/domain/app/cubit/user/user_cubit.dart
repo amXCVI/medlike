@@ -27,7 +27,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (event == UserMediatorEvent.logout) {
       forceLogout();
     } else if(event == UserMediatorEvent.smartAppWrongPhone) { 
-      forceLogout(isRelogin: true);
+      forceLogout(isRelogin: true, byProfiles: true);
     } else if (event == UserMediatorEvent.pushNotification) {
       getLastNotReadNotification(true);
     }
@@ -45,7 +45,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     } else if(error is DioError &&
         error.message.startsWith("Неверный логин или пароль")
     ) {
-      forceLogout(isRelogin: true);
+      forceLogout(
+        isRelogin: true,
+        byProfiles: true
+      );
     }
 
     super.onError(error, stacktrace);
@@ -150,6 +153,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Авторизация по токену Смартапп
   Future<bool> smartappAuth({
     required String smartappToken,
+    bool isRelogin = false,
+    bool byProfiles = false 
+    /// Если мы получаем пустой список профилей и 
+    /// пытаемся обновить accessToken
+    /// количество попыток ограничено 2 разами
   }) async {
     emit(state.copyWith(
       getSmartappTokenStatus: GetSmartappTokenStatuses.loading,
@@ -169,31 +177,40 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tokenTryCount: state.tokenTryCount + 1
         ));
         UserSecureStorage.deleteField(AppConstants.smartappToken);
+        return false;
       } else if (response.token.isEmpty) {
         emit(state.copyWith(
           getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
           tokenTryCount: state.tokenTryCount + 1
         ));
-        if(state.tokenTryCount < 2) {
-          forceLogout(isRelogin: true);
+        if(isRelogin) {
+          if(state.tokenTryCount < 2) {
+            forceLogout(
+              isRelogin: isRelogin,
+              byProfiles: byProfiles
+            );
+          }
         }
-      }
-      UserSecureStorage.setField(AppConstants.accessToken, response.token);
-      UserSecureStorage.setField(
-          AppConstants.refreshToken, response.refreshToken);
-      UserSecureStorage.setField(AppConstants.isAuth, 'true');
-      print('######## Внутренние токены записаны в localStorage ###########');
-      // UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
-      emit(state.copyWith(
-        getSmartappTokenStatus: GetSmartappTokenStatuses.success,
-        token: response.token,
-        refreshToken: response.refreshToken,
-        tryCount: 5,
-        tokenTryCount: 0
-      ));
+        return false;
+      } else {
+        await UserSecureStorage.setField(AppConstants.accessToken, response.token);
+        await UserSecureStorage.setField(
+            AppConstants.refreshToken, response.refreshToken);
+        await UserSecureStorage.setField(AppConstants.isAuth, 'true');
+        print('######## Внутренние токены записаны в localStorage ###########');
+        // UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
+        emit(state.copyWith(
+          getSmartappTokenStatus: GetSmartappTokenStatuses.success,
+          token: response.token,
+          refreshToken: response.refreshToken,
+          tryCount: 5,
+          /// Сбрасываем счетчик релогинов только если запрос не из профилей
+          tokenTryCount: byProfiles ? state.tokenTryCount : 0 
+        ));
 
-      getUserProfiles(true);
-      return true;
+        getUserProfiles(true);
+        return true;
+      }
     } catch (e) {
       emit(state.copyWith(
         getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
@@ -216,10 +233,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Выход из приложения с удалением данных сессии
-  void forceLogout({
-    bool isRelogin = false
+  /// Добавлен функционал релогина, который РЕКУРСИВЕН
+  /// поэтому результат релогина так же возвращаем
+  Future<bool> forceLogout({
+    bool isRelogin = false,
+    bool byProfiles = false
   }) async {
-    UserSecureStorage.setField(AppConstants.isAuth, 'false');
+    await UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
     UserSecureStorage.deleteField(AppConstants.accessToken);
     UserSecureStorage.deleteField(AppConstants.refreshToken);
@@ -227,20 +247,33 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
     if(isRelogin) {
-      print('######## Попытка релогина! ###########');
+      print('######## Попытка релогина! Из профилей: $byProfiles ###########');
 
       final smartappToken = await UserSecureStorage.getField(AppConstants.smartappToken);
       if(smartappToken != null) {
-        final isSuccess = await smartappAuth(smartappToken: smartappToken);
+        final isSuccess = await smartappAuth(
+          smartappToken: smartappToken,
+          byProfiles: byProfiles
+        );
         if(isSuccess) {
-          return;
+          return true;
+        } else {
+          emit(state.cleanState(
+            tokenTryCount: state.tokenTryCount // Если два раза запросили, блокируем будущие запросы
+          ));
+
+          return false;
         }
       }
 
       emit(state.cleanState(
         tokenTryCount: state.tokenTryCount // Если два раза запросили, блокируем будущие запросы
       ));
+
+      return false;
     }
+
+    return false;
   }
 
   /// Авторизация по биометрии
@@ -278,7 +311,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       print(response);
 
       if(response == []) {
-        forceLogout(isRelogin: true);
+        forceLogout(
+          isRelogin: true,
+          byProfiles: true
+        );
         return;
       }
 
@@ -293,7 +329,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
       /// В случае ошибки скорее всего пустой ЛК
-      forceLogout(isRelogin: true);
+      forceLogout(
+        isRelogin: true,
+        byProfiles: true
+      );
       addError(e);
     }
   }

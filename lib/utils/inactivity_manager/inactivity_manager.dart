@@ -105,8 +105,8 @@ class _InactivityManagerState extends State<InactivityManager>
           previous.getSmartappTokenStatus != current.getSmartappTokenStatus
         ),
         listener: (context, state) {
-          print('######## Пробуем получить JWT токен еще раз ###########');
           if(state.getSmartappTokenStatus == GetSmartappTokenStatuses.wrongJWT) {
+            print('######## Пробуем получить JWT токен еще раз ###########');
             context.router.replace(SmartappLoginRoute());
           }
         },
