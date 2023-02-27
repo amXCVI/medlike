@@ -26,8 +26,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void receive(String from, UserMediatorEvent event) {
     if (event == UserMediatorEvent.logout) {
       forceLogout();
-    } else if(event == UserMediatorEvent.smartAppWrongPhone) { 
-      forceLogout(isRelogin: true, byProfiles: true);
+    } else if(event == UserMediatorEvent.smartAppWrongPhone) {
+      if(state.tokenTryCount < 2) { 
+        forceLogout(isRelogin: true, byProfiles: true);
+      }
     } else if (event == UserMediatorEvent.pushNotification) {
       getLastNotReadNotification(true);
     }
@@ -45,10 +47,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     } else if(error is DioError &&
         error.message.startsWith("Неверный логин или пароль")
     ) {
-      forceLogout(
-        isRelogin: true,
-        byProfiles: true
-      );
+      if(state.tokenTryCount < 2) {
+        forceLogout(
+          isRelogin: true,
+          byProfiles: true
+        );
+      }
     }
 
     super.onError(error, stacktrace);
@@ -185,7 +189,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tokenTryCount: state.tokenTryCount + 1
         ));
         if(isRelogin) {
-          if(state.tokenTryCount < 1) {
+          if(state.tokenTryCount < 2 && byProfiles) {
             forceLogout(
               isRelogin: isRelogin,
               byProfiles: byProfiles
@@ -313,10 +317,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       print(response);
 
       if(response == []) {
-        forceLogout(
-          isRelogin: true,
-          byProfiles: true
-        );
+         if(state.tokenTryCount < 2) { 
+          forceLogout(
+            isRelogin: true,
+            byProfiles: true
+          );
+         }
         return;
       }
 
@@ -331,10 +337,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
       /// В случае ошибки скорее всего пустой ЛК
-      forceLogout(
-        isRelogin: true,
-        byProfiles: true
-      );
+      /// Проверка на попытки получения ЛК
+      print("######## Ошибка получения списка, кол-во попыток ${state.tokenTryCount} #######");
+      if(state.tokenTryCount < 2) { 
+        forceLogout(
+          isRelogin: true,
+          byProfiles: true
+        );
+      }
       addError(e);
     }
   }
