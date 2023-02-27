@@ -22,6 +22,7 @@ class WrongLoginPage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: const Center(
         child: SizedBox(

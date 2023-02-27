@@ -130,6 +130,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         token: response.token,
         refreshToken: response.refreshToken,
         tryCount: 5,
+        tokenTryCount: state.tokenTryCount + 1
       ));
 
       getUserProfiles(true);
@@ -184,7 +185,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tokenTryCount: state.tokenTryCount + 1
         ));
         if(isRelogin) {
-          if(state.tokenTryCount < 2) {
+          if(state.tokenTryCount < 1) {
             forceLogout(
               isRelogin: isRelogin,
               byProfiles: byProfiles
@@ -205,7 +206,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           refreshToken: response.refreshToken,
           tryCount: 5,
           /// Сбрасываем счетчик релогинов только если запрос не из профилей
-          tokenTryCount: byProfiles ? state.tokenTryCount : 0 
+          tokenTryCount: byProfiles ? state.tokenTryCount + 1 : 0 
         ));
 
         getUserProfiles(true);
@@ -248,6 +249,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
     if(isRelogin) {
       print('######## Попытка релогина! Из профилей: $byProfiles ###########');
+      print('######## Кол-во попыток релогина: ${state.tokenTryCount} ###########');
 
       final smartappToken = await UserSecureStorage.getField(AppConstants.smartappToken);
       if(smartappToken != null) {

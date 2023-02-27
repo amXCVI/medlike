@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:medlike/utils/relogin_manager/relogin_manager.dart';
 import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
@@ -129,6 +130,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         /// Блокировка экрана по неактивности пользователя
         // const UnAuthChecker(),
         const AppVersionChecker(),
+        const ReloginManager(),
         // const PushRedirecter()
       ]),
       floatingActionButton: widget.actionButton,

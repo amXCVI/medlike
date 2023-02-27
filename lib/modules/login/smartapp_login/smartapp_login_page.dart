@@ -53,7 +53,7 @@ class SmartappLoginPage extends StatelessWidget {
               } else {
                 /// Тут кидаем на ошибку
                 print('Повторная попытка тоже не удалась ((');
-                context.router.replace(const WrongLoginRoute());
+                context.router.replaceAll([const WrongLoginRoute()]);
               }
             });
           }
