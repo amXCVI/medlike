@@ -100,8 +100,21 @@ class SmartappLoginPage extends StatelessWidget {
       context.router.replaceAll([const MainRoute()]);
     }
 
-    UserSecureStorage.getField(AppConstants.isAuth).then((isAuth) {
-      if (isAuth != 'true') {
+    Future<bool> getAuthStatus() async {
+       final token =
+        '${await UserSecureStorage.getField(AppConstants.accessToken)}';
+    final isAuth =
+        '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
+
+    /// Должен быть токен, он не пустой, и то же самое для смартапп-токена
+    return token != 'null' &&
+        token.toString().isNotEmpty &&
+        isAuth;
+    }
+
+    /// Вызываем в builder что не есть хорошо!
+    getAuthStatus().then((isAuth) {
+      if (!isAuth) {
         getSmartappTokenForce();
       } else {
         context.router.replaceAll([const MainRoute()]);

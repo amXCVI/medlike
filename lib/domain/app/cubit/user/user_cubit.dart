@@ -225,6 +225,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     }
   }
 
+  void resetTokenTryCount() {
+    emit(state.copyWith(
+      tokenTryCount: 0
+    ));
+  }
+
   /// Лайтовый выход из приложения. Заблокировать сессию
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');

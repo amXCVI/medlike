@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/not_found_data/wrong_list_widget.dart';
 
@@ -9,10 +11,13 @@ class WrongLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void forceLoginAttempt() {
-      context.read<UserCubit>().forceLogout(
+    void forceLoginAttempt() async {
+      if(await context.read<UserCubit>().forceLogout(
         isRelogin: true
-      );
+      )) {
+        context.read<UserCubit>().resetTokenTryCount();
+        context.router.replaceAll([const MainRoute()]);
+      }
     }
 
     return Scaffold(
