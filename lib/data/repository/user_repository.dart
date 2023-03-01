@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
@@ -397,8 +398,10 @@ class UserRepository {
           statusCode: 200
         );
       } else {
+        final error = DefaultErrorModel.fromJson(response.data);
         return AuthSmartappTokenResponse(
           statusCode: response.statusCode,
+          message: error.message,
           token: '', 
           refreshToken: ''
         );

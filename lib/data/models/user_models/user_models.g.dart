@@ -37,6 +37,7 @@ _$_AuthSmartappTokenResponse _$$_AuthSmartappTokenResponseFromJson(
         Map<String, dynamic> json) =>
     _$_AuthSmartappTokenResponse(
       statusCode: json['statusCode'] as int?,
+      message: json['message'] as String?,
       token: json['token'] as String,
       refreshToken: json['refreshToken'] as String,
     );
@@ -45,6 +46,7 @@ Map<String, dynamic> _$$_AuthSmartappTokenResponseToJson(
         _$_AuthSmartappTokenResponse instance) =>
     <String, dynamic>{
       'statusCode': instance.statusCode,
+      'message': instance.message,
       'token': instance.token,
       'refreshToken': instance.refreshToken,
     };

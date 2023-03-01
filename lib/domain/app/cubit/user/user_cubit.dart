@@ -184,10 +184,21 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         UserSecureStorage.deleteField(AppConstants.smartappToken);
         return false;
       } else if (response.token.isEmpty) {
-        emit(state.copyWith(
-          getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
-          tokenTryCount: state.tokenTryCount + 1
-        ));
+        if(response.message == "Smart-app токен устарел") {
+          emit(state.copyWith(
+            getSmartappTokenStatus: GetSmartappTokenStatuses.wrongJWT,
+            tokenTryCount: state.tokenTryCount + 1
+          ));
+          UserSecureStorage.deleteField(AppConstants.smartappToken);
+        } else {
+          emit(state.copyWith(
+            getSmartappTokenStatus: GetSmartappTokenStatuses.failed,
+            tokenTryCount: state.tokenTryCount + 1
+          ));
+
+          UserSecureStorage.deleteField(AppConstants.smartappToken);
+          return false;
+        }
         if(isRelogin) {
           if(state.tokenTryCount < 2 && byProfiles) {
             forceLogout(
@@ -298,12 +309,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Получает список профилей из всех МО
-  void getUserProfiles(bool isRefresh) async {
+  Future<bool> getUserProfiles(bool isRefresh, {
+    isCheck = false
+  }) async {
     cleanSelectedUserId();
     if (!isRefresh &&
         state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
-      return;
+      return true;
     }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
@@ -311,7 +324,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     try {
       final currentSelectedUserId =
           await UserSecureStorage.getField(AppConstants.selectedUserId);
-      final List<UserProfile> response;
+      List<UserProfile> response;
       response = await userRepository.getProfiles();
 
       final defaultUserId = response[0].id;
@@ -323,13 +336,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       print(response);
 
       if(response == []) {
-         if(state.tokenTryCount < 2) { 
+         if(state.tokenTryCount < 2 && !isCheck) { 
           forceLogout(
             isRelogin: true,
             byProfiles: true
           );
          }
-        return;
+        return false;
       }
 
       emit(state.copyWith(
@@ -338,20 +351,25 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         selectedUserId: (currentSelectedUserId ?? defaultUserId).toString(),
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
+
+      return true;
     } catch (e) {
+      /*
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
+      */
       /// В случае ошибки скорее всего пустой ЛК
       /// Проверка на попытки получения ЛК
       print("######## Ошибка получения списка, кол-во попыток ${state.tokenTryCount} #######");
-      if(state.tokenTryCount < 2) { 
+      if(state.tokenTryCount < 2 && !isCheck) { 
         forceLogout(
           isRelogin: true,
           byProfiles: true
         );
       }
       addError(e);
+      return false;
     }
   }
 

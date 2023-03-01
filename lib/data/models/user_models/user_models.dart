@@ -35,6 +35,7 @@ class AuthTokenResponse with _$AuthTokenResponse {
 class AuthSmartappTokenResponse with _$AuthSmartappTokenResponse {
   const factory AuthSmartappTokenResponse({
     int? statusCode,
+    String? message,
     required String token,
     required String refreshToken,
   }) = _AuthSmartappTokenResponse;

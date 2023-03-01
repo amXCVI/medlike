@@ -22,20 +22,7 @@ class ReloginManager extends StatelessWidget {
           context.router.replaceAll([const WrongLoginRoute()]);
         }
       },
-      /// Два вложенных слушателя это плохо, 
-      /// но надо четко отделить логику одного от логика другого
-      child: BlocListener<UserCubit, UserState>(
-        listenWhen: ((previous, current) => 
-          previous.getSmartappTokenStatus != current.getSmartappTokenStatus
-        ),
-        listener: (context, state) {
-          if(state.getSmartappTokenStatus == GetSmartappTokenStatuses.wrongJWT) {
-            print('######## Пробуем получить JWT токен еще раз ###########');
-            context.router.replaceAll([SmartappLoginRoute()]);
-          }
-        },
-        child: const SizedBox()
-      ),
+      child: const SizedBox()
     );
   }
 }
