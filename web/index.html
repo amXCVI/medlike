@@ -21,20 +21,29 @@
 	<script src="./bundle.js"></script>
 	<script>
 		var bridge = window.webBridgeInstance;
+		var debugCounter = 0;
 		async function sendBotEvent(jsonEventObject, data) {
 			let eventObject = JSON.parse(jsonEventObject);
 			if (data) eventObject.params.body = data;
 			console.log('sendBotEvent start', eventObject);
 			return new Promise((resolve, reject) => {
 				console.log('bridge.sendBotEvent(eventObject)', eventObject);
+				var index = debugCounter;
+				debugCounter++;
+				console.log('bridge.sendBotEvent(index)', index);
+				console.log('bridge.sendBotEvent(timestamp)', Date.now());
 				bridge.sendBotEvent(eventObject)
 					.then((res) => {
 						console.log('bridge.sendBotEvent method success', res);
 						try {
 							console.log('bridge.sendBotEvent success:', res);
+							console.log('bridge.sendBotEvent success(index)', index);
+							console.log('bridge.sendBotEvent success(timestamp)', Date.now());
 							resolve(JSON.stringify(res));
 						} catch (err) {
 							console.log('bridge.sendBotEvent error:', res);
+							console.log('bridge.sendBotEvent error(index)', index);
+							console.log('bridge.sendBotEvent error(timestamp)', Date.now());
 							resolve(res);
 						}
 
@@ -42,6 +51,8 @@
 					.catch((err) => {
 						console.log('sending event object: ', eventObject);
 						console.log('bridge.sendBotEvent error', err);
+						console.log('bridge.sendBotEvent error(index)', index);
+						console.log('bridge.sendBotEvent error(timestamp)', Date.now());
 						reject(JSON.stringify(err))
 					})
 			});
