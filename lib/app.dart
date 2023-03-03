@@ -11,6 +11,7 @@ import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/domain/app/cubit/images/image_cubit.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -68,7 +69,8 @@ class App extends StatelessWidget {
         BlocProvider(
             create: (context) => DiaryCubit(DiaryRepository(), mediator)),
         BlocProvider(create: (context) => PromptCubit()),
-        BlocProvider(create: (context) => TourCubit()..fetchStatus())
+        BlocProvider(create: (context) => TourCubit()..fetchStatus()),
+        BlocProvider(create: (context) => ImageCubit())
       ],
       child: InactivityManager(
         child: MaterialApp.router(

@@ -1,7 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:medlike/data/repository/images_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/images/image_cubit.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
 class WebFutureImage extends StatefulWidget {
@@ -21,35 +20,28 @@ class WebFutureImage extends StatefulWidget {
 }
 
 class _WebFutureImageState extends State<WebFutureImage> {
-  late final Future<Uint8List> imageFuture;
-  late final Future<String> botXImage;
 
   @override
   void initState() {
     super.initState();
-    botXImage = _getData();
+    _checkData();
   }
 
-  Future<String> _getData() {
-    return ImagesRepository.getPathImageFile(url: widget.imageUrl)
-        .then((value) => value)
-        .catchError((onError) {
-      print('Не удалось загрузить изображение по widget.imageUrl');
-      print('Возможно, изображение отсутствует');
-      return ('');
-    });
+  void _checkData() {
+    if(!context.read<ImageCubit>().state.hasUrl(widget.imageUrl)) {
+      context.read<ImageCubit>().addUrl(widget.imageUrl);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: botXImage,
-      builder: (BuildContext context, AsyncSnapshot<String> image) {
-        if (image.hasData || !widget.isWithButton) {
+    return BlocBuilder<ImageCubit, ImageState>(
+      builder: (BuildContext context, ImageState state) {
+        if (state.hasUrl(widget.imageUrl) || !widget.isWithButton) {
           return Center(
-            child: image.data!.isNotEmpty
+            child: state.getUrl(widget.imageUrl).isNotEmpty
                 ? Image.asset(
-                    image.data as String,
+                    state.getUrl(widget.imageUrl),
                     fit: BoxFit.cover,
                   )
                 : const SizedBox(),
