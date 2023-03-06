@@ -76,6 +76,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
     widget.filteringFunction!(_searchQueryController.text);
   }
 
+  late List<Widget> actions = widget.actions.isNotEmpty ?
+    widget.actions : [
+      const SizedBox(width: 28,)
+    ];
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -107,52 +112,58 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   icon: Image.asset('assets/icons/app_bar/ic_logo_filled.png',
                       width: 28.0),
                 ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: _isSearchMode
-                ? [
-                    SizedBox(
-                      width: 250,
-                      child: TextField(
-                        controller: _searchQueryController,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          hintText: "Поиск...",
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(color: AppColors.lightText),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: _isSearchMode
+                  ? [
+                      SizedBox(
+                        width: 250,
+                        child: TextField(
+                          controller: _searchQueryController,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: "Поиск...",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(color: AppColors.lightText),
+                          ),
+                          style: Theme.of(context).textTheme.labelLarge,
+                          onChanged: (query) => updateSearchQuery(query),
+                          textInputAction: TextInputAction.search,
+                          onSubmitted: (value) {
+                            _handleSearch();
+                          },
                         ),
-                        style: Theme.of(context).textTheme.labelLarge,
-                        onChanged: (query) => updateSearchQuery(query),
-                        textInputAction: TextInputAction.search,
-                        onSubmitted: (value) {
-                          _handleSearch();
-                        },
                       ),
-                    ),
-                  ]
-                : [
-                    Text(
-                      widget.title.characters
-                          .replaceAll(Characters(''), Characters('\u{200B}'))
-                          .toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium
-                          ?.copyWith(fontWeight: FontWeight.w500),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    widget.subtitle.isNotEmpty
-                        ? Text(
-                            widget.subtitle,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          )
-                        : const SizedBox(),
-                    const SizedBox(height: 10),
-                  ],
+                    ]
+                  : [
+                      FittedBox(
+                        fit: BoxFit.scaleDown, 
+                        child: Text(
+                          widget.title.characters
+                              .replaceAll(Characters(''), Characters('\u{200B}'))
+                              .toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      widget.subtitle.isNotEmpty
+                          ? Text(
+                              widget.subtitle,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 10),
+                    ],
+            ),
           ),
           Row(
             children: widget.isSearch
@@ -170,7 +181,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             ? 'assets/icons/app_bar/close_search.svg'
                             : 'assets/icons/app_bar/search_icon.svg'))
                   ]
-                : widget.actions,
+                : actions,
           )
         ],
       ),
