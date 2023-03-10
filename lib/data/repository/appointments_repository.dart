@@ -31,7 +31,8 @@ class AppointmentsRepository {
     try {
       final response = await _dioClient
         .put('/api/v1.0/schedule/appointments/$appointmentId/confirm?userId=$userId');
-      return response.statusCode == 200 ? true : false;
+      return response.statusCode == 200 
+        || response.statusCode == 204 ? true : false;
     } catch (err) {
       rethrow;
     }

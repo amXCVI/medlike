@@ -259,7 +259,7 @@ class SmartAppClient {
           'url': '${ApiConstants.baseUrl}$endpoint',
           'headers': defaultHeaders,
           'method': 'PUT',
-          'body': data ?? '{}',
+          'body': data ?? {},
           'params': '',
         },
       }),

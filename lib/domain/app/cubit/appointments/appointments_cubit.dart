@@ -290,7 +290,11 @@ class AppointmentsCubit
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
 
-    } catch (e) {
+    } catch (e, stacktrace) {
+      /// На всякий пожарный перезагружаем записи
+      print("======== CONFIRM ERROR $e =========");
+      print("======== $stacktrace =========");
+      await getAppointmentsList(true);
       emit(
         state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed)
       );
