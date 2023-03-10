@@ -6,6 +6,7 @@ import 'package:medlike/constants/push_constants.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class PushRedirecter extends StatefulWidget {
   const PushRedirecter({Key? key}) : super(key: key);
@@ -19,6 +20,8 @@ class _PushRedirecterState extends State<PushRedirecter> {
   @override
   void initState() {
     FCMService.initializeSelect(((notificationResponse) {
+      Sentry.captureMessage("Notification response ${notificationResponse.payload}");
+
       final data = jsonDecode(notificationResponse.payload ?? '{}');
       print('payload ${notificationResponse.payload} ${AppRoutes.health}');
 

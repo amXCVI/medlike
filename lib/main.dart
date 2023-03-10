@@ -1,14 +1,23 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:testfairy_flutter/testfairy_flutter.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  await FCMService.fcmBackgroundHandler(message);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +28,7 @@ void main() async {
 
   await FCMService.initializeFirebase();
   await FCMService.initializeLocalNotifications();
-  await FCMService.onBackgroundMsg();
+  await FCMService.onBackgroundMsg(_firebaseMessagingBackgroundHandler);
   //await FCMService.onMessage();
   await FCMService.getFCMToken();
   await FCMService.getAPNSToken();
