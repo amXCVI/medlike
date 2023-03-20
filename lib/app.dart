@@ -33,6 +33,11 @@ class App extends StatelessWidget {
   final _router = AppRouter(
     checkIsAuthUser: CheckIsAuthUser(),
     checkIsSavedPinCode: CheckIsSavedPinCode(),
+    checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
+    checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
+    checkIsOneClinicForMain: CheckIsOneClinicForMain(),
+    checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
+    checkIsOneProfileForMain: CheckIsOneProfileForMain()
   );
 
   final mediator = UserMediator();
@@ -42,10 +47,10 @@ class App extends StatelessWidget {
     final appointmentCubit = AppointmentsCubit(AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
 
-    FCMService.onMessage(((message) {
+    FCMService.onMessage((message) {
       mediator.sendTo<AppointmentsCubit>(userCubit, UserMediatorEvent.pushNotification);
       mediator.sendTo<UserCubit>(appointmentCubit, UserMediatorEvent.pushNotification);
-    }));
+    });
 
     return MultiBlocProvider(
       providers: [

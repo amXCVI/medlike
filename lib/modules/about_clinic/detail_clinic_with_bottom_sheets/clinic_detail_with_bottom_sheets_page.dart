@@ -51,7 +51,7 @@ class _ClinicDetailWithBottomSheetsPageState
 
   void onPanelClosed() {
     if (widget.selectedClinic.buildings.length == 1) {
-      context.router.replaceNamed(AppRoutes.clinicInfo);
+      context.router.replaceNamed(AppRoutes.clinicInfoForMain);
     } else {
       setState(() {
         _panelController.close();
@@ -66,7 +66,7 @@ class _ClinicDetailWithBottomSheetsPageState
         if (_panelController.isPanelOpen) {
           onPanelClosed();
         } else {
-          context.router.replaceNamed(AppRoutes.clinicInfo);
+          context.router.replaceNamed(AppRoutes.clinicInfoForMain);
         }
         return false;
       },
@@ -106,7 +106,7 @@ class _ClinicDetailWithBottomSheetsPageState
                   timeZoneOffset: widget.selectedClinic.timeZoneOffset ?? 3,
                 ),
                 collapsed: CollapsedSlidingPanel(
-                  buildingsList: clinicBuildings ?? [],
+                  buildingsList: clinicBuildings,
                   clinicName: widget.selectedClinic.name,
                   onTapBuilding: onTapBuilding,
                 ),
@@ -118,7 +118,7 @@ class _ClinicDetailWithBottomSheetsPageState
                         : clinicBuildings.length * 88 + 70,
                   ),
                   child: ClinicMapPlaces(
-                    buildingsList: clinicBuildings ?? [],
+                    buildingsList: clinicBuildings,
                     handleSelectedBuilding: onTapBuilding,
                     selectedBuildingId: selectedBuilding != null
                         ? selectedBuilding!.buildingId

@@ -6,7 +6,7 @@ import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 import 'clinic_item.dart';
 
-class AllClinicsList extends StatelessWidget {
+class AllClinicsList extends StatefulWidget {
   const AllClinicsList({
     Key? key,
     required this.clinicsList,
@@ -19,26 +19,37 @@ class AllClinicsList extends StatelessWidget {
   final bool isFromMainPage;
 
   @override
-  Widget build(BuildContext context) {
-    void _handleTapOnClinic(ClinicModel clinic) {
-      if (isFromMainPage) {
+  State<AllClinicsList> createState() => _AllClinicsListState();
+}
+
+class _AllClinicsListState extends State<AllClinicsList> {
+  void _handleTapOnClinic(ClinicModel clinic) {
+    //widget.handleTapOnClinic(clinic);
+    if (widget.isFromMainPage) {
         context.router.push(PriceRoute(clinicId: clinic.id));
-      } else {
+    } else {
         context.router
-            .push(ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
-      }
+          .push(ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
     }
+  }
 
-    if (clinicsList.length == 1) {
-      _handleTapOnClinic(clinicsList[0]);
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.clinicsList.length == 1) {
+      _handleTapOnClinic(widget.clinicsList[0]);
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => onRefreshData(isRefresh: true),
+      onRefresh: () => widget.onRefreshData(isRefresh: true),
       child: DefaultScrollbar(
         child: ListView(
             shrinkWrap: true,
-            children: clinicsList
+            children: widget.clinicsList
                 .map((item) => ClinicItem(
                       clinicItem: item,
                       onTap: () {

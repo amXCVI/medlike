@@ -10,8 +10,10 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'all_clinics_list_skeleton.dart';
 
 class AllClinicsListPage extends StatelessWidget {
-  const AllClinicsListPage({Key? key, this.isFromMainPage = false})
-      : super(key: key);
+  const AllClinicsListPage({
+    Key? key, 
+    this.isFromMainPage = false
+  }) : super(key: key);
 
   final bool isFromMainPage;
 
@@ -40,7 +42,7 @@ class AllClinicsListPage extends StatelessWidget {
               return AllClinicsList(
                   clinicsList: state.clinicsList as List<ClinicModel>,
                   onRefreshData: _onLoadDada,
-                  isFromMainPage: isFromMainPage,
+                  isFromMainPage: isFromMainPage
               );
             } else {
               return const AllClinicsListSkeleton();
@@ -50,4 +52,18 @@ class AllClinicsListPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class ClinicPageForDetails extends AllClinicsListPage {
+  const ClinicPageForDetails({
+    super.key, 
+    super.isFromMainPage = false
+  });
+}
+
+class ClinicPageForMain extends AllClinicsListPage {
+  const ClinicPageForMain({
+    super.key, 
+    super.isFromMainPage = false
+  });
 }

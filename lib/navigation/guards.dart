@@ -1,5 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/clinic_models/clinic_models.dart';
+import 'package:medlike/data/models/user_models/user_models.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
@@ -40,5 +46,79 @@ class CheckIsSavedPinCode extends AutoRouteGuard {
     } else {
       router.navigateNamed(AppRoutes.loginPhone);
     }
+  }
+}
+
+abstract class CheckIsOneClinic extends AutoRouteGuard {
+  void redirect(ClinicModel clinic, StackRouter router);
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) async {
+    final context = router.navigatorKey.currentContext;
+    final clinicsList = context?.read<ClinicsCubit>().state.clinicsList;
+
+    if (clinicsList?.length == 1) {
+      redirect(clinicsList![0], router);
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+abstract class CheckIsOneProfile extends AutoRouteGuard {
+  void redirect(UserProfile user, StackRouter router);
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) async {
+    final context = router.navigatorKey.currentContext;
+    final usersList = context?.read<UserCubit>().state.userProfiles;
+
+    if (usersList?.length == 1) {
+      context?.read<UserCubit>().setSelectedUserId(usersList![0].id);
+      redirect(usersList![0], router);
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+class CheckIsOneClinicForPrice extends CheckIsOneClinic {
+  @override
+  void redirect(ClinicModel clinic, StackRouter router) {
+    router.push(PriceRoute(clinicId: clinic.id));
+  }
+}
+
+class CheckIsOneClinicForDetails extends CheckIsOneClinic {
+  @override
+  void redirect(ClinicModel clinic, StackRouter router) {
+    router
+      .push(ClinicDetailWithBottomSheetsRoute(selectedClinic: clinic));
+  }
+}
+
+class CheckIsOneClinicForMain extends CheckIsOneClinic {
+  @override
+  void redirect(ClinicModel clinic, StackRouter router) {
+    router
+      .push(const MainRoute());
+  }
+}
+
+class CheckIsOneProfileForHealth extends CheckIsOneProfile {
+  @override
+  void redirect(UserProfile profile, StackRouter router) {
+
+    router
+      .push(CardsRoute(isChildrenPage: false));
+  }
+}
+
+class CheckIsOneProfileForMain extends CheckIsOneProfile {
+  @override
+  void redirect(UserProfile profile, StackRouter router) {
+
+    router
+      .push(const MainRoute());
   }
 }
