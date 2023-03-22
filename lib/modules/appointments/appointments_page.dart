@@ -11,19 +11,33 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class AppointmentsPage extends StatelessWidget {
-  const AppointmentsPage({Key? key, this.isRefresh = false}) : super(key: key);
+  const AppointmentsPage({
+    Key? key, 
+    this.isRefresh = false,
+    this.initDay
+  }) : super(key: key);
 
   /// Используется для принудительной подгрузки данных.
   /// При переходе в мои приемы со страницы записи, например
   final bool? isRefresh;
 
+  /// Принудительно открываем нужную дату при необходимости
+  final DateTime? initDay;
+
   @override
   Widget build(BuildContext context) {
-    Future<void> _onLoadDada({bool isRefresh = true}) async {
+    Future<void> _onLoadDada({
+      bool isRefresh = true, 
+      DateTime? initDay
+    }) async {
+      if(initDay != null) {
+        print('Init day: $initDay');
+        context.read<AppointmentsCubit>().setSelectedDate(initDay);
+      } 
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }
 
-    _onLoadDada(isRefresh: isRefresh as bool);
+    _onLoadDada(isRefresh: isRefresh as bool, initDay: initDay);
 
     return WillPopScope(
       onWillPop: () async {

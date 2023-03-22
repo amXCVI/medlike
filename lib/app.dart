@@ -18,27 +18,22 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
-import 'package:medlike/navigation/guards.dart';
-import 'package:medlike/navigation/router.gr.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:get_it/get_it.dart';
+
+import 'navigation/router.gr.dart';
+
+final getIt = GetIt.instance;
+
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
-  final _router = AppRouter(
-    checkIsAuthUser: CheckIsAuthUser(),
-    checkIsSavedPinCode: CheckIsSavedPinCode(),
-    checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
-    checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
-    checkIsOneClinicForMain: CheckIsOneClinicForMain(),
-    checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
-    checkIsOneProfileForMain: CheckIsOneProfileForMain()
-  );
+  final _router = getIt<AppRouter>();
 
   final mediator = UserMediator();
 
