@@ -245,7 +245,7 @@ class AppointmentsCubit
       );
 
       emit(state.copyWith(
-        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        confirmCounter: (state.confirmCounter ?? 2) - 1,
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
     } catch (e) {
@@ -286,7 +286,7 @@ class AppointmentsCubit
       );
 
       emit(state.copyWith(
-        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        confirmCounter: (state.confirmCounter ?? 2) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
 
