@@ -916,7 +916,7 @@ mixin _$Doctor {
   String get firstName => throw _privateConstructorUsedError;
   String get middleName => throw _privateConstructorUsedError;
   String get specializationId => throw _privateConstructorUsedError;
-  String get specialization => throw _privateConstructorUsedError; //?
+  String get specialization => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;

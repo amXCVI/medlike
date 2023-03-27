@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:get_it/get_it.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
@@ -7,7 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/helpers/resume_helper.dart';
+import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+
+final getIt = GetIt.instance;
 
 class CheckIsAuthUser extends AutoRouteGuard {
   @override
@@ -21,11 +26,24 @@ class CheckIsAuthUser extends AutoRouteGuard {
         '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
     /// Должен быть токен, он не пустой, и пин-код для быстрого входа в приложение сохранен
-    if (token != 'null' &&
-        token.toString().isNotEmpty &&
-        isAuth &&
-        isSavedPinCode) {
-      resolver.next(true);
+    final isLogged = token != 'null' &&
+      token.toString().isNotEmpty &&
+      isAuth &&
+      isSavedPinCode;
+
+    /// Прошло ли достаточно времени, чтобы кидать на пинкод? 
+    final isBlocked = await ResumeHelper.isAppBlocked();
+    
+    if (isLogged && !isBlocked) {
+      final pushNavigationService = getIt<PushNavigationService>();
+      /// Читаем, не нужно ли перейти на страницу по тапу на пуш
+      final page = pushNavigationService.nextPage;
+
+      if(page != null) {
+        router.push(page);
+      } else {
+        resolver.next(true);
+      }
     } else {
       router.navigateNamed(AppRoutes.loginPinCodeCheck);
     }

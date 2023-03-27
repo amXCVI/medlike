@@ -8,6 +8,7 @@ import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class AppointmentsPage extends StatelessWidget {
@@ -31,7 +32,12 @@ class AppointmentsPage extends StatelessWidget {
       DateTime? initDay
     }) async {
       if(initDay != null) {
-        print('Init day: $initDay');
+        DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(initDay);
+        DateTime dateTo = date_utils.DateUtils.lastDayOfWeekWithHours(initDay);
+
+        context.read<AppointmentsCubit>().setStartDate(dateFrom);
+        context.read<AppointmentsCubit>().setEndDate(dateTo);
+
         context.read<AppointmentsCubit>().setSelectedDate(initDay);
       } 
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);

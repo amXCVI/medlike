@@ -5,6 +5,7 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
+import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
 
@@ -107,6 +108,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
               });
         }
 
+        ResumeHelper.resume();
         return true;
       } else {
         if (countAttempts + 1 == AppConstants.countLoginAttemps) {

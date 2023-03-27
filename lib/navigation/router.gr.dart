@@ -294,7 +294,8 @@ class AppRouter extends _i37.RootStackRouter {
           child: _i23.MedcardPage(
               key: args.key,
               userId: args.userId,
-              isChildrenPage: args.isChildrenPage));
+              isChildrenPage: args.isChildrenPage,
+              eventId: args.eventId));
     },
     FilesRoute.name: (routeData) {
       final args = routeData.argsAs<FilesRouteArgs>();
@@ -1169,18 +1170,27 @@ class MedcardProfilesListRoute extends _i37.PageRouteInfo<void> {
 /// [_i23.MedcardPage]
 class MedcardRoute extends _i37.PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute(
-      {_i38.Key? key, required String userId, required bool isChildrenPage})
+      {_i38.Key? key,
+      required String userId,
+      required bool isChildrenPage,
+      String? eventId})
       : super(MedcardRoute.name,
             path: '/medcard_files_list',
             args: MedcardRouteArgs(
-                key: key, userId: userId, isChildrenPage: isChildrenPage));
+                key: key,
+                userId: userId,
+                isChildrenPage: isChildrenPage,
+                eventId: eventId));
 
   static const String name = 'MedcardRoute';
 }
 
 class MedcardRouteArgs {
   const MedcardRouteArgs(
-      {this.key, required this.userId, required this.isChildrenPage});
+      {this.key,
+      required this.userId,
+      required this.isChildrenPage,
+      this.eventId});
 
   final _i38.Key? key;
 
@@ -1188,9 +1198,11 @@ class MedcardRouteArgs {
 
   final bool isChildrenPage;
 
+  final String? eventId;
+
   @override
   String toString() {
-    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
+    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage, eventId: $eventId}';
   }
 }
 

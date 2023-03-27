@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:medlike/constants/entity_types.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:testfairy_flutter/testfairy_flutter.dart';
@@ -32,6 +33,8 @@ void onPayload(String? payload) {
   final data = jsonDecode(payload ?? '{}');
 
   final _router = getIt<AppRouter>();
+  final pushNavigationService = getIt<PushNavigationService>();
+
   final userId = data['UserId'] as String?;
 
   switch(data['EntityType']) {
@@ -40,7 +43,8 @@ void onPayload(String? payload) {
         _router.push(
           MedcardRoute(
             userId: userId,
-            isChildrenPage: true
+            isChildrenPage: true,
+            eventId: data['EventId']
           )
         );
       }
@@ -58,6 +62,9 @@ void onPayload(String? payload) {
 
           Sentry.captureMessage("Push message: $message $dateString ${dateFormat.parse(dateString)}");
           final date = dateFormat.parse(dateString);
+          pushNavigationService.nextPage = AppointmentsRoute(
+            initDay: date
+          );
 
           _router.push(
             AppointmentsRoute(
@@ -91,7 +98,9 @@ void main() async {
     checkIsOneClinicForMain: CheckIsOneClinicForMain(),
     checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
     checkIsOneProfileForMain: CheckIsOneProfileForMain()
-  ));      
+  ));
+
+  getIt.registerSingleton(PushNavigationService());
 
   await FCMService.initializeFirebase();
   await FCMService.initializeLocalNotifications();
