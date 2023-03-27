@@ -40,13 +40,14 @@ void onPayload(String? payload) {
   switch(data['EntityType']) {
     case EntityType.newMedcardEvent:
       if(userId != null) {
-        _router.push(
-          MedcardRoute(
-            userId: userId,
-            isChildrenPage: true,
-            eventId: data['EventId']
-          )
+        final route =  MedcardRoute(
+          userId: userId,
+          isChildrenPage: false,
+          eventId: data['EventId']
         );
+
+        pushNavigationService.nextPage = route;
+        _router.push(route);
       }
       break;
     case EntityType.appointmentCanceled:

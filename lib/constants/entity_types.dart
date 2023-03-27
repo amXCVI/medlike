@@ -5,7 +5,7 @@ class EntityType {
 
   static const appointmentCanceled = 'AppointmentCancel';
 
-  static const appointmentScheduled = 'AppointmentSchedule';
+  static const appointmentScheduled = 'AppointmentScheduled';
 
   static const memberAttached = 'MemberAttach';
 
