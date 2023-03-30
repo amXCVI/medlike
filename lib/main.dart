@@ -29,7 +29,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await FCMService.fcmBackgroundHandler(message);
 }
 
-void onPayload(String? payload) {
+void onPayload(String? payload, {
+  bool onAppOpen = false
+}) {
+  Sentry.captureMessage("JSON Decode: $payload");
   final data = jsonDecode(payload ?? '{}');
 
   final _router = getIt<AppRouter>();
@@ -37,16 +40,20 @@ void onPayload(String? payload) {
 
   final userId = data['UserId'] as String?;
 
+  Sentry.captureMessage("On push tap Data: ${data['EntityType']}");
+
   switch(data['EntityType']) {
     case EntityType.newMedcardEvent:
       if(userId != null) {
-        final route =  MedcardRoute(
+        final route = MedcardRoute(
           userId: userId,
           isChildrenPage: false,
           eventId: data['EventId']
         );
 
-        pushNavigationService.nextPage = route;
+        if(!onAppOpen) {
+          pushNavigationService.nextPage = route;
+        }
         _router.push(route);
       }
       break;
@@ -63,15 +70,12 @@ void onPayload(String? payload) {
 
           Sentry.captureMessage("Push message: $message $dateString ${dateFormat.parse(dateString)}");
           final date = dateFormat.parse(dateString);
-          pushNavigationService.nextPage = AppointmentsRoute(
-            initDay: date
-          );
+          final _route = AppointmentsRoute(initDay: date);
 
-          _router.push(
-            AppointmentsRoute(
-              initDay: date
-            )
-          );
+          if(!onAppOpen) {
+            pushNavigationService.nextPage = _route;
+          }
+          _router.push(_route);
         } catch(err, stackTrace) {
           Sentry.captureException(err, stackTrace: stackTrace);
           _router.push(AppointmentsRoute());
@@ -110,6 +114,10 @@ void main() async {
   FCMService.initializeSelect((notificationResponse) {
     Sentry.captureMessage("On push tap ${notificationResponse.payload}");
     onPayload(notificationResponse.payload);
+  });
+  FCMService.checkNotificationClicked((notificationResponse) {
+    Sentry.captureMessage("On open by push ${notificationResponse.payload}");
+    onPayload(notificationResponse.payload); // ,onAppOpen: true);
   });
   await FCMService.getFCMToken();
   await FCMService.getAPNSToken();

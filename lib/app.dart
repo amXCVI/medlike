@@ -18,8 +18,10 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/modules/main_page/splash_page.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:medlike/utils/helpers/auth_check_helpers.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -61,22 +63,34 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],
       child: InactivityManager(
-        child: MaterialApp.router(
-          title: 'Medlike',
-          theme: AppTheme.lightAppTheme,
-          routerDelegate: AutoRouterDelegate(
-            _router,
-            navigatorObservers: () => [
-              FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-              SentryNavigatorObserver()
-            ],
-          ),
-          routeInformationParser: _router.defaultRouteParser(),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-          ],
-          supportedLocales: const [Locale('en')],
+        child: FutureBuilder<bool>(
+          future: checkIsSavedPinCode(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            if(!snapshot.hasData) {
+              return const SplashPage();
+            }
+            return MaterialApp.router(
+              title: 'Medlike',
+              theme: AppTheme.lightAppTheme,
+              routerDelegate: AutoRouterDelegate(
+                _router,
+                initialRoutes: [
+                  if(snapshot.data!) const CheckPinCodeRoute(),
+                  if(!snapshot.data!) StartPhoneNumberRoute()
+                ],
+                navigatorObservers: () => [
+                  FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+                  SentryNavigatorObserver()
+                ],
+              ),
+              routeInformationParser: _router.defaultRouteParser(),
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+              ],
+              supportedLocales: const [Locale('en')],
+            );
+          }
         ),
       ),
     );

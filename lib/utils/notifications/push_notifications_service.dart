@@ -60,16 +60,38 @@ class FCMService {
   }
 
   static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
-    const InitializationSettings _initializationSettings =
+    final InitializationSettings _initializationSettings =
         InitializationSettings(
-      android: AndroidInitializationSettings("@mipmap/launcher_icon"),
-      iOS: DarwinInitializationSettings(),
+      android: const AndroidInitializationSettings("@mipmap/launcher_icon"),
+      iOS: DarwinInitializationSettings(
+        onDidReceiveLocalNotification: ((id, title, body, payload) {
+          Sentry.captureMessage("$id $title $body $payload");
+        })
+      ),
     );
 
     _localNotificationsPlugin.initialize(
       _initializationSettings,
       onDidReceiveNotificationResponse: onSelectNotification,
+      onDidReceiveBackgroundNotificationResponse:(details) {
+        Sentry.captureMessage("BC details: ${details.payload}");
+        onSelectNotification(details);
+      },
     );
+  }
+
+  static Future<void> checkNotificationClicked(
+    Function(NotificationResponse notificationResponse) onSelectNotification
+  ) async {
+     Sentry.captureMessage("NotificationService.checkNotificationClicked()");
+    NotificationAppLaunchDetails? details =
+        await _localNotificationsPlugin.getNotificationAppLaunchDetails();
+
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse != null) {
+      onSelectNotification(details.notificationResponse!);
+    }
   }
 
   static NotificationDetails platformChannelSpecifics =
