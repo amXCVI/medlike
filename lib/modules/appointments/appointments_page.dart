@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/appointments/appointments_calendar.dart';
 import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
@@ -15,7 +16,8 @@ class AppointmentsPage extends StatelessWidget {
   const AppointmentsPage({
     Key? key, 
     this.isRefresh = false,
-    this.initDay
+    this.initDay,
+    this.notificationId
   }) : super(key: key);
 
   /// Используется для принудительной подгрузки данных.
@@ -24,6 +26,9 @@ class AppointmentsPage extends StatelessWidget {
 
   /// Принудительно открываем нужную дату при необходимости
   final DateTime? initDay;
+
+  /// Закрываем уведомление при необходимости
+  final String? notificationId;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,11 @@ class AppointmentsPage extends StatelessWidget {
 
         context.read<AppointmentsCubit>().setSelectedDate(initDay);
       } 
+
+      if(notificationId != null) {
+        context.read<UserCubit>()
+          .updateNotificationStatus(notificationId!);
+      }
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }
 

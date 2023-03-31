@@ -1,17 +1,15 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
-import 'package:medlike/constants/entity_types.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -28,65 +26,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   await FCMService.fcmBackgroundHandler(message);
 }
-
-void onPayload(String? payload, {
-  bool onAppOpen = false
-}) {
-  Sentry.captureMessage("JSON Decode: $payload");
-  final data = jsonDecode(payload ?? '{}');
-
-  final _router = getIt<AppRouter>();
-  final pushNavigationService = getIt<PushNavigationService>();
-
-  final userId = data['UserId'] as String?;
-
-  Sentry.captureMessage("On push tap Data: ${data['EntityType']}");
-
-  switch(data['EntityType']) {
-    case EntityType.newMedcardEvent:
-      if(userId != null) {
-        final route = MedcardRoute(
-          userId: userId,
-          isChildrenPage: false,
-          eventId: data['EventId']
-        );
-
-        if(!onAppOpen) {
-          pushNavigationService.nextPage = route;
-        }
-        _router.push(route);
-      }
-      break;
-    case EntityType.appointmentCanceled:
-    case EntityType.appointmentScheduled:
-    case EntityType.appointmentReminder24h:
-      final message = data['message'] as String?; 
-      final parts = message?.split(',');
-      if((parts?.length ?? 0) > 1) {
-        try{
-          final dt = parts![1];
-          final dateString = dt.split(" ")[1];
-          DateFormat dateFormat = DateFormat("dd.MM.yyyy");
-
-          Sentry.captureMessage("Push message: $message $dateString ${dateFormat.parse(dateString)}");
-          final date = dateFormat.parse(dateString);
-          final _route = AppointmentsRoute(initDay: date);
-
-          if(!onAppOpen) {
-            pushNavigationService.nextPage = _route;
-          }
-          _router.push(_route);
-        } catch(err, stackTrace) {
-          Sentry.captureException(err, stackTrace: stackTrace);
-          _router.push(AppointmentsRoute());
-        }
-      }
-      break;
-    case EntityType.memberAttached:
-      _router.push(const MainRoute());
-      break;
-    }
-  }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -113,11 +52,11 @@ void main() async {
   //await FCMService.onMessage();
   FCMService.initializeSelect((notificationResponse) {
     Sentry.captureMessage("On push tap ${notificationResponse.payload}");
-    onPayload(notificationResponse.payload);
+    pushHandler(notificationResponse.payload);
   });
   FCMService.checkNotificationClicked((notificationResponse) {
     Sentry.captureMessage("On open by push ${notificationResponse.payload}");
-    onPayload(notificationResponse.payload); // ,onAppOpen: true);
+    pushHandler(notificationResponse.payload);
   });
   await FCMService.getFCMToken();
   await FCMService.getAPNSToken();

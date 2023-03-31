@@ -167,7 +167,10 @@ class AppRouter extends _i37.RootStackRouter {
       return _i37.AdaptivePage<dynamic>(
           routeData: routeData,
           child: _i10.AppointmentsPage(
-              key: args.key, isRefresh: args.isRefresh, initDay: args.initDay));
+              key: args.key,
+              isRefresh: args.isRefresh,
+              initDay: args.initDay,
+              notificationId: args.notificationId));
     },
     SubscribeProfilesListRoute.name: (routeData) {
       return _i37.AdaptivePage<dynamic>(
@@ -678,17 +681,25 @@ class MainRoute extends _i37.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.AppointmentsPage]
 class AppointmentsRoute extends _i37.PageRouteInfo<AppointmentsRouteArgs> {
-  AppointmentsRoute({_i38.Key? key, bool? isRefresh = false, DateTime? initDay})
+  AppointmentsRoute(
+      {_i38.Key? key,
+      bool? isRefresh = false,
+      DateTime? initDay,
+      String? notificationId})
       : super(AppointmentsRoute.name,
             path: '/my_appointments',
             args: AppointmentsRouteArgs(
-                key: key, isRefresh: isRefresh, initDay: initDay));
+                key: key,
+                isRefresh: isRefresh,
+                initDay: initDay,
+                notificationId: notificationId));
 
   static const String name = 'AppointmentsRoute';
 }
 
 class AppointmentsRouteArgs {
-  const AppointmentsRouteArgs({this.key, this.isRefresh = false, this.initDay});
+  const AppointmentsRouteArgs(
+      {this.key, this.isRefresh = false, this.initDay, this.notificationId});
 
   final _i38.Key? key;
 
@@ -696,9 +707,11 @@ class AppointmentsRouteArgs {
 
   final DateTime? initDay;
 
+  final String? notificationId;
+
   @override
   String toString() {
-    return 'AppointmentsRouteArgs{key: $key, isRefresh: $isRefresh, initDay: $initDay}';
+    return 'AppointmentsRouteArgs{key: $key, isRefresh: $isRefresh, initDay: $initDay, notificationId: $notificationId}';
   }
 }
 
