@@ -187,7 +187,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                               fileUrl:
                                   '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
                               fileName: notificationItem.description,
-                              fileId: notificationItem.entityId,
+                              fileId: notificationItem.entityId!,
                             );
                             break;
                           case (NotificationsTypes.appointmentCanceled):
