@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/entity_types.dart';
 import 'package:get_it/get_it.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -43,30 +43,17 @@ void pushHandler(String? payload, {
       continue appointment;
     appointment:
     case EntityType.appointmentReminder24h:
-      final message = data['message'] as String?; 
-      final parts = message?.split(',');
-      if((parts?.length ?? 0) > 1) {
-        try{
-          final dt = parts![1];
-          final dateString = dt.split(" ")[1];
-          DateFormat dateFormat = DateFormat("dd.MM.yyyy");
+      final date = getFromAppointment(data['message']);
+      
+      final _route = AppointmentsRoute(
+        initDay: date,
+        notificationId: notificationId
+      );
 
-          Sentry.captureMessage("Push message: $message $dateString ${dateFormat.parse(dateString)}");
-          final date = dateFormat.parse(dateString);
-          final _route = AppointmentsRoute(
-            initDay: date,
-            notificationId: notificationId
-          );
-
-          if(!onAppOpen) {
-            pushNavigationService.nextPage = _route;
-          }
-          _router.push(_route);
-        } catch(err, stackTrace) {
-          Sentry.captureException(err, stackTrace: stackTrace);
-          _router.push(AppointmentsRoute());
-        }
+      if(!onAppOpen) {
+        pushNavigationService.nextPage = _route;
       }
+      _router.push(_route);
     break;
   case EntityType.memberAttached:
     _router.push(const MainRoute());

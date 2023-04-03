@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// Ф-я добавляет кол-во часов из часового пояса клиники
 /// Используется в тех местах, где критично точное местное время
@@ -82,4 +83,23 @@ DateTime getAppointmentTimeObject(DateTime dateTime, int timeZoneOffset,
       .add(Duration(hours: isTimeCell != true ? timeZoneOffset : mskTime));
 
   return timeOfClinic;
+}
+
+DateTime? getFromAppointment(String? message) {
+  final parts = message?.split(',');
+  if((parts?.length ?? 0) > 1) {
+    try{
+      final dt = parts![1];
+      final dateString = dt.split(" ")[1];
+      DateFormat dateFormat = DateFormat("dd.MM.yyyy");
+
+      final date = dateFormat.parse(dateString);
+      return date;
+    } catch(err, stackTrace) {
+      Sentry.captureException(err, stackTrace: stackTrace);
+      return null;
+    }
+  }
+
+  return null;
 }

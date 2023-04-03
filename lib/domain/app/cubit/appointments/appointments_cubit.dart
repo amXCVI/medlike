@@ -46,62 +46,46 @@ class AppointmentsCubit
       final List<AppointmentModel> response;
       response = await appointmentsRepository.getAppointmentsList();
 
+      final appointmentsList = response
+        .map((e) => AppointmentModelWithTimeZoneOffset(
+            status: e.status,
+            needConfirmation: e.needConfirmation,
+            comment: e.comment,
+            researchPlace: e.researchPlace,
+            id: e.id,
+            appointmentDateTime:
+                const TimestampConverter().fromJson(e.appointmentDateTime),
+            timeZoneOffset: int.parse(
+                e.appointmentDateTime.split('+').last.substring(0, 2)),
+            patientInfo: e.patientInfo,
+            clinicInfo: e.clinicInfo,
+            doctorInfo: e.doctorInfo,
+            researches: e.researches,
+            categoryType: e.categoryType,
+            isVideo: e.isVideo,
+            payType: e.payType,
+            isDraft: e.isDraft,
+            orderId: e.orderId,
+            scheduleId: e.scheduleId,
+            paymentStatus: e.paymentStatus,
+            recommendations: e.recommendations))
+        .toList();
+
+      final awaitedAppointments = appointmentsList
+        .where((e) => AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
+      .toList();
+
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.success,
-        appointmentsList: response
-            .map((e) => AppointmentModelWithTimeZoneOffset(
-                status: e.status,
-                needConfirmation: e.needConfirmation,
-                comment: e.comment,
-                researchPlace: e.researchPlace,
-                id: e.id,
-                appointmentDateTime:
-                    const TimestampConverter().fromJson(e.appointmentDateTime),
-                timeZoneOffset: int.parse(
-                    e.appointmentDateTime.split('+').last.substring(0, 2)),
-                patientInfo: e.patientInfo,
-                clinicInfo: e.clinicInfo,
-                doctorInfo: e.doctorInfo,
-                researches: e.researches,
-                categoryType: e.categoryType,
-                isVideo: e.isVideo,
-                payType: e.payType,
-                isDraft: e.isDraft,
-                orderId: e.orderId,
-                scheduleId: e.scheduleId,
-                paymentStatus: e.paymentStatus,
-                recommendations: e.recommendations))
-            .toList(),
-        filteredAppointmentsList: response
-            .map((e) => AppointmentModelWithTimeZoneOffset(
-                status: e.status,
-                needConfirmation: e.needConfirmation,
-                comment: e.comment,
-                researchPlace: e.researchPlace,
-                id: e.id,
-                appointmentDateTime:
-                    const TimestampConverter().fromJson(e.appointmentDateTime),
-                timeZoneOffset: int.parse(
-                    e.appointmentDateTime.split('+').last.substring(0, 2)),
-                patientInfo: e.patientInfo,
-                clinicInfo: e.clinicInfo,
-                doctorInfo: e.doctorInfo,
-                researches: e.researches,
-                categoryType: e.categoryType,
-                isVideo: e.isVideo,
-                payType: e.payType,
-                isDraft: e.isDraft,
-                orderId: e.orderId,
-                scheduleId: e.scheduleId,
-                paymentStatus: e.paymentStatus,
-                recommendations: e.recommendations))
-            .toList(),
+        appointmentsList: appointmentsList,
+        filteredAppointmentsList: appointmentsList,
         confirmCounter: 
-          response.where(
+          awaitedAppointments.where(
             (e) {
               final diff = 
-                const TimestampConverter().fromJson(e.appointmentDateTime).difference(DateTime.now());
-              return e.status == 4 && diff.inHours < 24 && diff.inHours >= 0;
+                e.appointmentDateTime.difference(DateTime.now());
+                /// TODO: WTF??
+              return diff.inHours < 24 && diff.inHours >= 0;
             }
           ).length
       ));
