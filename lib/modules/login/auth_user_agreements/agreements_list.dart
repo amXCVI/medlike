@@ -21,6 +21,8 @@ class _AgreementsListState extends State<AgreementsList> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   late WebViewController _con;
+  double? height;
+  String? body;
 
   _launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -30,17 +32,21 @@ class _AgreementsListState extends State<AgreementsList> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    /// Запрашивается №7. Никто не знает, почему именно так и от чего это зависит
+  /// Запрашивается №7. Никто не знает, почему именно так и от чего это зависит
     void _onLoadDada() {
       context
           .read<UserCubit>()
           .getUserAgreementDocument(typeAgreement: 'userAgreement');
     }
 
+  @override
+  void initState() {
+    super.initState();
     _onLoadDada();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         if (state.getUserAgreementDocumentStatus ==
@@ -48,36 +54,57 @@ class _AgreementsListState extends State<AgreementsList> {
           return const Text('');
         } else if (state.getUserAgreementDocumentStatus ==
             GetUserAgreementDocumentStatuses.success) {
-          return ListView(
-            shrinkWrap: true,
-            children: [
-              SizedBox(
-                  //? Задается высота для webview. Без этого не получилось сделать
-                  height: MediaQuery.of(context).size.height,
-                  child: kIsWeb
-                      ? WebAgreementsWidget(
-                          htmlBody: state.userAgreementDocument!.body,
-                        )
-                      : WebView(
-                          onWebViewCreated:
-                              (WebViewController webViewController) {
-                            _controller.complete(webViewController);
-                            _con = webViewController;
-                            _con.loadHtmlString(
-                                state.userAgreementDocument!.body);
-                          },
-                          navigationDelegate:
-                              (NavigationRequest request) async {
-                            if (request.url == 'about:blank') {
-                              return NavigationDecision.navigate;
-                            } else {
-                              _launchURL(request.url);
-                              return NavigationDecision.prevent;
-                            }
-                          },
-                          gestureNavigationEnabled: true,
-                        ))
-            ],
+          return LayoutBuilder(
+            /// Фикс высоты для webview
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return ListView(
+                children: [
+                  SizedBox(
+                      //? Задается высота для webview. Без этого не получилось сделать
+                      height: constraints.maxHeight,
+                      child: WebView(
+                        onWebViewCreated: (WebViewController webViewController) {
+                          const js = '''
+                            <script>
+                              var body = document.body,
+                              html = document.documentElement;
+
+                              var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                              html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+                              Print.postMessage(height);
+                            </script>'''; 
+
+                          _controller.complete(webViewController);
+                          _con = webViewController;
+                          _con.loadHtmlString(
+                            body ?? (state.userAgreementDocument!.body + js)
+                          );
+                        },
+                        javascriptMode: JavascriptMode.unrestricted,
+                        javascriptChannels: {
+                          JavascriptChannel(
+                            name: 'Print',
+                            onMessageReceived: (JavascriptMessage message) {
+                              setState(() {
+                                height = double.parse(message.message);
+                                body = state.userAgreementDocument!.body;
+                              });
+                            })
+                        },
+                        navigationDelegate: (NavigationRequest request) async {
+                          if (request.url == 'about:blank') {
+                            return NavigationDecision.navigate;
+                          } else {
+                            _launchURL(request.url);
+                            return NavigationDecision.prevent;
+                          }
+                        },
+                        gestureNavigationEnabled: true,
+                      ))
+                ],
+              );
+            }
           );
         } else {
           return const AgreementsListSkeleton();

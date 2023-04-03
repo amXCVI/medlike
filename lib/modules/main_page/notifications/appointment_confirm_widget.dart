@@ -15,15 +15,23 @@ class _AppointmentsConfirmWidgetState extends State<AppointmentsConfirmWidget> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 100), () async {
-      await context.read<AppointmentsCubit>().getLastAppointment(true);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppointmentsCubit, AppointmentsState>(
+    return BlocConsumer<AppointmentsCubit, AppointmentsState>(
+      listenWhen: (previous, current) {
+        return previous.getAppointmentsStatus != current.getAppointmentsStatus;
+      },
+      listener: (context, state) {
+        if(state.getAppointmentsStatus == GetAppointmentsStatuses.success) {
+          try {
+            context.read<AppointmentsCubit>().getLastAppointment(true);
+          } catch(err, stacktrace) {
+            rethrow;
+          }
+        }
+      },
       builder: (context, state) {
         if (state.lastAppointment == null) {
           return const SizedBox();
@@ -35,5 +43,3 @@ class _AppointmentsConfirmWidgetState extends State<AppointmentsConfirmWidget> {
     );
   }
 }
-
-

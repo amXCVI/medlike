@@ -20,11 +20,9 @@ class HealthPage extends StatelessWidget {
     void _handleTapOnUserProfile(String userId, bool isChildren) {
       context.read<DiaryCubit>().setUserId(userId);
       _loadData('None');
-      if (isChildren) {
-        context.router.push(CardsRoute(isChildrenPage: true));
-      } else {
-        context.router.replace(CardsRoute(isChildrenPage: false));
-      }
+      /// Для автоматического пропуска экрана replace всегда
+      /// isChildren игнорируем
+      context.router.replace(CardsRoute(isChildrenPage: false));
     }
 
     return BlocBuilder<DiaryCubit, DiaryState>(builder: (context, state) {
@@ -41,4 +39,8 @@ class HealthPage extends StatelessWidget {
       );
     });
   }
+}
+
+class HealthPageForMain extends HealthPage {
+  const HealthPageForMain({super.key});
 }

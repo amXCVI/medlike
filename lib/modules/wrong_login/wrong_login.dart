@@ -16,11 +16,11 @@ class WrongLoginPage extends StatelessWidget {
         isRelogin: true
       )) {
         /// Проверяем профиль
-        final isActiveUser = await context.read<UserCubit>().getUserProfiles(
+        final profileList = await context.read<UserCubit>().getUserProfiles(
           true,
           isCheck: true
         );
-        if(isActiveUser) {
+        if(profileList != null) {
           context.read<UserCubit>().resetTokenTryCount();
           context.router.replaceAll([const MainRoute()]);
         }

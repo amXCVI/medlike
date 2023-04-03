@@ -56,8 +56,8 @@ List<MainMenuItemJSON> mainMenuItemsList = [
     svgIconPath: 'assets/icons/menu_icons/ic_clinic_outline.svg',
     svgFilledIconPath: 'assets/icons/menu_icons/ic_clinic_filled.svg',
     title: 'Клиника',
-    link: AppRoutes.clinicInfo,
-    name: AppRoutes.clinicInfo,
+    link: AppRoutes.clinicInfoForDetails,
+    name: AppRoutes.clinicInfoForDetails,
   ),
   // MainMenuItemJSON(
   //   svgIconPath: 'assets/icons/menu_icons/ic_setting_outline.svg',

@@ -16,13 +16,14 @@ class _NotificationsWidgetState extends State<NotificationsWidget> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 100), () async {
-      await context.read<UserCubit>().getLastNotReadNotification(true);
+    try {
+      context.read<UserCubit>().getLastNotReadNotification(true);
       setState(() {
         isLoaded = true;
       });
-    });
+    } catch(err, stacktrace) {
+      rethrow;
+    }
   }
 
   @override

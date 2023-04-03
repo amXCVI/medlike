@@ -18,21 +18,20 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
-import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
+
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
-  final _router = AppRouter(
-    checkIsAuthUser: CheckIsAuthUser(),
-    checkIsSavedPinCode: CheckIsSavedPinCode(),
-    checkIsAuthSmartappUser: CheckIsAuthSmartappUser(),
-  );
+  final _router = getIt<AppRouter>();
 
   final mediator = UserMediator();
 

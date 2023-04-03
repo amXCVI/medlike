@@ -309,15 +309,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Получает список профилей из всех МО
-  Future<bool> getUserProfiles(bool isRefresh, {
+  Future<List<UserProfile>?> getUserProfiles(bool isRefresh, {
     isCheck = false
   }) async {
-    cleanSelectedUserId();
-    if (!isRefresh &&
-        state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
-        state.userProfiles != null) {
-      return true;
-    }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
@@ -342,7 +336,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
             byProfiles: true
           );
          }
-        return false;
+        return null;
       }
 
       emit(state.copyWith(
@@ -352,7 +346,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
 
-      return true;
+      return response;
     } catch (e) {
       /*
       emit(state.copyWith(
@@ -369,7 +363,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         );
       }
       addError(e);
-      return false;
+
+      return null;
     }
   }
 
@@ -412,7 +407,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
-
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');

@@ -83,3 +83,21 @@ DateTime getAppointmentTimeObject(DateTime dateTime, int timeZoneOffset,
 
   return timeOfClinic;
 }
+
+DateTime? getFromAppointment(String? message) {
+  final parts = message?.split(',');
+  if((parts?.length ?? 0) > 1) {
+    try{
+      final dt = parts![1];
+      final dateString = dt.split(" ")[1];
+      DateFormat dateFormat = DateFormat("dd.MM.yyyy");
+
+      final date = dateFormat.parse(dateString);
+      return date;
+    } catch(err, stackTrace) {
+      return null;
+    }
+  }
+
+  return null;
+}
