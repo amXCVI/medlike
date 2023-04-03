@@ -80,12 +80,27 @@ class AppRouter extends _i37.RootStackRouter {
   AppRouter(
       {_i38.GlobalKey<_i38.NavigatorState>? navigatorKey,
       required this.checkIsSavedPinCode,
-      required this.checkIsAuthUser})
+      required this.checkIsAuthUser,
+      required this.checkIsOneClinicForPrice,
+      required this.checkIsOneClinicForDetails,
+      required this.checkIsOneClinicForMain,
+      required this.checkIsOneProfileForHealth,
+      required this.checkIsOneProfileForMain})
       : super(navigatorKey);
 
   final _i39.CheckIsSavedPinCode checkIsSavedPinCode;
 
   final _i39.CheckIsAuthUser checkIsAuthUser;
+
+  final _i39.CheckIsOneClinicForPrice checkIsOneClinicForPrice;
+
+  final _i39.CheckIsOneClinicForDetails checkIsOneClinicForDetails;
+
+  final _i39.CheckIsOneClinicForMain checkIsOneClinicForMain;
+
+  final _i39.CheckIsOneProfileForHealth checkIsOneProfileForHealth;
+
+  final _i39.CheckIsOneProfileForMain checkIsOneProfileForMain;
 
   @override
   final Map<String, _i37.PageFactory> pagesMap = {
@@ -151,8 +166,11 @@ class AppRouter extends _i37.RootStackRouter {
           orElse: () => const AppointmentsRouteArgs());
       return _i37.AdaptivePage<dynamic>(
           routeData: routeData,
-          child:
-              _i10.AppointmentsPage(key: args.key, isRefresh: args.isRefresh));
+          child: _i10.AppointmentsPage(
+              key: args.key,
+              isRefresh: args.isRefresh,
+              initDay: args.initDay,
+              notificationId: args.notificationId));
     },
     SubscribeProfilesListRoute.name: (routeData) {
       return _i37.AdaptivePage<dynamic>(
@@ -279,7 +297,8 @@ class AppRouter extends _i37.RootStackRouter {
           child: _i23.MedcardPage(
               key: args.key,
               userId: args.userId,
-              isChildrenPage: args.isChildrenPage));
+              isChildrenPage: args.isChildrenPage,
+              eventId: args.eventId));
     },
     FilesRoute.name: (routeData) {
       final args = routeData.argsAs<FilesRouteArgs>();
@@ -312,6 +331,22 @@ class AppRouter extends _i37.RootStackRouter {
           child: _i28.AllClinicsListPage(
               key: args.key, isFromMainPage: args.isFromMainPage));
     },
+    ClinicRouteForDetails.name: (routeData) {
+      final args = routeData.argsAs<ClinicRouteForDetailsArgs>(
+          orElse: () => const ClinicRouteForDetailsArgs());
+      return _i37.AdaptivePage<dynamic>(
+          routeData: routeData,
+          child: _i28.ClinicPageForDetails(
+              key: args.key, isFromMainPage: args.isFromMainPage));
+    },
+    ClinicRouteForMain.name: (routeData) {
+      final args = routeData.argsAs<ClinicRouteForMainArgs>(
+          orElse: () => const ClinicRouteForMainArgs());
+      return _i37.AdaptivePage<dynamic>(
+          routeData: routeData,
+          child: _i28.ClinicPageForMain(
+              key: args.key, isFromMainPage: args.isFromMainPage));
+    },
     ClinicDetailWithBottomSheetsRoute.name: (routeData) {
       final args = routeData.argsAs<ClinicDetailWithBottomSheetsRouteArgs>();
       return _i37.AdaptivePage<dynamic>(
@@ -334,6 +369,10 @@ class AppRouter extends _i37.RootStackRouter {
     HealthRoute.name: (routeData) {
       return _i37.AdaptivePage<dynamic>(
           routeData: routeData, child: const _i32.HealthPage());
+    },
+    HealthRouteForMain.name: (routeData) {
+      return _i37.AdaptivePage<dynamic>(
+          routeData: routeData, child: const _i32.HealthPageForMain());
     },
     CardsRoute.name: (routeData) {
       final args = routeData.argsAs<CardsRouteArgs>();
@@ -430,7 +469,14 @@ class AppRouter extends _i37.RootStackRouter {
         _i37.RouteConfig(SupportRoute.name,
             path: '/settings_support', guards: [checkIsAuthUser]),
         _i37.RouteConfig(AllClinicsListRoute.name,
-            path: '/clinic_info', guards: [checkIsAuthUser]),
+            path: '/clinic_info',
+            guards: [checkIsOneClinicForPrice, checkIsAuthUser]),
+        _i37.RouteConfig(ClinicRouteForDetails.name,
+            path: '/clinic_info_for_details',
+            guards: [checkIsOneClinicForDetails, checkIsAuthUser]),
+        _i37.RouteConfig(ClinicRouteForMain.name,
+            path: '/clinic_info_for_main',
+            guards: [checkIsOneClinicForMain, checkIsAuthUser]),
         _i37.RouteConfig(ClinicDetailWithBottomSheetsRoute.name,
             path: '/clinic_info_details', guards: [checkIsAuthUser]),
         _i37.RouteConfig(PriceRoute.name,
@@ -438,7 +484,11 @@ class AppRouter extends _i37.RootStackRouter {
         _i37.RouteConfig(SalesRoute.name,
             path: '/clinic_info_sales', guards: [checkIsAuthUser]),
         _i37.RouteConfig(HealthRoute.name,
-            path: '/health_profiles', guards: [checkIsAuthUser]),
+            path: '/health_profiles',
+            guards: [checkIsOneProfileForHealth, checkIsAuthUser]),
+        _i37.RouteConfig(HealthRouteForMain.name,
+            path: '/health_profiles_for_main',
+            guards: [checkIsOneProfileForMain, checkIsAuthUser]),
         _i37.RouteConfig(CardsRoute.name,
             path: '/health', guards: [checkIsAuthUser]),
         _i37.RouteConfig(DiaryRoute.name,
@@ -631,24 +681,37 @@ class MainRoute extends _i37.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.AppointmentsPage]
 class AppointmentsRoute extends _i37.PageRouteInfo<AppointmentsRouteArgs> {
-  AppointmentsRoute({_i38.Key? key, bool? isRefresh = false})
+  AppointmentsRoute(
+      {_i38.Key? key,
+      bool? isRefresh = false,
+      DateTime? initDay,
+      String? notificationId})
       : super(AppointmentsRoute.name,
             path: '/my_appointments',
-            args: AppointmentsRouteArgs(key: key, isRefresh: isRefresh));
+            args: AppointmentsRouteArgs(
+                key: key,
+                isRefresh: isRefresh,
+                initDay: initDay,
+                notificationId: notificationId));
 
   static const String name = 'AppointmentsRoute';
 }
 
 class AppointmentsRouteArgs {
-  const AppointmentsRouteArgs({this.key, this.isRefresh = false});
+  const AppointmentsRouteArgs(
+      {this.key, this.isRefresh = false, this.initDay, this.notificationId});
 
   final _i38.Key? key;
 
   final bool? isRefresh;
 
+  final DateTime? initDay;
+
+  final String? notificationId;
+
   @override
   String toString() {
-    return 'AppointmentsRouteArgs{key: $key, isRefresh: $isRefresh}';
+    return 'AppointmentsRouteArgs{key: $key, isRefresh: $isRefresh, initDay: $initDay, notificationId: $notificationId}';
   }
 }
 
@@ -1120,18 +1183,27 @@ class MedcardProfilesListRoute extends _i37.PageRouteInfo<void> {
 /// [_i23.MedcardPage]
 class MedcardRoute extends _i37.PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute(
-      {_i38.Key? key, required String userId, required bool isChildrenPage})
+      {_i38.Key? key,
+      required String userId,
+      required bool isChildrenPage,
+      String? eventId})
       : super(MedcardRoute.name,
             path: '/medcard_files_list',
             args: MedcardRouteArgs(
-                key: key, userId: userId, isChildrenPage: isChildrenPage));
+                key: key,
+                userId: userId,
+                isChildrenPage: isChildrenPage,
+                eventId: eventId));
 
   static const String name = 'MedcardRoute';
 }
 
 class MedcardRouteArgs {
   const MedcardRouteArgs(
-      {this.key, required this.userId, required this.isChildrenPage});
+      {this.key,
+      required this.userId,
+      required this.isChildrenPage,
+      this.eventId});
 
   final _i38.Key? key;
 
@@ -1139,9 +1211,11 @@ class MedcardRouteArgs {
 
   final bool isChildrenPage;
 
+  final String? eventId;
+
   @override
   String toString() {
-    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
+    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage, eventId: $eventId}';
   }
 }
 
@@ -1236,6 +1310,57 @@ class AllClinicsListRouteArgs {
 }
 
 /// generated route for
+/// [_i28.ClinicPageForDetails]
+class ClinicRouteForDetails
+    extends _i37.PageRouteInfo<ClinicRouteForDetailsArgs> {
+  ClinicRouteForDetails({_i38.Key? key, bool isFromMainPage = false})
+      : super(ClinicRouteForDetails.name,
+            path: '/clinic_info_for_details',
+            args: ClinicRouteForDetailsArgs(
+                key: key, isFromMainPage: isFromMainPage));
+
+  static const String name = 'ClinicRouteForDetails';
+}
+
+class ClinicRouteForDetailsArgs {
+  const ClinicRouteForDetailsArgs({this.key, this.isFromMainPage = false});
+
+  final _i38.Key? key;
+
+  final bool isFromMainPage;
+
+  @override
+  String toString() {
+    return 'ClinicRouteForDetailsArgs{key: $key, isFromMainPage: $isFromMainPage}';
+  }
+}
+
+/// generated route for
+/// [_i28.ClinicPageForMain]
+class ClinicRouteForMain extends _i37.PageRouteInfo<ClinicRouteForMainArgs> {
+  ClinicRouteForMain({_i38.Key? key, bool isFromMainPage = false})
+      : super(ClinicRouteForMain.name,
+            path: '/clinic_info_for_main',
+            args: ClinicRouteForMainArgs(
+                key: key, isFromMainPage: isFromMainPage));
+
+  static const String name = 'ClinicRouteForMain';
+}
+
+class ClinicRouteForMainArgs {
+  const ClinicRouteForMainArgs({this.key, this.isFromMainPage = false});
+
+  final _i38.Key? key;
+
+  final bool isFromMainPage;
+
+  @override
+  String toString() {
+    return 'ClinicRouteForMainArgs{key: $key, isFromMainPage: $isFromMainPage}';
+  }
+}
+
+/// generated route for
 /// [_i29.ClinicDetailWithBottomSheetsPage]
 class ClinicDetailWithBottomSheetsRoute
     extends _i37.PageRouteInfo<ClinicDetailWithBottomSheetsRouteArgs> {
@@ -1317,6 +1442,15 @@ class HealthRoute extends _i37.PageRouteInfo<void> {
   const HealthRoute() : super(HealthRoute.name, path: '/health_profiles');
 
   static const String name = 'HealthRoute';
+}
+
+/// generated route for
+/// [_i32.HealthPageForMain]
+class HealthRouteForMain extends _i37.PageRouteInfo<void> {
+  const HealthRouteForMain()
+      : super(HealthRouteForMain.name, path: '/health_profiles_for_main');
+
+  static const String name = 'HealthRouteForMain';
 }
 
 /// generated route for

@@ -16,7 +16,7 @@ class NotificationModel with _$NotificationModel {
     required int eventsCount,
     required String userId,
     required String eventType,
-    required String entityId,
+    String? entityId,
   }) = _NotificationModel;
 
   factory NotificationModel.fromJson(Map<String, Object?> json) =>

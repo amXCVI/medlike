@@ -60,16 +60,38 @@ class FCMService {
   }
 
   static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
-    const InitializationSettings _initializationSettings =
+    final InitializationSettings _initializationSettings =
         InitializationSettings(
-      android: AndroidInitializationSettings("@mipmap/launcher_icon"),
-      iOS: DarwinInitializationSettings(),
+      android: const AndroidInitializationSettings("@mipmap/launcher_icon"),
+      iOS: DarwinInitializationSettings(
+        onDidReceiveLocalNotification: ((id, title, body, payload) {
+          Sentry.captureMessage("$id $title $body $payload");
+        })
+      ),
     );
 
     _localNotificationsPlugin.initialize(
       _initializationSettings,
       onDidReceiveNotificationResponse: onSelectNotification,
+      onDidReceiveBackgroundNotificationResponse:(details) {
+        Sentry.captureMessage("BC details: ${details.payload}");
+        onSelectNotification(details);
+      },
     );
+  }
+
+  static Future<void> checkNotificationClicked(
+    Function(NotificationResponse notificationResponse) onSelectNotification
+  ) async {
+     Sentry.captureMessage("NotificationService.checkNotificationClicked()");
+    NotificationAppLaunchDetails? details =
+        await _localNotificationsPlugin.getNotificationAppLaunchDetails();
+
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse != null) {
+      onSelectNotification(details.notificationResponse!);
+    }
   }
 
   static NotificationDetails platformChannelSpecifics =
@@ -91,26 +113,14 @@ class FCMService {
     }
   }
 
-  static Future<void> onBackgroundMsg() async {
+  static Future<void> onBackgroundMsg(Function(RemoteMessage message)? onBackgroundMessage) async {
     await FCMService._getFMInstance().getInitialMessage();
     FirebaseMessaging.onBackgroundMessage(FCMService.fcmBackgroundHandler);
   }
 
   static Future<void> fcmBackgroundHandler(RemoteMessage message) async {
-    Sentry.captureMessage("Background Message payload ${message.data}");
-    await FCMService._localNotificationsPlugin.show(
-      0,
-      message.data['title'],
-      message.data['message'],
-      FCMService.platformChannelSpecifics,
-      payload: "new follower",
-    );
-  }
-
-  static Future<void> onMessage(Function(RemoteMessage message)? onShowMessage) async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Sentry.captureMessage("Message payload ${message.data}");
-
+    try {
+      Sentry.captureMessage("Background Message payload ${message.data}");
       await FCMService._localNotificationsPlugin.show(
         0,
         message.data['title'],
@@ -118,9 +128,36 @@ class FCMService {
         FCMService.platformChannelSpecifics,
         payload: jsonEncode(message.data),
       );
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+    }
+  }
 
-      if(onShowMessage != null) {
-        onShowMessage(message);
+  static Future<void> onMessage(Function(RemoteMessage message)? onShowMessage) async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      try {
+        Sentry.captureMessage("Message notification ${message.notification?.body}");
+        Sentry.captureMessage("Message payload ${message.data}");
+
+        await FCMService._localNotificationsPlugin.show(
+          0,
+          message.data['title'],
+          message.data['message'],
+          FCMService.platformChannelSpecifics,
+          payload: jsonEncode(message.data),
+        );
+
+        if(onShowMessage != null) {
+          onShowMessage(message);
+        }
+      } catch (exception, stackTrace) {
+        await Sentry.captureException(
+          exception,
+          stackTrace: stackTrace,
+        );
       }
     });
   }
@@ -142,7 +179,7 @@ class FCMService {
   }
 
   static Future<void> getFCMApps() async {
-    String? appName=await FirebaseMessaging.instance.app.name;
+    String? appName = FirebaseMessaging.instance.app.name;
     if (kDebugMode) {
       print('!!!!!!!!! FCM appName: $appName');
     }

@@ -135,6 +135,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           await deleteFirebaseDeviceId();
         }
         await addFirebaseDeviceId();
+        if(Platform.isAndroid) {
+          await FCMService.onMessage(null);
+        }
       });
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
@@ -201,6 +204,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         await deleteFirebaseDeviceId();
       }
       await addFirebaseDeviceId();
+      if(Platform.isAndroid) {
+        await FCMService.onMessage(null);
+      }
     });
   }
 
@@ -212,7 +218,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       Sentry.configureScope((scope) {
         scope.setExtra('fcmToken', fcmToken);
       });
-      userRepository.registerDeviceFirebaseToken(token: fcmToken);
+      await FirebaseMessaging.instance.getAPNSToken();
+      await userRepository.registerDeviceFirebaseToken(token: fcmToken);
       Sentry.captureMessage('FCM Token: $fcmToken');
     } catch (e) {
       Sentry.captureException(e);
@@ -234,12 +241,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Получает список профилей из всех МО
-  void getUserProfiles(bool isRefresh) async {
+  Future<List<UserProfile>?> getUserProfiles(bool isRefresh) async {
     cleanSelectedUserId();
     if (!isRefresh &&
         state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
-      return;
+      return state.userProfiles;
     }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
@@ -262,11 +269,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         selectedUserId: (currentSelectedUserId ?? defaultUserId).toString(),
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
+
+      return response;
     } catch (e) {
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
       addError(e);
+
+      return null;
     }
   }
 
@@ -319,6 +330,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           await deleteFirebaseDeviceId();
         }
         await addFirebaseDeviceId();
+        if(Platform.isAndroid) {
+          await FCMService.onMessage(null);
+        }
       });
       return true;
     } else {

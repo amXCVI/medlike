@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class InactivityManager extends StatefulWidget {
@@ -31,19 +32,16 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    const dur = Duration(
-      minutes: kDebugMode ? 60 : AppConstants.timeoutDurationMinutes
-    );
-
     if(state != AppLifecycleState.resumed) {
       await UserSecureStorage.setField(AppConstants.timeoutStart, DateTime.now().toString());
       context.read<PromptCubit>().unselect();
     } else {
-      final time = DateTime.tryParse(
-        await UserSecureStorage.getField(AppConstants.timeoutStart) ?? ''
-      );
-      if(time == null || DateTime.now().difference(time) >= dur) {
+      final isBlocked = await ResumeHelper.isAppBlocked();
+      //UserSecureStorage.deleteField(AppConstants.timeoutStart);
+      if(isBlocked) {
         _logOutUser();
+      } else {
+        ResumeHelper.resume();
       }
     }
   }
@@ -64,6 +62,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   }
 
   void _handleUserInteraction([_]) {
+    ResumeHelper.resume();
     if (!_timer.isActive) {
       return;
     }

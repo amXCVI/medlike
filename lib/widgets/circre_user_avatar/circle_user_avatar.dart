@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class CircleUserAvatar extends StatelessWidget {
   const CircleUserAvatar({
@@ -33,7 +34,11 @@ class CircleUserAvatar extends StatelessWidget {
                 ? CircleAvatar(
                     radius: radius,
                     backgroundImage: NetworkImage(
-                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar'),
+                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar',
+                    ),
+                    onBackgroundImageError: (exception, stackTrace) {
+                      Sentry.captureException(exception, stackTrace: stackTrace);
+                    },
                   )
                 : CircleAvatar(
                     radius: radius,

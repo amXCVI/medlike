@@ -74,12 +74,15 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(path: AppRoutes.settingsAgreements, page: AgreementsPage),
     AdaptiveRoute(path: AppRoutes.settingsSupport, page: SupportPage, guards: [CheckIsAuthUser]),
 
-    AdaptiveRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.clinicInfo, page: AllClinicsListPage, guards: [CheckIsOneClinicForPrice, CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.clinicInfoForDetails, page: ClinicPageForDetails, guards: [CheckIsOneClinicForDetails, CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.clinicInfoForMain, page: ClinicPageForMain, guards: [CheckIsOneClinicForMain, CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoDetails, page: ClinicDetailWithBottomSheetsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoPrice, page: PricePage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.clinicInfoSales, page: SalesPage, guards: [CheckIsAuthUser]),
 
-    AdaptiveRoute(path: AppRoutes.healthProfiles, page: HealthPage, guards: [CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.healthProfiles, page: HealthPage, guards: [CheckIsOneProfileForHealth, CheckIsAuthUser]),
+    AdaptiveRoute(path: AppRoutes.healthProfilesForMain, page: HealthPageForMain, guards: [CheckIsOneProfileForMain, CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.health, page: CardsPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
     AdaptiveRoute(path: AppRoutes.diaryAdd, page: DiaryAddPage, guards: [CheckIsAuthUser]),

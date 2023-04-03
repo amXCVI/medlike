@@ -163,7 +163,9 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
               child: InkWell(
                 onTap: () {
                   context.router.push(
-                    AppointmentsRoute()
+                    AppointmentsRoute(
+                      initDay: widget.appointment.appointmentDateTime
+                    )
                   );
                 },
                 child: content
