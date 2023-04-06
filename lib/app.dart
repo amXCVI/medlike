@@ -35,7 +35,8 @@ final getIt = GetIt.instance;
 class App extends StatelessWidget {
   App({
     Key? key,
-    this.appointmentsRepository
+    this.appointmentsRepository,
+    this.testChild
   }) : super(key: key);
 
   final _router = getIt<AppRouter>();
@@ -43,6 +44,8 @@ class App extends StatelessWidget {
   final mediator = UserMediator();
 
   final AppointmentsRepository? appointmentsRepository;
+
+  final Widget? testChild;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +57,44 @@ class App extends StatelessWidget {
       mediator.sendTo<AppointmentsCubit>(userCubit, UserMediatorEvent.pushNotification);
       mediator.sendTo<UserCubit>(appointmentCubit, UserMediatorEvent.pushNotification);
     });
+
+    final app = testChild != null ? 
+      MaterialApp(
+        home: Scaffold(
+          body: testChild,
+        ),
+        debugShowCheckedModeBanner: false,
+      ) : InactivityManager(
+      child: FutureBuilder<bool>(
+        future: checkIsSavedPinCode(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if(!snapshot.hasData) {
+            return const SplashPage();
+          }
+          return MaterialApp.router(
+            title: 'Medlike',
+            theme: AppTheme.lightAppTheme,
+            routerDelegate: AutoRouterDelegate(
+              _router,
+              initialRoutes: [
+                if(snapshot.data!) const CheckPinCodeRoute(),
+                if(!snapshot.data!) StartPhoneNumberRoute()
+              ],
+              navigatorObservers: () => [
+                FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+                SentryNavigatorObserver()
+              ],
+            ),
+            routeInformationParser: _router.defaultRouteParser(),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('en')],
+          );
+        }
+      ),
+    );
 
     return MultiBlocProvider(
       providers: [
@@ -68,37 +109,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => PromptCubit()),
         BlocProvider(create: (context) => TourCubit()..fetchStatus())
       ],
-      child: InactivityManager(
-        child: FutureBuilder<bool>(
-          future: checkIsSavedPinCode(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if(!snapshot.hasData) {
-              return const SplashPage();
-            }
-            return MaterialApp.router(
-              title: 'Medlike',
-              theme: AppTheme.lightAppTheme,
-              routerDelegate: AutoRouterDelegate(
-                _router,
-                initialRoutes: [
-                  if(snapshot.data!) const CheckPinCodeRoute(),
-                  if(!snapshot.data!) StartPhoneNumberRoute()
-                ],
-                navigatorObservers: () => [
-                  FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-                  SentryNavigatorObserver()
-                ],
-              ),
-              routeInformationParser: _router.defaultRouteParser(),
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-              ],
-              supportedLocales: const [Locale('en')],
-            );
-          }
-        ),
-      ),
+      child: app
     );
   }
 }

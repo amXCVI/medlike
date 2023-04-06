@@ -15,6 +15,5 @@ void main() {
     var appointmentConfirmWidget = find.byType(SplashPage);
 
     expect(appointmentConfirmWidget, findsOneWidget);
-    await tester.pumpAndSettle(const Duration(seconds: 1));
   });
 }
