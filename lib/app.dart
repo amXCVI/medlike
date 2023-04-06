@@ -33,15 +33,21 @@ final getIt = GetIt.instance;
 
 
 class App extends StatelessWidget {
-  App({Key? key}) : super(key: key);
+  App({
+    Key? key,
+    this.appointmentsRepository
+  }) : super(key: key);
 
   final _router = getIt<AppRouter>();
 
   final mediator = UserMediator();
 
+  final AppointmentsRepository? appointmentsRepository;
+
   @override
   Widget build(BuildContext context) {
-    final appointmentCubit = AppointmentsCubit(AppointmentsRepository(), mediator);
+
+    final appointmentCubit = AppointmentsCubit(appointmentsRepository ?? AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
 
     FCMService.onMessage((message) {

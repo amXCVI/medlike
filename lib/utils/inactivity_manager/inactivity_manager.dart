@@ -74,6 +74,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
   @override
   void dispose() {
     super.dispose();
+    _timer.cancel();
     WidgetsBinding.instance.removeObserver(this);
   }
 
