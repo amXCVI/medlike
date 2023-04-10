@@ -42,7 +42,7 @@ class App extends StatelessWidget {
     final userCubit = UserCubit(UserRepository(), mediator);
 
     try {
-      SmartAppClient.getSmartAppToken();
+      SmartAppClient.getSmartAppTokenWithRefresh();
     } catch (err) {
       rethrow;
     }

@@ -23,7 +23,7 @@ class SmartappLoginPage extends StatelessWidget {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
-      SmartAppClient.getSmartAppToken().then((data) async {
+      SmartAppClient.getSmartAppTokenWithRefresh().then((data) async {
         /// Если токен пришел, авторизовываемся у себя через него
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
@@ -67,7 +67,7 @@ class SmartappLoginPage extends StatelessWidget {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
-      return await SmartAppClient.getSmartAppToken().then((data) async {
+      return await SmartAppClient.getSmartAppTokenWithRefresh().then((data) async {
         /// Если токен пришел, авторизовываемся у себя через него
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');

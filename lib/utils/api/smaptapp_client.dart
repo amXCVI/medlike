@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
 import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/utils/api/smartapp_client_errors.dart';
 
 import 'dart:js' as js;
 
@@ -570,7 +571,48 @@ class SmartAppClient {
     }), js.allowInterop((err) {
       print('ERROR GET SMARTAPP TOKEN: $err');
       print('>>>> Ошибка при получении токена смартапп');
-      return err;
+      throw SmartappTokenException(err);
     })));
   }
+  
+
+  static Future<String> refreshSmartAppToken() async {
+    return await promiseToFuture(sendBotEvent(
+      const JsonEncoder().convert({
+        'method': 'get_refresh_open_id_token',
+        'params': {},
+      }),
+      null,
+    ).then(js.allowInterop((data) {
+      print('>>>> Ответ рефреша из смартаппа пришел: $data');
+      dynamic jsonResponseObject;
+      try {
+        jsonResponseObject = json.decode(data);
+      } catch (err) {
+        jsonResponseObject = data;
+      }
+      print('>>>> res: $jsonResponseObject');
+      SmartappSendBotEventTokenResponseModel parsedResponse =
+          SmartappSendBotEventTokenResponseModel.fromJson(jsonResponseObject);
+      print('>>>> Ответ прочитан и преобразован в объект: $parsedResponse');
+      String refreshResult = parsedResponse.payload.result;
+      return refreshResult;
+    }), js.allowInterop((err) {
+      print('ERROR REFRESH SMARTAPP TOKEN: $err');
+      print('>>>> Ошибка при рефреше токена смартапп');
+      throw SmartappTokenException(err);
+    })));
+  }
+
+  /// Комбинированная функция для рефреша токена в случае проблемы
+  static Future<String> getSmartAppTokenWithRefresh() async {
+    try {
+      String token = await SmartAppClient.getSmartAppToken();
+      return token;
+    } catch (error) {
+      await SmartAppClient.refreshSmartAppToken();
+      String token = await SmartAppClient.getSmartAppToken();
+      return token;
+    }
+  } 
 }
