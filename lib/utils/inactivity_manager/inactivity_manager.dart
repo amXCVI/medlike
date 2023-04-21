@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
+import 'package:medlike/utils/helpers/smartapp/get_smartapp_token_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class InactivityManager extends StatefulWidget {
@@ -24,6 +25,10 @@ class _InactivityManagerState extends State<InactivityManager>
   @override
   void initState() {
     super.initState();
+
+    /// TODO: переписать нормально из хелпера 
+    /// в вызов метода кубита
+    getSmartappTokenHelper(context);
 
     WidgetsBinding.instance.addObserver(this);
     _initializeTimer();

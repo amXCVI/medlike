@@ -19,11 +19,11 @@ class SmartappLoginPage extends StatelessWidget {
       return await context.read<UserCubit>().smartappAuth(smartappToken: data);
     }
 
-    void getSmartappTokenForce() async {
+    void getSmartappToken() async {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
-      SmartAppClient.getSmartAppTokenWithRefresh().then((data) async {
+      SmartAppClient.getSmartAppToken().then((data) async {
         /// Если токен пришел, авторизовываемся у себя через него
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
@@ -63,34 +63,6 @@ class SmartappLoginPage extends StatelessWidget {
       });
     }
 
-    Future<bool> getSmartappToken() async {
-      print('start getting smartapp token');
-
-      /// Запрашиваем токен в Смартаппе
-      return await SmartAppClient.getSmartAppTokenWithRefresh().then((data) async {
-        /// Если токен пришел, авторизовываемся у себя через него
-        print(
-            'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
-        return await context
-            .read<UserCubit>()
-            .smartappAuth(smartappToken: data)
-            .then((value) {
-          if (value) {
-            /// Если авторизация успешна, переходим на главную
-            print(
-                '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
-            return true;
-          } else {
-            print('Не удалось авторизоваться через smartapp token.');
-            return false;
-          }
-        });
-      }).catchError((onError) {
-        print('ERROR: $onError');
-        return false;
-      });
-    }
-
     void goToLoginPage() {
       UserSecureStorage.setField(AppConstants.smartappToken, 'smartappToken');
       context.router.replaceAll([StartPhoneNumberRoute()]);
@@ -115,7 +87,7 @@ class SmartappLoginPage extends StatelessWidget {
     /// Вызываем в builder что не есть хорошо!
     getAuthStatus().then((isAuth) {
       if (!isAuth) {
-        getSmartappTokenForce();
+        getSmartappToken();
       } else {
         context.router.replaceAll([const MainRoute()]);
       }
@@ -123,7 +95,7 @@ class SmartappLoginPage extends StatelessWidget {
 
     return Center(
       child: GestureDetector(
-        onDoubleTap: getSmartappTokenForce,
+        onDoubleTap: getSmartappToken,
         child: const CircularLoader(
           radius: 50,
         ),

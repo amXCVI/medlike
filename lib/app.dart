@@ -21,7 +21,6 @@ import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:get_it/get_it.dart';
 
@@ -40,12 +39,6 @@ class App extends StatelessWidget {
     final appointmentCubit =
         AppointmentsCubit(AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
-
-    try {
-      SmartAppClient.getSmartAppTokenWithRefresh();
-    } catch (err) {
-      rethrow;
-    }
 
     return MultiBlocProvider(
       providers: [
