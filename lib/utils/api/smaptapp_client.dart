@@ -10,6 +10,7 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/smartapp_models/smartapp_models.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/api/smartapp_client_errors.dart';
+import 'package:medlike/utils/helpers/smartapp/clients_headers_helper.dart';
 
 import 'dart:js' as js;
 
@@ -36,31 +37,18 @@ external Promise<dynamic> sendClientEvent(Object objectParams);
 external String userAgent;
 
 class SmartAppClient {
-  Map<String, dynamic> _getDefaultHeaders(String token, {
+
+  Map<String, dynamic> getHeaders(String token, {
      Map<String, dynamic>? headers
   }) {
     print('=========== USER-AGENT ==============');
     print(userAgent);
 
-    Map<String, dynamic> defaultHeaders = {
-      'User-Agent': userAgent,
-      'Accept': 'application/json; charset=utf-8',
-      'Content-Type': 'application/json',
-      'Project': ApiConstants.env,
-      'VerApp': ApiConstants.appVersion,
-      'Platform': '6',
-      'Authorization': token,
-    };
-
-    if(headers != null) {
-      return {
-        ...headers,
-        'User-Agent': userAgent,
-        'Platform': '6',
-      };
-    }
-
-    return defaultHeaders;
+    return getHeadersHelper(
+      token,
+      userAgent,
+      headers: headers
+    );
   }
 
   Future<dynamic> get(String endpoint,
@@ -77,7 +65,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token, 
       headers: options?.headers
     );
@@ -132,7 +120,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token, 
       headers: options?.headers
     );
@@ -194,7 +182,7 @@ class SmartAppClient {
     print('DELETE $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
@@ -248,7 +236,7 @@ class SmartAppClient {
     print('PUT $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
@@ -300,7 +288,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
@@ -354,7 +342,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
@@ -425,7 +413,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
@@ -477,7 +465,7 @@ class SmartAppClient {
 
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
-    Map<String, dynamic> defaultHeaders = _getDefaultHeaders(
+    Map<String, dynamic> defaultHeaders = getHeaders(
       token,
       headers: options?.headers
     );
