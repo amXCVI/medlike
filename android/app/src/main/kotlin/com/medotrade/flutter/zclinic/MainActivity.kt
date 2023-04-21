@@ -1,4 +1,4 @@
-package com.example.medlike
+package com.medotrade.flutter.zclinic
 
 import android.os.Bundle
 import io.flutter.embedding.engine.FlutterEngine

@@ -4,7 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -14,7 +13,6 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -131,13 +129,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       /// Обновляем токен, есть вероятность, что он устарел
       Future.delayed(Duration.zero, () async {
         /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-        if(kDebugMode) {
-          await deleteFirebaseDeviceId();
-        }
         await addFirebaseDeviceId();
-        if(Platform.isAndroid) {
-          await FCMService.onMessage(null);
-        }
       });
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
@@ -180,8 +172,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.authPinCode);
     UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
-    FCMService.cleanFCMToken();
-
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
@@ -200,13 +190,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     /// Обновляем токен, есть вероятность, что он устарел
     Future.delayed(Duration.zero, () async {
       /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-      if(kDebugMode) {
-        await deleteFirebaseDeviceId();
-      }
       await addFirebaseDeviceId();
-      if(Platform.isAndroid) {
-        await FCMService.onMessage(null);
-      }
     });
   }
 
@@ -221,20 +205,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       await FirebaseMessaging.instance.getAPNSToken();
       await userRepository.registerDeviceFirebaseToken(token: fcmToken);
       Sentry.captureMessage('FCM Token: $fcmToken');
-    } catch (e) {
-      Sentry.captureException(e);
-    }
-  }
-
-  /// Удаляет deviceId устройства на бэке
-  Future<void> deleteFirebaseDeviceId() async {
-    try {
-      String fcmToken = await FirebaseMessaging.instance.getToken() as String;
-      userRepository.deleteDeviceFirebaseToken(token: fcmToken);
-      Sentry.captureMessage(
-        'Удаляем токен $fcmToken'
-      );
-      await FirebaseMessaging.instance.deleteToken();
     } catch (e) {
       Sentry.captureException(e);
     }
@@ -326,13 +296,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       /// Обновляем токен, есть вероятность, что он устарел
       Future.delayed(Duration.zero, () async {
         /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-        if(kDebugMode) {
-          await deleteFirebaseDeviceId();
-        }
         await addFirebaseDeviceId();
-        if(Platform.isAndroid) {
-          await FCMService.onMessage(null);
-        }
       });
       return true;
     } else {

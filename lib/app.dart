@@ -23,7 +23,6 @@ import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/helpers/auth_check_helpers.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:get_it/get_it.dart';
 
@@ -53,10 +52,12 @@ class App extends StatelessWidget {
     final appointmentCubit = AppointmentsCubit(appointmentsRepository ?? AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
 
+    /*
     FCMService.onMessage((message) {
       mediator.sendTo<AppointmentsCubit>(userCubit, UserMediatorEvent.pushNotification);
       mediator.sendTo<UserCubit>(appointmentCubit, UserMediatorEvent.pushNotification);
     });
+    */
 
     final app = testChild != null ? 
       MaterialApp(

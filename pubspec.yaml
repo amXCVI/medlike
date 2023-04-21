@@ -62,6 +62,7 @@ dependencies:
   sentry_flutter: ^6.18.2
   sentry_dio: ^6.18.2
   get_it: ^7.2.0
+  permission_handler: ^10.2.0
 
   cupertino_icons: ^1.0.5
 
@@ -73,6 +74,8 @@ dev_dependencies:
   json_serializable: ^6.2.0
   logger: ^1.1.0
   mocktail: ^0.3.0
+  change_app_package_name: ^1.1.0
+
 
   flutter_lints: any
   freezed: ^2.0.3+1
