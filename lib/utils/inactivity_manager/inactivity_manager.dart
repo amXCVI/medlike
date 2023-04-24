@@ -10,7 +10,6 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class InactivityManager extends StatefulWidget {
   const InactivityManager({Key? key, required this.child}) : super(key: key);

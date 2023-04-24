@@ -17,10 +17,10 @@ class LocalNotificationService {
       return status;
     } else {
       final before = await permission.shouldShowRequestRationale;
-      final rs = await permission.request();
+      final rs = await [permission, Permission.photos].request();
       final after = await permission.shouldShowRequestRationale;
 
-      if (rs.isGranted) {
+      if (rs[0]?.isGranted == true) {
         print('User granted this permission');
       } else if (!before && after) {
         print('Show permission request pop-up and user denied first time');
