@@ -12,6 +12,9 @@ class LocalNotificationService {
     final status = await permission.status;
     if (status.isGranted) {
       print('User granted this permission before');
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      print('!!!!!!!!! FCM Token: $fcmToken');
+      return status;
     } else {
       final before = await permission.shouldShowRequestRationale;
       final rs = await permission.request();
@@ -43,10 +46,10 @@ class LocalNotificationService {
 
     /// TODO initialize method
     _notificationsPlugin.initialize(initializationSettings,
-    onDidReceiveNotificationResponse: (notificationResponse) async {
+        onSelectNotification: (String? route) async {
       print("onSelectNotification");
-      if (notificationResponse.payload != null) {
-        // TODO: Add logic to handle notification payload when tapped
+      if (route?.isNotEmpty == true) {
+        print("Router Value: $route");
       }
     });
   }
@@ -57,7 +60,6 @@ class LocalNotificationService {
 
       const NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
-          // "com.example.flutter_push_notification_app",
           "flutter_push_notification_app",
           "flutter_push_notification_app",
           importance: Importance.max,
@@ -77,27 +79,5 @@ class LocalNotificationService {
     } on Exception catch (e) {
       print(e);
     }
-  }
-
-  static void listenToForegroundMessages() {
-    FirebaseMessaging.onMessage.listen((message) {
-      print("FirebaseMessaging.onMessage.listen");
-      if (message.notification != null) {
-        // TODO: Add logic to handle foreground messages
-        print("Foreground Message ID: ${message.data["_id"]}");
-        LocalNotificationService.createAndDisplayNotification(message);
-      }
-    });
-  }
-
-  static void listenToBackgroundMessages() {
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print("FirebaseMessaging.onMessageOpenedApp.listen");
-      if (message.notification != null) {
-        // TODO: Add logic to handle background messages
-        print("Background Message ID: ${message.data['_id']}");
-        LocalNotificationService.createAndDisplayNotification(message);
-      }
-    });
   }
 }

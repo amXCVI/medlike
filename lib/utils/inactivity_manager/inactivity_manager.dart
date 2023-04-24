@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,11 +32,56 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
     WidgetsBinding.instance.addObserver(this);
     _initializeTimer();
 
-    LocalNotificationService.requestPermission().then((status) {
-      if (status.isGranted) {
-        LocalNotificationService.listenToForegroundMessages();
-        LocalNotificationService.listenToBackgroundMessages();
-      }
+    LocalNotificationService.requestPermission().then((value) async {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      print('!!!!!!!!! FCM Token: $fcmToken');
+
+      /// TODO Terminated State
+      /// 1. This method call when app in terminated state and you get a notification
+      // when you click on notification app open from terminated state and
+      // you can get notification data in this method
+      FirebaseMessaging.instance.getInitialMessage().then((message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+
+          //print(message.notification.title);
+          //print(message.notification.body);
+          print("Terminated Message ID: ${message.data["_id"]}");
+
+
+          LocalNotificationService.createAndDisplayNotification(message);
+        }
+      }).catchError((error) {
+        print(error);
+      });
+
+      /// TODO Foreground State
+      /// 2. This method only call when App in foreground it mean app must be opened
+      FirebaseMessaging.onMessage.listen((message) {
+        print("FirebaseMessaging.onMessage.listen");
+        //if (message.notification != null) {
+          //print(message.notification.title);
+          //print(message.notification.body);
+          print("Foreground Message ID: ${message.data["_id"]}");
+          LocalNotificationService.createAndDisplayNotification(message);
+        //}
+      });
+
+      /// TODO Background State
+      /// 3. This method only call when App in background and not terminated(not closed)
+      FirebaseMessaging.onMessageOpenedApp.listen((message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        //if (message.notification != null) {
+          final routeFromMessage = message.data["route"];
+          Navigator.of(context).pushNamed(routeFromMessage);
+
+          //print(message.notification.title);
+          //print(message.notification.body);
+          print("Background Message ID: ${message.data['_id']}");
+
+          LocalNotificationService.createAndDisplayNotification(message);
+        //}
+      });
     });
   }
 
