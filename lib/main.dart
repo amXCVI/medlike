@@ -51,7 +51,15 @@ void main() async {
       Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
       pushHandler(jsonEncode(message.data));
   });
-  LocalNotificationService.initialize(null);
+  //await FCMService.onMessage();
+  LocalNotificationService.initializeSelect((notificationResponse) {
+    Sentry.captureMessage("On push tap ${notificationResponse.payload}");
+    pushHandler(notificationResponse.payload);
+  });
+  LocalNotificationService.checkNotificationClicked((notificationResponse) {
+    Sentry.captureMessage("On open by push ${notificationResponse.payload}");
+    pushHandler(notificationResponse.payload);
+  });
 
   runZonedGuarded(() async {
     await SentryFlutter.init(

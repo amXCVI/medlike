@@ -39,27 +39,40 @@ class LocalNotificationService {
     return status;
   }
 
-  static void initialize(BuildContext? context) {
-    // initializationSettings for Android
-    const InitializationSettings initializationSettings =
+  /// TODO: понять где вызывать
+  static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
+    final InitializationSettings _initializationSettings =
         InitializationSettings(
-      android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+      android: const AndroidInitializationSettings("@mipmap/launcher_icon"),
+      iOS: DarwinInitializationSettings(
+        onDidReceiveLocalNotification: ((id, title, body, payload) {
+          Sentry.captureMessage("$id $title $body $payload");
+        })
+      ),
     );
 
-    _notificationsPlugin.initialize(initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse? response) async {
-        Sentry.captureMessage("JSON payload: ${response == null} ${response?.payload}");
-        if (response != null) {
-          pushHandler(response.payload);
-        }
+    _notificationsPlugin.initialize(
+      _initializationSettings,
+      onDidReceiveNotificationResponse: onSelectNotification,
+      onDidReceiveBackgroundNotificationResponse:(details) {
+        Sentry.captureMessage("BC details: ${details.payload}");
+        onSelectNotification(details);
       },
-      onDidReceiveBackgroundNotificationResponse: (NotificationResponse? response) async {
-        Sentry.captureMessage("JSON background payload: ${response?.payload}");
-        if (response != null) {
-          pushHandler(response.payload);
-        }
-      }
     );
+  }
+
+  static Future<void> checkNotificationClicked(
+    Function(NotificationResponse notificationResponse) onSelectNotification
+  ) async {
+     Sentry.captureMessage("NotificationService.checkNotificationClicked()");
+    NotificationAppLaunchDetails? details =
+        await _notificationsPlugin.getNotificationAppLaunchDetails();
+
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse != null) {
+      onSelectNotification(details.notificationResponse!);
+    }
   }
 
   static void createAndDisplayNotification(RemoteMessage message) async {
