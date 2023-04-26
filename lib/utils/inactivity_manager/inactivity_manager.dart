@@ -10,6 +10,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class InactivityManager extends StatefulWidget {
   const InactivityManager({Key? key, required this.child}) : super(key: key);
@@ -69,17 +70,8 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
       /// TODO Background State
       /// 3. This method only call when App in background and not terminated(not closed)
       FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        print("FirebaseMessaging.onMessageOpenedApp.listen");
-        //if (message.notification != null) {
-          final routeFromMessage = message.data["route"];
-          Navigator.of(context).pushNamed(routeFromMessage);
-
-          //print(message.notification.title);
-          //print(message.notification.body);
-          print("Background Message ID: ${message.data['_id']}");
-
-          LocalNotificationService.createAndDisplayNotification(message);
-        //}
+        Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+        LocalNotificationService.createAndDisplayNotification(message);
       });
     });
   }

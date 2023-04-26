@@ -1,7 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
@@ -44,14 +46,20 @@ class LocalNotificationService {
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
     );
 
-    /// TODO initialize method
     _notificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? route) async {
-      print("onSelectNotification");
-      if (route?.isNotEmpty == true) {
-        print("Router Value: $route");
+      onDidReceiveNotificationResponse: (NotificationResponse? response) async {
+        Sentry.captureMessage("JSON payload: ${response == null} ${response?.payload}");
+        if (response != null) {
+          pushHandler(response.payload);
+        }
+      },
+      onDidReceiveBackgroundNotificationResponse: (NotificationResponse? response) async {
+        Sentry.captureMessage("JSON background payload: ${response?.payload}");
+        if (response != null) {
+          pushHandler(response.payload);
+        }
       }
-    });
+    );
   }
 
   static void createAndDisplayNotification(RemoteMessage message) async {

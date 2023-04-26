@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,6 +9,7 @@ import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -45,6 +47,10 @@ void main() async {
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+      pushHandler(jsonEncode(message.data));
+  });
   LocalNotificationService.initialize(null);
 
   runZonedGuarded(() async {
