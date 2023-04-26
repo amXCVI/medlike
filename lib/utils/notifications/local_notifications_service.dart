@@ -1,7 +1,7 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -94,8 +94,7 @@ class LocalNotificationService {
         message.data['title'],
         message.data['message'],
         notificationDetails,
-        payload: message.data["_id"],
-        ////////////////////////////////////////////////////////////////////
+        payload: jsonEncode(message.data)
       );
     } on Exception catch (e) {
       print(e);
