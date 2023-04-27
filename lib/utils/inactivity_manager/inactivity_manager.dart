@@ -43,12 +43,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
       FirebaseMessaging.instance.getInitialMessage().then((message) {
         print("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
-
-          //print(message.notification.title);
-          //print(message.notification.body);
-          print("Terminated Message ID: ${message.data["_id"]}");
-
-
+          Sentry.captureMessage("FirebaseMessaging.instance.getInitialMessage ${message.data["title"]}");
           LocalNotificationService.createAndDisplayNotification(message);
         }
       }).catchError((error) {
@@ -62,7 +57,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
         //if (message.notification != null) {
           //print(message.notification.title);
           //print(message.notification.body);
-          print("Foreground Message ID: ${message.data["_id"]}");
+          Sentry.captureMessage("FirebaseMessaging.onMessage.listen ${message.data["title"]}");
           LocalNotificationService.createAndDisplayNotification(message);
         //}
       });

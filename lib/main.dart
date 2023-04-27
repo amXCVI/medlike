@@ -22,7 +22,7 @@ final getIt = GetIt.instance;
 @pragma('vm:entry-point')
 Future<void> backgroundHandler(RemoteMessage message) async {
   /*print(message.notification.title); */
-  print(message.data.toString());
+  Sentry.captureMessage("background ${message.data.toString()}");
   LocalNotificationService.createAndDisplayNotification(message);
 }
 

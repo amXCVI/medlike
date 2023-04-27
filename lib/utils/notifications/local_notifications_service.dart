@@ -53,7 +53,10 @@ class LocalNotificationService {
 
     _notificationsPlugin.initialize(
       _initializationSettings,
-      onDidReceiveNotificationResponse: onSelectNotification,
+      onDidReceiveNotificationResponse: (details) {
+        Sentry.captureMessage("FC details: ${details.payload}");
+        onSelectNotification(details);
+      },
       onDidReceiveBackgroundNotificationResponse:(details) {
         Sentry.captureMessage("BC details: ${details.payload}");
         onSelectNotification(details);
@@ -97,7 +100,7 @@ class LocalNotificationService {
         payload: jsonEncode(message.data)
       );
     } on Exception catch (e) {
-      print(e);
+      Sentry.captureException(e, stackTrace: StackTrace.current);
     }
   }
 }
