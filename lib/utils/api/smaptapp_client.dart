@@ -178,7 +178,7 @@ class SmartAppClient {
   }
 
   Future<dynamic> delete(String endpoint,
-      {Map<String, dynamic>? data, Options? options}) async {
+      {Map<String, dynamic>? data, Options? options, Map<String, String>? queryParameters}) async {
     print('DELETE $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
@@ -187,11 +187,20 @@ class SmartAppClient {
       headers: options?.headers
     );
 
+    String paramsStr = '';
+
+    if (queryParameters != null) {
+      paramsStr = queryParameters.keys
+          .map((key) =>
+              "${Uri.encodeComponent(key)}=${Uri.encodeComponent(queryParameters[key]!)}")
+          .join("&");
+    }
+
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
         'method': 'proxy_request',
         'params': {
-          'url': '${ApiConstants.baseUrl}$endpoint',
+          'url': '${ApiConstants.baseUrl}$endpoint${paramsStr.isNotEmpty ? '?$paramsStr' : ''}',
           'headers': defaultHeaders,
           'method': 'DELETE',
           'body': data,
@@ -231,15 +240,25 @@ class SmartAppClient {
     })));
   }
 
-  Future<dynamic> put(String endpoint,
-      {Map<String, dynamic>? data, Options? options}) async {
+  Future<dynamic> put(String endpoint, {dynamic data, Options? options}) async {
     print('PUT $endpoint');
     final token =
         'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}';
     Map<String, dynamic> defaultHeaders = getHeaders(
       token,
-      headers: options?.headers
+      headers: options?.headers,
     );
+
+    bool isDataRuntimeType = false;
+    try {
+      isDataRuntimeType =
+          data.runtimeType.toString() == FormData().runtimeType.toString();
+      print(data.runtimeType.toString());
+      print(isDataRuntimeType);
+    } catch (err) {
+      print("не удалось определить тип объекта data");
+      print(err);
+    }
 
     return await promiseToFuture(sendBotEvent(
       const JsonEncoder().convert({
@@ -248,11 +267,11 @@ class SmartAppClient {
           'url': '${ApiConstants.baseUrl}$endpoint',
           'headers': defaultHeaders,
           'method': 'PUT',
-          'body': data ?? {},
+          'body': isDataRuntimeType ? null : data,
           'params': '',
         },
       }),
-      data,
+      isDataRuntimeType ? data : null,
     ).then(js.allowInterop((data) {
       dynamic jsonResponseObject = json.decode(data);
       print('>>>> Ответ из смартаппа  по PUT $endpoint: $jsonResponseObject');

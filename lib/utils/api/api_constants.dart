@@ -8,6 +8,12 @@ class ApiConstants {
   static String baseUrlNornickTestHTTP =
       'http://vmshqkcz01.npr.nornick.ru/medlike/prod';
 
+  static String baseUrlNornickPreview =
+      'https://mis-api.nornik.ru/medlike/preview';
+
+  static String baseUrlNornickPreviewHTTP =
+      'http://mis-api.nornik.ru/medlike/preview';
+
   // Версия приложения. Когда-нибудь нужно сделать, чтобы эта штука подтягивалась автоматически
   static String appVersion = '1.1';
 

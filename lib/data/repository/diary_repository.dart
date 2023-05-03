@@ -2,11 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
+import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class DiaryRepository {
-  final _dioClient = Api().dio;
+  final SmartAppClient _dioClient = Api().dio;
 
   Future<List<DiaryCategoryModel>> getDiaryCategories(
       {DateTime? updateSince}) async {
@@ -103,6 +104,7 @@ class DiaryRepository {
         //   },
         // )
       );
+      /// Get diaries here
       final res = response.statusCode ?? 0;
 
       return res >= 200 && res < 300;

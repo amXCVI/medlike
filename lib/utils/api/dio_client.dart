@@ -24,7 +24,7 @@ class Api {
           (HttpClient client) {
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
-
+        /*
         if (!kIsWeb) {
           (dio.httpClientAdapter as DefaultHttpClientAdapter)
               .onHttpClientCreate = (client) {
@@ -33,6 +33,7 @@ class Api {
             return client;
           };
         }
+        */
 
         return client;
       };
@@ -41,7 +42,7 @@ class Api {
 
   static SmartAppClient smartAppClient = SmartAppClient();
 
-  dynamic get dio => kIsWeb ? smartAppClient : _dio;
+  SmartAppClient get dio => smartAppClient;
   // Dio get dio => _dio;
 
 }

@@ -6,7 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
-import 'package:medlike/widgets/fluttertoast/toast.dart';
+//import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 part 'diary_state.dart';
 
@@ -168,14 +168,16 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
           );
         }
 
-        AppToast.showAppToast(msg: 'Запись добавлена');
+        //AppToast.showAppToast(msg: 'Запись добавлена');
       }
 
     } catch (e) {
-      addError(e);
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.failed,
-      ));
+      getDiariesList(
+        grouping: 'None',
+        dateFrom: updateFrom,
+        dateTo: updateTo ,
+        syn: syn
+      );
     }
   }
 
@@ -212,14 +214,17 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
           );
         }
 
-        AppToast.showAppToast(msg: 'Запись отредактирована');
+        //AppToast.showAppToast(msg: 'Запись отредактирована');
       }
     } catch (e) {
-      addError(e);
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.failed,
-        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
-      ));
+      /* В случае ошибки пытаемся получить показатели */
+
+      getDiariesList(
+        grouping: 'None',
+        dateFrom: updateFrom,
+        dateTo: updateTo ,
+        syn: syn
+      );
     }
   }
 
@@ -252,14 +257,15 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
           );
         }
 
-        AppToast.showAppToast(msg: 'Запись удалена');
+        //AppToast.showAppToast(msg: 'Запись удалена');
       }
     } catch (e) {
-      addError(e);
-      emit(state.copyWith(
-        updateDiaryStatuses: UpdateDiaryStatuses.failed,
-        getDiaryStatuses: GetDiaryStatuses.success /// Убираем статус загрузки на предыдущий
-      ));
+      getDiariesList(
+        grouping: 'None',
+        dateFrom: updateFrom,
+        dateTo: updateTo ,
+        syn: syn
+      );
     }
   }
 

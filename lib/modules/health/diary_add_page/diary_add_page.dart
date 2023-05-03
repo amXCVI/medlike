@@ -173,20 +173,6 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       builder: (context, state) {
         return DefaultScaffold(
           isChildrenPage: true,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: DiaryAddForm(
-              children: fields,
-              formKey: _formKey,
-              initialDate: _initialDate,
-              initialTime: _initialTime,
-              onDateChange: onDateChange,
-              onTimeChange: onTimeChange,
-              dateController: dateController,
-              timeController: timeController,
-              setEnabled: (status) => setState(() => isDisabledButton = !status),
-            ),
-          ),
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             backgroundColor: !isDisabledButton
@@ -251,6 +237,20 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
             label: Text(
               (widget.initialValues == null ? 'Добавить' : 'Сохранить').toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: DiaryAddForm(
+              formKey: _formKey,
+              initialDate: _initialDate,
+              initialTime: _initialTime,
+              onDateChange: onDateChange,
+              onTimeChange: onTimeChange,
+              dateController: dateController,
+              timeController: timeController,
+              setEnabled: (status) => setState(() => isDisabledButton = !status),
+              children: fields,
             ),
           ),
         );

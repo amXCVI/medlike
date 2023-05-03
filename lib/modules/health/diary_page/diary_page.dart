@@ -67,7 +67,19 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DiaryCubit, DiaryState>(
+    return BlocConsumer<DiaryCubit, DiaryState>(
+      listener: (context, state) {
+        if (state.updateDiaryStatuses != UpdateDiaryStatuses.loading &&
+            state.periodedSelectedDiary != null) {
+          final date = state.selectedDiary!.currentValue?.date ?? DateTime.now();
+          final dates = ValueHelper.getPeriodTiming(date, grouping);
+
+          setState(() {
+            dateFrom = dates[0];
+            dateTo = dates[1];
+          });
+        }
+      },
       builder: (context, state) {
         void onTap(String selectedGroup, String syn) {
           //final date = state.selectedDiary!.currentValue.date;
@@ -136,25 +148,6 @@ class _DiaryPageState extends State<DiaryPage> {
         return TapCanvas(
           child: DefaultScaffold(
             isChildrenPage: true,
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: [
-                    if((
-                      state.selectedDiary != null &&
-                      !(state.selectedDiary!.values.isEmpty && grouping == '')  
-                      ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
-                    ) DiaryChips(
-                      syn: state.selectedDiary!.syn,
-                      onTap: onTap,
-                      selectedGroup: grouping,
-                    ),
-                    page,
-                  ],
-                ),
-              ),
-            ),
             appBarTitle: widget.title,
             actionButton: FloatingActionButton.extended(
               onPressed: () {
@@ -174,6 +167,25 @@ class _DiaryPageState extends State<DiaryPage> {
               label: Text(
                 'Добавить'.toUpperCase(),
                 style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    if((
+                      state.selectedDiary != null &&
+                      !(state.selectedDiary!.values.isEmpty && grouping == '')  
+                      ) && state.updateDiaryStatuses != UpdateDiaryStatuses.loading
+                    ) DiaryChips(
+                      syn: state.selectedDiary!.syn,
+                      onTap: onTap,
+                      selectedGroup: grouping,
+                    ),
+                    page,
+                  ],
+                ),
               ),
             ),
           ),

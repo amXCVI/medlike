@@ -921,11 +921,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           lastNotification: lastNotification,
           isLastNotificationShow: lastNotification == null ? false : true));
     } catch (e) {
+      /*
       emit(state.copyWith(
         getLastNotReadEventStatus: GetLastNotReadEventStatuses.failed,
       ));
       addError(e);
       rethrow;
+      */
+      /// Может придти пустой ответ, временный фикс
+      emit(state.copyWith(
+        getLastNotReadEventStatus: GetLastNotReadEventStatuses.success,
+        isLastNotificationShow: false,
+      ));
     }
   }
 
@@ -945,12 +952,20 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
             UpdatingNotificationStatusStatuses.success,
       ));
     } catch (e) {
+      /*
       emit(state.copyWith(
         updatingNotificationStatusStatus:
             UpdatingNotificationStatusStatuses.failed,
       ));
       addError(e);
       rethrow;
+      */
+      /// Может придти пустой ответ, временный фикс
+      await getLastNotReadNotification(true); 
+      emit(state.copyWith(
+        updatingNotificationStatusStatus:
+            UpdatingNotificationStatusStatuses.success,
+      ));
     }
   }
 }
