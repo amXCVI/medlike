@@ -105,6 +105,7 @@ class DiaryTile extends StatelessWidget {
 
     return Slidable(
         key: ValueKey(item.hashCode),
+        /*
         endActionPane: ActionPane(
           motion: const BehindMotion(),
           dismissible: DismissiblePane(onDismissed: onDismiss),
@@ -115,6 +116,7 @@ class DiaryTile extends StatelessWidget {
             )
           ],
         ),
+        */
         child: Container(
           decoration: const BoxDecoration(
             border: Border(
@@ -141,6 +143,7 @@ class DiaryTile extends StatelessWidget {
                 fontSize: 14,
               ),
             ),
+            /*
             trailing: SvgPicture.asset(
               'assets/icons/ic_arrow_right_calendar.svg',
               color: AppColors.lightText
@@ -161,6 +164,7 @@ class DiaryTile extends StatelessWidget {
                 )
               );
             },
+            */
           ),
         ));
   }

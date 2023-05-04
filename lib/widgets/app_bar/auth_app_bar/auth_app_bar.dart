@@ -36,6 +36,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
   bool _isSearchMode = false;
   String searchQuery = "Search query";
 
+  @override
+  void initState() {
+    super.initState();
+    actions = widget.actions.isNotEmpty ? widget.actions : [const SizedBox(width: 28,)];
+  }
+
   void _startSearch() {
     ModalRoute.of(context)
         ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
@@ -76,16 +82,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
     widget.filteringFunction!(_searchQueryController.text);
   }
 
-  late List<Widget> actions = widget.actions.isNotEmpty ?
-    widget.actions : [
-      const SizedBox(width: 28,)
-    ];
+  late List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      foregroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: AppColors.mainAppBackground,
+      foregroundColor: AppColors.mainText,
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,

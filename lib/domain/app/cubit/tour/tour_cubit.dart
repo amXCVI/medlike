@@ -5,7 +5,7 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 part 'tour_state.dart';
 
 class TourCubit extends Cubit<TourState> {
-  TourCubit() : super(TourState());
+  TourCubit() : super(SmartappState());
 
   void checkNotification() {
     emit(state.copyWith(
@@ -38,6 +38,7 @@ class TourCubit extends Cubit<TourState> {
   }
 
   void fetchStatus() async {
+    /*
     String? demoTourStatus =
       await UserSecureStorage.getField(AppConstants.demoTourStatus);
     
@@ -47,6 +48,7 @@ class TourCubit extends Cubit<TourState> {
     } else {
       setStatus(TourStatuses.late);
     }
+    */
   }
 
   void setStatus(TourStatuses status) {

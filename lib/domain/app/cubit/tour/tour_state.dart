@@ -44,3 +44,15 @@ class TourState {
     );
   }
 }
+
+class SmartappState extends TourState {
+  SmartappState() : super(
+    tourStatuses: TourStatuses.late,
+    isNotificationShown: true,
+    isFavoriteShown: true,
+    isAppointmentShown: true,
+    isSupportShown: true,
+    isCabinetsInfoPlaceShow: true,
+    isNotificationCloseShown: true,
+  );
+}
