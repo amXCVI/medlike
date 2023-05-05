@@ -48,3 +48,4 @@ app.*.map.json
 /lib/generated/intl/messages_all.dart
 /lib/generated/intl/messages_ru_RU.dart
 /web/smartapp-bridge/smartapp-bridge/node_modules/
+Dockerfile

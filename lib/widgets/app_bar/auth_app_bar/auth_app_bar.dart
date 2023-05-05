@@ -36,12 +36,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
   bool _isSearchMode = false;
   String searchQuery = "Search query";
 
-  @override
-  void initState() {
-    super.initState();
-    actions = widget.actions.isNotEmpty ? widget.actions : [const SizedBox(width: 28,)];
-  }
-
   void _startSearch() {
     ModalRoute.of(context)
         ?.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
