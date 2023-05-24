@@ -9,6 +9,14 @@ import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_rec
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 
+/*
+builder: (context, state) {
+  return ClinicsBuilder(
+    clinicsList: state.clinicsList ?? [],
+  );
+},
+*/
+
 class AppointmentInfo extends StatelessWidget {
   const AppointmentInfo({Key? key}) : super(key: key);
 
@@ -136,7 +144,7 @@ class ClinicsBuilder extends StatelessWidget {
                           getClinic(state.selectedTimetableCell, clinicsList)!.timeZoneOffset ?? 3,
                           isTimeCell: true
                         )
-                    )                       
+                    )
                   )
                 ],
               ),
