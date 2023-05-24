@@ -86,6 +86,7 @@ class LocalNotificationService {
         android: AndroidNotificationDetails(
           "flutter_push_notification_app",
           "flutter_push_notification_app",
+          icon: "@mipmap/launcher_icon",
           importance: Importance.max,
           priority: Priority.high,
         ),
@@ -100,6 +101,7 @@ class LocalNotificationService {
         payload: jsonEncode(message.data)
       );
     } on Exception catch (e) {
+      Sentry.captureMessage("${message.data['title']} error: $e ${StackTrace.current}");
       Sentry.captureException(e, stackTrace: StackTrace.current);
     }
   }
