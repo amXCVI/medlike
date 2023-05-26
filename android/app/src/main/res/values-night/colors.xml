@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#151616</color>
+    <color name="colorPrimaryDark">#FFF5F5F5</color>
+    <color name="colorAccent">@color/colorBlue</color>
+    <color name="colorBlue">#3c94a8</color>
+    <color name="colorError">#ff5752</color>
+    <color name="colorPhoneNumber">@color/mainBrand</color>
+    <color name="colorSingleLetter">@color/mainBrand</color>
+
+    <color name="mainBrand">#3C94A8</color>
+    <color name="mainBrandAlpha">#4d3C94A8</color>
+    <color name="mainText">#151616</color>
+    <color name="lightText">#9E9D9D</color>
+    <color name="mainBackground">#FFFFFF</color>
+    <color name="circleBgFirst">#EEEEEE</color>
+    <color name="circleBgSecond">#EDF5F7</color>
+    <color name="mainError">#FF5752</color>
+    <color name="lightError">#FFEBEB</color>
+    <color name="mainDone">#51E09F</color>
+    <color name="mainOther">#3B75B8</color>
+    <color name="circleBgThird">#EBF1F8</color>
+    <color name="notDone">#9D9DCF</color>
+    <color name="mainWaiting">#FFCC00</color>
+    <color name="gradientFirst">#56C8D4</color>
+    <color name="gradientSecond">#2B7A92</color>
+    <color name="mainSeparatorAlpha">#669E9D9D</color>
+    <color name="mainBgAlpha">#1A3C94A8</color>
+    <color name="mainOverlayAlpha">#66151616</color>
+    <color name="letterText">@color/mainBrand</color>
+    <color name="secondBackground">#FAFAFA</color>
+    <color name="gradientThird">#E6151616</color>
+    <color name="gradientFourth">#33151616</color>
+
+
+    <color name="blackShadowAlpha">#80151616</color>
+    <color name="mainShadow">@color/mainBrand</color>
+
+
+<!--    <color name="mainBrand"></color>-->
+<!--    <color name="mainText"></color>-->
+<!--    <color name="lightText"></color>-->
+<!--    <color name="mainBackground"></color>-->
+<!--    <color name="circleBgFirst"></color>-->
+<!--    <color name="circleBgSecond"></color>-->
+<!--    <color name="mainError"></color>-->
+<!--    <color name="lightError"></color>-->
+<!--    <color name="mainDone"></color>-->
+<!--    <color name="mainOther"></color>-->
+<!--    <color name="circleBgThird"></color>-->
+<!--    <color name="notDone"></color>-->
+<!--    <color name="mainWaiting"></color>-->
+<!--    <color name="gradientFirst"></color>-->
+<!--    <color name="gradientSecond"></color>-->
+<!--    <color name="mainSeparatorAlpha"></color>-->
+<!--    <color name="mainBgAlpha"></color>-->
+<!--    <color name="mainOverlayAlpha"></color>-->
+</resources>

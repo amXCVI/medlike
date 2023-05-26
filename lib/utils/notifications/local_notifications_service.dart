@@ -43,7 +43,7 @@ class LocalNotificationService {
   static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
     final InitializationSettings _initializationSettings =
         InitializationSettings(
-      android: const AndroidInitializationSettings("@mipmap/launcher_icon"),
+      android: const AndroidInitializationSettings("@drawable/ic_notification"),
       iOS: DarwinInitializationSettings(
         onDidReceiveLocalNotification: ((id, title, body, payload) {
           Sentry.captureMessage("$id $title $body $payload");
@@ -53,14 +53,6 @@ class LocalNotificationService {
 
     _notificationsPlugin.initialize(
       _initializationSettings,
-      onDidReceiveNotificationResponse: (details) {
-        Sentry.captureMessage("FC details: ${details.payload}");
-        onSelectNotification(details);
-      },
-      onDidReceiveBackgroundNotificationResponse:(details) {
-        Sentry.captureMessage("BC details: ${details.payload}");
-        onSelectNotification(details);
-      },
     );
   }
 
@@ -86,7 +78,7 @@ class LocalNotificationService {
         android: AndroidNotificationDetails(
           "flutter_push_notification_app",
           "flutter_push_notification_app",
-          icon: "@mipmap/launcher_icon",
+          icon: "@drawable/ic_notification",
           importance: Importance.max,
           priority: Priority.high,
         ),
