@@ -917,10 +917,15 @@ mixin _$Doctor {
   String get middleName => throw _privateConstructorUsedError;
   String get specializationId => throw _privateConstructorUsedError;
   String get specialization => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   List<int> get categories => throw _privateConstructorUsedError;
+  String? get imagePreviewLocation => throw _privateConstructorUsedError;
+  String? get imageFullSizeLocation => throw _privateConstructorUsedError;
+  num get avergareRating => throw _privateConstructorUsedError;
+  List<AssessmentModel> get assessments => throw _privateConstructorUsedError;
+  String? get shortinfo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -938,10 +943,15 @@ abstract class $DoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int price,
+      int? price,
       int categoryType,
       bool isFavorite,
-      List<int> categories});
+      List<int> categories,
+      String? imagePreviewLocation,
+      String? imageFullSizeLocation,
+      num avergareRating,
+      List<AssessmentModel> assessments,
+      String? shortinfo});
 }
 
 /// @nodoc
@@ -964,6 +974,11 @@ class _$DoctorCopyWithImpl<$Res> implements $DoctorCopyWith<$Res> {
     Object? categoryType = freezed,
     Object? isFavorite = freezed,
     Object? categories = freezed,
+    Object? imagePreviewLocation = freezed,
+    Object? imageFullSizeLocation = freezed,
+    Object? avergareRating = freezed,
+    Object? assessments = freezed,
+    Object? shortinfo = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -993,7 +1008,7 @@ class _$DoctorCopyWithImpl<$Res> implements $DoctorCopyWith<$Res> {
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: categoryType == freezed
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1006,6 +1021,26 @@ class _$DoctorCopyWithImpl<$Res> implements $DoctorCopyWith<$Res> {
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      imagePreviewLocation: imagePreviewLocation == freezed
+          ? _value.imagePreviewLocation
+          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageFullSizeLocation: imageFullSizeLocation == freezed
+          ? _value.imageFullSizeLocation
+          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avergareRating: avergareRating == freezed
+          ? _value.avergareRating
+          : avergareRating // ignore: cast_nullable_to_non_nullable
+              as num,
+      assessments: assessments == freezed
+          ? _value.assessments
+          : assessments // ignore: cast_nullable_to_non_nullable
+              as List<AssessmentModel>,
+      shortinfo: shortinfo == freezed
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1022,10 +1057,15 @@ abstract class _$$_DoctorCopyWith<$Res> implements $DoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int price,
+      int? price,
       int categoryType,
       bool isFavorite,
-      List<int> categories});
+      List<int> categories,
+      String? imagePreviewLocation,
+      String? imageFullSizeLocation,
+      num avergareRating,
+      List<AssessmentModel> assessments,
+      String? shortinfo});
 }
 
 /// @nodoc
@@ -1049,6 +1089,11 @@ class __$$_DoctorCopyWithImpl<$Res> extends _$DoctorCopyWithImpl<$Res>
     Object? categoryType = freezed,
     Object? isFavorite = freezed,
     Object? categories = freezed,
+    Object? imagePreviewLocation = freezed,
+    Object? imageFullSizeLocation = freezed,
+    Object? avergareRating = freezed,
+    Object? assessments = freezed,
+    Object? shortinfo = freezed,
   }) {
     return _then(_$_Doctor(
       id: id == freezed
@@ -1078,7 +1123,7 @@ class __$$_DoctorCopyWithImpl<$Res> extends _$DoctorCopyWithImpl<$Res>
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: categoryType == freezed
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1091,6 +1136,26 @@ class __$$_DoctorCopyWithImpl<$Res> extends _$DoctorCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      imagePreviewLocation: imagePreviewLocation == freezed
+          ? _value.imagePreviewLocation
+          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageFullSizeLocation: imageFullSizeLocation == freezed
+          ? _value.imageFullSizeLocation
+          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avergareRating: avergareRating == freezed
+          ? _value.avergareRating
+          : avergareRating // ignore: cast_nullable_to_non_nullable
+              as num,
+      assessments: assessments == freezed
+          ? _value._assessments
+          : assessments // ignore: cast_nullable_to_non_nullable
+              as List<AssessmentModel>,
+      shortinfo: shortinfo == freezed
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1108,8 +1173,14 @@ class _$_Doctor implements _Doctor {
       required this.price,
       required this.categoryType,
       required this.isFavorite,
-      required final List<int> categories})
-      : _categories = categories;
+      required final List<int> categories,
+      required this.imagePreviewLocation,
+      required this.imageFullSizeLocation,
+      required this.avergareRating,
+      required final List<AssessmentModel> assessments,
+      required this.shortinfo})
+      : _categories = categories,
+        _assessments = assessments;
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1127,7 +1198,7 @@ class _$_Doctor implements _Doctor {
   @override
   final String specialization;
   @override
-  final int price;
+  final int? price;
   @override
   final int categoryType;
   @override
@@ -1140,8 +1211,24 @@ class _$_Doctor implements _Doctor {
   }
 
   @override
+  final String? imagePreviewLocation;
+  @override
+  final String? imageFullSizeLocation;
+  @override
+  final num avergareRating;
+  final List<AssessmentModel> _assessments;
+  @override
+  List<AssessmentModel> get assessments {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_assessments);
+  }
+
+  @override
+  final String? shortinfo;
+
+  @override
   String toString() {
-    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories)';
+    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, avergareRating: $avergareRating, assessments: $assessments, shortinfo: $shortinfo)';
   }
 
   @override
@@ -1164,7 +1251,16 @@ class _$_Doctor implements _Doctor {
             const DeepCollectionEquality()
                 .equals(other.isFavorite, isFavorite) &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality()
+                .equals(other.imagePreviewLocation, imagePreviewLocation) &&
+            const DeepCollectionEquality()
+                .equals(other.imageFullSizeLocation, imageFullSizeLocation) &&
+            const DeepCollectionEquality()
+                .equals(other.avergareRating, avergareRating) &&
+            const DeepCollectionEquality()
+                .equals(other._assessments, _assessments) &&
+            const DeepCollectionEquality().equals(other.shortinfo, shortinfo));
   }
 
   @JsonKey(ignore: true)
@@ -1180,7 +1276,12 @@ class _$_Doctor implements _Doctor {
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(categoryType),
       const DeepCollectionEquality().hash(isFavorite),
-      const DeepCollectionEquality().hash(_categories));
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(imagePreviewLocation),
+      const DeepCollectionEquality().hash(imageFullSizeLocation),
+      const DeepCollectionEquality().hash(avergareRating),
+      const DeepCollectionEquality().hash(_assessments),
+      const DeepCollectionEquality().hash(shortinfo));
 
   @JsonKey(ignore: true)
   @override
@@ -1201,10 +1302,15 @@ abstract class _Doctor implements Doctor {
       required final String middleName,
       required final String specializationId,
       required final String specialization,
-      required final int price,
+      required final int? price,
       required final int categoryType,
       required final bool isFavorite,
-      required final List<int> categories}) = _$_Doctor;
+      required final List<int> categories,
+      required final String? imagePreviewLocation,
+      required final String? imageFullSizeLocation,
+      required final num avergareRating,
+      required final List<AssessmentModel> assessments,
+      required final String? shortinfo}) = _$_Doctor;
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 
@@ -1221,13 +1327,23 @@ abstract class _Doctor implements Doctor {
   @override
   String get specialization => throw _privateConstructorUsedError;
   @override
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   @override
   int get categoryType => throw _privateConstructorUsedError;
   @override
   bool get isFavorite => throw _privateConstructorUsedError;
   @override
   List<int> get categories => throw _privateConstructorUsedError;
+  @override
+  String? get imagePreviewLocation => throw _privateConstructorUsedError;
+  @override
+  String? get imageFullSizeLocation => throw _privateConstructorUsedError;
+  @override
+  num get avergareRating => throw _privateConstructorUsedError;
+  @override
+  List<AssessmentModel> get assessments => throw _privateConstructorUsedError;
+  @override
+  String? get shortinfo => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorCopyWith<_$_Doctor> get copyWith =>
@@ -1242,7 +1358,7 @@ Research _$ResearchFromJson(Map<String, dynamic> json) {
 mixin _$Research {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
   int get scheduleType => throw _privateConstructorUsedError;
   String get buildingId => throw _privateConstructorUsedError;
@@ -1260,7 +1376,7 @@ abstract class $ResearchCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      int price,
+      int? price,
       int categoryType,
       int scheduleType,
       String buildingId});
@@ -1295,7 +1411,7 @@ class _$ResearchCopyWithImpl<$Res> implements $ResearchCopyWith<$Res> {
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: categoryType == freezed
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1321,7 +1437,7 @@ abstract class _$$_ResearchCopyWith<$Res> implements $ResearchCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      int price,
+      int? price,
       int categoryType,
       int scheduleType,
       String buildingId});
@@ -1358,7 +1474,7 @@ class __$$_ResearchCopyWithImpl<$Res> extends _$ResearchCopyWithImpl<$Res>
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: categoryType == freezed
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1394,7 +1510,7 @@ class _$_Research implements _Research {
   @override
   final String name;
   @override
-  final int price;
+  final int? price;
   @override
   final int categoryType;
   @override
@@ -1449,7 +1565,7 @@ abstract class _Research implements Research {
   const factory _Research(
       {required final String id,
       required final String name,
-      required final int price,
+      required final int? price,
       required final int categoryType,
       required final int scheduleType,
       required final String buildingId}) = _$_Research;
@@ -1461,7 +1577,7 @@ abstract class _Research implements Research {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   @override
   int get categoryType => throw _privateConstructorUsedError;
   @override
@@ -1738,5 +1854,227 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
   @override
   @JsonKey(ignore: true)
   _$$_FavoriteDoctorCopyWith<_$_FavoriteDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AssessmentModel _$AssessmentModelFromJson(Map<String, dynamic> json) {
+  return _AssessmentModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AssessmentModel {
+  int get rating => throw _privateConstructorUsedError;
+  String get header => throw _privateConstructorUsedError;
+  String get assessment => throw _privateConstructorUsedError;
+  bool get isPublic => throw _privateConstructorUsedError;
+  String get user => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AssessmentModelCopyWith<AssessmentModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AssessmentModelCopyWith<$Res> {
+  factory $AssessmentModelCopyWith(
+          AssessmentModel value, $Res Function(AssessmentModel) then) =
+      _$AssessmentModelCopyWithImpl<$Res>;
+  $Res call(
+      {int rating,
+      String header,
+      String assessment,
+      bool isPublic,
+      String user});
+}
+
+/// @nodoc
+class _$AssessmentModelCopyWithImpl<$Res>
+    implements $AssessmentModelCopyWith<$Res> {
+  _$AssessmentModelCopyWithImpl(this._value, this._then);
+
+  final AssessmentModel _value;
+  // ignore: unused_field
+  final $Res Function(AssessmentModel) _then;
+
+  @override
+  $Res call({
+    Object? rating = freezed,
+    Object? header = freezed,
+    Object? assessment = freezed,
+    Object? isPublic = freezed,
+    Object? user = freezed,
+  }) {
+    return _then(_value.copyWith(
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      header: header == freezed
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      assessment: assessment == freezed
+          ? _value.assessment
+          : assessment // ignore: cast_nullable_to_non_nullable
+              as String,
+      isPublic: isPublic == freezed
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AssessmentModelCopyWith<$Res>
+    implements $AssessmentModelCopyWith<$Res> {
+  factory _$$_AssessmentModelCopyWith(
+          _$_AssessmentModel value, $Res Function(_$_AssessmentModel) then) =
+      __$$_AssessmentModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int rating,
+      String header,
+      String assessment,
+      bool isPublic,
+      String user});
+}
+
+/// @nodoc
+class __$$_AssessmentModelCopyWithImpl<$Res>
+    extends _$AssessmentModelCopyWithImpl<$Res>
+    implements _$$_AssessmentModelCopyWith<$Res> {
+  __$$_AssessmentModelCopyWithImpl(
+      _$_AssessmentModel _value, $Res Function(_$_AssessmentModel) _then)
+      : super(_value, (v) => _then(v as _$_AssessmentModel));
+
+  @override
+  _$_AssessmentModel get _value => super._value as _$_AssessmentModel;
+
+  @override
+  $Res call({
+    Object? rating = freezed,
+    Object? header = freezed,
+    Object? assessment = freezed,
+    Object? isPublic = freezed,
+    Object? user = freezed,
+  }) {
+    return _then(_$_AssessmentModel(
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      header: header == freezed
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      assessment: assessment == freezed
+          ? _value.assessment
+          : assessment // ignore: cast_nullable_to_non_nullable
+              as String,
+      isPublic: isPublic == freezed
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AssessmentModel implements _AssessmentModel {
+  const _$_AssessmentModel(
+      {required this.rating,
+      required this.header,
+      required this.assessment,
+      required this.isPublic,
+      required this.user});
+
+  factory _$_AssessmentModel.fromJson(Map<String, dynamic> json) =>
+      _$$_AssessmentModelFromJson(json);
+
+  @override
+  final int rating;
+  @override
+  final String header;
+  @override
+  final String assessment;
+  @override
+  final bool isPublic;
+  @override
+  final String user;
+
+  @override
+  String toString() {
+    return 'AssessmentModel(rating: $rating, header: $header, assessment: $assessment, isPublic: $isPublic, user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AssessmentModel &&
+            const DeepCollectionEquality().equals(other.rating, rating) &&
+            const DeepCollectionEquality().equals(other.header, header) &&
+            const DeepCollectionEquality()
+                .equals(other.assessment, assessment) &&
+            const DeepCollectionEquality().equals(other.isPublic, isPublic) &&
+            const DeepCollectionEquality().equals(other.user, user));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(rating),
+      const DeepCollectionEquality().hash(header),
+      const DeepCollectionEquality().hash(assessment),
+      const DeepCollectionEquality().hash(isPublic),
+      const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AssessmentModelCopyWith<_$_AssessmentModel> get copyWith =>
+      __$$_AssessmentModelCopyWithImpl<_$_AssessmentModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AssessmentModelToJson(this);
+  }
+}
+
+abstract class _AssessmentModel implements AssessmentModel {
+  const factory _AssessmentModel(
+      {required final int rating,
+      required final String header,
+      required final String assessment,
+      required final bool isPublic,
+      required final String user}) = _$_AssessmentModel;
+
+  factory _AssessmentModel.fromJson(Map<String, dynamic> json) =
+      _$_AssessmentModel.fromJson;
+
+  @override
+  int get rating => throw _privateConstructorUsedError;
+  @override
+  String get header => throw _privateConstructorUsedError;
+  @override
+  String get assessment => throw _privateConstructorUsedError;
+  @override
+  bool get isPublic => throw _privateConstructorUsedError;
+  @override
+  String get user => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AssessmentModelCopyWith<_$_AssessmentModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

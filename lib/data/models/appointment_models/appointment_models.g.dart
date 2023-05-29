@@ -11,7 +11,7 @@ _$_AppointmentModel _$$_AppointmentModelFromJson(Map<String, dynamic> json) =>
       status: json['status'] as int,
       needConfirmation: json['needConfirmation'] as bool,
       comment: json['comment'] as String?,
-      researchPlace: json['researchPlace'] as String,
+      researchPlace: json['researchPlace'] as String?,
       id: json['id'] as String,
       appointmentDateTime: json['appointmentDateTime'] as String,
       patientInfo: PatientInfoModel.fromJson(
@@ -31,6 +31,11 @@ _$_AppointmentModel _$$_AppointmentModelFromJson(Map<String, dynamic> json) =>
       scheduleId: json['scheduleId'] as String,
       paymentStatus: json['paymentStatus'] as int,
       recommendations: json['recommendations'] as String?,
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => ResearchWidthPriceInAppointmentModel.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
+      checkURI: json['checkURI'] as String?,
     );
 
 Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
@@ -53,6 +58,8 @@ Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
       'scheduleId': instance.scheduleId,
       'paymentStatus': instance.paymentStatus,
       'recommendations': instance.recommendations,
+      'items': instance.items,
+      'checkURI': instance.checkURI,
     };
 
 _$_AppointmentModelWithTimeZoneOffset
@@ -61,7 +68,7 @@ _$_AppointmentModelWithTimeZoneOffset
           status: json['status'] as int,
           needConfirmation: json['needConfirmation'] as bool,
           comment: json['comment'] as String?,
-          researchPlace: json['researchPlace'] as String,
+          researchPlace: json['researchPlace'] as String?,
           id: json['id'] as String,
           appointmentDateTime: const TimestampConverter()
               .fromJson(json['appointmentDateTime'] as String),
@@ -83,6 +90,11 @@ _$_AppointmentModelWithTimeZoneOffset
           scheduleId: json['scheduleId'] as String,
           paymentStatus: json['paymentStatus'] as int,
           recommendations: json['recommendations'] as String?,
+          items: (json['items'] as List<dynamic>?)
+              ?.map((e) => ResearchWidthPriceInAppointmentModel.fromJson(
+                  e as Map<String, dynamic>))
+              .toList(),
+          checkURI: json['checkURI'] as String?,
         );
 
 Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
@@ -108,6 +120,8 @@ Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
       'scheduleId': instance.scheduleId,
       'paymentStatus': instance.paymentStatus,
       'recommendations': instance.recommendations,
+      'items': instance.items,
+      'checkURI': instance.checkURI,
     };
 
 _$_PatientInfoModel _$$_PatientInfoModelFromJson(Map<String, dynamic> json) =>
@@ -144,6 +158,9 @@ _$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>
       lastName: json['lastName'] as String?,
       specializationId: json['specializationId'] as String?,
       specialization: json['specialization'] as String?,
+      imagePreviewLocation: json['imagePreviewLocation'] as String?,
+      imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
+      shortInfo: json['shortInfo'] as String?,
     );
 
 Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
@@ -154,6 +171,9 @@ Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
       'lastName': instance.lastName,
       'specializationId': instance.specializationId,
       'specialization': instance.specialization,
+      'imagePreviewLocation': instance.imagePreviewLocation,
+      'imageFullSizeLocation': instance.imageFullSizeLocation,
+      'shortInfo': instance.shortInfo,
     };
 
 _$_ResearchesModel _$$_ResearchesModelFromJson(Map<String, dynamic> json) =>
@@ -235,4 +255,29 @@ Map<String, dynamic> _$$_RegisterOrderResponseModelToJson(
       'result': instance.result,
       'paymentUrl': instance.paymentUrl,
       'error': instance.error,
+    };
+
+_$_ResearchWidthPriceInAppointmentModel
+    _$$_ResearchWidthPriceInAppointmentModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_ResearchWidthPriceInAppointmentModel(
+          id: json['id'] as String?,
+          service: json['service'] as String?,
+          prescType: json['prescType'] as String?,
+          price: json['price'] as int?,
+          paid: json['paid'] as int?,
+          billUslug: json['billUslug'] as String?,
+          presc: json['presc'] as String?,
+        );
+
+Map<String, dynamic> _$$_ResearchWidthPriceInAppointmentModelToJson(
+        _$_ResearchWidthPriceInAppointmentModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'service': instance.service,
+      'prescType': instance.prescType,
+      'price': instance.price,
+      'paid': instance.paid,
+      'billUslug': instance.billUslug,
+      'presc': instance.presc,
     };

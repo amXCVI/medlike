@@ -16,8 +16,11 @@ class DoctorItem extends StatelessWidget {
         NumberFormat.currency(locale: "ru_RU", symbol: 'P', decimalDigits: 0);
 
     return SubscribeRowItem(
-      title: '${doctorItem.lastName.toString()} ${doctorItem.firstName[0]}. ${doctorItem.middleName[0]}.',
-      subtitle: doctorItem.price > 0 ? 'от ${rublesFormat.format(doctorItem.price / 100)}' : '',
+      title:
+          '${doctorItem.lastName.toString()} ${doctorItem.firstName[0]}. ${doctorItem.middleName[0]}.',
+      subtitle: doctorItem.price != null && doctorItem.price! > 0
+          ? 'от ${rublesFormat.format(doctorItem.price! / 100)}'
+          : '',
       onTap: onTap,
     );
   }

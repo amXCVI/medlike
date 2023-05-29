@@ -13,7 +13,7 @@ class AppointmentModel with _$AppointmentModel {
     required int status,
     required bool needConfirmation,
     required String? comment,
-    required String researchPlace,
+    required String? researchPlace,
     required String id,
     required String appointmentDateTime,
     required PatientInfoModel patientInfo,
@@ -28,6 +28,8 @@ class AppointmentModel with _$AppointmentModel {
     required String scheduleId,
     required int paymentStatus,
     required String? recommendations,
+    required List<ResearchWidthPriceInAppointmentModel>? items,
+    required String? checkURI,
   }) = _AppointmentModel;
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
@@ -41,7 +43,7 @@ class AppointmentModelWithTimeZoneOffset
     required int status,
     required bool needConfirmation,
     required String? comment,
-    required String researchPlace,
+    required String? researchPlace,
     required String id,
     @TimestampConverter() required DateTime appointmentDateTime,
     required int timeZoneOffset,
@@ -57,6 +59,8 @@ class AppointmentModelWithTimeZoneOffset
     required String scheduleId,
     required int paymentStatus,
     required String? recommendations,
+    required List<ResearchWidthPriceInAppointmentModel>? items,
+    required String? checkURI,
   }) = _AppointmentModelWithTimeZoneOffset;
 
   factory AppointmentModelWithTimeZoneOffset.fromJson(
@@ -96,6 +100,9 @@ class DoctorInfoModel with _$DoctorInfoModel {
     required String? lastName,
     required String? specializationId,
     required String? specialization,
+    required String? imagePreviewLocation,
+    required String? imageFullSizeLocation,
+    required String? shortInfo,
   }) = _DoctorInfoModel;
 
   factory DoctorInfoModel.fromJson(Map<String, Object?> json) =>
@@ -162,4 +169,22 @@ class RegisterOrderResponseModel with _$RegisterOrderResponseModel {
 
   factory RegisterOrderResponseModel.fromJson(Map<String, Object?> json) =>
       _$RegisterOrderResponseModelFromJson(json);
+}
+
+@freezed
+class ResearchWidthPriceInAppointmentModel
+    with _$ResearchWidthPriceInAppointmentModel {
+  const factory ResearchWidthPriceInAppointmentModel({
+    required String? id,
+    required String? service,
+    required String? prescType,
+    required int? price,
+    required int? paid,
+    required String? billUslug,
+    required String? presc,
+  }) = _ResearchWidthPriceInAppointmentModel;
+
+  factory ResearchWidthPriceInAppointmentModel.fromJson(
+          Map<String, Object?> json) =>
+      _$ResearchWidthPriceInAppointmentModelFromJson(json);
 }

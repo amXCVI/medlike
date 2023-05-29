@@ -6,7 +6,8 @@ class ClinicAddressHelper {
   }
 
   static String getShortAddress(String address) {
-    List<String> addressArray = ClinicAddressHelper.clinicAddressSplitter(address);
+    List<String> addressArray =
+        ClinicAddressHelper.clinicAddressSplitter(address);
     if (addressArray.isEmpty) return '';
     addressArray.removeAt(0);
     addressArray.removeAt(0);

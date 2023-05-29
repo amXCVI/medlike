@@ -93,11 +93,18 @@ _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
       middleName: json['middleName'] as String,
       specializationId: json['specializationId'] as String,
       specialization: json['specialization'] as String,
-      price: json['price'] as int,
+      price: json['price'] as int?,
       categoryType: json['categoryType'] as int,
       isFavorite: json['isFavorite'] as bool,
       categories:
           (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
+      imagePreviewLocation: json['imagePreviewLocation'] as String?,
+      imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
+      avergareRating: json['avergareRating'] as num,
+      assessments: (json['assessments'] as List<dynamic>)
+          .map((e) => AssessmentModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      shortinfo: json['shortinfo'] as String?,
     );
 
 Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
@@ -111,12 +118,17 @@ Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
       'categoryType': instance.categoryType,
       'isFavorite': instance.isFavorite,
       'categories': instance.categories,
+      'imagePreviewLocation': instance.imagePreviewLocation,
+      'imageFullSizeLocation': instance.imageFullSizeLocation,
+      'avergareRating': instance.avergareRating,
+      'assessments': instance.assessments,
+      'shortinfo': instance.shortinfo,
     };
 
 _$_Research _$$_ResearchFromJson(Map<String, dynamic> json) => _$_Research(
       id: json['id'] as String,
       name: json['name'] as String,
-      price: json['price'] as int,
+      price: json['price'] as int?,
       categoryType: json['categoryType'] as int,
       scheduleType: json['scheduleType'] as int,
       buildingId: json['buildingId'] as String,
@@ -152,4 +164,22 @@ Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
       'specializationId': instance.specializationId,
       'specialization': instance.specialization,
       'categoryType': instance.categoryType,
+    };
+
+_$_AssessmentModel _$$_AssessmentModelFromJson(Map<String, dynamic> json) =>
+    _$_AssessmentModel(
+      rating: json['rating'] as int,
+      header: json['header'] as String,
+      assessment: json['assessment'] as String,
+      isPublic: json['isPublic'] as bool,
+      user: json['user'] as String,
+    );
+
+Map<String, dynamic> _$$_AssessmentModelToJson(_$_AssessmentModel instance) =>
+    <String, dynamic>{
+      'rating': instance.rating,
+      'header': instance.header,
+      'assessment': instance.assessment,
+      'isPublic': instance.isPublic,
+      'user': instance.user,
     };
