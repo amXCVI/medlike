@@ -21,6 +21,7 @@ class DiaryAddForm extends StatelessWidget {
   final Function(DateTime, String) onDateChange;
   final Function(DateTime, String) onTimeChange;
   final DateTime? initialDate;
+  /// Обновлям время когда дата изменилась
   final DateTime? initialTime;
   final Function(bool) setEnabled;
   
