@@ -72,6 +72,9 @@ class AppConstants {
   // Ключ, проверяет актуальная версия приложения установлена или нет.
   // Меняется в интерсепторе, проверяется в Guards
   static const String isActualAppVersion = 'true';
+
+  static const String esiaOAuthPageURL =
+      'https://tgn.medotrade.ru:23340/MedLike/Env04/esia/login';
 }
 
 // Способы авторизации

@@ -21,7 +21,7 @@ dependencies:
   mask_text_input_formatter: ^2.3.0
   dio: ^4.0.6
   json_annotation: ^4.5.0
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^8.0.0
   flutter_svg: any
   intl: ^0.17.0
   freezed_annotation: ^2.0.3
@@ -61,6 +61,7 @@ dependencies:
   testfairy_flutter: any
   sentry_flutter: ^6.18.2
   sentry_dio: ^6.18.2
+  oauth2_client: ^3.2.1
 
   cupertino_icons: ^1.0.5
 
