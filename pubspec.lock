@@ -569,20 +569,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_auth_2:
-    dependency: transitive
-    description:
-      name: flutter_web_auth_2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
-  flutter_web_auth_2_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_web_auth_2_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -868,13 +854,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  oauth2_client:
-    dependency: "direct main"
-    description:
-      name: oauth2_client
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.1"
   octo_image:
     dependency: transitive
     description:
@@ -1078,13 +1057,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  random_string:
-    dependency: transitive
-    description:
-      name: random_string
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.1"
   rxdart:
     dependency: transitive
     description:
@@ -1426,13 +1398,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
-  window_to_front:
-    dependency: transitive
-    description:
-      name: window_to_front
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   xdg_directories:
     dependency: transitive
     description:

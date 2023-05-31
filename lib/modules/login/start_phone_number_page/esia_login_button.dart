@@ -1,40 +1,13 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/utils/esia/esia_o_auth.dart';
-import 'package:oauth2_client/access_token_response.dart';
+import 'package:medlike/navigation/router.gr.dart';
 
 class EsiaLoginButton extends StatelessWidget {
   const EsiaLoginButton({Key? key}) : super(key: key);
 
   Future<void> handleTapOnEsiaLogin(BuildContext context) async {
-    //clientID
-    String cID = 'x';
-
-    //clientSecret
-    String cSecret = 'y';
-
-    // OAuth2Client client = GitHubOAuth2Client(
-    //     redirectUri: 'my.test.app:/oauth2redirect',
-    //     customUriScheme: 'my.test.app');
-
-    AccessTokenResponse tknResp = await client.getTokenWithAuthCodeFlow(
-        clientId: cID, clientSecret: cSecret);
-
-    print('!!!!!!: $tknResp');
-
-    // http.Response resp = await http.get('https://api.github.com/user/repos',
-    //     headers: {'Authorization': 'Bearer ' + tknResp.accessToken});
-    // AccessTokenResponse tknResp = (await client.getTokenWithAuthCodeFlow(
-    //   clientId: '12',
-    //   enablePKCE: false,
-    // ));
-    //
-    print(tknResp);
-    if (tknResp.isExpired()) {
-      var myCustomFieldVal = tknResp.getRespField('firstName');
-      print(myCustomFieldVal);
-    }
-    // context.router.push(const EsiaLoginRoute());
+    context.router.push(const EsiaLoginRoute());
   }
 
   @override
