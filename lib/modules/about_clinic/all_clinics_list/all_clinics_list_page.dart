@@ -9,7 +9,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 import 'all_clinics_list_skeleton.dart';
 
-class AllClinicsListPage extends StatelessWidget {
+class AllClinicsListPage extends StatefulWidget {
   const AllClinicsListPage({
     Key? key, 
     this.isFromMainPage = false
@@ -18,12 +18,22 @@ class AllClinicsListPage extends StatelessWidget {
   final bool isFromMainPage;
 
   @override
-  Widget build(BuildContext context) {
-    void _onLoadDada({bool isRefresh = false}) {
+  State<AllClinicsListPage> createState() => _AllClinicsListPageState();
+}
+
+class _AllClinicsListPageState extends State<AllClinicsListPage> {
+  void _onLoadDada({bool isRefresh = false}) {
       context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
     }
-
+    
+  @override
+  void initState() {
+    super.initState();
     _onLoadDada();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return WillPopScope(
       onWillPop: () async {
@@ -42,7 +52,7 @@ class AllClinicsListPage extends StatelessWidget {
               return AllClinicsList(
                   clinicsList: state.clinicsList as List<ClinicModel>,
                   onRefreshData: _onLoadDada,
-                  isFromMainPage: isFromMainPage
+                  isFromMainPage: widget.isFromMainPage
               );
             } else {
               return const AllClinicsListSkeleton();

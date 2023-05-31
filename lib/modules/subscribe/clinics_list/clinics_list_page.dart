@@ -9,7 +9,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 import 'clinics_list_skeleton.dart';
 
-class ClinicsListPage extends StatelessWidget {
+class ClinicsListPage extends StatefulWidget {
   const ClinicsListPage(
       {Key? key, required this.userId, required this.isChildrenPage})
       : super(key: key);
@@ -17,16 +17,26 @@ class ClinicsListPage extends StatelessWidget {
   final bool isChildrenPage;
 
   @override
-  Widget build(BuildContext context) {
-    void _onRefreshData({bool isRefresh = false}) {
-      context.read<SubscribeCubit>().getAvailableClinicsList(userId, isRefresh);
-    }
+  State<ClinicsListPage> createState() => _ClinicsListPageState();
+}
 
+class _ClinicsListPageState extends State<ClinicsListPage> {
+  void _onRefreshData({bool isRefresh = false}) {
+    context.read<SubscribeCubit>().getAvailableClinicsList(widget.userId, isRefresh);
+  }
+
+  @override
+  void initState() {
+    super.initState();
     _onRefreshData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return WillPopScope(
       onWillPop: () async {
-        if (isChildrenPage) {
+        if (widget.isChildrenPage) {
           context.router.replace(const SubscribeProfilesListRoute());
         } else {
           context.router.replaceAll([const MainRoute()]);
@@ -51,7 +61,7 @@ class ClinicsListPage extends StatelessWidget {
               return ClinicsList(
                 availableClinicsList:
                     state.availableClinicsList as List<AvailableClinic>,
-                userId: userId,
+                userId: widget.userId,
                 onRefreshData: _onRefreshData,
               );
             } else {

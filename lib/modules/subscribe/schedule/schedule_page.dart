@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
+import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -17,7 +18,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
-class SchedulePage extends StatelessWidget {
+class SchedulePage extends StatefulWidget {
   const SchedulePage({
     Key? key,
     required this.pageTitle,
@@ -49,46 +50,61 @@ class SchedulePage extends StatelessWidget {
   final bool isFavorite;
 
   @override
-  Widget build(BuildContext context) {
-    void _getAppointments(DateTime selectedDate) async {
+  State<SchedulePage> createState() => _SchedulePageState();
+}
+
+class _SchedulePageState extends State<SchedulePage> {
+  ClinicModel? clinic;
+  List<ClinicModel>? clinicsList;
+
+  @override
+  void initState() {
+    super.initState();
+    _onRefreshData();
+
+    clinicsList = context.read<ClinicsCubit>().state.clinicsList;
+    clinic = clinicsList?.firstWhere(((el) => el.id == widget.clinicId));
+  }
+
+  void _getAppointments(DateTime selectedDate) async {
       await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
         (value) => context
             .read<AppointmentsCubit>()
             .getAppointmentsListForSelectedDay(
-                userId: userId, selectedDate: selectedDate));
+                userId: widget.userId, selectedDate: selectedDate));
     }
 
     void _getCalendarList({bool? isRefresh}) async {
       context.read<SubscribeCubit>().getCalendarList(
             isRefresh: isRefresh ?? false,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
+            userId: widget.userId,
+            buildingId: widget.buildingId,
+            clinicId: widget.clinicId,
             categoryType:
-                CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
+                CategoryTypes.getCategoryTypeByCategoryTypeId(widget.categoryTypeId)
                     .categoryType,
-            doctorId: doctorId,
-            specialisationId: specialisationId,
-            cabinet: cabinet,
-            researchIds: researchIds,
-            isAny: isAny,
+            doctorId: widget.doctorId,
+            specialisationId: widget.specialisationId,
+            cabinet: widget.cabinet,
+            researchIds: widget.researchIds,
+            isAny: widget.isAny,
           );
     }
 
     void _getCellsList({bool? isRefresh}) async {
       context.read<SubscribeCubit>().getTimetableList(
             isRefresh: isRefresh ?? false,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
+            userId: widget.userId,
+            buildingId: widget.buildingId,
+            clinicId: widget.clinicId,
             categoryType:
-                CategoryTypes.getCategoryTypeByCategoryTypeId(categoryTypeId)
+                CategoryTypes.getCategoryTypeByCategoryTypeId(widget.categoryTypeId)
                     .categoryType,
-            doctorId: doctorId,
-            specialisationId: specialisationId,
-            cabinet: cabinet,
-            researchIds: researchIds,
-            isAny: isAny,
+            doctorId: widget.doctorId,
+            specialisationId: widget.specialisationId,
+            cabinet: widget.cabinet,
+            researchIds: widget.researchIds,
+            isAny: widget.isAny,
           );
     }
 
@@ -98,7 +114,7 @@ class SchedulePage extends StatelessWidget {
       context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
       context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
       context.read<AppointmentsCubit>().getAppointmentsListForSelectedDay(
-          userId: userId, selectedDate: selectedDay.date);
+          userId: widget.userId, selectedDate: selectedDay.date);
       if (selectedDay.hasLogs) {
         context
             .read<AppointmentsCubit>()
@@ -129,35 +145,34 @@ class SchedulePage extends StatelessWidget {
       return Future(() => null);
     }
 
-    _onRefreshData();
-
-    final clinicsList = context.read<ClinicsCubit>().state.clinicsList;
-    final clinic = clinicsList?.firstWhere(((el) => el.id == clinicId));
-
-    void _handleTapOnCell(TimetableCellModel selectedCell) {
+    void _handleTapOnCell(TimetableCellModel selectedCell, {
+      bool isDoctorSelected = false,
+    }) {
       context.read<SubscribeCubit>().setSelectedTimetableCell(selectedCell);
       context.read<SubscribeCubit>().getAppointmentInfoData(
             scheduleId: selectedCell.scheduleId,
-            userId: userId,
-            researchIds: researchIds != null ? researchIds as List<String> : [],
+            userId: widget.userId,
+            researchIds: widget.researchIds != null ? widget.researchIds as List<String> : [],
             appointmentDate: selectedCell.time,
           );
       context.read<SubscribeCubit>().checkAndLockAvailableCell(
             scheduleId: selectedCell.scheduleId,
-            userId: userId,
-            clinicId: clinicId,
+            userId: widget.userId,
+            clinicId: widget.clinicId,
             appointmentDate: selectedCell.time,
           );
-      if (selectedCell.doctorAvailable) {
+      if (selectedCell.doctorAvailable && !isDoctorSelected) {
         context.read<SubscribeCubit>().getAvailableDoctor(
               scheduleId: selectedCell.scheduleId,
-              clinicId: clinicId,
+              clinicId: widget.clinicId,
             );
       }
       context.router.push(ConfirmationSubscribeRoute(
-          userId: userId, timeZoneHours: clinic?.timeZoneOffset ?? 0));
+          userId: widget.userId, timeZoneHours: clinic?.timeZoneOffset ?? 0));
     }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
       builder: (context, state) {
         /// при возврате со страницы подтверждения приема нужно заново подгрузить ячейки
@@ -167,17 +182,17 @@ class SchedulePage extends StatelessWidget {
         }
 
         return DefaultScaffold(
-          appBarTitle: pageTitle,
-          appBarSubtitle: pageSubtitle,
+          appBarTitle: widget.pageTitle,
+          appBarSubtitle: widget.pageSubtitle,
           isChildrenPage: true,
-          actions: doctorId != null
+          actions: widget.doctorId != null
               ? [
                   FavoriteDoctorButton(
-                    userId: userId,
-                    buildingId: buildingId,
-                    clinicId: clinicId,
-                    doctorId: doctorId as String,
-                    categoryTypeId: categoryTypeId,
+                    userId: widget.userId,
+                    buildingId: widget.buildingId,
+                    clinicId: widget.clinicId,
+                    doctorId: widget.doctorId as String,
+                    categoryTypeId: widget.categoryTypeId,
                     isFavorite: state.selectedDoctor != null
                         ? state.selectedDoctor!.isFavorite
                         : false,
@@ -223,7 +238,10 @@ class SchedulePage extends StatelessWidget {
                                   ? state.selectedTimetableCell!.scheduleId
                                   : '',
                           timezoneHours: clinic?.timeZoneOffset,
-                          handleTapOnCell: _handleTapOnCell,
+                          handleTapOnCell: (model) => _handleTapOnCell(
+                            model,
+                            isDoctorSelected: state.selectedDoctor != null
+                          ),
                         )
                       : state.getTimetableCellsStatus ==
                                   GetTimetableCellsStatuses.loading &&
@@ -244,7 +262,7 @@ class SchedulePage extends StatelessWidget {
                               )),
                  AppointmentsListWidget(
                     selectedDate: state.selectedDate,
-                    userId: userId,
+                    userId: widget.userId,
                   ),
                 ],
               ),
