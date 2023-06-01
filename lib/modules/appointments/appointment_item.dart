@@ -7,7 +7,6 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
-import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
 
 class AppointmentItem extends StatelessWidget {
@@ -30,47 +29,75 @@ class AppointmentItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          appointmentItem.categoryType == 1 || appointmentItem.categoryType == 0
-              ? Text(title, style: Theme.of(context).textTheme.titleMedium)
-              : RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                          text: CategoryTypes.getCategoryTypeByCategoryTypeId(
-                                  appointmentItem.categoryType)
-                              .russianCategoryTypeName,
-                          style: Theme.of(context).textTheme.titleMedium),
-                      ...appointmentItem.researches.map((e) => TextSpan(
-                          text: ', ${e.name}',
-                          style: Theme.of(context).textTheme.titleMedium))
-                    ],
-                  ),
-                ),
+          // Название приема
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: appointmentItem.categoryType == 1 ||
+                        appointmentItem.categoryType == 0
+                    ? Text(title,
+                        style: Theme.of(context).textTheme.titleMedium)
+                    : RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: CategoryTypes
+                                        .getCategoryTypeByCategoryTypeId(
+                                            appointmentItem.categoryType)
+                                    .russianCategoryTypeName,
+                                style: Theme.of(context).textTheme.titleMedium),
+                            ...appointmentItem.researches.map((e) => TextSpan(
+                                text: ', ${e.name}',
+                                style: Theme.of(context).textTheme.titleMedium))
+                          ],
+                        ),
+                      ),
+              ),
+              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
+            ],
+          ),
+          // Доктор (аватарка, ФИО)
           appointmentItem.doctorInfo.id != null &&
                   appointmentItem.doctorInfo.id!.isNotEmpty
               ? Padding(
-                  padding: const EdgeInsets.only(top: 4.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(top: 6.0, bottom: 14.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        radius: 15,
-                        child: Text(
-                          appointmentItem.doctorInfo.lastName![0],
-                          style: const TextStyle(fontFamily: 'AquawaxPro'),
-                        ),
-                        backgroundColor: AppColors.mainBrand[100],
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 15,
+                            child: Text(
+                              appointmentItem.doctorInfo.lastName![0],
+                              style: const TextStyle(fontFamily: 'AquawaxPro'),
+                            ),
+                            backgroundColor: AppColors.mainBrand[100],
+                          ),
+                          const SizedBox(width: 8.0),
+                          Text(
+                              '${appointmentItem.doctorInfo.lastName} ${appointmentItem.doctorInfo.firstName![0]}. ${appointmentItem.doctorInfo.middleName![0]}.',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(color: AppColors.lightText)),
+                        ],
                       ),
-                      const SizedBox(width: 8.0),
-                      Text(
-                          '${appointmentItem.doctorInfo.lastName} ${appointmentItem.doctorInfo.firstName![0]}. ${appointmentItem.doctorInfo.middleName![0]}.',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: AppColors.lightText)),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                              'assets/icons/appointments/raiting_gold_star.svg'),
+                          const SizedBox(width: 6),
+                          const Text('4.8')
+                        ],
+                      ),
                     ],
                   ),
                 )
               : const SizedBox(height: 15.0),
+          // Адрес
           appointmentItem.clinicInfo.address != null
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,6 +118,7 @@ class AppointmentItem extends StatelessWidget {
                   ],
                 )
               : const SizedBox(),
+          // Рекомендации
           AppointmentItemRecommendations(
             recommendations: appointmentItem.recommendations ?? '',
             serviceName: appointmentItem.categoryType == 1 ||
@@ -100,30 +128,15 @@ class AppointmentItem extends StatelessWidget {
                       (e) => e.name as String,
                     ).join(', ')}',
           ),
+          // Профиль пациента
+          Row(children: [
+            SvgPicture.asset('assets/icons/appointments/profile.svg'),
+            const SizedBox(width: 8.0),
+            Text(appointmentItem.patientInfo.name.toString()),
+          ]),
           const SizedBox(height: 8.0),
           Row(
             children: [
-              RichText(
-                text: WidgetSpan(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.circleBgFirst,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/appointments/clock.svg'),
-                        const SizedBox(width: 8.0),
-                        Text(getAppointmentTime(
-                          appointmentItem.appointmentDateTime,
-                          appointmentItem.timeZoneOffset, // Стандарт МСК
-                        )),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(width: 8.0),
               RichText(
                 text: WidgetSpan(
@@ -136,9 +149,9 @@ class AppointmentItem extends StatelessWidget {
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                            'assets/icons/appointments/profile.svg'),
+                            'assets/icons/appointments/ic_rub.svg'),
                         const SizedBox(width: 8.0),
-                        Text(appointmentItem.patientInfo.name.toString()),
+                        Text('Оплачено'),
                       ],
                     ),
                   ),

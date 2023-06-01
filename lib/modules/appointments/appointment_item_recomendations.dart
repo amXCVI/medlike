@@ -43,7 +43,6 @@ class AppointmentItemRecommendations extends StatelessWidget {
                 maxLines: 1,
                 softWrap: true,
               )),
-              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
             ],
           ),
         ),
