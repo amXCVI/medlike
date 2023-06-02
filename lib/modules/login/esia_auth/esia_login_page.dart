@@ -84,10 +84,19 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
           onPageFinished: (finish) {
             _getAuthEsiaTokenFromHTMLPage();
           },
+          onProgress: (i) {
+            setState(() {
+              isHideWebView = true;
+            });
+          },
           navigationDelegate: (navReq) async {
             if (navReq.url.contains('status')) {
               setState(() {
                 isHideWebView = true;
+              });
+            } else {
+              setState(() {
+                isHideWebView = false;
               });
             }
             return NavigationDecision.navigate;

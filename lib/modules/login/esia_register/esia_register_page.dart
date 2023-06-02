@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/phone_number_formattier.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
@@ -46,7 +47,10 @@ class EsiaRegisterPage extends StatelessWidget {
             birthday: birthday,
           )
           .then((registerNewProfileRes) => {
-                // if (registerNewProfileRes) {checkIsAcceptedUserAgreements()}
+                if (registerNewProfileRes)
+                  {
+                    context.router.replaceAll([AuthUserAgreementsRoute()])
+                  }
               })
           .catchError((err) {});
     }
@@ -76,7 +80,7 @@ class EsiaRegisterPage extends StatelessWidget {
                       horizontal: 16,
                     ),
                     child: Text(
-                      phoneNumber,
+                      PhoneNumber.defaultFormattier(phoneNumber),
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -135,6 +139,7 @@ class EsiaRegisterPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(24),
                       ),
                       height: 48,
+                      padding: const EdgeInsets.symmetric(horizontal: 64.0),
                       child: Text('Назад'.toUpperCase(),
                           style: Theme.of(context)
                               .textTheme
