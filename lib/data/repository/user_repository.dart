@@ -389,4 +389,51 @@ class UserRepository {
       rethrow;
     }
   }
+
+  Future<EsiaTokenAuthRequest> esiaGetTokenOrUserData({
+    required String esiaToken,
+  }) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/auth/token-esia',
+        data: {},
+        options: Options(headers: {'Authorization': 'Bearer $esiaToken'}),
+      );
+      return EsiaTokenAuthRequest.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<CreateUserProfileAndMedicalCardRequestModel>
+      createUserProfileAndMedicalCard({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+  }) async {
+    try {
+      final response = await _dioClient.post(
+        '/api/v1.0/auth/CreateUserProfileAndMedicalCard',
+        data: {
+          "PersonFIO": {
+            "FirstName": firstName,
+            "MiddleName": middleName,
+            "LastName": lastName,
+          },
+          "PhoneNumber": phoneNumber,
+          "Birthday": birthday,
+          "Sex": sex,
+          "Snils": snils,
+        },
+      );
+      return CreateUserProfileAndMedicalCardRequestModel.fromJson(
+          response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

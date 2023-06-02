@@ -29,9 +29,11 @@ class DioInterceptors extends Interceptor {
       'Content-Type': 'application/json',
       'Project': ApiConstants.env,
       'VerApp': ApiConstants.appVersion,
-      'Platform': PlatformHelper.getPlatform(), //Platform.isAndroid ? '1' : '2',
-      'Authorization':
-          'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
+      'Platform':
+          PlatformHelper.getPlatform(), //Platform.isAndroid ? '1' : '2',
+      'Authorization': options.headers.keys.contains('Authorization')
+          ? options.headers['Authorization']
+          : 'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
 
     return super.onRequest(options, handler);
@@ -118,6 +120,7 @@ class DioInterceptors extends Interceptor {
               handler);
         });
       case 409:
+
         /// Не посылаем AppToast
         return super.onError(err, handler);
       case 460:

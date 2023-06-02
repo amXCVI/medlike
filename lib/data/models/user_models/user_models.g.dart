@@ -211,3 +211,111 @@ Map<String, dynamic> _$$_UserAgreementItemModelToJson(
       'version': instance.version,
       'accepted': instance.accepted,
     };
+
+_$_EsiaTokenAuthRequest _$$_EsiaTokenAuthRequestFromJson(
+        Map<String, dynamic> json) =>
+    _$_EsiaTokenAuthRequest(
+      isUserExists: json['isUserExists'] as bool,
+      signinModel: json['signinModel'] == null
+          ? null
+          : EsiaTokenAuthSigninModelRequest.fromJson(
+              json['signinModel'] as Map<String, dynamic>),
+      registrationModel: json['registrationModel'] == null
+          ? null
+          : EsiaTokenAuthRegistrationModelRequest.fromJson(
+              json['registrationModel'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_EsiaTokenAuthRequestToJson(
+        _$_EsiaTokenAuthRequest instance) =>
+    <String, dynamic>{
+      'isUserExists': instance.isUserExists,
+      'signinModel': instance.signinModel,
+      'registrationModel': instance.registrationModel,
+    };
+
+_$_EsiaTokenAuthRegistrationModelRequest
+    _$$_EsiaTokenAuthRegistrationModelRequestFromJson(
+            Map<String, dynamic> json) =>
+        _$_EsiaTokenAuthRegistrationModelRequest(
+          firstName: json['firstName'] as String,
+          lastName: json['lastName'] as String,
+          middleName: json['middleName'] as String,
+          phoneNumber: json['phoneNumber'] as String,
+          snils: json['snils'] as String,
+          sex: json['sex'] as int,
+          birthday: json['birthday'] as String,
+        );
+
+Map<String, dynamic> _$$_EsiaTokenAuthRegistrationModelRequestToJson(
+        _$_EsiaTokenAuthRegistrationModelRequest instance) =>
+    <String, dynamic>{
+      'firstName': instance.firstName,
+      'lastName': instance.lastName,
+      'middleName': instance.middleName,
+      'phoneNumber': instance.phoneNumber,
+      'snils': instance.snils,
+      'sex': instance.sex,
+      'birthday': instance.birthday,
+    };
+
+_$_EsiaTokenAuthSigninModelRequest _$$_EsiaTokenAuthSigninModelRequestFromJson(
+        Map<String, dynamic> json) =>
+    _$_EsiaTokenAuthSigninModelRequest(
+      token: json['token'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+
+Map<String, dynamic> _$$_EsiaTokenAuthSigninModelRequestToJson(
+        _$_EsiaTokenAuthSigninModelRequest instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'refreshToken': instance.refreshToken,
+    };
+
+_$_CreateUserProfileAndMedicalCardRequestModel
+    _$$_CreateUserProfileAndMedicalCardRequestModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_CreateUserProfileAndMedicalCardRequestModel(
+          result: json['result'] as bool,
+          profileId: json['profileId'] as String,
+          error: json['error'] as String,
+          integrationResponse:
+              CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson(
+                  json['integrationResponse'] as Map<String, dynamic>),
+          forceToSite: json['forceToSite'] as bool,
+        );
+
+Map<String, dynamic> _$$_CreateUserProfileAndMedicalCardRequestModelToJson(
+        _$_CreateUserProfileAndMedicalCardRequestModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'profileId': instance.profileId,
+      'error': instance.error,
+      'integrationResponse': instance.integrationResponse,
+      'forceToSite': instance.forceToSite,
+    };
+
+_$_CreateUserProfileAndMedicalCardIntegrationResponseModel
+    _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelFromJson(
+            Map<String, dynamic> json) =>
+        _$_CreateUserProfileAndMedicalCardIntegrationResponseModel(
+          result: json['result'] as bool,
+          profileId: json['profileId'] as String,
+          errorCode: json['errorCode'] as String,
+          errorText: json['errorText'] as String,
+          accountId: json['accountId'] as String,
+          forceErrorToSite: json['forceErrorToSite'] as bool,
+        );
+
+Map<String,
+    dynamic> _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelToJson(
+        _$_CreateUserProfileAndMedicalCardIntegrationResponseModel instance) =>
+    <String, dynamic>{
+      'result': instance.result,
+      'profileId': instance.profileId,
+      'errorCode': instance.errorCode,
+      'errorText': instance.errorText,
+      'accountId': instance.accountId,
+      'forceErrorToSite': instance.forceErrorToSite,
+    };

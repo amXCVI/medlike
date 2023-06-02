@@ -12,6 +12,7 @@ import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
 import 'package:medlike/modules/login/esia_auth/esia_login_page.dart';
+import 'package:medlike/modules/login/esia_register/esia_register_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
@@ -56,7 +57,9 @@ import 'package:medlike/navigation/routes_names_map.dart';
     AdaptiveRoute(
         path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
     AdaptiveRoute(path: AppRoutes.loginUnauthSupport, page: UnauthSupportPage),
-    AdaptiveRoute(path: AppRoutes.esiaLoginPage, page: EsiaLoginPage),
+    AdaptiveRoute(path: AppRoutes.loginEsiaLoginPage, page: EsiaLoginPage),
+    AdaptiveRoute(
+        path: AppRoutes.loginEsiaRegisterPage, page: EsiaRegisterPage),
 
     AdaptiveRoute(
         path: AppRoutes.main,
