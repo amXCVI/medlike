@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.0"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   barcode:
     dependency: "direct main"
     description:
@@ -475,6 +482,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_holo_date_picker:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: dev
+      resolved-ref: aba956bae35433ad82a6aefea7f915222aa66888
+      url: "../flutter_holo_date_picker"
+    source: git
+    version: "1.0.6"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

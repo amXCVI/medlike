@@ -82,6 +82,8 @@ class AppRouter extends _i37.RootStackRouter {
       {_i38.GlobalKey<_i38.NavigatorState>? navigatorKey,
       required this.checkIsSavedPinCode,
       required this.checkIsAuthUser,
+      required this.checkIsOneProfileForSubscribe,
+      required this.checkIsOneClinicForSubscribe,
       required this.checkIsOneClinicForPrice,
       required this.checkIsOneClinicForDetails,
       required this.checkIsOneClinicForMain,
@@ -92,6 +94,10 @@ class AppRouter extends _i37.RootStackRouter {
   final _i39.CheckIsSavedPinCode checkIsSavedPinCode;
 
   final _i39.CheckIsAuthUser checkIsAuthUser;
+
+  final _i39.CheckIsOneProfileForSubscribe checkIsOneProfileForSubscribe;
+
+  final _i39.CheckIsOneClinicForSubscribe checkIsOneClinicForSubscribe;
 
   final _i39.CheckIsOneClinicForPrice checkIsOneClinicForPrice;
 
@@ -437,9 +443,11 @@ class AppRouter extends _i37.RootStackRouter {
         _i37.RouteConfig(AppointmentsRoute.name,
             path: '/my_appointments', guards: [checkIsAuthUser]),
         _i37.RouteConfig(SubscribeProfilesListRoute.name,
-            path: '/subscribe_profiles', guards: [checkIsAuthUser]),
+            path: '/subscribe_profiles',
+            guards: [checkIsOneProfileForSubscribe, checkIsAuthUser]),
         _i37.RouteConfig(ClinicsListRoute.name,
-            path: '/subscribe_clinics', guards: [checkIsAuthUser]),
+            path: '/subscribe_clinics',
+            guards: [checkIsOneClinicForSubscribe, checkIsAuthUser]),
         _i37.RouteConfig(ServicesListRoute.name,
             path: '/subscribe_services', guards: [checkIsAuthUser]),
         _i37.RouteConfig(ResearchesListRoute.name,
@@ -491,11 +499,11 @@ class AppRouter extends _i37.RootStackRouter {
             path: '/health_profiles_for_main',
             guards: [checkIsOneProfileForMain, checkIsAuthUser]),
         _i37.RouteConfig(CardsRoute.name,
-            path: '/health_profiles_main', guards: [checkIsAuthUser]),
+            path: '/health', guards: [checkIsAuthUser]),
         _i37.RouteConfig(DiaryRoute.name,
-            path: '/health_profiles_diary', guards: [checkIsAuthUser]),
+            path: '/diary', guards: [checkIsAuthUser]),
         _i37.RouteConfig(DiaryAddRoute.name,
-            path: '/health_profiles_diary_add', guards: [checkIsAuthUser]),
+            path: '/diary_add', guards: [checkIsAuthUser]),
         _i37.RouteConfig(RequireUpdateAppRoute.name,
             path: '/require_updater_page')
       ];
@@ -1459,7 +1467,7 @@ class HealthRouteForMain extends _i37.PageRouteInfo<void> {
 class CardsRoute extends _i37.PageRouteInfo<CardsRouteArgs> {
   CardsRoute({_i40.Key? key, required bool isChildrenPage})
       : super(CardsRoute.name,
-            path: '/health_profiles_main',
+            path: '/health',
             args: CardsRouteArgs(key: key, isChildrenPage: isChildrenPage));
 
   static const String name = 'CardsRoute';
@@ -1487,7 +1495,7 @@ class DiaryRoute extends _i37.PageRouteInfo<DiaryRouteArgs> {
       required _i42.DiaryCategoryModel categoryModel,
       required String syn})
       : super(DiaryRoute.name,
-            path: '/health_profiles_diary',
+            path: '/diary',
             args: DiaryRouteArgs(
                 key: key,
                 title: title,
@@ -1534,7 +1542,7 @@ class DiaryAddRoute extends _i37.PageRouteInfo<DiaryAddRouteArgs> {
       List<double>? initialValues,
       DateTime? initialDate})
       : super(DiaryAddRoute.name,
-            path: '/health_profiles_diary_add',
+            path: '/diary_add',
             args: DiaryAddRouteArgs(
                 key: key,
                 title: title,

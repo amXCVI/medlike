@@ -5,6 +5,7 @@ import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -81,12 +82,42 @@ abstract class CheckIsOneProfile extends AutoRouteGuard {
     final context = router.navigatorKey.currentContext;
     final usersList = context?.read<UserCubit>().state.userProfiles;
 
-    if (usersList?.length == 1) {
-      context?.read<UserCubit>().setSelectedUserId(usersList![0].id);
-      redirect(usersList![0], router);
+    if(usersList != null && usersList.length == 1) {
+      context?.read<UserCubit>().setSelectedUserId(usersList[0].id);
+      redirect(usersList[0], router);
     } else {
       resolver.next(true);
     }
+  }
+}
+
+abstract class CheckIsOneAvaliableClinic extends AutoRouteGuard {
+  void redirect(AvailableClinic clinic, String userId, StackRouter router);
+
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) async {
+    final context = router.navigatorKey.currentContext;
+    final clinicsList = context?.read<SubscribeCubit>().state.availableClinicsList;
+    final userId = context?.read<UserCubit>().state.selectedUserId;
+
+    if(clinicsList != null && userId != null && clinicsList.length == 1) {
+      final building = clinicsList[0];
+      context?.read<SubscribeCubit>().setSelectedBuilding(building);
+      redirect(building, userId, router);
+    } else {
+      resolver.next(true);
+    }
+  }
+}
+
+class CheckIsOneClinicForSubscribe extends CheckIsOneAvaliableClinic {
+  @override
+  void redirect(AvailableClinic clinic, String userId, StackRouter router) {
+    router.push(ServicesListRoute(
+      clinicId: clinic.id,
+      buildingId: clinic.buildingId,
+      userId: userId
+    ));
   }
 }
 
@@ -113,9 +144,19 @@ class CheckIsOneClinicForMain extends CheckIsOneClinic {
   }
 }
 
+class CheckIsOneProfileForSubscribe extends CheckIsOneProfile {
+  @override
+  void redirect(UserProfile user, StackRouter router) {
+    router.push(ClinicsListRoute(
+      userId: user.id, 
+      isChildrenPage: false
+    ));
+  }
+}
+
 class CheckIsOneProfileForHealth extends CheckIsOneProfile {
   @override
-  void redirect(UserProfile profile, StackRouter router) {
+  void redirect(UserProfile user, StackRouter router) {
 
     router
       .push(CardsRoute(isChildrenPage: false));
@@ -124,7 +165,7 @@ class CheckIsOneProfileForHealth extends CheckIsOneProfile {
 
 class CheckIsOneProfileForMain extends CheckIsOneProfile {
   @override
-  void redirect(UserProfile profile, StackRouter router) {
+  void redirect(UserProfile user, StackRouter router) {
 
     router
       .push(const MainRoute());
