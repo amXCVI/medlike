@@ -16,10 +16,11 @@ class AppointmentInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
-        if (state.getAllClinicsListStatus == GetAllClinicsListStatuses.failed) {
+        if (state.getAllClinicsListStatus ==
+          GetAllClinicsListStatuses.failed) {
           return const Text('');
         } else if (state.getAllClinicsListStatus ==
-            GetAllClinicsListStatuses.success) {
+          GetAllClinicsListStatuses.success) {
           return ClinicsBuilder(
             clinicsList: state.clinicsList!,
           );
@@ -32,14 +33,16 @@ class AppointmentInfo extends StatelessWidget {
 }
 
 class ClinicsBuilder extends StatelessWidget {
-  const ClinicsBuilder({Key? key, required this.clinicsList}) : super(key: key);
+  const ClinicsBuilder({
+    Key? key,
+    required this.clinicsList
+  }) : super(key: key);
 
   final List<ClinicModel> clinicsList;
 
-  ClinicModel? getClinic(
-      TimetableCellModel? item, List<ClinicModel>? clinicsList) {
-    for (ClinicModel clinic in clinicsList ?? []) {
-      if (clinic.buildings.any((el) => el.buildingId == item?.buildingId)) {
+  ClinicModel? getClinic(TimetableCellModel? item, List<ClinicModel>? clinicsList) {
+    for(ClinicModel clinic in clinicsList ?? []) {
+      if(clinic.buildings.any((el) => el.buildingId == item?.buildingId)) {
         return clinic;
       }
     }
@@ -65,7 +68,7 @@ class ClinicsBuilder extends StatelessWidget {
                       state.getAppointmentInfoStatus !=
                           GetAppointmentInfoStatuses.loading
                   ? AppointmentRecommendations(
-                      serviceName: state.appointmentInfoData!.serviceName,
+                serviceName: state.appointmentInfoData!.serviceName,
                       recommendations: state
                           .appointmentInfoData!.recommendations
                           .asMap()
@@ -83,10 +86,7 @@ class ClinicsBuilder extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: AppointmentInfoItem(
-                        title: 'Клиника',
-                        value: state.selectedBuilding?.name != null
-                            ? state.selectedBuilding!.name
-                            : ''),
+                        title: 'Клиника', value: state.selectedBuilding!.name),
                   ),
                   const SizedBox(width: 24),
                   Expanded(
@@ -128,16 +128,16 @@ class ClinicsBuilder extends StatelessWidget {
                   ),
                   const SizedBox(width: 24),
                   Expanded(
-                      flex: 2,
-                      child: AppointmentInfoItem(
-                          title: 'Время',
-                          value: getAppointmentTime(
-                              state.selectedTimetableCell!.time,
-                              getClinic(state.selectedTimetableCell,
-                                          clinicsList)!
-                                      .timeZoneOffset ??
-                                  3,
-                              isTimeCell: true)))
+                    flex: 2,
+                    child: AppointmentInfoItem(
+                        title: 'Время',
+                        value: getAppointmentTime(
+                          state.selectedTimetableCell!.time, 
+                          getClinic(state.selectedTimetableCell, clinicsList)!.timeZoneOffset ?? 3,
+                          isTimeCell: true
+                        )
+                    )                       
+                  )
                 ],
               ),
             ],

@@ -32,7 +32,9 @@ Future<Widget> withApp([Widget? child,
     checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
     checkIsOneClinicForMain: CheckIsOneClinicForMain(),
     checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
-    checkIsOneProfileForMain: CheckIsOneProfileForMain()
+    checkIsOneProfileForMain: CheckIsOneProfileForMain(),
+    checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
+    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()
   ));
 
   getIt.registerSingleton(PushNavigationService());
