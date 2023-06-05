@@ -24,19 +24,20 @@ class _CardsPageState extends State<CardsPage> {
   late bool isFilteringMode = false;
   GlobalKey widgetOverBodyGlobalKey = GlobalKey();
 
+  void _onLoadDada(String grouping, {String? syn}) {
+    context.read<DiaryCubit>().getDiaryCategoriesList(userIds: []);
+    
+    context.read<DiaryCubit>().getDiariesList(grouping: grouping, syn: syn);
+  }
+
   @override
   void initState() {
+    _onLoadDada('Hour');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    void _onLoadDada(String grouping, {String? syn}) {
-      context.read<DiaryCubit>().getDiaryCategoriesList();
-
-      context.read<DiaryCubit>().getDiariesList(grouping: grouping, syn: syn);
-    }
-
     void handleTapOnFiltersButton() {
       if (isFilteringMode) {
         setState(() {
@@ -59,10 +60,8 @@ class _CardsPageState extends State<CardsPage> {
       onWillPop: () async {
         if (isFilteringMode) {
           handleResetFilters();
-        } else if (widget.isChildrenPage) {
-          context.router.replace(const HealthRoute());
         } else {
-          context.router.replaceAll([const MainRoute()]);
+          context.router.replaceAll([const HealthRouteForMain()]);
         }
         return false;
       },

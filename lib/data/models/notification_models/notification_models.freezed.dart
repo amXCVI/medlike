@@ -28,7 +28,7 @@ mixin _$NotificationModel {
   int get eventsCount => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   String get eventType => throw _privateConstructorUsedError;
-  String get entityId => throw _privateConstructorUsedError;
+  String? get entityId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +49,7 @@ abstract class $NotificationModelCopyWith<$Res> {
       int eventsCount,
       String userId,
       String eventType,
-      String entityId});
+      String? entityId});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class _$NotificationModelCopyWithImpl<$Res>
       entityId: entityId == freezed
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -124,7 +124,7 @@ abstract class _$$_NotificationModelCopyWith<$Res>
       int eventsCount,
       String userId,
       String eventType,
-      String entityId});
+      String? entityId});
 }
 
 /// @nodoc
@@ -181,7 +181,7 @@ class __$$_NotificationModelCopyWithImpl<$Res>
       entityId: entityId == freezed
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -197,7 +197,7 @@ class _$_NotificationModel implements _NotificationModel {
       required this.eventsCount,
       required this.userId,
       required this.eventType,
-      required this.entityId});
+      this.entityId});
 
   factory _$_NotificationModel.fromJson(Map<String, dynamic> json) =>
       _$$_NotificationModelFromJson(json);
@@ -218,7 +218,7 @@ class _$_NotificationModel implements _NotificationModel {
   @override
   final String eventType;
   @override
-  final String entityId;
+  final String? entityId;
 
   @override
   String toString() {
@@ -276,7 +276,7 @@ abstract class _NotificationModel implements NotificationModel {
       required final int eventsCount,
       required final String userId,
       required final String eventType,
-      required final String entityId}) = _$_NotificationModel;
+      final String? entityId}) = _$_NotificationModel;
 
   factory _NotificationModel.fromJson(Map<String, dynamic> json) =
       _$_NotificationModel.fromJson;
@@ -297,7 +297,7 @@ abstract class _NotificationModel implements NotificationModel {
   @override
   String get eventType => throw _privateConstructorUsedError;
   @override
-  String get entityId => throw _privateConstructorUsedError;
+  String? get entityId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>

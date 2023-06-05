@@ -3,6 +3,7 @@ import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/helpers/health_filters_helper.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
@@ -16,9 +17,20 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
 
   final DiaryRepository diaryRepository;
 
+  @override
+  void receive(String from, UserMediatorEvent event) {
+    if (event == UserMediatorEvent.logout) {
+      HealthFiltersHelper.cleanFilters();
+      emit(state.copyWith(
+        filteredSyns: {}
+      ));
+    }
+  }
+
   /// Получить список дневников
   void getDiaryCategoriesList({
     DateTime? updateSince,
+    required List<String> userIds
   }) async {
     emit(state.copyWith(
       getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.loading,
@@ -29,10 +41,25 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
       response = await diaryRepository.getDiaryCategories(
         updateSince: updateSince
       );
+      Map<String, List<String>>? filters;
+
+      if(state.filteredSyns == null) {
+        /// Получить фильтры из HealtFiltersHelper
+        filters = await HealthFiltersHelper.loadFilters(userIds);
+
+        emit(state.copyWith(
+          filteredSyns: filters
+        ));
+      } else {
+        filters = state.filteredSyns;
+      }
+
+      final filredSyns = filters?[state.userId] ?? [];
+
       emit(state.copyWith(
         getDiaryCategoriesStatuses: GetDiaryCategoriesStatuses.success,
         filteredDiariesCategoriesList: response.where((element) 
-          => !state.filteredSyns.contains(element.synonim)).toList(),
+          => !filredSyns.contains(element.synonim)).toList(),
         diariesCategoriesList: response,
       ));
     } catch (e) {
@@ -126,12 +153,20 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
   }
 
   /// Фильтровать дневники
-  void setFiltered(
-    List<String> filteredSyns
-  ) {
+  void setFiltered({
+    required String userId,
+    required List<String> userFilteredSyns
+  }) {
+    final filteredSyns = state.filteredSyns;
+    filteredSyns?[userId] = userFilteredSyns;
+
+    HealthFiltersHelper.setFilters(
+      filteredSyns ?? {}
+    );
+
     emit(state.copyWith(
       filteredDiariesCategoriesList: state.diariesCategoriesList!.where((element) 
-        => !filteredSyns.contains(element.synonim)).toList(),
+        => !userFilteredSyns.contains(element.synonim)).toList(),
       filteredSyns: filteredSyns
     ));
   } 
@@ -165,8 +200,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись добавлена');
       }
 
     } catch (e) {
@@ -209,8 +242,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись отредактирована');
       }
     } catch (e) {
       addError(e);
@@ -249,8 +280,6 @@ class DiaryCubit extends MediatorCubit<DiaryState, UserMediatorEvent>
             syn: syn
           );
         }
-
-        AppToast.showAppToast(msg: 'Запись удалена');
       }
     } catch (e) {
       addError(e);

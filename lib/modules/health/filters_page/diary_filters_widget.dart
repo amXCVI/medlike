@@ -17,7 +17,8 @@ class _DiaryFiltersWidgetState extends State<DiaryFiltersWidget> {
 
   @override
   void initState() {
-    selected = List.from(context.read<DiaryCubit>().state.filteredSyns);
+    final filteredSyns = context.read<DiaryCubit>().state.filteredSyns ?? {};
+    selected = List.from(filteredSyns[context.read<DiaryCubit>().state.userId] ?? []);
     super.initState();
   }
 
@@ -33,7 +34,10 @@ class _DiaryFiltersWidgetState extends State<DiaryFiltersWidget> {
             selected.add(syn);
           }
         });
-        context.read<DiaryCubit>().setFiltered(selected);
+        context.read<DiaryCubit>().setFiltered(
+          userId: state.userId!, 
+          userFilteredSyns: selected
+        );
       }
 
       if (state.getDiaryCategoriesStatuses ==

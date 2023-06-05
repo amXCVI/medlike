@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
@@ -11,8 +12,12 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userIds = context.read<UserCubit>().state.userProfiles?.map((e) => e.id).toList();
+
     void _loadData(String grouping) {
-      context.read<DiaryCubit>().getDiaryCategoriesList();
+      context.read<DiaryCubit>().getDiaryCategoriesList(
+        userIds: userIds ?? []
+      );
 
       context.read<DiaryCubit>().getDiariesList(grouping: 'None');
     }
@@ -20,11 +25,9 @@ class HealthPage extends StatelessWidget {
     void _handleTapOnUserProfile(String userId, bool isChildren) {
       context.read<DiaryCubit>().setUserId(userId);
       _loadData('None');
-      if (isChildren) {
-        context.router.push(CardsRoute(isChildrenPage: true));
-      } else {
-        context.router.replace(CardsRoute(isChildrenPage: false));
-      }
+      /// Для автоматического пропуска экрана replace всегда
+      /// isChildren игнорируем
+      context.router.replace(CardsRoute(isChildrenPage: false));
     }
 
     return BlocBuilder<DiaryCubit, DiaryState>(builder: (context, state) {
@@ -35,10 +38,14 @@ class HealthPage extends StatelessWidget {
         },
         child: ProfilesListPage(
           title: 'Показатели здоровья',
-          routeName: AppRoutes.health,
+          routeName: AppRoutes.healthProfilesForMain,
           handleTapOnUserProfile: _handleTapOnUserProfile,
         ),
       );
     });
   }
+}
+
+class HealthPageForMain extends HealthPage {
+  const HealthPageForMain({super.key});
 }

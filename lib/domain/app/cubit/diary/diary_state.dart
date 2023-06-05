@@ -14,7 +14,8 @@ class DiaryState {
   final List<DiaryFlatModel>? diariesList;
   final List<DiaryCategoryModel>? diariesCategoriesList;
   final List<DiaryCategoryModel>? filteredDiariesCategoriesList;
-  final List<String> filteredSyns;
+  /// Вроде бы фильтры по категориям 
+  final Map<String, List<String>>? filteredSyns;
   final String? userId;
   final DiaryFlatModel? selectedDiary;
   final DiaryFlatModel? periodedSelectedDiary;
@@ -30,11 +31,10 @@ class DiaryState {
     this.pageUpdateStatuses,
     this.filteredDiariesCategoriesList,
     this.userId,
-    List<String>? filteredSyns,
+    this.filteredSyns,
     DateTime? dateFrom,
     DateTime? dateTo,
-  }) :
-    filteredSyns = filteredSyns ?? [];
+  });
 
   DiaryState copyWith({
     GetDiaryStatuses? getDiaryStatuses,
@@ -48,7 +48,8 @@ class DiaryState {
     DiaryFlatModel? selectedDiary,
     DiaryFlatModel? periodedSelectedDiary,
     String? selectedDiaryTitle,
-    List<String>? filteredSyns,
+    /// Вроде бы фильтры по категориям 
+    Map<String, List<String>>? filteredSyns,
   }) {
     return DiaryState(
       getDiaryStatuses: getDiaryStatuses ?? this.getDiaryStatuses,

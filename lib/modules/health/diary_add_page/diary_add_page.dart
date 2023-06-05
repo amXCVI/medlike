@@ -153,6 +153,15 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         dateController.text = text;
         this.date = date;
         _initialDate = date;
+
+        /// В _initialTime записывается дата как в _initialDate
+        _initialTime = DateTime(
+          _initialDate!.year,
+          _initialDate!.month,
+          _initialDate!.day,
+          _initialTime!.hour,
+          _initialTime!.minute,
+        );
       });
     }
 
