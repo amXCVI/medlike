@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 
 class AppointmentItemRecommendations extends StatelessWidget {
   const AppointmentItemRecommendations(
@@ -16,21 +15,21 @@ class AppointmentItemRecommendations extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: GestureDetector(
-          onTap: () => {
-            showModalBottomSheet(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12),
-                    topLeft: Radius.circular(12),
-                  ),
-                ),
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => RecommendationBottomSheet(
-                      serviceName: serviceName,
-                      recommendationsText: recommendations,
-                    ))
-          },
+          // onTap: () => {
+          //   showModalBottomSheet(
+          //       shape: const RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.only(
+          //           topRight: Radius.circular(12),
+          //           topLeft: Radius.circular(12),
+          //         ),
+          //       ),
+          //       context: context,
+          //       isScrollControlled: true,
+          //       builder: (context) => RecommendationBottomSheet(
+          //             serviceName: serviceName,
+          //             recommendationsText: recommendations,
+          //           ))
+          // },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

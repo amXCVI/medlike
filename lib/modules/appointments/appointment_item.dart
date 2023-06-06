@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/constants/appointment_payment_statuses.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
@@ -156,7 +157,9 @@ class AppointmentItem extends StatelessWidget {
                         SvgPicture.asset(
                             'assets/icons/appointments/ic_rub.svg'),
                         const SizedBox(width: 8.0),
-                        const Text('Оплачено'),
+                        Text(AppointmentPaymentStatuses.getPaymentStatus(
+                                appointmentItem.paymentStatus)
+                            .description),
                       ],
                     ),
                   ),
