@@ -48,44 +48,45 @@ class AppointmentsCubit
       response = await appointmentsRepository.getAppointmentsList();
 
       final appointmentsList = response
-        .map((e) => AppointmentModelWithTimeZoneOffset(
-            status: e.status,
-            needConfirmation: e.needConfirmation,
-            comment: e.comment,
-            researchPlace: e.researchPlace,
-            id: e.id,
-            appointmentDateTime:
-                const TimestampConverter().fromJson(e.appointmentDateTime),
-            timeZoneOffset: getTimezoneOffset(e.appointmentDateTime),
-            patientInfo: e.patientInfo,
-            clinicInfo: e.clinicInfo,
-            doctorInfo: e.doctorInfo,
-            researches: e.researches,
-            categoryType: e.categoryType,
-            isVideo: e.isVideo,
-            payType: e.payType,
-            isDraft: e.isDraft,
-            orderId: e.orderId,
-            scheduleId: e.scheduleId,
-            paymentStatus: e.paymentStatus,
-            recommendations: e.recommendations))
-        .toList();
+          .map((e) => AppointmentModelWithTimeZoneOffset(
+                status: e.status,
+                needConfirmation: e.needConfirmation,
+                comment: e.comment,
+                researchPlace: e.researchPlace,
+                id: e.id,
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
+                timeZoneOffset: getTimezoneOffset(e.appointmentDateTime),
+                patientInfo: e.patientInfo,
+                clinicInfo: e.clinicInfo,
+                doctorInfo: e.doctorInfo,
+                researches: e.researches,
+                categoryType: e.categoryType,
+                isVideo: e.isVideo,
+                payType: e.payType,
+                isDraft: e.isDraft,
+                orderId: e.orderId,
+                scheduleId: e.scheduleId,
+                paymentStatus: e.paymentStatus,
+                recommendations: e.recommendations,
+                items: e.items,
+                checkURI: e.checkURI,
+              ))
+          .toList();
 
       final awaitedAppointments = response
-        .where((e) => AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
-      .toList();
+          .where((e) =>
+              AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
+          .toList();
 
       emit(state.copyWith(
-        getAppointmentsStatus: GetAppointmentsStatuses.success,
-        appointmentsList: appointmentsList,
-        filteredAppointmentsList: appointmentsList,
-        confirmCounter:
-          awaitedAppointments.where(
-            (e) => isDifferenceIn24h(
-              DateTime.parse(e.appointmentDateTime)
-            )
-          ).length
-      ));
+          getAppointmentsStatus: GetAppointmentsStatuses.success,
+          appointmentsList: appointmentsList,
+          filteredAppointmentsList: appointmentsList,
+          confirmCounter: awaitedAppointments
+              .where((e) =>
+                  isDifferenceIn24h(DateTime.parse(e.appointmentDateTime)))
+              .length));
       emit(state.copyWith(
           getAppointmentsStatus: GetAppointmentsStatuses.success,
           appointmentsList: response

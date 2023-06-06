@@ -8,6 +8,7 @@ import 'package:medlike/modules/appointments/appointment_item_recomendations.dar
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
+import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 
 class AppointmentItem extends StatelessWidget {
   const AppointmentItem({Key? key, required this.appointmentItem})
@@ -136,7 +137,11 @@ class AppointmentItem extends StatelessWidget {
           ]),
           const SizedBox(height: 8.0),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              NextAppointmentTimeChip(
+                  appointmentDateTime: appointmentItem.appointmentDateTime,
+                  timeZoneOffset: appointmentItem.timeZoneOffset),
               const SizedBox(width: 8.0),
               RichText(
                 text: WidgetSpan(
@@ -151,7 +156,7 @@ class AppointmentItem extends StatelessWidget {
                         SvgPicture.asset(
                             'assets/icons/appointments/ic_rub.svg'),
                         const SizedBox(width: 8.0),
-                        Text('Оплачено'),
+                        const Text('Оплачено'),
                       ],
                     ),
                   ),
