@@ -23,11 +23,12 @@ class AppRoutes {
   static const subscribeConfirmation = '/subscribe_confirm';
   static const subscribePayment = '/subscribe_payment_page';
   static const myAppointments = '/my_appointments';
+  static const appointmentDetails = '/my_appointments_details';
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
   static const healthProfiles = '/health_profiles';
-  static const healthProfilesForMain= '/health_profiles_for_main';
+  static const healthProfilesForMain = '/health_profiles_for_main';
   static const health = '/health';
   static const diary = '/diary';
   static const diaryAdd = '/diary_add';

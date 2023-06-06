@@ -8,6 +8,8 @@ enum PutAppointmentsStatuses { initial, loading, success, failed }
 
 enum DeleteAppointmentStatuses { initial, loading, success, failed }
 
+enum GetAppointmentStatuses { initial, loading, success, failed }
+
 @immutable
 class AppointmentsState {
   final GetAppointmentsStatuses? getAppointmentsStatus;
@@ -23,6 +25,8 @@ class AppointmentsState {
   final DateTime startDate;
   final DateTime endDate;
   final DateTime selectedDate;
+  final GetAppointmentStatuses? getAppointmentStatus;
+  final AppointmentModel? selectedAppointment;
 
   AppointmentsState({
     this.getAppointmentsStatus,
@@ -35,6 +39,8 @@ class AppointmentsState {
     this.getLastAppointmentStatus,
     this.confirmCounter,
     this.appointmentLoadingId,
+    this.getAppointmentStatus,
+    this.selectedAppointment,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -58,6 +64,8 @@ class AppointmentsState {
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
+    GetAppointmentStatuses? getAppointmentStatus,
+    AppointmentModel? selectedAppointment,
   }) {
     return AppointmentsState(
       getAppointmentsStatus:
@@ -75,6 +83,8 @@ class AppointmentsState {
       lastAppointment: lastAppointment ?? this.lastAppointment,
       confirmCounter: confirmCounter ?? this.confirmCounter,
       appointmentLoadingId: appointmentLoadingId ?? this.appointmentLoadingId,
+      getAppointmentStatus: getAppointmentStatus ?? this.getAppointmentStatus,
+      selectedAppointment: selectedAppointment ?? this.selectedAppointment,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       selectedDate: selectedDate ?? this.selectedDate,
@@ -83,18 +93,13 @@ class AppointmentsState {
 
   AppointmentsState clearAppointment() {
     return AppointmentsState(
-      getAppointmentsStatus:
-          getAppointmentsStatus,
+      getAppointmentsStatus: getAppointmentsStatus,
       appointmentsList: appointmentsList,
-      filteredAppointmentsList:
-          filteredAppointmentsList,
-      selectedDayAppointmentsList:
-          selectedDayAppointmentsList,
+      filteredAppointmentsList: filteredAppointmentsList,
+      selectedDayAppointmentsList: selectedDayAppointmentsList,
       putAppointmentStatus: putAppointmentStatus,
-      deleteAppointmentStatus:
-          deleteAppointmentStatus,
-      getLastAppointmentStatus:
-          getLastAppointmentStatus,
+      deleteAppointmentStatus: deleteAppointmentStatus,
+      getLastAppointmentStatus: getLastAppointmentStatus,
       lastAppointment: null,
       confirmCounter: null,
       appointmentLoadingId: null,

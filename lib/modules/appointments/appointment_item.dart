@@ -1,14 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/constants/appointment_payment_statuses.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
+import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
-import 'package:medlike/widgets/buttons/simple_button.dart';
+import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 
 class AppointmentItem extends StatelessWidget {
@@ -25,6 +28,38 @@ class AppointmentItem extends StatelessWidget {
                 appointmentItem.categoryType)
             .russianCategoryTypeName;
 
+    void _handleTapOnAppointment() {
+      context.read<AppointmentsCubit>().getAppointmentById(
+            appointmentId: appointmentItem.id,
+            userId: appointmentItem.patientInfo.id!,
+          );
+
+      context.router.push(AppointmentDetailRoute(
+          appointmentItem: AppointmentModel(
+        status: appointmentItem.status,
+        needConfirmation: appointmentItem.needConfirmation,
+        comment: appointmentItem.comment,
+        researchPlace: appointmentItem.researchPlace,
+        id: appointmentItem.id,
+        appointmentDateTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
+            .format(appointmentItem.appointmentDateTime),
+        patientInfo: appointmentItem.patientInfo,
+        clinicInfo: appointmentItem.clinicInfo,
+        doctorInfo: appointmentItem.doctorInfo,
+        researches: appointmentItem.researches,
+        categoryType: appointmentItem.categoryType,
+        isVideo: appointmentItem.isVideo,
+        payType: appointmentItem.payType,
+        isDraft: appointmentItem.isDraft,
+        orderId: appointmentItem.orderId,
+        scheduleId: appointmentItem.scheduleId,
+        paymentStatus: appointmentItem.paymentStatus,
+        recommendations: appointmentItem.recommendations,
+        items: appointmentItem.items,
+        checkURI: appointmentItem.checkURI,
+      )));
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       child: Column(
@@ -32,33 +67,38 @@ class AppointmentItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Название приема
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: appointmentItem.categoryType == 1 ||
-                        appointmentItem.categoryType == 0
-                    ? Text(title,
-                        style: Theme.of(context).textTheme.titleMedium)
-                    : RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: CategoryTypes
-                                        .getCategoryTypeByCategoryTypeId(
-                                            appointmentItem.categoryType)
-                                    .russianCategoryTypeName,
-                                style: Theme.of(context).textTheme.titleMedium),
-                            ...appointmentItem.researches.map((e) => TextSpan(
-                                text: ', ${e.name}',
-                                style: Theme.of(context).textTheme.titleMedium))
-                          ],
+          GestureDetector(
+            onTap: _handleTapOnAppointment,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: appointmentItem.categoryType == 1 ||
+                          appointmentItem.categoryType == 0
+                      ? Text(title,
+                          style: Theme.of(context).textTheme.titleMedium)
+                      : RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                  text: CategoryTypes
+                                          .getCategoryTypeByCategoryTypeId(
+                                              appointmentItem.categoryType)
+                                      .russianCategoryTypeName,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
+                              ...appointmentItem.researches.map((e) => TextSpan(
+                                  text: ', ${e.name}',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium))
+                            ],
+                          ),
                         ),
-                      ),
-              ),
-              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
-            ],
+                ),
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
+              ],
+            ),
           ),
           // Доктор (аватарка, ФИО)
           appointmentItem.doctorInfo.id != null &&
@@ -169,51 +209,9 @@ class AppointmentItem extends StatelessWidget {
           ),
           if (appointmentItem.status == 4) const SizedBox(height: 14.0),
           if (appointmentItem.status == 4)
-            BlocBuilder<AppointmentsCubit, AppointmentsState>(
-              builder: (context, state) {
-                final isDeleting = state.deleteAppointmentStatus ==
-                        DeleteAppointmentStatuses.loading &&
-                    state.appointmentLoadingId == appointmentItem.id;
-                final isConfirming = state.putAppointmentStatus ==
-                        PutAppointmentsStatuses.loading &&
-                    state.appointmentLoadingId == appointmentItem.id;
-
-                final isDisabled = isConfirming || isDeleting;
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: SimpleButton(
-                      isPrimary: true,
-                      isLoading: isConfirming,
-                      isDisabled: isDisabled,
-                      labelText: 'Подтвердить',
-                      onTap: () {
-                        context.read<AppointmentsCubit>().confirmAppointment(
-                            appointmentId: appointmentItem.id,
-                            userId: appointmentItem.patientInfo.id as String);
-                      },
-                    )),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                        child: SimpleButton(
-                            labelText: 'Отменить',
-                            isLoading: isDeleting,
-                            isDisabled: isDisabled,
-                            onTap: () {
-                              context
-                                  .read<AppointmentsCubit>()
-                                  .deleteAppointment(
-                                      appointmentId: appointmentItem.id,
-                                      userId: appointmentItem.patientInfo.id
-                                          as String);
-                            }))
-                  ],
-                );
-              },
+            ApplyAndCancellAppointment(
+              appointmentId: appointmentItem.id,
+              userId: appointmentItem.patientInfo.id as String,
             )
         ],
       ),

@@ -108,10 +108,14 @@ class _NextAppointmentTimeChipState extends State<NextAppointmentTimeChip> {
             ),
           ),
         ),
-        widget.isBottomLabel && _differenceInMinutes >= 0
+        widget.isBottomLabel &&
+                _differenceInMinutes >= 0 &&
+                _differenceInMinutes <= 120
             ? const SizedBox(height: 8)
             : const SizedBox(),
-        widget.isBottomLabel && _differenceInMinutes >= 0
+        widget.isBottomLabel &&
+                _differenceInMinutes >= 0 &&
+                _differenceInMinutes <= 120
             ? Text(
                 'До приема $_differenceInMinutes мин.',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(

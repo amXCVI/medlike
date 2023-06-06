@@ -51,8 +51,21 @@ class AppointmentsRepository {
       rethrow;
     }
   }
+
+  Future<AppointmentModel> getAppointmentById({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    try {
+      final response = await _dioClient
+          .get('/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
+      final appointment = response.data;
+      return AppointmentModel.fromJson(appointment);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }
 
-class MockAppointmentsRepository extends Mock implements AppointmentsRepository {
-
-}
+class MockAppointmentsRepository extends Mock
+    implements AppointmentsRepository {}

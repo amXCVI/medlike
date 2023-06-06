@@ -332,4 +332,35 @@ class AppointmentsCubit
   void clearAppointment() {
     emit(state.clearAppointment());
   }
+
+  /// Получить прием по id
+  Future<AppointmentModel> getAppointmentById({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      getAppointmentStatus: GetAppointmentStatuses.loading,
+    ));
+
+    try {
+      final AppointmentModel response;
+      response = await appointmentsRepository.getAppointmentById(
+        appointmentId: appointmentId,
+        userId: userId,
+      );
+
+      emit(state.copyWith(
+        getAppointmentStatus: GetAppointmentStatuses.success,
+        selectedAppointment: response,
+      ));
+
+      return response;
+    } catch (e) {
+      clearAppointment();
+      emit(state.copyWith(
+        getAppointmentStatus: GetAppointmentStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
 }

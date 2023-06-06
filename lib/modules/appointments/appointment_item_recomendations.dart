@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AppointmentItemRecommendations extends StatelessWidget {
-  const AppointmentItemRecommendations(
-      {Key? key, required this.recommendations, required this.serviceName})
-      : super(key: key);
+  const AppointmentItemRecommendations({
+    Key? key,
+    required this.recommendations,
+    required this.serviceName,
+    this.maxLines = 1,
+    this.onTap,
+  }) : super(key: key);
 
   final String recommendations;
   final String serviceName;
+  final int maxLines;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +21,7 @@ class AppointmentItemRecommendations extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: GestureDetector(
-          // onTap: () => {
-          //   showModalBottomSheet(
-          //       shape: const RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.only(
-          //           topRight: Radius.circular(12),
-          //           topLeft: Radius.circular(12),
-          //         ),
-          //       ),
-          //       context: context,
-          //       isScrollControlled: true,
-          //       builder: (context) => RecommendationBottomSheet(
-          //             serviceName: serviceName,
-          //             recommendationsText: recommendations,
-          //           ))
-          // },
+          onTap: onTap,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +31,7 @@ class AppointmentItemRecommendations extends StatelessWidget {
                   child: Text(
                 recommendations,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+                maxLines: maxLines,
                 softWrap: true,
               )),
             ],

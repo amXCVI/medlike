@@ -48,7 +48,7 @@ class RecommendationBottomSheet extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Рекомендации',
+                    'Рекомендации к приему',
                     style: Theme.of(context)
                         .textTheme
                         .headlineMedium
