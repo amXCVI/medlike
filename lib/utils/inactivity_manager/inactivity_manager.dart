@@ -8,8 +8,8 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
+import 'package:medlike/utils/helpers/smartapp/get_smartapp_token_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 class InactivityManager extends StatefulWidget {
   const InactivityManager({Key? key, required this.child}) : super(key: key);
@@ -35,44 +35,6 @@ class _InactivityManagerState extends State<InactivityManager>
 
     WidgetsBinding.instance.addObserver(this);
     _initializeTimer();
-
-    LocalNotificationService.requestPermission().then((value) async {
-      String? fcmToken = await FirebaseMessaging.instance.getToken();
-      print('!!!!!!!!! FCM Token: $fcmToken');
-
-      /// TODO Terminated State
-      /// 1. This method call when app in terminated state and you get a notification
-      // when you click on notification app open from terminated state and
-      // you can get notification data in this method
-      FirebaseMessaging.instance.getInitialMessage().then((message) {
-        print("FirebaseMessaging.instance.getInitialMessage");
-        if (message != null) {
-          Sentry.captureMessage("FirebaseMessaging.instance.getInitialMessage ${message.data["title"]}");
-          LocalNotificationService.createAndDisplayNotification(message);
-        }
-      }).catchError((error) {
-        print(error);
-      });
-
-      /// TODO Foreground State
-      /// 2. This method only call when App in foreground it mean app must be opened
-      FirebaseMessaging.onMessage.listen((message) {
-        print("FirebaseMessaging.onMessage.listen");
-        //if (message.notification != null) {
-          //print(message.notification.title);
-          //print(message.notification.body);
-          Sentry.captureMessage("FirebaseMessaging.onMessage.listen ${message.data["title"]}");
-          LocalNotificationService.createAndDisplayNotification(message);
-        //}
-      });
-
-      /// TODO Background State
-      /// 3. This method only call when App in background and not terminated(not closed)
-      FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
-        LocalNotificationService.createAndDisplayNotification(message);
-      });
-    });
   }
 
   @override

@@ -25,7 +25,7 @@ class _CardsPageState extends State<CardsPage> {
   GlobalKey widgetOverBodyGlobalKey = GlobalKey();
 
   void _onLoadDada(String grouping, {String? syn}) {
-    context.read<DiaryCubit>().getDiaryCategoriesList();
+    context.read<DiaryCubit>().getDiaryCategoriesList(userIds: []);
 
     context.read<DiaryCubit>().getDiariesList(grouping: grouping, syn: syn);
   }

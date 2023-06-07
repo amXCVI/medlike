@@ -27,6 +27,7 @@ Future<Widget> withApp([Widget? child,
 
   getIt.registerSingleton<AppRouter>(AppRouter(
     checkIsAuthUser: CheckIsAuthUser(),
+    checkIsAuthSmartappUser: CheckIsAuthSmartappUser(),
     checkIsSavedPinCode: CheckIsSavedPinCode(),
     checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
     checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
@@ -34,10 +35,8 @@ Future<Widget> withApp([Widget? child,
     checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
     checkIsOneProfileForMain: CheckIsOneProfileForMain(),
     checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
-    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()
+    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe(),
   ));
-
-  getIt.registerSingleton(PushNavigationService());
 
   return App(
     testChild: child,
