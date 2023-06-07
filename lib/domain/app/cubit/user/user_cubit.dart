@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
