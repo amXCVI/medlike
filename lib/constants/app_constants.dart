@@ -19,6 +19,9 @@ class AppConstants {
   // Ключ для сохранения последнего активного профиля в security storage
   static const String selectedUserId = 'selectedUserId';
 
+  // Ключ для сохранения JSON с фильтрами показателей здоровья
+  static const String healthFilters = 'healthFilters';
+
   // Ключ Яндекс.карты
   //! Не наш ключ!!! Нашел в гугле!!! Наш не работает!!!
   static const String yandexMapApiKey = 'c0d403ab-e5be-4049-908c-8122a58acf23';

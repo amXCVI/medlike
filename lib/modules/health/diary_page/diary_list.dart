@@ -52,6 +52,7 @@ class DiaryList extends StatelessWidget {
             minValue: minValue,
             maxValue: maxValue,
             onSubmit: onSubmit,
+            isLast: items.indexOf(e) == items.length - 1
           )
         ).toList()
       ],
@@ -71,7 +72,8 @@ class DiaryTile extends StatelessWidget {
     required this.grouping,
     required this.minValue,
     required this.maxValue,
-    required this.onSubmit
+    required this.onSubmit,
+    required this.isLast
   }) : super(key: key);
 
   final String title;
@@ -83,6 +85,7 @@ class DiaryTile extends StatelessWidget {
   final String grouping;
   final List<double> minValue;
   final List<double> maxValue;
+  final bool isLast;
   final Function(String, DateTime, DateTime) onSubmit;
 
   @override
@@ -108,63 +111,68 @@ class DiaryTile extends StatelessWidget {
         /*
         endActionPane: ActionPane(
           motion: const BehindMotion(),
+          /// assets/icons/settings/ic_delete_support_file.svg
           dismissible: DismissiblePane(onDismissed: onDismiss),
           children: [
             DismissibleAction(
               onDismiss: onDismiss,
               verticalPadding: 0,
+              type: DismissibleActionType.trash,
             )
           ],
         ),
         */
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
-              bottom:  BorderSide(
-                width: 1, 
-                color: AppColors.mainSeparatorAlpha
-              ), 
-            )
+              bottom: !isLast ? const BorderSide(
+                color: AppColors.mainSeparatorAlpha,
+                width: 1,
+              ) : BorderSide.none,
+            ),
           ),
-          child: ListTile(
-            title: Text(
-              '$val $measureItem',
-              style: const TextStyle(
-                fontSize: 17,
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: isLast ? 16 : 0,
             ),
-            subtitle: Text(
-              ValueHelper.getDateInDiaryItem(
-                item.date
+            child: ListTile(
+              title: Text(
+                '$val $measureItem',
+                style: const TextStyle(
+                  fontSize: 17,
+                ),
               ),
-              style: const TextStyle(
-                color: Color.fromRGBO(158, 157, 157, 1),
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
+              subtitle: Text(
+                ValueHelper.getDateInDiaryItem(
+                  item.date
+                ),
+                style: const TextStyle(
+                  color: AppColors.lightText,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                ),
               ),
+              trailing: SvgPicture.asset(
+                'assets/icons/ic_arrow_right_calendar.svg',
+                color: AppColors.lightText
+              ),
+              onTap: () {
+                context.router.push(
+                  DiaryAddRoute(
+                    title: title,
+                    measureItem: measureItem,
+                    decimalDigits: decimalDigits,
+                    paramName: paramName,
+                    initialValues: item.innerData,
+                    grouping: grouping,
+                    initialDate: item.date,
+                    onSubmit: onSubmit,
+                    minValue: minValue,
+                    maxValue: maxValue
+                  )
+                );
+              },
             ),
-            /*
-            trailing: SvgPicture.asset(
-              'assets/icons/ic_arrow_right_calendar.svg',
-              color: AppColors.lightText
-            ),
-            onTap: () {
-              context.router.push(
-                DiaryAddRoute(
-                  title: title,
-                  measureItem: measureItem,
-                  decimalDigits: decimalDigits,
-                  paramName: paramName,
-                  initialValues: item.innerData,
-                  grouping: grouping,
-                  initialDate: item.date,
-                  onSubmit: onSubmit,
-                  minValue: minValue,
-                  maxValue: maxValue
-                )
-              );
-            },
-            */
           ),
         ));
   }

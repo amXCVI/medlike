@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
-import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
-import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class AppointmentConfirmView extends StatefulWidget {
   const AppointmentConfirmView({Key? key, required this.appointment})
@@ -25,7 +23,9 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
 
   @override
   void initState() {
+    /// TODO: разбораться с таймером
     super.initState();
+    /*
     Future.delayed(const Duration(milliseconds: 100), () {
       final state = context.read<TourCubit>().state;
       if (state.tourStatuses == TourStatuses.first &&
@@ -33,12 +33,15 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
         onShow(context);
       }
     });
+    */
   }
 
   void onShow(BuildContext context) {
+    /*
     Future.delayed(const Duration(milliseconds: 1000), () {
       context.read<TourCubit>().checkNotificationClose();
     });
+    */
   }
 
   @override
@@ -86,40 +89,21 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
                   style: Theme.of(context).textTheme.titleMedium,
                   overflow: TextOverflow.ellipsis,
                 ),
-                BlocBuilder<TourCubit, TourState>(
-                  buildWhen: (_, tourState) {
-                    final tooltip = TourTooltip.of(context).create(
-                        'Отслеживайте события по всем своим закрепленным пользователям',
-                        onDismiss: () {
-                      context.read<TourCubit>().checkNotification();
-                    });
-
-                    if (tourState.tourStatuses == TourStatuses.first &&
-                        tourState.isNotificationShown != true) {
-                      tooltip.show(
-                          widgetKey: _key, offset: const Offset(24, 0));
-                    }
-
-                    return true;
-                  },
-                  builder: (ctx, state) {
-                    return Container(
-                      key: _key,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2.0, horizontal: 12.0),
-                      decoration: const BoxDecoration(
-                          color: AppColors.mainError,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(24))),
-                      child: Text(
-                        eventsCount.toString(),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    );
-                  },
+                Container(
+                  key: _key,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 2.0, horizontal: 12.0),
+                  decoration: const BoxDecoration(
+                      color: AppColors.mainError,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(24))),
+                  child: Text(
+                    eventsCount.toString(),
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
                 )
               ],
             ),

@@ -164,7 +164,7 @@ class _HealthItemState extends State<HealthItem> {
 
                                         Future.microtask(() {
                                           setState(() {
-                                            item = widget.data?.values[id];
+                                            item = items[id];
                                             offset = newOffset;
                                             blockOffset = newOffset;
                                             //widget.setSelected(true);

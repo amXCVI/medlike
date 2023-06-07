@@ -374,7 +374,9 @@ class _$_SmartappFileDataModel implements _SmartappFileDataModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappFileDataModelToJson(this);
+    return _$$_SmartappFileDataModelToJson(
+      this,
+    );
   }
 }
 
@@ -399,33 +401,33 @@ abstract class _SmartappFileDataModel implements SmartappFileDataModel {
       _$_SmartappFileDataModel.fromJson;
 
   @override
-  dynamic? get caption => throw _privateConstructorUsedError;
+  dynamic? get caption;
   @override
-  int? get chunkSize => throw _privateConstructorUsedError;
+  int? get chunkSize;
   @override
-  dynamic? get duration => throw _privateConstructorUsedError;
+  dynamic? get duration;
   @override
-  String? get file => throw _privateConstructorUsedError;
+  String? get file;
   @override
-  String? get fileEncryptionAlgo => throw _privateConstructorUsedError;
+  String? get fileEncryptionAlgo;
   @override
-  String? get fileHash => throw _privateConstructorUsedError;
+  String? get fileHash;
   @override
-  String? get fileId => throw _privateConstructorUsedError;
+  String? get fileId;
   @override
-  String? get fileMimeType => throw _privateConstructorUsedError;
+  String? get fileMimeType;
   @override
-  String? get fileName => throw _privateConstructorUsedError;
+  String? get fileName;
   @override
-  String? get filePreview => throw _privateConstructorUsedError;
+  String? get filePreview;
   @override
-  dynamic? get filePreviewHeight => throw _privateConstructorUsedError;
+  dynamic? get filePreviewHeight;
   @override
-  dynamic? get filePreviewWidth => throw _privateConstructorUsedError;
+  dynamic? get filePreviewWidth;
   @override
-  int? get fileSize => throw _privateConstructorUsedError;
+  int? get fileSize;
   @override
-  String? get type => throw _privateConstructorUsedError;
+  String? get type;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappFileDataModelCopyWith<_$_SmartappFileDataModel> get copyWith =>
@@ -635,7 +637,9 @@ class _$_SmartappSendBotEventResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventResponseModelToJson(this);
+    return _$$_SmartappSendBotEventResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -652,14 +656,13 @@ abstract class _SmartappSendBotEventResponseModel
       _$_SmartappSendBotEventResponseModel.fromJson;
 
   @override
-  List<SmartappFileDataModel>? get files => throw _privateConstructorUsedError;
+  List<SmartappFileDataModel>? get files;
   @override
-  SmartappSendBotEventPayloadModel get payload =>
-      throw _privateConstructorUsedError;
+  SmartappSendBotEventPayloadModel get payload;
   @override
-  String get ref => throw _privateConstructorUsedError;
+  String get ref;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventResponseModelCopyWith<
@@ -821,7 +824,9 @@ class _$_SmartappSendBotEventPayloadModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventPayloadModelToJson(this);
+    return _$$_SmartappSendBotEventPayloadModelToJson(
+      this,
+    );
   }
 }
 
@@ -835,10 +840,9 @@ abstract class _SmartappSendBotEventPayloadModel
       Map<String, dynamic> json) = _$_SmartappSendBotEventPayloadModel.fromJson;
 
   @override
-  SmartappSendBotEventPayloadResultModel get result =>
-      throw _privateConstructorUsedError;
+  SmartappSendBotEventPayloadResultModel get result;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventPayloadModelCopyWith<
@@ -1004,7 +1008,9 @@ class _$_SmartappSendBotEventPayloadResultModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventPayloadResultModelToJson(this);
+    return _$$_SmartappSendBotEventPayloadResultModelToJson(
+      this,
+    );
   }
 }
 
@@ -1020,11 +1026,11 @@ abstract class _SmartappSendBotEventPayloadResultModel
       _$_SmartappSendBotEventPayloadResultModel.fromJson;
 
   @override
-  dynamic? get content => throw _privateConstructorUsedError;
+  dynamic? get content;
   @override
-  String get status => throw _privateConstructorUsedError;
+  String get status;
   @override
-  int? get code => throw _privateConstructorUsedError;
+  int? get code;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventPayloadResultModelCopyWith<
@@ -1239,7 +1245,9 @@ class _$_SmartappSendBotEventStaticResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventStaticResponseModelToJson(this);
+    return _$$_SmartappSendBotEventStaticResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -1256,14 +1264,13 @@ abstract class _SmartappSendBotEventStaticResponseModel
       _$_SmartappSendBotEventStaticResponseModel.fromJson;
 
   @override
-  List<dynamic>? get files => throw _privateConstructorUsedError;
+  List<dynamic>? get files;
   @override
-  SmartappSendBotEventStaticPayloadModel get payload =>
-      throw _privateConstructorUsedError;
+  SmartappSendBotEventStaticPayloadModel get payload;
   @override
-  String get ref => throw _privateConstructorUsedError;
+  String get ref;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventStaticResponseModelCopyWith<
@@ -1430,7 +1437,9 @@ class _$_SmartappSendBotEventStaticPayloadModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventStaticPayloadModelToJson(this);
+    return _$$_SmartappSendBotEventStaticPayloadModelToJson(
+      this,
+    );
   }
 }
 
@@ -1446,10 +1455,9 @@ abstract class _SmartappSendBotEventStaticPayloadModel
       _$_SmartappSendBotEventStaticPayloadModel.fromJson;
 
   @override
-  SmartappSendBotEventStaticPayloadResultModel get result =>
-      throw _privateConstructorUsedError;
+  SmartappSendBotEventStaticPayloadResultModel get result;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventStaticPayloadModelCopyWith<
@@ -1586,7 +1594,9 @@ class _$_SmartappSendBotEventStaticPayloadResultModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventStaticPayloadResultModelToJson(this);
+    return _$$_SmartappSendBotEventStaticPayloadResultModelToJson(
+      this,
+    );
   }
 }
 
@@ -1601,7 +1611,7 @@ abstract class _SmartappSendBotEventStaticPayloadResultModel
       _$_SmartappSendBotEventStaticPayloadResultModel.fromJson;
 
   @override
-  String get path => throw _privateConstructorUsedError;
+  String get path;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventStaticPayloadResultModelCopyWith<
@@ -1815,7 +1825,9 @@ class _$_SmartappSendBotEventTokenResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventTokenResponseModelToJson(this);
+    return _$$_SmartappSendBotEventTokenResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -1832,14 +1844,13 @@ abstract class _SmartappSendBotEventTokenResponseModel
       _$_SmartappSendBotEventTokenResponseModel.fromJson;
 
   @override
-  List<dynamic>? get files => throw _privateConstructorUsedError;
+  List<dynamic>? get files;
   @override
-  SmartappSendBotEventTokenPayloadModel get payload =>
-      throw _privateConstructorUsedError;
+  SmartappSendBotEventTokenPayloadModel get payload;
   @override
-  String? get ref => throw _privateConstructorUsedError;
+  String? get ref;
   @override
-  String? get type => throw _privateConstructorUsedError;
+  String? get type;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventTokenResponseModelCopyWith<
@@ -1989,7 +2000,9 @@ class _$_SmartappSendBotEventTokenPayloadModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappSendBotEventTokenPayloadModelToJson(this);
+    return _$$_SmartappSendBotEventTokenPayloadModelToJson(
+      this,
+    );
   }
 }
 
@@ -2004,9 +2017,9 @@ abstract class _SmartappSendBotEventTokenPayloadModel
       _$_SmartappSendBotEventTokenPayloadModel.fromJson;
 
   @override
-  dynamic get result => throw _privateConstructorUsedError;
+  dynamic get result;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappSendBotEventTokenPayloadModelCopyWith<
@@ -2276,7 +2289,9 @@ class _$_SmartappGetFileResponseModel implements _SmartappGetFileResponseModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SmartappGetFileResponseModelToJson(this);
+    return _$$_SmartappGetFileResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -2297,26 +2312,26 @@ abstract class _SmartappGetFileResponseModel
       _$_SmartappGetFileResponseModel.fromJson;
 
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  String get filename => throw _privateConstructorUsedError;
+  String get filename;
   @override
-  String get size => throw _privateConstructorUsedError;
+  String get size;
   @override
   @JsonKey(name: 'is_async_file')
-  String? get isAsyncFile => throw _privateConstructorUsedError;
+  String? get isAsyncFile;
   @override
   @JsonKey(name: '_file_id')
-  String? get fileId => throw _privateConstructorUsedError;
+  String? get fileId;
   @override
   @JsonKey(name: '_file_mimetype')
-  String? get fileMimetype => throw _privateConstructorUsedError;
+  String? get fileMimetype;
   @override
   @JsonKey(name: '_file_url')
-  String? get fileUrl => throw _privateConstructorUsedError;
+  String? get fileUrl;
   @override
   @JsonKey(name: '_file_hash')
-  String? get fileHash => throw _privateConstructorUsedError;
+  String? get fileHash;
   @override
   @JsonKey(ignore: true)
   _$$_SmartappGetFileResponseModelCopyWith<_$_SmartappGetFileResponseModel>

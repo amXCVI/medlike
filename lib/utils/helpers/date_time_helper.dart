@@ -54,6 +54,7 @@ String getAppointmentTime(DateTime dateTime, int timeZoneOffset,
     {String? formatSting, bool? isTimeCell}) {
   const mskTime = 3;
 
+  ///? Нечистая функция
   int tz = DateTime.now().timeZoneOffset.inHours;
 
   final timeString = DateFormat(formatSting ?? 'HH:mm').format(dateTime);

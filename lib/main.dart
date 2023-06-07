@@ -22,6 +22,8 @@ void main() async {
     checkIsOneClinicForMain: CheckIsOneClinicForMain(),
     checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
     checkIsOneProfileForMain: CheckIsOneProfileForMain(),
+    checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
+    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()
   );
 
   getIt.registerSingleton<AppRouter>(_router);

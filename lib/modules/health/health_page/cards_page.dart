@@ -32,6 +32,7 @@ class _CardsPageState extends State<CardsPage> {
 
   @override
   void initState() {
+    _onLoadDada('Hour');
     super.initState();
     _onLoadDada("Hour");
   }

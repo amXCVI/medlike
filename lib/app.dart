@@ -28,11 +28,19 @@ final getIt = GetIt.instance;
 
 
 class App extends StatelessWidget {
-  App({Key? key}) : super(key: key);
+  App({
+    Key? key,
+    this.appointmentsRepository,
+    this.testChild
+  }) : super(key: key);
 
   final _router = getIt<AppRouter>();
 
   final mediator = UserMediator();
+
+  final AppointmentsRepository? appointmentsRepository;
+
+  final Widget? testChild;
 
   @override
   Widget build(BuildContext context) {

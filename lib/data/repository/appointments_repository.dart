@@ -1,5 +1,6 @@
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/utils/api/dio_client.dart';
+import 'package:mocktail/mocktail.dart';
 
 class AppointmentsRepository {
   final _dioClient = Api().dio;
@@ -50,4 +51,8 @@ class AppointmentsRepository {
       rethrow;
     }
   }
+}
+
+class MockAppointmentsRepository extends Mock implements AppointmentsRepository {
+
 }
