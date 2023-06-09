@@ -42,6 +42,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
+    /// Логин
     AdaptiveRoute(path: AppRoutes.loginPhone, page: StartPhoneNumberPage),
     AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordPage),
     AdaptiveRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
@@ -57,16 +58,20 @@ import 'package:medlike/navigation/routes_names_map.dart';
         path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
     AdaptiveRoute(path: AppRoutes.loginUnauthSupport, page: UnauthSupportPage),
 
+    /// Главная
     AdaptiveRoute(
         path: AppRoutes.main,
         page: MainPage,
         guards: [CheckIsAuthUser],
         initial: true),
 
+    /// Приемы
     AdaptiveRoute(
         path: AppRoutes.myAppointments,
         page: AppointmentsPage,
         guards: [CheckIsAuthUser]),
+
+    /// Запись
     AdaptiveRoute(
         path: AppRoutes.subscribeProfiles,
         page: SubscribeProfilesListPage,
@@ -114,6 +119,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
         page: PaymentPage,
         guards: [CheckIsAuthUser]),
 
+    /// Медкарта
     AdaptiveRoute(
         path: AppRoutes.medcard,
         page: MedcardProfilesListPage,
@@ -127,6 +133,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
         page: FilesPage,
         guards: [CheckIsAuthUser]),
 
+    /// Настройки
     AdaptiveRoute(
         path: AppRoutes.settings,
         page: SettingsPage,
@@ -137,6 +144,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
         page: SupportPage,
         guards: [CheckIsAuthUser]),
 
+    /// Клиники
     AdaptiveRoute(
         path: AppRoutes.clinicInfo,
         page: AllClinicsListPage,
@@ -162,6 +170,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
         page: SalesPage,
         guards: [CheckIsAuthUser]),
 
+    /// Показатели здоровья
     AdaptiveRoute(
         path: AppRoutes.healthProfiles,
         page: HealthPage,
@@ -179,11 +188,13 @@ import 'package:medlike/navigation/routes_names_map.dart';
         page: DiaryAddPage,
         guards: [CheckIsAuthUser]),
 
+    /// Документы
     AdaptiveRoute(
         path: AppRoutes.documents,
         page: DocumentsPage,
         guards: [CheckIsAuthUser]),
 
+    /// Служебное
     AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
 
     // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
