@@ -99,7 +99,7 @@ class DocumentItem extends StatelessWidget {
                                 SvgPicture.asset(
                                     'assets/icons/appointments/clock.svg'),
                                 const SizedBox(width: 8.0),
-                                Text(DateFormat('HH:mm DD.MM.yyyy')
+                                Text(DateFormat('HH:mm DD.MM.yy')
                                     .format(documentItem.documentCreateDate)),
                               ],
                             ),

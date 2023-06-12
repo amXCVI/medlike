@@ -33,6 +33,7 @@ class AppRoutes {
   static const diaryAdd = '/diary_add';
   static const healthFilters = '/health_filters';
   static const documents = '/documents';
+  static const documentDetail = '/document_detail';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoForDetails = '/clinic_info_for_details';
   static const clinicInfoForMain = '/clinic_info_for_main';
