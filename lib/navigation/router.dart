@@ -4,7 +4,7 @@ import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/cl
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
-import 'package:medlike/modules/documents/documents_page.dart';
+import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';

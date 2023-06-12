@@ -21,7 +21,8 @@ import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/cl
 import 'package:medlike/modules/about_clinic/price/price_page.dart' as _i30;
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart' as _i31;
 import 'package:medlike/modules/appointments/appointments_page.dart' as _i10;
-import 'package:medlike/modules/documents/documents_page.dart' as _i36;
+import 'package:medlike/modules/documents/documents_list_page/documents_page.dart'
+    as _i36;
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart'
     as _i35;
 import 'package:medlike/modules/health/diary_page/diary_page.dart' as _i34;
