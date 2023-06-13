@@ -1,2 +1,1983 @@
-/*! For license information please see bundle.js.LICENSE.txt */
-var smartAppBridgeLibraryBundle;!function(){var e={908:function(e,t,n){"use strict";var r=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0}),t.camelCaseToSnakeCase=t.snakeCaseToCamelCase=t.isUuid=void 0;const o=r(n(929)),a=r(n(865));t.isUuid=e=>/[0-9a-fA-F-]{32}/.test(e),t.snakeCaseToCamelCase=e=>{var n;return Array.isArray(e)?e.map(t.snakeCaseToCamelCase):e&&"Object"===(null===(n=e.constructor)||void 0===n?void 0:n.name)?Object.keys(e).reduce(((n,r)=>{const a=(0,t.snakeCaseToCamelCase)(e[r]),i=(0,t.isUuid)(r)?r:(0,o.default)(r);return Object.assign(Object.assign({},n),{[i]:a})}),{}):e},t.camelCaseToSnakeCase=e=>{var n;return Array.isArray(e)?e.map(t.camelCaseToSnakeCase):e&&"Object"===(null===(n=e.constructor)||void 0===n?void 0:n.name)?Object.keys(e).reduce(((n,r)=>{const o=(0,t.camelCaseToSnakeCase)(e[r]);return Object.assign(Object.assign({},n),{[(0,a.default)(r)]:o})}),{}):e}},733:function(e,t){"use strict";var n,r,o;Object.defineProperty(t,"__esModule",{value:!0}),t.WEB_COMMAND_TYPE_RPC_LOGS=t.WEB_COMMAND_TYPE_RPC=t.WEB_COMMAND_TYPE=t.RESPONSE_TIMEOUT=t.HANDLER=t.EVENT_TYPE=t.PLATFORM=void 0,(o=t.PLATFORM||(t.PLATFORM={})).WEB="web",o.IOS="ios",o.ANDROID="android",o.UNKNOWN="unknown",(r=t.EVENT_TYPE||(t.EVENT_TYPE={})).RECEIVE="recv",r.SEND="send",(n=t.HANDLER||(t.HANDLER={})).BOTX="botx",n.EXPRESS="express",t.RESPONSE_TIMEOUT=3e4,t.WEB_COMMAND_TYPE="smartapp",t.WEB_COMMAND_TYPE_RPC="smartapp_rpc",t.WEB_COMMAND_TYPE_RPC_LOGS="smartAppLogs"},760:function(e,t,n){"use strict";var r=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0});const o=r(n(729));class a extends o.default{constructor(){super()}onceWithTimeout(e,t){return new Promise(((n,r)=>{const o=setTimeout((()=>{console.error("Bridge ~ Timeout event",o),r()}),t);this.once(e,(e=>{clearTimeout(o),n(e)}))}))}}t.default=a},44:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});const r=n(733);t.default=()=>(()=>{const e=new URLSearchParams(location.search).get("platform");return Object.values(r.PLATFORM).includes(e)?e:r.PLATFORM.UNKNOWN})()||(/android/i.test(navigator.userAgent)?r.PLATFORM.ANDROID:(/iPad|iPhone|iPod/.test(navigator.userAgent)||navigator.userAgent.includes("Mac")&&"ontouchend"in document)&&!window.MSStream?r.PLATFORM.IOS:r.PLATFORM.WEB)},71:function(e,t,n){"use strict";var r=this&&this.__rest||function(e,t){var n={};for(var r in e)Object.prototype.hasOwnProperty.call(e,r)&&t.indexOf(r)<0&&(n[r]=e[r]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var o=0;for(r=Object.getOwnPropertySymbols(e);o<r.length;o++)t.indexOf(r[o])<0&&Object.prototype.propertyIsEnumerable.call(e,r[o])&&(n[r[o]]=e[r[o]])}return n},o=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}};Object.defineProperty(t,"__esModule",{value:!0});const a=n(614),i=n(908),u=n(733),s=o(n(760)),c=o(n(44));t.default=class{constructor(){this.eventEmitter=new s.default,this.addGlobalListener(),this.logsEnabled=!1,this.isRenameParamsEnabled=!0}addGlobalListener(){window.addEventListener("message",(e=>{const t=this.isRenameParamsEnabled;if((0,c.default)()===u.PLATFORM.WEB&&e.data.handler===u.HANDLER.EXPRESS&&this.isRenameParamsEnabled&&(this.isRenameParamsEnabled=!1),"object"!=typeof e.data||"object"!=typeof e.data.data||"string"!=typeof e.data.data.type)return;this.logsEnabled&&console.log("Bridge ~ Incoming event",e.data);const n=e.data,{ref:o}=n,a=n.data,{type:s}=a,f=r(a,["type"]),{files:l}=n,d=o||u.EVENT_TYPE.RECEIVE,p=this.isRenameParamsEnabled?null==l?void 0:l.map((e=>(0,i.snakeCaseToCamelCase)(e))):l;this.eventEmitter.emit(d,{ref:o,type:s,payload:this.isRenameParamsEnabled?(0,i.snakeCaseToCamelCase)(f):f,files:p}),t&&(this.isRenameParamsEnabled=!0)}))}onReceive(e){this.eventEmitter.on(u.EVENT_TYPE.RECEIVE,e)}sendEvent({handler:e,method:t,params:n,files:r,timeout:o=u.RESPONSE_TIMEOUT,guaranteed_delivery_required:s=!1}){const f=this.isRenameParamsEnabled;(0,c.default)()===u.PLATFORM.WEB&&e===u.HANDLER.EXPRESS&&this.isRenameParamsEnabled&&this.disableRenameParams();const l=(0,a.v4)(),d={ref:l,type:u.WEB_COMMAND_TYPE_RPC,method:t,handler:e,payload:this.isRenameParamsEnabled?(0,i.camelCaseToSnakeCase)(n):n,guaranteed_delivery_required:s},p=this.isRenameParamsEnabled?null==r?void 0:r.map((e=>(0,i.camelCaseToSnakeCase)(e))):r,v=r?Object.assign(Object.assign({},d),{files:p}):d;return this.logsEnabled&&console.log("Bridge ~ Outgoing event",v),window.parent.postMessage({type:u.WEB_COMMAND_TYPE,payload:v},"*"),f&&this.enableRenameParams(),this.eventEmitter.onceWithTimeout(l,o)}sendBotEvent({method:e,params:t,files:n,timeout:r,guaranteed_delivery_required:o}){return this.sendEvent({handler:u.HANDLER.BOTX,method:e,params:t,files:n,timeout:r,guaranteed_delivery_required:o})}sendClientEvent({method:e,params:t,timeout:n}){return this.sendEvent({handler:u.HANDLER.EXPRESS,method:e,params:t,timeout:n})}enableLogs(){this.logsEnabled=!0;const e=console.log;console.log=function(...t){window.parent.postMessage({type:u.WEB_COMMAND_TYPE_RPC_LOGS,payload:t},"*"),e.apply(console,t)}}disableLogs(){this.logsEnabled=!1}enableRenameParams(){this.isRenameParamsEnabled=!0,console.log("Bridge ~ Enabled renaming event params from camelCase to snake_case and vice versa")}disableRenameParams(){this.isRenameParamsEnabled=!1,console.log("Bridge ~ Disabled renaming event params from camelCase to snake_case and vice versa")}}},729:function(e){"use strict";var t=Object.prototype.hasOwnProperty,n="~";function r(){}function o(e,t,n){this.fn=e,this.context=t,this.once=n||!1}function a(e,t,r,a,i){if("function"!=typeof r)throw new TypeError("The listener must be a function");var u=new o(r,a||e,i),s=n?n+t:t;return e._events[s]?e._events[s].fn?e._events[s]=[e._events[s],u]:e._events[s].push(u):(e._events[s]=u,e._eventsCount++),e}function i(e,t){0==--e._eventsCount?e._events=new r:delete e._events[t]}function u(){this._events=new r,this._eventsCount=0}Object.create&&(r.prototype=Object.create(null),(new r).__proto__||(n=!1)),u.prototype.eventNames=function(){var e,r,o=[];if(0===this._eventsCount)return o;for(r in e=this._events)t.call(e,r)&&o.push(n?r.slice(1):r);return Object.getOwnPropertySymbols?o.concat(Object.getOwnPropertySymbols(e)):o},u.prototype.listeners=function(e){var t=n?n+e:e,r=this._events[t];if(!r)return[];if(r.fn)return[r.fn];for(var o=0,a=r.length,i=new Array(a);o<a;o++)i[o]=r[o].fn;return i},u.prototype.listenerCount=function(e){var t=n?n+e:e,r=this._events[t];return r?r.fn?1:r.length:0},u.prototype.emit=function(e,t,r,o,a,i){var u=n?n+e:e;if(!this._events[u])return!1;var s,c,f=this._events[u],l=arguments.length;if(f.fn){switch(f.once&&this.removeListener(e,f.fn,void 0,!0),l){case 1:return f.fn.call(f.context),!0;case 2:return f.fn.call(f.context,t),!0;case 3:return f.fn.call(f.context,t,r),!0;case 4:return f.fn.call(f.context,t,r,o),!0;case 5:return f.fn.call(f.context,t,r,o,a),!0;case 6:return f.fn.call(f.context,t,r,o,a,i),!0}for(c=1,s=new Array(l-1);c<l;c++)s[c-1]=arguments[c];f.fn.apply(f.context,s)}else{var d,p=f.length;for(c=0;c<p;c++)switch(f[c].once&&this.removeListener(e,f[c].fn,void 0,!0),l){case 1:f[c].fn.call(f[c].context);break;case 2:f[c].fn.call(f[c].context,t);break;case 3:f[c].fn.call(f[c].context,t,r);break;case 4:f[c].fn.call(f[c].context,t,r,o);break;default:if(!s)for(d=1,s=new Array(l-1);d<l;d++)s[d-1]=arguments[d];f[c].fn.apply(f[c].context,s)}}return!0},u.prototype.on=function(e,t,n){return a(this,e,t,n,!1)},u.prototype.once=function(e,t,n){return a(this,e,t,n,!0)},u.prototype.removeListener=function(e,t,r,o){var a=n?n+e:e;if(!this._events[a])return this;if(!t)return i(this,a),this;var u=this._events[a];if(u.fn)u.fn!==t||o&&!u.once||r&&u.context!==r||i(this,a);else{for(var s=0,c=[],f=u.length;s<f;s++)(u[s].fn!==t||o&&!u[s].once||r&&u[s].context!==r)&&c.push(u[s]);c.length?this._events[a]=1===c.length?c[0]:c:i(this,a)}return this},u.prototype.removeAllListeners=function(e){var t;return e?(t=n?n+e:e,this._events[t]&&i(this,t)):(this._events=new r,this._eventsCount=0),this},u.prototype.off=u.prototype.removeListener,u.prototype.addListener=u.prototype.on,u.prefixed=n,u.EventEmitter=u,e.exports=u},705:function(e,t,n){var r=n(639).Symbol;e.exports=r},932:function(e){e.exports=function(e,t){for(var n=-1,r=null==e?0:e.length,o=Array(r);++n<r;)o[n]=t(e[n],n,e);return o}},663:function(e){e.exports=function(e,t,n,r){var o=-1,a=null==e?0:e.length;for(r&&a&&(n=e[++o]);++o<a;)n=t(n,e[o],o,e);return n}},286:function(e){e.exports=function(e){return e.split("")}},29:function(e){var t=/[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;e.exports=function(e){return e.match(t)||[]}},239:function(e,t,n){var r=n(705),o=n(607),a=n(333),i=r?r.toStringTag:void 0;e.exports=function(e){return null==e?void 0===e?"[object Undefined]":"[object Null]":i&&i in Object(e)?o(e):a(e)}},674:function(e){e.exports=function(e){return function(t){return null==e?void 0:e[t]}}},259:function(e){e.exports=function(e,t,n){var r=-1,o=e.length;t<0&&(t=-t>o?0:o+t),(n=n>o?o:n)<0&&(n+=o),o=t>n?0:n-t>>>0,t>>>=0;for(var a=Array(o);++r<o;)a[r]=e[r+t];return a}},531:function(e,t,n){var r=n(705),o=n(932),a=n(469),i=n(448),u=r?r.prototype:void 0,s=u?u.toString:void 0;e.exports=function e(t){if("string"==typeof t)return t;if(a(t))return o(t,e)+"";if(i(t))return s?s.call(t):"";var n=t+"";return"0"==n&&1/t==-1/0?"-0":n}},180:function(e,t,n){var r=n(259);e.exports=function(e,t,n){var o=e.length;return n=void 0===n?o:n,!t&&n>=o?e:r(e,t,n)}},805:function(e,t,n){var r=n(180),o=n(689),a=n(140),i=n(833);e.exports=function(e){return function(t){t=i(t);var n=o(t)?a(t):void 0,u=n?n[0]:t.charAt(0),s=n?r(n,1).join(""):t.slice(1);return u[e]()+s}}},393:function(e,t,n){var r=n(663),o=n(816),a=n(748),i=RegExp("['’]","g");e.exports=function(e){return function(t){return r(a(o(t).replace(i,"")),e,"")}}},389:function(e,t,n){var r=n(674)({"À":"A","Á":"A","Â":"A","Ã":"A","Ä":"A","Å":"A","à":"a","á":"a","â":"a","ã":"a","ä":"a","å":"a","Ç":"C","ç":"c","Ð":"D","ð":"d","È":"E","É":"E","Ê":"E","Ë":"E","è":"e","é":"e","ê":"e","ë":"e","Ì":"I","Í":"I","Î":"I","Ï":"I","ì":"i","í":"i","î":"i","ï":"i","Ñ":"N","ñ":"n","Ò":"O","Ó":"O","Ô":"O","Õ":"O","Ö":"O","Ø":"O","ò":"o","ó":"o","ô":"o","õ":"o","ö":"o","ø":"o","Ù":"U","Ú":"U","Û":"U","Ü":"U","ù":"u","ú":"u","û":"u","ü":"u","Ý":"Y","ý":"y","ÿ":"y","Æ":"Ae","æ":"ae","Þ":"Th","þ":"th","ß":"ss","Ā":"A","Ă":"A","Ą":"A","ā":"a","ă":"a","ą":"a","Ć":"C","Ĉ":"C","Ċ":"C","Č":"C","ć":"c","ĉ":"c","ċ":"c","č":"c","Ď":"D","Đ":"D","ď":"d","đ":"d","Ē":"E","Ĕ":"E","Ė":"E","Ę":"E","Ě":"E","ē":"e","ĕ":"e","ė":"e","ę":"e","ě":"e","Ĝ":"G","Ğ":"G","Ġ":"G","Ģ":"G","ĝ":"g","ğ":"g","ġ":"g","ģ":"g","Ĥ":"H","Ħ":"H","ĥ":"h","ħ":"h","Ĩ":"I","Ī":"I","Ĭ":"I","Į":"I","İ":"I","ĩ":"i","ī":"i","ĭ":"i","į":"i","ı":"i","Ĵ":"J","ĵ":"j","Ķ":"K","ķ":"k","ĸ":"k","Ĺ":"L","Ļ":"L","Ľ":"L","Ŀ":"L","Ł":"L","ĺ":"l","ļ":"l","ľ":"l","ŀ":"l","ł":"l","Ń":"N","Ņ":"N","Ň":"N","Ŋ":"N","ń":"n","ņ":"n","ň":"n","ŋ":"n","Ō":"O","Ŏ":"O","Ő":"O","ō":"o","ŏ":"o","ő":"o","Ŕ":"R","Ŗ":"R","Ř":"R","ŕ":"r","ŗ":"r","ř":"r","Ś":"S","Ŝ":"S","Ş":"S","Š":"S","ś":"s","ŝ":"s","ş":"s","š":"s","Ţ":"T","Ť":"T","Ŧ":"T","ţ":"t","ť":"t","ŧ":"t","Ũ":"U","Ū":"U","Ŭ":"U","Ů":"U","Ű":"U","Ų":"U","ũ":"u","ū":"u","ŭ":"u","ů":"u","ű":"u","ų":"u","Ŵ":"W","ŵ":"w","Ŷ":"Y","ŷ":"y","Ÿ":"Y","Ź":"Z","Ż":"Z","Ž":"Z","ź":"z","ż":"z","ž":"z","Ĳ":"IJ","ĳ":"ij","Œ":"Oe","œ":"oe","ŉ":"'n","ſ":"s"});e.exports=r},957:function(e,t,n){var r="object"==typeof n.g&&n.g&&n.g.Object===Object&&n.g;e.exports=r},607:function(e,t,n){var r=n(705),o=Object.prototype,a=o.hasOwnProperty,i=o.toString,u=r?r.toStringTag:void 0;e.exports=function(e){var t=a.call(e,u),n=e[u];try{e[u]=void 0;var r=!0}catch(e){}var o=i.call(e);return r&&(t?e[u]=n:delete e[u]),o}},689:function(e){var t=RegExp("[\\u200d\\ud800-\\udfff\\u0300-\\u036f\\ufe20-\\ufe2f\\u20d0-\\u20ff\\ufe0e\\ufe0f]");e.exports=function(e){return t.test(e)}},157:function(e){var t=/[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;e.exports=function(e){return t.test(e)}},333:function(e){var t=Object.prototype.toString;e.exports=function(e){return t.call(e)}},639:function(e,t,n){var r=n(957),o="object"==typeof self&&self&&self.Object===Object&&self,a=r||o||Function("return this")();e.exports=a},140:function(e,t,n){var r=n(286),o=n(689),a=n(676);e.exports=function(e){return o(e)?a(e):r(e)}},676:function(e){var t="\\ud800-\\udfff",n="["+t+"]",r="[\\u0300-\\u036f\\ufe20-\\ufe2f\\u20d0-\\u20ff]",o="\\ud83c[\\udffb-\\udfff]",a="[^"+t+"]",i="(?:\\ud83c[\\udde6-\\uddff]){2}",u="[\\ud800-\\udbff][\\udc00-\\udfff]",s="(?:"+r+"|"+o+")?",c="[\\ufe0e\\ufe0f]?",f=c+s+"(?:\\u200d(?:"+[a,i,u].join("|")+")"+c+s+")*",l="(?:"+[a+r+"?",r,i,u,n].join("|")+")",d=RegExp(o+"(?="+o+")|"+l+f,"g");e.exports=function(e){return e.match(d)||[]}},757:function(e){var t="\\ud800-\\udfff",n="\\u2700-\\u27bf",r="a-z\\xdf-\\xf6\\xf8-\\xff",o="A-Z\\xc0-\\xd6\\xd8-\\xde",a="\\xac\\xb1\\xd7\\xf7\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf\\u2000-\\u206f \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000",i="["+a+"]",u="\\d+",s="["+n+"]",c="["+r+"]",f="[^"+t+a+u+n+r+o+"]",l="(?:\\ud83c[\\udde6-\\uddff]){2}",d="[\\ud800-\\udbff][\\udc00-\\udfff]",p="["+o+"]",v="(?:"+c+"|"+f+")",h="(?:"+p+"|"+f+")",m="(?:['’](?:d|ll|m|re|s|t|ve))?",y="(?:['’](?:D|LL|M|RE|S|T|VE))?",b="(?:[\\u0300-\\u036f\\ufe20-\\ufe2f\\u20d0-\\u20ff]|\\ud83c[\\udffb-\\udfff])?",g="[\\ufe0e\\ufe0f]?",E=g+b+"(?:\\u200d(?:"+["[^"+t+"]",l,d].join("|")+")"+g+b+")*",_="(?:"+[s,l,d].join("|")+")"+E,x=RegExp([p+"?"+c+"+"+m+"(?="+[i,p,"$"].join("|")+")",h+"+"+y+"(?="+[i,p+v,"$"].join("|")+")",p+"?"+v+"+"+m,p+"+"+y,"\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])","\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])",u,_].join("|"),"g");e.exports=function(e){return e.match(x)||[]}},929:function(e,t,n){var r=n(403),o=n(393)((function(e,t,n){return t=t.toLowerCase(),e+(n?r(t):t)}));e.exports=o},403:function(e,t,n){var r=n(833),o=n(700);e.exports=function(e){return o(r(e).toLowerCase())}},816:function(e,t,n){var r=n(389),o=n(833),a=/[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g,i=RegExp("[\\u0300-\\u036f\\ufe20-\\ufe2f\\u20d0-\\u20ff]","g");e.exports=function(e){return(e=o(e))&&e.replace(a,r).replace(i,"")}},469:function(e){var t=Array.isArray;e.exports=t},5:function(e){e.exports=function(e){return null!=e&&"object"==typeof e}},448:function(e,t,n){var r=n(239),o=n(5);e.exports=function(e){return"symbol"==typeof e||o(e)&&"[object Symbol]"==r(e)}},865:function(e,t,n){var r=n(393)((function(e,t,n){return e+(n?"_":"")+t.toLowerCase()}));e.exports=r},833:function(e,t,n){var r=n(531);e.exports=function(e){return null==e?"":r(e)}},700:function(e,t,n){var r=n(805)("toUpperCase");e.exports=r},748:function(e,t,n){var r=n(29),o=n(157),a=n(833),i=n(757);e.exports=function(e,t,n){return e=a(e),void 0===(t=n?void 0:t)?o(e)?i(e):r(e):e.match(t)||[]}},408:function(e,t){"use strict";Symbol.for("react.element"),Symbol.for("react.portal"),Symbol.for("react.fragment"),Symbol.for("react.strict_mode"),Symbol.for("react.profiler"),Symbol.for("react.provider"),Symbol.for("react.context"),Symbol.for("react.forward_ref"),Symbol.for("react.suspense"),Symbol.for("react.memo"),Symbol.for("react.lazy"),Symbol.iterator;var n={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},r=Object.assign,o={};function a(e,t,r){this.props=e,this.context=t,this.refs=o,this.updater=r||n}function i(){}function u(e,t,r){this.props=e,this.context=t,this.refs=o,this.updater=r||n}a.prototype.isReactComponent={},a.prototype.setState=function(e,t){if("object"!=typeof e&&"function"!=typeof e&&null!=e)throw Error("setState(...): takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,e,t,"setState")},a.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")},i.prototype=a.prototype;var s=u.prototype=new i;s.constructor=u,r(s,a.prototype),s.isPureReactComponent=!0;Array.isArray,Object.prototype.hasOwnProperty},294:function(e,t,n){"use strict";n(408)},614:function(e,t,n){"use strict";var r;n.r(t),n.d(t,{NIL:function(){return w},parse:function(){return m},stringify:function(){return d},v1:function(){return h},v3:function(){return C},v4:function(){return P},v5:function(){return T},validate:function(){return u},version:function(){return j}});var o=new Uint8Array(16);function a(){if(!r&&!(r="undefined"!=typeof crypto&&crypto.getRandomValues&&crypto.getRandomValues.bind(crypto)||"undefined"!=typeof msCrypto&&"function"==typeof msCrypto.getRandomValues&&msCrypto.getRandomValues.bind(msCrypto)))throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");return r(o)}for(var i=/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i,u=function(e){return"string"==typeof e&&i.test(e)},s=[],c=0;c<256;++c)s.push((c+256).toString(16).substr(1));var f,l,d=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,n=(s[e[t+0]]+s[e[t+1]]+s[e[t+2]]+s[e[t+3]]+"-"+s[e[t+4]]+s[e[t+5]]+"-"+s[e[t+6]]+s[e[t+7]]+"-"+s[e[t+8]]+s[e[t+9]]+"-"+s[e[t+10]]+s[e[t+11]]+s[e[t+12]]+s[e[t+13]]+s[e[t+14]]+s[e[t+15]]).toLowerCase();if(!u(n))throw TypeError("Stringified UUID is invalid");return n},p=0,v=0,h=function(e,t,n){var r=t&&n||0,o=t||new Array(16),i=(e=e||{}).node||f,u=void 0!==e.clockseq?e.clockseq:l;if(null==i||null==u){var s=e.random||(e.rng||a)();null==i&&(i=f=[1|s[0],s[1],s[2],s[3],s[4],s[5]]),null==u&&(u=l=16383&(s[6]<<8|s[7]))}var c=void 0!==e.msecs?e.msecs:Date.now(),h=void 0!==e.nsecs?e.nsecs:v+1,m=c-p+(h-v)/1e4;if(m<0&&void 0===e.clockseq&&(u=u+1&16383),(m<0||c>p)&&void 0===e.nsecs&&(h=0),h>=1e4)throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");p=c,v=h,l=u;var y=(1e4*(268435455&(c+=122192928e5))+h)%4294967296;o[r++]=y>>>24&255,o[r++]=y>>>16&255,o[r++]=y>>>8&255,o[r++]=255&y;var b=c/4294967296*1e4&268435455;o[r++]=b>>>8&255,o[r++]=255&b,o[r++]=b>>>24&15|16,o[r++]=b>>>16&255,o[r++]=u>>>8|128,o[r++]=255&u;for(var g=0;g<6;++g)o[r+g]=i[g];return t||d(o)},m=function(e){if(!u(e))throw TypeError("Invalid UUID");var t,n=new Uint8Array(16);return n[0]=(t=parseInt(e.slice(0,8),16))>>>24,n[1]=t>>>16&255,n[2]=t>>>8&255,n[3]=255&t,n[4]=(t=parseInt(e.slice(9,13),16))>>>8,n[5]=255&t,n[6]=(t=parseInt(e.slice(14,18),16))>>>8,n[7]=255&t,n[8]=(t=parseInt(e.slice(19,23),16))>>>8,n[9]=255&t,n[10]=(t=parseInt(e.slice(24,36),16))/1099511627776&255,n[11]=t/4294967296&255,n[12]=t>>>24&255,n[13]=t>>>16&255,n[14]=t>>>8&255,n[15]=255&t,n};function y(e,t,n){function r(e,r,o,a){if("string"==typeof e&&(e=function(e){e=unescape(encodeURIComponent(e));for(var t=[],n=0;n<e.length;++n)t.push(e.charCodeAt(n));return t}(e)),"string"==typeof r&&(r=m(r)),16!==r.length)throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");var i=new Uint8Array(16+e.length);if(i.set(r),i.set(e,r.length),(i=n(i))[6]=15&i[6]|t,i[8]=63&i[8]|128,o){a=a||0;for(var u=0;u<16;++u)o[a+u]=i[u];return o}return d(i)}try{r.name=e}catch(e){}return r.DNS="6ba7b810-9dad-11d1-80b4-00c04fd430c8",r.URL="6ba7b811-9dad-11d1-80b4-00c04fd430c8",r}function b(e){return 14+(e+64>>>9<<4)+1}function g(e,t){var n=(65535&e)+(65535&t);return(e>>16)+(t>>16)+(n>>16)<<16|65535&n}function E(e,t,n,r,o,a){return g((i=g(g(t,e),g(r,a)))<<(u=o)|i>>>32-u,n);var i,u}function _(e,t,n,r,o,a,i){return E(t&n|~t&r,e,t,o,a,i)}function x(e,t,n,r,o,a,i){return E(t&r|n&~r,e,t,o,a,i)}function O(e,t,n,r,o,a,i){return E(t^n^r,e,t,o,a,i)}function A(e,t,n,r,o,a,i){return E(n^(t|~r),e,t,o,a,i)}var C=y("v3",48,(function(e){if("string"==typeof e){var t=unescape(encodeURIComponent(e));e=new Uint8Array(t.length);for(var n=0;n<t.length;++n)e[n]=t.charCodeAt(n)}return function(e){for(var t=[],n=32*e.length,r="0123456789abcdef",o=0;o<n;o+=8){var a=e[o>>5]>>>o%32&255,i=parseInt(r.charAt(a>>>4&15)+r.charAt(15&a),16);t.push(i)}return t}(function(e,t){e[t>>5]|=128<<t%32,e[b(t)-1]=t;for(var n=1732584193,r=-271733879,o=-1732584194,a=271733878,i=0;i<e.length;i+=16){var u=n,s=r,c=o,f=a;n=_(n,r,o,a,e[i],7,-680876936),a=_(a,n,r,o,e[i+1],12,-389564586),o=_(o,a,n,r,e[i+2],17,606105819),r=_(r,o,a,n,e[i+3],22,-1044525330),n=_(n,r,o,a,e[i+4],7,-176418897),a=_(a,n,r,o,e[i+5],12,1200080426),o=_(o,a,n,r,e[i+6],17,-1473231341),r=_(r,o,a,n,e[i+7],22,-45705983),n=_(n,r,o,a,e[i+8],7,1770035416),a=_(a,n,r,o,e[i+9],12,-1958414417),o=_(o,a,n,r,e[i+10],17,-42063),r=_(r,o,a,n,e[i+11],22,-1990404162),n=_(n,r,o,a,e[i+12],7,1804603682),a=_(a,n,r,o,e[i+13],12,-40341101),o=_(o,a,n,r,e[i+14],17,-1502002290),n=x(n,r=_(r,o,a,n,e[i+15],22,1236535329),o,a,e[i+1],5,-165796510),a=x(a,n,r,o,e[i+6],9,-1069501632),o=x(o,a,n,r,e[i+11],14,643717713),r=x(r,o,a,n,e[i],20,-373897302),n=x(n,r,o,a,e[i+5],5,-701558691),a=x(a,n,r,o,e[i+10],9,38016083),o=x(o,a,n,r,e[i+15],14,-660478335),r=x(r,o,a,n,e[i+4],20,-405537848),n=x(n,r,o,a,e[i+9],5,568446438),a=x(a,n,r,o,e[i+14],9,-1019803690),o=x(o,a,n,r,e[i+3],14,-187363961),r=x(r,o,a,n,e[i+8],20,1163531501),n=x(n,r,o,a,e[i+13],5,-1444681467),a=x(a,n,r,o,e[i+2],9,-51403784),o=x(o,a,n,r,e[i+7],14,1735328473),n=O(n,r=x(r,o,a,n,e[i+12],20,-1926607734),o,a,e[i+5],4,-378558),a=O(a,n,r,o,e[i+8],11,-2022574463),o=O(o,a,n,r,e[i+11],16,1839030562),r=O(r,o,a,n,e[i+14],23,-35309556),n=O(n,r,o,a,e[i+1],4,-1530992060),a=O(a,n,r,o,e[i+4],11,1272893353),o=O(o,a,n,r,e[i+7],16,-155497632),r=O(r,o,a,n,e[i+10],23,-1094730640),n=O(n,r,o,a,e[i+13],4,681279174),a=O(a,n,r,o,e[i],11,-358537222),o=O(o,a,n,r,e[i+3],16,-722521979),r=O(r,o,a,n,e[i+6],23,76029189),n=O(n,r,o,a,e[i+9],4,-640364487),a=O(a,n,r,o,e[i+12],11,-421815835),o=O(o,a,n,r,e[i+15],16,530742520),n=A(n,r=O(r,o,a,n,e[i+2],23,-995338651),o,a,e[i],6,-198630844),a=A(a,n,r,o,e[i+7],10,1126891415),o=A(o,a,n,r,e[i+14],15,-1416354905),r=A(r,o,a,n,e[i+5],21,-57434055),n=A(n,r,o,a,e[i+12],6,1700485571),a=A(a,n,r,o,e[i+3],10,-1894986606),o=A(o,a,n,r,e[i+10],15,-1051523),r=A(r,o,a,n,e[i+1],21,-2054922799),n=A(n,r,o,a,e[i+8],6,1873313359),a=A(a,n,r,o,e[i+15],10,-30611744),o=A(o,a,n,r,e[i+6],15,-1560198380),r=A(r,o,a,n,e[i+13],21,1309151649),n=A(n,r,o,a,e[i+4],6,-145523070),a=A(a,n,r,o,e[i+11],10,-1120210379),o=A(o,a,n,r,e[i+2],15,718787259),r=A(r,o,a,n,e[i+9],21,-343485551),n=g(n,u),r=g(r,s),o=g(o,c),a=g(a,f)}return[n,r,o,a]}(function(e){if(0===e.length)return[];for(var t=8*e.length,n=new Uint32Array(b(t)),r=0;r<t;r+=8)n[r>>5]|=(255&e[r/8])<<r%32;return n}(e),8*e.length))})),P=function(e,t,n){var r=(e=e||{}).random||(e.rng||a)();if(r[6]=15&r[6]|64,r[8]=63&r[8]|128,t){n=n||0;for(var o=0;o<16;++o)t[n+o]=r[o];return t}return d(r)};function R(e,t,n,r){switch(e){case 0:return t&n^~t&r;case 1:case 3:return t^n^r;case 2:return t&n^t&r^n&r}}function S(e,t){return e<<t|e>>>32-t}var T=y("v5",80,(function(e){var t=[1518500249,1859775393,2400959708,3395469782],n=[1732584193,4023233417,2562383102,271733878,3285377520];if("string"==typeof e){var r=unescape(encodeURIComponent(e));e=[];for(var o=0;o<r.length;++o)e.push(r.charCodeAt(o))}else Array.isArray(e)||(e=Array.prototype.slice.call(e));e.push(128);for(var a=e.length/4+2,i=Math.ceil(a/16),u=new Array(i),s=0;s<i;++s){for(var c=new Uint32Array(16),f=0;f<16;++f)c[f]=e[64*s+4*f]<<24|e[64*s+4*f+1]<<16|e[64*s+4*f+2]<<8|e[64*s+4*f+3];u[s]=c}u[i-1][14]=8*(e.length-1)/Math.pow(2,32),u[i-1][14]=Math.floor(u[i-1][14]),u[i-1][15]=8*(e.length-1)&4294967295;for(var l=0;l<i;++l){for(var d=new Uint32Array(80),p=0;p<16;++p)d[p]=u[l][p];for(var v=16;v<80;++v)d[v]=S(d[v-3]^d[v-8]^d[v-14]^d[v-16],1);for(var h=n[0],m=n[1],y=n[2],b=n[3],g=n[4],E=0;E<80;++E){var _=Math.floor(E/20),x=S(h,5)+R(_,m,y,b)+g+t[_]+d[E]>>>0;g=b,b=y,y=S(m,30)>>>0,m=h,h=x}n[0]=n[0]+h>>>0,n[1]=n[1]+m>>>0,n[2]=n[2]+y>>>0,n[3]=n[3]+b>>>0,n[4]=n[4]+g>>>0}return[n[0]>>24&255,n[0]>>16&255,n[0]>>8&255,255&n[0],n[1]>>24&255,n[1]>>16&255,n[1]>>8&255,255&n[1],n[2]>>24&255,n[2]>>16&255,n[2]>>8&255,255&n[2],n[3]>>24&255,n[3]>>16&255,n[3]>>8&255,255&n[3],n[4]>>24&255,n[4]>>16&255,n[4]>>8&255,255&n[4]]})),w="00000000-0000-0000-0000-000000000000",j=function(e){if(!u(e))throw TypeError("Invalid UUID");return parseInt(e.substr(14,1),16)}}},t={};function n(r){var o=t[r];if(void 0!==o)return o.exports;var a=t[r]={exports:{}};return e[r].call(a.exports,a,a.exports,n),a.exports}n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,{a:t}),t},n.d=function(e,t){for(var r in t)n.o(t,r)&&!n.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:t[r]})},n.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}(),n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})};var r={};!function(){"use strict";n.r(r),n(294);var e=n(71),t=n.n(e);window.webBridgeInstance=new(t())}(),smartAppBridgeLibraryBundle=r}();
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.SmartAppBridge = factory());
+})(this, (function () { 'use strict';
+
+    var PLATFORM;
+    (function (PLATFORM) {
+        PLATFORM["WEB"] = "web";
+        PLATFORM["IOS"] = "ios";
+        PLATFORM["ANDROID"] = "android";
+        PLATFORM["UNKNOWN"] = "unknown";
+    })(PLATFORM || (PLATFORM = {}));
+    var EVENT_TYPE;
+    (function (EVENT_TYPE) {
+        EVENT_TYPE["RECEIVE"] = "recv";
+        EVENT_TYPE["SEND"] = "send";
+    })(EVENT_TYPE || (EVENT_TYPE = {}));
+    var HANDLER;
+    (function (HANDLER) {
+        HANDLER["BOTX"] = "botx";
+        HANDLER["EXPRESS"] = "express";
+    })(HANDLER || (HANDLER = {}));
+    const RESPONSE_TIMEOUT = 30000;
+    const WEB_COMMAND_TYPE = 'smartapp';
+    const WEB_COMMAND_TYPE_RPC = 'smartapp_rpc';
+    const WEB_COMMAND_TYPE_RPC_LOGS = 'smartAppLogs';
+
+    const getPlatformByGetParam = () => {
+        const platform = new URLSearchParams(location.search).get('platform');
+        const isValidPlatform = Object.values(PLATFORM).includes(platform);
+        if (isValidPlatform)
+            return platform;
+        return PLATFORM.UNKNOWN;
+    };
+    const detectPlatformByUserAgent = () => {
+        if (/android/i.test(navigator.userAgent)) {
+            return PLATFORM.ANDROID;
+        }
+        if ((/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.userAgent.includes('Mac') && 'ontouchend' in document)) &&
+            !window.MSStream)
+            return PLATFORM.IOS;
+        return PLATFORM.WEB;
+    };
+    /**
+     * Get platform. Detection based on GET param `platform` or user agent.
+     *
+     * ```typescript
+     * const platform = getPlatform();
+     *
+     * // => 'web' | 'ios' | 'android'
+     * ```
+     */
+    const getPlatform = () => {
+        return getPlatformByGetParam() || detectPlatformByUserAgent();
+    };
+
+    // Unique ID creation requires a high quality random # generator. In the browser we therefore
+    // require the crypto API and do not support built-in fallback to lower quality random number
+    // generators (like Math.random()).
+    var getRandomValues;
+    var rnds8 = new Uint8Array(16);
+    function rng() {
+      // lazy load so that environments that need to polyfill have a chance to do so
+      if (!getRandomValues) {
+        // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+        // find the complete implementation of crypto (msCrypto) on IE11.
+        getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+
+        if (!getRandomValues) {
+          throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+        }
+      }
+
+      return getRandomValues(rnds8);
+    }
+
+    var REGEX = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+
+    function validate(uuid) {
+      return typeof uuid === 'string' && REGEX.test(uuid);
+    }
+
+    /**
+     * Convert array of 16 byte values to UUID string format of the form:
+     * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+     */
+
+    var byteToHex = [];
+
+    for (var i = 0; i < 256; ++i) {
+      byteToHex.push((i + 0x100).toString(16).substr(1));
+    }
+
+    function stringify(arr) {
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      // Note: Be careful editing this code!  It's been tuned for performance
+      // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+      var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+      // of the following:
+      // - One or more input array values don't map to a hex octet (leading to
+      // "undefined" in the uuid)
+      // - Invalid input values for the RFC `version` or `variant` fields
+
+      if (!validate(uuid)) {
+        throw TypeError('Stringified UUID is invalid');
+      }
+
+      return uuid;
+    }
+
+    function v4(options, buf, offset) {
+      options = options || {};
+      var rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+      rnds[6] = rnds[6] & 0x0f | 0x40;
+      rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+      if (buf) {
+        offset = offset || 0;
+
+        for (var i = 0; i < 16; ++i) {
+          buf[offset + i] = rnds[i];
+        }
+
+        return buf;
+      }
+
+      return stringify(rnds);
+    }
+
+    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+    function createCommonjsModule(fn) {
+      var module = { exports: {} };
+    	return fn(module, module.exports), module.exports;
+    }
+
+    /** Detect free variable `global` from Node.js. */
+
+    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+    var _freeGlobal = freeGlobal;
+
+    /** Detect free variable `self`. */
+    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+    /** Used as a reference to the global object. */
+    var root = _freeGlobal || freeSelf || Function('return this')();
+
+    var _root = root;
+
+    /** Built-in value references. */
+    var Symbol = _root.Symbol;
+
+    var _Symbol = Symbol;
+
+    /**
+     * A specialized version of `_.map` for arrays without support for iteratee
+     * shorthands.
+     *
+     * @private
+     * @param {Array} [array] The array to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @returns {Array} Returns the new mapped array.
+     */
+    function arrayMap(array, iteratee) {
+      var index = -1,
+          length = array == null ? 0 : array.length,
+          result = Array(length);
+
+      while (++index < length) {
+        result[index] = iteratee(array[index], index, array);
+      }
+      return result;
+    }
+
+    var _arrayMap = arrayMap;
+
+    /**
+     * Checks if `value` is classified as an `Array` object.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+     * @example
+     *
+     * _.isArray([1, 2, 3]);
+     * // => true
+     *
+     * _.isArray(document.body.children);
+     * // => false
+     *
+     * _.isArray('abc');
+     * // => false
+     *
+     * _.isArray(_.noop);
+     * // => false
+     */
+    var isArray = Array.isArray;
+
+    var isArray_1 = isArray;
+
+    /** Used for built-in method references. */
+    var objectProto$1 = Object.prototype;
+
+    /** Used to check objects for own properties. */
+    var hasOwnProperty = objectProto$1.hasOwnProperty;
+
+    /**
+     * Used to resolve the
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+     * of values.
+     */
+    var nativeObjectToString$1 = objectProto$1.toString;
+
+    /** Built-in value references. */
+    var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+
+    /**
+     * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @returns {string} Returns the raw `toStringTag`.
+     */
+    function getRawTag(value) {
+      var isOwn = hasOwnProperty.call(value, symToStringTag$1),
+          tag = value[symToStringTag$1];
+
+      try {
+        value[symToStringTag$1] = undefined;
+        var unmasked = true;
+      } catch (e) {}
+
+      var result = nativeObjectToString$1.call(value);
+      if (unmasked) {
+        if (isOwn) {
+          value[symToStringTag$1] = tag;
+        } else {
+          delete value[symToStringTag$1];
+        }
+      }
+      return result;
+    }
+
+    var _getRawTag = getRawTag;
+
+    /** Used for built-in method references. */
+    var objectProto = Object.prototype;
+
+    /**
+     * Used to resolve the
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+     * of values.
+     */
+    var nativeObjectToString = objectProto.toString;
+
+    /**
+     * Converts `value` to a string using `Object.prototype.toString`.
+     *
+     * @private
+     * @param {*} value The value to convert.
+     * @returns {string} Returns the converted string.
+     */
+    function objectToString(value) {
+      return nativeObjectToString.call(value);
+    }
+
+    var _objectToString = objectToString;
+
+    /** `Object#toString` result references. */
+    var nullTag = '[object Null]',
+        undefinedTag = '[object Undefined]';
+
+    /** Built-in value references. */
+    var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+    /**
+     * The base implementation of `getTag` without fallbacks for buggy environments.
+     *
+     * @private
+     * @param {*} value The value to query.
+     * @returns {string} Returns the `toStringTag`.
+     */
+    function baseGetTag(value) {
+      if (value == null) {
+        return value === undefined ? undefinedTag : nullTag;
+      }
+      return (symToStringTag && symToStringTag in Object(value))
+        ? _getRawTag(value)
+        : _objectToString(value);
+    }
+
+    var _baseGetTag = baseGetTag;
+
+    /**
+     * Checks if `value` is object-like. A value is object-like if it's not `null`
+     * and has a `typeof` result of "object".
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+     * @example
+     *
+     * _.isObjectLike({});
+     * // => true
+     *
+     * _.isObjectLike([1, 2, 3]);
+     * // => true
+     *
+     * _.isObjectLike(_.noop);
+     * // => false
+     *
+     * _.isObjectLike(null);
+     * // => false
+     */
+    function isObjectLike(value) {
+      return value != null && typeof value == 'object';
+    }
+
+    var isObjectLike_1 = isObjectLike;
+
+    /** `Object#toString` result references. */
+    var symbolTag = '[object Symbol]';
+
+    /**
+     * Checks if `value` is classified as a `Symbol` primitive or object.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+     * @example
+     *
+     * _.isSymbol(Symbol.iterator);
+     * // => true
+     *
+     * _.isSymbol('abc');
+     * // => false
+     */
+    function isSymbol(value) {
+      return typeof value == 'symbol' ||
+        (isObjectLike_1(value) && _baseGetTag(value) == symbolTag);
+    }
+
+    var isSymbol_1 = isSymbol;
+
+    /** Used as references for various `Number` constants. */
+    var INFINITY = 1 / 0;
+
+    /** Used to convert symbols to primitives and strings. */
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+        symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+    /**
+     * The base implementation of `_.toString` which doesn't convert nullish
+     * values to empty strings.
+     *
+     * @private
+     * @param {*} value The value to process.
+     * @returns {string} Returns the string.
+     */
+    function baseToString(value) {
+      // Exit early for strings to avoid a performance hit in some environments.
+      if (typeof value == 'string') {
+        return value;
+      }
+      if (isArray_1(value)) {
+        // Recursively convert values (susceptible to call stack limits).
+        return _arrayMap(value, baseToString) + '';
+      }
+      if (isSymbol_1(value)) {
+        return symbolToString ? symbolToString.call(value) : '';
+      }
+      var result = (value + '');
+      return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+    }
+
+    var _baseToString = baseToString;
+
+    /**
+     * Converts `value` to a string. An empty string is returned for `null`
+     * and `undefined` values. The sign of `-0` is preserved.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to convert.
+     * @returns {string} Returns the converted string.
+     * @example
+     *
+     * _.toString(null);
+     * // => ''
+     *
+     * _.toString(-0);
+     * // => '-0'
+     *
+     * _.toString([1, 2, 3]);
+     * // => '1,2,3'
+     */
+    function toString(value) {
+      return value == null ? '' : _baseToString(value);
+    }
+
+    var toString_1 = toString;
+
+    /**
+     * The base implementation of `_.slice` without an iteratee call guard.
+     *
+     * @private
+     * @param {Array} array The array to slice.
+     * @param {number} [start=0] The start position.
+     * @param {number} [end=array.length] The end position.
+     * @returns {Array} Returns the slice of `array`.
+     */
+    function baseSlice(array, start, end) {
+      var index = -1,
+          length = array.length;
+
+      if (start < 0) {
+        start = -start > length ? 0 : (length + start);
+      }
+      end = end > length ? length : end;
+      if (end < 0) {
+        end += length;
+      }
+      length = start > end ? 0 : ((end - start) >>> 0);
+      start >>>= 0;
+
+      var result = Array(length);
+      while (++index < length) {
+        result[index] = array[index + start];
+      }
+      return result;
+    }
+
+    var _baseSlice = baseSlice;
+
+    /**
+     * Casts `array` to a slice if it's needed.
+     *
+     * @private
+     * @param {Array} array The array to inspect.
+     * @param {number} start The start position.
+     * @param {number} [end=array.length] The end position.
+     * @returns {Array} Returns the cast slice.
+     */
+    function castSlice(array, start, end) {
+      var length = array.length;
+      end = end === undefined ? length : end;
+      return (!start && end >= length) ? array : _baseSlice(array, start, end);
+    }
+
+    var _castSlice = castSlice;
+
+    /** Used to compose unicode character classes. */
+    var rsAstralRange$2 = '\\ud800-\\udfff',
+        rsComboMarksRange$3 = '\\u0300-\\u036f',
+        reComboHalfMarksRange$3 = '\\ufe20-\\ufe2f',
+        rsComboSymbolsRange$3 = '\\u20d0-\\u20ff',
+        rsComboRange$3 = rsComboMarksRange$3 + reComboHalfMarksRange$3 + rsComboSymbolsRange$3,
+        rsVarRange$2 = '\\ufe0e\\ufe0f';
+
+    /** Used to compose unicode capture groups. */
+    var rsZWJ$2 = '\\u200d';
+
+    /** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+    var reHasUnicode = RegExp('[' + rsZWJ$2 + rsAstralRange$2  + rsComboRange$3 + rsVarRange$2 + ']');
+
+    /**
+     * Checks if `string` contains Unicode symbols.
+     *
+     * @private
+     * @param {string} string The string to inspect.
+     * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+     */
+    function hasUnicode(string) {
+      return reHasUnicode.test(string);
+    }
+
+    var _hasUnicode = hasUnicode;
+
+    /**
+     * Converts an ASCII `string` to an array.
+     *
+     * @private
+     * @param {string} string The string to convert.
+     * @returns {Array} Returns the converted array.
+     */
+    function asciiToArray(string) {
+      return string.split('');
+    }
+
+    var _asciiToArray = asciiToArray;
+
+    /** Used to compose unicode character classes. */
+    var rsAstralRange$1 = '\\ud800-\\udfff',
+        rsComboMarksRange$2 = '\\u0300-\\u036f',
+        reComboHalfMarksRange$2 = '\\ufe20-\\ufe2f',
+        rsComboSymbolsRange$2 = '\\u20d0-\\u20ff',
+        rsComboRange$2 = rsComboMarksRange$2 + reComboHalfMarksRange$2 + rsComboSymbolsRange$2,
+        rsVarRange$1 = '\\ufe0e\\ufe0f';
+
+    /** Used to compose unicode capture groups. */
+    var rsAstral = '[' + rsAstralRange$1 + ']',
+        rsCombo$2 = '[' + rsComboRange$2 + ']',
+        rsFitz$1 = '\\ud83c[\\udffb-\\udfff]',
+        rsModifier$1 = '(?:' + rsCombo$2 + '|' + rsFitz$1 + ')',
+        rsNonAstral$1 = '[^' + rsAstralRange$1 + ']',
+        rsRegional$1 = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+        rsSurrPair$1 = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+        rsZWJ$1 = '\\u200d';
+
+    /** Used to compose unicode regexes. */
+    var reOptMod$1 = rsModifier$1 + '?',
+        rsOptVar$1 = '[' + rsVarRange$1 + ']?',
+        rsOptJoin$1 = '(?:' + rsZWJ$1 + '(?:' + [rsNonAstral$1, rsRegional$1, rsSurrPair$1].join('|') + ')' + rsOptVar$1 + reOptMod$1 + ')*',
+        rsSeq$1 = rsOptVar$1 + reOptMod$1 + rsOptJoin$1,
+        rsSymbol = '(?:' + [rsNonAstral$1 + rsCombo$2 + '?', rsCombo$2, rsRegional$1, rsSurrPair$1, rsAstral].join('|') + ')';
+
+    /** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+    var reUnicode = RegExp(rsFitz$1 + '(?=' + rsFitz$1 + ')|' + rsSymbol + rsSeq$1, 'g');
+
+    /**
+     * Converts a Unicode `string` to an array.
+     *
+     * @private
+     * @param {string} string The string to convert.
+     * @returns {Array} Returns the converted array.
+     */
+    function unicodeToArray(string) {
+      return string.match(reUnicode) || [];
+    }
+
+    var _unicodeToArray = unicodeToArray;
+
+    /**
+     * Converts `string` to an array.
+     *
+     * @private
+     * @param {string} string The string to convert.
+     * @returns {Array} Returns the converted array.
+     */
+    function stringToArray(string) {
+      return _hasUnicode(string)
+        ? _unicodeToArray(string)
+        : _asciiToArray(string);
+    }
+
+    var _stringToArray = stringToArray;
+
+    /**
+     * Creates a function like `_.lowerFirst`.
+     *
+     * @private
+     * @param {string} methodName The name of the `String` case method to use.
+     * @returns {Function} Returns the new case function.
+     */
+    function createCaseFirst(methodName) {
+      return function(string) {
+        string = toString_1(string);
+
+        var strSymbols = _hasUnicode(string)
+          ? _stringToArray(string)
+          : undefined;
+
+        var chr = strSymbols
+          ? strSymbols[0]
+          : string.charAt(0);
+
+        var trailing = strSymbols
+          ? _castSlice(strSymbols, 1).join('')
+          : string.slice(1);
+
+        return chr[methodName]() + trailing;
+      };
+    }
+
+    var _createCaseFirst = createCaseFirst;
+
+    /**
+     * Converts the first character of `string` to upper case.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category String
+     * @param {string} [string=''] The string to convert.
+     * @returns {string} Returns the converted string.
+     * @example
+     *
+     * _.upperFirst('fred');
+     * // => 'Fred'
+     *
+     * _.upperFirst('FRED');
+     * // => 'FRED'
+     */
+    var upperFirst = _createCaseFirst('toUpperCase');
+
+    var upperFirst_1 = upperFirst;
+
+    /**
+     * Converts the first character of `string` to upper case and the remaining
+     * to lower case.
+     *
+     * @static
+     * @memberOf _
+     * @since 3.0.0
+     * @category String
+     * @param {string} [string=''] The string to capitalize.
+     * @returns {string} Returns the capitalized string.
+     * @example
+     *
+     * _.capitalize('FRED');
+     * // => 'Fred'
+     */
+    function capitalize(string) {
+      return upperFirst_1(toString_1(string).toLowerCase());
+    }
+
+    var capitalize_1 = capitalize;
+
+    /**
+     * A specialized version of `_.reduce` for arrays without support for
+     * iteratee shorthands.
+     *
+     * @private
+     * @param {Array} [array] The array to iterate over.
+     * @param {Function} iteratee The function invoked per iteration.
+     * @param {*} [accumulator] The initial value.
+     * @param {boolean} [initAccum] Specify using the first element of `array` as
+     *  the initial value.
+     * @returns {*} Returns the accumulated value.
+     */
+    function arrayReduce(array, iteratee, accumulator, initAccum) {
+      var index = -1,
+          length = array == null ? 0 : array.length;
+
+      if (initAccum && length) {
+        accumulator = array[++index];
+      }
+      while (++index < length) {
+        accumulator = iteratee(accumulator, array[index], index, array);
+      }
+      return accumulator;
+    }
+
+    var _arrayReduce = arrayReduce;
+
+    /**
+     * The base implementation of `_.propertyOf` without support for deep paths.
+     *
+     * @private
+     * @param {Object} object The object to query.
+     * @returns {Function} Returns the new accessor function.
+     */
+    function basePropertyOf(object) {
+      return function(key) {
+        return object == null ? undefined : object[key];
+      };
+    }
+
+    var _basePropertyOf = basePropertyOf;
+
+    /** Used to map Latin Unicode letters to basic Latin letters. */
+    var deburredLetters = {
+      // Latin-1 Supplement block.
+      '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
+      '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
+      '\xc7': 'C',  '\xe7': 'c',
+      '\xd0': 'D',  '\xf0': 'd',
+      '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
+      '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
+      '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
+      '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
+      '\xd1': 'N',  '\xf1': 'n',
+      '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
+      '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
+      '\xd9': 'U',  '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
+      '\xf9': 'u',  '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
+      '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
+      '\xc6': 'Ae', '\xe6': 'ae',
+      '\xde': 'Th', '\xfe': 'th',
+      '\xdf': 'ss',
+      // Latin Extended-A block.
+      '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
+      '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
+      '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
+      '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
+      '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
+      '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
+      '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
+      '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
+      '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
+      '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
+      '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
+      '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
+      '\u0134': 'J',  '\u0135': 'j',
+      '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
+      '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
+      '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
+      '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
+      '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
+      '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
+      '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
+      '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
+      '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
+      '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
+      '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
+      '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
+      '\u0163': 't',  '\u0165': 't', '\u0167': 't',
+      '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
+      '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
+      '\u0174': 'W',  '\u0175': 'w',
+      '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
+      '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
+      '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
+      '\u0132': 'IJ', '\u0133': 'ij',
+      '\u0152': 'Oe', '\u0153': 'oe',
+      '\u0149': "'n", '\u017f': 's'
+    };
+
+    /**
+     * Used by `_.deburr` to convert Latin-1 Supplement and Latin Extended-A
+     * letters to basic Latin letters.
+     *
+     * @private
+     * @param {string} letter The matched letter to deburr.
+     * @returns {string} Returns the deburred letter.
+     */
+    var deburrLetter = _basePropertyOf(deburredLetters);
+
+    var _deburrLetter = deburrLetter;
+
+    /** Used to match Latin Unicode letters (excluding mathematical operators). */
+    var reLatin = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g;
+
+    /** Used to compose unicode character classes. */
+    var rsComboMarksRange$1 = '\\u0300-\\u036f',
+        reComboHalfMarksRange$1 = '\\ufe20-\\ufe2f',
+        rsComboSymbolsRange$1 = '\\u20d0-\\u20ff',
+        rsComboRange$1 = rsComboMarksRange$1 + reComboHalfMarksRange$1 + rsComboSymbolsRange$1;
+
+    /** Used to compose unicode capture groups. */
+    var rsCombo$1 = '[' + rsComboRange$1 + ']';
+
+    /**
+     * Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks) and
+     * [combining diacritical marks for symbols](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks_for_Symbols).
+     */
+    var reComboMark = RegExp(rsCombo$1, 'g');
+
+    /**
+     * Deburrs `string` by converting
+     * [Latin-1 Supplement](https://en.wikipedia.org/wiki/Latin-1_Supplement_(Unicode_block)#Character_table)
+     * and [Latin Extended-A](https://en.wikipedia.org/wiki/Latin_Extended-A)
+     * letters to basic Latin letters and removing
+     * [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
+     *
+     * @static
+     * @memberOf _
+     * @since 3.0.0
+     * @category String
+     * @param {string} [string=''] The string to deburr.
+     * @returns {string} Returns the deburred string.
+     * @example
+     *
+     * _.deburr('déjà vu');
+     * // => 'deja vu'
+     */
+    function deburr(string) {
+      string = toString_1(string);
+      return string && string.replace(reLatin, _deburrLetter).replace(reComboMark, '');
+    }
+
+    var deburr_1 = deburr;
+
+    /** Used to match words composed of alphanumeric characters. */
+    var reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+
+    /**
+     * Splits an ASCII `string` into an array of its words.
+     *
+     * @private
+     * @param {string} The string to inspect.
+     * @returns {Array} Returns the words of `string`.
+     */
+    function asciiWords(string) {
+      return string.match(reAsciiWord) || [];
+    }
+
+    var _asciiWords = asciiWords;
+
+    /** Used to detect strings that need a more robust regexp to match words. */
+    var reHasUnicodeWord = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
+
+    /**
+     * Checks if `string` contains a word composed of Unicode symbols.
+     *
+     * @private
+     * @param {string} string The string to inspect.
+     * @returns {boolean} Returns `true` if a word is found, else `false`.
+     */
+    function hasUnicodeWord(string) {
+      return reHasUnicodeWord.test(string);
+    }
+
+    var _hasUnicodeWord = hasUnicodeWord;
+
+    /** Used to compose unicode character classes. */
+    var rsAstralRange = '\\ud800-\\udfff',
+        rsComboMarksRange = '\\u0300-\\u036f',
+        reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+        rsComboSymbolsRange = '\\u20d0-\\u20ff',
+        rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+        rsDingbatRange = '\\u2700-\\u27bf',
+        rsLowerRange = 'a-z\\xdf-\\xf6\\xf8-\\xff',
+        rsMathOpRange = '\\xac\\xb1\\xd7\\xf7',
+        rsNonCharRange = '\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf',
+        rsPunctuationRange = '\\u2000-\\u206f',
+        rsSpaceRange = ' \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000',
+        rsUpperRange = 'A-Z\\xc0-\\xd6\\xd8-\\xde',
+        rsVarRange = '\\ufe0e\\ufe0f',
+        rsBreakRange = rsMathOpRange + rsNonCharRange + rsPunctuationRange + rsSpaceRange;
+
+    /** Used to compose unicode capture groups. */
+    var rsApos$1 = "['\u2019]",
+        rsBreak = '[' + rsBreakRange + ']',
+        rsCombo = '[' + rsComboRange + ']',
+        rsDigits = '\\d+',
+        rsDingbat = '[' + rsDingbatRange + ']',
+        rsLower = '[' + rsLowerRange + ']',
+        rsMisc = '[^' + rsAstralRange + rsBreakRange + rsDigits + rsDingbatRange + rsLowerRange + rsUpperRange + ']',
+        rsFitz = '\\ud83c[\\udffb-\\udfff]',
+        rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+        rsNonAstral = '[^' + rsAstralRange + ']',
+        rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+        rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+        rsUpper = '[' + rsUpperRange + ']',
+        rsZWJ = '\\u200d';
+
+    /** Used to compose unicode regexes. */
+    var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
+        rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
+        rsOptContrLower = '(?:' + rsApos$1 + '(?:d|ll|m|re|s|t|ve))?',
+        rsOptContrUpper = '(?:' + rsApos$1 + '(?:D|LL|M|RE|S|T|VE))?',
+        reOptMod = rsModifier + '?',
+        rsOptVar = '[' + rsVarRange + ']?',
+        rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+        rsOrdLower = '\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])',
+        rsOrdUpper = '\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])',
+        rsSeq = rsOptVar + reOptMod + rsOptJoin,
+        rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq;
+
+    /** Used to match complex or compound words. */
+    var reUnicodeWord = RegExp([
+      rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
+      rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
+      rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
+      rsUpper + '+' + rsOptContrUpper,
+      rsOrdUpper,
+      rsOrdLower,
+      rsDigits,
+      rsEmoji
+    ].join('|'), 'g');
+
+    /**
+     * Splits a Unicode `string` into an array of its words.
+     *
+     * @private
+     * @param {string} The string to inspect.
+     * @returns {Array} Returns the words of `string`.
+     */
+    function unicodeWords(string) {
+      return string.match(reUnicodeWord) || [];
+    }
+
+    var _unicodeWords = unicodeWords;
+
+    /**
+     * Splits `string` into an array of its words.
+     *
+     * @static
+     * @memberOf _
+     * @since 3.0.0
+     * @category String
+     * @param {string} [string=''] The string to inspect.
+     * @param {RegExp|string} [pattern] The pattern to match words.
+     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+     * @returns {Array} Returns the words of `string`.
+     * @example
+     *
+     * _.words('fred, barney, & pebbles');
+     * // => ['fred', 'barney', 'pebbles']
+     *
+     * _.words('fred, barney, & pebbles', /[^, ]+/g);
+     * // => ['fred', 'barney', '&', 'pebbles']
+     */
+    function words(string, pattern, guard) {
+      string = toString_1(string);
+      pattern = guard ? undefined : pattern;
+
+      if (pattern === undefined) {
+        return _hasUnicodeWord(string) ? _unicodeWords(string) : _asciiWords(string);
+      }
+      return string.match(pattern) || [];
+    }
+
+    var words_1 = words;
+
+    /** Used to compose unicode capture groups. */
+    var rsApos = "['\u2019]";
+
+    /** Used to match apostrophes. */
+    var reApos = RegExp(rsApos, 'g');
+
+    /**
+     * Creates a function like `_.camelCase`.
+     *
+     * @private
+     * @param {Function} callback The function to combine each word.
+     * @returns {Function} Returns the new compounder function.
+     */
+    function createCompounder(callback) {
+      return function(string) {
+        return _arrayReduce(words_1(deburr_1(string).replace(reApos, '')), callback, '');
+      };
+    }
+
+    var _createCompounder = createCompounder;
+
+    /**
+     * Converts `string` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
+     *
+     * @static
+     * @memberOf _
+     * @since 3.0.0
+     * @category String
+     * @param {string} [string=''] The string to convert.
+     * @returns {string} Returns the camel cased string.
+     * @example
+     *
+     * _.camelCase('Foo Bar');
+     * // => 'fooBar'
+     *
+     * _.camelCase('--foo-bar--');
+     * // => 'fooBar'
+     *
+     * _.camelCase('__FOO_BAR__');
+     * // => 'fooBar'
+     */
+    var camelCase = _createCompounder(function(result, word, index) {
+      word = word.toLowerCase();
+      return result + (index ? capitalize_1(word) : word);
+    });
+
+    var camelCase_1 = camelCase;
+
+    /**
+     * Converts `string` to
+     * [snake case](https://en.wikipedia.org/wiki/Snake_case).
+     *
+     * @static
+     * @memberOf _
+     * @since 3.0.0
+     * @category String
+     * @param {string} [string=''] The string to convert.
+     * @returns {string} Returns the snake cased string.
+     * @example
+     *
+     * _.snakeCase('Foo Bar');
+     * // => 'foo_bar'
+     *
+     * _.snakeCase('fooBar');
+     * // => 'foo_bar'
+     *
+     * _.snakeCase('--FOO-BAR--');
+     * // => 'foo_bar'
+     */
+    var snakeCase = _createCompounder(function(result, word, index) {
+      return result + (index ? '_' : '') + word.toLowerCase();
+    });
+
+    var snakeCase_1 = snakeCase;
+
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const isUuid = (value) => {
+        return /[0-9a-fA-F-]{32}/.test(value);
+    };
+    const snakeCaseToCamelCase = (data) => {
+        if (Array.isArray(data))
+            return data.map(snakeCaseToCamelCase);
+        if (!data || data.constructor?.name !== 'Object')
+            return data;
+        return Object.keys(data).reduce((result, key) => {
+            const value = snakeCaseToCamelCase(data[key]);
+            const keyValue = isUuid(key) ? key : camelCase_1(key);
+            return { ...result, [keyValue]: value };
+        }, {});
+    };
+    const camelCaseToSnakeCase = (data) => {
+        if (Array.isArray(data))
+            return data.map(camelCaseToSnakeCase);
+        if (!data || data.constructor?.name !== 'Object')
+            return data;
+        return Object.keys(data).reduce((result, key) => {
+            const value = camelCaseToSnakeCase(data[key]);
+            return { ...result, [snakeCase_1(key)]: value };
+        }, {});
+    };
+
+    var eventemitter3 = createCommonjsModule(function (module) {
+
+    var has = Object.prototype.hasOwnProperty
+      , prefix = '~';
+
+    /**
+     * Constructor to create a storage for our `EE` objects.
+     * An `Events` instance is a plain object whose properties are event names.
+     *
+     * @constructor
+     * @private
+     */
+    function Events() {}
+
+    //
+    // We try to not inherit from `Object.prototype`. In some engines creating an
+    // instance in this way is faster than calling `Object.create(null)` directly.
+    // If `Object.create(null)` is not supported we prefix the event names with a
+    // character to make sure that the built-in object properties are not
+    // overridden or used as an attack vector.
+    //
+    if (Object.create) {
+      Events.prototype = Object.create(null);
+
+      //
+      // This hack is needed because the `__proto__` property is still inherited in
+      // some old browsers like Android 4, iPhone 5.1, Opera 11 and Safari 5.
+      //
+      if (!new Events().__proto__) prefix = false;
+    }
+
+    /**
+     * Representation of a single event listener.
+     *
+     * @param {Function} fn The listener function.
+     * @param {*} context The context to invoke the listener with.
+     * @param {Boolean} [once=false] Specify if the listener is a one-time listener.
+     * @constructor
+     * @private
+     */
+    function EE(fn, context, once) {
+      this.fn = fn;
+      this.context = context;
+      this.once = once || false;
+    }
+
+    /**
+     * Add a listener for a given event.
+     *
+     * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn The listener function.
+     * @param {*} context The context to invoke the listener with.
+     * @param {Boolean} once Specify if the listener is a one-time listener.
+     * @returns {EventEmitter}
+     * @private
+     */
+    function addListener(emitter, event, fn, context, once) {
+      if (typeof fn !== 'function') {
+        throw new TypeError('The listener must be a function');
+      }
+
+      var listener = new EE(fn, context || emitter, once)
+        , evt = prefix ? prefix + event : event;
+
+      if (!emitter._events[evt]) emitter._events[evt] = listener, emitter._eventsCount++;
+      else if (!emitter._events[evt].fn) emitter._events[evt].push(listener);
+      else emitter._events[evt] = [emitter._events[evt], listener];
+
+      return emitter;
+    }
+
+    /**
+     * Clear event by name.
+     *
+     * @param {EventEmitter} emitter Reference to the `EventEmitter` instance.
+     * @param {(String|Symbol)} evt The Event name.
+     * @private
+     */
+    function clearEvent(emitter, evt) {
+      if (--emitter._eventsCount === 0) emitter._events = new Events();
+      else delete emitter._events[evt];
+    }
+
+    /**
+     * Minimal `EventEmitter` interface that is molded against the Node.js
+     * `EventEmitter` interface.
+     *
+     * @constructor
+     * @public
+     */
+    function EventEmitter() {
+      this._events = new Events();
+      this._eventsCount = 0;
+    }
+
+    /**
+     * Return an array listing the events for which the emitter has registered
+     * listeners.
+     *
+     * @returns {Array}
+     * @public
+     */
+    EventEmitter.prototype.eventNames = function eventNames() {
+      var names = []
+        , events
+        , name;
+
+      if (this._eventsCount === 0) return names;
+
+      for (name in (events = this._events)) {
+        if (has.call(events, name)) names.push(prefix ? name.slice(1) : name);
+      }
+
+      if (Object.getOwnPropertySymbols) {
+        return names.concat(Object.getOwnPropertySymbols(events));
+      }
+
+      return names;
+    };
+
+    /**
+     * Return the listeners registered for a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @returns {Array} The registered listeners.
+     * @public
+     */
+    EventEmitter.prototype.listeners = function listeners(event) {
+      var evt = prefix ? prefix + event : event
+        , handlers = this._events[evt];
+
+      if (!handlers) return [];
+      if (handlers.fn) return [handlers.fn];
+
+      for (var i = 0, l = handlers.length, ee = new Array(l); i < l; i++) {
+        ee[i] = handlers[i].fn;
+      }
+
+      return ee;
+    };
+
+    /**
+     * Return the number of listeners listening to a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @returns {Number} The number of listeners.
+     * @public
+     */
+    EventEmitter.prototype.listenerCount = function listenerCount(event) {
+      var evt = prefix ? prefix + event : event
+        , listeners = this._events[evt];
+
+      if (!listeners) return 0;
+      if (listeners.fn) return 1;
+      return listeners.length;
+    };
+
+    /**
+     * Calls each of the listeners registered for a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @returns {Boolean} `true` if the event had listeners, else `false`.
+     * @public
+     */
+    EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
+      var evt = prefix ? prefix + event : event;
+
+      if (!this._events[evt]) return false;
+
+      var listeners = this._events[evt]
+        , len = arguments.length
+        , args
+        , i;
+
+      if (listeners.fn) {
+        if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+
+        switch (len) {
+          case 1: return listeners.fn.call(listeners.context), true;
+          case 2: return listeners.fn.call(listeners.context, a1), true;
+          case 3: return listeners.fn.call(listeners.context, a1, a2), true;
+          case 4: return listeners.fn.call(listeners.context, a1, a2, a3), true;
+          case 5: return listeners.fn.call(listeners.context, a1, a2, a3, a4), true;
+          case 6: return listeners.fn.call(listeners.context, a1, a2, a3, a4, a5), true;
+        }
+
+        for (i = 1, args = new Array(len -1); i < len; i++) {
+          args[i - 1] = arguments[i];
+        }
+
+        listeners.fn.apply(listeners.context, args);
+      } else {
+        var length = listeners.length
+          , j;
+
+        for (i = 0; i < length; i++) {
+          if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+
+          switch (len) {
+            case 1: listeners[i].fn.call(listeners[i].context); break;
+            case 2: listeners[i].fn.call(listeners[i].context, a1); break;
+            case 3: listeners[i].fn.call(listeners[i].context, a1, a2); break;
+            case 4: listeners[i].fn.call(listeners[i].context, a1, a2, a3); break;
+            default:
+              if (!args) for (j = 1, args = new Array(len -1); j < len; j++) {
+                args[j - 1] = arguments[j];
+              }
+
+              listeners[i].fn.apply(listeners[i].context, args);
+          }
+        }
+      }
+
+      return true;
+    };
+
+    /**
+     * Add a listener for a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn The listener function.
+     * @param {*} [context=this] The context to invoke the listener with.
+     * @returns {EventEmitter} `this`.
+     * @public
+     */
+    EventEmitter.prototype.on = function on(event, fn, context) {
+      return addListener(this, event, fn, context, false);
+    };
+
+    /**
+     * Add a one-time listener for a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn The listener function.
+     * @param {*} [context=this] The context to invoke the listener with.
+     * @returns {EventEmitter} `this`.
+     * @public
+     */
+    EventEmitter.prototype.once = function once(event, fn, context) {
+      return addListener(this, event, fn, context, true);
+    };
+
+    /**
+     * Remove the listeners of a given event.
+     *
+     * @param {(String|Symbol)} event The event name.
+     * @param {Function} fn Only remove the listeners that match this function.
+     * @param {*} context Only remove the listeners that have this context.
+     * @param {Boolean} once Only remove one-time listeners.
+     * @returns {EventEmitter} `this`.
+     * @public
+     */
+    EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+      var evt = prefix ? prefix + event : event;
+
+      if (!this._events[evt]) return this;
+      if (!fn) {
+        clearEvent(this, evt);
+        return this;
+      }
+
+      var listeners = this._events[evt];
+
+      if (listeners.fn) {
+        if (
+          listeners.fn === fn &&
+          (!once || listeners.once) &&
+          (!context || listeners.context === context)
+        ) {
+          clearEvent(this, evt);
+        }
+      } else {
+        for (var i = 0, events = [], length = listeners.length; i < length; i++) {
+          if (
+            listeners[i].fn !== fn ||
+            (once && !listeners[i].once) ||
+            (context && listeners[i].context !== context)
+          ) {
+            events.push(listeners[i]);
+          }
+        }
+
+        //
+        // Reset the array, or remove it completely if we have no more listeners.
+        //
+        if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
+        else clearEvent(this, evt);
+      }
+
+      return this;
+    };
+
+    /**
+     * Remove all listeners, or those of the specified event.
+     *
+     * @param {(String|Symbol)} [event] The event name.
+     * @returns {EventEmitter} `this`.
+     * @public
+     */
+    EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
+      var evt;
+
+      if (event) {
+        evt = prefix ? prefix + event : event;
+        if (this._events[evt]) clearEvent(this, evt);
+      } else {
+        this._events = new Events();
+        this._eventsCount = 0;
+      }
+
+      return this;
+    };
+
+    //
+    // Alias methods names because people roll like that.
+    //
+    EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+    EventEmitter.prototype.addListener = EventEmitter.prototype.on;
+
+    //
+    // Expose the prefix.
+    //
+    EventEmitter.prefixed = prefix;
+
+    //
+    // Allow `EventEmitter` to be imported as module namespace.
+    //
+    EventEmitter.EventEmitter = EventEmitter;
+
+    //
+    // Expose the module.
+    //
+    {
+      module.exports = EventEmitter;
+    }
+    });
+
+    /**
+     * Extended Event Emitted class
+     *
+     * ```typescript
+     * const emitter = new EmitterEventPayload();
+     *
+     * // promise will be rejected in 20 secs
+     * // if no one event has been received with type 'ref-uuid-value'
+     * // otherwise promise will be fulfilled with payload object
+     * const promise = emitter.onceWithTimeout('ref-uuid-value', 20000)
+     * ```
+     */
+    class ExtendedEventEmitter extends eventemitter3 {
+        constructor() {
+            super();
+        }
+        /**
+         * Wait when event with `type` will be emitted for `timeout` ms.
+         *
+         * ```js
+         * emitter.onceWithTimeout('d6910a9d-ea24-5fc6-a654-28781ef21f8f', 20000)
+         * // => Promise
+         * ```
+         */
+        onceWithTimeout(type, timeout) {
+            return new Promise((resolve, reject) => {
+                const timer = setTimeout(() => reject(), timeout);
+                this.once(type, (event) => {
+                    clearTimeout(timer);
+                    resolve(event);
+                });
+            });
+        }
+    }
+
+    /** @ignore */
+    const log = (...args) => {
+        const text = args.map((arg) => (typeof arg === 'string' ? arg : JSON.stringify(arg))).join(' ');
+        alert(text);
+    };
+
+    class AndroidBridge {
+        eventEmitter;
+        hasCommunicationObject;
+        logsEnabled;
+        isRenameParamsEnabled;
+        constructor() {
+            this.hasCommunicationObject = typeof window.express !== 'undefined' && !!window.express.handleSmartAppEvent;
+            this.eventEmitter = new ExtendedEventEmitter();
+            this.logsEnabled = false;
+            this.isRenameParamsEnabled = true;
+            if (!this.hasCommunicationObject) {
+                log('No method "express.handleSmartAppEvent", cannot send message to Android');
+                return;
+            }
+            // Expect json data as string
+            window.handleAndroidEvent = ({ ref, data, files, }) => {
+                if (this.logsEnabled)
+                    console.log('Bridge ~ Incoming event', JSON.stringify({
+                        ref,
+                        data,
+                        files,
+                    }, null, 2));
+                const { type, ...payload } = data;
+                const emitterType = ref || EVENT_TYPE.RECEIVE;
+                const eventFiles = this.isRenameParamsEnabled ?
+                    files?.map((file) => snakeCaseToCamelCase(file)) : files;
+                const event = {
+                    ref,
+                    type,
+                    payload: this.isRenameParamsEnabled ? snakeCaseToCamelCase(payload) : payload,
+                    files: eventFiles,
+                };
+                this.eventEmitter.emit(emitterType, event);
+            };
+        }
+        /**
+         * Set callback function to handle events without **ref**
+         * (notifications for example).
+         *
+         * ```js
+         * bridge.onReceive(({ type, handler, payload }) => {
+         *   // Handle event data
+         *   console.log('event', type, handler, payload)
+         * })
+         * ```
+         * @param callback - Callback function.
+         */
+        onReceive(callback) {
+            this.eventEmitter.on(EVENT_TYPE.RECEIVE, callback);
+        }
+        sendEvent({ handler, method, params, files, timeout = RESPONSE_TIMEOUT, guaranteed_delivery_required = false, }) {
+            if (!this.hasCommunicationObject)
+                return Promise.reject();
+            const ref = v4(); // UUID to detect express response.
+            const eventParams = {
+                ref,
+                type: WEB_COMMAND_TYPE_RPC,
+                method,
+                handler,
+                payload: this.isRenameParamsEnabled ? camelCaseToSnakeCase(params) : params,
+                guaranteed_delivery_required,
+            };
+            const eventFiles = this.isRenameParamsEnabled ?
+                files?.map((file) => camelCaseToSnakeCase(file)) : files;
+            const event = JSON.stringify(files ? { ...eventParams, files: eventFiles } : eventParams);
+            if (this.logsEnabled)
+                console.log('Bridge ~ Outgoing event', JSON.stringify(event, null, '  '));
+            window.express.handleSmartAppEvent(event);
+            return this.eventEmitter.onceWithTimeout(ref, timeout);
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendBotEvent(
+         *     {
+         *       method: 'get_weather',
+         *       params: {
+         *         city: 'Moscow',
+         *       },
+         *       files: []
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         * @param method - Event type.
+         * @param params
+         * @param files
+         * @param timeout - Timeout in ms.
+         * @param guaranteed_delivery_required - boolean.
+         * @returns Promise.
+         */
+        sendBotEvent({ method, params, files, timeout, guaranteed_delivery_required }) {
+            return this.sendEvent({ handler: HANDLER.BOTX, method, params, files, timeout, guaranteed_delivery_required });
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendClientEvent(
+         *     {
+         *       type: 'get_weather',
+         *       handler: 'express',
+         *       payload: {
+         *         city: 'Moscow',
+         *       },
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         * @param method - Event type.
+         * @param params
+         * @param timeout - Timeout in ms.
+         * @returns Promise.
+         */
+        sendClientEvent({ method, params, timeout }) {
+            return this.sendEvent({ handler: HANDLER.EXPRESS, method, params, timeout });
+        }
+        /**
+         * Enabling logs.
+         *
+         * ```js
+         * bridge
+         *   .enableLogs()
+         * ```
+         */
+        enableLogs() {
+            this.logsEnabled = true;
+        }
+        /**
+         * Disabling logs.
+         *
+         * ```js
+         * bridge
+         *   .disableLogs()
+         * ```
+         */
+        disableLogs() {
+            this.logsEnabled = false;
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .enableRenameParams()
+         * ```
+         */
+        enableRenameParams() {
+            this.isRenameParamsEnabled = true;
+            console.log('Bridge ~ Enabled renaming event params from camelCase to snake_case and vice versa');
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .disableRenameParams()
+         * ```
+         */
+        disableRenameParams() {
+            this.isRenameParamsEnabled = false;
+            console.log('Bridge ~ Disabled renaming event params from camelCase to snake_case and vice versa');
+        }
+        log(data) {
+            if ((!this.hasCommunicationObject || !data) ||
+                (typeof data !== 'string' && typeof data !== 'object'))
+                return;
+            window.express.handleSmartAppEvent(JSON.stringify({ 'SmartApp Log': data }, null, 2));
+        }
+    }
+
+    class IosBridge {
+        eventEmitter;
+        hasCommunicationObject;
+        logsEnabled;
+        isRenameParamsEnabled;
+        constructor() {
+            this.hasCommunicationObject =
+                window.webkit &&
+                    window.webkit.messageHandlers &&
+                    window.webkit.messageHandlers.express &&
+                    !!window.webkit.messageHandlers.express.postMessage;
+            this.eventEmitter = new ExtendedEventEmitter();
+            this.logsEnabled = false;
+            this.isRenameParamsEnabled = true;
+            if (!this.hasCommunicationObject) {
+                log('No method "express.postMessage", cannot send message to iOS');
+                return;
+            }
+            // Expect json data as string
+            window.handleIosEvent = ({ ref, data, files, }) => {
+                if (this.logsEnabled)
+                    console.log('Bridge ~ Incoming event', JSON.stringify({ ref, data, files }, null, 2));
+                const { type, ...payload } = data;
+                const emitterType = ref || EVENT_TYPE.RECEIVE;
+                const eventFiles = this.isRenameParamsEnabled ?
+                    files?.map((file) => snakeCaseToCamelCase(file)) : files;
+                const event = {
+                    ref,
+                    type,
+                    payload: this.isRenameParamsEnabled ? snakeCaseToCamelCase(payload) : payload,
+                    files: eventFiles,
+                };
+                this.eventEmitter.emit(emitterType, event);
+            };
+        }
+        /**
+         * Set callback function to handle events without **ref**
+         * (notifications for example).
+         *
+         * ```js
+         * bridge.onRecieve(({ type, handler, payload }) => {
+         *   // Handle event data
+         *   console.log('event', type, handler, payload)
+         * })
+         * ```
+         */
+        onReceive(callback) {
+            this.eventEmitter.on(EVENT_TYPE.RECEIVE, callback);
+        }
+        sendEvent({ handler, method, params, files, timeout = RESPONSE_TIMEOUT, guaranteed_delivery_required = false, }) {
+            if (!this.hasCommunicationObject)
+                return Promise.reject();
+            const ref = v4(); // UUID to detect express response.
+            const eventProps = {
+                ref,
+                type: WEB_COMMAND_TYPE_RPC,
+                method,
+                handler,
+                payload: this.isRenameParamsEnabled ? camelCaseToSnakeCase(params) : params,
+                guaranteed_delivery_required,
+            };
+            const eventFiles = this.isRenameParamsEnabled ?
+                files?.map((file) => camelCaseToSnakeCase(file)) : files;
+            const event = files ? { ...eventProps, files: eventFiles } : eventProps;
+            if (this.logsEnabled)
+                console.log('Bridge ~ Outgoing event', JSON.stringify(event, null, '  '));
+            window.webkit.messageHandlers.express.postMessage(event);
+            return this.eventEmitter.onceWithTimeout(ref, timeout);
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendBotEvent(
+         *     {
+         *       method: 'get_weather',
+         *       params: {
+         *         city: 'Moscow',
+         *       },
+         *       files: []
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         */
+        sendBotEvent({ method, params, files, timeout = RESPONSE_TIMEOUT, guaranteed_delivery_required, }) {
+            return this.sendEvent({
+                handler: HANDLER.BOTX,
+                method,
+                params,
+                files,
+                timeout,
+                guaranteed_delivery_required,
+            });
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendClientEvent(
+         *     {
+         *       type: 'get_weather',
+         *       handler: 'express',
+         *       payload: {
+         *         city: 'Moscow',
+         *       },
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         */
+        sendClientEvent({ method, params, timeout = RESPONSE_TIMEOUT, }) {
+            return this.sendEvent({
+                handler: HANDLER.EXPRESS,
+                method,
+                params,
+                timeout,
+            });
+        }
+        /**
+         * Enabling logs.
+         *
+         * ```js
+         * bridge
+         *   .enableLogs()
+         * ```
+         */
+        enableLogs() {
+            this.logsEnabled = true;
+        }
+        /**
+         * Disabling logs.
+         *
+         * ```js
+         * bridge
+         *   .disableLogs()
+         * ```
+         */
+        disableLogs() {
+            this.logsEnabled = false;
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .enableRenameParams()
+         * ```
+         */
+        enableRenameParams() {
+            this.isRenameParamsEnabled = true;
+            console.log('Bridge ~ Enabled renaming event params from camelCase to snake_case and vice versa');
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .disableRenameParams()
+         * ```
+         */
+        disableRenameParams() {
+            this.isRenameParamsEnabled = false;
+            console.log('Bridge ~ Disabled renaming event params from camelCase to snake_case and vice versa');
+        }
+        log(data) {
+            if (!this.hasCommunicationObject || !data)
+                return;
+            let value = '';
+            if (typeof data === 'string') {
+                value = data;
+            }
+            else if (typeof data === 'object') {
+                value = JSON.stringify(data, null, 2);
+            }
+            else
+                return;
+            window.webkit.messageHandlers.express.postMessage({ 'SmartApp Log': value });
+        }
+    }
+
+    class WebBridge {
+        eventEmitter;
+        logsEnabled;
+        isRenameParamsEnabled;
+        constructor() {
+            this.eventEmitter = new ExtendedEventEmitter();
+            this.addGlobalListener();
+            this.logsEnabled = false;
+            this.isRenameParamsEnabled = true;
+        }
+        addGlobalListener() {
+            window.addEventListener('message', (event) => {
+                const isRenameParamsWasEnabled = this.isRenameParamsEnabled;
+                if (getPlatform() === PLATFORM.WEB &&
+                    event.data.handler === HANDLER.EXPRESS &&
+                    this.isRenameParamsEnabled)
+                    this.isRenameParamsEnabled = false;
+                if (typeof event.data !== 'object' ||
+                    typeof event.data.data !== 'object' ||
+                    typeof event.data.data.type !== 'string')
+                    return;
+                if (this.logsEnabled)
+                    console.log('Bridge ~ Incoming event', event.data);
+                const { ref, data: { type, ...payload }, files, } = event.data;
+                const emitterType = ref || EVENT_TYPE.RECEIVE;
+                const eventFiles = this.isRenameParamsEnabled ?
+                    files?.map((file) => snakeCaseToCamelCase(file)) : files;
+                this.eventEmitter.emit(emitterType, {
+                    ref,
+                    type,
+                    payload: this.isRenameParamsEnabled ? snakeCaseToCamelCase(payload) : payload,
+                    files: eventFiles,
+                });
+                if (isRenameParamsWasEnabled)
+                    this.isRenameParamsEnabled = true;
+            });
+        }
+        /**
+         * Set callback function to handle events without **ref**
+         * (notifications for example).
+         *
+         * ```js
+         * bridge.onReceive(({ type, handler, payload }) => {
+         *   // Handle event data
+         *   console.log('event', type, handler, payload)
+         * })
+         * ```
+         */
+        onReceive(callback) {
+            this.eventEmitter.on(EVENT_TYPE.RECEIVE, callback);
+        }
+        sendEvent({ handler, method, params, files, timeout = RESPONSE_TIMEOUT, guaranteed_delivery_required = false, }) {
+            const isRenameParamsInitiallyEnabled = this.isRenameParamsEnabled;
+            if (getPlatform() === PLATFORM.WEB &&
+                handler === HANDLER.EXPRESS &&
+                this.isRenameParamsEnabled)
+                this.isRenameParamsEnabled = false;
+            const ref = v4(); // UUID to detect express response.
+            const payload = {
+                ref,
+                type: WEB_COMMAND_TYPE_RPC,
+                method,
+                handler,
+                payload: this.isRenameParamsEnabled ? camelCaseToSnakeCase(params) : params,
+                guaranteed_delivery_required,
+            };
+            const eventFiles = this.isRenameParamsEnabled ?
+                files?.map((file) => camelCaseToSnakeCase(file)) : files;
+            const event = files ? { ...payload, files: eventFiles } : payload;
+            if (this.logsEnabled)
+                console.log('Bridge ~ Outgoing event', event);
+            window.parent.postMessage({
+                type: WEB_COMMAND_TYPE,
+                payload: event,
+            }, '*');
+            if (isRenameParamsInitiallyEnabled)
+                this.isRenameParamsEnabled = true;
+            return this.eventEmitter.onceWithTimeout(ref, timeout);
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendClientEvent(
+         *     {
+         *       method: 'get_weather',
+         *       params: {
+         *         city: 'Moscow',
+         *       },
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         */
+        sendBotEvent({ method, params, files, timeout, guaranteed_delivery_required, }) {
+            return this.sendEvent({
+                handler: HANDLER.BOTX,
+                method,
+                params,
+                files,
+                timeout,
+                guaranteed_delivery_required,
+            });
+        }
+        /**
+         * Send event and wait response from express client.
+         *
+         * ```js
+         * bridge
+         *   .sendClientEvent(
+         *     {
+         *       method: 'get_weather',
+         *       params: {
+         *         city: 'Moscow',
+         *       },
+         *     }
+         *   )
+         *   .then(data => {
+         *     // Handle response
+         *     console.log('response', data)
+         *   })
+         * ```
+         */
+        sendClientEvent({ method, params, timeout }) {
+            return this.sendEvent({
+                handler: HANDLER.EXPRESS,
+                method,
+                params,
+                timeout,
+            });
+        }
+        /**
+         * Enabling logs.
+         *
+         * ```js
+         * bridge
+         *   .enableLogs()
+         * ```
+         */
+        enableLogs() {
+            this.logsEnabled = true;
+            const _log = console.log;
+            console.log = function (...rest) {
+                window.parent.postMessage({
+                    type: WEB_COMMAND_TYPE_RPC_LOGS,
+                    payload: rest,
+                }, '*');
+                _log.apply(console, rest);
+            };
+        }
+        /**
+         * Disabling logs.
+         *
+         * ```js
+         * bridge
+         *   .disableLogs()
+         * ```
+         */
+        disableLogs() {
+            this.logsEnabled = false;
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .enableRenameParams()
+         * ```
+         */
+        enableRenameParams() {
+            this.isRenameParamsEnabled = true;
+            console.log('Bridge ~ Enabled renaming event params from camelCase to snake_case and vice versa');
+        }
+        /**
+         * Enabling renaming event params from camelCase to snake_case and vice versa
+         * ```js
+         * bridge
+         *    .disableRenameParams()
+         * ```
+         */
+        disableRenameParams() {
+            this.isRenameParamsEnabled = false;
+            console.log('Bridge ~ Disabled renaming event params from camelCase to snake_case and vice versa');
+        }
+    }
+
+    const LIB_VERSION = "1.1.7";
+
+    const getBridge = () => {
+//        if (process.env.NODE_ENV === 'test')
+//            return null;
+        const platform = getPlatform();
+        console.log('Bridge ~ version', LIB_VERSION);
+        switch (platform) {
+            case PLATFORM.ANDROID:
+                return new AndroidBridge();
+            case PLATFORM.IOS:
+                return new IosBridge();
+            case PLATFORM.WEB:
+                return new WebBridge();
+            default:
+                console.error('Wrong platform');
+                return new WebBridge();
+                break;
+        }
+        return null;
+    };
+    var index = getBridge();
+
+    window.webBridgeInstance = getBridge();
+
+    return index;
+
+}));
