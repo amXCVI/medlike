@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'medcard_models.dart';
 
@@ -35,45 +35,48 @@ mixin _$FilterDateItemModel {
 abstract class $FilterDateItemModelCopyWith<$Res> {
   factory $FilterDateItemModelCopyWith(
           FilterDateItemModel value, $Res Function(FilterDateItemModel) then) =
-      _$FilterDateItemModelCopyWithImpl<$Res>;
+      _$FilterDateItemModelCopyWithImpl<$Res, FilterDateItemModel>;
+  @useResult
   $Res call(
       {String label, DateTime startDate, DateTime endDate, Duration duration});
 }
 
 /// @nodoc
-class _$FilterDateItemModelCopyWithImpl<$Res>
+class _$FilterDateItemModelCopyWithImpl<$Res, $Val extends FilterDateItemModel>
     implements $FilterDateItemModelCopyWith<$Res> {
   _$FilterDateItemModelCopyWithImpl(this._value, this._then);
 
-  final FilterDateItemModel _value;
   // ignore: unused_field
-  final $Res Function(FilterDateItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? startDate = freezed,
-    Object? endDate = freezed,
-    Object? duration = freezed,
+    Object? label = null,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? duration = null,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      startDate: startDate == freezed
+      startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: endDate == freezed
+      endDate: null == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
-    ));
+    ) as $Val);
   }
 }
 
@@ -84,42 +87,41 @@ abstract class _$$_FilterDateItemModelCopyWith<$Res>
           $Res Function(_$_FilterDateItemModel) then) =
       __$$_FilterDateItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String label, DateTime startDate, DateTime endDate, Duration duration});
 }
 
 /// @nodoc
 class __$$_FilterDateItemModelCopyWithImpl<$Res>
-    extends _$FilterDateItemModelCopyWithImpl<$Res>
+    extends _$FilterDateItemModelCopyWithImpl<$Res, _$_FilterDateItemModel>
     implements _$$_FilterDateItemModelCopyWith<$Res> {
   __$$_FilterDateItemModelCopyWithImpl(_$_FilterDateItemModel _value,
       $Res Function(_$_FilterDateItemModel) _then)
-      : super(_value, (v) => _then(v as _$_FilterDateItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_FilterDateItemModel get _value => super._value as _$_FilterDateItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? startDate = freezed,
-    Object? endDate = freezed,
-    Object? duration = freezed,
+    Object? label = null,
+    Object? startDate = null,
+    Object? endDate = null,
+    Object? duration = null,
   }) {
     return _then(_$_FilterDateItemModel(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      startDate: startDate == freezed
+      startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      endDate: endDate == freezed
+      endDate: null == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration,
@@ -158,30 +160,31 @@ class _$_FilterDateItemModel implements _FilterDateItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FilterDateItemModel &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate) &&
-            const DeepCollectionEquality().equals(other.duration, duration));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(endDate),
-      const DeepCollectionEquality().hash(duration));
+  int get hashCode =>
+      Object.hash(runtimeType, label, startDate, endDate, duration);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FilterDateItemModelCopyWith<_$_FilterDateItemModel> get copyWith =>
       __$$_FilterDateItemModelCopyWithImpl<_$_FilterDateItemModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FilterDateItemModelToJson(this);
+    return _$$_FilterDateItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -196,13 +199,13 @@ abstract class _FilterDateItemModel implements FilterDateItemModel {
       _$_FilterDateItemModel.fromJson;
 
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  DateTime get startDate => throw _privateConstructorUsedError;
+  DateTime get startDate;
   @override
-  DateTime get endDate => throw _privateConstructorUsedError;
+  DateTime get endDate;
   @override
-  Duration get duration => throw _privateConstructorUsedError;
+  Duration get duration;
   @override
   @JsonKey(ignore: true)
   _$$_FilterDateItemModelCopyWith<_$_FilterDateItemModel> get copyWith =>
@@ -229,34 +232,38 @@ mixin _$FilterCategoryItemModel {
 abstract class $FilterCategoryItemModelCopyWith<$Res> {
   factory $FilterCategoryItemModelCopyWith(FilterCategoryItemModel value,
           $Res Function(FilterCategoryItemModel) then) =
-      _$FilterCategoryItemModelCopyWithImpl<$Res>;
+      _$FilterCategoryItemModelCopyWithImpl<$Res, FilterCategoryItemModel>;
+  @useResult
   $Res call({String label, String categoryName});
 }
 
 /// @nodoc
-class _$FilterCategoryItemModelCopyWithImpl<$Res>
+class _$FilterCategoryItemModelCopyWithImpl<$Res,
+        $Val extends FilterCategoryItemModel>
     implements $FilterCategoryItemModelCopyWith<$Res> {
   _$FilterCategoryItemModelCopyWithImpl(this._value, this._then);
 
-  final FilterCategoryItemModel _value;
   // ignore: unused_field
-  final $Res Function(FilterCategoryItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? categoryName = freezed,
+    Object? label = null,
+    Object? categoryName = null,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryName: categoryName == freezed
+      categoryName: null == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -267,32 +274,31 @@ abstract class _$$_FilterCategoryItemModelCopyWith<$Res>
           $Res Function(_$_FilterCategoryItemModel) then) =
       __$$_FilterCategoryItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String label, String categoryName});
 }
 
 /// @nodoc
 class __$$_FilterCategoryItemModelCopyWithImpl<$Res>
-    extends _$FilterCategoryItemModelCopyWithImpl<$Res>
+    extends _$FilterCategoryItemModelCopyWithImpl<$Res,
+        _$_FilterCategoryItemModel>
     implements _$$_FilterCategoryItemModelCopyWith<$Res> {
   __$$_FilterCategoryItemModelCopyWithImpl(_$_FilterCategoryItemModel _value,
       $Res Function(_$_FilterCategoryItemModel) _then)
-      : super(_value, (v) => _then(v as _$_FilterCategoryItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_FilterCategoryItemModel get _value =>
-      super._value as _$_FilterCategoryItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? categoryName = freezed,
+    Object? label = null,
+    Object? categoryName = null,
   }) {
     return _then(_$_FilterCategoryItemModel(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryName: categoryName == freezed
+      categoryName: null == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String,
@@ -324,20 +330,18 @@ class _$_FilterCategoryItemModel implements _FilterCategoryItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FilterCategoryItemModel &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryName, categoryName));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(categoryName));
+  int get hashCode => Object.hash(runtimeType, label, categoryName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_FilterCategoryItemModelCopyWith<_$_FilterCategoryItemModel>
       get copyWith =>
           __$$_FilterCategoryItemModelCopyWithImpl<_$_FilterCategoryItemModel>(
@@ -345,7 +349,9 @@ class _$_FilterCategoryItemModel implements _FilterCategoryItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FilterCategoryItemModelToJson(this);
+    return _$$_FilterCategoryItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -358,9 +364,9 @@ abstract class _FilterCategoryItemModel implements FilterCategoryItemModel {
       _$_FilterCategoryItemModel.fromJson;
 
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  String get categoryName => throw _privateConstructorUsedError;
+  String get categoryName;
   @override
   @JsonKey(ignore: true)
   _$$_FilterCategoryItemModelCopyWith<_$_FilterCategoryItemModel>
@@ -390,7 +396,8 @@ mixin _$MedcardFiltersItemModel {
 abstract class $MedcardFiltersItemModelCopyWith<$Res> {
   factory $MedcardFiltersItemModelCopyWith(MedcardFiltersItemModel value,
           $Res Function(MedcardFiltersItemModel) then) =
-      _$MedcardFiltersItemModelCopyWithImpl<$Res>;
+      _$MedcardFiltersItemModelCopyWithImpl<$Res, MedcardFiltersItemModel>;
+  @useResult
   $Res call(
       {String label,
       String? categoryName,
@@ -400,44 +407,47 @@ abstract class $MedcardFiltersItemModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MedcardFiltersItemModelCopyWithImpl<$Res>
+class _$MedcardFiltersItemModelCopyWithImpl<$Res,
+        $Val extends MedcardFiltersItemModel>
     implements $MedcardFiltersItemModelCopyWith<$Res> {
   _$MedcardFiltersItemModelCopyWithImpl(this._value, this._then);
 
-  final MedcardFiltersItemModel _value;
   // ignore: unused_field
-  final $Res Function(MedcardFiltersItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
+    Object? label = null,
     Object? categoryName = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryName: categoryName == freezed
+      categoryName: freezed == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -448,6 +458,7 @@ abstract class _$$_MedcardFiltersItemModelCopyWith<$Res>
           $Res Function(_$_MedcardFiltersItemModel) then) =
       __$$_MedcardFiltersItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String label,
       String? categoryName,
@@ -458,42 +469,40 @@ abstract class _$$_MedcardFiltersItemModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_MedcardFiltersItemModelCopyWithImpl<$Res>
-    extends _$MedcardFiltersItemModelCopyWithImpl<$Res>
+    extends _$MedcardFiltersItemModelCopyWithImpl<$Res,
+        _$_MedcardFiltersItemModel>
     implements _$$_MedcardFiltersItemModelCopyWith<$Res> {
   __$$_MedcardFiltersItemModelCopyWithImpl(_$_MedcardFiltersItemModel _value,
       $Res Function(_$_MedcardFiltersItemModel) _then)
-      : super(_value, (v) => _then(v as _$_MedcardFiltersItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_MedcardFiltersItemModel get _value =>
-      super._value as _$_MedcardFiltersItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
+    Object? label = null,
     Object? categoryName = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
   }) {
     return _then(_$_MedcardFiltersItemModel(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryName: categoryName == freezed
+      categoryName: freezed == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      startDate: startDate == freezed
+      startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      duration: duration == freezed
+      duration: freezed == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as Duration?,
@@ -535,26 +544,24 @@ class _$_MedcardFiltersItemModel implements _MedcardFiltersItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MedcardFiltersItemModel &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryName, categoryName) &&
-            const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate) &&
-            const DeepCollectionEquality().equals(other.duration, duration));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(categoryName),
-      const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(endDate),
-      const DeepCollectionEquality().hash(duration));
+      runtimeType, label, categoryName, startDate, endDate, duration);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MedcardFiltersItemModelCopyWith<_$_MedcardFiltersItemModel>
       get copyWith =>
           __$$_MedcardFiltersItemModelCopyWithImpl<_$_MedcardFiltersItemModel>(
@@ -562,7 +569,9 @@ class _$_MedcardFiltersItemModel implements _MedcardFiltersItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFiltersItemModelToJson(this);
+    return _$$_MedcardFiltersItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -578,15 +587,15 @@ abstract class _MedcardFiltersItemModel implements MedcardFiltersItemModel {
       _$_MedcardFiltersItemModel.fromJson;
 
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  String? get categoryName => throw _privateConstructorUsedError;
+  String? get categoryName;
   @override
-  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get startDate;
   @override
-  DateTime? get endDate => throw _privateConstructorUsedError;
+  DateTime? get endDate;
   @override
-  Duration? get duration => throw _privateConstructorUsedError;
+  Duration? get duration;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFiltersItemModelCopyWith<_$_MedcardFiltersItemModel>
@@ -616,7 +625,8 @@ mixin _$MedcardDocsModel {
 abstract class $MedcardDocsModelCopyWith<$Res> {
   factory $MedcardDocsModelCopyWith(
           MedcardDocsModel value, $Res Function(MedcardDocsModel) then) =
-      _$MedcardDocsModelCopyWithImpl<$Res>;
+      _$MedcardDocsModelCopyWithImpl<$Res, MedcardDocsModel>;
+  @useResult
   $Res call(
       {String mdocId,
       String section,
@@ -627,49 +637,51 @@ abstract class $MedcardDocsModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MedcardDocsModelCopyWithImpl<$Res>
+class _$MedcardDocsModelCopyWithImpl<$Res, $Val extends MedcardDocsModel>
     implements $MedcardDocsModelCopyWith<$Res> {
   _$MedcardDocsModelCopyWithImpl(this._value, this._then);
 
-  final MedcardDocsModel _value;
   // ignore: unused_field
-  final $Res Function(MedcardDocsModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mdocId = freezed,
-    Object? section = freezed,
-    Object? prescId = freezed,
-    Object? nameDoc = freezed,
-    Object? dateSign = freezed,
-    Object? lastModifiedDate = freezed,
+    Object? mdocId = null,
+    Object? section = null,
+    Object? prescId = null,
+    Object? nameDoc = null,
+    Object? dateSign = null,
+    Object? lastModifiedDate = null,
   }) {
     return _then(_value.copyWith(
-      mdocId: mdocId == freezed
+      mdocId: null == mdocId
           ? _value.mdocId
           : mdocId // ignore: cast_nullable_to_non_nullable
               as String,
-      section: section == freezed
+      section: null == section
           ? _value.section
           : section // ignore: cast_nullable_to_non_nullable
               as String,
-      prescId: prescId == freezed
+      prescId: null == prescId
           ? _value.prescId
           : prescId // ignore: cast_nullable_to_non_nullable
               as String,
-      nameDoc: nameDoc == freezed
+      nameDoc: null == nameDoc
           ? _value.nameDoc
           : nameDoc // ignore: cast_nullable_to_non_nullable
               as String,
-      dateSign: dateSign == freezed
+      dateSign: null == dateSign
           ? _value.dateSign
           : dateSign // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      lastModifiedDate: lastModifiedDate == freezed
+      lastModifiedDate: null == lastModifiedDate
           ? _value.lastModifiedDate
           : lastModifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -680,6 +692,7 @@ abstract class _$$_MedcardDocsModelCopyWith<$Res>
           _$_MedcardDocsModel value, $Res Function(_$_MedcardDocsModel) then) =
       __$$_MedcardDocsModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String mdocId,
       String section,
@@ -691,46 +704,44 @@ abstract class _$$_MedcardDocsModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_MedcardDocsModelCopyWithImpl<$Res>
-    extends _$MedcardDocsModelCopyWithImpl<$Res>
+    extends _$MedcardDocsModelCopyWithImpl<$Res, _$_MedcardDocsModel>
     implements _$$_MedcardDocsModelCopyWith<$Res> {
   __$$_MedcardDocsModelCopyWithImpl(
       _$_MedcardDocsModel _value, $Res Function(_$_MedcardDocsModel) _then)
-      : super(_value, (v) => _then(v as _$_MedcardDocsModel));
+      : super(_value, _then);
 
-  @override
-  _$_MedcardDocsModel get _value => super._value as _$_MedcardDocsModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mdocId = freezed,
-    Object? section = freezed,
-    Object? prescId = freezed,
-    Object? nameDoc = freezed,
-    Object? dateSign = freezed,
-    Object? lastModifiedDate = freezed,
+    Object? mdocId = null,
+    Object? section = null,
+    Object? prescId = null,
+    Object? nameDoc = null,
+    Object? dateSign = null,
+    Object? lastModifiedDate = null,
   }) {
     return _then(_$_MedcardDocsModel(
-      mdocId: mdocId == freezed
+      mdocId: null == mdocId
           ? _value.mdocId
           : mdocId // ignore: cast_nullable_to_non_nullable
               as String,
-      section: section == freezed
+      section: null == section
           ? _value.section
           : section // ignore: cast_nullable_to_non_nullable
               as String,
-      prescId: prescId == freezed
+      prescId: null == prescId
           ? _value.prescId
           : prescId // ignore: cast_nullable_to_non_nullable
               as String,
-      nameDoc: nameDoc == freezed
+      nameDoc: null == nameDoc
           ? _value.nameDoc
           : nameDoc // ignore: cast_nullable_to_non_nullable
               as String,
-      dateSign: dateSign == freezed
+      dateSign: null == dateSign
           ? _value.dateSign
           : dateSign // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      lastModifiedDate: lastModifiedDate == freezed
+      lastModifiedDate: null == lastModifiedDate
           ? _value.lastModifiedDate
           : lastModifiedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -775,34 +786,32 @@ class _$_MedcardDocsModel implements _MedcardDocsModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MedcardDocsModel &&
-            const DeepCollectionEquality().equals(other.mdocId, mdocId) &&
-            const DeepCollectionEquality().equals(other.section, section) &&
-            const DeepCollectionEquality().equals(other.prescId, prescId) &&
-            const DeepCollectionEquality().equals(other.nameDoc, nameDoc) &&
-            const DeepCollectionEquality().equals(other.dateSign, dateSign) &&
-            const DeepCollectionEquality()
-                .equals(other.lastModifiedDate, lastModifiedDate));
+            (identical(other.mdocId, mdocId) || other.mdocId == mdocId) &&
+            (identical(other.section, section) || other.section == section) &&
+            (identical(other.prescId, prescId) || other.prescId == prescId) &&
+            (identical(other.nameDoc, nameDoc) || other.nameDoc == nameDoc) &&
+            (identical(other.dateSign, dateSign) ||
+                other.dateSign == dateSign) &&
+            (identical(other.lastModifiedDate, lastModifiedDate) ||
+                other.lastModifiedDate == lastModifiedDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mdocId),
-      const DeepCollectionEquality().hash(section),
-      const DeepCollectionEquality().hash(prescId),
-      const DeepCollectionEquality().hash(nameDoc),
-      const DeepCollectionEquality().hash(dateSign),
-      const DeepCollectionEquality().hash(lastModifiedDate));
+  int get hashCode => Object.hash(runtimeType, mdocId, section, prescId,
+      nameDoc, dateSign, lastModifiedDate);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MedcardDocsModelCopyWith<_$_MedcardDocsModel> get copyWith =>
       __$$_MedcardDocsModelCopyWithImpl<_$_MedcardDocsModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardDocsModelToJson(this);
+    return _$$_MedcardDocsModelToJson(
+      this,
+    );
   }
 }
 
@@ -819,17 +828,17 @@ abstract class _MedcardDocsModel implements MedcardDocsModel {
       _$_MedcardDocsModel.fromJson;
 
   @override
-  String get mdocId => throw _privateConstructorUsedError;
+  String get mdocId;
   @override
-  String get section => throw _privateConstructorUsedError;
+  String get section;
   @override
-  String get prescId => throw _privateConstructorUsedError;
+  String get prescId;
   @override
-  String get nameDoc => throw _privateConstructorUsedError;
+  String get nameDoc;
   @override
-  DateTime get dateSign => throw _privateConstructorUsedError;
+  DateTime get dateSign;
   @override
-  DateTime get lastModifiedDate => throw _privateConstructorUsedError;
+  DateTime get lastModifiedDate;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardDocsModelCopyWith<_$_MedcardDocsModel> get copyWith =>
@@ -859,7 +868,8 @@ mixin _$MedcardUserFileModel {
 abstract class $MedcardUserFileModelCopyWith<$Res> {
   factory $MedcardUserFileModelCopyWith(MedcardUserFileModel value,
           $Res Function(MedcardUserFileModel) then) =
-      _$MedcardUserFileModelCopyWithImpl<$Res>;
+      _$MedcardUserFileModelCopyWithImpl<$Res, MedcardUserFileModel>;
+  @useResult
   $Res call(
       {String id,
       String filename,
@@ -870,49 +880,52 @@ abstract class $MedcardUserFileModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MedcardUserFileModelCopyWithImpl<$Res>
+class _$MedcardUserFileModelCopyWithImpl<$Res,
+        $Val extends MedcardUserFileModel>
     implements $MedcardUserFileModelCopyWith<$Res> {
   _$MedcardUserFileModelCopyWithImpl(this._value, this._then);
 
-  final MedcardUserFileModel _value;
   // ignore: unused_field
-  final $Res Function(MedcardUserFileModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? filename = freezed,
-    Object? type = freezed,
-    Object? uploadDate = freezed,
-    Object? length = freezed,
-    Object? hasPreview = freezed,
+    Object? id = null,
+    Object? filename = null,
+    Object? type = null,
+    Object? uploadDate = null,
+    Object? length = null,
+    Object? hasPreview = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      filename: filename == freezed
+      filename: null == filename
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      uploadDate: uploadDate == freezed
+      uploadDate: null == uploadDate
           ? _value.uploadDate
           : uploadDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      length: length == freezed
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as int,
-      hasPreview: hasPreview == freezed
+      hasPreview: null == hasPreview
           ? _value.hasPreview
           : hasPreview // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -923,6 +936,7 @@ abstract class _$$_MedcardUserFileModelCopyWith<$Res>
           $Res Function(_$_MedcardUserFileModel) then) =
       __$$_MedcardUserFileModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String filename,
@@ -934,46 +948,44 @@ abstract class _$$_MedcardUserFileModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_MedcardUserFileModelCopyWithImpl<$Res>
-    extends _$MedcardUserFileModelCopyWithImpl<$Res>
+    extends _$MedcardUserFileModelCopyWithImpl<$Res, _$_MedcardUserFileModel>
     implements _$$_MedcardUserFileModelCopyWith<$Res> {
   __$$_MedcardUserFileModelCopyWithImpl(_$_MedcardUserFileModel _value,
       $Res Function(_$_MedcardUserFileModel) _then)
-      : super(_value, (v) => _then(v as _$_MedcardUserFileModel));
+      : super(_value, _then);
 
-  @override
-  _$_MedcardUserFileModel get _value => super._value as _$_MedcardUserFileModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? filename = freezed,
-    Object? type = freezed,
-    Object? uploadDate = freezed,
-    Object? length = freezed,
-    Object? hasPreview = freezed,
+    Object? id = null,
+    Object? filename = null,
+    Object? type = null,
+    Object? uploadDate = null,
+    Object? length = null,
+    Object? hasPreview = null,
   }) {
     return _then(_$_MedcardUserFileModel(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      filename: filename == freezed
+      filename: null == filename
           ? _value.filename
           : filename // ignore: cast_nullable_to_non_nullable
               as String,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      uploadDate: uploadDate == freezed
+      uploadDate: null == uploadDate
           ? _value.uploadDate
           : uploadDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      length: length == freezed
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as int,
-      hasPreview: hasPreview == freezed
+      hasPreview: null == hasPreview
           ? _value.hasPreview
           : hasPreview // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -1018,36 +1030,34 @@ class _$_MedcardUserFileModel implements _MedcardUserFileModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MedcardUserFileModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.filename, filename) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality()
-                .equals(other.uploadDate, uploadDate) &&
-            const DeepCollectionEquality().equals(other.length, length) &&
-            const DeepCollectionEquality()
-                .equals(other.hasPreview, hasPreview));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.filename, filename) ||
+                other.filename == filename) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.uploadDate, uploadDate) ||
+                other.uploadDate == uploadDate) &&
+            (identical(other.length, length) || other.length == length) &&
+            (identical(other.hasPreview, hasPreview) ||
+                other.hasPreview == hasPreview));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(filename),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(uploadDate),
-      const DeepCollectionEquality().hash(length),
-      const DeepCollectionEquality().hash(hasPreview));
+      runtimeType, id, filename, type, uploadDate, length, hasPreview);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MedcardUserFileModelCopyWith<_$_MedcardUserFileModel> get copyWith =>
       __$$_MedcardUserFileModelCopyWithImpl<_$_MedcardUserFileModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardUserFileModelToJson(this);
+    return _$$_MedcardUserFileModelToJson(
+      this,
+    );
   }
 }
 
@@ -1064,17 +1074,17 @@ abstract class _MedcardUserFileModel implements MedcardUserFileModel {
       _$_MedcardUserFileModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get filename => throw _privateConstructorUsedError;
+  String get filename;
   @override
-  String get type => throw _privateConstructorUsedError;
+  String get type;
   @override
-  DateTime get uploadDate => throw _privateConstructorUsedError;
+  DateTime get uploadDate;
   @override
-  int get length => throw _privateConstructorUsedError;
+  int get length;
   @override
-  bool get hasPreview => throw _privateConstructorUsedError;
+  bool get hasPreview;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardUserFileModelCopyWith<_$_MedcardUserFileModel> get copyWith =>
@@ -1102,34 +1112,39 @@ abstract class $DeleteUserFileResponseModelCopyWith<$Res> {
   factory $DeleteUserFileResponseModelCopyWith(
           DeleteUserFileResponseModel value,
           $Res Function(DeleteUserFileResponseModel) then) =
-      _$DeleteUserFileResponseModelCopyWithImpl<$Res>;
+      _$DeleteUserFileResponseModelCopyWithImpl<$Res,
+          DeleteUserFileResponseModel>;
+  @useResult
   $Res call({bool result, String? information});
 }
 
 /// @nodoc
-class _$DeleteUserFileResponseModelCopyWithImpl<$Res>
+class _$DeleteUserFileResponseModelCopyWithImpl<$Res,
+        $Val extends DeleteUserFileResponseModel>
     implements $DeleteUserFileResponseModelCopyWith<$Res> {
   _$DeleteUserFileResponseModelCopyWithImpl(this._value, this._then);
 
-  final DeleteUserFileResponseModel _value;
   // ignore: unused_field
-  final $Res Function(DeleteUserFileResponseModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
+    Object? result = null,
     Object? information = freezed,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1141,33 +1156,32 @@ abstract class _$$_DeleteUserFileResponseModelCopyWith<$Res>
           $Res Function(_$_DeleteUserFileResponseModel) then) =
       __$$_DeleteUserFileResponseModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool result, String? information});
 }
 
 /// @nodoc
 class __$$_DeleteUserFileResponseModelCopyWithImpl<$Res>
-    extends _$DeleteUserFileResponseModelCopyWithImpl<$Res>
+    extends _$DeleteUserFileResponseModelCopyWithImpl<$Res,
+        _$_DeleteUserFileResponseModel>
     implements _$$_DeleteUserFileResponseModelCopyWith<$Res> {
   __$$_DeleteUserFileResponseModelCopyWithImpl(
       _$_DeleteUserFileResponseModel _value,
       $Res Function(_$_DeleteUserFileResponseModel) _then)
-      : super(_value, (v) => _then(v as _$_DeleteUserFileResponseModel));
+      : super(_value, _then);
 
-  @override
-  _$_DeleteUserFileResponseModel get _value =>
-      super._value as _$_DeleteUserFileResponseModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
+    Object? result = null,
     Object? information = freezed,
   }) {
     return _then(_$_DeleteUserFileResponseModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1199,27 +1213,27 @@ class _$_DeleteUserFileResponseModel implements _DeleteUserFileResponseModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeleteUserFileResponseModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality()
-                .equals(other.information, information));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.information, information) ||
+                other.information == information));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(information));
+  int get hashCode => Object.hash(runtimeType, result, information);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
       get copyWith => __$$_DeleteUserFileResponseModelCopyWithImpl<
           _$_DeleteUserFileResponseModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DeleteUserFileResponseModelToJson(this);
+    return _$$_DeleteUserFileResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -1233,9 +1247,9 @@ abstract class _DeleteUserFileResponseModel
       _$_DeleteUserFileResponseModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_DeleteUserFileResponseModelCopyWith<_$_DeleteUserFileResponseModel>
@@ -1263,39 +1277,43 @@ mixin _$MedcardFilterItemModel {
 abstract class $MedcardFilterItemModelCopyWith<$Res> {
   factory $MedcardFilterItemModelCopyWith(MedcardFilterItemModel value,
           $Res Function(MedcardFilterItemModel) then) =
-      _$MedcardFilterItemModelCopyWithImpl<$Res>;
+      _$MedcardFilterItemModelCopyWithImpl<$Res, MedcardFilterItemModel>;
+  @useResult
   $Res call({String label, String value, String categoryLabel});
 }
 
 /// @nodoc
-class _$MedcardFilterItemModelCopyWithImpl<$Res>
+class _$MedcardFilterItemModelCopyWithImpl<$Res,
+        $Val extends MedcardFilterItemModel>
     implements $MedcardFilterItemModelCopyWith<$Res> {
   _$MedcardFilterItemModelCopyWithImpl(this._value, this._then);
 
-  final MedcardFilterItemModel _value;
   // ignore: unused_field
-  final $Res Function(MedcardFilterItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
-    Object? categoryLabel = freezed,
+    Object? label = null,
+    Object? value = null,
+    Object? categoryLabel = null,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryLabel: categoryLabel == freezed
+      categoryLabel: null == categoryLabel
           ? _value.categoryLabel
           : categoryLabel // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1306,37 +1324,36 @@ abstract class _$$_MedcardFilterItemModelCopyWith<$Res>
           $Res Function(_$_MedcardFilterItemModel) then) =
       __$$_MedcardFilterItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String label, String value, String categoryLabel});
 }
 
 /// @nodoc
 class __$$_MedcardFilterItemModelCopyWithImpl<$Res>
-    extends _$MedcardFilterItemModelCopyWithImpl<$Res>
+    extends _$MedcardFilterItemModelCopyWithImpl<$Res,
+        _$_MedcardFilterItemModel>
     implements _$$_MedcardFilterItemModelCopyWith<$Res> {
   __$$_MedcardFilterItemModelCopyWithImpl(_$_MedcardFilterItemModel _value,
       $Res Function(_$_MedcardFilterItemModel) _then)
-      : super(_value, (v) => _then(v as _$_MedcardFilterItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_MedcardFilterItemModel get _value =>
-      super._value as _$_MedcardFilterItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
-    Object? categoryLabel = freezed,
+    Object? label = null,
+    Object? value = null,
+    Object? categoryLabel = null,
   }) {
     return _then(_$_MedcardFilterItemModel(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryLabel: categoryLabel == freezed
+      categoryLabel: null == categoryLabel
           ? _value.categoryLabel
           : categoryLabel // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1370,29 +1387,28 @@ class _$_MedcardFilterItemModel implements _MedcardFilterItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MedcardFilterItemModel &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryLabel, categoryLabel));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.categoryLabel, categoryLabel) ||
+                other.categoryLabel == categoryLabel));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(categoryLabel));
+  int get hashCode => Object.hash(runtimeType, label, value, categoryLabel);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MedcardFilterItemModelCopyWith<_$_MedcardFilterItemModel> get copyWith =>
       __$$_MedcardFilterItemModelCopyWithImpl<_$_MedcardFilterItemModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFilterItemModelToJson(this);
+    return _$$_MedcardFilterItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -1406,11 +1422,11 @@ abstract class _MedcardFilterItemModel implements MedcardFilterItemModel {
       _$_MedcardFilterItemModel.fromJson;
 
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
-  String get categoryLabel => throw _privateConstructorUsedError;
+  String get categoryLabel;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFilterItemModelCopyWith<_$_MedcardFilterItemModel> get copyWith =>
@@ -1438,39 +1454,42 @@ mixin _$MedcardFilterModel {
 abstract class $MedcardFilterModelCopyWith<$Res> {
   factory $MedcardFilterModelCopyWith(
           MedcardFilterModel value, $Res Function(MedcardFilterModel) then) =
-      _$MedcardFilterModelCopyWithImpl<$Res>;
+      _$MedcardFilterModelCopyWithImpl<$Res, MedcardFilterModel>;
+  @useResult
   $Res call({String title, String value, List<MedcardFilterItemModel> filters});
 }
 
 /// @nodoc
-class _$MedcardFilterModelCopyWithImpl<$Res>
+class _$MedcardFilterModelCopyWithImpl<$Res, $Val extends MedcardFilterModel>
     implements $MedcardFilterModelCopyWith<$Res> {
   _$MedcardFilterModelCopyWithImpl(this._value, this._then);
 
-  final MedcardFilterModel _value;
   // ignore: unused_field
-  final $Res Function(MedcardFilterModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? value = freezed,
-    Object? filters = freezed,
+    Object? title = null,
+    Object? value = null,
+    Object? filters = null,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      filters: filters == freezed
+      filters: null == filters
           ? _value.filters
           : filters // ignore: cast_nullable_to_non_nullable
               as List<MedcardFilterItemModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1481,36 +1500,35 @@ abstract class _$$_MedcardFilterModelCopyWith<$Res>
           $Res Function(_$_MedcardFilterModel) then) =
       __$$_MedcardFilterModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String title, String value, List<MedcardFilterItemModel> filters});
 }
 
 /// @nodoc
 class __$$_MedcardFilterModelCopyWithImpl<$Res>
-    extends _$MedcardFilterModelCopyWithImpl<$Res>
+    extends _$MedcardFilterModelCopyWithImpl<$Res, _$_MedcardFilterModel>
     implements _$$_MedcardFilterModelCopyWith<$Res> {
   __$$_MedcardFilterModelCopyWithImpl(
       _$_MedcardFilterModel _value, $Res Function(_$_MedcardFilterModel) _then)
-      : super(_value, (v) => _then(v as _$_MedcardFilterModel));
+      : super(_value, _then);
 
-  @override
-  _$_MedcardFilterModel get _value => super._value as _$_MedcardFilterModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? value = freezed,
-    Object? filters = freezed,
+    Object? title = null,
+    Object? value = null,
+    Object? filters = null,
   }) {
     return _then(_$_MedcardFilterModel(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      filters: filters == freezed
+      filters: null == filters
           ? _value._filters
           : filters // ignore: cast_nullable_to_non_nullable
               as List<MedcardFilterItemModel>,
@@ -1537,6 +1555,7 @@ class _$_MedcardFilterModel implements _MedcardFilterModel {
   final List<MedcardFilterItemModel> _filters;
   @override
   List<MedcardFilterItemModel> get filters {
+    if (_filters is EqualUnmodifiableListView) return _filters;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_filters);
   }
@@ -1551,28 +1570,28 @@ class _$_MedcardFilterModel implements _MedcardFilterModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MedcardFilterModel &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.value, value) || other.value == value) &&
             const DeepCollectionEquality().equals(other._filters, _filters));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(_filters));
+      runtimeType, title, value, const DeepCollectionEquality().hash(_filters));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MedcardFilterModelCopyWith<_$_MedcardFilterModel> get copyWith =>
       __$$_MedcardFilterModelCopyWithImpl<_$_MedcardFilterModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MedcardFilterModelToJson(this);
+    return _$$_MedcardFilterModelToJson(
+      this,
+    );
   }
 }
 
@@ -1587,12 +1606,11 @@ abstract class _MedcardFilterModel implements MedcardFilterModel {
       _$_MedcardFilterModel.fromJson;
 
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
-  List<MedcardFilterItemModel> get filters =>
-      throw _privateConstructorUsedError;
+  List<MedcardFilterItemModel> get filters;
   @override
   @JsonKey(ignore: true)
   _$$_MedcardFilterModelCopyWith<_$_MedcardFilterModel> get copyWith =>

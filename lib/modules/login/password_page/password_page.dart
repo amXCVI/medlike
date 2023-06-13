@@ -5,10 +5,11 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/password_page/password_bottom_navigator.dart';
 import 'package:medlike/modules/login/password_page/password_view.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 
+@RoutePage()
 class PasswordPage extends StatelessWidget {
   const PasswordPage({Key? key, required this.phoneNumber}) : super(key: key);
 

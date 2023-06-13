@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/clinics_list/clinics_list.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 import 'clinics_list_skeleton.dart';
 
+@RoutePage()
 class ClinicsListPage extends StatefulWidget {
   const ClinicsListPage(
       {Key? key, required this.userId, required this.isChildrenPage})
@@ -22,7 +23,9 @@ class ClinicsListPage extends StatefulWidget {
 
 class _ClinicsListPageState extends State<ClinicsListPage> {
   void _onRefreshData({bool isRefresh = false}) {
-    context.read<SubscribeCubit>().getAvailableClinicsList(widget.userId, isRefresh);
+    context
+        .read<SubscribeCubit>()
+        .getAvailableClinicsList(widget.userId, isRefresh);
   }
 
   @override
@@ -33,7 +36,6 @@ class _ClinicsListPageState extends State<ClinicsListPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         if (widget.isChildrenPage) {

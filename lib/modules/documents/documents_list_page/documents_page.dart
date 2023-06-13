@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
@@ -10,6 +11,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 import 'documents_list_skeleton.dart';
 
+@RoutePage()
 class DocumentsPage extends StatefulWidget {
   const DocumentsPage({Key? key}) : super(key: key);
 

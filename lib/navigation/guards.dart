@@ -7,7 +7,7 @@ import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -32,7 +32,7 @@ class CheckIsAuthUser extends AutoRouteGuard {
       isSavedPinCode;
 
     final isBlocked = await ResumeHelper.isAppBlocked();
-    
+
     if (isLogged && !isBlocked) {
       resolver.next(true);
     } else {
@@ -148,7 +148,7 @@ class CheckIsOneProfileForSubscribe extends CheckIsOneProfile {
   @override
   void redirect(UserProfile user, StackRouter router) {
     router.push(ClinicsListRoute(
-      userId: user.id, 
+      userId: user.id,
       isChildrenPage: false
     ));
   }

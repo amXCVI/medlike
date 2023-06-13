@@ -49,6 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     setState(() {
       searchQuery = newQuery;
     });
+
     /// Здесь можно задать минимальо необходимое кол-во букв для начала поиска
     if (newQuery.isNotEmpty || newQuery.isEmpty) {
       _handleSearch();
@@ -78,7 +79,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
       centerTitle: true,

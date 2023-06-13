@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
@@ -9,6 +10,7 @@ import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 import 'doctors_list.dart';
 
+@RoutePage()
 class DoctorsListPage extends StatelessWidget {
   const DoctorsListPage({
     Key? key,

@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 
-class InvalidRefreshTokenError extends DioError {
+class InvalidRefreshTokenError extends DioException {
   String _message = 'InvalidRefreshTokenError';
 
-  InvalidRefreshTokenError({required requestOptions}) : super(requestOptions: requestOptions) {
-    _message = message;
+  InvalidRefreshTokenError({required requestOptions})
+      : super(requestOptions: requestOptions) {
+    _message = message!;
   }
 
   @override

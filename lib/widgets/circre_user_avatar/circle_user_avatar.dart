@@ -25,19 +25,20 @@ class CircleUserAvatar extends StatelessWidget {
       child: CircleAvatar(
         backgroundColor: isSelected
             ? Theme.of(context).primaryColor
-            : Theme.of(context).backgroundColor,
+            : Theme.of(context).colorScheme.background,
         radius: radius + 4,
         child: CircleAvatar(
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             radius: radius + 2,
             child: userAvatar != null
                 ? CircleAvatar(
                     radius: radius,
                     backgroundImage: NetworkImage(
-                        '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar',
+                      '${ApiConstants.baseUrl}/avatar/xxxhdpi/$userId/$userAvatar',
                     ),
                     onBackgroundImageError: (exception, stackTrace) {
-                      Sentry.captureException(exception, stackTrace: stackTrace);
+                      Sentry.captureException(exception,
+                          stackTrace: stackTrace);
                     },
                   )
                 : CircleAvatar(

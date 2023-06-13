@@ -9,11 +9,10 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 import 'all_clinics_list_skeleton.dart';
 
+@RoutePage()
 class AllClinicsListPage extends StatefulWidget {
-  const AllClinicsListPage({
-    Key? key, 
-    this.isFromMainPage = false
-  }) : super(key: key);
+  const AllClinicsListPage({Key? key, this.isFromMainPage = false})
+      : super(key: key);
 
   final bool isFromMainPage;
 
@@ -23,9 +22,9 @@ class AllClinicsListPage extends StatefulWidget {
 
 class _AllClinicsListPageState extends State<AllClinicsListPage> {
   void _onLoadDada({bool isRefresh = false}) {
-      context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
-    }
-    
+    context.read<ClinicsCubit>().getAllClinicsList(isRefresh);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,6 @@ class _AllClinicsListPageState extends State<AllClinicsListPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         context.router.navigateNamed(AppRoutes.main);
@@ -52,8 +50,7 @@ class _AllClinicsListPageState extends State<AllClinicsListPage> {
               return AllClinicsList(
                   clinicsList: state.clinicsList as List<ClinicModel>,
                   onRefreshData: _onLoadDada,
-                  isFromMainPage: widget.isFromMainPage
-              );
+                  isFromMainPage: widget.isFromMainPage);
             } else {
               return const AllClinicsListSkeleton();
             }
@@ -64,16 +61,12 @@ class _AllClinicsListPageState extends State<AllClinicsListPage> {
   }
 }
 
-class ClinicPageForDetails extends AllClinicsListPage {
-  const ClinicPageForDetails({
-    super.key, 
-    super.isFromMainPage = false
-  });
+@RoutePage()
+class ClinicForDetailsPage extends AllClinicsListPage {
+  const ClinicForDetailsPage({super.key, super.isFromMainPage = false});
 }
 
-class ClinicPageForMain extends AllClinicsListPage {
-  const ClinicPageForMain({
-    super.key, 
-    super.isFromMainPage = false
-  });
+@RoutePage()
+class ClinicForMainPage extends AllClinicsListPage {
+  const ClinicForMainPage({super.key, super.isFromMainPage = false});
 }

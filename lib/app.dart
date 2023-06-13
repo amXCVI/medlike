@@ -28,7 +28,7 @@ import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:get_it/get_it.dart';
 
-import 'navigation/router.gr.dart';
+import 'navigation/router.dart';
 
 final getIt = GetIt.instance;
 
@@ -72,8 +72,18 @@ class App extends StatelessWidget {
                     return const SplashPage();
                   }
                   return MaterialApp.router(
+                    theme: AppTheme.lightAppTheme.copyWith(
+                      pageTransitionsTheme:
+                          const PageTransitionsTheme(builders: {
+                        // replace default CupertinoPageTransitionsBuilder with this
+                        TargetPlatform.iOS:
+                            NoShadowCupertinoPageTransitionsBuilder(),
+                        TargetPlatform.android:
+                            FadeUpwardsPageTransitionsBuilder(),
+                      }),
+                    ),
                     title: 'Medlike',
-                    theme: AppTheme.lightAppTheme,
+                    // theme: AppTheme.lightAppTheme,
                     routerDelegate: AutoRouterDelegate(
                       _router,
                       initialRoutes: [

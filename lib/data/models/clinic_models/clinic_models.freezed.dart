@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'clinic_models.dart';
 
@@ -39,7 +39,8 @@ mixin _$AvailableClinic {
 abstract class $AvailableClinicCopyWith<$Res> {
   factory $AvailableClinicCopyWith(
           AvailableClinic value, $Res Function(AvailableClinic) then) =
-      _$AvailableClinicCopyWithImpl<$Res>;
+      _$AvailableClinicCopyWithImpl<$Res, AvailableClinic>;
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -52,59 +53,61 @@ abstract class $AvailableClinicCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AvailableClinicCopyWithImpl<$Res>
+class _$AvailableClinicCopyWithImpl<$Res, $Val extends AvailableClinic>
     implements $AvailableClinicCopyWith<$Res> {
   _$AvailableClinicCopyWithImpl(this._value, this._then);
 
-  final AvailableClinic _value;
   // ignore: unused_field
-  final $Res Function(AvailableClinic) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
-    Object? timeZoneOffset = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
+    Object? timeZoneOffset = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value.workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: null == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -115,6 +118,7 @@ abstract class _$$_AvailableClinicCopyWith<$Res>
           _$_AvailableClinic value, $Res Function(_$_AvailableClinic) then) =
       __$$_AvailableClinicCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -128,56 +132,54 @@ abstract class _$$_AvailableClinicCopyWith<$Res>
 
 /// @nodoc
 class __$$_AvailableClinicCopyWithImpl<$Res>
-    extends _$AvailableClinicCopyWithImpl<$Res>
+    extends _$AvailableClinicCopyWithImpl<$Res, _$_AvailableClinic>
     implements _$$_AvailableClinicCopyWith<$Res> {
   __$$_AvailableClinicCopyWithImpl(
       _$_AvailableClinic _value, $Res Function(_$_AvailableClinic) _then)
-      : super(_value, (v) => _then(v as _$_AvailableClinic));
+      : super(_value, _then);
 
-  @override
-  _$_AvailableClinic get _value => super._value as _$_AvailableClinic;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
-    Object? timeZoneOffset = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
+    Object? timeZoneOffset = null,
   }) {
     return _then(_$_AvailableClinic(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value._phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value._workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: null == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int,
@@ -216,6 +218,7 @@ class _$_AvailableClinic implements _AvailableClinic {
   final List<String> _phone;
   @override
   List<String> get phone {
+    if (_phone is EqualUnmodifiableListView) return _phone;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_phone);
   }
@@ -223,6 +226,7 @@ class _$_AvailableClinic implements _AvailableClinic {
   final List<String> _workTime;
   @override
   List<String> get workTime {
+    if (_workTime is EqualUnmodifiableListView) return _workTime;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_workTime);
   }
@@ -240,40 +244,43 @@ class _$_AvailableClinic implements _AvailableClinic {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AvailableClinic &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.departmentName, departmentName) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.buildingId, buildingId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.departmentName, departmentName) ||
+                other.departmentName == departmentName) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.buildingId, buildingId) ||
+                other.buildingId == buildingId) &&
             const DeepCollectionEquality().equals(other._phone, _phone) &&
             const DeepCollectionEquality().equals(other._workTime, _workTime) &&
-            const DeepCollectionEquality()
-                .equals(other.timeZoneOffset, timeZoneOffset));
+            (identical(other.timeZoneOffset, timeZoneOffset) ||
+                other.timeZoneOffset == timeZoneOffset));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(departmentName),
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(buildingId),
+      name,
+      departmentName,
+      address,
+      id,
+      buildingId,
       const DeepCollectionEquality().hash(_phone),
       const DeepCollectionEquality().hash(_workTime),
-      const DeepCollectionEquality().hash(timeZoneOffset));
+      timeZoneOffset);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AvailableClinicCopyWith<_$_AvailableClinic> get copyWith =>
       __$$_AvailableClinicCopyWithImpl<_$_AvailableClinic>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AvailableClinicToJson(this);
+    return _$$_AvailableClinicToJson(
+      this,
+    );
   }
 }
 
@@ -292,21 +299,21 @@ abstract class _AvailableClinic implements AvailableClinic {
       _$_AvailableClinic.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get departmentName => throw _privateConstructorUsedError;
+  String? get departmentName;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
-  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get phone;
   @override
-  List<String> get workTime => throw _privateConstructorUsedError;
+  List<String> get workTime;
   @override
-  int get timeZoneOffset => throw _privateConstructorUsedError;
+  int get timeZoneOffset;
   @override
   @JsonKey(ignore: true)
   _$$_AvailableClinicCopyWith<_$_AvailableClinic> get copyWith =>
@@ -332,29 +339,33 @@ mixin _$AvailableClinicsList {
 abstract class $AvailableClinicsListCopyWith<$Res> {
   factory $AvailableClinicsListCopyWith(AvailableClinicsList value,
           $Res Function(AvailableClinicsList) then) =
-      _$AvailableClinicsListCopyWithImpl<$Res>;
+      _$AvailableClinicsListCopyWithImpl<$Res, AvailableClinicsList>;
+  @useResult
   $Res call({List<AvailableClinic> availableClinicsList});
 }
 
 /// @nodoc
-class _$AvailableClinicsListCopyWithImpl<$Res>
+class _$AvailableClinicsListCopyWithImpl<$Res,
+        $Val extends AvailableClinicsList>
     implements $AvailableClinicsListCopyWith<$Res> {
   _$AvailableClinicsListCopyWithImpl(this._value, this._then);
 
-  final AvailableClinicsList _value;
   // ignore: unused_field
-  final $Res Function(AvailableClinicsList) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? availableClinicsList = freezed,
+    Object? availableClinicsList = null,
   }) {
     return _then(_value.copyWith(
-      availableClinicsList: availableClinicsList == freezed
+      availableClinicsList: null == availableClinicsList
           ? _value.availableClinicsList
           : availableClinicsList // ignore: cast_nullable_to_non_nullable
               as List<AvailableClinic>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -365,26 +376,25 @@ abstract class _$$_AvailableClinicsListCopyWith<$Res>
           $Res Function(_$_AvailableClinicsList) then) =
       __$$_AvailableClinicsListCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<AvailableClinic> availableClinicsList});
 }
 
 /// @nodoc
 class __$$_AvailableClinicsListCopyWithImpl<$Res>
-    extends _$AvailableClinicsListCopyWithImpl<$Res>
+    extends _$AvailableClinicsListCopyWithImpl<$Res, _$_AvailableClinicsList>
     implements _$$_AvailableClinicsListCopyWith<$Res> {
   __$$_AvailableClinicsListCopyWithImpl(_$_AvailableClinicsList _value,
       $Res Function(_$_AvailableClinicsList) _then)
-      : super(_value, (v) => _then(v as _$_AvailableClinicsList));
+      : super(_value, _then);
 
-  @override
-  _$_AvailableClinicsList get _value => super._value as _$_AvailableClinicsList;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? availableClinicsList = freezed,
+    Object? availableClinicsList = null,
   }) {
     return _then(_$_AvailableClinicsList(
-      availableClinicsList: availableClinicsList == freezed
+      availableClinicsList: null == availableClinicsList
           ? _value._availableClinicsList
           : availableClinicsList // ignore: cast_nullable_to_non_nullable
               as List<AvailableClinic>,
@@ -405,6 +415,8 @@ class _$_AvailableClinicsList implements _AvailableClinicsList {
   final List<AvailableClinic> _availableClinicsList;
   @override
   List<AvailableClinic> get availableClinicsList {
+    if (_availableClinicsList is EqualUnmodifiableListView)
+      return _availableClinicsList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_availableClinicsList);
   }
@@ -430,13 +442,16 @@ class _$_AvailableClinicsList implements _AvailableClinicsList {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AvailableClinicsListCopyWith<_$_AvailableClinicsList> get copyWith =>
       __$$_AvailableClinicsListCopyWithImpl<_$_AvailableClinicsList>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AvailableClinicsListToJson(this);
+    return _$$_AvailableClinicsListToJson(
+      this,
+    );
   }
 }
 
@@ -449,8 +464,7 @@ abstract class _AvailableClinicsList implements AvailableClinicsList {
       _$_AvailableClinicsList.fromJson;
 
   @override
-  List<AvailableClinic> get availableClinicsList =>
-      throw _privateConstructorUsedError;
+  List<AvailableClinic> get availableClinicsList;
   @override
   @JsonKey(ignore: true)
   _$$_AvailableClinicsListCopyWith<_$_AvailableClinicsList> get copyWith =>
@@ -478,7 +492,8 @@ mixin _$ClinicModel {
 abstract class $ClinicModelCopyWith<$Res> {
   factory $ClinicModelCopyWith(
           ClinicModel value, $Res Function(ClinicModel) then) =
-      _$ClinicModelCopyWithImpl<$Res>;
+      _$ClinicModelCopyWithImpl<$Res, ClinicModel>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -487,38 +502,41 @@ abstract class $ClinicModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ClinicModelCopyWithImpl<$Res> implements $ClinicModelCopyWith<$Res> {
+class _$ClinicModelCopyWithImpl<$Res, $Val extends ClinicModel>
+    implements $ClinicModelCopyWith<$Res> {
   _$ClinicModelCopyWithImpl(this._value, this._then);
 
-  final ClinicModel _value;
   // ignore: unused_field
-  final $Res Function(ClinicModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? timeZoneOffset = freezed,
-    Object? buildings = freezed,
+    Object? buildings = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: freezed == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int?,
-      buildings: buildings == freezed
+      buildings: null == buildings
           ? _value.buildings
           : buildings // ignore: cast_nullable_to_non_nullable
               as List<BuildingModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -529,6 +547,7 @@ abstract class _$$_ClinicModelCopyWith<$Res>
           _$_ClinicModel value, $Res Function(_$_ClinicModel) then) =
       __$$_ClinicModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -537,36 +556,35 @@ abstract class _$$_ClinicModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ClinicModelCopyWithImpl<$Res> extends _$ClinicModelCopyWithImpl<$Res>
+class __$$_ClinicModelCopyWithImpl<$Res>
+    extends _$ClinicModelCopyWithImpl<$Res, _$_ClinicModel>
     implements _$$_ClinicModelCopyWith<$Res> {
   __$$_ClinicModelCopyWithImpl(
       _$_ClinicModel _value, $Res Function(_$_ClinicModel) _then)
-      : super(_value, (v) => _then(v as _$_ClinicModel));
+      : super(_value, _then);
 
-  @override
-  _$_ClinicModel get _value => super._value as _$_ClinicModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
     Object? timeZoneOffset = freezed,
-    Object? buildings = freezed,
+    Object? buildings = null,
   }) {
     return _then(_$_ClinicModel(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: freezed == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int?,
-      buildings: buildings == freezed
+      buildings: null == buildings
           ? _value._buildings
           : buildings // ignore: cast_nullable_to_non_nullable
               as List<BuildingModel>,
@@ -596,6 +614,7 @@ class _$_ClinicModel implements _ClinicModel {
   final List<BuildingModel> _buildings;
   @override
   List<BuildingModel> get buildings {
+    if (_buildings is EqualUnmodifiableListView) return _buildings;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_buildings);
   }
@@ -610,31 +629,30 @@ class _$_ClinicModel implements _ClinicModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ClinicModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.timeZoneOffset, timeZoneOffset) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.timeZoneOffset, timeZoneOffset) ||
+                other.timeZoneOffset == timeZoneOffset) &&
             const DeepCollectionEquality()
                 .equals(other._buildings, _buildings));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(timeZoneOffset),
+  int get hashCode => Object.hash(runtimeType, id, name, timeZoneOffset,
       const DeepCollectionEquality().hash(_buildings));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ClinicModelCopyWith<_$_ClinicModel> get copyWith =>
       __$$_ClinicModelCopyWithImpl<_$_ClinicModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClinicModelToJson(this);
+    return _$$_ClinicModelToJson(
+      this,
+    );
   }
 }
 
@@ -649,13 +667,13 @@ abstract class _ClinicModel implements ClinicModel {
       _$_ClinicModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  int? get timeZoneOffset => throw _privateConstructorUsedError;
+  int? get timeZoneOffset;
   @override
-  List<BuildingModel> get buildings => throw _privateConstructorUsedError;
+  List<BuildingModel> get buildings;
   @override
   @JsonKey(ignore: true)
   _$$_ClinicModelCopyWith<_$_ClinicModel> get copyWith =>
@@ -686,7 +704,8 @@ mixin _$BuildingModel {
 abstract class $BuildingModelCopyWith<$Res> {
   factory $BuildingModelCopyWith(
           BuildingModel value, $Res Function(BuildingModel) then) =
-      _$BuildingModelCopyWithImpl<$Res>;
+      _$BuildingModelCopyWithImpl<$Res, BuildingModel>;
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -698,54 +717,56 @@ abstract class $BuildingModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BuildingModelCopyWithImpl<$Res>
+class _$BuildingModelCopyWithImpl<$Res, $Val extends BuildingModel>
     implements $BuildingModelCopyWith<$Res> {
   _$BuildingModelCopyWithImpl(this._value, this._then);
 
-  final BuildingModel _value;
   // ignore: unused_field
-  final $Res Function(BuildingModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value.workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -756,6 +777,7 @@ abstract class _$$_BuildingModelCopyWith<$Res>
           _$_BuildingModel value, $Res Function(_$_BuildingModel) then) =
       __$$_BuildingModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -768,51 +790,49 @@ abstract class _$$_BuildingModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_BuildingModelCopyWithImpl<$Res>
-    extends _$BuildingModelCopyWithImpl<$Res>
+    extends _$BuildingModelCopyWithImpl<$Res, _$_BuildingModel>
     implements _$$_BuildingModelCopyWith<$Res> {
   __$$_BuildingModelCopyWithImpl(
       _$_BuildingModel _value, $Res Function(_$_BuildingModel) _then)
-      : super(_value, (v) => _then(v as _$_BuildingModel));
+      : super(_value, _then);
 
-  @override
-  _$_BuildingModel get _value => super._value as _$_BuildingModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
   }) {
     return _then(_$_BuildingModel(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value._phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value._workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -850,6 +870,7 @@ class _$_BuildingModel implements _BuildingModel {
   final List<String> _phone;
   @override
   List<String> get phone {
+    if (_phone is EqualUnmodifiableListView) return _phone;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_phone);
   }
@@ -857,6 +878,7 @@ class _$_BuildingModel implements _BuildingModel {
   final List<String> _workTime;
   @override
   List<String> get workTime {
+    if (_workTime is EqualUnmodifiableListView) return _workTime;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_workTime);
   }
@@ -871,13 +893,13 @@ class _$_BuildingModel implements _BuildingModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BuildingModel &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.departmentName, departmentName) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.buildingId, buildingId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.departmentName, departmentName) ||
+                other.departmentName == departmentName) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.buildingId, buildingId) ||
+                other.buildingId == buildingId) &&
             const DeepCollectionEquality().equals(other._phone, _phone) &&
             const DeepCollectionEquality().equals(other._workTime, _workTime));
   }
@@ -886,22 +908,25 @@ class _$_BuildingModel implements _BuildingModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(departmentName),
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(buildingId),
+      name,
+      departmentName,
+      address,
+      id,
+      buildingId,
       const DeepCollectionEquality().hash(_phone),
       const DeepCollectionEquality().hash(_workTime));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BuildingModelCopyWith<_$_BuildingModel> get copyWith =>
       __$$_BuildingModelCopyWithImpl<_$_BuildingModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BuildingModelToJson(this);
+    return _$$_BuildingModelToJson(
+      this,
+    );
   }
 }
 
@@ -919,19 +944,19 @@ abstract class _BuildingModel implements BuildingModel {
       _$_BuildingModel.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get departmentName => throw _privateConstructorUsedError;
+  String? get departmentName;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
-  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get phone;
   @override
-  List<String> get workTime => throw _privateConstructorUsedError;
+  List<String> get workTime;
   @override
   @JsonKey(ignore: true)
   _$$_BuildingModelCopyWith<_$_BuildingModel> get copyWith =>
@@ -959,45 +984,48 @@ mixin _$PriceItemModel {
 abstract class $PriceItemModelCopyWith<$Res> {
   factory $PriceItemModelCopyWith(
           PriceItemModel value, $Res Function(PriceItemModel) then) =
-      _$PriceItemModelCopyWithImpl<$Res>;
+      _$PriceItemModelCopyWithImpl<$Res, PriceItemModel>;
+  @useResult
   $Res call(
       {String title, int price, bool haveRecommendations, String serviceId});
 }
 
 /// @nodoc
-class _$PriceItemModelCopyWithImpl<$Res>
+class _$PriceItemModelCopyWithImpl<$Res, $Val extends PriceItemModel>
     implements $PriceItemModelCopyWith<$Res> {
   _$PriceItemModelCopyWithImpl(this._value, this._then);
 
-  final PriceItemModel _value;
   // ignore: unused_field
-  final $Res Function(PriceItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? price = freezed,
-    Object? haveRecommendations = freezed,
-    Object? serviceId = freezed,
+    Object? title = null,
+    Object? price = null,
+    Object? haveRecommendations = null,
+    Object? serviceId = null,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
-      haveRecommendations: haveRecommendations == freezed
+      haveRecommendations: null == haveRecommendations
           ? _value.haveRecommendations
           : haveRecommendations // ignore: cast_nullable_to_non_nullable
               as bool,
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1008,42 +1036,41 @@ abstract class _$$_PriceItemModelCopyWith<$Res>
           _$_PriceItemModel value, $Res Function(_$_PriceItemModel) then) =
       __$$_PriceItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String title, int price, bool haveRecommendations, String serviceId});
 }
 
 /// @nodoc
 class __$$_PriceItemModelCopyWithImpl<$Res>
-    extends _$PriceItemModelCopyWithImpl<$Res>
+    extends _$PriceItemModelCopyWithImpl<$Res, _$_PriceItemModel>
     implements _$$_PriceItemModelCopyWith<$Res> {
   __$$_PriceItemModelCopyWithImpl(
       _$_PriceItemModel _value, $Res Function(_$_PriceItemModel) _then)
-      : super(_value, (v) => _then(v as _$_PriceItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_PriceItemModel get _value => super._value as _$_PriceItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? price = freezed,
-    Object? haveRecommendations = freezed,
-    Object? serviceId = freezed,
+    Object? title = null,
+    Object? price = null,
+    Object? haveRecommendations = null,
+    Object? serviceId = null,
   }) {
     return _then(_$_PriceItemModel(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
-      haveRecommendations: haveRecommendations == freezed
+      haveRecommendations: null == haveRecommendations
           ? _value.haveRecommendations
           : haveRecommendations // ignore: cast_nullable_to_non_nullable
               as bool,
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1082,30 +1109,30 @@ class _$_PriceItemModel implements _PriceItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PriceItemModel &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality()
-                .equals(other.haveRecommendations, haveRecommendations) &&
-            const DeepCollectionEquality().equals(other.serviceId, serviceId));
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.haveRecommendations, haveRecommendations) ||
+                other.haveRecommendations == haveRecommendations) &&
+            (identical(other.serviceId, serviceId) ||
+                other.serviceId == serviceId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(haveRecommendations),
-      const DeepCollectionEquality().hash(serviceId));
+  int get hashCode =>
+      Object.hash(runtimeType, title, price, haveRecommendations, serviceId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PriceItemModelCopyWith<_$_PriceItemModel> get copyWith =>
       __$$_PriceItemModelCopyWithImpl<_$_PriceItemModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PriceItemModelToJson(this);
+    return _$$_PriceItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -1120,13 +1147,13 @@ abstract class _PriceItemModel implements PriceItemModel {
       _$_PriceItemModel.fromJson;
 
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  int get price => throw _privateConstructorUsedError;
+  int get price;
   @override
-  bool get haveRecommendations => throw _privateConstructorUsedError;
+  bool get haveRecommendations;
   @override
-  String get serviceId => throw _privateConstructorUsedError;
+  String get serviceId;
   @override
   @JsonKey(ignore: true)
   _$$_PriceItemModelCopyWith<_$_PriceItemModel> get copyWith =>
@@ -1157,7 +1184,8 @@ mixin _$ClinicPromotionModel {
 abstract class $ClinicPromotionModelCopyWith<$Res> {
   factory $ClinicPromotionModelCopyWith(ClinicPromotionModel value,
           $Res Function(ClinicPromotionModel) then) =
-      _$ClinicPromotionModelCopyWithImpl<$Res>;
+      _$ClinicPromotionModelCopyWithImpl<$Res, ClinicPromotionModel>;
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -1169,54 +1197,57 @@ abstract class $ClinicPromotionModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ClinicPromotionModelCopyWithImpl<$Res>
+class _$ClinicPromotionModelCopyWithImpl<$Res,
+        $Val extends ClinicPromotionModel>
     implements $ClinicPromotionModelCopyWith<$Res> {
   _$ClinicPromotionModelCopyWithImpl(this._value, this._then);
 
-  final ClinicPromotionModel _value;
   // ignore: unused_field
-  final $Res Function(ClinicPromotionModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? dateFrom = freezed,
-    Object? dateTo = freezed,
-    Object? defaultPrice = freezed,
-    Object? promoPrice = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? description = null,
+    Object? dateFrom = null,
+    Object? dateTo = null,
+    Object? defaultPrice = null,
+    Object? promoPrice = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      dateFrom: dateFrom == freezed
+      dateFrom: null == dateFrom
           ? _value.dateFrom
           : dateFrom // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      dateTo: dateTo == freezed
+      dateTo: null == dateTo
           ? _value.dateTo
           : dateTo // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      defaultPrice: defaultPrice == freezed
+      defaultPrice: null == defaultPrice
           ? _value.defaultPrice
           : defaultPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      promoPrice: promoPrice == freezed
+      promoPrice: null == promoPrice
           ? _value.promoPrice
           : promoPrice // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1227,6 +1258,7 @@ abstract class _$$_ClinicPromotionModelCopyWith<$Res>
           $Res Function(_$_ClinicPromotionModel) then) =
       __$$_ClinicPromotionModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String name,
@@ -1239,51 +1271,49 @@ abstract class _$$_ClinicPromotionModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_ClinicPromotionModelCopyWithImpl<$Res>
-    extends _$ClinicPromotionModelCopyWithImpl<$Res>
+    extends _$ClinicPromotionModelCopyWithImpl<$Res, _$_ClinicPromotionModel>
     implements _$$_ClinicPromotionModelCopyWith<$Res> {
   __$$_ClinicPromotionModelCopyWithImpl(_$_ClinicPromotionModel _value,
       $Res Function(_$_ClinicPromotionModel) _then)
-      : super(_value, (v) => _then(v as _$_ClinicPromotionModel));
+      : super(_value, _then);
 
-  @override
-  _$_ClinicPromotionModel get _value => super._value as _$_ClinicPromotionModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? dateFrom = freezed,
-    Object? dateTo = freezed,
-    Object? defaultPrice = freezed,
-    Object? promoPrice = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? description = null,
+    Object? dateFrom = null,
+    Object? dateTo = null,
+    Object? defaultPrice = null,
+    Object? promoPrice = null,
   }) {
     return _then(_$_ClinicPromotionModel(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      dateFrom: dateFrom == freezed
+      dateFrom: null == dateFrom
           ? _value.dateFrom
           : dateFrom // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      dateTo: dateTo == freezed
+      dateTo: null == dateTo
           ? _value.dateTo
           : dateTo // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      defaultPrice: defaultPrice == freezed
+      defaultPrice: null == defaultPrice
           ? _value.defaultPrice
           : defaultPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      promoPrice: promoPrice == freezed
+      promoPrice: null == promoPrice
           ? _value.promoPrice
           : promoPrice // ignore: cast_nullable_to_non_nullable
               as int,
@@ -1331,39 +1361,36 @@ class _$_ClinicPromotionModel implements _ClinicPromotionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ClinicPromotionModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.dateFrom, dateFrom) &&
-            const DeepCollectionEquality().equals(other.dateTo, dateTo) &&
-            const DeepCollectionEquality()
-                .equals(other.defaultPrice, defaultPrice) &&
-            const DeepCollectionEquality()
-                .equals(other.promoPrice, promoPrice));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.dateFrom, dateFrom) ||
+                other.dateFrom == dateFrom) &&
+            (identical(other.dateTo, dateTo) || other.dateTo == dateTo) &&
+            (identical(other.defaultPrice, defaultPrice) ||
+                other.defaultPrice == defaultPrice) &&
+            (identical(other.promoPrice, promoPrice) ||
+                other.promoPrice == promoPrice));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(dateFrom),
-      const DeepCollectionEquality().hash(dateTo),
-      const DeepCollectionEquality().hash(defaultPrice),
-      const DeepCollectionEquality().hash(promoPrice));
+  int get hashCode => Object.hash(runtimeType, id, name, description, dateFrom,
+      dateTo, defaultPrice, promoPrice);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ClinicPromotionModelCopyWith<_$_ClinicPromotionModel> get copyWith =>
       __$$_ClinicPromotionModelCopyWithImpl<_$_ClinicPromotionModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClinicPromotionModelToJson(this);
+    return _$$_ClinicPromotionModelToJson(
+      this,
+    );
   }
 }
 
@@ -1381,19 +1408,19 @@ abstract class _ClinicPromotionModel implements ClinicPromotionModel {
       _$_ClinicPromotionModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
-  DateTime get dateFrom => throw _privateConstructorUsedError;
+  DateTime get dateFrom;
   @override
-  DateTime get dateTo => throw _privateConstructorUsedError;
+  DateTime get dateTo;
   @override
-  int get defaultPrice => throw _privateConstructorUsedError;
+  int get defaultPrice;
   @override
-  int get promoPrice => throw _privateConstructorUsedError;
+  int get promoPrice;
   @override
   @JsonKey(ignore: true)
   _$$_ClinicPromotionModelCopyWith<_$_ClinicPromotionModel> get copyWith =>
@@ -1425,7 +1452,8 @@ mixin _$MainscreenPromotionModel {
 abstract class $MainscreenPromotionModelCopyWith<$Res> {
   factory $MainscreenPromotionModelCopyWith(MainscreenPromotionModel value,
           $Res Function(MainscreenPromotionModel) then) =
-      _$MainscreenPromotionModelCopyWithImpl<$Res>;
+      _$MainscreenPromotionModelCopyWithImpl<$Res, MainscreenPromotionModel>;
+  @useResult
   $Res call(
       {String id,
       String clinicId,
@@ -1437,54 +1465,57 @@ abstract class $MainscreenPromotionModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MainscreenPromotionModelCopyWithImpl<$Res>
+class _$MainscreenPromotionModelCopyWithImpl<$Res,
+        $Val extends MainscreenPromotionModel>
     implements $MainscreenPromotionModelCopyWith<$Res> {
   _$MainscreenPromotionModelCopyWithImpl(this._value, this._then);
 
-  final MainscreenPromotionModel _value;
   // ignore: unused_field
-  final $Res Function(MainscreenPromotionModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? clinicId = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? defaultPrice = freezed,
-    Object? promoPrice = freezed,
-    Object? fileName = freezed,
+    Object? id = null,
+    Object? clinicId = null,
+    Object? name = null,
+    Object? description = null,
+    Object? defaultPrice = null,
+    Object? promoPrice = null,
+    Object? fileName = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      clinicId: clinicId == freezed
+      clinicId: null == clinicId
           ? _value.clinicId
           : clinicId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      defaultPrice: defaultPrice == freezed
+      defaultPrice: null == defaultPrice
           ? _value.defaultPrice
           : defaultPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      promoPrice: promoPrice == freezed
+      promoPrice: null == promoPrice
           ? _value.promoPrice
           : promoPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      fileName: fileName == freezed
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1496,6 +1527,7 @@ abstract class _$$_MainscreenPromotionModelCopyWith<$Res>
           $Res Function(_$_MainscreenPromotionModel) then) =
       __$$_MainscreenPromotionModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String clinicId,
@@ -1508,52 +1540,50 @@ abstract class _$$_MainscreenPromotionModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_MainscreenPromotionModelCopyWithImpl<$Res>
-    extends _$MainscreenPromotionModelCopyWithImpl<$Res>
+    extends _$MainscreenPromotionModelCopyWithImpl<$Res,
+        _$_MainscreenPromotionModel>
     implements _$$_MainscreenPromotionModelCopyWith<$Res> {
   __$$_MainscreenPromotionModelCopyWithImpl(_$_MainscreenPromotionModel _value,
       $Res Function(_$_MainscreenPromotionModel) _then)
-      : super(_value, (v) => _then(v as _$_MainscreenPromotionModel));
+      : super(_value, _then);
 
-  @override
-  _$_MainscreenPromotionModel get _value =>
-      super._value as _$_MainscreenPromotionModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? clinicId = freezed,
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? defaultPrice = freezed,
-    Object? promoPrice = freezed,
-    Object? fileName = freezed,
+    Object? id = null,
+    Object? clinicId = null,
+    Object? name = null,
+    Object? description = null,
+    Object? defaultPrice = null,
+    Object? promoPrice = null,
+    Object? fileName = null,
   }) {
     return _then(_$_MainscreenPromotionModel(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      clinicId: clinicId == freezed
+      clinicId: null == clinicId
           ? _value.clinicId
           : clinicId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      defaultPrice: defaultPrice == freezed
+      defaultPrice: null == defaultPrice
           ? _value.defaultPrice
           : defaultPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      promoPrice: promoPrice == freezed
+      promoPrice: null == promoPrice
           ? _value.promoPrice
           : promoPrice // ignore: cast_nullable_to_non_nullable
               as int,
-      fileName: fileName == freezed
+      fileName: null == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1601,39 +1631,37 @@ class _$_MainscreenPromotionModel implements _MainscreenPromotionModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MainscreenPromotionModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.clinicId, clinicId) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality()
-                .equals(other.defaultPrice, defaultPrice) &&
-            const DeepCollectionEquality()
-                .equals(other.promoPrice, promoPrice) &&
-            const DeepCollectionEquality().equals(other.fileName, fileName));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.clinicId, clinicId) ||
+                other.clinicId == clinicId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.defaultPrice, defaultPrice) ||
+                other.defaultPrice == defaultPrice) &&
+            (identical(other.promoPrice, promoPrice) ||
+                other.promoPrice == promoPrice) &&
+            (identical(other.fileName, fileName) ||
+                other.fileName == fileName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(clinicId),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(defaultPrice),
-      const DeepCollectionEquality().hash(promoPrice),
-      const DeepCollectionEquality().hash(fileName));
+  int get hashCode => Object.hash(runtimeType, id, clinicId, name, description,
+      defaultPrice, promoPrice, fileName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MainscreenPromotionModelCopyWith<_$_MainscreenPromotionModel>
       get copyWith => __$$_MainscreenPromotionModelCopyWithImpl<
           _$_MainscreenPromotionModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MainscreenPromotionModelToJson(this);
+    return _$$_MainscreenPromotionModelToJson(
+      this,
+    );
   }
 }
 
@@ -1651,19 +1679,19 @@ abstract class _MainscreenPromotionModel implements MainscreenPromotionModel {
       _$_MainscreenPromotionModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get clinicId => throw _privateConstructorUsedError;
+  String get clinicId;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
-  int get defaultPrice => throw _privateConstructorUsedError;
+  int get defaultPrice;
   @override
-  int get promoPrice => throw _privateConstructorUsedError;
+  int get promoPrice;
   @override
-  String get fileName => throw _privateConstructorUsedError;
+  String get fileName;
   @override
   @JsonKey(ignore: true)
   _$$_MainscreenPromotionModelCopyWith<_$_MainscreenPromotionModel>
@@ -1696,7 +1724,8 @@ mixin _$BuildingLatLngModel {
 abstract class $BuildingLatLngModelCopyWith<$Res> {
   factory $BuildingLatLngModelCopyWith(
           BuildingLatLngModel value, $Res Function(BuildingLatLngModel) then) =
-      _$BuildingLatLngModelCopyWithImpl<$Res>;
+      _$BuildingLatLngModelCopyWithImpl<$Res, BuildingLatLngModel>;
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -1710,64 +1739,66 @@ abstract class $BuildingLatLngModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BuildingLatLngModelCopyWithImpl<$Res>
+class _$BuildingLatLngModelCopyWithImpl<$Res, $Val extends BuildingLatLngModel>
     implements $BuildingLatLngModelCopyWith<$Res> {
   _$BuildingLatLngModelCopyWithImpl(this._value, this._then);
 
-  final BuildingLatLngModel _value;
   // ignore: unused_field
-  final $Res Function(BuildingLatLngModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value.workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      latitude: latitude == freezed
+      latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
-      longitude: longitude == freezed
+      longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1778,6 +1809,7 @@ abstract class _$$_BuildingLatLngModelCopyWith<$Res>
           $Res Function(_$_BuildingLatLngModel) then) =
       __$$_BuildingLatLngModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String name,
       String? departmentName,
@@ -1792,61 +1824,59 @@ abstract class _$$_BuildingLatLngModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_BuildingLatLngModelCopyWithImpl<$Res>
-    extends _$BuildingLatLngModelCopyWithImpl<$Res>
+    extends _$BuildingLatLngModelCopyWithImpl<$Res, _$_BuildingLatLngModel>
     implements _$$_BuildingLatLngModelCopyWith<$Res> {
   __$$_BuildingLatLngModelCopyWithImpl(_$_BuildingLatLngModel _value,
       $Res Function(_$_BuildingLatLngModel) _then)
-      : super(_value, (v) => _then(v as _$_BuildingLatLngModel));
+      : super(_value, _then);
 
-  @override
-  _$_BuildingLatLngModel get _value => super._value as _$_BuildingLatLngModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
     Object? departmentName = freezed,
-    Object? address = freezed,
-    Object? id = freezed,
-    Object? buildingId = freezed,
-    Object? phone = freezed,
-    Object? workTime = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
+    Object? address = null,
+    Object? id = null,
+    Object? buildingId = null,
+    Object? phone = null,
+    Object? workTime = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_$_BuildingLatLngModel(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      departmentName: departmentName == freezed
+      departmentName: freezed == departmentName
           ? _value.departmentName
           : departmentName // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      phone: phone == freezed
+      phone: null == phone
           ? _value._phone
           : phone // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      workTime: workTime == freezed
+      workTime: null == workTime
           ? _value._workTime
           : workTime // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      latitude: latitude == freezed
+      latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as double,
-      longitude: longitude == freezed
+      longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
@@ -1886,6 +1916,7 @@ class _$_BuildingLatLngModel implements _BuildingLatLngModel {
   final List<String> _phone;
   @override
   List<String> get phone {
+    if (_phone is EqualUnmodifiableListView) return _phone;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_phone);
   }
@@ -1893,6 +1924,7 @@ class _$_BuildingLatLngModel implements _BuildingLatLngModel {
   final List<String> _workTime;
   @override
   List<String> get workTime {
+    if (_workTime is EqualUnmodifiableListView) return _workTime;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_workTime);
   }
@@ -1912,42 +1944,47 @@ class _$_BuildingLatLngModel implements _BuildingLatLngModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BuildingLatLngModel &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.departmentName, departmentName) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.buildingId, buildingId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.departmentName, departmentName) ||
+                other.departmentName == departmentName) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.buildingId, buildingId) ||
+                other.buildingId == buildingId) &&
             const DeepCollectionEquality().equals(other._phone, _phone) &&
             const DeepCollectionEquality().equals(other._workTime, _workTime) &&
-            const DeepCollectionEquality().equals(other.latitude, latitude) &&
-            const DeepCollectionEquality().equals(other.longitude, longitude));
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(departmentName),
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(buildingId),
+      name,
+      departmentName,
+      address,
+      id,
+      buildingId,
       const DeepCollectionEquality().hash(_phone),
       const DeepCollectionEquality().hash(_workTime),
-      const DeepCollectionEquality().hash(latitude),
-      const DeepCollectionEquality().hash(longitude));
+      latitude,
+      longitude);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BuildingLatLngModelCopyWith<_$_BuildingLatLngModel> get copyWith =>
       __$$_BuildingLatLngModelCopyWithImpl<_$_BuildingLatLngModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BuildingLatLngModelToJson(this);
+    return _$$_BuildingLatLngModelToJson(
+      this,
+    );
   }
 }
 
@@ -1967,23 +2004,23 @@ abstract class _BuildingLatLngModel implements BuildingLatLngModel {
       _$_BuildingLatLngModel.fromJson;
 
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  String? get departmentName => throw _privateConstructorUsedError;
+  String? get departmentName;
   @override
-  String get address => throw _privateConstructorUsedError;
+  String get address;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
-  List<String> get phone => throw _privateConstructorUsedError;
+  List<String> get phone;
   @override
-  List<String> get workTime => throw _privateConstructorUsedError;
+  List<String> get workTime;
   @override
-  double get latitude => throw _privateConstructorUsedError;
+  double get latitude;
   @override
-  double get longitude => throw _privateConstructorUsedError;
+  double get longitude;
   @override
   @JsonKey(ignore: true)
   _$$_BuildingLatLngModelCopyWith<_$_BuildingLatLngModel> get copyWith =>
@@ -2012,39 +2049,44 @@ abstract class $RecommendationByServiceModelCopyWith<$Res> {
   factory $RecommendationByServiceModelCopyWith(
           RecommendationByServiceModel value,
           $Res Function(RecommendationByServiceModel) then) =
-      _$RecommendationByServiceModelCopyWithImpl<$Res>;
+      _$RecommendationByServiceModelCopyWithImpl<$Res,
+          RecommendationByServiceModel>;
+  @useResult
   $Res call({String serviceId, String serviceName, String recommendation});
 }
 
 /// @nodoc
-class _$RecommendationByServiceModelCopyWithImpl<$Res>
+class _$RecommendationByServiceModelCopyWithImpl<$Res,
+        $Val extends RecommendationByServiceModel>
     implements $RecommendationByServiceModelCopyWith<$Res> {
   _$RecommendationByServiceModelCopyWithImpl(this._value, this._then);
 
-  final RecommendationByServiceModel _value;
   // ignore: unused_field
-  final $Res Function(RecommendationByServiceModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? serviceId = freezed,
-    Object? serviceName = freezed,
-    Object? recommendation = freezed,
+    Object? serviceId = null,
+    Object? serviceName = null,
+    Object? recommendation = null,
   }) {
     return _then(_value.copyWith(
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendation: recommendation == freezed
+      recommendation: null == recommendation
           ? _value.recommendation
           : recommendation // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2056,38 +2098,37 @@ abstract class _$$_RecommendationByServiceModelCopyWith<$Res>
           $Res Function(_$_RecommendationByServiceModel) then) =
       __$$_RecommendationByServiceModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String serviceId, String serviceName, String recommendation});
 }
 
 /// @nodoc
 class __$$_RecommendationByServiceModelCopyWithImpl<$Res>
-    extends _$RecommendationByServiceModelCopyWithImpl<$Res>
+    extends _$RecommendationByServiceModelCopyWithImpl<$Res,
+        _$_RecommendationByServiceModel>
     implements _$$_RecommendationByServiceModelCopyWith<$Res> {
   __$$_RecommendationByServiceModelCopyWithImpl(
       _$_RecommendationByServiceModel _value,
       $Res Function(_$_RecommendationByServiceModel) _then)
-      : super(_value, (v) => _then(v as _$_RecommendationByServiceModel));
+      : super(_value, _then);
 
-  @override
-  _$_RecommendationByServiceModel get _value =>
-      super._value as _$_RecommendationByServiceModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? serviceId = freezed,
-    Object? serviceName = freezed,
-    Object? recommendation = freezed,
+    Object? serviceId = null,
+    Object? serviceName = null,
+    Object? recommendation = null,
   }) {
     return _then(_$_RecommendationByServiceModel(
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendation: recommendation == freezed
+      recommendation: null == recommendation
           ? _value.recommendation
           : recommendation // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2123,30 +2164,31 @@ class _$_RecommendationByServiceModel implements _RecommendationByServiceModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RecommendationByServiceModel &&
-            const DeepCollectionEquality().equals(other.serviceId, serviceId) &&
-            const DeepCollectionEquality()
-                .equals(other.serviceName, serviceName) &&
-            const DeepCollectionEquality()
-                .equals(other.recommendation, recommendation));
+            (identical(other.serviceId, serviceId) ||
+                other.serviceId == serviceId) &&
+            (identical(other.serviceName, serviceName) ||
+                other.serviceName == serviceName) &&
+            (identical(other.recommendation, recommendation) ||
+                other.recommendation == recommendation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(serviceId),
-      const DeepCollectionEquality().hash(serviceName),
-      const DeepCollectionEquality().hash(recommendation));
+  int get hashCode =>
+      Object.hash(runtimeType, serviceId, serviceName, recommendation);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RecommendationByServiceModelCopyWith<_$_RecommendationByServiceModel>
       get copyWith => __$$_RecommendationByServiceModelCopyWithImpl<
           _$_RecommendationByServiceModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecommendationByServiceModelToJson(this);
+    return _$$_RecommendationByServiceModelToJson(
+      this,
+    );
   }
 }
 
@@ -2161,11 +2203,11 @@ abstract class _RecommendationByServiceModel
       _$_RecommendationByServiceModel.fromJson;
 
   @override
-  String get serviceId => throw _privateConstructorUsedError;
+  String get serviceId;
   @override
-  String get serviceName => throw _privateConstructorUsedError;
+  String get serviceName;
   @override
-  String get recommendation => throw _privateConstructorUsedError;
+  String get recommendation;
   @override
   @JsonKey(ignore: true)
   _$$_RecommendationByServiceModelCopyWith<_$_RecommendationByServiceModel>

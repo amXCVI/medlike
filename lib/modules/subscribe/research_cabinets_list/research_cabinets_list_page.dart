@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
@@ -8,6 +9,7 @@ import 'package:medlike/modules/subscribe/research_cabinets_list/research_cabine
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
+@RoutePage()
 class ResearchCabinetsListPage extends StatelessWidget {
   const ResearchCabinetsListPage({
     Key? key,
@@ -57,9 +59,9 @@ class ResearchCabinetsListPage extends StatelessWidget {
           } else if (state.getCabinetsListStatus ==
               GetCabinetsListStatuses.success) {
             return (state.cabinetsList!.isNotEmpty &&
-                    state.filteredCabinetsList!.isEmpty)
-                && (state.doctorsList!.isNotEmpty &&
-                  state.filteredDoctorsList!.isEmpty)
+                        state.filteredCabinetsList!.isEmpty) &&
+                    (state.doctorsList!.isNotEmpty &&
+                        state.filteredDoctorsList!.isEmpty)
                 ? const NotFoundData()
                 : ResearchCabinetsList(
                     doctorsList: state.filteredDoctorsList as List<Doctor>,

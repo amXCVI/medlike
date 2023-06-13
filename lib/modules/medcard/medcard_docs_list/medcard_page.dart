@@ -9,17 +9,18 @@ import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skel
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_filters_widget.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_list.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/selected_filters_widget.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
+@RoutePage()
 class MedcardPage extends StatefulWidget {
-  const MedcardPage({
-    Key? key, 
-    required this.userId, 
-    required this.isChildrenPage,
-    this.eventId
-  }): super(key: key);
+  const MedcardPage(
+      {Key? key,
+      required this.userId,
+      required this.isChildrenPage,
+      this.eventId})
+      : super(key: key);
 
   final String userId;
   final bool isChildrenPage;
@@ -38,7 +39,7 @@ class _MedcardPageState extends State<MedcardPage> {
   void initState() {
     handleResetFilters();
     _onLoadDada();
-    if(widget.eventId != null) {
+    if (widget.eventId != null) {
       context.read<UserCubit>().updateNotificationStatus(widget.eventId!);
     }
 

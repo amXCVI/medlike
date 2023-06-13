@@ -2,10 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_page.dart';
 
+@RoutePage()
 class SubscribeProfilesListPage extends StatelessWidget {
   const SubscribeProfilesListPage({Key? key}) : super(key: key);
 

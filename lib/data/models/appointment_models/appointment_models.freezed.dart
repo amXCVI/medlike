@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'appointment_models.dart';
 
@@ -49,7 +49,8 @@ mixin _$AppointmentModel {
 abstract class $AppointmentModelCopyWith<$Res> {
   factory $AppointmentModelCopyWith(
           AppointmentModel value, $Res Function(AppointmentModel) then) =
-      _$AppointmentModelCopyWithImpl<$Res>;
+      _$AppointmentModelCopyWithImpl<$Res, AppointmentModel>;
+  @useResult
   $Res call(
       {int status,
       bool needConfirmation,
@@ -76,129 +77,134 @@ abstract class $AppointmentModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppointmentModelCopyWithImpl<$Res>
+class _$AppointmentModelCopyWithImpl<$Res, $Val extends AppointmentModel>
     implements $AppointmentModelCopyWith<$Res> {
   _$AppointmentModelCopyWithImpl(this._value, this._then);
 
-  final AppointmentModel _value;
   // ignore: unused_field
-  final $Res Function(AppointmentModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? needConfirmation = freezed,
+    Object? status = null,
+    Object? needConfirmation = null,
     Object? comment = freezed,
-    Object? researchPlace = freezed,
-    Object? id = freezed,
-    Object? appointmentDateTime = freezed,
-    Object? patientInfo = freezed,
-    Object? clinicInfo = freezed,
-    Object? doctorInfo = freezed,
-    Object? researches = freezed,
-    Object? categoryType = freezed,
-    Object? isVideo = freezed,
-    Object? payType = freezed,
-    Object? isDraft = freezed,
+    Object? researchPlace = null,
+    Object? id = null,
+    Object? appointmentDateTime = null,
+    Object? patientInfo = null,
+    Object? clinicInfo = null,
+    Object? doctorInfo = null,
+    Object? researches = null,
+    Object? categoryType = null,
+    Object? isVideo = null,
+    Object? payType = null,
+    Object? isDraft = null,
     Object? orderId = freezed,
-    Object? scheduleId = freezed,
-    Object? paymentStatus = freezed,
+    Object? scheduleId = null,
+    Object? paymentStatus = null,
     Object? recommendations = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      needConfirmation: needConfirmation == freezed
+      needConfirmation: null == needConfirmation
           ? _value.needConfirmation
           : needConfirmation // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      researchPlace: researchPlace == freezed
+      researchPlace: null == researchPlace
           ? _value.researchPlace
           : researchPlace // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      appointmentDateTime: appointmentDateTime == freezed
+      appointmentDateTime: null == appointmentDateTime
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
               as String,
-      patientInfo: patientInfo == freezed
+      patientInfo: null == patientInfo
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
               as PatientInfoModel,
-      clinicInfo: clinicInfo == freezed
+      clinicInfo: null == clinicInfo
           ? _value.clinicInfo
           : clinicInfo // ignore: cast_nullable_to_non_nullable
               as ClinicInfoModel,
-      doctorInfo: doctorInfo == freezed
+      doctorInfo: null == doctorInfo
           ? _value.doctorInfo
           : doctorInfo // ignore: cast_nullable_to_non_nullable
               as DoctorInfoModel,
-      researches: researches == freezed
+      researches: null == researches
           ? _value.researches
           : researches // ignore: cast_nullable_to_non_nullable
               as List<ResearchesModel>,
-      categoryType: categoryType == freezed
+      categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
-      isVideo: isVideo == freezed
+      isVideo: null == isVideo
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      isDraft: isDraft == freezed
+      isDraft: null == isDraft
           ? _value.isDraft
           : isDraft // ignore: cast_nullable_to_non_nullable
               as bool,
-      orderId: orderId == freezed
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: null == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as int,
-      recommendations: recommendations == freezed
+      recommendations: freezed == recommendations
           ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PatientInfoModelCopyWith<$Res> get patientInfo {
     return $PatientInfoModelCopyWith<$Res>(_value.patientInfo, (value) {
-      return _then(_value.copyWith(patientInfo: value));
+      return _then(_value.copyWith(patientInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ClinicInfoModelCopyWith<$Res> get clinicInfo {
     return $ClinicInfoModelCopyWith<$Res>(_value.clinicInfo, (value) {
-      return _then(_value.copyWith(clinicInfo: value));
+      return _then(_value.copyWith(clinicInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $DoctorInfoModelCopyWith<$Res> get doctorInfo {
     return $DoctorInfoModelCopyWith<$Res>(_value.doctorInfo, (value) {
-      return _then(_value.copyWith(doctorInfo: value));
+      return _then(_value.copyWith(doctorInfo: value) as $Val);
     });
   }
 }
@@ -210,6 +216,7 @@ abstract class _$$_AppointmentModelCopyWith<$Res>
           _$_AppointmentModel value, $Res Function(_$_AppointmentModel) then) =
       __$$_AppointmentModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int status,
       bool needConfirmation,
@@ -240,106 +247,104 @@ abstract class _$$_AppointmentModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_AppointmentModelCopyWithImpl<$Res>
-    extends _$AppointmentModelCopyWithImpl<$Res>
+    extends _$AppointmentModelCopyWithImpl<$Res, _$_AppointmentModel>
     implements _$$_AppointmentModelCopyWith<$Res> {
   __$$_AppointmentModelCopyWithImpl(
       _$_AppointmentModel _value, $Res Function(_$_AppointmentModel) _then)
-      : super(_value, (v) => _then(v as _$_AppointmentModel));
+      : super(_value, _then);
 
-  @override
-  _$_AppointmentModel get _value => super._value as _$_AppointmentModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? needConfirmation = freezed,
+    Object? status = null,
+    Object? needConfirmation = null,
     Object? comment = freezed,
-    Object? researchPlace = freezed,
-    Object? id = freezed,
-    Object? appointmentDateTime = freezed,
-    Object? patientInfo = freezed,
-    Object? clinicInfo = freezed,
-    Object? doctorInfo = freezed,
-    Object? researches = freezed,
-    Object? categoryType = freezed,
-    Object? isVideo = freezed,
-    Object? payType = freezed,
-    Object? isDraft = freezed,
+    Object? researchPlace = null,
+    Object? id = null,
+    Object? appointmentDateTime = null,
+    Object? patientInfo = null,
+    Object? clinicInfo = null,
+    Object? doctorInfo = null,
+    Object? researches = null,
+    Object? categoryType = null,
+    Object? isVideo = null,
+    Object? payType = null,
+    Object? isDraft = null,
     Object? orderId = freezed,
-    Object? scheduleId = freezed,
-    Object? paymentStatus = freezed,
+    Object? scheduleId = null,
+    Object? paymentStatus = null,
     Object? recommendations = freezed,
   }) {
     return _then(_$_AppointmentModel(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      needConfirmation: needConfirmation == freezed
+      needConfirmation: null == needConfirmation
           ? _value.needConfirmation
           : needConfirmation // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      researchPlace: researchPlace == freezed
+      researchPlace: null == researchPlace
           ? _value.researchPlace
           : researchPlace // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      appointmentDateTime: appointmentDateTime == freezed
+      appointmentDateTime: null == appointmentDateTime
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
               as String,
-      patientInfo: patientInfo == freezed
+      patientInfo: null == patientInfo
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
               as PatientInfoModel,
-      clinicInfo: clinicInfo == freezed
+      clinicInfo: null == clinicInfo
           ? _value.clinicInfo
           : clinicInfo // ignore: cast_nullable_to_non_nullable
               as ClinicInfoModel,
-      doctorInfo: doctorInfo == freezed
+      doctorInfo: null == doctorInfo
           ? _value.doctorInfo
           : doctorInfo // ignore: cast_nullable_to_non_nullable
               as DoctorInfoModel,
-      researches: researches == freezed
+      researches: null == researches
           ? _value._researches
           : researches // ignore: cast_nullable_to_non_nullable
               as List<ResearchesModel>,
-      categoryType: categoryType == freezed
+      categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
-      isVideo: isVideo == freezed
+      isVideo: null == isVideo
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      isDraft: isDraft == freezed
+      isDraft: null == isDraft
           ? _value.isDraft
           : isDraft // ignore: cast_nullable_to_non_nullable
               as bool,
-      orderId: orderId == freezed
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: null == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as int,
-      recommendations: recommendations == freezed
+      recommendations: freezed == recommendations
           ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -395,6 +400,7 @@ class _$_AppointmentModel implements _AppointmentModel {
   final List<ResearchesModel> _researches;
   @override
   List<ResearchesModel> get researches {
+    if (_researches is EqualUnmodifiableListView) return _researches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_researches);
   }
@@ -426,68 +432,71 @@ class _$_AppointmentModel implements _AppointmentModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppointmentModel &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.needConfirmation, needConfirmation) &&
-            const DeepCollectionEquality().equals(other.comment, comment) &&
-            const DeepCollectionEquality()
-                .equals(other.researchPlace, researchPlace) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.appointmentDateTime, appointmentDateTime) &&
-            const DeepCollectionEquality()
-                .equals(other.patientInfo, patientInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.clinicInfo, clinicInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorInfo, doctorInfo) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.needConfirmation, needConfirmation) ||
+                other.needConfirmation == needConfirmation) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.researchPlace, researchPlace) ||
+                other.researchPlace == researchPlace) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.appointmentDateTime, appointmentDateTime) ||
+                other.appointmentDateTime == appointmentDateTime) &&
+            (identical(other.patientInfo, patientInfo) ||
+                other.patientInfo == patientInfo) &&
+            (identical(other.clinicInfo, clinicInfo) ||
+                other.clinicInfo == clinicInfo) &&
+            (identical(other.doctorInfo, doctorInfo) ||
+                other.doctorInfo == doctorInfo) &&
             const DeepCollectionEquality()
                 .equals(other._researches, _researches) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryType, categoryType) &&
-            const DeepCollectionEquality().equals(other.isVideo, isVideo) &&
-            const DeepCollectionEquality().equals(other.payType, payType) &&
-            const DeepCollectionEquality().equals(other.isDraft, isDraft) &&
-            const DeepCollectionEquality().equals(other.orderId, orderId) &&
-            const DeepCollectionEquality()
-                .equals(other.scheduleId, scheduleId) &&
-            const DeepCollectionEquality()
-                .equals(other.paymentStatus, paymentStatus) &&
-            const DeepCollectionEquality()
-                .equals(other.recommendations, recommendations));
+            (identical(other.categoryType, categoryType) ||
+                other.categoryType == categoryType) &&
+            (identical(other.isVideo, isVideo) || other.isVideo == isVideo) &&
+            (identical(other.payType, payType) || other.payType == payType) &&
+            (identical(other.isDraft, isDraft) || other.isDraft == isDraft) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.scheduleId, scheduleId) ||
+                other.scheduleId == scheduleId) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.recommendations, recommendations) ||
+                other.recommendations == recommendations));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(needConfirmation),
-      const DeepCollectionEquality().hash(comment),
-      const DeepCollectionEquality().hash(researchPlace),
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(appointmentDateTime),
-      const DeepCollectionEquality().hash(patientInfo),
-      const DeepCollectionEquality().hash(clinicInfo),
-      const DeepCollectionEquality().hash(doctorInfo),
+      status,
+      needConfirmation,
+      comment,
+      researchPlace,
+      id,
+      appointmentDateTime,
+      patientInfo,
+      clinicInfo,
+      doctorInfo,
       const DeepCollectionEquality().hash(_researches),
-      const DeepCollectionEquality().hash(categoryType),
-      const DeepCollectionEquality().hash(isVideo),
-      const DeepCollectionEquality().hash(payType),
-      const DeepCollectionEquality().hash(isDraft),
-      const DeepCollectionEquality().hash(orderId),
-      const DeepCollectionEquality().hash(scheduleId),
-      const DeepCollectionEquality().hash(paymentStatus),
-      const DeepCollectionEquality().hash(recommendations));
+      categoryType,
+      isVideo,
+      payType,
+      isDraft,
+      orderId,
+      scheduleId,
+      paymentStatus,
+      recommendations);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AppointmentModelCopyWith<_$_AppointmentModel> get copyWith =>
       __$$_AppointmentModelCopyWithImpl<_$_AppointmentModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AppointmentModelToJson(this);
+    return _$$_AppointmentModelToJson(
+      this,
+    );
   }
 }
 
@@ -516,41 +525,41 @@ abstract class _AppointmentModel implements AppointmentModel {
       _$_AppointmentModel.fromJson;
 
   @override
-  int get status => throw _privateConstructorUsedError;
+  int get status;
   @override
-  bool get needConfirmation => throw _privateConstructorUsedError;
+  bool get needConfirmation;
   @override
-  String? get comment => throw _privateConstructorUsedError;
+  String? get comment;
   @override
-  String get researchPlace => throw _privateConstructorUsedError;
+  String get researchPlace;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get appointmentDateTime => throw _privateConstructorUsedError;
+  String get appointmentDateTime;
   @override
-  PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
+  PatientInfoModel get patientInfo;
   @override
-  ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
+  ClinicInfoModel get clinicInfo;
   @override
-  DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
+  DoctorInfoModel get doctorInfo;
   @override
-  List<ResearchesModel> get researches => throw _privateConstructorUsedError;
+  List<ResearchesModel> get researches;
   @override
-  int get categoryType => throw _privateConstructorUsedError;
+  int get categoryType;
   @override
-  bool get isVideo => throw _privateConstructorUsedError;
+  bool get isVideo;
   @override
-  String get payType => throw _privateConstructorUsedError;
+  String get payType;
   @override
-  bool get isDraft => throw _privateConstructorUsedError;
+  bool get isDraft;
   @override
-  String? get orderId => throw _privateConstructorUsedError;
+  String? get orderId;
   @override
-  String get scheduleId => throw _privateConstructorUsedError;
+  String get scheduleId;
   @override
-  int get paymentStatus => throw _privateConstructorUsedError;
+  int get paymentStatus;
   @override
-  String? get recommendations => throw _privateConstructorUsedError;
+  String? get recommendations;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentModelCopyWith<_$_AppointmentModel> get copyWith =>
@@ -597,7 +606,9 @@ abstract class $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
   factory $AppointmentModelWithTimeZoneOffsetCopyWith(
           AppointmentModelWithTimeZoneOffset value,
           $Res Function(AppointmentModelWithTimeZoneOffset) then) =
-      _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>;
+      _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
+          AppointmentModelWithTimeZoneOffset>;
+  @useResult
   $Res call(
       {int status,
       bool needConfirmation,
@@ -625,134 +636,140 @@ abstract class $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
+class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
+        $Val extends AppointmentModelWithTimeZoneOffset>
     implements $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
   _$AppointmentModelWithTimeZoneOffsetCopyWithImpl(this._value, this._then);
 
-  final AppointmentModelWithTimeZoneOffset _value;
   // ignore: unused_field
-  final $Res Function(AppointmentModelWithTimeZoneOffset) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? needConfirmation = freezed,
+    Object? status = null,
+    Object? needConfirmation = null,
     Object? comment = freezed,
-    Object? researchPlace = freezed,
-    Object? id = freezed,
-    Object? appointmentDateTime = freezed,
-    Object? timeZoneOffset = freezed,
-    Object? patientInfo = freezed,
-    Object? clinicInfo = freezed,
-    Object? doctorInfo = freezed,
-    Object? researches = freezed,
-    Object? categoryType = freezed,
-    Object? isVideo = freezed,
-    Object? payType = freezed,
-    Object? isDraft = freezed,
+    Object? researchPlace = null,
+    Object? id = null,
+    Object? appointmentDateTime = null,
+    Object? timeZoneOffset = null,
+    Object? patientInfo = null,
+    Object? clinicInfo = null,
+    Object? doctorInfo = null,
+    Object? researches = null,
+    Object? categoryType = null,
+    Object? isVideo = null,
+    Object? payType = null,
+    Object? isDraft = null,
     Object? orderId = freezed,
-    Object? scheduleId = freezed,
-    Object? paymentStatus = freezed,
+    Object? scheduleId = null,
+    Object? paymentStatus = null,
     Object? recommendations = freezed,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      needConfirmation: needConfirmation == freezed
+      needConfirmation: null == needConfirmation
           ? _value.needConfirmation
           : needConfirmation // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      researchPlace: researchPlace == freezed
+      researchPlace: null == researchPlace
           ? _value.researchPlace
           : researchPlace // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      appointmentDateTime: appointmentDateTime == freezed
+      appointmentDateTime: null == appointmentDateTime
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: null == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int,
-      patientInfo: patientInfo == freezed
+      patientInfo: null == patientInfo
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
               as PatientInfoModel,
-      clinicInfo: clinicInfo == freezed
+      clinicInfo: null == clinicInfo
           ? _value.clinicInfo
           : clinicInfo // ignore: cast_nullable_to_non_nullable
               as ClinicInfoModel,
-      doctorInfo: doctorInfo == freezed
+      doctorInfo: null == doctorInfo
           ? _value.doctorInfo
           : doctorInfo // ignore: cast_nullable_to_non_nullable
               as DoctorInfoModel,
-      researches: researches == freezed
+      researches: null == researches
           ? _value.researches
           : researches // ignore: cast_nullable_to_non_nullable
               as List<ResearchesModel>,
-      categoryType: categoryType == freezed
+      categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
-      isVideo: isVideo == freezed
+      isVideo: null == isVideo
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      isDraft: isDraft == freezed
+      isDraft: null == isDraft
           ? _value.isDraft
           : isDraft // ignore: cast_nullable_to_non_nullable
               as bool,
-      orderId: orderId == freezed
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: null == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as int,
-      recommendations: recommendations == freezed
+      recommendations: freezed == recommendations
           ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PatientInfoModelCopyWith<$Res> get patientInfo {
     return $PatientInfoModelCopyWith<$Res>(_value.patientInfo, (value) {
-      return _then(_value.copyWith(patientInfo: value));
+      return _then(_value.copyWith(patientInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ClinicInfoModelCopyWith<$Res> get clinicInfo {
     return $ClinicInfoModelCopyWith<$Res>(_value.clinicInfo, (value) {
-      return _then(_value.copyWith(clinicInfo: value));
+      return _then(_value.copyWith(clinicInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $DoctorInfoModelCopyWith<$Res> get doctorInfo {
     return $DoctorInfoModelCopyWith<$Res>(_value.doctorInfo, (value) {
-      return _then(_value.copyWith(doctorInfo: value));
+      return _then(_value.copyWith(doctorInfo: value) as $Val);
     });
   }
 }
@@ -765,6 +782,7 @@ abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
           $Res Function(_$_AppointmentModelWithTimeZoneOffset) then) =
       __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int status,
       bool needConfirmation,
@@ -796,113 +814,111 @@ abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
 
 /// @nodoc
 class __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
-    extends _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
+    extends _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
+        _$_AppointmentModelWithTimeZoneOffset>
     implements _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
   __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl(
       _$_AppointmentModelWithTimeZoneOffset _value,
       $Res Function(_$_AppointmentModelWithTimeZoneOffset) _then)
-      : super(_value, (v) => _then(v as _$_AppointmentModelWithTimeZoneOffset));
+      : super(_value, _then);
 
-  @override
-  _$_AppointmentModelWithTimeZoneOffset get _value =>
-      super._value as _$_AppointmentModelWithTimeZoneOffset;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
-    Object? needConfirmation = freezed,
+    Object? status = null,
+    Object? needConfirmation = null,
     Object? comment = freezed,
-    Object? researchPlace = freezed,
-    Object? id = freezed,
-    Object? appointmentDateTime = freezed,
-    Object? timeZoneOffset = freezed,
-    Object? patientInfo = freezed,
-    Object? clinicInfo = freezed,
-    Object? doctorInfo = freezed,
-    Object? researches = freezed,
-    Object? categoryType = freezed,
-    Object? isVideo = freezed,
-    Object? payType = freezed,
-    Object? isDraft = freezed,
+    Object? researchPlace = null,
+    Object? id = null,
+    Object? appointmentDateTime = null,
+    Object? timeZoneOffset = null,
+    Object? patientInfo = null,
+    Object? clinicInfo = null,
+    Object? doctorInfo = null,
+    Object? researches = null,
+    Object? categoryType = null,
+    Object? isVideo = null,
+    Object? payType = null,
+    Object? isDraft = null,
     Object? orderId = freezed,
-    Object? scheduleId = freezed,
-    Object? paymentStatus = freezed,
+    Object? scheduleId = null,
+    Object? paymentStatus = null,
     Object? recommendations = freezed,
   }) {
     return _then(_$_AppointmentModelWithTimeZoneOffset(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      needConfirmation: needConfirmation == freezed
+      needConfirmation: null == needConfirmation
           ? _value.needConfirmation
           : needConfirmation // ignore: cast_nullable_to_non_nullable
               as bool,
-      comment: comment == freezed
+      comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String?,
-      researchPlace: researchPlace == freezed
+      researchPlace: null == researchPlace
           ? _value.researchPlace
           : researchPlace // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      appointmentDateTime: appointmentDateTime == freezed
+      appointmentDateTime: null == appointmentDateTime
           ? _value.appointmentDateTime
           : appointmentDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      timeZoneOffset: timeZoneOffset == freezed
+      timeZoneOffset: null == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int,
-      patientInfo: patientInfo == freezed
+      patientInfo: null == patientInfo
           ? _value.patientInfo
           : patientInfo // ignore: cast_nullable_to_non_nullable
               as PatientInfoModel,
-      clinicInfo: clinicInfo == freezed
+      clinicInfo: null == clinicInfo
           ? _value.clinicInfo
           : clinicInfo // ignore: cast_nullable_to_non_nullable
               as ClinicInfoModel,
-      doctorInfo: doctorInfo == freezed
+      doctorInfo: null == doctorInfo
           ? _value.doctorInfo
           : doctorInfo // ignore: cast_nullable_to_non_nullable
               as DoctorInfoModel,
-      researches: researches == freezed
+      researches: null == researches
           ? _value._researches
           : researches // ignore: cast_nullable_to_non_nullable
               as List<ResearchesModel>,
-      categoryType: categoryType == freezed
+      categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
-      isVideo: isVideo == freezed
+      isVideo: null == isVideo
           ? _value.isVideo
           : isVideo // ignore: cast_nullable_to_non_nullable
               as bool,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      isDraft: isDraft == freezed
+      isDraft: null == isDraft
           ? _value.isDraft
           : isDraft // ignore: cast_nullable_to_non_nullable
               as bool,
-      orderId: orderId == freezed
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: null == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as int,
-      recommendations: recommendations == freezed
+      recommendations: freezed == recommendations
           ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -964,6 +980,7 @@ class _$_AppointmentModelWithTimeZoneOffset
   final List<ResearchesModel> _researches;
   @override
   List<ResearchesModel> get researches {
+    if (_researches is EqualUnmodifiableListView) return _researches;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_researches);
   }
@@ -995,66 +1012,67 @@ class _$_AppointmentModelWithTimeZoneOffset
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppointmentModelWithTimeZoneOffset &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.needConfirmation, needConfirmation) &&
-            const DeepCollectionEquality().equals(other.comment, comment) &&
-            const DeepCollectionEquality()
-                .equals(other.researchPlace, researchPlace) &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.appointmentDateTime, appointmentDateTime) &&
-            const DeepCollectionEquality()
-                .equals(other.timeZoneOffset, timeZoneOffset) &&
-            const DeepCollectionEquality()
-                .equals(other.patientInfo, patientInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.clinicInfo, clinicInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorInfo, doctorInfo) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.needConfirmation, needConfirmation) ||
+                other.needConfirmation == needConfirmation) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.researchPlace, researchPlace) ||
+                other.researchPlace == researchPlace) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.appointmentDateTime, appointmentDateTime) ||
+                other.appointmentDateTime == appointmentDateTime) &&
+            (identical(other.timeZoneOffset, timeZoneOffset) ||
+                other.timeZoneOffset == timeZoneOffset) &&
+            (identical(other.patientInfo, patientInfo) ||
+                other.patientInfo == patientInfo) &&
+            (identical(other.clinicInfo, clinicInfo) ||
+                other.clinicInfo == clinicInfo) &&
+            (identical(other.doctorInfo, doctorInfo) ||
+                other.doctorInfo == doctorInfo) &&
             const DeepCollectionEquality()
                 .equals(other._researches, _researches) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryType, categoryType) &&
-            const DeepCollectionEquality().equals(other.isVideo, isVideo) &&
-            const DeepCollectionEquality().equals(other.payType, payType) &&
-            const DeepCollectionEquality().equals(other.isDraft, isDraft) &&
-            const DeepCollectionEquality().equals(other.orderId, orderId) &&
-            const DeepCollectionEquality()
-                .equals(other.scheduleId, scheduleId) &&
-            const DeepCollectionEquality()
-                .equals(other.paymentStatus, paymentStatus) &&
-            const DeepCollectionEquality()
-                .equals(other.recommendations, recommendations));
+            (identical(other.categoryType, categoryType) ||
+                other.categoryType == categoryType) &&
+            (identical(other.isVideo, isVideo) || other.isVideo == isVideo) &&
+            (identical(other.payType, payType) || other.payType == payType) &&
+            (identical(other.isDraft, isDraft) || other.isDraft == isDraft) &&
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.scheduleId, scheduleId) ||
+                other.scheduleId == scheduleId) &&
+            (identical(other.paymentStatus, paymentStatus) ||
+                other.paymentStatus == paymentStatus) &&
+            (identical(other.recommendations, recommendations) ||
+                other.recommendations == recommendations));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(status),
-        const DeepCollectionEquality().hash(needConfirmation),
-        const DeepCollectionEquality().hash(comment),
-        const DeepCollectionEquality().hash(researchPlace),
-        const DeepCollectionEquality().hash(id),
-        const DeepCollectionEquality().hash(appointmentDateTime),
-        const DeepCollectionEquality().hash(timeZoneOffset),
-        const DeepCollectionEquality().hash(patientInfo),
-        const DeepCollectionEquality().hash(clinicInfo),
-        const DeepCollectionEquality().hash(doctorInfo),
+        status,
+        needConfirmation,
+        comment,
+        researchPlace,
+        id,
+        appointmentDateTime,
+        timeZoneOffset,
+        patientInfo,
+        clinicInfo,
+        doctorInfo,
         const DeepCollectionEquality().hash(_researches),
-        const DeepCollectionEquality().hash(categoryType),
-        const DeepCollectionEquality().hash(isVideo),
-        const DeepCollectionEquality().hash(payType),
-        const DeepCollectionEquality().hash(isDraft),
-        const DeepCollectionEquality().hash(orderId),
-        const DeepCollectionEquality().hash(scheduleId),
-        const DeepCollectionEquality().hash(paymentStatus),
-        const DeepCollectionEquality().hash(recommendations)
+        categoryType,
+        isVideo,
+        payType,
+        isDraft,
+        orderId,
+        scheduleId,
+        paymentStatus,
+        recommendations
       ]);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AppointmentModelWithTimeZoneOffsetCopyWith<
           _$_AppointmentModelWithTimeZoneOffset>
       get copyWith => __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<
@@ -1062,7 +1080,9 @@ class _$_AppointmentModelWithTimeZoneOffset
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AppointmentModelWithTimeZoneOffsetToJson(this);
+    return _$$_AppointmentModelWithTimeZoneOffsetToJson(
+      this,
+    );
   }
 }
 
@@ -1095,44 +1115,44 @@ abstract class _AppointmentModelWithTimeZoneOffset
       _$_AppointmentModelWithTimeZoneOffset.fromJson;
 
   @override
-  int get status => throw _privateConstructorUsedError;
+  int get status;
   @override
-  bool get needConfirmation => throw _privateConstructorUsedError;
+  bool get needConfirmation;
   @override
-  String? get comment => throw _privateConstructorUsedError;
+  String? get comment;
   @override
-  String get researchPlace => throw _privateConstructorUsedError;
+  String get researchPlace;
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @TimestampConverter()
-  DateTime get appointmentDateTime => throw _privateConstructorUsedError;
+  DateTime get appointmentDateTime;
   @override
-  int get timeZoneOffset => throw _privateConstructorUsedError;
+  int get timeZoneOffset;
   @override
-  PatientInfoModel get patientInfo => throw _privateConstructorUsedError;
+  PatientInfoModel get patientInfo;
   @override
-  ClinicInfoModel get clinicInfo => throw _privateConstructorUsedError;
+  ClinicInfoModel get clinicInfo;
   @override
-  DoctorInfoModel get doctorInfo => throw _privateConstructorUsedError;
+  DoctorInfoModel get doctorInfo;
   @override
-  List<ResearchesModel> get researches => throw _privateConstructorUsedError;
+  List<ResearchesModel> get researches;
   @override
-  int get categoryType => throw _privateConstructorUsedError;
+  int get categoryType;
   @override
-  bool get isVideo => throw _privateConstructorUsedError;
+  bool get isVideo;
   @override
-  String get payType => throw _privateConstructorUsedError;
+  String get payType;
   @override
-  bool get isDraft => throw _privateConstructorUsedError;
+  bool get isDraft;
   @override
-  String? get orderId => throw _privateConstructorUsedError;
+  String? get orderId;
   @override
-  String get scheduleId => throw _privateConstructorUsedError;
+  String get scheduleId;
   @override
-  int get paymentStatus => throw _privateConstructorUsedError;
+  int get paymentStatus;
   @override
-  String? get recommendations => throw _privateConstructorUsedError;
+  String? get recommendations;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentModelWithTimeZoneOffsetCopyWith<
@@ -1159,34 +1179,37 @@ mixin _$PatientInfoModel {
 abstract class $PatientInfoModelCopyWith<$Res> {
   factory $PatientInfoModelCopyWith(
           PatientInfoModel value, $Res Function(PatientInfoModel) then) =
-      _$PatientInfoModelCopyWithImpl<$Res>;
+      _$PatientInfoModelCopyWithImpl<$Res, PatientInfoModel>;
+  @useResult
   $Res call({String? id, String? name});
 }
 
 /// @nodoc
-class _$PatientInfoModelCopyWithImpl<$Res>
+class _$PatientInfoModelCopyWithImpl<$Res, $Val extends PatientInfoModel>
     implements $PatientInfoModelCopyWith<$Res> {
   _$PatientInfoModelCopyWithImpl(this._value, this._then);
 
-  final PatientInfoModel _value;
   // ignore: unused_field
-  final $Res Function(PatientInfoModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1197,31 +1220,30 @@ abstract class _$$_PatientInfoModelCopyWith<$Res>
           _$_PatientInfoModel value, $Res Function(_$_PatientInfoModel) then) =
       __$$_PatientInfoModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? id, String? name});
 }
 
 /// @nodoc
 class __$$_PatientInfoModelCopyWithImpl<$Res>
-    extends _$PatientInfoModelCopyWithImpl<$Res>
+    extends _$PatientInfoModelCopyWithImpl<$Res, _$_PatientInfoModel>
     implements _$$_PatientInfoModelCopyWith<$Res> {
   __$$_PatientInfoModelCopyWithImpl(
       _$_PatientInfoModel _value, $Res Function(_$_PatientInfoModel) _then)
-      : super(_value, (v) => _then(v as _$_PatientInfoModel));
+      : super(_value, _then);
 
-  @override
-  _$_PatientInfoModel get _value => super._value as _$_PatientInfoModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
     return _then(_$_PatientInfoModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1252,25 +1274,25 @@ class _$_PatientInfoModel implements _PatientInfoModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PatientInfoModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PatientInfoModelCopyWith<_$_PatientInfoModel> get copyWith =>
       __$$_PatientInfoModelCopyWithImpl<_$_PatientInfoModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PatientInfoModelToJson(this);
+    return _$$_PatientInfoModelToJson(
+      this,
+    );
   }
 }
 
@@ -1283,9 +1305,9 @@ abstract class _PatientInfoModel implements PatientInfoModel {
       _$_PatientInfoModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(ignore: true)
   _$$_PatientInfoModelCopyWith<_$_PatientInfoModel> get copyWith =>
@@ -1312,19 +1334,22 @@ mixin _$ClinicInfoModel {
 abstract class $ClinicInfoModelCopyWith<$Res> {
   factory $ClinicInfoModelCopyWith(
           ClinicInfoModel value, $Res Function(ClinicInfoModel) then) =
-      _$ClinicInfoModelCopyWithImpl<$Res>;
+      _$ClinicInfoModelCopyWithImpl<$Res, ClinicInfoModel>;
+  @useResult
   $Res call({String? id, String? name, String? address});
 }
 
 /// @nodoc
-class _$ClinicInfoModelCopyWithImpl<$Res>
+class _$ClinicInfoModelCopyWithImpl<$Res, $Val extends ClinicInfoModel>
     implements $ClinicInfoModelCopyWith<$Res> {
   _$ClinicInfoModelCopyWithImpl(this._value, this._then);
 
-  final ClinicInfoModel _value;
   // ignore: unused_field
-  final $Res Function(ClinicInfoModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1332,19 +1357,19 @@ class _$ClinicInfoModelCopyWithImpl<$Res>
     Object? address = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1355,20 +1380,19 @@ abstract class _$$_ClinicInfoModelCopyWith<$Res>
           _$_ClinicInfoModel value, $Res Function(_$_ClinicInfoModel) then) =
       __$$_ClinicInfoModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? id, String? name, String? address});
 }
 
 /// @nodoc
 class __$$_ClinicInfoModelCopyWithImpl<$Res>
-    extends _$ClinicInfoModelCopyWithImpl<$Res>
+    extends _$ClinicInfoModelCopyWithImpl<$Res, _$_ClinicInfoModel>
     implements _$$_ClinicInfoModelCopyWith<$Res> {
   __$$_ClinicInfoModelCopyWithImpl(
       _$_ClinicInfoModel _value, $Res Function(_$_ClinicInfoModel) _then)
-      : super(_value, (v) => _then(v as _$_ClinicInfoModel));
+      : super(_value, _then);
 
-  @override
-  _$_ClinicInfoModel get _value => super._value as _$_ClinicInfoModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1376,15 +1400,15 @@ class __$$_ClinicInfoModelCopyWithImpl<$Res>
     Object? address = freezed,
   }) {
     return _then(_$_ClinicInfoModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1418,27 +1442,26 @@ class _$_ClinicInfoModel implements _ClinicInfoModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ClinicInfoModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.address, address));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(address));
+  int get hashCode => Object.hash(runtimeType, id, name, address);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ClinicInfoModelCopyWith<_$_ClinicInfoModel> get copyWith =>
       __$$_ClinicInfoModelCopyWithImpl<_$_ClinicInfoModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ClinicInfoModelToJson(this);
+    return _$$_ClinicInfoModelToJson(
+      this,
+    );
   }
 }
 
@@ -1452,11 +1475,11 @@ abstract class _ClinicInfoModel implements ClinicInfoModel {
       _$_ClinicInfoModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get address => throw _privateConstructorUsedError;
+  String? get address;
   @override
   @JsonKey(ignore: true)
   _$$_ClinicInfoModelCopyWith<_$_ClinicInfoModel> get copyWith =>
@@ -1486,7 +1509,8 @@ mixin _$DoctorInfoModel {
 abstract class $DoctorInfoModelCopyWith<$Res> {
   factory $DoctorInfoModelCopyWith(
           DoctorInfoModel value, $Res Function(DoctorInfoModel) then) =
-      _$DoctorInfoModelCopyWithImpl<$Res>;
+      _$DoctorInfoModelCopyWithImpl<$Res, DoctorInfoModel>;
+  @useResult
   $Res call(
       {String? id,
       String? firstName,
@@ -1497,14 +1521,16 @@ abstract class $DoctorInfoModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DoctorInfoModelCopyWithImpl<$Res>
+class _$DoctorInfoModelCopyWithImpl<$Res, $Val extends DoctorInfoModel>
     implements $DoctorInfoModelCopyWith<$Res> {
   _$DoctorInfoModelCopyWithImpl(this._value, this._then);
 
-  final DoctorInfoModel _value;
   // ignore: unused_field
-  final $Res Function(DoctorInfoModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1515,31 +1541,31 @@ class _$DoctorInfoModelCopyWithImpl<$Res>
     Object? specialization = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      middleName: middleName == freezed
+      middleName: freezed == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      specializationId: specializationId == freezed
+      specializationId: freezed == specializationId
           ? _value.specializationId
           : specializationId // ignore: cast_nullable_to_non_nullable
               as String?,
-      specialization: specialization == freezed
+      specialization: freezed == specialization
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1550,6 +1576,7 @@ abstract class _$$_DoctorInfoModelCopyWith<$Res>
           _$_DoctorInfoModel value, $Res Function(_$_DoctorInfoModel) then) =
       __$$_DoctorInfoModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       String? firstName,
@@ -1561,15 +1588,13 @@ abstract class _$$_DoctorInfoModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_DoctorInfoModelCopyWithImpl<$Res>
-    extends _$DoctorInfoModelCopyWithImpl<$Res>
+    extends _$DoctorInfoModelCopyWithImpl<$Res, _$_DoctorInfoModel>
     implements _$$_DoctorInfoModelCopyWith<$Res> {
   __$$_DoctorInfoModelCopyWithImpl(
       _$_DoctorInfoModel _value, $Res Function(_$_DoctorInfoModel) _then)
-      : super(_value, (v) => _then(v as _$_DoctorInfoModel));
+      : super(_value, _then);
 
-  @override
-  _$_DoctorInfoModel get _value => super._value as _$_DoctorInfoModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1580,27 +1605,27 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
     Object? specialization = freezed,
   }) {
     return _then(_$_DoctorInfoModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      firstName: firstName == freezed
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String?,
-      middleName: middleName == freezed
+      middleName: freezed == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastName: lastName == freezed
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String?,
-      specializationId: specializationId == freezed
+      specializationId: freezed == specializationId
           ? _value.specializationId
           : specializationId // ignore: cast_nullable_to_non_nullable
               as String?,
-      specialization: specialization == freezed
+      specialization: freezed == specialization
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1645,36 +1670,35 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DoctorInfoModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality()
-                .equals(other.middleName, middleName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality()
-                .equals(other.specializationId, specializationId) &&
-            const DeepCollectionEquality()
-                .equals(other.specialization, specialization));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.specializationId, specializationId) ||
+                other.specializationId == specializationId) &&
+            (identical(other.specialization, specialization) ||
+                other.specialization == specialization));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(middleName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(specializationId),
-      const DeepCollectionEquality().hash(specialization));
+  int get hashCode => Object.hash(runtimeType, id, firstName, middleName,
+      lastName, specializationId, specialization);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>
       __$$_DoctorInfoModelCopyWithImpl<_$_DoctorInfoModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DoctorInfoModelToJson(this);
+    return _$$_DoctorInfoModelToJson(
+      this,
+    );
   }
 }
 
@@ -1691,17 +1715,17 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
       _$_DoctorInfoModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get firstName => throw _privateConstructorUsedError;
+  String? get firstName;
   @override
-  String? get middleName => throw _privateConstructorUsedError;
+  String? get middleName;
   @override
-  String? get lastName => throw _privateConstructorUsedError;
+  String? get lastName;
   @override
-  String? get specializationId => throw _privateConstructorUsedError;
+  String? get specializationId;
   @override
-  String? get specialization => throw _privateConstructorUsedError;
+  String? get specialization;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>
@@ -1727,34 +1751,37 @@ mixin _$ResearchesModel {
 abstract class $ResearchesModelCopyWith<$Res> {
   factory $ResearchesModelCopyWith(
           ResearchesModel value, $Res Function(ResearchesModel) then) =
-      _$ResearchesModelCopyWithImpl<$Res>;
+      _$ResearchesModelCopyWithImpl<$Res, ResearchesModel>;
+  @useResult
   $Res call({String? id, String? name});
 }
 
 /// @nodoc
-class _$ResearchesModelCopyWithImpl<$Res>
+class _$ResearchesModelCopyWithImpl<$Res, $Val extends ResearchesModel>
     implements $ResearchesModelCopyWith<$Res> {
   _$ResearchesModelCopyWithImpl(this._value, this._then);
 
-  final ResearchesModel _value;
   // ignore: unused_field
-  final $Res Function(ResearchesModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1765,31 +1792,30 @@ abstract class _$$_ResearchesModelCopyWith<$Res>
           _$_ResearchesModel value, $Res Function(_$_ResearchesModel) then) =
       __$$_ResearchesModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? id, String? name});
 }
 
 /// @nodoc
 class __$$_ResearchesModelCopyWithImpl<$Res>
-    extends _$ResearchesModelCopyWithImpl<$Res>
+    extends _$ResearchesModelCopyWithImpl<$Res, _$_ResearchesModel>
     implements _$$_ResearchesModelCopyWith<$Res> {
   __$$_ResearchesModelCopyWithImpl(
       _$_ResearchesModel _value, $Res Function(_$_ResearchesModel) _then)
-      : super(_value, (v) => _then(v as _$_ResearchesModel));
+      : super(_value, _then);
 
-  @override
-  _$_ResearchesModel get _value => super._value as _$_ResearchesModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
   }) {
     return _then(_$_ResearchesModel(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1820,25 +1846,25 @@ class _$_ResearchesModel implements _ResearchesModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ResearchesModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ResearchesModelCopyWith<_$_ResearchesModel> get copyWith =>
       __$$_ResearchesModelCopyWithImpl<_$_ResearchesModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResearchesModelToJson(this);
+    return _$$_ResearchesModelToJson(
+      this,
+    );
   }
 }
 
@@ -1851,9 +1877,9 @@ abstract class _ResearchesModel implements ResearchesModel {
       _$_ResearchesModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(ignore: true)
   _$$_ResearchesModelCopyWith<_$_ResearchesModel> get copyWith =>
@@ -1883,7 +1909,8 @@ mixin _$AppointmentInfoModel {
 abstract class $AppointmentInfoModelCopyWith<$Res> {
   factory $AppointmentInfoModelCopyWith(AppointmentInfoModel value,
           $Res Function(AppointmentInfoModel) then) =
-      _$AppointmentInfoModelCopyWithImpl<$Res>;
+      _$AppointmentInfoModelCopyWithImpl<$Res, AppointmentInfoModel>;
+  @useResult
   $Res call(
       {int price,
       bool noPayment,
@@ -1893,44 +1920,47 @@ abstract class $AppointmentInfoModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AppointmentInfoModelCopyWithImpl<$Res>
+class _$AppointmentInfoModelCopyWithImpl<$Res,
+        $Val extends AppointmentInfoModel>
     implements $AppointmentInfoModelCopyWith<$Res> {
   _$AppointmentInfoModelCopyWithImpl(this._value, this._then);
 
-  final AppointmentInfoModel _value;
   // ignore: unused_field
-  final $Res Function(AppointmentInfoModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? price = freezed,
-    Object? noPayment = freezed,
-    Object? serviceName = freezed,
-    Object? payType = freezed,
-    Object? recommendations = freezed,
+    Object? price = null,
+    Object? noPayment = null,
+    Object? serviceName = null,
+    Object? payType = null,
+    Object? recommendations = null,
   }) {
     return _then(_value.copyWith(
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
-      noPayment: noPayment == freezed
+      noPayment: null == noPayment
           ? _value.noPayment
           : noPayment // ignore: cast_nullable_to_non_nullable
               as bool,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendations: recommendations == freezed
+      recommendations: null == recommendations
           ? _value.recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as List<RecommendationItemModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -1941,6 +1971,7 @@ abstract class _$$_AppointmentInfoModelCopyWith<$Res>
           $Res Function(_$_AppointmentInfoModel) then) =
       __$$_AppointmentInfoModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int price,
       bool noPayment,
@@ -1951,41 +1982,39 @@ abstract class _$$_AppointmentInfoModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_AppointmentInfoModelCopyWithImpl<$Res>
-    extends _$AppointmentInfoModelCopyWithImpl<$Res>
+    extends _$AppointmentInfoModelCopyWithImpl<$Res, _$_AppointmentInfoModel>
     implements _$$_AppointmentInfoModelCopyWith<$Res> {
   __$$_AppointmentInfoModelCopyWithImpl(_$_AppointmentInfoModel _value,
       $Res Function(_$_AppointmentInfoModel) _then)
-      : super(_value, (v) => _then(v as _$_AppointmentInfoModel));
+      : super(_value, _then);
 
-  @override
-  _$_AppointmentInfoModel get _value => super._value as _$_AppointmentInfoModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? price = freezed,
-    Object? noPayment = freezed,
-    Object? serviceName = freezed,
-    Object? payType = freezed,
-    Object? recommendations = freezed,
+    Object? price = null,
+    Object? noPayment = null,
+    Object? serviceName = null,
+    Object? payType = null,
+    Object? recommendations = null,
   }) {
     return _then(_$_AppointmentInfoModel(
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
-      noPayment: noPayment == freezed
+      noPayment: null == noPayment
           ? _value.noPayment
           : noPayment // ignore: cast_nullable_to_non_nullable
               as bool,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      payType: payType == freezed
+      payType: null == payType
           ? _value.payType
           : payType // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendations: recommendations == freezed
+      recommendations: null == recommendations
           ? _value._recommendations
           : recommendations // ignore: cast_nullable_to_non_nullable
               as List<RecommendationItemModel>,
@@ -2018,6 +2047,7 @@ class _$_AppointmentInfoModel implements _AppointmentInfoModel {
   final List<RecommendationItemModel> _recommendations;
   @override
   List<RecommendationItemModel> get recommendations {
+    if (_recommendations is EqualUnmodifiableListView) return _recommendations;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_recommendations);
   }
@@ -2032,34 +2062,33 @@ class _$_AppointmentInfoModel implements _AppointmentInfoModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppointmentInfoModel &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality().equals(other.noPayment, noPayment) &&
-            const DeepCollectionEquality()
-                .equals(other.serviceName, serviceName) &&
-            const DeepCollectionEquality().equals(other.payType, payType) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.noPayment, noPayment) ||
+                other.noPayment == noPayment) &&
+            (identical(other.serviceName, serviceName) ||
+                other.serviceName == serviceName) &&
+            (identical(other.payType, payType) || other.payType == payType) &&
             const DeepCollectionEquality()
                 .equals(other._recommendations, _recommendations));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(noPayment),
-      const DeepCollectionEquality().hash(serviceName),
-      const DeepCollectionEquality().hash(payType),
-      const DeepCollectionEquality().hash(_recommendations));
+  int get hashCode => Object.hash(runtimeType, price, noPayment, serviceName,
+      payType, const DeepCollectionEquality().hash(_recommendations));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AppointmentInfoModelCopyWith<_$_AppointmentInfoModel> get copyWith =>
       __$$_AppointmentInfoModelCopyWithImpl<_$_AppointmentInfoModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AppointmentInfoModelToJson(this);
+    return _$$_AppointmentInfoModelToJson(
+      this,
+    );
   }
 }
 
@@ -2076,16 +2105,15 @@ abstract class _AppointmentInfoModel implements AppointmentInfoModel {
       _$_AppointmentInfoModel.fromJson;
 
   @override
-  int get price => throw _privateConstructorUsedError;
+  int get price;
   @override
-  bool get noPayment => throw _privateConstructorUsedError;
+  bool get noPayment;
   @override
-  String get serviceName => throw _privateConstructorUsedError;
+  String get serviceName;
   @override
-  String get payType => throw _privateConstructorUsedError;
+  String get payType;
   @override
-  List<RecommendationItemModel> get recommendations =>
-      throw _privateConstructorUsedError;
+  List<RecommendationItemModel> get recommendations;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentInfoModelCopyWith<_$_AppointmentInfoModel> get copyWith =>
@@ -2113,39 +2141,43 @@ mixin _$RecommendationItemModel {
 abstract class $RecommendationItemModelCopyWith<$Res> {
   factory $RecommendationItemModelCopyWith(RecommendationItemModel value,
           $Res Function(RecommendationItemModel) then) =
-      _$RecommendationItemModelCopyWithImpl<$Res>;
+      _$RecommendationItemModelCopyWithImpl<$Res, RecommendationItemModel>;
+  @useResult
   $Res call({String serviceId, String serviceName, String recommendation});
 }
 
 /// @nodoc
-class _$RecommendationItemModelCopyWithImpl<$Res>
+class _$RecommendationItemModelCopyWithImpl<$Res,
+        $Val extends RecommendationItemModel>
     implements $RecommendationItemModelCopyWith<$Res> {
   _$RecommendationItemModelCopyWithImpl(this._value, this._then);
 
-  final RecommendationItemModel _value;
   // ignore: unused_field
-  final $Res Function(RecommendationItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? serviceId = freezed,
-    Object? serviceName = freezed,
-    Object? recommendation = freezed,
+    Object? serviceId = null,
+    Object? serviceName = null,
+    Object? recommendation = null,
   }) {
     return _then(_value.copyWith(
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendation: recommendation == freezed
+      recommendation: null == recommendation
           ? _value.recommendation
           : recommendation // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2156,37 +2188,36 @@ abstract class _$$_RecommendationItemModelCopyWith<$Res>
           $Res Function(_$_RecommendationItemModel) then) =
       __$$_RecommendationItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String serviceId, String serviceName, String recommendation});
 }
 
 /// @nodoc
 class __$$_RecommendationItemModelCopyWithImpl<$Res>
-    extends _$RecommendationItemModelCopyWithImpl<$Res>
+    extends _$RecommendationItemModelCopyWithImpl<$Res,
+        _$_RecommendationItemModel>
     implements _$$_RecommendationItemModelCopyWith<$Res> {
   __$$_RecommendationItemModelCopyWithImpl(_$_RecommendationItemModel _value,
       $Res Function(_$_RecommendationItemModel) _then)
-      : super(_value, (v) => _then(v as _$_RecommendationItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_RecommendationItemModel get _value =>
-      super._value as _$_RecommendationItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? serviceId = freezed,
-    Object? serviceName = freezed,
-    Object? recommendation = freezed,
+    Object? serviceId = null,
+    Object? serviceName = null,
+    Object? recommendation = null,
   }) {
     return _then(_$_RecommendationItemModel(
-      serviceId: serviceId == freezed
+      serviceId: null == serviceId
           ? _value.serviceId
           : serviceId // ignore: cast_nullable_to_non_nullable
               as String,
-      serviceName: serviceName == freezed
+      serviceName: null == serviceName
           ? _value.serviceName
           : serviceName // ignore: cast_nullable_to_non_nullable
               as String,
-      recommendation: recommendation == freezed
+      recommendation: null == recommendation
           ? _value.recommendation
           : recommendation // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2222,23 +2253,22 @@ class _$_RecommendationItemModel implements _RecommendationItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RecommendationItemModel &&
-            const DeepCollectionEquality().equals(other.serviceId, serviceId) &&
-            const DeepCollectionEquality()
-                .equals(other.serviceName, serviceName) &&
-            const DeepCollectionEquality()
-                .equals(other.recommendation, recommendation));
+            (identical(other.serviceId, serviceId) ||
+                other.serviceId == serviceId) &&
+            (identical(other.serviceName, serviceName) ||
+                other.serviceName == serviceName) &&
+            (identical(other.recommendation, recommendation) ||
+                other.recommendation == recommendation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(serviceId),
-      const DeepCollectionEquality().hash(serviceName),
-      const DeepCollectionEquality().hash(recommendation));
+  int get hashCode =>
+      Object.hash(runtimeType, serviceId, serviceName, recommendation);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RecommendationItemModelCopyWith<_$_RecommendationItemModel>
       get copyWith =>
           __$$_RecommendationItemModelCopyWithImpl<_$_RecommendationItemModel>(
@@ -2246,7 +2276,9 @@ class _$_RecommendationItemModel implements _RecommendationItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RecommendationItemModelToJson(this);
+    return _$$_RecommendationItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -2260,11 +2292,11 @@ abstract class _RecommendationItemModel implements RecommendationItemModel {
       _$_RecommendationItemModel.fromJson;
 
   @override
-  String get serviceId => throw _privateConstructorUsedError;
+  String get serviceId;
   @override
-  String get serviceName => throw _privateConstructorUsedError;
+  String get serviceName;
   @override
-  String get recommendation => throw _privateConstructorUsedError;
+  String get recommendation;
   @override
   @JsonKey(ignore: true)
   _$$_RecommendationItemModelCopyWith<_$_RecommendationItemModel>
@@ -2292,34 +2324,39 @@ abstract class $CreateNewAppointmentResponseModelCopyWith<$Res> {
   factory $CreateNewAppointmentResponseModelCopyWith(
           CreateNewAppointmentResponseModel value,
           $Res Function(CreateNewAppointmentResponseModel) then) =
-      _$CreateNewAppointmentResponseModelCopyWithImpl<$Res>;
+      _$CreateNewAppointmentResponseModelCopyWithImpl<$Res,
+          CreateNewAppointmentResponseModel>;
+  @useResult
   $Res call({String result, String information});
 }
 
 /// @nodoc
-class _$CreateNewAppointmentResponseModelCopyWithImpl<$Res>
+class _$CreateNewAppointmentResponseModelCopyWithImpl<$Res,
+        $Val extends CreateNewAppointmentResponseModel>
     implements $CreateNewAppointmentResponseModelCopyWith<$Res> {
   _$CreateNewAppointmentResponseModelCopyWithImpl(this._value, this._then);
 
-  final CreateNewAppointmentResponseModel _value;
   // ignore: unused_field
-  final $Res Function(CreateNewAppointmentResponseModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? information = freezed,
+    Object? result = null,
+    Object? information = null,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as String,
-      information: information == freezed
+      information: null == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2331,33 +2368,32 @@ abstract class _$$_CreateNewAppointmentResponseModelCopyWith<$Res>
           $Res Function(_$_CreateNewAppointmentResponseModel) then) =
       __$$_CreateNewAppointmentResponseModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String result, String information});
 }
 
 /// @nodoc
 class __$$_CreateNewAppointmentResponseModelCopyWithImpl<$Res>
-    extends _$CreateNewAppointmentResponseModelCopyWithImpl<$Res>
+    extends _$CreateNewAppointmentResponseModelCopyWithImpl<$Res,
+        _$_CreateNewAppointmentResponseModel>
     implements _$$_CreateNewAppointmentResponseModelCopyWith<$Res> {
   __$$_CreateNewAppointmentResponseModelCopyWithImpl(
       _$_CreateNewAppointmentResponseModel _value,
       $Res Function(_$_CreateNewAppointmentResponseModel) _then)
-      : super(_value, (v) => _then(v as _$_CreateNewAppointmentResponseModel));
+      : super(_value, _then);
 
-  @override
-  _$_CreateNewAppointmentResponseModel get _value =>
-      super._value as _$_CreateNewAppointmentResponseModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? information = freezed,
+    Object? result = null,
+    Object? information = null,
   }) {
     return _then(_$_CreateNewAppointmentResponseModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as String,
-      information: information == freezed
+      information: null == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2391,20 +2427,18 @@ class _$_CreateNewAppointmentResponseModel
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateNewAppointmentResponseModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality()
-                .equals(other.information, information));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.information, information) ||
+                other.information == information));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(information));
+  int get hashCode => Object.hash(runtimeType, result, information);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreateNewAppointmentResponseModelCopyWith<
           _$_CreateNewAppointmentResponseModel>
       get copyWith => __$$_CreateNewAppointmentResponseModelCopyWithImpl<
@@ -2412,7 +2446,9 @@ class _$_CreateNewAppointmentResponseModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateNewAppointmentResponseModelToJson(this);
+    return _$$_CreateNewAppointmentResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -2427,9 +2463,9 @@ abstract class _CreateNewAppointmentResponseModel
       _$_CreateNewAppointmentResponseModel.fromJson;
 
   @override
-  String get result => throw _privateConstructorUsedError;
+  String get result;
   @override
-  String get information => throw _privateConstructorUsedError;
+  String get information;
   @override
   @JsonKey(ignore: true)
   _$$_CreateNewAppointmentResponseModelCopyWith<
@@ -2458,39 +2494,44 @@ mixin _$RegisterOrderResponseModel {
 abstract class $RegisterOrderResponseModelCopyWith<$Res> {
   factory $RegisterOrderResponseModelCopyWith(RegisterOrderResponseModel value,
           $Res Function(RegisterOrderResponseModel) then) =
-      _$RegisterOrderResponseModelCopyWithImpl<$Res>;
+      _$RegisterOrderResponseModelCopyWithImpl<$Res,
+          RegisterOrderResponseModel>;
+  @useResult
   $Res call({bool result, String paymentUrl, String? error});
 }
 
 /// @nodoc
-class _$RegisterOrderResponseModelCopyWithImpl<$Res>
+class _$RegisterOrderResponseModelCopyWithImpl<$Res,
+        $Val extends RegisterOrderResponseModel>
     implements $RegisterOrderResponseModelCopyWith<$Res> {
   _$RegisterOrderResponseModelCopyWithImpl(this._value, this._then);
 
-  final RegisterOrderResponseModel _value;
   // ignore: unused_field
-  final $Res Function(RegisterOrderResponseModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? paymentUrl = freezed,
+    Object? result = null,
+    Object? paymentUrl = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      paymentUrl: paymentUrl == freezed
+      paymentUrl: null == paymentUrl
           ? _value.paymentUrl
           : paymentUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2502,38 +2543,37 @@ abstract class _$$_RegisterOrderResponseModelCopyWith<$Res>
           $Res Function(_$_RegisterOrderResponseModel) then) =
       __$$_RegisterOrderResponseModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool result, String paymentUrl, String? error});
 }
 
 /// @nodoc
 class __$$_RegisterOrderResponseModelCopyWithImpl<$Res>
-    extends _$RegisterOrderResponseModelCopyWithImpl<$Res>
+    extends _$RegisterOrderResponseModelCopyWithImpl<$Res,
+        _$_RegisterOrderResponseModel>
     implements _$$_RegisterOrderResponseModelCopyWith<$Res> {
   __$$_RegisterOrderResponseModelCopyWithImpl(
       _$_RegisterOrderResponseModel _value,
       $Res Function(_$_RegisterOrderResponseModel) _then)
-      : super(_value, (v) => _then(v as _$_RegisterOrderResponseModel));
+      : super(_value, _then);
 
-  @override
-  _$_RegisterOrderResponseModel get _value =>
-      super._value as _$_RegisterOrderResponseModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? paymentUrl = freezed,
+    Object? result = null,
+    Object? paymentUrl = null,
     Object? error = freezed,
   }) {
     return _then(_$_RegisterOrderResponseModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      paymentUrl: paymentUrl == freezed
+      paymentUrl: null == paymentUrl
           ? _value.paymentUrl
           : paymentUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -2567,29 +2607,28 @@ class _$_RegisterOrderResponseModel implements _RegisterOrderResponseModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RegisterOrderResponseModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality()
-                .equals(other.paymentUrl, paymentUrl) &&
-            const DeepCollectionEquality().equals(other.error, error));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.paymentUrl, paymentUrl) ||
+                other.paymentUrl == paymentUrl) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(paymentUrl),
-      const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, result, paymentUrl, error);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RegisterOrderResponseModelCopyWith<_$_RegisterOrderResponseModel>
       get copyWith => __$$_RegisterOrderResponseModelCopyWithImpl<
           _$_RegisterOrderResponseModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterOrderResponseModelToJson(this);
+    return _$$_RegisterOrderResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -2604,11 +2643,11 @@ abstract class _RegisterOrderResponseModel
       _$_RegisterOrderResponseModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String get paymentUrl => throw _privateConstructorUsedError;
+  String get paymentUrl;
   @override
-  String? get error => throw _privateConstructorUsedError;
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterOrderResponseModelCopyWith<_$_RegisterOrderResponseModel>

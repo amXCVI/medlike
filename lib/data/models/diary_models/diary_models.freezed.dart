@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'diary_models.dart';
 
@@ -47,7 +47,8 @@ mixin _$DiaryCategoryModel {
 abstract class $DiaryCategoryModelCopyWith<$Res> {
   factory $DiaryCategoryModelCopyWith(
           DiaryCategoryModel value, $Res Function(DiaryCategoryModel) then) =
-      _$DiaryCategoryModelCopyWithImpl<$Res>;
+      _$DiaryCategoryModelCopyWithImpl<$Res, DiaryCategoryModel>;
+  @useResult
   $Res call(
       {String synonim,
       String name,
@@ -68,99 +69,101 @@ abstract class $DiaryCategoryModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DiaryCategoryModelCopyWithImpl<$Res>
+class _$DiaryCategoryModelCopyWithImpl<$Res, $Val extends DiaryCategoryModel>
     implements $DiaryCategoryModelCopyWith<$Res> {
   _$DiaryCategoryModelCopyWithImpl(this._value, this._then);
 
-  final DiaryCategoryModel _value;
   // ignore: unused_field
-  final $Res Function(DiaryCategoryModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? synonim = freezed,
-    Object? name = freezed,
-    Object? minValue = freezed,
-    Object? maxValue = freezed,
-    Object? minNormalValue = freezed,
-    Object? maxNormalValue = freezed,
-    Object? categoryImg = freezed,
-    Object? filterImg = freezed,
-    Object? paramCount = freezed,
-    Object? order = freezed,
-    Object? measureItem = freezed,
-    Object? paramName = freezed,
+    Object? synonim = null,
+    Object? name = null,
+    Object? minValue = null,
+    Object? maxValue = null,
+    Object? minNormalValue = null,
+    Object? maxNormalValue = null,
+    Object? categoryImg = null,
+    Object? filterImg = null,
+    Object? paramCount = null,
+    Object? order = null,
+    Object? measureItem = null,
+    Object? paramName = null,
     Object? values = freezed,
-    Object? appleSynCompare = freezed,
-    Object? decimalDigits = freezed,
-    Object? avgByMaxCount = freezed,
+    Object? appleSynCompare = null,
+    Object? decimalDigits = null,
+    Object? avgByMaxCount = null,
   }) {
     return _then(_value.copyWith(
-      synonim: synonim == freezed
+      synonim: null == synonim
           ? _value.synonim
           : synonim // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      minValue: minValue == freezed
+      minValue: null == minValue
           ? _value.minValue
           : minValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      maxValue: maxValue == freezed
+      maxValue: null == maxValue
           ? _value.maxValue
           : maxValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      minNormalValue: minNormalValue == freezed
+      minNormalValue: null == minNormalValue
           ? _value.minNormalValue
           : minNormalValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      maxNormalValue: maxNormalValue == freezed
+      maxNormalValue: null == maxNormalValue
           ? _value.maxNormalValue
           : maxNormalValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      categoryImg: categoryImg == freezed
+      categoryImg: null == categoryImg
           ? _value.categoryImg
           : categoryImg // ignore: cast_nullable_to_non_nullable
               as String,
-      filterImg: filterImg == freezed
+      filterImg: null == filterImg
           ? _value.filterImg
           : filterImg // ignore: cast_nullable_to_non_nullable
               as String,
-      paramCount: paramCount == freezed
+      paramCount: null == paramCount
           ? _value.paramCount
           : paramCount // ignore: cast_nullable_to_non_nullable
               as int,
-      order: order == freezed
+      order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as int,
-      measureItem: measureItem == freezed
+      measureItem: null == measureItem
           ? _value.measureItem
           : measureItem // ignore: cast_nullable_to_non_nullable
               as String,
-      paramName: paramName == freezed
+      paramName: null == paramName
           ? _value.paramName
           : paramName // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      values: values == freezed
+      values: freezed == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      appleSynCompare: appleSynCompare == freezed
+      appleSynCompare: null == appleSynCompare
           ? _value.appleSynCompare
           : appleSynCompare // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      decimalDigits: decimalDigits == freezed
+      decimalDigits: null == decimalDigits
           ? _value.decimalDigits
           : decimalDigits // ignore: cast_nullable_to_non_nullable
               as int,
-      avgByMaxCount: avgByMaxCount == freezed
+      avgByMaxCount: null == avgByMaxCount
           ? _value.avgByMaxCount
           : avgByMaxCount // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -171,6 +174,7 @@ abstract class _$$_CategoryCopyWith<$Res>
           _$_Category value, $Res Function(_$_Category) then) =
       __$$_CategoryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String synonim,
       String name,
@@ -192,96 +196,94 @@ abstract class _$$_CategoryCopyWith<$Res>
 
 /// @nodoc
 class __$$_CategoryCopyWithImpl<$Res>
-    extends _$DiaryCategoryModelCopyWithImpl<$Res>
+    extends _$DiaryCategoryModelCopyWithImpl<$Res, _$_Category>
     implements _$$_CategoryCopyWith<$Res> {
   __$$_CategoryCopyWithImpl(
       _$_Category _value, $Res Function(_$_Category) _then)
-      : super(_value, (v) => _then(v as _$_Category));
+      : super(_value, _then);
 
-  @override
-  _$_Category get _value => super._value as _$_Category;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? synonim = freezed,
-    Object? name = freezed,
-    Object? minValue = freezed,
-    Object? maxValue = freezed,
-    Object? minNormalValue = freezed,
-    Object? maxNormalValue = freezed,
-    Object? categoryImg = freezed,
-    Object? filterImg = freezed,
-    Object? paramCount = freezed,
-    Object? order = freezed,
-    Object? measureItem = freezed,
-    Object? paramName = freezed,
+    Object? synonim = null,
+    Object? name = null,
+    Object? minValue = null,
+    Object? maxValue = null,
+    Object? minNormalValue = null,
+    Object? maxNormalValue = null,
+    Object? categoryImg = null,
+    Object? filterImg = null,
+    Object? paramCount = null,
+    Object? order = null,
+    Object? measureItem = null,
+    Object? paramName = null,
     Object? values = freezed,
-    Object? appleSynCompare = freezed,
-    Object? decimalDigits = freezed,
-    Object? avgByMaxCount = freezed,
+    Object? appleSynCompare = null,
+    Object? decimalDigits = null,
+    Object? avgByMaxCount = null,
   }) {
     return _then(_$_Category(
-      synonim: synonim == freezed
+      synonim: null == synonim
           ? _value.synonim
           : synonim // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      minValue: minValue == freezed
+      minValue: null == minValue
           ? _value._minValue
           : minValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      maxValue: maxValue == freezed
+      maxValue: null == maxValue
           ? _value._maxValue
           : maxValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      minNormalValue: minNormalValue == freezed
+      minNormalValue: null == minNormalValue
           ? _value._minNormalValue
           : minNormalValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      maxNormalValue: maxNormalValue == freezed
+      maxNormalValue: null == maxNormalValue
           ? _value._maxNormalValue
           : maxNormalValue // ignore: cast_nullable_to_non_nullable
               as List<double>,
-      categoryImg: categoryImg == freezed
+      categoryImg: null == categoryImg
           ? _value.categoryImg
           : categoryImg // ignore: cast_nullable_to_non_nullable
               as String,
-      filterImg: filterImg == freezed
+      filterImg: null == filterImg
           ? _value.filterImg
           : filterImg // ignore: cast_nullable_to_non_nullable
               as String,
-      paramCount: paramCount == freezed
+      paramCount: null == paramCount
           ? _value.paramCount
           : paramCount // ignore: cast_nullable_to_non_nullable
               as int,
-      order: order == freezed
+      order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as int,
-      measureItem: measureItem == freezed
+      measureItem: null == measureItem
           ? _value.measureItem
           : measureItem // ignore: cast_nullable_to_non_nullable
               as String,
-      paramName: paramName == freezed
+      paramName: null == paramName
           ? _value._paramName
           : paramName // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      values: values == freezed
+      values: freezed == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      appleSynCompare: appleSynCompare == freezed
+      appleSynCompare: null == appleSynCompare
           ? _value._appleSynCompare
           : appleSynCompare // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      decimalDigits: decimalDigits == freezed
+      decimalDigits: null == decimalDigits
           ? _value.decimalDigits
           : decimalDigits // ignore: cast_nullable_to_non_nullable
               as int,
-      avgByMaxCount: avgByMaxCount == freezed
+      avgByMaxCount: null == avgByMaxCount
           ? _value.avgByMaxCount
           : avgByMaxCount // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -326,6 +328,7 @@ class _$_Category implements _Category {
   final List<double> _minValue;
   @override
   List<double> get minValue {
+    if (_minValue is EqualUnmodifiableListView) return _minValue;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_minValue);
   }
@@ -333,6 +336,7 @@ class _$_Category implements _Category {
   final List<double> _maxValue;
   @override
   List<double> get maxValue {
+    if (_maxValue is EqualUnmodifiableListView) return _maxValue;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_maxValue);
   }
@@ -340,6 +344,7 @@ class _$_Category implements _Category {
   final List<double> _minNormalValue;
   @override
   List<double> get minNormalValue {
+    if (_minNormalValue is EqualUnmodifiableListView) return _minNormalValue;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_minNormalValue);
   }
@@ -347,6 +352,7 @@ class _$_Category implements _Category {
   final List<double> _maxNormalValue;
   @override
   List<double> get maxNormalValue {
+    if (_maxNormalValue is EqualUnmodifiableListView) return _maxNormalValue;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_maxNormalValue);
   }
@@ -364,6 +370,7 @@ class _$_Category implements _Category {
   final List<String> _paramName;
   @override
   List<String> get paramName {
+    if (_paramName is EqualUnmodifiableListView) return _paramName;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_paramName);
   }
@@ -373,6 +380,7 @@ class _$_Category implements _Category {
   final List<dynamic> _appleSynCompare;
   @override
   List<dynamic> get appleSynCompare {
+    if (_appleSynCompare is EqualUnmodifiableListView) return _appleSynCompare;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_appleSynCompare);
   }
@@ -392,62 +400,66 @@ class _$_Category implements _Category {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Category &&
-            const DeepCollectionEquality().equals(other.synonim, synonim) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
+            (identical(other.synonim, synonim) || other.synonim == synonim) &&
+            (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._minValue, _minValue) &&
             const DeepCollectionEquality().equals(other._maxValue, _maxValue) &&
             const DeepCollectionEquality()
                 .equals(other._minNormalValue, _minNormalValue) &&
             const DeepCollectionEquality()
                 .equals(other._maxNormalValue, _maxNormalValue) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryImg, categoryImg) &&
-            const DeepCollectionEquality().equals(other.filterImg, filterImg) &&
-            const DeepCollectionEquality()
-                .equals(other.paramCount, paramCount) &&
-            const DeepCollectionEquality().equals(other.order, order) &&
-            const DeepCollectionEquality()
-                .equals(other.measureItem, measureItem) &&
+            (identical(other.categoryImg, categoryImg) ||
+                other.categoryImg == categoryImg) &&
+            (identical(other.filterImg, filterImg) ||
+                other.filterImg == filterImg) &&
+            (identical(other.paramCount, paramCount) ||
+                other.paramCount == paramCount) &&
+            (identical(other.order, order) || other.order == order) &&
+            (identical(other.measureItem, measureItem) ||
+                other.measureItem == measureItem) &&
             const DeepCollectionEquality()
                 .equals(other._paramName, _paramName) &&
             const DeepCollectionEquality().equals(other.values, values) &&
             const DeepCollectionEquality()
                 .equals(other._appleSynCompare, _appleSynCompare) &&
-            const DeepCollectionEquality()
-                .equals(other.decimalDigits, decimalDigits) &&
-            const DeepCollectionEquality()
-                .equals(other.avgByMaxCount, avgByMaxCount));
+            (identical(other.decimalDigits, decimalDigits) ||
+                other.decimalDigits == decimalDigits) &&
+            (identical(other.avgByMaxCount, avgByMaxCount) ||
+                other.avgByMaxCount == avgByMaxCount));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(synonim),
-      const DeepCollectionEquality().hash(name),
+      synonim,
+      name,
       const DeepCollectionEquality().hash(_minValue),
       const DeepCollectionEquality().hash(_maxValue),
       const DeepCollectionEquality().hash(_minNormalValue),
       const DeepCollectionEquality().hash(_maxNormalValue),
-      const DeepCollectionEquality().hash(categoryImg),
-      const DeepCollectionEquality().hash(filterImg),
-      const DeepCollectionEquality().hash(paramCount),
-      const DeepCollectionEquality().hash(order),
-      const DeepCollectionEquality().hash(measureItem),
+      categoryImg,
+      filterImg,
+      paramCount,
+      order,
+      measureItem,
       const DeepCollectionEquality().hash(_paramName),
       const DeepCollectionEquality().hash(values),
       const DeepCollectionEquality().hash(_appleSynCompare),
-      const DeepCollectionEquality().hash(decimalDigits),
-      const DeepCollectionEquality().hash(avgByMaxCount));
+      decimalDigits,
+      avgByMaxCount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CategoryCopyWith<_$_Category> get copyWith =>
       __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryToJson(this);
+    return _$$_CategoryToJson(
+      this,
+    );
   }
 }
 
@@ -473,37 +485,37 @@ abstract class _Category implements DiaryCategoryModel {
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  String get synonim => throw _privateConstructorUsedError;
+  String get synonim;
   @override
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
-  List<double> get minValue => throw _privateConstructorUsedError;
+  List<double> get minValue;
   @override
-  List<double> get maxValue => throw _privateConstructorUsedError;
+  List<double> get maxValue;
   @override
-  List<double> get minNormalValue => throw _privateConstructorUsedError;
+  List<double> get minNormalValue;
   @override
-  List<double> get maxNormalValue => throw _privateConstructorUsedError;
+  List<double> get maxNormalValue;
   @override
-  String get categoryImg => throw _privateConstructorUsedError;
+  String get categoryImg;
   @override
-  String get filterImg => throw _privateConstructorUsedError;
+  String get filterImg;
   @override
-  int get paramCount => throw _privateConstructorUsedError;
+  int get paramCount;
   @override
-  int get order => throw _privateConstructorUsedError;
+  int get order;
   @override
-  String get measureItem => throw _privateConstructorUsedError;
+  String get measureItem;
   @override
-  List<String> get paramName => throw _privateConstructorUsedError;
+  List<String> get paramName;
   @override
-  dynamic get values => throw _privateConstructorUsedError;
+  dynamic get values;
   @override
-  List<dynamic> get appleSynCompare => throw _privateConstructorUsedError;
+  List<dynamic> get appleSynCompare;
   @override
-  int get decimalDigits => throw _privateConstructorUsedError;
+  int get decimalDigits;
   @override
-  bool get avgByMaxCount => throw _privateConstructorUsedError;
+  bool get avgByMaxCount;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryCopyWith<_$_Category> get copyWith =>
@@ -533,7 +545,8 @@ mixin _$DiaryModel {
 abstract class $DiaryModelCopyWith<$Res> {
   factory $DiaryModelCopyWith(
           DiaryModel value, $Res Function(DiaryModel) then) =
-      _$DiaryModelCopyWithImpl<$Res>;
+      _$DiaryModelCopyWithImpl<$Res, DiaryModel>;
+  @useResult
   $Res call(
       {String syn,
       @TimestampConverter() DateTime firstValue,
@@ -543,43 +556,46 @@ abstract class $DiaryModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DiaryModelCopyWithImpl<$Res> implements $DiaryModelCopyWith<$Res> {
+class _$DiaryModelCopyWithImpl<$Res, $Val extends DiaryModel>
+    implements $DiaryModelCopyWith<$Res> {
   _$DiaryModelCopyWithImpl(this._value, this._then);
 
-  final DiaryModel _value;
   // ignore: unused_field
-  final $Res Function(DiaryModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? syn = freezed,
-    Object? firstValue = freezed,
+    Object? syn = null,
+    Object? firstValue = null,
     Object? currentValue = freezed,
-    Object? values = freezed,
-    Object? grouping = freezed,
+    Object? values = null,
+    Object? grouping = null,
   }) {
     return _then(_value.copyWith(
-      syn: syn == freezed
+      syn: null == syn
           ? _value.syn
           : syn // ignore: cast_nullable_to_non_nullable
               as String,
-      firstValue: firstValue == freezed
+      firstValue: null == firstValue
           ? _value.firstValue
           : firstValue // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      currentValue: currentValue == freezed
+      currentValue: freezed == currentValue
           ? _value.currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      values: values == freezed
+      values: null == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
               as List<DiaryItem>,
-      grouping: grouping == freezed
+      grouping: null == grouping
           ? _value.grouping
           : grouping // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -588,6 +604,7 @@ abstract class _$$_DiaryCopyWith<$Res> implements $DiaryModelCopyWith<$Res> {
   factory _$$_DiaryCopyWith(_$_Diary value, $Res Function(_$_Diary) then) =
       __$$_DiaryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String syn,
       @TimestampConverter() DateTime firstValue,
@@ -597,40 +614,39 @@ abstract class _$$_DiaryCopyWith<$Res> implements $DiaryModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DiaryCopyWithImpl<$Res> extends _$DiaryModelCopyWithImpl<$Res>
+class __$$_DiaryCopyWithImpl<$Res>
+    extends _$DiaryModelCopyWithImpl<$Res, _$_Diary>
     implements _$$_DiaryCopyWith<$Res> {
   __$$_DiaryCopyWithImpl(_$_Diary _value, $Res Function(_$_Diary) _then)
-      : super(_value, (v) => _then(v as _$_Diary));
+      : super(_value, _then);
 
-  @override
-  _$_Diary get _value => super._value as _$_Diary;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? syn = freezed,
-    Object? firstValue = freezed,
+    Object? syn = null,
+    Object? firstValue = null,
     Object? currentValue = freezed,
-    Object? values = freezed,
-    Object? grouping = freezed,
+    Object? values = null,
+    Object? grouping = null,
   }) {
     return _then(_$_Diary(
-      syn: syn == freezed
+      syn: null == syn
           ? _value.syn
           : syn // ignore: cast_nullable_to_non_nullable
               as String,
-      firstValue: firstValue == freezed
+      firstValue: null == firstValue
           ? _value.firstValue
           : firstValue // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      currentValue: currentValue == freezed
+      currentValue: freezed == currentValue
           ? _value._currentValue
           : currentValue // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      values: values == freezed
+      values: null == values
           ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
               as List<DiaryItem>,
-      grouping: grouping == freezed
+      grouping: null == grouping
           ? _value.grouping
           : grouping // ignore: cast_nullable_to_non_nullable
               as int,
@@ -664,6 +680,7 @@ class _$_Diary extends _Diary {
   List<dynamic>? get currentValue {
     final value = _currentValue;
     if (value == null) return null;
+    if (_currentValue is EqualUnmodifiableListView) return _currentValue;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -671,6 +688,7 @@ class _$_Diary extends _Diary {
   final List<DiaryItem> _values;
   @override
   List<DiaryItem> get values {
+    if (_values is EqualUnmodifiableListView) return _values;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_values);
   }
@@ -688,33 +706,37 @@ class _$_Diary extends _Diary {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Diary &&
-            const DeepCollectionEquality().equals(other.syn, syn) &&
-            const DeepCollectionEquality()
-                .equals(other.firstValue, firstValue) &&
+            (identical(other.syn, syn) || other.syn == syn) &&
+            (identical(other.firstValue, firstValue) ||
+                other.firstValue == firstValue) &&
             const DeepCollectionEquality()
                 .equals(other._currentValue, _currentValue) &&
             const DeepCollectionEquality().equals(other._values, _values) &&
-            const DeepCollectionEquality().equals(other.grouping, grouping));
+            (identical(other.grouping, grouping) ||
+                other.grouping == grouping));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(syn),
-      const DeepCollectionEquality().hash(firstValue),
+      syn,
+      firstValue,
       const DeepCollectionEquality().hash(_currentValue),
       const DeepCollectionEquality().hash(_values),
-      const DeepCollectionEquality().hash(grouping));
+      grouping);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DiaryCopyWith<_$_Diary> get copyWith =>
       __$$_DiaryCopyWithImpl<_$_Diary>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DiaryToJson(this);
+    return _$$_DiaryToJson(
+      this,
+    );
   }
 }
 
@@ -730,16 +752,16 @@ abstract class _Diary extends DiaryModel {
   factory _Diary.fromJson(Map<String, dynamic> json) = _$_Diary.fromJson;
 
   @override
-  String get syn => throw _privateConstructorUsedError;
+  String get syn;
   @override
   @TimestampConverter()
-  DateTime get firstValue => throw _privateConstructorUsedError;
+  DateTime get firstValue;
   @override
-  List<dynamic>? get currentValue => throw _privateConstructorUsedError;
+  List<dynamic>? get currentValue;
   @override
-  List<DiaryItem> get values => throw _privateConstructorUsedError;
+  List<DiaryItem> get values;
   @override
-  int get grouping => throw _privateConstructorUsedError;
+  int get grouping;
   @override
   @JsonKey(ignore: true)
   _$$_DiaryCopyWith<_$_Diary> get copyWith =>
@@ -765,33 +787,37 @@ mixin _$DiaryItem {
 /// @nodoc
 abstract class $DiaryItemCopyWith<$Res> {
   factory $DiaryItemCopyWith(DiaryItem value, $Res Function(DiaryItem) then) =
-      _$DiaryItemCopyWithImpl<$Res>;
+      _$DiaryItemCopyWithImpl<$Res, DiaryItem>;
+  @useResult
   $Res call({@TimestampConverter() DateTime date, List<List<dynamic>> data});
 }
 
 /// @nodoc
-class _$DiaryItemCopyWithImpl<$Res> implements $DiaryItemCopyWith<$Res> {
+class _$DiaryItemCopyWithImpl<$Res, $Val extends DiaryItem>
+    implements $DiaryItemCopyWith<$Res> {
   _$DiaryItemCopyWithImpl(this._value, this._then);
 
-  final DiaryItem _value;
   // ignore: unused_field
-  final $Res Function(DiaryItem) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? data = freezed,
+    Object? date = null,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as List<List<dynamic>>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -801,30 +827,30 @@ abstract class _$$_DiaryItemCopyWith<$Res> implements $DiaryItemCopyWith<$Res> {
           _$_DiaryItem value, $Res Function(_$_DiaryItem) then) =
       __$$_DiaryItemCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({@TimestampConverter() DateTime date, List<List<dynamic>> data});
 }
 
 /// @nodoc
-class __$$_DiaryItemCopyWithImpl<$Res> extends _$DiaryItemCopyWithImpl<$Res>
+class __$$_DiaryItemCopyWithImpl<$Res>
+    extends _$DiaryItemCopyWithImpl<$Res, _$_DiaryItem>
     implements _$$_DiaryItemCopyWith<$Res> {
   __$$_DiaryItemCopyWithImpl(
       _$_DiaryItem _value, $Res Function(_$_DiaryItem) _then)
-      : super(_value, (v) => _then(v as _$_DiaryItem));
+      : super(_value, _then);
 
-  @override
-  _$_DiaryItem get _value => super._value as _$_DiaryItem;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? data = freezed,
+    Object? date = null,
+    Object? data = null,
   }) {
     return _then(_$_DiaryItem(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      data: data == freezed
+      data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
               as List<List<dynamic>>,
@@ -850,6 +876,7 @@ class _$_DiaryItem extends _DiaryItem {
   final List<List<dynamic>> _data;
   @override
   List<List<dynamic>> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
   }
@@ -864,25 +891,26 @@ class _$_DiaryItem extends _DiaryItem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DiaryItem &&
-            const DeepCollectionEquality().equals(other.date, date) &&
+            (identical(other.date, date) || other.date == date) &&
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(_data));
+      runtimeType, date, const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DiaryItemCopyWith<_$_DiaryItem> get copyWith =>
       __$$_DiaryItemCopyWithImpl<_$_DiaryItem>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DiaryItemToJson(this);
+    return _$$_DiaryItemToJson(
+      this,
+    );
   }
 }
 
@@ -897,9 +925,9 @@ abstract class _DiaryItem extends DiaryItem {
 
   @override
   @TimestampConverter()
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  List<List<dynamic>> get data => throw _privateConstructorUsedError;
+  List<List<dynamic>> get data;
   @override
   @JsonKey(ignore: true)
   _$$_DiaryItemCopyWith<_$_DiaryItem> get copyWith =>

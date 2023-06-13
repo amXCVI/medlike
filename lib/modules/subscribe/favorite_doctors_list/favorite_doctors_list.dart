@@ -6,7 +6,7 @@ import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/favorite_doctor_item.dart';
 import 'package:medlike/modules/subscribe/favorite_doctors_list/not_found_favorite_doctors.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class FavoriteDoctorsList extends StatefulWidget {

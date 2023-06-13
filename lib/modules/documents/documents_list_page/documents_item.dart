@@ -30,7 +30,7 @@ class DocumentItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
         child: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: InkWell(
             highlightColor: Theme.of(context).highlightColor,
             onTap: onTap,

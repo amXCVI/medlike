@@ -30,7 +30,7 @@ class UserAvatarWithUploader extends StatelessWidget {
             border: Border.all(
               color: isSelectedItem
                   ? Theme.of(context).primaryColor
-                  : Theme.of(context).backgroundColor,
+                  : Theme.of(context).colorScheme.background,
               width: 2.0,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(44.0))),

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_item.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/not_found_data/empty_list_widget.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 

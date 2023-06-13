@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+@RoutePage()
 class AgreementsPage extends StatefulWidget {
   const AgreementsPage({Key? key, this.isAppointmentAgreements = false})
       : super(key: key);
@@ -39,11 +41,11 @@ class _AgreementsPageState extends State<AgreementsPage> {
 
   void onLoadDada() {
     context.read<UserCubit>().getUserAgreementDocument(
-        typeAgreement: widget.isAppointmentAgreements
-            ? 'AppointmentAgreement'
-            : 'AllAgreement',
-      );
-    }
+          typeAgreement: widget.isAppointmentAgreements
+              ? 'AppointmentAgreement'
+              : 'AllAgreement',
+        );
+  }
 
   @override
   void initState() {
@@ -53,7 +55,6 @@ class _AgreementsPageState extends State<AgreementsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultScaffold(
       appBarTitle: 'Документы',
       isChildrenPage: true,
@@ -80,17 +81,16 @@ class _AgreementsPageState extends State<AgreementsPage> {
                               html.clientHeight, html.scrollHeight, html.offsetHeight );
 
                               Print.postMessage(height);
-                            </script>'''; 
+                            </script>''';
 
                         _controller.complete(webViewController);
                         _con = webViewController;
                         _con.loadHtmlString(
-                          body ?? (state.userAgreementDocument!.body + js)
-                        );
+                            body ?? (state.userAgreementDocument!.body + js));
                       },
                       javascriptMode: JavascriptMode.unrestricted,
-                        javascriptChannels: {
-                          JavascriptChannel(
+                      javascriptChannels: {
+                        JavascriptChannel(
                             name: 'Print',
                             onMessageReceived: (JavascriptMessage message) {
                               setState(() {
@@ -98,7 +98,7 @@ class _AgreementsPageState extends State<AgreementsPage> {
                                 body = state.userAgreementDocument!.body;
                               });
                             })
-                        },
+                      },
                       navigationDelegate: (NavigationRequest request) async {
                         if (request.url == 'about:blank') {
                           return NavigationDecision.navigate;

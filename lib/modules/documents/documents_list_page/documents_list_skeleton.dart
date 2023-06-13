@@ -14,7 +14,7 @@ class DocumentsListSkeleton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             border: Border(
               bottom: BorderSide(color: Theme.of(context).dividerColor),
             ),

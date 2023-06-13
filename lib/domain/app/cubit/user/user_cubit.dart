@@ -9,7 +9,6 @@ import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
-import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -37,7 +36,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   @override
   void onError(Object error, StackTrace stacktrace) {
-    if (error is DioError &&
+    if (error is DioException &&
         error.message ==
             'CertificateNotVerifiedException: Connection is not secure') {
       AppToast.showAppToast(
@@ -60,12 +59,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(
-      userPhoneNumber: phone
-    ));
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
-  /// Обновляем количество секунд до 
+  /// Обновляем количество секунд до
   void setTimer(DateTime time) {
     emit(state.copyWith(timerEnd: time));
   }
@@ -73,14 +70,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-        authScreen: UserAuthScreens.inputPassword,
-        checkUserAccountStatus: CheckUserAccountStatuses.continued,
+      authScreen: UserAuthScreens.inputPassword,
+      checkUserAccountStatus: CheckUserAccountStatuses.continued,
     ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
   void getPhoneNumber() async {
-    String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    String? phone =
+        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
     emit(state.copyWith(userPhoneNumber: phone));
   }
 
@@ -127,6 +125,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         refreshToken: response.refreshToken,
         tryCount: 5,
       ));
+
       /// Обновляем токен, есть вероятность, что он устарел
       Future.delayed(Duration.zero, () async {
         /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
@@ -136,7 +135,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       getUserProfiles(true);
       return Future(() => null);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
         tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
@@ -190,6 +189,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
+
     /// Обновляем токен, есть вероятность, что он устарел
     Future.delayed(Duration.zero, () async {
       /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
@@ -200,7 +200,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняет deviceId устройства на бэке
   Future<void> addFirebaseDeviceId() async {
     try {
-
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       Sentry.configureScope((scope) {
         scope.setExtra('fcmToken', fcmToken);
@@ -296,6 +295,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
+
       /// Обновляем токен, есть вероятность, что он устарел
       Future.delayed(Duration.zero, () async {
         /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
@@ -328,7 +328,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.success,
       ));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
       return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
@@ -357,7 +357,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
             SendingResetPasswordCodeStatuses.success,
       ));
       return null;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
       return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
@@ -465,20 +465,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       /// Если телефон не совпадает с кубитом, то сбрасываем таймер
       if (state.userPhoneNumber != phoneNumber) {
-        setTimer(DateTime.now().subtract(
-          const Duration(minutes: 5)
-        ));
+        setTimer(DateTime.now().subtract(const Duration(minutes: 5)));
       }
-
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
           userPhoneNumber: phoneNumber,
           isFound: response.found));
       return response;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
-      if(e.type == DioErrorType.other) {
+      if (e.type == DioExceptionType.unknown) {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }

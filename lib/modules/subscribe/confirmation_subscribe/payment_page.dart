@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+@RoutePage()
 class PaymentPage extends StatefulWidget {
   const PaymentPage({Key? key, required this.userId}) : super(key: key);
 

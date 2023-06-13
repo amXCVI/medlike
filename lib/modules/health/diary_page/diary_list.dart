@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/diary_models/diary_models.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:auto_route/auto_route.dart';
@@ -40,13 +40,13 @@ class DiaryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ...items.map((e) => 
+        ...items.map((e) =>
           DiaryTile(
-            title: title, 
-            item: items[items.indexOf(e)], 
-            decimalDigits: decimalDigits, 
-            measureItem: measureItem, 
-            syn: syn, 
+            title: title,
+            item: items[items.indexOf(e)],
+            decimalDigits: decimalDigits,
+            measureItem: measureItem,
+            syn: syn,
             paramName: paramName,
             grouping: grouping,
             minValue: minValue,
@@ -56,7 +56,7 @@ class DiaryList extends StatelessWidget {
           )
         ).toList()
       ],
-    );   
+    );
   }
 }
 
@@ -104,7 +104,7 @@ class DiaryTile extends StatelessWidget {
           updateFrom: dates[0],
           updateTo: dates[1]
         );
-    } 
+    }
 
     return Slidable(
         key: ValueKey(item.hashCode),

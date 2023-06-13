@@ -103,9 +103,6 @@ final lightTheme = ThemeData(
       letterSpacing: 0.25,
     ),
   ),
-
-  /// Colors
-  backgroundColor: AppColors.mainAppBackground,
   scaffoldBackgroundColor: AppColors.mainAppBackground,
   primaryColor: AppColors.mainBrand[900],
   primaryColorLight: AppColors.mainBrandSecond,
@@ -147,5 +144,22 @@ final lightTheme = ThemeData(
       TargetPlatform.android: ZoomPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoWillPopScopePageTransionsBuilder(),
     },
+  ),
+
+  appBarTheme: const AppBarTheme(
+    color: AppColors.mainAppBackground,
+  ),
+  colorScheme: const ColorScheme(
+    background: AppColors.mainAppBackground,
+    brightness: Brightness.light,
+    primary: AppColors.mainBrandColor,
+    onPrimary: Color(0xFF505050),
+    secondary: Color(0xFFBBBBBB),
+    onSecondary: Color(0xFFEAEAEA),
+    error: AppColors.mainError,
+    onError: Color(0xFFF32424),
+    onBackground: Color(0xFFFFFFFF),
+    surface: Color(0xFF54B435),
+    onSurface: Color(0xFF54B435),
   ),
 );

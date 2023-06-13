@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'document_models.dart';
 
@@ -38,7 +38,8 @@ mixin _$DocumentModel {
 abstract class $DocumentModelCopyWith<$Res> {
   factory $DocumentModelCopyWith(
           DocumentModel value, $Res Function(DocumentModel) then) =
-      _$DocumentModelCopyWithImpl<$Res>;
+      _$DocumentModelCopyWithImpl<$Res, DocumentModel>;
+  @useResult
   $Res call(
       {String documentName,
       String documentURL,
@@ -50,54 +51,56 @@ abstract class $DocumentModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DocumentModelCopyWithImpl<$Res>
+class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
     implements $DocumentModelCopyWith<$Res> {
   _$DocumentModelCopyWithImpl(this._value, this._then);
 
-  final DocumentModel _value;
   // ignore: unused_field
-  final $Res Function(DocumentModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentName = freezed,
-    Object? documentURL = freezed,
-    Object? status = freezed,
-    Object? clinicAddress = freezed,
-    Object? documentSubscribeDate = freezed,
-    Object? documentCreateDate = freezed,
-    Object? userName = freezed,
+    Object? documentName = null,
+    Object? documentURL = null,
+    Object? status = null,
+    Object? clinicAddress = null,
+    Object? documentSubscribeDate = null,
+    Object? documentCreateDate = null,
+    Object? userName = null,
   }) {
     return _then(_value.copyWith(
-      documentName: documentName == freezed
+      documentName: null == documentName
           ? _value.documentName
           : documentName // ignore: cast_nullable_to_non_nullable
               as String,
-      documentURL: documentURL == freezed
+      documentURL: null == documentURL
           ? _value.documentURL
           : documentURL // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      clinicAddress: clinicAddress == freezed
+      clinicAddress: null == clinicAddress
           ? _value.clinicAddress
           : clinicAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      documentSubscribeDate: documentSubscribeDate == freezed
+      documentSubscribeDate: null == documentSubscribeDate
           ? _value.documentSubscribeDate
           : documentSubscribeDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      documentCreateDate: documentCreateDate == freezed
+      documentCreateDate: null == documentCreateDate
           ? _value.documentCreateDate
           : documentCreateDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      userName: userName == freezed
+      userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -108,6 +111,7 @@ abstract class _$$_DocumentModelModelCopyWith<$Res>
           $Res Function(_$_DocumentModelModel) then) =
       __$$_DocumentModelModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String documentName,
       String documentURL,
@@ -120,51 +124,49 @@ abstract class _$$_DocumentModelModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_DocumentModelModelCopyWithImpl<$Res>
-    extends _$DocumentModelCopyWithImpl<$Res>
+    extends _$DocumentModelCopyWithImpl<$Res, _$_DocumentModelModel>
     implements _$$_DocumentModelModelCopyWith<$Res> {
   __$$_DocumentModelModelCopyWithImpl(
       _$_DocumentModelModel _value, $Res Function(_$_DocumentModelModel) _then)
-      : super(_value, (v) => _then(v as _$_DocumentModelModel));
+      : super(_value, _then);
 
-  @override
-  _$_DocumentModelModel get _value => super._value as _$_DocumentModelModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentName = freezed,
-    Object? documentURL = freezed,
-    Object? status = freezed,
-    Object? clinicAddress = freezed,
-    Object? documentSubscribeDate = freezed,
-    Object? documentCreateDate = freezed,
-    Object? userName = freezed,
+    Object? documentName = null,
+    Object? documentURL = null,
+    Object? status = null,
+    Object? clinicAddress = null,
+    Object? documentSubscribeDate = null,
+    Object? documentCreateDate = null,
+    Object? userName = null,
   }) {
     return _then(_$_DocumentModelModel(
-      documentName: documentName == freezed
+      documentName: null == documentName
           ? _value.documentName
           : documentName // ignore: cast_nullable_to_non_nullable
               as String,
-      documentURL: documentURL == freezed
+      documentURL: null == documentURL
           ? _value.documentURL
           : documentURL // ignore: cast_nullable_to_non_nullable
               as String,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
-      clinicAddress: clinicAddress == freezed
+      clinicAddress: null == clinicAddress
           ? _value.clinicAddress
           : clinicAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      documentSubscribeDate: documentSubscribeDate == freezed
+      documentSubscribeDate: null == documentSubscribeDate
           ? _value.documentSubscribeDate
           : documentSubscribeDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      documentCreateDate: documentCreateDate == freezed
+      documentCreateDate: null == documentCreateDate
           ? _value.documentCreateDate
           : documentCreateDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      userName: userName == freezed
+      userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String,
@@ -212,41 +214,45 @@ class _$_DocumentModelModel implements _DocumentModelModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentModelModel &&
-            const DeepCollectionEquality()
-                .equals(other.documentName, documentName) &&
-            const DeepCollectionEquality()
-                .equals(other.documentURL, documentURL) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality()
-                .equals(other.clinicAddress, clinicAddress) &&
-            const DeepCollectionEquality()
-                .equals(other.documentSubscribeDate, documentSubscribeDate) &&
-            const DeepCollectionEquality()
-                .equals(other.documentCreateDate, documentCreateDate) &&
-            const DeepCollectionEquality().equals(other.userName, userName));
+            (identical(other.documentName, documentName) ||
+                other.documentName == documentName) &&
+            (identical(other.documentURL, documentURL) ||
+                other.documentURL == documentURL) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.clinicAddress, clinicAddress) ||
+                other.clinicAddress == clinicAddress) &&
+            (identical(other.documentSubscribeDate, documentSubscribeDate) ||
+                other.documentSubscribeDate == documentSubscribeDate) &&
+            (identical(other.documentCreateDate, documentCreateDate) ||
+                other.documentCreateDate == documentCreateDate) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(documentName),
-      const DeepCollectionEquality().hash(documentURL),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(clinicAddress),
-      const DeepCollectionEquality().hash(documentSubscribeDate),
-      const DeepCollectionEquality().hash(documentCreateDate),
-      const DeepCollectionEquality().hash(userName));
+      documentName,
+      documentURL,
+      status,
+      clinicAddress,
+      documentSubscribeDate,
+      documentCreateDate,
+      userName);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DocumentModelModelCopyWith<_$_DocumentModelModel> get copyWith =>
       __$$_DocumentModelModelCopyWithImpl<_$_DocumentModelModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DocumentModelModelToJson(this);
+    return _$$_DocumentModelModelToJson(
+      this,
+    );
   }
 }
 
@@ -264,19 +270,19 @@ abstract class _DocumentModelModel implements DocumentModel {
       _$_DocumentModelModel.fromJson;
 
   @override
-  String get documentName => throw _privateConstructorUsedError;
+  String get documentName;
   @override
-  String get documentURL => throw _privateConstructorUsedError;
+  String get documentURL;
   @override
-  int get status => throw _privateConstructorUsedError;
+  int get status;
   @override
-  String get clinicAddress => throw _privateConstructorUsedError;
+  String get clinicAddress;
   @override
-  DateTime get documentSubscribeDate => throw _privateConstructorUsedError;
+  DateTime get documentSubscribeDate;
   @override
-  DateTime get documentCreateDate => throw _privateConstructorUsedError;
+  DateTime get documentCreateDate;
   @override
-  String get userName => throw _privateConstructorUsedError;
+  String get userName;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentModelModelCopyWith<_$_DocumentModelModel> get copyWith =>
@@ -304,39 +310,43 @@ mixin _$DocumentFilterItemModel {
 abstract class $DocumentFilterItemModelCopyWith<$Res> {
   factory $DocumentFilterItemModelCopyWith(DocumentFilterItemModel value,
           $Res Function(DocumentFilterItemModel) then) =
-      _$DocumentFilterItemModelCopyWithImpl<$Res>;
+      _$DocumentFilterItemModelCopyWithImpl<$Res, DocumentFilterItemModel>;
+  @useResult
   $Res call({String label, String value, String categoryLabel});
 }
 
 /// @nodoc
-class _$DocumentFilterItemModelCopyWithImpl<$Res>
+class _$DocumentFilterItemModelCopyWithImpl<$Res,
+        $Val extends DocumentFilterItemModel>
     implements $DocumentFilterItemModelCopyWith<$Res> {
   _$DocumentFilterItemModelCopyWithImpl(this._value, this._then);
 
-  final DocumentFilterItemModel _value;
   // ignore: unused_field
-  final $Res Function(DocumentFilterItemModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
-    Object? categoryLabel = freezed,
+    Object? label = null,
+    Object? value = null,
+    Object? categoryLabel = null,
   }) {
     return _then(_value.copyWith(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryLabel: categoryLabel == freezed
+      categoryLabel: null == categoryLabel
           ? _value.categoryLabel
           : categoryLabel // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -347,37 +357,36 @@ abstract class _$$_DocumentFilterItemModelCopyWith<$Res>
           $Res Function(_$_DocumentFilterItemModel) then) =
       __$$_DocumentFilterItemModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String label, String value, String categoryLabel});
 }
 
 /// @nodoc
 class __$$_DocumentFilterItemModelCopyWithImpl<$Res>
-    extends _$DocumentFilterItemModelCopyWithImpl<$Res>
+    extends _$DocumentFilterItemModelCopyWithImpl<$Res,
+        _$_DocumentFilterItemModel>
     implements _$$_DocumentFilterItemModelCopyWith<$Res> {
   __$$_DocumentFilterItemModelCopyWithImpl(_$_DocumentFilterItemModel _value,
       $Res Function(_$_DocumentFilterItemModel) _then)
-      : super(_value, (v) => _then(v as _$_DocumentFilterItemModel));
+      : super(_value, _then);
 
-  @override
-  _$_DocumentFilterItemModel get _value =>
-      super._value as _$_DocumentFilterItemModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? label = freezed,
-    Object? value = freezed,
-    Object? categoryLabel = freezed,
+    Object? label = null,
+    Object? value = null,
+    Object? categoryLabel = null,
   }) {
     return _then(_$_DocumentFilterItemModel(
-      label: label == freezed
+      label: null == label
           ? _value.label
           : label // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryLabel: categoryLabel == freezed
+      categoryLabel: null == categoryLabel
           ? _value.categoryLabel
           : categoryLabel // ignore: cast_nullable_to_non_nullable
               as String,
@@ -411,22 +420,19 @@ class _$_DocumentFilterItemModel implements _DocumentFilterItemModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentFilterItemModel &&
-            const DeepCollectionEquality().equals(other.label, label) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryLabel, categoryLabel));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.categoryLabel, categoryLabel) ||
+                other.categoryLabel == categoryLabel));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(label),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(categoryLabel));
+  int get hashCode => Object.hash(runtimeType, label, value, categoryLabel);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DocumentFilterItemModelCopyWith<_$_DocumentFilterItemModel>
       get copyWith =>
           __$$_DocumentFilterItemModelCopyWithImpl<_$_DocumentFilterItemModel>(
@@ -434,7 +440,9 @@ class _$_DocumentFilterItemModel implements _DocumentFilterItemModel {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DocumentFilterItemModelToJson(this);
+    return _$$_DocumentFilterItemModelToJson(
+      this,
+    );
   }
 }
 
@@ -448,11 +456,11 @@ abstract class _DocumentFilterItemModel implements DocumentFilterItemModel {
       _$_DocumentFilterItemModel.fromJson;
 
   @override
-  String get label => throw _privateConstructorUsedError;
+  String get label;
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
-  String get categoryLabel => throw _privateConstructorUsedError;
+  String get categoryLabel;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentFilterItemModelCopyWith<_$_DocumentFilterItemModel>
@@ -480,40 +488,43 @@ mixin _$DocumentFilterModel {
 abstract class $DocumentFilterModelCopyWith<$Res> {
   factory $DocumentFilterModelCopyWith(
           DocumentFilterModel value, $Res Function(DocumentFilterModel) then) =
-      _$DocumentFilterModelCopyWithImpl<$Res>;
+      _$DocumentFilterModelCopyWithImpl<$Res, DocumentFilterModel>;
+  @useResult
   $Res call(
       {String title, String value, List<DocumentFilterItemModel> filters});
 }
 
 /// @nodoc
-class _$DocumentFilterModelCopyWithImpl<$Res>
+class _$DocumentFilterModelCopyWithImpl<$Res, $Val extends DocumentFilterModel>
     implements $DocumentFilterModelCopyWith<$Res> {
   _$DocumentFilterModelCopyWithImpl(this._value, this._then);
 
-  final DocumentFilterModel _value;
   // ignore: unused_field
-  final $Res Function(DocumentFilterModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? value = freezed,
-    Object? filters = freezed,
+    Object? title = null,
+    Object? value = null,
+    Object? filters = null,
   }) {
     return _then(_value.copyWith(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      filters: filters == freezed
+      filters: null == filters
           ? _value.filters
           : filters // ignore: cast_nullable_to_non_nullable
               as List<DocumentFilterItemModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -524,37 +535,36 @@ abstract class _$$_DocumentFilterModelCopyWith<$Res>
           $Res Function(_$_DocumentFilterModel) then) =
       __$$_DocumentFilterModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String title, String value, List<DocumentFilterItemModel> filters});
 }
 
 /// @nodoc
 class __$$_DocumentFilterModelCopyWithImpl<$Res>
-    extends _$DocumentFilterModelCopyWithImpl<$Res>
+    extends _$DocumentFilterModelCopyWithImpl<$Res, _$_DocumentFilterModel>
     implements _$$_DocumentFilterModelCopyWith<$Res> {
   __$$_DocumentFilterModelCopyWithImpl(_$_DocumentFilterModel _value,
       $Res Function(_$_DocumentFilterModel) _then)
-      : super(_value, (v) => _then(v as _$_DocumentFilterModel));
+      : super(_value, _then);
 
-  @override
-  _$_DocumentFilterModel get _value => super._value as _$_DocumentFilterModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = freezed,
-    Object? value = freezed,
-    Object? filters = freezed,
+    Object? title = null,
+    Object? value = null,
+    Object? filters = null,
   }) {
     return _then(_$_DocumentFilterModel(
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      value: value == freezed
+      value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
-      filters: filters == freezed
+      filters: null == filters
           ? _value._filters
           : filters // ignore: cast_nullable_to_non_nullable
               as List<DocumentFilterItemModel>,
@@ -581,6 +591,7 @@ class _$_DocumentFilterModel implements _DocumentFilterModel {
   final List<DocumentFilterItemModel> _filters;
   @override
   List<DocumentFilterItemModel> get filters {
+    if (_filters is EqualUnmodifiableListView) return _filters;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_filters);
   }
@@ -595,28 +606,28 @@ class _$_DocumentFilterModel implements _DocumentFilterModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentFilterModel &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.value, value) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.value, value) || other.value == value) &&
             const DeepCollectionEquality().equals(other._filters, _filters));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(value),
-      const DeepCollectionEquality().hash(_filters));
+      runtimeType, title, value, const DeepCollectionEquality().hash(_filters));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DocumentFilterModelCopyWith<_$_DocumentFilterModel> get copyWith =>
       __$$_DocumentFilterModelCopyWithImpl<_$_DocumentFilterModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DocumentFilterModelToJson(this);
+    return _$$_DocumentFilterModelToJson(
+      this,
+    );
   }
 }
 
@@ -631,12 +642,11 @@ abstract class _DocumentFilterModel implements DocumentFilterModel {
       _$_DocumentFilterModel.fromJson;
 
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String get value => throw _privateConstructorUsedError;
+  String get value;
   @override
-  List<DocumentFilterItemModel> get filters =>
-      throw _privateConstructorUsedError;
+  List<DocumentFilterItemModel> get filters;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentFilterModelCopyWith<_$_DocumentFilterModel> get copyWith =>

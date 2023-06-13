@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_header.dart';
+import 'package:medlike/modules/documents/document_detail_page/pdf_viewer.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
+@RoutePage()
 class DocumentPage extends StatelessWidget {
   const DocumentPage({Key? key, required this.document}) : super(key: key);
 
@@ -37,6 +40,9 @@ class DocumentPage extends StatelessWidget {
               status: document.status,
               date: document.documentCreateDate,
               userName: document.userName,
+            ),
+            const PdfViewer(
+              pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
             )
           ],
         ));

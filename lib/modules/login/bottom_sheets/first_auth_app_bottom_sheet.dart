@@ -13,7 +13,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12)),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

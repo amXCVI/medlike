@@ -10,10 +10,12 @@ class UnAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
       foregroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      leading: Image.asset('assets/icons/ic_logo_launch.png', width: 28,),
+      leading: Image.asset(
+        'assets/icons/ic_logo_launch.png',
+        width: 28,
+      ),
       title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
       centerTitle: true,
       actions: [

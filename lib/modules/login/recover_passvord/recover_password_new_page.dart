@@ -4,9 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/auth_skeletons/default_auth_skeleton.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_view.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
+@RoutePage()
 class RecoverPasswordNewPage extends StatelessWidget {
   const RecoverPasswordNewPage({Key? key, required this.smsToken})
       : super(key: key);
@@ -39,7 +40,7 @@ class RecoverPasswordNewPage extends StatelessWidget {
         }
         return DefaultScaffold(
           child: state.resetPasswordStatus == ResetPasswordStatuses.loading ||
-              state.changePasswordStatus == ChangePasswordStatuses.loading
+                  state.changePasswordStatus == ChangePasswordStatuses.loading
               ? const DefaultAuthSkeleton()
               : RecoverPasswordNewView(
                   smsToken: smsToken,

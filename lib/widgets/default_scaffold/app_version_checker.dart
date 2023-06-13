@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/constants/app_constants.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class AppVersionChecker extends StatelessWidget {

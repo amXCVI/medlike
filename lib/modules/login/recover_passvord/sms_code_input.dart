@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class SmsCodeInput extends StatefulWidget {
   const SmsCodeInput({
-    Key? key, 
+    Key? key,
     required this.phoneNumber,
     required this.timerEnd
   }) : super(key: key);
