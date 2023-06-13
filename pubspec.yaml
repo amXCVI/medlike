@@ -54,11 +54,11 @@ dependencies:
   map_launcher: ^2.3.0+1
   collection: ^1.16.0
   tap_canvas: ^0.9.4
-  firebase_core: ^1.21.1
-  firebase_messaging: ^11.2.8
-  flutter_local_notifications: ^11.0.0
-  firebase_analytics: ^9.3.5
-  firebase_crashlytics: ^2.8.11
+  #firebase_core: ^1.21.1
+  #firebase_messaging: ^11.2.8
+  #flutter_local_notifications: ^11.0.0
+  #firebase_analytics: ^9.3.5
+  #firebase_crashlytics: ^2.8.11
   flutter_launcher_icons: ^0.10.0
   sliding_up_panel: ^2.0.0+1
   in_app_update: ^3.0.0
