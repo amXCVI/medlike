@@ -152,6 +152,7 @@ class DiaryTile extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
+              /*
               trailing: SvgPicture.asset(
                 'assets/icons/ic_arrow_right_calendar.svg',
                 color: AppColors.lightText
@@ -172,6 +173,7 @@ class DiaryTile extends StatelessWidget {
                   )
                 );
               },
+              */
             ),
           ),
         ));
