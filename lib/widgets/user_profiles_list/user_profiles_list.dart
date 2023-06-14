@@ -6,7 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profile_item.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profile_skeleton.dart';
 
-class UserProfilesList extends StatelessWidget {
+class UserProfilesList extends StatefulWidget {
   const UserProfilesList({Key? key, this.selectableItems = false})
       : super(key: key);
 
@@ -15,15 +15,25 @@ class UserProfilesList extends StatelessWidget {
   final bool selectableItems;
 
   @override
-  Widget build(BuildContext context) {
+  State<UserProfilesList> createState() => _UserProfilesListState();
+}
+
+class _UserProfilesListState extends State<UserProfilesList> {
+  @override
+  void initState() {
     context.read<UserCubit>().getUserProfiles(false);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     void handleTapOnUserProfile(String userId) {
       context.read<UserCubit>().setSelectedUserId(userId);
     }
 
     void handleLoadAvatar(String userId) async {
-      if (selectableItems) {
+      if (widget.selectableItems) {
         return;
       }
       try {
@@ -71,13 +81,13 @@ class UserProfilesList extends StatelessWidget {
                   children: state.userProfiles!
                       .map((item) => InkWell(
                             onTap: () {
-                              selectableItems
+                              widget.selectableItems
                                   ? handleTapOnUserProfile(item.id)
                                   : {};
                             },
                             child: UserProfileItem(
                               userProfileDate: item,
-                              isSelectedItem: selectableItems
+                              isSelectedItem: widget.selectableItems
                                   ? state.selectedUserId == null ||
                                           state.selectedUserId!.isEmpty
                                       ? state.userProfiles![0].id == item.id

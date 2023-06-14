@@ -317,6 +317,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   Future<List<UserProfile>?> getUserProfiles(bool isRefresh, {
     isCheck = false
   }) async {
+    if (!isRefresh &&
+      state.getUserProfileStatus ==
+        GetUserProfilesStatusesList.success
+    ) {
+      return state.userProfiles;
+    }
+
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
