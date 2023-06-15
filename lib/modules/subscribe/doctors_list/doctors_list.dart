@@ -54,6 +54,7 @@ class _DoctorsListState extends State<DoctorsList> {
         isFavorite: doctor.isFavorite,
       ));
     } else {
+      // ?
       context.router.push(ScheduleRoute(
         pageTitle: 'Любой',
         pageSubtitle: widget.specialisation,

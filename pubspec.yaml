@@ -35,7 +35,7 @@ dependencies:
   webview_flutter: ^3.0.4
   flutter_holo_date_picker:
     git: 
-      url: git@10.5.55.13:Medotrade/medlike_flutter/flutter_holo_date_picker.git
+      url: ../flutter_holo_date_picker
       ref: dev
   carousel_slider: ^4.1.1
   open_file: ^3.2.1
