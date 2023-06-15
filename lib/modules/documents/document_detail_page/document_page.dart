@@ -41,8 +41,10 @@ class DocumentPage extends StatelessWidget {
               date: document.documentCreateDate,
               userName: document.userName,
             ),
-            const PdfViewer(
-              pdfUrl: 'https://www.africau.edu/images/default/sample.pdf',
+            PdfViewerWidget(
+              fileId: document.documentName,
+              pdfUrl:
+                  'https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf',
             )
           ],
         ));

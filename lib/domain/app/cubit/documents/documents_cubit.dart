@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/file.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/data/repository/documents_repository.dart';
@@ -6,6 +9,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/modules/documents/documents_mock.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'documents_state.dart';
 
@@ -93,5 +97,22 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
     emit(state.copyWith(
       filteredDocumentsList: filteredList,
     ));
+  }
+
+  /// Получение документа по url
+  Future<File> getDocumentByUrl(String fileUrl) async {
+    try {
+      File file = await DefaultCacheManager().getSingleFile(
+        fileUrl,
+        key: fileUrl,
+        headers: {
+          'Authorization':
+              'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}'
+        },
+      );
+      return file;
+    } catch (err) {
+      rethrow;
+    }
   }
 }
