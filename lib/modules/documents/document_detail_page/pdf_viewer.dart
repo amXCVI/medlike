@@ -23,6 +23,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   Uint8List? theImage;
   File? file;
   late PdfViewerController viewerController = PdfViewerController();
+  late int pageCount = 1;
 
   @override
   void initState() {
@@ -37,16 +38,30 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
     });
   }
 
+  void getPageCount() {
+    int count = 0;
+    try {
+      count = viewerController.pageCount;
+    } catch (err) {
+      count = 1;
+    }
+    setState(() {
+      pageCount = count;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getPageCount();
+    });
+
     return isLoaded == true
         ? Column(
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: viewerController != null
-                    ? viewerController.pageCount * 500
-                    : 500,
+                height: pageCount * 500,
                 child: PdfViewer.openFile(
                   file!.path,
                   viewerController: viewerController,
@@ -59,6 +74,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
                   ])),
                 ),
               ),
+              Text(pageCount.toString())
             ],
           )
         : const Center(
