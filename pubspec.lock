@@ -418,7 +418,7 @@ packages:
       path: "."
       ref: dev
       resolved-ref: aba956bae35433ad82a6aefea7f915222aa66888
-      url: "git@10.5.55.13:Medotrade/medlike_flutter/flutter_holo_date_picker.git"
+      url: "../flutter_holo_date_picker"
     source: git
     version: "1.0.6"
   flutter_launcher_icons:
@@ -508,6 +508,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_optimizer:
+    dependency: "direct dev"
+    description:
+      name: flutter_web_optimizer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

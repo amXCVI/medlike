@@ -96,9 +96,7 @@ class SmartappLoginPage extends StatelessWidget {
     return Center(
       child: GestureDetector(
         onDoubleTap: getSmartappToken,
-        child: const CircularLoader(
-          radius: 50,
-        ),
+        child: const SizedBox(),
       ),
 
       // child: Column(

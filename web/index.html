@@ -88,7 +88,41 @@
 		bridge?.disableRenameParams();
 	</script>
 
-	<!-- <script>
+	<div id="loading">
+		<style>
+			body {
+				inset: 0;
+				overflow: hidden;
+				margin: 0;
+				padding: 0;
+				position: fixed;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+			}
+			#loading {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#loading img {
+				width: 90px;
+				height: 90px;
+    		}
+			#loading.main_done img {
+				opacity: 1;
+			}
+			#loading.init_done img {
+				opacity: 0.05;
+			}
+		</style>
+		<img src="./icons/Icon-512-filled.png" alt="Loading..."/>
+	</div>
+
+	<script>
 		function base64Encode(buf) {
 			let string = '';
 			(new Uint8Array(buf)).forEach(
@@ -209,6 +243,13 @@
 			scriptTag.src = './main.dart.js';
 			scriptTag.type = 'application/javascript';
 			document.body.append(scriptTag);
+			/*
+			var loading = document.querySelector("#loading");
+			loading.classList.add("main_done");
+			window.setTimeout(function () {
+				loading.remove();
+			}, 200);
+			*/
 		}
 
 		if ('serviceWorker' in navigator) {

@@ -18,6 +18,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/navigation/navigation_observer.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -78,7 +79,9 @@ class App extends StatelessWidget {
           theme: AppTheme.lightAppTheme,
           routerDelegate: AutoRouterDelegate(
             _router,
-            navigatorObservers: () => [],
+            navigatorObservers: () => [
+              SmartappNavigatorObserver()
+            ],
           ),
           routeInformationParser: _router.defaultRouteParser(),
           debugShowCheckedModeBanner: false,
