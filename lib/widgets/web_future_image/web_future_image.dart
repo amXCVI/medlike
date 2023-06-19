@@ -8,11 +8,15 @@ class WebFutureImage extends StatefulWidget {
     Key? key,
     required this.imageUrl,
     this.radius,
+    this.width,
+    this.height,
     this.isWithButton = false,
   }) : super(key: key);
 
   final String imageUrl;
   final double? radius;
+  final double? width;
+  final double? height;
   final bool isWithButton;
 
   @override
@@ -43,6 +47,8 @@ class _WebFutureImageState extends State<WebFutureImage> {
                 ? Image.asset(
                     state.getUrl(widget.imageUrl),
                     fit: BoxFit.cover,
+                    width: widget.width,
+                    height: widget.height,
                   )
                 : const SizedBox(),
           );

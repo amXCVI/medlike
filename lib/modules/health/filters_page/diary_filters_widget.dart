@@ -4,6 +4,7 @@ import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/modules/health/filters_page/filters_skeleton.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/filters/filters_list.dart';
+import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class DiaryFiltersWidget extends StatefulWidget {
   const DiaryFiltersWidget({Key? key}) : super(key: key);
@@ -53,8 +54,8 @@ class _DiaryFiltersWidgetState extends State<DiaryFiltersWidget> {
                 .toList(),
             images: state.diariesCategoriesList!
                 .map(
-                  (e) => Image.network(
-                    '${ApiConstants.baseUrl}${e.filterImg}',
+                  (e) => WebFutureImage(
+                    imageUrl: '${ApiConstants.baseUrl}${e.filterImg}',
                     width: 20,
                     height: 20,
                   ),

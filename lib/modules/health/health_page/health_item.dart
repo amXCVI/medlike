@@ -11,6 +11,7 @@ import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/context_helper.dart';
 import 'package:medlike/utils/helpers/grouping_helper.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
+import 'package:medlike/widgets/web_future_image/web_future_image.dart';
 
 class HealthItem extends StatefulWidget {
   const HealthItem(
@@ -108,8 +109,8 @@ class _HealthItemState extends State<HealthItem> {
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Image.network(
-                                    '${ApiConstants.baseUrl}${widget.iconPath}',
+                                  WebFutureImage(
+                                    imageUrl: '${ApiConstants.baseUrl}${widget.iconPath}',
                                     width: 20,
                                     height: 20,
                                   ),
