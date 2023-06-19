@@ -112,7 +112,7 @@ class AttachFileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: InkWell(
         onTap: onTap,
         child: Padding(

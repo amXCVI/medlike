@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
-import 'package:medlike/navigation/guards.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
@@ -33,25 +32,25 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  getIt.registerSingleton<AppRouter>(AppRouter(
-    checkIsAuthUser: CheckIsAuthUser(),
-    checkIsSavedPinCode: CheckIsSavedPinCode(),
-    checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
-    checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
-    checkIsOneClinicForMain: CheckIsOneClinicForMain(),
-    checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
-    checkIsOneProfileForMain: CheckIsOneProfileForMain(),
-    checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
-    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()
-  ));
+  getIt.registerSingleton<AppRouter>(AppRouter());
+  // checkIsAuthUser: CheckIsAuthUser(),
+  // checkIsSavedPinCode: CheckIsSavedPinCode(),
+  // checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
+  // checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
+  // checkIsOneClinicForMain: CheckIsOneClinicForMain(),
+  // checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
+  // checkIsOneProfileForMain: CheckIsOneProfileForMain(),
+  // checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
+  // checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()));
 
   getIt.registerSingleton(PushNavigationService());
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
-      pushHandler(jsonEncode(message.data));
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    Sentry.captureMessage(
+        "FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+    pushHandler(jsonEncode(message.data));
   });
   //await FCMService.onMessage();
   LocalNotificationService.initializeSelect((notificationResponse) {
@@ -66,7 +65,8 @@ void main() async {
   runZonedGuarded(() async {
     await SentryFlutter.init(
       (options) {
-        options.dsn = 'https://f6a923e6681b4453b447df38aa889523@o4504496183246848.ingest.sentry.io/4504496185737216';
+        options.dsn =
+            'https://f6a923e6681b4453b447df38aa889523@o4504496183246848.ingest.sentry.io/4504496185737216';
         options.debug = true;
         options.sendDefaultPii = true;
       },

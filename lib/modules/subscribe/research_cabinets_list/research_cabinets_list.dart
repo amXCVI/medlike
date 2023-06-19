@@ -7,7 +7,7 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/cabinet_item.dart';
 import 'package:medlike/modules/subscribe/research_cabinets_list/doctor_item.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/info_place/info_place.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';

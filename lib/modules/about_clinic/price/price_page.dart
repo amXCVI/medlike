@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
@@ -9,6 +10,7 @@ import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
+@RoutePage()
 class PricePage extends StatefulWidget {
   const PricePage({Key? key, required this.clinicId}) : super(key: key);
 

@@ -10,6 +10,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+@RoutePage()
 class ClinicDetailWithBottomSheetsPage extends StatefulWidget {
   const ClinicDetailWithBottomSheetsPage({
     Key? key,

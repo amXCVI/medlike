@@ -29,11 +29,13 @@ class AppRoutes {
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
   static const healthProfiles = '/health_profiles';
-  static const healthProfilesForMain= '/health_profiles_for_main';
+  static const healthProfilesForMain = '/health_profiles_for_main';
   static const health = '/health';
   static const diary = '/diary';
   static const diaryAdd = '/diary_add';
   static const healthFilters = '/health_filters';
+  static const documents = '/documents';
+  static const documentDetail = '/document_detail';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoForDetails = '/clinic_info_for_details';
   static const clinicInfoForMain = '/clinic_info_for_main';

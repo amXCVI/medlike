@@ -35,7 +35,7 @@ class SubscribeRowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: InkWell(
         highlightColor: Theme.of(context).highlightColor,
         onTap: onTap,
@@ -58,10 +58,11 @@ class SubscribeRowItem extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: isSelected
                             ? Theme.of(context).primaryColor
-                            : Theme.of(context).backgroundColor,
+                            : Theme.of(context).colorScheme.background,
                         radius: radius + 4,
                         child: CircleAvatar(
-                            backgroundColor: Theme.of(context).backgroundColor,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
                             radius: radius + 2,
                             child: isFirstSymbolForIcon
                                 ? CircleAvatar(
@@ -75,25 +76,31 @@ class SubscribeRowItem extends StatelessWidget {
                                           fontFamily: 'AquawaxPro',
                                         )),
                                   )
-                                : customIcon
-                        ),
+                                : customIcon),
                       ),
                       const SizedBox(width: 24.0),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width - 32 - 44 - 16 - 44,
+                        width: MediaQuery.of(context).size.width -
+                            32 -
+                            44 -
+                            16 -
+                            44,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               title,
-                              overflow: TextOverflow.ellipsis ,
+                              overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               softWrap: true,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  color: isSelected
-                                      ? Theme.of(context).primaryColor
-                                      : AppColors.mainText),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                      color: isSelected
+                                          ? Theme.of(context).primaryColor
+                                          : AppColors.mainText),
                             ),
                             const SizedBox(height: 4),
                             subtitle.isNotEmpty
@@ -105,8 +112,7 @@ class SubscribeRowItem extends StatelessWidget {
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(
-                                            color: AppColors.lightText),
+                                        ?.copyWith(color: AppColors.lightText),
                                   )
                                 : const SizedBox(),
                           ],
@@ -119,7 +125,8 @@ class SubscribeRowItem extends StatelessWidget {
                           'assets/icons/subscribe/right_arrow_icon.svg')
                       : const Text(''),
                   isSelected
-                      ? SvgPicture.asset('assets/icons/profile/checked_icon.svg')
+                      ? SvgPicture.asset(
+                          'assets/icons/profile/checked_icon.svg')
                       : const Text(''),
                   customRightAction ?? const SizedBox(),
                 ],

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skel
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
+@RoutePage()
 class FilesPage extends StatefulWidget {
   const FilesPage({Key? key, required this.userId}) : super(key: key);
 

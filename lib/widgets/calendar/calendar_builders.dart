@@ -67,7 +67,7 @@ CalendarBuilders calendarBuilder({
               : hasAvailableCellsDatesList
                       .contains(DateFormat("yyyy-MM-dd").format(date))
                   ? AppColors.circleBgFirst
-                  : Theme.of(context).backgroundColor,
+                  : Theme.of(context).colorScheme.background,
           shape: BoxShape.circle,
         ),
         margin: const EdgeInsets.symmetric(vertical: 3),
@@ -95,7 +95,7 @@ CalendarBuilders calendarBuilder({
           color: hasAvailableCellsDatesList
                   .contains(DateFormat("yyyy-MM-dd").format(date))
               ? AppColors.circleBgFirst
-              : Theme.of(context).backgroundColor,
+              : Theme.of(context).colorScheme.background,
           shape: BoxShape.circle,
         ),
         margin: const EdgeInsets.symmetric(vertical: 3),

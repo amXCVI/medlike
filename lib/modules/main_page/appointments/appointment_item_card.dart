@@ -40,7 +40,7 @@ class AppointmentItemCard extends StatelessWidget {
                 offset: Offset(0, 8),
               ),
             ],
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

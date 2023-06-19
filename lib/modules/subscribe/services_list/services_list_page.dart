@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
@@ -6,6 +7,7 @@ import 'package:medlike/modules/subscribe/services_list/services_list.dart';
 import 'package:medlike/modules/subscribe/services_list/services_list_skeleton.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
+@RoutePage()
 class ServicesListPage extends StatelessWidget {
   const ServicesListPage({
     Key? key,
@@ -20,7 +22,7 @@ class ServicesListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _onRefreshData () {
+    void _onRefreshData() {
       context
           .read<SubscribeCubit>()
           .getServicesList(userId, clinicId, buildingId);
@@ -33,8 +35,7 @@ class ServicesListPage extends StatelessWidget {
       isChildrenPage: true,
       child: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
-          if (state.getServicesListStatus ==
-              GetServicesListStatuses.failed) {
+          if (state.getServicesListStatus == GetServicesListStatuses.failed) {
             return const Text('');
           } else if (state.getServicesListStatus ==
               GetServicesListStatuses.success) {

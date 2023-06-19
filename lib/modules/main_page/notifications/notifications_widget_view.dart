@@ -10,14 +10,13 @@ import 'package:medlike/data/models/notification_models/notification_models.dart
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class NotificationsWidgetView extends StatefulWidget {
-  const NotificationsWidgetView({Key? key, this.clinic})
-      : super(key: key);
+  const NotificationsWidgetView({Key? key, this.clinic}) : super(key: key);
 
   final ClinicModel? clinic;
 
@@ -88,14 +87,13 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                               style: Theme.of(context).textTheme.titleMedium,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if(isLoading) const SizedBox(
-                              width: 10,
-                            ),
-                            if(isLoading) Lottie.asset(
-                              'assets/animations/loader.json',
-                              width: 15,
-                              height: 15
-                            ),
+                            if (isLoading)
+                              const SizedBox(
+                                width: 10,
+                              ),
+                            if (isLoading)
+                              Lottie.asset('assets/animations/loader.json',
+                                  width: 15, height: 15),
                           ],
                         ),
                         BlocBuilder<TourCubit, TourState>(
@@ -169,9 +167,8 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                       offset: Offset(0, 8),
                     ),
                   ],
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 ),
-
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                   child: Material(
@@ -180,22 +177,22 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         setState(() {
                           isLoading = true;
                         });
-                        switch(notificationItem.eventType) {
+                        switch (notificationItem.eventType) {
                           case (NotificationsTypes.newMedcardEventPdf):
                           case (NotificationsTypes.newMedcardEventJson):
-                            await context.read<MedcardCubit>().downloadAndOpenPdfFileByUrl(
-                              fileUrl:
-                                  '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
-                              fileName: notificationItem.description,
-                              fileId: notificationItem.entityId!,
-                            );
+                            await context
+                                .read<MedcardCubit>()
+                                .downloadAndOpenPdfFileByUrl(
+                                  fileUrl:
+                                      '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
+                                  fileName: notificationItem.description,
+                                  fileId: notificationItem.entityId!,
+                                );
                             break;
                           case (NotificationsTypes.appointmentCanceled):
                           case (NotificationsTypes.appointmentScheduled):
                           case (NotificationsTypes.appointmentCompleted):
-                            context.router.push(
-                              AppointmentsRoute()
-                            );
+                            context.router.push(AppointmentsRoute());
                             break;
                         }
 
@@ -205,28 +202,27 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         setState(() {
                           isLoading = false;
                         });
-
                       },
                       child: Slidable(
-                        key: UniqueKey(),
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(onDismissed: () {
-                            context
-                                .read<UserCubit>()
-                                .updateNotificationStatus(notificationItem.id);
-                          }),
-                          children: [
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (ctx) {},
-                              backgroundColor: const Color(0xFFFE4A49),
-                              icon: Icons.delete,
-                            ),
-                          ],
-                        ),
-                        child: content
-                      ),
+                          key: UniqueKey(),
+                          endActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            dismissible: DismissiblePane(onDismissed: () {
+                              context
+                                  .read<UserCubit>()
+                                  .updateNotificationStatus(
+                                      notificationItem.id);
+                            }),
+                            children: [
+                              SlidableAction(
+                                flex: 2,
+                                onPressed: (ctx) {},
+                                backgroundColor: const Color(0xFFFE4A49),
+                                icon: Icons.delete,
+                              ),
+                            ],
+                          ),
+                          child: content),
                     ),
                   ),
                 ),
@@ -241,9 +237,7 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
 
 class NotificationBottom extends StatelessWidget {
   const NotificationBottom(
-      {Key? key,
-      required this.notificationItem,
-      required this.isLoading})
+      {Key? key, required this.notificationItem, required this.isLoading})
       : super(key: key);
 
   final NotificationModel notificationItem;

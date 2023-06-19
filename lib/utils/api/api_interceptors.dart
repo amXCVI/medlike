@@ -51,7 +51,7 @@ class DioInterceptors extends Interceptor {
   }
 
   @override
-  onError(DioError err, ErrorInterceptorHandler handler) async {
+  onError(DioException err, ErrorInterceptorHandler handler) async {
     if (kDebugMode) {
       print('ERROR[${err.message}] => PATH: ${err.requestOptions.path}');
       print(err.type);
@@ -120,7 +120,6 @@ class DioInterceptors extends Interceptor {
               handler);
         });
       case 409:
-
         /// Не посылаем AppToast
         return super.onError(err, handler);
       case 460:
@@ -130,7 +129,7 @@ class DioInterceptors extends Interceptor {
         AppToast.showAppToast(msg: 'Проверьте подключение к сети интернет');
         return;
       default:
-        if (err.type == DioErrorType.receiveTimeout) {
+        if (err.type == DioExceptionType.receiveTimeout) {
           AppToast.showAppToast(msg: 'Слишком долгое время ответа сервера');
           return super.onError(err, handler);
         }
@@ -138,21 +137,22 @@ class DioInterceptors extends Interceptor {
         if (errStr == null) {
           return super.onError(err, handler);
         }
-        AppToast.showAppToast(msg: errStr.isNotEmpty ? errStr : err.message);
+        AppToast.showAppToast(
+            msg: errStr.isNotEmpty ? errStr : err.message ?? '');
         return super.onError(err, handler);
     }
   }
 
   void _lockDio() {
-    loggedDio.lock();
-    loggedDio.interceptors.responseLock.lock();
-    loggedDio.interceptors.errorLock.lock();
+    // loggedDio.lock();
+    // loggedDio.interceptors.responseLock.lock();
+    // loggedDio.interceptors.errorLock.lock();
   }
 
   void _unlockDio() {
-    loggedDio.unlock();
-    loggedDio.interceptors.responseLock.unlock();
-    loggedDio.interceptors.errorLock.unlock();
+    // loggedDio.unlock();
+    // loggedDio.interceptors.responseLock.unlock();
+    // loggedDio.interceptors.errorLock.unlock();
   }
 
   Future<bool> hasInternetConnection() async {

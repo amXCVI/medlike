@@ -16,7 +16,7 @@ class NextActionButtonItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).colorScheme.background,
       child: InkWell(
           onTap: handleTap,
           child: Container(

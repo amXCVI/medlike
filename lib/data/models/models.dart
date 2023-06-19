@@ -5,3 +5,4 @@ export 'docor_models/doctor_models.dart';
 export 'error_models/error_models.dart';
 export 'medcard_models/medcard_models.dart';
 export 'appointment_models/appointment_models.dart';
+export 'document_models/document_models.dart';

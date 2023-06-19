@@ -12,13 +12,11 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
+@RoutePage()
 class AppointmentsPage extends StatelessWidget {
-  const AppointmentsPage({
-    Key? key, 
-    this.isRefresh = false,
-    this.initDay,
-    this.notificationId
-  }) : super(key: key);
+  const AppointmentsPage(
+      {Key? key, this.isRefresh = false, this.initDay, this.notificationId})
+      : super(key: key);
 
   /// Используется для принудительной подгрузки данных.
   /// При переходе в мои приемы со страницы записи, например
@@ -32,11 +30,8 @@ class AppointmentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _onLoadDada({
-      bool isRefresh = true, 
-      DateTime? initDay
-    }) async {
-      if(initDay != null) {
+    Future<void> _onLoadDada({bool isRefresh = true, DateTime? initDay}) async {
+      if (initDay != null) {
         DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(initDay);
         DateTime dateTo = date_utils.DateUtils.lastDayOfWeekWithHours(initDay);
 
@@ -44,11 +39,10 @@ class AppointmentsPage extends StatelessWidget {
         context.read<AppointmentsCubit>().setEndDate(dateTo);
 
         context.read<AppointmentsCubit>().setSelectedDate(initDay);
-      } 
+      }
 
-      if(notificationId != null) {
-        context.read<UserCubit>()
-          .updateNotificationStatus(notificationId!);
+      if (notificationId != null) {
+        context.read<UserCubit>().updateNotificationStatus(notificationId!);
       }
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }

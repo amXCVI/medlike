@@ -15,6 +15,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode/barcode_button.dart';
 
+@RoutePage()
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 

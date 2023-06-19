@@ -9,7 +9,7 @@ import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/modules/main_page/appointments/appointment_item_card.dart';
 import 'package:medlike/modules/main_page/appointments/appointments_widget_skeleton.dart';
 import 'package:medlike/modules/main_page/appointments/not_found_appointment.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 
 class AppointmentsWidget extends StatelessWidget {
   const AppointmentsWidget({Key? key}) : super(key: key);

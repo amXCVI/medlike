@@ -19,7 +19,7 @@ class BottomBar extends StatelessWidget {
             border: Border(
               top: BorderSide(color: Theme.of(context).dividerColor),
             ),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             boxShadow: [
               BoxShadow(
                 color: Theme.of(context).dividerColor,
@@ -44,7 +44,7 @@ class BottomBar extends StatelessWidget {
                               borderRadius: const BorderRadius.only(
                                   topRight: Radius.circular(12),
                                   topLeft: Radius.circular(12)),
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                             child: Column(
                               children: [

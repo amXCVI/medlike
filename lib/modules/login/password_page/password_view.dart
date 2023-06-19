@@ -8,7 +8,7 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/auth_skeletons/default_auth_skeleton.dart';
 import 'package:medlike/modules/login/password_page/password_input.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_login_animation/default_login_animation.dart';
@@ -64,7 +64,7 @@ class _PasswordPageWidgetState extends State<PasswordPageWidget> {
                         });
                   } else {
                     setState(() {
-                      error = value.tryCount == -1 ? 
+                      error = value.tryCount == -1 ?
                         value.message : '${value.message}. Осталось попыток: ${value.tryCount}';
                     });
                   }

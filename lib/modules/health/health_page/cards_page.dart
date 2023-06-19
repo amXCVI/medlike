@@ -5,12 +5,13 @@ import 'package:medlike/modules/health/filters_page/diary_filters_widget.dart';
 import 'package:medlike/modules/health/health_page/health_list.dart';
 import 'package:medlike/modules/health/health_page/health_list_skeleton.dart';
 import 'package:medlike/modules/health/health_page/health_nodata.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
+@RoutePage()
 class CardsPage extends StatefulWidget {
   const CardsPage({Key? key, required this.isChildrenPage}) : super(key: key);
 
@@ -26,7 +27,7 @@ class _CardsPageState extends State<CardsPage> {
 
   void _onLoadDada(String grouping, {String? syn}) {
     context.read<DiaryCubit>().getDiaryCategoriesList(userIds: []);
-    
+
     context.read<DiaryCubit>().getDiariesList(grouping: grouping, syn: syn);
   }
 
@@ -61,7 +62,7 @@ class _CardsPageState extends State<CardsPage> {
         if (isFilteringMode) {
           handleResetFilters();
         } else {
-          context.router.replaceAll([const HealthRouteForMain()]);
+          context.router.replaceAll([const HealthForMainRoute()]);
         }
         return false;
       },

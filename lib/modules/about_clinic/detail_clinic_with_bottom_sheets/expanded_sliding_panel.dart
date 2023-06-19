@@ -11,7 +11,7 @@ import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/ma
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/next_action_button_item.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/sliding_panel_header.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/work_times_list.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 
 class ExpandedSlidingPanel extends StatelessWidget {

@@ -6,10 +6,11 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/modules/subscribe/researches_list/researches_list.dart';
 import 'package:medlike/modules/subscribe/researches_list/researches_list_skeleton.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
+@RoutePage()
 class ResearchesListPage extends StatelessWidget {
   const ResearchesListPage({
     Key? key,

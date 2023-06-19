@@ -49,7 +49,7 @@ class PriceFiltersWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? Theme.of(context).primaryColor
-                              : Theme.of(context).backgroundColor,
+                              : Theme.of(context).colorScheme.background,
                           borderRadius: BorderRadius.circular(50),
                           boxShadow: const [
                             BoxShadow(

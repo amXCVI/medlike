@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class NewPasswordInput extends StatefulWidget {
   const NewPasswordInput({
-    Key? key, 
+    Key? key,
     required this.token,
     required this.phoneNumberFromState,
     required this.onAuth
@@ -103,7 +103,7 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
               userName: phoneString,
               newPassword: _password,
             );
-        
+
       } else {
         await context.read<UserCubit>().resetPassword(
               phoneNumber: phoneString,

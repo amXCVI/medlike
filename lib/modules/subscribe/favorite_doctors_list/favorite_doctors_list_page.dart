@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
@@ -8,6 +9,7 @@ import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 import 'favorites_doctors_list_skeleton.dart';
 
+@RoutePage()
 class FavoriteDoctorsListPage extends StatelessWidget {
   const FavoriteDoctorsListPage({
     Key? key,

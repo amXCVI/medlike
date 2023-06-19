@@ -6,12 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
+import 'package:medlike/data/repository/documents_repository.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/data/repository/user_repository.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
+import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -26,17 +28,13 @@ import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:get_it/get_it.dart';
 
-import 'navigation/router.gr.dart';
+import 'navigation/router.dart';
 
 final getIt = GetIt.instance;
 
-
 class App extends StatelessWidget {
-  App({
-    Key? key,
-    this.appointmentsRepository,
-    this.testChild
-  }) : super(key: key);
+  App({Key? key, this.appointmentsRepository, this.testChild})
+      : super(key: key);
 
   final _router = getIt<AppRouter>();
 
@@ -48,8 +46,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final appointmentCubit = AppointmentsCubit(appointmentsRepository ?? AppointmentsRepository(), mediator);
+    final appointmentCubit = AppointmentsCubit(
+        appointmentsRepository ?? AppointmentsRepository(), mediator);
     final userCubit = UserCubit(UserRepository(), mediator);
 
     /*
@@ -59,58 +57,70 @@ class App extends StatelessWidget {
     });
     */
 
-    final app = testChild != null ? 
-      MaterialApp(
-        home: Scaffold(
-          body: testChild,
-        ),
-        debugShowCheckedModeBanner: false,
-      ) : InactivityManager(
-      child: FutureBuilder<bool>(
-        future: checkIsSavedPinCode(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if(!snapshot.hasData) {
-            return const SplashPage();
-          }
-          return MaterialApp.router(
-            title: 'Medlike',
-            theme: AppTheme.lightAppTheme,
-            routerDelegate: AutoRouterDelegate(
-              _router,
-              initialRoutes: [
-                if(snapshot.data!) const CheckPinCodeRoute(),
-                if(!snapshot.data!) StartPhoneNumberRoute()
-              ],
-              navigatorObservers: () => [
-                FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-                SentryNavigatorObserver()
-              ],
+    final app = testChild != null
+        ? MaterialApp(
+            home: Scaffold(
+              body: testChild,
             ),
-            routeInformationParser: _router.defaultRouteParser(),
             debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('en')],
+          )
+        : InactivityManager(
+            child: FutureBuilder<bool>(
+                future: checkIsSavedPinCode(),
+                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const SplashPage();
+                  }
+                  return MaterialApp.router(
+                    theme: AppTheme.lightAppTheme.copyWith(
+                      pageTransitionsTheme:
+                          const PageTransitionsTheme(builders: {
+                        // replace default CupertinoPageTransitionsBuilder with this
+                        TargetPlatform.iOS:
+                            NoShadowCupertinoPageTransitionsBuilder(),
+                        TargetPlatform.android:
+                            FadeUpwardsPageTransitionsBuilder(),
+                      }),
+                    ),
+                    title: 'Medlike',
+                    // theme: AppTheme.lightAppTheme,
+                    routerDelegate: AutoRouterDelegate(
+                      _router,
+                      initialRoutes: [
+                        if (snapshot.data!) const CheckPinCodeRoute(),
+                        if (!snapshot.data!) StartPhoneNumberRoute()
+                      ],
+                      navigatorObservers: () => [
+                        FirebaseAnalyticsObserver(
+                            analytics: FirebaseAnalytics.instance),
+                        SentryNavigatorObserver()
+                      ],
+                    ),
+                    routeInformationParser: _router.defaultRouteParser(),
+                    debugShowCheckedModeBanner: false,
+                    localizationsDelegates: const [
+                      GlobalMaterialLocalizations.delegate,
+                    ],
+                    supportedLocales: const [Locale('en')],
+                  );
+                }),
           );
-        }
-      ),
-    );
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => userCubit),
-        BlocProvider(
-            create: (context) => SubscribeCubit(SubscribeRepository(), mediator)),
-        BlocProvider(create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
-        BlocProvider(
-            create: (context) => appointmentCubit),
-        BlocProvider(create: (context) => MedcardCubit(MedcardRepository(), mediator)),
-        BlocProvider(create: (context) => DiaryCubit(DiaryRepository(), mediator)),
-        BlocProvider(create: (context) => PromptCubit()),
-        BlocProvider(create: (context) => TourCubit()..fetchStatus())
-      ],
-      child: app
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider(create: (context) => userCubit),
+      BlocProvider(
+          create: (context) => SubscribeCubit(SubscribeRepository(), mediator)),
+      BlocProvider(
+          create: (context) => ClinicsCubit(ClinicsRepository(), mediator)),
+      BlocProvider(create: (context) => appointmentCubit),
+      BlocProvider(
+          create: (context) => MedcardCubit(MedcardRepository(), mediator)),
+      BlocProvider(
+          create: (context) => DiaryCubit(DiaryRepository(), mediator)),
+      BlocProvider(
+          create: (context) => DocumentsCubit(DocumentsRepository(), mediator)),
+      BlocProvider(create: (context) => PromptCubit()),
+      BlocProvider(create: (context) => TourCubit()..fetchStatus())
+    ], child: app);
   }
 }

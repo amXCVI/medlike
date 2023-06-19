@@ -10,7 +10,7 @@ import 'package:medlike/modules/about_clinic/detail_clinic/address.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/map_places.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/phones_list.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic/work_times_list.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/default_divider.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';

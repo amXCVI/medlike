@@ -4,6 +4,7 @@ import 'package:medlike/modules/settings/settings_list.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
+@RoutePage()
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 

@@ -149,7 +149,7 @@ class _CalendarState extends State<Calendar> {
               markersAlignment: Alignment.topRight,
               markersMaxCount: 1,
               weekendDecoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).colorScheme.background,
                 shape: BoxShape.circle,
               ),
               weekendTextStyle: Theme.of(context)
@@ -170,7 +170,7 @@ class _CalendarState extends State<Calendar> {
                   height: 30,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     boxShadow: const [
                       BoxShadow(
                         color: Colors.black12,

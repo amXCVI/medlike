@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/guards.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';

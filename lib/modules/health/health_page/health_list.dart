@@ -5,7 +5,7 @@ import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/modules/health/health_page/health_item.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/helpers/value_helper.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:collection/collection.dart';

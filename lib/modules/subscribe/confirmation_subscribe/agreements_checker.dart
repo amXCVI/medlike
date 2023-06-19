@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/checkbox/custom_checkbox.dart';
 
 class AgreementsChecker extends StatelessWidget {
@@ -30,7 +30,7 @@ class AgreementsChecker extends StatelessWidget {
           onTap: onTapChecker,
           child: Padding(
             padding: const EdgeInsets.only(
-              left: 16, 
+              left: 16,
               top: 10,
               bottom: 10,
               right: 15
