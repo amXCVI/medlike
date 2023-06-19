@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 
 class EsiaLoginButton extends StatelessWidget {
   const EsiaLoginButton({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class EsiaLoginButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 20),
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           boxShadow: const [
             BoxShadow(

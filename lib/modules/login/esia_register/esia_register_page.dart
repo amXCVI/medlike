@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/phone_number_formattier.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
@@ -13,6 +13,7 @@ import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart
 
 import 'esia_register_form_item.dart';
 
+@RoutePage()
 class EsiaRegisterPage extends StatelessWidget {
   const EsiaRegisterPage({
     Key? key,

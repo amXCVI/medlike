@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -127,7 +128,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
 
       /// Обновляем токен, есть вероятность, что он устарел
-      if(kDebugMode) {
+      if (kDebugMode) {
         await deleteFirebaseDeviceId();
       }
       await addFirebaseDeviceId();
@@ -181,7 +182,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tryCount: 5,
         ));
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
         tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
@@ -258,7 +259,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.authPinCode);
     UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
-    FCMService.cleanFCMToken();
+    // ! FCMService.cleanFCMToken();
 
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
@@ -277,7 +278,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     ));
 
     /// Обновляем токен, есть вероятность, что он устарел
-    if(kDebugMode) {
+    if (kDebugMode) {
       await deleteFirebaseDeviceId();
     }
     await addFirebaseDeviceId();
@@ -303,9 +304,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     try {
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       userRepository.deleteDeviceFirebaseToken(token: fcmToken);
-      Sentry.captureMessage(
-        'Удаляем токен $fcmToken'
-      );
+      Sentry.captureMessage('Удаляем токен $fcmToken');
       await FirebaseMessaging.instance.deleteToken();
     } catch (e) {
       Sentry.captureException(e);
@@ -397,7 +396,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
 
       /// Обновляем токен, есть вероятность, что он устарел
-      if(kDebugMode) {
+      if (kDebugMode) {
         await deleteFirebaseDeviceId();
       }
       await addFirebaseDeviceId();

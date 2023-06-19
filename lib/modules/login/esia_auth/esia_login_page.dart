@@ -1,16 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:html/parser.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:html/parser.dart';
 
+@RoutePage()
 class EsiaLoginPage extends StatefulWidget {
   const EsiaLoginPage({Key? key}) : super(key: key);
 

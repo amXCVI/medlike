@@ -2378,7 +2378,8 @@ mixin _$EsiaTokenAuthRequest {
 abstract class $EsiaTokenAuthRequestCopyWith<$Res> {
   factory $EsiaTokenAuthRequestCopyWith(EsiaTokenAuthRequest value,
           $Res Function(EsiaTokenAuthRequest) then) =
-      _$EsiaTokenAuthRequestCopyWithImpl<$Res>;
+      _$EsiaTokenAuthRequestCopyWithImpl<$Res, EsiaTokenAuthRequest>;
+  @useResult
   $Res call(
       {bool isUserExists,
       EsiaTokenAuthSigninModelRequest? signinModel,
@@ -2389,37 +2390,41 @@ abstract class $EsiaTokenAuthRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EsiaTokenAuthRequestCopyWithImpl<$Res>
+class _$EsiaTokenAuthRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthRequest>
     implements $EsiaTokenAuthRequestCopyWith<$Res> {
   _$EsiaTokenAuthRequestCopyWithImpl(this._value, this._then);
 
-  final EsiaTokenAuthRequest _value;
   // ignore: unused_field
-  final $Res Function(EsiaTokenAuthRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isUserExists = freezed,
+    Object? isUserExists = null,
     Object? signinModel = freezed,
     Object? registrationModel = freezed,
   }) {
     return _then(_value.copyWith(
-      isUserExists: isUserExists == freezed
+      isUserExists: null == isUserExists
           ? _value.isUserExists
           : isUserExists // ignore: cast_nullable_to_non_nullable
               as bool,
-      signinModel: signinModel == freezed
+      signinModel: freezed == signinModel
           ? _value.signinModel
           : signinModel // ignore: cast_nullable_to_non_nullable
               as EsiaTokenAuthSigninModelRequest?,
-      registrationModel: registrationModel == freezed
+      registrationModel: freezed == registrationModel
           ? _value.registrationModel
           : registrationModel // ignore: cast_nullable_to_non_nullable
               as EsiaTokenAuthRegistrationModelRequest?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $EsiaTokenAuthSigninModelRequestCopyWith<$Res>? get signinModel {
     if (_value.signinModel == null) {
       return null;
@@ -2427,11 +2432,12 @@ class _$EsiaTokenAuthRequestCopyWithImpl<$Res>
 
     return $EsiaTokenAuthSigninModelRequestCopyWith<$Res>(_value.signinModel!,
         (value) {
-      return _then(_value.copyWith(signinModel: value));
+      return _then(_value.copyWith(signinModel: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>? get registrationModel {
     if (_value.registrationModel == null) {
       return null;
@@ -2439,7 +2445,7 @@ class _$EsiaTokenAuthRequestCopyWithImpl<$Res>
 
     return $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>(
         _value.registrationModel!, (value) {
-      return _then(_value.copyWith(registrationModel: value));
+      return _then(_value.copyWith(registrationModel: value) as $Val);
     });
   }
 }
@@ -2451,6 +2457,7 @@ abstract class _$$_EsiaTokenAuthRequestCopyWith<$Res>
           $Res Function(_$_EsiaTokenAuthRequest) then) =
       __$$_EsiaTokenAuthRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool isUserExists,
       EsiaTokenAuthSigninModelRequest? signinModel,
@@ -2464,31 +2471,29 @@ abstract class _$$_EsiaTokenAuthRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_EsiaTokenAuthRequestCopyWithImpl<$Res>
-    extends _$EsiaTokenAuthRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthRequestCopyWithImpl<$Res, _$_EsiaTokenAuthRequest>
     implements _$$_EsiaTokenAuthRequestCopyWith<$Res> {
   __$$_EsiaTokenAuthRequestCopyWithImpl(_$_EsiaTokenAuthRequest _value,
       $Res Function(_$_EsiaTokenAuthRequest) _then)
-      : super(_value, (v) => _then(v as _$_EsiaTokenAuthRequest));
+      : super(_value, _then);
 
-  @override
-  _$_EsiaTokenAuthRequest get _value => super._value as _$_EsiaTokenAuthRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isUserExists = freezed,
+    Object? isUserExists = null,
     Object? signinModel = freezed,
     Object? registrationModel = freezed,
   }) {
     return _then(_$_EsiaTokenAuthRequest(
-      isUserExists: isUserExists == freezed
+      isUserExists: null == isUserExists
           ? _value.isUserExists
           : isUserExists // ignore: cast_nullable_to_non_nullable
               as bool,
-      signinModel: signinModel == freezed
+      signinModel: freezed == signinModel
           ? _value.signinModel
           : signinModel // ignore: cast_nullable_to_non_nullable
               as EsiaTokenAuthSigninModelRequest?,
-      registrationModel: registrationModel == freezed
+      registrationModel: freezed == registrationModel
           ? _value.registrationModel
           : registrationModel // ignore: cast_nullable_to_non_nullable
               as EsiaTokenAuthRegistrationModelRequest?,
@@ -2524,31 +2529,31 @@ class _$_EsiaTokenAuthRequest implements _EsiaTokenAuthRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EsiaTokenAuthRequest &&
-            const DeepCollectionEquality()
-                .equals(other.isUserExists, isUserExists) &&
-            const DeepCollectionEquality()
-                .equals(other.signinModel, signinModel) &&
-            const DeepCollectionEquality()
-                .equals(other.registrationModel, registrationModel));
+            (identical(other.isUserExists, isUserExists) ||
+                other.isUserExists == isUserExists) &&
+            (identical(other.signinModel, signinModel) ||
+                other.signinModel == signinModel) &&
+            (identical(other.registrationModel, registrationModel) ||
+                other.registrationModel == registrationModel));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(isUserExists),
-      const DeepCollectionEquality().hash(signinModel),
-      const DeepCollectionEquality().hash(registrationModel));
+  int get hashCode =>
+      Object.hash(runtimeType, isUserExists, signinModel, registrationModel);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EsiaTokenAuthRequestCopyWith<_$_EsiaTokenAuthRequest> get copyWith =>
       __$$_EsiaTokenAuthRequestCopyWithImpl<_$_EsiaTokenAuthRequest>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EsiaTokenAuthRequestToJson(this);
+    return _$$_EsiaTokenAuthRequestToJson(
+      this,
+    );
   }
 }
 
@@ -2563,13 +2568,11 @@ abstract class _EsiaTokenAuthRequest implements EsiaTokenAuthRequest {
       _$_EsiaTokenAuthRequest.fromJson;
 
   @override
-  bool get isUserExists => throw _privateConstructorUsedError;
+  bool get isUserExists;
   @override
-  EsiaTokenAuthSigninModelRequest? get signinModel =>
-      throw _privateConstructorUsedError;
+  EsiaTokenAuthSigninModelRequest? get signinModel;
   @override
-  EsiaTokenAuthRegistrationModelRequest? get registrationModel =>
-      throw _privateConstructorUsedError;
+  EsiaTokenAuthRegistrationModelRequest? get registrationModel;
   @override
   @JsonKey(ignore: true)
   _$$_EsiaTokenAuthRequestCopyWith<_$_EsiaTokenAuthRequest> get copyWith =>
@@ -2603,7 +2606,9 @@ abstract class $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
   factory $EsiaTokenAuthRegistrationModelRequestCopyWith(
           EsiaTokenAuthRegistrationModelRequest value,
           $Res Function(EsiaTokenAuthRegistrationModelRequest) then) =
-      _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>;
+      _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+          EsiaTokenAuthRegistrationModelRequest>;
+  @useResult
   $Res call(
       {String firstName,
       String lastName,
@@ -2615,54 +2620,57 @@ abstract class $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
+class _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthRegistrationModelRequest>
     implements $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
   _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl(this._value, this._then);
 
-  final EsiaTokenAuthRegistrationModelRequest _value;
   // ignore: unused_field
-  final $Res Function(EsiaTokenAuthRegistrationModelRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-    Object? middleName = freezed,
-    Object? phoneNumber = freezed,
-    Object? snils = freezed,
-    Object? sex = freezed,
-    Object? birthday = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? middleName = null,
+    Object? phoneNumber = null,
+    Object? snils = null,
+    Object? sex = null,
+    Object? birthday = null,
   }) {
     return _then(_value.copyWith(
-      firstName: firstName == freezed
+      firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: lastName == freezed
+      lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: middleName == freezed
+      middleName: null == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: phoneNumber == freezed
+      phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      snils: snils == freezed
+      snils: null == snils
           ? _value.snils
           : snils // ignore: cast_nullable_to_non_nullable
               as String,
-      sex: sex == freezed
+      sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
               as int,
-      birthday: birthday == freezed
+      birthday: null == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2674,6 +2682,7 @@ abstract class _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>
           $Res Function(_$_EsiaTokenAuthRegistrationModelRequest) then) =
       __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String firstName,
       String lastName,
@@ -2686,54 +2695,51 @@ abstract class _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
-    extends _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+        _$_EsiaTokenAuthRegistrationModelRequest>
     implements _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
   __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl(
       _$_EsiaTokenAuthRegistrationModelRequest _value,
       $Res Function(_$_EsiaTokenAuthRegistrationModelRequest) _then)
-      : super(_value,
-            (v) => _then(v as _$_EsiaTokenAuthRegistrationModelRequest));
+      : super(_value, _then);
 
-  @override
-  _$_EsiaTokenAuthRegistrationModelRequest get _value =>
-      super._value as _$_EsiaTokenAuthRegistrationModelRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = freezed,
-    Object? lastName = freezed,
-    Object? middleName = freezed,
-    Object? phoneNumber = freezed,
-    Object? snils = freezed,
-    Object? sex = freezed,
-    Object? birthday = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? middleName = null,
+    Object? phoneNumber = null,
+    Object? snils = null,
+    Object? sex = null,
+    Object? birthday = null,
   }) {
     return _then(_$_EsiaTokenAuthRegistrationModelRequest(
-      firstName: firstName == freezed
+      firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: lastName == freezed
+      lastName: null == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: middleName == freezed
+      middleName: null == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String,
-      phoneNumber: phoneNumber == freezed
+      phoneNumber: null == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      snils: snils == freezed
+      snils: null == snils
           ? _value.snils
           : snils // ignore: cast_nullable_to_non_nullable
               as String,
-      sex: sex == freezed
+      sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
               as int,
-      birthday: birthday == freezed
+      birthday: null == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2783,31 +2789,28 @@ class _$_EsiaTokenAuthRegistrationModelRequest
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EsiaTokenAuthRegistrationModelRequest &&
-            const DeepCollectionEquality().equals(other.firstName, firstName) &&
-            const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality()
-                .equals(other.middleName, middleName) &&
-            const DeepCollectionEquality()
-                .equals(other.phoneNumber, phoneNumber) &&
-            const DeepCollectionEquality().equals(other.snils, snils) &&
-            const DeepCollectionEquality().equals(other.sex, sex) &&
-            const DeepCollectionEquality().equals(other.birthday, birthday));
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.snils, snils) || other.snils == snils) &&
+            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(firstName),
-      const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(middleName),
-      const DeepCollectionEquality().hash(phoneNumber),
-      const DeepCollectionEquality().hash(snils),
-      const DeepCollectionEquality().hash(sex),
-      const DeepCollectionEquality().hash(birthday));
+  int get hashCode => Object.hash(runtimeType, firstName, lastName, middleName,
+      phoneNumber, snils, sex, birthday);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<
           _$_EsiaTokenAuthRegistrationModelRequest>
       get copyWith => __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<
@@ -2815,7 +2818,9 @@ class _$_EsiaTokenAuthRegistrationModelRequest
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EsiaTokenAuthRegistrationModelRequestToJson(this);
+    return _$$_EsiaTokenAuthRegistrationModelRequestToJson(
+      this,
+    );
   }
 }
 
@@ -2836,19 +2841,19 @@ abstract class _EsiaTokenAuthRegistrationModelRequest
       _$_EsiaTokenAuthRegistrationModelRequest.fromJson;
 
   @override
-  String get firstName => throw _privateConstructorUsedError;
+  String get firstName;
   @override
-  String get lastName => throw _privateConstructorUsedError;
+  String get lastName;
   @override
-  String get middleName => throw _privateConstructorUsedError;
+  String get middleName;
   @override
-  String get phoneNumber => throw _privateConstructorUsedError;
+  String get phoneNumber;
   @override
-  String get snils => throw _privateConstructorUsedError;
+  String get snils;
   @override
-  int get sex => throw _privateConstructorUsedError;
+  int get sex;
   @override
-  String get birthday => throw _privateConstructorUsedError;
+  String get birthday;
   @override
   @JsonKey(ignore: true)
   _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<
@@ -2877,34 +2882,39 @@ abstract class $EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
   factory $EsiaTokenAuthSigninModelRequestCopyWith(
           EsiaTokenAuthSigninModelRequest value,
           $Res Function(EsiaTokenAuthSigninModelRequest) then) =
-      _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>;
+      _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+          EsiaTokenAuthSigninModelRequest>;
+  @useResult
   $Res call({String token, String refreshToken});
 }
 
 /// @nodoc
-class _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>
+class _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthSigninModelRequest>
     implements $EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
   _$EsiaTokenAuthSigninModelRequestCopyWithImpl(this._value, this._then);
 
-  final EsiaTokenAuthSigninModelRequest _value;
   // ignore: unused_field
-  final $Res Function(EsiaTokenAuthSigninModelRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = freezed,
-    Object? refreshToken = freezed,
+    Object? token = null,
+    Object? refreshToken = null,
   }) {
     return _then(_value.copyWith(
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      refreshToken: refreshToken == freezed
+      refreshToken: null == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -2916,33 +2926,32 @@ abstract class _$$_EsiaTokenAuthSigninModelRequestCopyWith<$Res>
           $Res Function(_$_EsiaTokenAuthSigninModelRequest) then) =
       __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String token, String refreshToken});
 }
 
 /// @nodoc
 class __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>
-    extends _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+        _$_EsiaTokenAuthSigninModelRequest>
     implements _$$_EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
   __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl(
       _$_EsiaTokenAuthSigninModelRequest _value,
       $Res Function(_$_EsiaTokenAuthSigninModelRequest) _then)
-      : super(_value, (v) => _then(v as _$_EsiaTokenAuthSigninModelRequest));
+      : super(_value, _then);
 
-  @override
-  _$_EsiaTokenAuthSigninModelRequest get _value =>
-      super._value as _$_EsiaTokenAuthSigninModelRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = freezed,
-    Object? refreshToken = freezed,
+    Object? token = null,
+    Object? refreshToken = null,
   }) {
     return _then(_$_EsiaTokenAuthSigninModelRequest(
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      refreshToken: refreshToken == freezed
+      refreshToken: null == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2976,20 +2985,18 @@ class _$_EsiaTokenAuthSigninModelRequest
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EsiaTokenAuthSigninModelRequest &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality()
-                .equals(other.refreshToken, refreshToken));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(refreshToken));
+  int get hashCode => Object.hash(runtimeType, token, refreshToken);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EsiaTokenAuthSigninModelRequestCopyWith<
           _$_EsiaTokenAuthSigninModelRequest>
       get copyWith => __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<
@@ -2997,7 +3004,9 @@ class _$_EsiaTokenAuthSigninModelRequest
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EsiaTokenAuthSigninModelRequestToJson(this);
+    return _$$_EsiaTokenAuthSigninModelRequestToJson(
+      this,
+    );
   }
 }
 
@@ -3011,9 +3020,9 @@ abstract class _EsiaTokenAuthSigninModelRequest
       _$_EsiaTokenAuthSigninModelRequest.fromJson;
 
   @override
-  String get token => throw _privateConstructorUsedError;
+  String get token;
   @override
-  String get refreshToken => throw _privateConstructorUsedError;
+  String get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_EsiaTokenAuthSigninModelRequestCopyWith<
@@ -3048,7 +3057,9 @@ abstract class $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
   factory $CreateUserProfileAndMedicalCardRequestModelCopyWith(
           CreateUserProfileAndMedicalCardRequestModel value,
           $Res Function(CreateUserProfileAndMedicalCardRequestModel) then) =
-      _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>;
+      _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+          CreateUserProfileAndMedicalCardRequestModel>;
+  @useResult
   $Res call(
       {bool result,
       String profileId,
@@ -3062,53 +3073,57 @@ abstract class $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>
+class _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+        $Val extends CreateUserProfileAndMedicalCardRequestModel>
     implements $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
   _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl(
       this._value, this._then);
 
-  final CreateUserProfileAndMedicalCardRequestModel _value;
   // ignore: unused_field
-  final $Res Function(CreateUserProfileAndMedicalCardRequestModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? profileId = freezed,
-    Object? error = freezed,
-    Object? integrationResponse = freezed,
-    Object? forceToSite = freezed,
+    Object? result = null,
+    Object? profileId = null,
+    Object? error = null,
+    Object? integrationResponse = null,
+    Object? forceToSite = null,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      profileId: profileId == freezed
+      profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      integrationResponse: integrationResponse == freezed
+      integrationResponse: null == integrationResponse
           ? _value.integrationResponse
           : integrationResponse // ignore: cast_nullable_to_non_nullable
               as CreateUserProfileAndMedicalCardIntegrationResponseModel,
-      forceToSite: forceToSite == freezed
+      forceToSite: null == forceToSite
           ? _value.forceToSite
           : forceToSite // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res>
       get integrationResponse {
     return $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
         $Res>(_value.integrationResponse, (value) {
-      return _then(_value.copyWith(integrationResponse: value));
+      return _then(_value.copyWith(integrationResponse: value) as $Val);
     });
   }
 }
@@ -3121,6 +3136,7 @@ abstract class _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res>
           $Res Function(_$_CreateUserProfileAndMedicalCardRequestModel) then) =
       __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool result,
       String profileId,
@@ -3136,44 +3152,41 @@ abstract class _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>
-    extends _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>
+    extends _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+        _$_CreateUserProfileAndMedicalCardRequestModel>
     implements _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
   __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl(
       _$_CreateUserProfileAndMedicalCardRequestModel _value,
       $Res Function(_$_CreateUserProfileAndMedicalCardRequestModel) _then)
-      : super(_value,
-            (v) => _then(v as _$_CreateUserProfileAndMedicalCardRequestModel));
+      : super(_value, _then);
 
-  @override
-  _$_CreateUserProfileAndMedicalCardRequestModel get _value =>
-      super._value as _$_CreateUserProfileAndMedicalCardRequestModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? profileId = freezed,
-    Object? error = freezed,
-    Object? integrationResponse = freezed,
-    Object? forceToSite = freezed,
+    Object? result = null,
+    Object? profileId = null,
+    Object? error = null,
+    Object? integrationResponse = null,
+    Object? forceToSite = null,
   }) {
     return _then(_$_CreateUserProfileAndMedicalCardRequestModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      profileId: profileId == freezed
+      profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as String,
-      error: error == freezed
+      error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      integrationResponse: integrationResponse == freezed
+      integrationResponse: null == integrationResponse
           ? _value.integrationResponse
           : integrationResponse // ignore: cast_nullable_to_non_nullable
               as CreateUserProfileAndMedicalCardIntegrationResponseModel,
-      forceToSite: forceToSite == freezed
+      forceToSite: null == forceToSite
           ? _value.forceToSite
           : forceToSite // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -3218,27 +3231,24 @@ class _$_CreateUserProfileAndMedicalCardRequestModel
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CreateUserProfileAndMedicalCardRequestModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality().equals(other.profileId, profileId) &&
-            const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality()
-                .equals(other.integrationResponse, integrationResponse) &&
-            const DeepCollectionEquality()
-                .equals(other.forceToSite, forceToSite));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.integrationResponse, integrationResponse) ||
+                other.integrationResponse == integrationResponse) &&
+            (identical(other.forceToSite, forceToSite) ||
+                other.forceToSite == forceToSite));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(profileId),
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(integrationResponse),
-      const DeepCollectionEquality().hash(forceToSite));
+      runtimeType, result, profileId, error, integrationResponse, forceToSite);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<
           _$_CreateUserProfileAndMedicalCardRequestModel>
       get copyWith =>
@@ -3247,7 +3257,9 @@ class _$_CreateUserProfileAndMedicalCardRequestModel
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CreateUserProfileAndMedicalCardRequestModelToJson(this);
+    return _$$_CreateUserProfileAndMedicalCardRequestModelToJson(
+      this,
+    );
   }
 }
 
@@ -3267,16 +3279,16 @@ abstract class _CreateUserProfileAndMedicalCardRequestModel
       _$_CreateUserProfileAndMedicalCardRequestModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String get profileId => throw _privateConstructorUsedError;
+  String get profileId;
   @override
-  String get error => throw _privateConstructorUsedError;
+  String get error;
   @override
   CreateUserProfileAndMedicalCardIntegrationResponseModel
-      get integrationResponse => throw _privateConstructorUsedError;
+      get integrationResponse;
   @override
-  bool get forceToSite => throw _privateConstructorUsedError;
+  bool get forceToSite;
   @override
   @JsonKey(ignore: true)
   _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<
@@ -3315,7 +3327,8 @@ abstract class $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
           $Res Function(CreateUserProfileAndMedicalCardIntegrationResponseModel)
               then) =
       _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
-          $Res>;
+          $Res, CreateUserProfileAndMedicalCardIntegrationResponseModel>;
+  @useResult
   $Res call(
       {bool result,
       String profileId,
@@ -3327,52 +3340,54 @@ abstract class $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
 
 /// @nodoc
 class _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
-        $Res>
+        $Res,
+        $Val extends CreateUserProfileAndMedicalCardIntegrationResponseModel>
     implements
         $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res> {
   _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl(
       this._value, this._then);
 
-  final CreateUserProfileAndMedicalCardIntegrationResponseModel _value;
   // ignore: unused_field
-  final $Res Function(CreateUserProfileAndMedicalCardIntegrationResponseModel)
-      _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? profileId = freezed,
-    Object? errorCode = freezed,
-    Object? errorText = freezed,
-    Object? accountId = freezed,
-    Object? forceErrorToSite = freezed,
+    Object? result = null,
+    Object? profileId = null,
+    Object? errorCode = null,
+    Object? errorText = null,
+    Object? accountId = null,
+    Object? forceErrorToSite = null,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      profileId: profileId == freezed
+      profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as String,
-      errorCode: errorCode == freezed
+      errorCode: null == errorCode
           ? _value.errorCode
           : errorCode // ignore: cast_nullable_to_non_nullable
               as String,
-      errorText: errorText == freezed
+      errorText: null == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
-      accountId: accountId == freezed
+      accountId: null == accountId
           ? _value.accountId
           : accountId // ignore: cast_nullable_to_non_nullable
               as String,
-      forceErrorToSite: forceErrorToSite == freezed
+      forceErrorToSite: null == forceErrorToSite
           ? _value.forceErrorToSite
           : forceErrorToSite // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -3389,6 +3404,7 @@ abstract class _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWi
       __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
           $Res>;
   @override
+  @useResult
   $Res call(
       {bool result,
       String profileId,
@@ -3402,7 +3418,7 @@ abstract class _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWi
 class __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
         $Res>
     extends _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
-        $Res>
+        $Res, _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>
     implements
         _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
             $Res> {
@@ -3410,47 +3426,40 @@ class __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
       _$_CreateUserProfileAndMedicalCardIntegrationResponseModel _value,
       $Res Function(_$_CreateUserProfileAndMedicalCardIntegrationResponseModel)
           _then)
-      : super(
-            _value,
-            (v) => _then(v
-                as _$_CreateUserProfileAndMedicalCardIntegrationResponseModel));
+      : super(_value, _then);
 
-  @override
-  _$_CreateUserProfileAndMedicalCardIntegrationResponseModel get _value =>
-      super._value
-          as _$_CreateUserProfileAndMedicalCardIntegrationResponseModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
-    Object? profileId = freezed,
-    Object? errorCode = freezed,
-    Object? errorText = freezed,
-    Object? accountId = freezed,
-    Object? forceErrorToSite = freezed,
+    Object? result = null,
+    Object? profileId = null,
+    Object? errorCode = null,
+    Object? errorText = null,
+    Object? accountId = null,
+    Object? forceErrorToSite = null,
   }) {
     return _then(_$_CreateUserProfileAndMedicalCardIntegrationResponseModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      profileId: profileId == freezed
+      profileId: null == profileId
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as String,
-      errorCode: errorCode == freezed
+      errorCode: null == errorCode
           ? _value.errorCode
           : errorCode // ignore: cast_nullable_to_non_nullable
               as String,
-      errorText: errorText == freezed
+      errorText: null == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
-      accountId: accountId == freezed
+      accountId: null == accountId
           ? _value.accountId
           : accountId // ignore: cast_nullable_to_non_nullable
               as String,
-      forceErrorToSite: forceErrorToSite == freezed
+      forceErrorToSite: null == forceErrorToSite
           ? _value.forceErrorToSite
           : forceErrorToSite // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -3498,28 +3507,27 @@ class _$_CreateUserProfileAndMedicalCardIntegrationResponseModel
         (other.runtimeType == runtimeType &&
             other
                 is _$_CreateUserProfileAndMedicalCardIntegrationResponseModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality().equals(other.profileId, profileId) &&
-            const DeepCollectionEquality().equals(other.errorCode, errorCode) &&
-            const DeepCollectionEquality().equals(other.errorText, errorText) &&
-            const DeepCollectionEquality().equals(other.accountId, accountId) &&
-            const DeepCollectionEquality()
-                .equals(other.forceErrorToSite, forceErrorToSite));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
+            (identical(other.errorCode, errorCode) ||
+                other.errorCode == errorCode) &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
+            (identical(other.forceErrorToSite, forceErrorToSite) ||
+                other.forceErrorToSite == forceErrorToSite));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(profileId),
-      const DeepCollectionEquality().hash(errorCode),
-      const DeepCollectionEquality().hash(errorText),
-      const DeepCollectionEquality().hash(accountId),
-      const DeepCollectionEquality().hash(forceErrorToSite));
+  int get hashCode => Object.hash(runtimeType, result, profileId, errorCode,
+      errorText, accountId, forceErrorToSite);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
           _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>
       get copyWith =>
@@ -3530,7 +3538,8 @@ class _$_CreateUserProfileAndMedicalCardIntegrationResponseModel
   @override
   Map<String, dynamic> toJson() {
     return _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelToJson(
-        this);
+      this,
+    );
   }
 }
 
@@ -3550,17 +3559,17 @@ abstract class _CreateUserProfileAndMedicalCardIntegrationResponseModel
       _$_CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String get profileId => throw _privateConstructorUsedError;
+  String get profileId;
   @override
-  String get errorCode => throw _privateConstructorUsedError;
+  String get errorCode;
   @override
-  String get errorText => throw _privateConstructorUsedError;
+  String get errorText;
   @override
-  String get accountId => throw _privateConstructorUsedError;
+  String get accountId;
   @override
-  bool get forceErrorToSite => throw _privateConstructorUsedError;
+  bool get forceErrorToSite;
   @override
   @JsonKey(ignore: true)
   _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
