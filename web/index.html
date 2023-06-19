@@ -22,6 +22,14 @@
 	<script>
 		var bridge = window.webBridgeInstance;
 		var debugCounter = 0;
+		async function setPath(route) {
+			const pathname = window.location.pathname;
+			const hash = window.location.hash;
+			const newPathname = pathname.replace(/\/[^/]*$/, route);
+			const newUrl = window.location.protocol + "//" + window.location.host + newPathname + hash;
+			window.history.pushState({path: newUrl}, '', newUrl);
+		}
+
 		async function sendBotEvent(jsonEventObject, data) {
 			let eventObject = JSON.parse(jsonEventObject);
 			if (data) eventObject.params.body = data;
@@ -58,7 +66,7 @@
 			});
 		}
 
-    async function sendClientEvent(jsonEventObject) {
+    	async function sendClientEvent(jsonEventObject) {
 			const eventObject = JSON.parse(jsonEventObject);
 			console.log('sendClientEvent start', eventObject);
 			return new Promise((resolve, reject) => {
@@ -79,10 +87,25 @@
 					})
 			});
 		}
-
+		/*
 		bridge?.sendClientEvent({
 			method: 'ready',
 			params: {}
+		});
+		*/
+		sendClientEvent({
+			method: 'ready',
+			params: {}
+		}).then((res) => {
+			console.log('bridge.sendClientEvent READY success ', res);
+			route = res?.meta?.route;
+			if(route && route != '/#') {
+				setPath(route);
+			}
+		}).catch((err) => {
+			console.log('sending event object: ', eventObject);
+			console.log('bridge.sendClientEvent READY error ', err);
+			//setPath('/#/login_phone')
 		});
 
 		bridge?.disableRenameParams();
@@ -218,7 +241,7 @@
 					})
 			});
 		}
-	</script>  -->
+	</script> 
 	<script>
 		window.flutterConfiguration = {
 			canvasKitBaseUrl: "./canvaskit/"
