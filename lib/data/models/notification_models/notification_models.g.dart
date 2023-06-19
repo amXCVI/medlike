@@ -16,7 +16,7 @@ _$_NotificationModel _$$_NotificationModelFromJson(Map<String, dynamic> json) =>
       eventsCount: json['eventsCount'] as int,
       userId: json['userId'] as String,
       eventType: json['eventType'] as String,
-      entityId: json['entityId'] as String,
+      entityId: json['entityId'] as String?,
     );
 
 Map<String, dynamic> _$$_NotificationModelToJson(

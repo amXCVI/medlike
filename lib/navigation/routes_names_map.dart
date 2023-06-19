@@ -11,6 +11,7 @@ class AppRoutes {
   static const loginEsiaLoginPage = '/login-esia-login-page';
   static const loginEsiaRegisterPage = '/login-esia-register-page';
   static const main = '/main';
+  static const backToMain = '/main';
   static const subscribe = '/subscribe';
   static const subscribeProfiles = '/subscribe_profiles';
   static const subscribeClinics = '/subscribe_clinics';
@@ -28,11 +29,14 @@ class AppRoutes {
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
   static const healthProfiles = '/health_profiles';
+  static const healthProfilesForMain= '/health_profiles_for_main';
   static const health = '/health';
   static const diary = '/diary';
   static const diaryAdd = '/diary_add';
   static const healthFilters = '/health_filters';
   static const clinicInfo = '/clinic_info';
+  static const clinicInfoForDetails = '/clinic_info_for_details';
+  static const clinicInfoForMain = '/clinic_info_for_main';
   static const clinicInfoDetails = '/clinic_info_details';
   static const clinicInfoPrice = '/clinic_info_price';
   static const clinicInfoSales = '/clinic_info_sales';

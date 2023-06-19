@@ -28,6 +28,7 @@ List<MainMenuItemJSON> mainMenuItemsList = [
     svgIconPath: 'assets/icons/menu_icons/ic_appointment_outline.svg',
     svgFilledIconPath: 'assets/icons/menu_icons/ic_appointment_filled.svg',
     title: 'Запись на прием',
+    //?
     link: AppRoutes.subscribeProfiles,
     name: '/subscribe',
   ),
@@ -56,8 +57,8 @@ List<MainMenuItemJSON> mainMenuItemsList = [
     svgIconPath: 'assets/icons/menu_icons/ic_clinic_outline.svg',
     svgFilledIconPath: 'assets/icons/menu_icons/ic_clinic_filled.svg',
     title: 'Клиника',
-    link: AppRoutes.clinicInfo,
-    name: AppRoutes.clinicInfo,
+    link: AppRoutes.clinicInfoForDetails,
+    name: AppRoutes.clinicInfoForDetails,
   ),
   MainMenuItemJSON(
     svgIconPath: 'assets/icons/menu_icons/ic_setting_outline.svg',

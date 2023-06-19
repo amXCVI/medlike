@@ -95,7 +95,8 @@ class AppointmentsState {
           deleteAppointmentStatus,
       getLastAppointmentStatus:
           getLastAppointmentStatus,
-      confirmCounter: 0,
+      lastAppointment: null,
+      confirmCounter: null,
       appointmentLoadingId: null,
       startDate: startDate,
       endDate: endDate,

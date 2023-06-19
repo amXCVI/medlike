@@ -4,17 +4,16 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
+import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -61,10 +60,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(userPhoneNumber: phone));
+    emit(state.copyWith(
+      userPhoneNumber: phone
+    ));
   }
 
-  /// Обновляем количество секунд до
+  /// Обновляем количество секунд до 
   void setTimer(DateTime time) {
     emit(state.copyWith(timerEnd: time));
   }
@@ -72,15 +73,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-      authScreen: UserAuthScreens.inputPassword,
-      checkUserAccountStatus: CheckUserAccountStatuses.continued,
+        authScreen: UserAuthScreens.inputPassword,
+        checkUserAccountStatus: CheckUserAccountStatuses.continued,
     ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
   void getPhoneNumber() async {
-    String? phone =
-        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
     emit(state.copyWith(userPhoneNumber: phone));
   }
 
@@ -129,7 +129,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
 
       /// Обновляем токен, есть вероятность, что он устарел
-      if (kDebugMode) {
+      if(kDebugMode) {
         await deleteFirebaseDeviceId();
       }
       await addFirebaseDeviceId();
@@ -241,6 +241,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   void signOut() async {
     UserSecureStorage.setField(AppConstants.isAuth, 'false');
     UserSecureStorage.deleteField(AppConstants.selectedUserId);
+    //mediator?.sendTo<DiaryCubit>(this, UserMediatorEvent.logout);
+
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
@@ -275,9 +277,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
-
     /// Обновляем токен, есть вероятность, что он устарел
-    if (kDebugMode) {
+    if(kDebugMode) {
       await deleteFirebaseDeviceId();
     }
     await addFirebaseDeviceId();
@@ -286,11 +287,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняет deviceId устройства на бэке
   Future<void> addFirebaseDeviceId() async {
     try {
+
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       Sentry.configureScope((scope) {
         scope.setExtra('fcmToken', fcmToken);
       });
-      userRepository.registerDeviceFirebaseToken(token: fcmToken);
+      await FirebaseMessaging.instance.getAPNSToken();
+      await userRepository.registerDeviceFirebaseToken(token: fcmToken);
       Sentry.captureMessage('FCM Token: $fcmToken');
     } catch (e) {
       Sentry.captureException(e);
@@ -302,7 +305,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     try {
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       userRepository.deleteDeviceFirebaseToken(token: fcmToken);
-      Sentry.captureMessage('Удаляем токен $fcmToken');
+      Sentry.captureMessage(
+        'Удаляем токен $fcmToken'
+      );
       await FirebaseMessaging.instance.deleteToken();
     } catch (e) {
       Sentry.captureException(e);
@@ -310,12 +315,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   }
 
   /// Получает список профилей из всех МО
-  void getUserProfiles(bool isRefresh) async {
+  Future<List<UserProfile>?> getUserProfiles(bool isRefresh) async {
     cleanSelectedUserId();
     if (!isRefresh &&
         state.getUserProfileStatus == GetUserProfilesStatusesList.success &&
         state.userProfiles != null) {
-      return;
+      return state.userProfiles;
     }
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
@@ -338,11 +343,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         selectedUserId: (currentSelectedUserId ?? defaultUserId).toString(),
         token: await UserSecureStorage.getField(AppConstants.accessToken),
       ));
+
+      return response;
     } catch (e) {
       emit(state.copyWith(
         getUserProfileStatus: GetUserProfilesStatusesList.failure,
       ));
       addError(e);
+
+      return null;
     }
   }
 
@@ -388,9 +397,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
-
       /// Обновляем токен, есть вероятность, что он устарел
-      if (kDebugMode) {
+      if(kDebugMode) {
         await deleteFirebaseDeviceId();
       }
       await addFirebaseDeviceId();
@@ -558,8 +566,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       /// Если телефон не совпадает с кубитом, то сбрасываем таймер
       if (state.userPhoneNumber != phoneNumber) {
-        setTimer(DateTime.now().subtract(const Duration(minutes: 5)));
+        setTimer(DateTime.now().subtract(
+          const Duration(minutes: 5)
+        ));
       }
+
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
@@ -568,7 +579,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       return response;
     } on DioError catch (e) {
       addError(e);
-      if (e.type == DioErrorType.other) {
+      if(e.type == DioErrorType.other) {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }

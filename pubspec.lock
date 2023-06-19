@@ -514,42 +514,42 @@ packages:
       name: flutter_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.0"
+    version: "5.0.2"
   flutter_secure_storage_linux:
     dependency: transitive
     description:
       name: flutter_secure_storage_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.3"
+    version: "1.1.0"
   flutter_secure_storage_macos:
     dependency: transitive
     description:
       name: flutter_secure_storage_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "1.1.0"
   flutter_secure_storage_platform_interface:
     dependency: transitive
     description:
       name: flutter_secure_storage_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.0"
   flutter_secure_storage_web:
     dependency: transitive
     description:
       name: flutter_secure_storage_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.0.2"
   flutter_secure_storage_windows:
     dependency: transitive
     description:
       name: flutter_secure_storage_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "1.1.2"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -629,7 +629,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.5"
+    version: "0.13.4"
   http_multi_server:
     dependency: transitive
     description:
@@ -1285,7 +1285,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.11"
+    version: "6.1.4"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1427,5 +1427,5 @@ packages:
     source: hosted
     version: "2.0.2"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
-  flutter: ">=3.3.0"
+  dart: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.1"

@@ -1,14 +1,30 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
-import 'package:medlike/utils/notifications/push_notifications_service.dart';
+import 'package:medlike/navigation/guards.dart';
+import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/utils/helpers/push_handle_helper.dart';
+import 'package:medlike/utils/notifications/local_notifications_service.dart';
+import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:testfairy_flutter/testfairy_flutter.dart';
+
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
+
+@pragma('vm:entry-point')
+Future<void> backgroundHandler(RemoteMessage message) async {
+  /*print(message.notification.title); */
+  Sentry.captureMessage("background ${message.data.toString()}");
+  LocalNotificationService.createAndDisplayNotification(message);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,14 +33,35 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  await FCMService.initializeFirebase();
-  await FCMService.initializeLocalNotifications();
-  await FCMService.onBackgroundMsg();
-  //await FCMService.onMessage();
-  await FCMService.getFCMToken();
-  await FCMService.getAPNSToken();
+  getIt.registerSingleton<AppRouter>(AppRouter(
+    checkIsAuthUser: CheckIsAuthUser(),
+    checkIsSavedPinCode: CheckIsSavedPinCode(),
+    checkIsOneClinicForPrice: CheckIsOneClinicForPrice(),
+    checkIsOneClinicForDetails: CheckIsOneClinicForDetails(),
+    checkIsOneClinicForMain: CheckIsOneClinicForMain(),
+    checkIsOneProfileForHealth: CheckIsOneProfileForHealth(),
+    checkIsOneProfileForMain: CheckIsOneProfileForMain(),
+    checkIsOneProfileForSubscribe: CheckIsOneProfileForSubscribe(),
+    checkIsOneClinicForSubscribe: CheckIsOneClinicForSubscribe()
+  ));
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  getIt.registerSingleton(PushNavigationService());
+
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+      pushHandler(jsonEncode(message.data));
+  });
+  //await FCMService.onMessage();
+  LocalNotificationService.initializeSelect((notificationResponse) {
+    Sentry.captureMessage("On push tap ${notificationResponse.payload}");
+    pushHandler(notificationResponse.payload);
+  });
+  LocalNotificationService.checkNotificationClicked((notificationResponse) {
+    Sentry.captureMessage("On open by push ${notificationResponse.payload}");
+    pushHandler(notificationResponse.payload);
+  });
 
   runZonedGuarded(() async {
     await SentryFlutter.init(

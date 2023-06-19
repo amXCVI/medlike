@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
+import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/files_button.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_docs_list_skeleton.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_filters_widget.dart';
@@ -13,12 +14,16 @@ import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 class MedcardPage extends StatefulWidget {
-  const MedcardPage(
-      {Key? key, required this.userId, required this.isChildrenPage})
-      : super(key: key);
+  const MedcardPage({
+    Key? key, 
+    required this.userId, 
+    required this.isChildrenPage,
+    this.eventId
+  }): super(key: key);
 
   final String userId;
   final bool isChildrenPage;
+  final String? eventId;
 
   @override
   State<MedcardPage> createState() => _MedcardPageState();
@@ -33,6 +38,10 @@ class _MedcardPageState extends State<MedcardPage> {
   void initState() {
     handleResetFilters();
     _onLoadDada();
+    if(widget.eventId != null) {
+      context.read<UserCubit>().updateNotificationStatus(widget.eventId!);
+    }
+
     super.initState();
   }
 

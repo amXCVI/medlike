@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/navigation/router.gr.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
@@ -24,7 +25,9 @@ class GridItem extends StatelessWidget {
     void handleTapOnItem() {
       switch (actionLink) {
         case AppRoutes.clinicInfo:
-          context.router.push(AllClinicsListRoute(isFromMainPage: true));
+          context.router.pushAll([AllClinicsListRoute(
+            isFromMainPage: true,
+          )]);
           break;
         default:
           context.router.pushNamed(actionLink);

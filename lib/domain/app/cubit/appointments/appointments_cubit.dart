@@ -7,6 +7,7 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/utils/helpers/timestamp_converter.dart';
+import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:meta/meta.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -46,63 +47,43 @@ class AppointmentsCubit
       final List<AppointmentModel> response;
       response = await appointmentsRepository.getAppointmentsList();
 
+      final appointmentsList = response
+        .map((e) => AppointmentModelWithTimeZoneOffset(
+            status: e.status,
+            needConfirmation: e.needConfirmation,
+            comment: e.comment,
+            researchPlace: e.researchPlace,
+            id: e.id,
+            appointmentDateTime:
+                const TimestampConverter().fromJson(e.appointmentDateTime),
+            timeZoneOffset: getTimezoneOffset(e.appointmentDateTime),
+            patientInfo: e.patientInfo,
+            clinicInfo: e.clinicInfo,
+            doctorInfo: e.doctorInfo,
+            researches: e.researches,
+            categoryType: e.categoryType,
+            isVideo: e.isVideo,
+            payType: e.payType,
+            isDraft: e.isDraft,
+            orderId: e.orderId,
+            scheduleId: e.scheduleId,
+            paymentStatus: e.paymentStatus,
+            recommendations: e.recommendations))
+        .toList();
+
+      final awaitedAppointments = response
+        .where((e) => AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
+      .toList();
+
       emit(state.copyWith(
         getAppointmentsStatus: GetAppointmentsStatuses.success,
-        appointmentsList: response
-            .map((e) => AppointmentModelWithTimeZoneOffset(
-                status: e.status,
-                needConfirmation: e.needConfirmation,
-                comment: e.comment,
-                researchPlace: e.researchPlace,
-                id: e.id,
-                appointmentDateTime:
-                    const TimestampConverter().fromJson(e.appointmentDateTime),
-                timeZoneOffset: int.parse(
-                    e.appointmentDateTime.split('+').last.substring(0, 2)),
-                patientInfo: e.patientInfo,
-                clinicInfo: e.clinicInfo,
-                doctorInfo: e.doctorInfo,
-                researches: e.researches,
-                categoryType: e.categoryType,
-                isVideo: e.isVideo,
-                payType: e.payType,
-                isDraft: e.isDraft,
-                orderId: e.orderId,
-                scheduleId: e.scheduleId,
-                paymentStatus: e.paymentStatus,
-                recommendations: e.recommendations))
-            .toList(),
-        filteredAppointmentsList: response
-            .map((e) => AppointmentModelWithTimeZoneOffset(
-                status: e.status,
-                needConfirmation: e.needConfirmation,
-                comment: e.comment,
-                researchPlace: e.researchPlace,
-                id: e.id,
-                appointmentDateTime:
-                    const TimestampConverter().fromJson(e.appointmentDateTime),
-                timeZoneOffset: int.parse(
-                    e.appointmentDateTime.split('+').last.substring(0, 2)),
-                patientInfo: e.patientInfo,
-                clinicInfo: e.clinicInfo,
-                doctorInfo: e.doctorInfo,
-                researches: e.researches,
-                categoryType: e.categoryType,
-                isVideo: e.isVideo,
-                payType: e.payType,
-                isDraft: e.isDraft,
-                orderId: e.orderId,
-                scheduleId: e.scheduleId,
-                paymentStatus: e.paymentStatus,
-                recommendations: e.recommendations))
-            .toList(),
+        appointmentsList: appointmentsList,
+        filteredAppointmentsList: appointmentsList,
         confirmCounter: 
-          response.where(
-            (e) {
-              final diff = 
-                const TimestampConverter().fromJson(e.appointmentDateTime).difference(DateTime.now());
-              return e.status == 4 && diff.inHours < 24 && diff.inHours >= 0;
-            }
+          awaitedAppointments.where(
+            (e) => isDifferenceIn24h(
+              DateTime.parse(e.appointmentDateTime)
+            )
           ).length
       ));
       filterAppointmentsList(state.selectedDate);
@@ -192,8 +173,7 @@ class AppointmentsCubit
               id: response.id,
               appointmentDateTime: const TimestampConverter()
                   .fromJson(response.appointmentDateTime),
-              timeZoneOffset: int.parse(
-                  response.appointmentDateTime.split('+').last.substring(0, 2)),
+              timeZoneOffset: getTimezoneOffset(response.appointmentDateTime),
               patientInfo: response.patientInfo,
               clinicInfo: response.clinicInfo,
               doctorInfo: response.doctorInfo,
@@ -245,7 +225,7 @@ class AppointmentsCubit
       );
 
       emit(state.copyWith(
-        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        confirmCounter: (state.confirmCounter ?? 2) - 1,
         deleteAppointmentStatus: DeleteAppointmentStatuses.success,
       ));
     } catch (e) {
@@ -286,7 +266,7 @@ class AppointmentsCubit
       );
 
       emit(state.copyWith(
-        confirmCounter: (state.confirmCounter ?? 1) - 1,
+        confirmCounter: (state.confirmCounter ?? 2) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
 

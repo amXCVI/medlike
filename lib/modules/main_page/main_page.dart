@@ -15,15 +15,25 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode/barcode_button.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  void initState() {
+    super.initState();
+
     context.read<UserCubit>().getUserProfiles(false);
     context.read<ClinicsCubit>().getAllClinicsList(false);
     context.read<AppointmentsCubit>().getAppointmentsList(false);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         showDialog<void>(

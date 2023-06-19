@@ -7,7 +7,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list_skeleton.dart';
 
-class ProfilesListPage extends StatelessWidget {
+class ProfilesListPage extends StatefulWidget {
   const ProfilesListPage(
       {Key? key,
       required this.title,
@@ -22,31 +22,40 @@ class ProfilesListPage extends StatelessWidget {
   final Function(String, bool) handleTapOnUserProfile;
 
   @override
-  Widget build(BuildContext context) {
-    void _onRefreshData({bool isRefresh = false}) {
-      context.read<UserCubit>().getUserProfiles(isRefresh);
-    }
+  State<ProfilesListPage> createState() => _ProfilesListPageState();
+}
 
+class _ProfilesListPageState extends State<ProfilesListPage> {
+  void _onRefreshData({bool isRefresh = false}) async {
+    //? TODO: нарушает принципы BLoC, переделать?
+    final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
+
+    if (userList?.length == 1 &&
+        context.router.current.path.contains(widget.routeName)) {
+      widget.handleTapOnUserProfile(userList![0].id, false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
     _onRefreshData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return DefaultScaffold(
-      appBarTitle: title,
+      appBarTitle: widget.title,
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
-          final userList = state.userProfiles;
-
-          if (userList?.length == 1 &&
-              context.router.current.path.contains(routeName)) {
-            handleTapOnUserProfile(userList![0].id, false);
-          }
-
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
             return ProfilesList(
               profilesList: state.userProfiles as List<UserProfile>,
-              selectedUserId: selectedId,
+              selectedUserId: widget.selectedId,
               onRefreshData: _onRefreshData,
-              handleTapOnUserProfile: handleTapOnUserProfile,
+              handleTapOnUserProfile: widget.handleTapOnUserProfile,
             );
           } else if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.failure) {
