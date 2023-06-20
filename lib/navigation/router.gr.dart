@@ -397,6 +397,11 @@ abstract class _$AppRouter extends RootStackRouter {
           snils: args.snils,
           sex: args.sex,
           birthday: args.birthday,
+          passportSerial: args.passportSerial,
+          passportNumber: args.passportNumber,
+          passportIssueDate: args.passportIssueDate,
+          passportIssueId: args.passportIssueId,
+          esiaToken: args.esiaToken,
         ),
       );
     },
@@ -1820,6 +1825,11 @@ class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
     required String snils,
     required int sex,
     required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
     List<PageRouteInfo>? children,
   }) : super(
           EsiaRegisterRoute.name,
@@ -1832,6 +1842,11 @@ class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
             snils: snils,
             sex: sex,
             birthday: birthday,
+            passportSerial: passportSerial,
+            passportNumber: passportNumber,
+            passportIssueDate: passportIssueDate,
+            passportIssueId: passportIssueId,
+            esiaToken: esiaToken,
           ),
           initialChildren: children,
         );
@@ -1852,6 +1867,11 @@ class EsiaRegisterRouteArgs {
     required this.snils,
     required this.sex,
     required this.birthday,
+    required this.passportSerial,
+    required this.passportNumber,
+    required this.passportIssueDate,
+    required this.passportIssueId,
+    required this.esiaToken,
   });
 
   final Key? key;
@@ -1870,9 +1890,19 @@ class EsiaRegisterRouteArgs {
 
   final String birthday;
 
+  final String passportSerial;
+
+  final String passportNumber;
+
+  final String passportIssueDate;
+
+  final String passportIssueId;
+
+  final String esiaToken;
+
   @override
   String toString() {
-    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday}';
+    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId, esiaToken: $esiaToken}';
   }
 }
 

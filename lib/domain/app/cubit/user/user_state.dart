@@ -49,6 +49,8 @@ enum CreateUserProfileAndMedicalCardStatuses {
   failed
 }
 
+enum CreateUserAndProfileStatuses { initial, loading, success, failed }
+
 enum NotificationEventType {
   AppointmentCompleted,
   AppointmentCanceled,
@@ -92,6 +94,7 @@ class UserState {
   final String? esiaAuthToken;
   final CreateUserProfileAndMedicalCardStatuses?
       createUserProfileAndMedicalCardStatus;
+  final CreateUserAndProfileStatuses? createUserAndProfileStatuses;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -128,6 +131,7 @@ class UserState {
     this.getTokenOrUserDataByEsiaTokenStatus,
     this.esiaAuthToken,
     this.createUserProfileAndMedicalCardStatus,
+    this.createUserAndProfileStatuses,
   });
 
   UserState copyWith({
@@ -164,6 +168,7 @@ class UserState {
     String? esiaAuthToken,
     CreateUserProfileAndMedicalCardStatuses?
         createUserProfileAndMedicalCardStatus,
+    CreateUserAndProfileStatuses? createUserAndProfileStatuses,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -215,6 +220,8 @@ class UserState {
       createUserProfileAndMedicalCardStatus:
           createUserProfileAndMedicalCardStatus ??
               this.createUserProfileAndMedicalCardStatus,
+      createUserAndProfileStatuses:
+          createUserAndProfileStatuses ?? this.createUserAndProfileStatuses,
     );
   }
 

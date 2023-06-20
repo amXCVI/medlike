@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:html/parser.dart';
@@ -37,7 +38,7 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
       return res;
     }
 
-    void _authenticateWithEsiaToken({required String esiaToken}) async {
+    void authenticateWithEsiaToken({required String esiaToken}) async {
       await context.read<UserCubit>().esiaAuth(esiaToken).then((esiaAuthRes) {
         if (esiaAuthRes!.isUserExists) {
           // Если чел уже зарегистриррован в системе
@@ -52,6 +53,12 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
               snils: esiaAuthRes.registrationModel!.snils,
               sex: esiaAuthRes.registrationModel!.sex,
               birthday: esiaAuthRes.registrationModel!.birthday,
+              passportSerial: esiaAuthRes.registrationModel!.passportSerial,
+              passportNumber: esiaAuthRes.registrationModel!.passportNumber,
+              passportIssueDate:
+                  esiaAuthRes.registrationModel!.passportIssueDate,
+              passportIssueId: esiaAuthRes.registrationModel!.passportIssueId,
+              esiaToken: esiaToken,
             )
           ]);
         }
@@ -61,14 +68,16 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
     // Получаю токен со страницы webView
     // Не уверен, что решение адекватное. Скорее наоборот
     // Бэкендеры утверждают, что класть токен в url - плохой тон, поэтому так
-    void _getAuthEsiaTokenFromHTMLPage() async {
+    void getAuthEsiaTokenFromHTMLPage() async {
       String docu = await _webViewController
-          .evaluateJavascript('document.documentElement.innerHTML') as String;
+          .runJavascriptReturningResult('document.documentElement.innerHTML');
       var dom = parse(docu);
       String? esiaToken = dom.getElementById('esia')?.text;
-      print('esiaToken: $esiaToken');
+      if (kDebugMode) {
+        print('esiaToken: $esiaToken');
+      }
       if (esiaToken != null && esiaToken.isNotEmpty) {
-        _authenticateWithEsiaToken(esiaToken: esiaToken);
+        authenticateWithEsiaToken(esiaToken: esiaToken);
       }
     }
 
@@ -79,11 +88,15 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
         WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: authorizationUrl.toString(),
-          onWebViewCreated: (controller) {
+          onWebViewCreated: (WebViewController controller) {
             _webViewController = controller;
+            controller.loadUrl(
+              authorizationUrl.toString(),
+              headers: {"Cookie": "mycookie=true"},
+            );
           },
           onPageFinished: (finish) {
-            _getAuthEsiaTokenFromHTMLPage();
+            getAuthEsiaTokenFromHTMLPage();
           },
           onProgress: (i) {
             setState(() {

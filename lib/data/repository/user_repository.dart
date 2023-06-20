@@ -11,7 +11,6 @@ import 'package:medlike/utils/api/dio_client.dart';
 import 'package:medlike/utils/helpers/platform_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:mime/mime.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 enum UserAuthenticationStatus {
   unknown,
@@ -432,6 +431,44 @@ class UserRepository {
       );
       return CreateUserProfileAndMedicalCardRequestModel.fromJson(
           response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> createUserAndProfile({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required DateTime birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required DateTime passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
+  }) async {
+    try {
+      await _dioClient.post(
+        '/api/v1.0/auth/create-misanduser-profiles',
+        data: {
+          "FirstName": firstName,
+          "MiddleName": middleName,
+          "LastName": lastName,
+          "Phone": phoneNumber,
+          "Birthday": birthday.toString(),
+          "Sex": sex,
+          "Snils": snils,
+          "PassportSerial": passportSerial,
+          "PassportNumber": passportNumber,
+          "PassportIssueDate": passportIssueDate.toString(),
+          "PassportIssueId": passportIssueId,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $esiaToken'}),
+      );
+      return true;
     } catch (err) {
       rethrow;
     }

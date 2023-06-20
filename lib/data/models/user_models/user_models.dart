@@ -182,6 +182,10 @@ class EsiaTokenAuthRegistrationModelRequest
     required String snils,
     required int sex,
     required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
   }) = _EsiaTokenAuthRegistrationModelRequest;
 
   factory EsiaTokenAuthRegistrationModelRequest.fromJson(

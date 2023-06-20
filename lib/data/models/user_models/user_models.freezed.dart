@@ -2593,6 +2593,10 @@ mixin _$EsiaTokenAuthRegistrationModelRequest {
   String get snils => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
+  String get passportSerial => throw _privateConstructorUsedError;
+  String get passportNumber => throw _privateConstructorUsedError;
+  String get passportIssueDate => throw _privateConstructorUsedError;
+  String get passportIssueId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -2616,7 +2620,11 @@ abstract class $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
       String phoneNumber,
       String snils,
       int sex,
-      String birthday});
+      String birthday,
+      String passportSerial,
+      String passportNumber,
+      String passportIssueDate,
+      String passportIssueId});
 }
 
 /// @nodoc
@@ -2640,6 +2648,10 @@ class _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
     Object? snils = null,
     Object? sex = null,
     Object? birthday = null,
+    Object? passportSerial = null,
+    Object? passportNumber = null,
+    Object? passportIssueDate = null,
+    Object? passportIssueId = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -2670,6 +2682,22 @@ class _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
+      passportSerial: null == passportSerial
+          ? _value.passportSerial
+          : passportSerial // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportNumber: null == passportNumber
+          ? _value.passportNumber
+          : passportNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueDate: null == passportIssueDate
+          ? _value.passportIssueDate
+          : passportIssueDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueId: null == passportIssueId
+          ? _value.passportIssueId
+          : passportIssueId // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -2690,7 +2718,11 @@ abstract class _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>
       String phoneNumber,
       String snils,
       int sex,
-      String birthday});
+      String birthday,
+      String passportSerial,
+      String passportNumber,
+      String passportIssueDate,
+      String passportIssueId});
 }
 
 /// @nodoc
@@ -2713,6 +2745,10 @@ class __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
     Object? snils = null,
     Object? sex = null,
     Object? birthday = null,
+    Object? passportSerial = null,
+    Object? passportNumber = null,
+    Object? passportIssueDate = null,
+    Object? passportIssueId = null,
   }) {
     return _then(_$_EsiaTokenAuthRegistrationModelRequest(
       firstName: null == firstName
@@ -2743,6 +2779,22 @@ class __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
+      passportSerial: null == passportSerial
+          ? _value.passportSerial
+          : passportSerial // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportNumber: null == passportNumber
+          ? _value.passportNumber
+          : passportNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueDate: null == passportIssueDate
+          ? _value.passportIssueDate
+          : passportIssueDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueId: null == passportIssueId
+          ? _value.passportIssueId
+          : passportIssueId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -2758,7 +2810,11 @@ class _$_EsiaTokenAuthRegistrationModelRequest
       required this.phoneNumber,
       required this.snils,
       required this.sex,
-      required this.birthday});
+      required this.birthday,
+      required this.passportSerial,
+      required this.passportNumber,
+      required this.passportIssueDate,
+      required this.passportIssueId});
 
   factory _$_EsiaTokenAuthRegistrationModelRequest.fromJson(
           Map<String, dynamic> json) =>
@@ -2778,10 +2834,18 @@ class _$_EsiaTokenAuthRegistrationModelRequest
   final int sex;
   @override
   final String birthday;
+  @override
+  final String passportSerial;
+  @override
+  final String passportNumber;
+  @override
+  final String passportIssueDate;
+  @override
+  final String passportIssueId;
 
   @override
   String toString() {
-    return 'EsiaTokenAuthRegistrationModelRequest(firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday)';
+    return 'EsiaTokenAuthRegistrationModelRequest(firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId)';
   }
 
   @override
@@ -2800,13 +2864,32 @@ class _$_EsiaTokenAuthRegistrationModelRequest
             (identical(other.snils, snils) || other.snils == snils) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.birthday, birthday) ||
-                other.birthday == birthday));
+                other.birthday == birthday) &&
+            (identical(other.passportSerial, passportSerial) ||
+                other.passportSerial == passportSerial) &&
+            (identical(other.passportNumber, passportNumber) ||
+                other.passportNumber == passportNumber) &&
+            (identical(other.passportIssueDate, passportIssueDate) ||
+                other.passportIssueDate == passportIssueDate) &&
+            (identical(other.passportIssueId, passportIssueId) ||
+                other.passportIssueId == passportIssueId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, firstName, lastName, middleName,
-      phoneNumber, snils, sex, birthday);
+  int get hashCode => Object.hash(
+      runtimeType,
+      firstName,
+      lastName,
+      middleName,
+      phoneNumber,
+      snils,
+      sex,
+      birthday,
+      passportSerial,
+      passportNumber,
+      passportIssueDate,
+      passportIssueId);
 
   @JsonKey(ignore: true)
   @override
@@ -2833,7 +2916,11 @@ abstract class _EsiaTokenAuthRegistrationModelRequest
           required final String phoneNumber,
           required final String snils,
           required final int sex,
-          required final String birthday}) =
+          required final String birthday,
+          required final String passportSerial,
+          required final String passportNumber,
+          required final String passportIssueDate,
+          required final String passportIssueId}) =
       _$_EsiaTokenAuthRegistrationModelRequest;
 
   factory _EsiaTokenAuthRegistrationModelRequest.fromJson(
@@ -2854,6 +2941,14 @@ abstract class _EsiaTokenAuthRegistrationModelRequest
   int get sex;
   @override
   String get birthday;
+  @override
+  String get passportSerial;
+  @override
+  String get passportNumber;
+  @override
+  String get passportIssueDate;
+  @override
+  String get passportIssueId;
   @override
   @JsonKey(ignore: true)
   _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<

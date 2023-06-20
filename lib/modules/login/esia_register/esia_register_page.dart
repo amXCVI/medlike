@@ -1,14 +1,16 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/phone_number_formattier.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
+import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 
 import 'esia_register_form_item.dart';
@@ -24,6 +26,11 @@ class EsiaRegisterPage extends StatelessWidget {
     required this.snils,
     required this.sex,
     required this.birthday,
+    required this.passportSerial,
+    required this.passportNumber,
+    required this.passportIssueDate,
+    required this.passportIssueId,
+    required this.esiaToken,
   }) : super(key: key);
   final String firstName;
   final String lastName;
@@ -32,13 +39,18 @@ class EsiaRegisterPage extends StatelessWidget {
   final String snils;
   final int sex;
   final String birthday;
+  final String passportSerial;
+  final String passportNumber;
+  final String passportIssueDate;
+  final String passportIssueId;
+  final String esiaToken;
 
   @override
   Widget build(BuildContext context) {
-    void _handleApplyRegisterUser() {
+    void handleApplyRegisterUser() {
       context
           .read<UserCubit>()
-          .createUserProfileAndMedicalCard(
+          .createUserAndProfile(
             firstName: firstName,
             lastName: lastName,
             middleName: middleName,
@@ -46,17 +58,34 @@ class EsiaRegisterPage extends StatelessWidget {
             snils: snils,
             sex: sex,
             birthday: birthday,
+            passportSerial: passportSerial,
+            passportNumber: passportNumber,
+            passportIssueDate: passportIssueDate,
+            passportIssueId: passportIssueId,
+            esiaToken: esiaToken,
           )
           .then((registerNewProfileRes) => {
                 if (registerNewProfileRes)
                   {
-                    context.router.replaceAll([AuthUserAgreementsRoute()])
+                    context
+                        .read<UserCubit>()
+                        .esiaAuth(esiaToken)
+                        .then((esiaAuthRes) {
+                      if (esiaAuthRes!.isUserExists) {
+                        context.router.replaceAll([AuthUserAgreementsRoute()]);
+                      }
+                    })
                   }
               })
-          .catchError((err) {});
+          .catchError((err) {
+        AppToast.showAppToast(msg: err);
+        if (kDebugMode) {
+          print(err);
+        }
+      });
     }
 
-    void _closePage() {
+    void closePage() {
       context.router.replaceAll([StartPhoneNumberRoute()]);
     }
 
@@ -103,8 +132,7 @@ class EsiaRegisterPage extends StatelessWidget {
                   ),
                   EsiaRegisterFormItem(
                     label: 'Дата рождения ',
-                    value: DateFormat('dd.MM.yyyy')
-                        .format(DateTime.parse(birthday)),
+                    value: birthday,
                   ),
                   EsiaRegisterFormItem(
                     label: 'СНИЛС',
@@ -118,24 +146,38 @@ class EsiaRegisterPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: PrimaryButton(
-                      label: Text(
-                        'зарегистрироваться'.toUpperCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall
-                            ?.copyWith(color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
-                      onTap: _handleApplyRegisterUser,
-                      disabled: false,
-                    ),
+                    child: BlocBuilder<UserCubit, UserState>(
+                        builder: (context, state) {
+                      if (state.createUserAndProfileStatuses !=
+                          CreateUserAndProfileStatuses.loading) {
+                        return PrimaryButton(
+                          label: Text(
+                            'зарегистрироваться'.toUpperCase(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                          onTap: handleApplyRegisterUser,
+                          disabled: false,
+                        );
+                      } else {
+                        return PrimaryButton(
+                          label: const Center(
+                            child: CircularLoader(),
+                          ),
+                          onTap: () {},
+                          padding: const EdgeInsets.all(4),
+                        );
+                      }
+                    }),
                   ),
                   const SizedBox(height: 4),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: MaterialButton(
-                      onPressed: _closePage,
+                      onPressed: closePage,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),

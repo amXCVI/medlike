@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
@@ -181,6 +182,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           refreshToken: response.signinModel?.refreshToken,
           tryCount: 5,
         ));
+        return response;
       }
     } on DioException catch (e) {
       emit(state.copyWith(
@@ -231,6 +233,51 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         createUserProfileAndMedicalCardStatus:
             CreateUserProfileAndMedicalCardStatuses.failed,
+      ));
+      return false;
+    }
+  }
+
+  /// Создать ЛК и профиль пользователя с помощью сервиса интеграции
+  Future<bool> createUserAndProfile({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
+  }) async {
+    emit(state.copyWith(
+      createUserAndProfileStatuses: CreateUserAndProfileStatuses.loading,
+    ));
+    try {
+      await userRepository.createUserAndProfile(
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        phoneNumber: phoneNumber,
+        snils: snils,
+        sex: sex,
+        birthday: DateFormat('d.M.y').parse(birthday),
+        passportSerial: passportSerial,
+        passportNumber: passportNumber,
+        passportIssueDate: DateFormat('d.M.y').parse(passportIssueDate),
+        passportIssueId: passportIssueId,
+        esiaToken: esiaToken,
+      );
+      emit(state.copyWith(
+        createUserAndProfileStatuses: CreateUserAndProfileStatuses.success,
+      ));
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        createUserAndProfileStatuses: CreateUserAndProfileStatuses.failed,
       ));
       return false;
     }

@@ -245,6 +245,10 @@ _$_EsiaTokenAuthRegistrationModelRequest
           snils: json['snils'] as String,
           sex: json['sex'] as int,
           birthday: json['birthday'] as String,
+          passportSerial: json['passportSerial'] as String,
+          passportNumber: json['passportNumber'] as String,
+          passportIssueDate: json['passportIssueDate'] as String,
+          passportIssueId: json['passportIssueId'] as String,
         );
 
 Map<String, dynamic> _$$_EsiaTokenAuthRegistrationModelRequestToJson(
@@ -257,6 +261,10 @@ Map<String, dynamic> _$$_EsiaTokenAuthRegistrationModelRequestToJson(
       'snils': instance.snils,
       'sex': instance.sex,
       'birthday': instance.birthday,
+      'passportSerial': instance.passportSerial,
+      'passportNumber': instance.passportNumber,
+      'passportIssueDate': instance.passportIssueDate,
+      'passportIssueId': instance.passportIssueId,
     };
 
 _$_EsiaTokenAuthSigninModelRequest _$$_EsiaTokenAuthSigninModelRequestFromJson(
