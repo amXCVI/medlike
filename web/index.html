@@ -87,13 +87,8 @@
 					})
 			});
 		}
-		/*
+
 		bridge?.sendClientEvent({
-			method: 'ready',
-			params: {}
-		});
-		*/
-		sendClientEvent({
 			method: 'ready',
 			params: {}
 		}).then((res) => {
@@ -103,9 +98,7 @@
 				setPath(route);
 			}
 		}).catch((err) => {
-			console.log('sending event object: ', eventObject);
 			console.log('bridge.sendClientEvent READY error ', err);
-			//setPath('/#/login_phone')
 		});
 
 		bridge?.disableRenameParams();
@@ -144,7 +137,7 @@
 		</style>
 		<img src="./icons/Icon-512-filled.png" alt="Loading..."/>
 	</div>
-
+	<!--
 	<script>
 		function base64Encode(buf) {
 			let string = '';
@@ -242,6 +235,8 @@
 			});
 		}
 	</script> 
+	-->
+
 	<script>
 		window.flutterConfiguration = {
 			canvasKitBaseUrl: "./canvaskit/"
