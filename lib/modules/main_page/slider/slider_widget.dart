@@ -16,9 +16,13 @@ class _SliderWidgetState extends State<SliderWidget> {
   int activePage = 0;
 
   @override
-  Widget build(BuildContext context) {
-    context.read<ClinicsCubit>().getMainscreenPromotionsList();
+  void initState() {
+    context.read<ClinicsCubit>().getMainscreenPromotionsList(isRefresh: false);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ClinicsCubit, ClinicsState>(
       builder: (context, state) {
         if (state.getMainscreenPromotionsListStatus ==

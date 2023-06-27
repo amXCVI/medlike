@@ -8,15 +8,24 @@ import 'package:medlike/utils/api/smaptapp_client.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
-class SmartappLoginPage extends StatelessWidget {
+class SmartappLoginPage extends StatefulWidget {
   const SmartappLoginPage({Key? key, this.resolver}) : super(key: key);
 
   final NavigationResolver? resolver;
 
   @override
+  State<SmartappLoginPage> createState() => _SmartappLoginPageState();
+}
+
+class _SmartappLoginPageState extends State<SmartappLoginPage> {
+  @override
   Widget build(BuildContext context) {
     Future<bool> smartappAuth(String data) async {
       return await context.read<UserCubit>().smartappAuth(smartappToken: data);
+    }
+
+    void saveSmartappToken() {
+      context.read<UserCubit>().saveSmartappToken();
     }
 
     void getSmartappToken() async {
@@ -24,16 +33,27 @@ class SmartappLoginPage extends StatelessWidget {
 
       /// Запрашиваем токен в Смартаппе
       SmartAppClient.getSmartAppToken().then((data) async {
-        /// Если токен пришел, авторизовываемся у себя через него
+        /// Если токен пришел, проверяем изменился ли он
+        /// Если да, авторизовываемся у себя через него
+        final savedToken = await UserSecureStorage.getField(AppConstants.smartappToken);
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
+
+        if(savedToken == data && mounted) {
+          print('Сохранненый смартапп-токен совпадает');
+          print('Реавторизация не требуется');
+          saveSmartappToken();
+
+          context.router.replaceAll([const MainRoute()]);
+          return;
+        }    
         await smartappAuth(data).then((value) async {
           if (value) {
             /// Если авторизация успешна, переходим далее
             print(
                 '!!!!!!!!!! SUCCESS AUTH WITH SMARTAPP TOKEN !!!!!!!!!!!!!!!');
-            if (resolver != null) {
-              resolver!.next(true);
+            if (widget.resolver != null) {
+              widget.resolver!.next(true);
               return;
             } else {
               context.router.replaceAll([const MainRoute()]);
@@ -44,8 +64,8 @@ class SmartappLoginPage extends StatelessWidget {
             await smartappAuth(data).then((value) {
               if (value) {
                 print('Повторная попытка успешна!!!');
-                if (resolver != null) {
-                  resolver!.next(true);
+                if (widget.resolver != null) {
+                  widget.resolver!.next(true);
                   return;
                 } else {
                   context.router.replaceAll([const MainRoute()]);

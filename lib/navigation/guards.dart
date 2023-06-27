@@ -22,6 +22,13 @@ class CheckIsAuthSmartappUser extends AutoRouteGuard {
     final isAuth =
         '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
+    final context = router.navigatorKey.currentContext;
+    final smartappTokenFromCubit = context?.read<UserCubit>().state.smartappToken;
+
+    if(smartappTokenFromCubit == null) {
+      router.navigate(SmartappLoginRoute(resolver: resolver));
+    }
+
     /// Должен быть токен, он не пустой, и то же самое для смартапп-токена
     if (token != 'null' &&
         token.toString().isNotEmpty &&

@@ -43,6 +43,7 @@ class _MainPageState extends State<MainPage> {
                 ));
         return false;
       },
+      /// TODO: Слушать получение юзер токена
       child: DefaultScaffold(
           appBarTitle: 'Главная',
           isChildrenPage: false,
