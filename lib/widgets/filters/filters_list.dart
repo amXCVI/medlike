@@ -29,7 +29,11 @@ class FiltersList extends StatelessWidget {
           itemBuilder: ((context, i) {
             return ListTile(
               title: Text(filterTitles[i]),
-              leading: images[i],
+              leading: SizedBox(
+                width: 20, 
+                height: 20,
+                child: images[i],
+              ),
               trailing: Container(
                 width: 20,
                 height: 20,
