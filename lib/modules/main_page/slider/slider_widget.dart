@@ -32,11 +32,11 @@ class _SliderWidgetState extends State<SliderWidget> {
                     GetMainscreenPromotionsListStatuses.failed ||
                 state.getMainscreenPromotionsListStatus ==
                         GetMainscreenPromotionsListStatuses.success &&
-                    state.mainscreenPromotionsList!.isEmpty &&
-                    userState.token != null) {
+                    state.mainscreenPromotionsList!.isEmpty ) {
               return const SizedBox();
             } else if (state.getMainscreenPromotionsListStatus ==
-                GetMainscreenPromotionsListStatuses.success) {
+                GetMainscreenPromotionsListStatuses.success &&
+                    userState.token != null) {
               return Stack(
                 children: [
                   Align(
