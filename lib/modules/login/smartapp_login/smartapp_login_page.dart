@@ -92,32 +92,26 @@ class _SmartappLoginPageState extends State<SmartappLoginPage> {
       context.router.replaceAll([const MainRoute()]);
     }
 
-    Future<bool> getAuthStatus(String? tokenInCubit) async {
+    Future<bool> getAuthStatus() async {
       final token =
           '${await UserSecureStorage.getField(AppConstants.accessToken)}';
       final isAuth =
           '${await UserSecureStorage.getField(AppConstants.isAuth)}' == 'true';
 
       /// Должен быть токен, он не пустой, и то же самое для смартапп-токена
-      return token != 'null' && tokenInCubit != null 
+      return token != 'null'
         && token.toString().isNotEmpty && isAuth;
     }
 
-    return BlocListener<UserCubit, UserState>(
-      listenWhen: (previous, current) {
-          return previous.smartappToken != current.smartappToken;
-      },
-      listener: (context, state) {
-        /// Вызываем в builder что не есть хорошо!
-        getAuthStatus(state.smartappToken).then((isAuth) {
-          if (!isAuth) {
-            getSmartappToken();
-          } else {
-            context.router.replaceAll([const MainRoute()]);
-          }
-        });
-      },
-      child: Center(
+    getAuthStatus().then((isAuth) {
+      if (!isAuth) {
+        getSmartappToken();
+      } else {
+        context.router.replaceAll([const MainRoute()]);
+      }
+    });
+
+    return Center(
         child: GestureDetector(
           onDoubleTap: getSmartappToken,
           child: const SizedBox(),
@@ -145,7 +139,6 @@ class _SmartappLoginPageState extends State<SmartappLoginPage> {
         //     ),
         //   ],
         // ),
-      ),
     );
   }
 }

@@ -56,7 +56,6 @@ class UserState {
   final String? userPhoneNumber;
   final String? token;
   final String? refreshToken;
-  final String? smartappToken;
   final int? tryCount;
   /// Специально для смартаппа храним запрашиваем ли токен повторно
   final int tokenTryCount;
@@ -91,7 +90,6 @@ class UserState {
     this.userPhoneNumber,
     this.token,
     this.refreshToken,
-    this.smartappToken,
     this.tryCount,
     this.tokenTryCount = 0,
     this.timerEnd,
@@ -162,7 +160,6 @@ class UserState {
       userPhoneNumber: userPhoneNumber ?? this.userPhoneNumber,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
-      smartappToken: smartappToken ?? this.smartappToken,
       tryCount: tryCount ?? this.tryCount,
       tokenTryCount: tokenTryCount ?? this.tokenTryCount,
       timerEnd: timerEnd ?? this.timerEnd,
