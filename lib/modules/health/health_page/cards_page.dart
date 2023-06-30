@@ -12,9 +12,14 @@ import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class CardsPage extends StatefulWidget {
-  const CardsPage({Key? key, required this.isChildrenPage}) : super(key: key);
+  const CardsPage({
+    Key? key, 
+    required this.isChildrenPage,
+    required this.needToGet
+  }) : super(key: key);
 
   final bool isChildrenPage;
+  final bool needToGet;
 
   @override
   State<CardsPage> createState() => _CardsPageState();
@@ -24,7 +29,7 @@ class _CardsPageState extends State<CardsPage> {
   late bool isFilteringMode = false;
   GlobalKey widgetOverBodyGlobalKey = GlobalKey();
 
-  void _onLoadDada(String grouping, {String? syn}) {
+  void _onLoadData(String grouping, {String? syn}) {
     context.read<DiaryCubit>().getDiaryCategoriesList(userIds: []);
     
     context.read<DiaryCubit>().getDiariesList(grouping: grouping, syn: syn);
@@ -32,7 +37,9 @@ class _CardsPageState extends State<CardsPage> {
 
   @override
   void initState() {
-    _onLoadDada('Hour');
+    if (widget.needToGet) {
+      _onLoadData('Hour');
+    }
     super.initState();
   }
 
@@ -100,7 +107,7 @@ class _CardsPageState extends State<CardsPage> {
                 return HealthList(
                     diariesCategoriesList: state.filteredDiariesCategoriesList!,
                     diariesItems: state.diariesList ?? [],
-                    onLoadDada: _onLoadDada);
+                  );
               } else {
                 return const HealthListSkeleton();
               }
