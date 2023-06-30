@@ -487,13 +487,13 @@ class AppRouter extends _i39.RootStackRouter {
       );
     },
     CardsRoute.name: (routeData) {
-      final args = routeData.argsAs<CardsRouteArgs>(
-          orElse: () => const CardsRouteArgs());
+      final args = routeData.argsAs<CardsRouteArgs>();
       return _i39.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i34.CardsPage(
           key: args.key,
           isChildrenPage: args.isChildrenPage,
+          needToGet: args.needToGet,
         ),
       );
     },
@@ -1989,13 +1989,15 @@ class HealthRouteForMain extends _i39.PageRouteInfo<void> {
 class CardsRoute extends _i39.PageRouteInfo<CardsRouteArgs> {
   CardsRoute({
     _i40.Key? key,
-    bool isChildrenPage = false,
+    required bool isChildrenPage,
+    required bool needToGet,
   }) : super(
           CardsRoute.name,
           path: '/health',
           args: CardsRouteArgs(
             key: key,
             isChildrenPage: isChildrenPage,
+            needToGet: needToGet,
           ),
         );
 
@@ -2005,16 +2007,19 @@ class CardsRoute extends _i39.PageRouteInfo<CardsRouteArgs> {
 class CardsRouteArgs {
   const CardsRouteArgs({
     this.key,
-    this.isChildrenPage = false,
+    required this.isChildrenPage,
+    required this.needToGet,
   });
 
   final _i40.Key? key;
 
   final bool isChildrenPage;
 
+  final bool needToGet;
+
   @override
   String toString() {
-    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage}';
+    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage, needToGet: $needToGet}';
   }
 }
 

@@ -167,7 +167,10 @@ class CheckIsOneProfileForHealth extends CheckIsOneProfile {
   void redirect(UserProfile user, StackRouter router) {
 
     router
-      .push(CardsRoute(isChildrenPage: false));
+      .push(CardsRoute(
+        isChildrenPage: false,
+        needToGet: true 
+      ));
   }
 }
 
