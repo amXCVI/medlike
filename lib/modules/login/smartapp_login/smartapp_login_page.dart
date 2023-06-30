@@ -23,30 +23,14 @@ class _SmartappLoginPageState extends State<SmartappLoginPage> {
       return await context.read<UserCubit>().smartappAuth(smartappToken: data);
     }
 
-    void saveSmartappToken() {
-      context.read<UserCubit>().saveSmartappToken();
-    }
-
     void getSmartappToken() async {
       print('start getting smartapp token');
 
       /// Запрашиваем токен в Смартаппе
       SmartAppClient.getSmartAppToken().then((data) async {
-        /// Если токен пришел, проверяем изменился ли он
-        /// Если да, авторизовываемся у себя через него
-        final savedToken =
-            await UserSecureStorage.getField(AppConstants.smartappToken);
         print(
             'Токен из смартаппа пришел, его удалось распарсить, передан во внутреннюю авторизацию: $data');
 
-        if (savedToken == data && mounted) {
-          print('Сохранненый смартапп-токен совпадает');
-          print('Реавторизация не требуется');
-          saveSmartappToken();
-
-          context.router.replaceAll([const MainRoute()]);
-          return;
-        }
         await smartappAuth(data).then((value) async {
           if (value) {
             /// Если авторизация успешна, переходим далее

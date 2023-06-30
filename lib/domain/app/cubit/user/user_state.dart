@@ -126,7 +126,6 @@ class UserState {
     String? userPhoneNumber,
     String? token,
     String? refreshToken,
-    String? smartappToken,
     int? tryCount,
     int? tokenTryCount,
     DateTime? timerEnd,

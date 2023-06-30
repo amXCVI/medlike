@@ -70,16 +70,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(token: accessToken));
   }
 
-  /// Сохраняет в кубит токен смартаппа
-  void saveSmartappToken() async {
-    emit(state.copyWith(
-      getSmartappTokenStatus: GetSmartappTokenStatuses.success,
-      smartappToken: await UserSecureStorage.getField(AppConstants.smartappToken),
-      token: await UserSecureStorage.getField(AppConstants.accessToken),
-      refreshToken: await UserSecureStorage.getField(AppConstants.refreshToken),
-    ));
-  }
-
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
     emit(state.copyWith(userPhoneNumber: phone));
@@ -230,7 +220,6 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         // UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
         emit(state.copyWith(
           getSmartappTokenStatus: GetSmartappTokenStatuses.success,
-          smartappToken: smartappToken,
           token: response.token,
           refreshToken: response.refreshToken,
           tryCount: 5,
