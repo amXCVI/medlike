@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:html/parser.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.dart';
@@ -69,15 +68,13 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
     // Не уверен, что решение адекватное. Скорее наоборот
     // Бэкендеры утверждают, что класть токен в url - плохой тон, поэтому так
     void getAuthEsiaTokenFromHTMLPage() async {
-      String docu = await _webViewController
-          .runJavascriptReturningResult('document.documentElement.innerHTML');
-      var dom = parse(docu);
-      String? esiaToken = dom.getElementById('esia')?.text;
+      String? esiaToken = await _webViewController.runJavascriptReturningResult(
+          'document.getElementById("esia").value');
       if (kDebugMode) {
         print('esiaToken: $esiaToken');
       }
       if (esiaToken != null && esiaToken.isNotEmpty) {
-        authenticateWithEsiaToken(esiaToken: esiaToken);
+        authenticateWithEsiaToken(esiaToken: esiaToken.replaceAll('"', ''));
       }
     }
 
@@ -96,12 +93,17 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             );
           },
           onPageFinished: (finish) {
-            getAuthEsiaTokenFromHTMLPage();
-          },
-          onProgress: (i) {
             setState(() {
               isHideWebView = true;
             });
+            Future.delayed(Duration(seconds: 1), () {
+              getAuthEsiaTokenFromHTMLPage();
+            });
+          },
+          onProgress: (i) {
+            // setState(() {
+            //   isHideWebView = true;
+            // });
           },
           navigationDelegate: (navReq) async {
             if (navReq.url.contains('status')) {
