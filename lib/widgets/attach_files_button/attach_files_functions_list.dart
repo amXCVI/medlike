@@ -39,9 +39,9 @@ class _AttachFilesFunctionsListState extends State<AttachFilesFunctionsList> {
       try {
         FilePickerResult? filePickerResult;
         if (fileType == FileType.media) {
-          var image = await _picker.getImage(source: ImageSource.camera);
+          var image = await _picker.pickImage(source: ImageSource.camera);
           if (image != null) {
-            widget.attachPickedFile(pickedFile: image);
+            widget.attachPickedFile(pickedFile: PickedFile(image.path));
           }
         } else {
           filePickerResult = await FilePicker.platform.pickFiles(
