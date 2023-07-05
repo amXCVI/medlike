@@ -182,6 +182,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           refreshToken: response.signinModel?.refreshToken,
           tryCount: 5,
         ));
+        getUserProfiles(true);
         return response;
       }
     } on DioException catch (e) {
