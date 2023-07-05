@@ -93,12 +93,12 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             );
           },
           onPageFinished: (finish) {
-            setState(() {
-              isHideWebView = true;
-            });
-            Future.delayed(Duration(seconds: 1), () {
-              getAuthEsiaTokenFromHTMLPage();
-            });
+            // setState(() {
+            //   isHideWebView = true;
+            // });
+            // Future.delayed(Duration(seconds: 1), () {
+            //   getAuthEsiaTokenFromHTMLPage();
+            // });
           },
           onProgress: (i) {
             // setState(() {
@@ -109,6 +109,9 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             if (navReq.url.contains('status')) {
               setState(() {
                 isHideWebView = true;
+              });
+              Future.delayed(const Duration(seconds: 1), () {
+                getAuthEsiaTokenFromHTMLPage();
               });
             } else {
               setState(() {
