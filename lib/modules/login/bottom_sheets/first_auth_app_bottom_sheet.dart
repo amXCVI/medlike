@@ -32,7 +32,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                       ?.copyWith(fontSize: 20)),
               const SizedBox(height: 16),
               const Text(
-                  'Для входа в приложение обратитесь в регистратуру клиники, услугами которой собираетесь пользоваться. Если Вы уже получили доступ — можете продолжить вход.'),
+                  'Для регистрации в приложении обратитесь в регистратуру клиники, услугами которой собираетесь пользоваться или зарегистрируйтесь через Госуслуги.'),
               const SizedBox(height: 32),
               PrimaryButton(
                   label: Text(
