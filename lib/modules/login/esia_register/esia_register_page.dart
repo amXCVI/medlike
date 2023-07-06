@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/phone_number_formattier.dart';
+import 'package:medlike/utils/helpers/snils_formattier.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -136,7 +137,7 @@ class EsiaRegisterPage extends StatelessWidget {
                   ),
                   EsiaRegisterFormItem(
                     label: 'СНИЛС',
-                    value: snils,
+                    value: SnilsString.defaultFormattier(snils),
                   ),
                 ],
               ),
