@@ -72,6 +72,21 @@ class Doctor with _$Doctor {
     required List<int> categories,
   }) = _Doctor;
 
+  static Doctor get emptyDoctor  {
+    return const Doctor(
+      id: '', 
+      lastName: '', 
+      firstName: '',
+      middleName: '', 
+      specializationId: '', 
+      specialization: '', 
+      price: 0, 
+      categoryType: 0, 
+      isFavorite: false, 
+      categories: []
+    );
+  }
+
   factory Doctor.fromJson(Map<String, Object?> json) =>
       _$DoctorFromJson(json);
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
+import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -240,7 +241,8 @@ class _SchedulePageState extends State<SchedulePage> {
                           timezoneHours: clinic?.timeZoneOffset,
                           handleTapOnCell: (model) => _handleTapOnCell(
                             model,
-                            isDoctorSelected: state.selectedDoctor != null
+                            isDoctorSelected: state.selectedDoctor != null 
+                              && state.selectedDoctor != Doctor.emptyDoctor
                           ),
                         )
                       : state.getTimetableCellsStatus ==

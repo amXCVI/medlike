@@ -608,7 +608,9 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         },
         'PatientInfo': {'Id': userId, 'Name': userName},
         'DoctorInfo':
-            state.selectedDoctor != null && state.selectedDoctor!.id.isNotEmpty
+            state.selectedDoctor != null
+            && state.selectedDoctor != Doctor.emptyDoctor 
+            && state.selectedDoctor!.id.isNotEmpty
                 ? {
                     'Id': state.selectedDoctor?.id,
                     'FirstName': state.selectedDoctor?.firstName,
@@ -764,6 +766,12 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       emit(state.copyWith(
           getAvailableDoctorStatus: GetAvailableDoctorStatuses.failed));
     }
+  }
+
+  void clearSelectedDoctor() async {
+    emit(state.copyWith(
+      selectedDoctor: Doctor.emptyDoctor
+    ));
   }
 
   /// Добавляет доктора в избранных
