@@ -8,11 +8,11 @@ class StartPhoneNumberView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       reverse: true,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        children: [
           DefaultLoginAnimation(),
           PhoneNumberInput(),
           EsiaLoginButton(),

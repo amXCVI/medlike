@@ -9,6 +9,9 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для показа bottomSheet со стартовой информацией
+  static const String startBottomSheetShowed = 'startBottomSheetShowed';
+
   // Ключ для пользовательских соглашений. Подписаны или нет.
   static const String isAcceptedAgreements = 'isAcceptedAgreements';
 
