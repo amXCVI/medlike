@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -87,10 +89,15 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
           initialUrl: authorizationUrl.toString(),
           onWebViewCreated: (WebViewController controller) {
             _webViewController = controller;
-            controller.loadUrl(
-              authorizationUrl.toString(),
-              headers: {"Cookie": "mycookie=true"},
-            );
+            if (Platform.isIOS) {
+              controller.loadUrl(
+                authorizationUrl.toString(),
+                headers: {"Cookie": "mycookie=true"},
+              );
+            } else {
+              final cookieManager = CookieManager();
+              cookieManager.clearCookies();
+            }
           },
           onPageFinished: (finish) {
             // setState(() {
