@@ -14,13 +14,11 @@ class HealthList extends StatelessWidget {
   const HealthList(
       {Key? key,
       required this.diariesCategoriesList,
-      required this.diariesItems,
-      required this.onLoadDada})
+      required this.diariesItems})
       : super(key: key);
 
   final List<DiaryCategoryModel> diariesCategoriesList;
   final List<DiaryFlatModel> diariesItems;
-  final Function onLoadDada;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,6 @@ class HealthList extends StatelessWidget {
               setSelected: (status) {
                 context.read<PromptCubit>().select(selectedId: index);
               },
-              onLoadDada: onLoadDada,
               onNavigate: (String title, String syn) {
                 final date = DateTime.now();
                 final dates = ValueHelper.getPeriodTiming(date, '');
