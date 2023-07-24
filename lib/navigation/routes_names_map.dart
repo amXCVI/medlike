@@ -8,6 +8,8 @@ class AppRoutes {
   static const loginRecoverPasswordNew = '/login_recover_password_new';
   static const loginAuthUserAgreements = '/login_auth_user_agreements';
   static const loginUnauthSupport = '/login_unauth_support';
+  static const loginEsiaLoginPage = '/login-esia-login-page';
+  static const loginEsiaRegisterPage = '/login-esia-register-page';
   static const main = '/main';
   static const backToMain = '/main';
   static const subscribe = '/subscribe';

@@ -39,6 +39,9 @@ class RecoverPasswordNewPage extends StatelessWidget {
           return const SizedBox();
         }
         return DefaultScaffold(
+          appBarTitle: 'Пароль',
+          isChildrenPage: true,
+          bottomNavigationBar: const SizedBox(),
           child: state.resetPasswordStatus == ResetPasswordStatuses.loading ||
                   state.changePasswordStatus == ChangePasswordStatuses.loading
               ? const DefaultAuthSkeleton()
@@ -47,9 +50,6 @@ class RecoverPasswordNewPage extends StatelessWidget {
                   phoneNumberFromState: state.userPhoneNumber!,
                   onAuth: _authenticateWithPhoneAndPassword,
                 ),
-          appBarTitle: 'Пароль',
-          isChildrenPage: true,
-          bottomNavigationBar: const SizedBox(),
         );
       },
     );

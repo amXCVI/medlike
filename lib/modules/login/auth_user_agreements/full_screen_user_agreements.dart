@@ -9,11 +9,11 @@ class FullScreenUserAgreements extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultScaffold(
       isChildrenPage: true,
+      appBarTitle: 'Документы',
+      bottomNavigationBar: const SizedBox(),
       child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: const AgreementsList()),
-      appBarTitle: 'Документы',
-      bottomNavigationBar: const SizedBox(),
     );
   }
 }

@@ -23,11 +23,11 @@ class CheckPinCodePage extends StatelessWidget {
         return false;
       },
       child: DefaultScaffold(
-        child: const CheckPinCode(),
         appBarTitle: AppConstants.appName,
         actions: const [UnauthSupportButton()],
         bottomNavigationBar: const PasswordPageBottomNavigationBar(),
         onPressedAppLogo: _onPressedAppLogo,
+        child: const CheckPinCode(),
       ),
     );
   }

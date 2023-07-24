@@ -2355,3 +2355,1319 @@ abstract class _UserAgreementItemModel implements UserAgreementItemModel {
   _$$_UserAgreementItemModelCopyWith<_$_UserAgreementItemModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+EsiaTokenAuthRequest _$EsiaTokenAuthRequestFromJson(Map<String, dynamic> json) {
+  return _EsiaTokenAuthRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EsiaTokenAuthRequest {
+  bool get isUserExists => throw _privateConstructorUsedError;
+  EsiaTokenAuthSigninModelRequest? get signinModel =>
+      throw _privateConstructorUsedError;
+  EsiaTokenAuthRegistrationModelRequest? get registrationModel =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EsiaTokenAuthRequestCopyWith<EsiaTokenAuthRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EsiaTokenAuthRequestCopyWith<$Res> {
+  factory $EsiaTokenAuthRequestCopyWith(EsiaTokenAuthRequest value,
+          $Res Function(EsiaTokenAuthRequest) then) =
+      _$EsiaTokenAuthRequestCopyWithImpl<$Res, EsiaTokenAuthRequest>;
+  @useResult
+  $Res call(
+      {bool isUserExists,
+      EsiaTokenAuthSigninModelRequest? signinModel,
+      EsiaTokenAuthRegistrationModelRequest? registrationModel});
+
+  $EsiaTokenAuthSigninModelRequestCopyWith<$Res>? get signinModel;
+  $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>? get registrationModel;
+}
+
+/// @nodoc
+class _$EsiaTokenAuthRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthRequest>
+    implements $EsiaTokenAuthRequestCopyWith<$Res> {
+  _$EsiaTokenAuthRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isUserExists = null,
+    Object? signinModel = freezed,
+    Object? registrationModel = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isUserExists: null == isUserExists
+          ? _value.isUserExists
+          : isUserExists // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signinModel: freezed == signinModel
+          ? _value.signinModel
+          : signinModel // ignore: cast_nullable_to_non_nullable
+              as EsiaTokenAuthSigninModelRequest?,
+      registrationModel: freezed == registrationModel
+          ? _value.registrationModel
+          : registrationModel // ignore: cast_nullable_to_non_nullable
+              as EsiaTokenAuthRegistrationModelRequest?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $EsiaTokenAuthSigninModelRequestCopyWith<$Res>? get signinModel {
+    if (_value.signinModel == null) {
+      return null;
+    }
+
+    return $EsiaTokenAuthSigninModelRequestCopyWith<$Res>(_value.signinModel!,
+        (value) {
+      return _then(_value.copyWith(signinModel: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>? get registrationModel {
+    if (_value.registrationModel == null) {
+      return null;
+    }
+
+    return $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>(
+        _value.registrationModel!, (value) {
+      return _then(_value.copyWith(registrationModel: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_EsiaTokenAuthRequestCopyWith<$Res>
+    implements $EsiaTokenAuthRequestCopyWith<$Res> {
+  factory _$$_EsiaTokenAuthRequestCopyWith(_$_EsiaTokenAuthRequest value,
+          $Res Function(_$_EsiaTokenAuthRequest) then) =
+      __$$_EsiaTokenAuthRequestCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool isUserExists,
+      EsiaTokenAuthSigninModelRequest? signinModel,
+      EsiaTokenAuthRegistrationModelRequest? registrationModel});
+
+  @override
+  $EsiaTokenAuthSigninModelRequestCopyWith<$Res>? get signinModel;
+  @override
+  $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>? get registrationModel;
+}
+
+/// @nodoc
+class __$$_EsiaTokenAuthRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthRequestCopyWithImpl<$Res, _$_EsiaTokenAuthRequest>
+    implements _$$_EsiaTokenAuthRequestCopyWith<$Res> {
+  __$$_EsiaTokenAuthRequestCopyWithImpl(_$_EsiaTokenAuthRequest _value,
+      $Res Function(_$_EsiaTokenAuthRequest) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isUserExists = null,
+    Object? signinModel = freezed,
+    Object? registrationModel = freezed,
+  }) {
+    return _then(_$_EsiaTokenAuthRequest(
+      isUserExists: null == isUserExists
+          ? _value.isUserExists
+          : isUserExists // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signinModel: freezed == signinModel
+          ? _value.signinModel
+          : signinModel // ignore: cast_nullable_to_non_nullable
+              as EsiaTokenAuthSigninModelRequest?,
+      registrationModel: freezed == registrationModel
+          ? _value.registrationModel
+          : registrationModel // ignore: cast_nullable_to_non_nullable
+              as EsiaTokenAuthRegistrationModelRequest?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EsiaTokenAuthRequest implements _EsiaTokenAuthRequest {
+  const _$_EsiaTokenAuthRequest(
+      {required this.isUserExists,
+      required this.signinModel,
+      required this.registrationModel});
+
+  factory _$_EsiaTokenAuthRequest.fromJson(Map<String, dynamic> json) =>
+      _$$_EsiaTokenAuthRequestFromJson(json);
+
+  @override
+  final bool isUserExists;
+  @override
+  final EsiaTokenAuthSigninModelRequest? signinModel;
+  @override
+  final EsiaTokenAuthRegistrationModelRequest? registrationModel;
+
+  @override
+  String toString() {
+    return 'EsiaTokenAuthRequest(isUserExists: $isUserExists, signinModel: $signinModel, registrationModel: $registrationModel)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EsiaTokenAuthRequest &&
+            (identical(other.isUserExists, isUserExists) ||
+                other.isUserExists == isUserExists) &&
+            (identical(other.signinModel, signinModel) ||
+                other.signinModel == signinModel) &&
+            (identical(other.registrationModel, registrationModel) ||
+                other.registrationModel == registrationModel));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isUserExists, signinModel, registrationModel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EsiaTokenAuthRequestCopyWith<_$_EsiaTokenAuthRequest> get copyWith =>
+      __$$_EsiaTokenAuthRequestCopyWithImpl<_$_EsiaTokenAuthRequest>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EsiaTokenAuthRequestToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EsiaTokenAuthRequest implements EsiaTokenAuthRequest {
+  const factory _EsiaTokenAuthRequest(
+      {required final bool isUserExists,
+      required final EsiaTokenAuthSigninModelRequest? signinModel,
+      required final EsiaTokenAuthRegistrationModelRequest?
+          registrationModel}) = _$_EsiaTokenAuthRequest;
+
+  factory _EsiaTokenAuthRequest.fromJson(Map<String, dynamic> json) =
+      _$_EsiaTokenAuthRequest.fromJson;
+
+  @override
+  bool get isUserExists;
+  @override
+  EsiaTokenAuthSigninModelRequest? get signinModel;
+  @override
+  EsiaTokenAuthRegistrationModelRequest? get registrationModel;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EsiaTokenAuthRequestCopyWith<_$_EsiaTokenAuthRequest> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+EsiaTokenAuthRegistrationModelRequest
+    _$EsiaTokenAuthRegistrationModelRequestFromJson(Map<String, dynamic> json) {
+  return _EsiaTokenAuthRegistrationModelRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EsiaTokenAuthRegistrationModelRequest {
+  String get firstName => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get middleName => throw _privateConstructorUsedError;
+  String get phoneNumber => throw _privateConstructorUsedError;
+  String get snils => throw _privateConstructorUsedError;
+  int get sex => throw _privateConstructorUsedError;
+  String get birthday => throw _privateConstructorUsedError;
+  String get passportSerial => throw _privateConstructorUsedError;
+  String get passportNumber => throw _privateConstructorUsedError;
+  String get passportIssueDate => throw _privateConstructorUsedError;
+  String get passportIssueId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EsiaTokenAuthRegistrationModelRequestCopyWith<
+          EsiaTokenAuthRegistrationModelRequest>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
+  factory $EsiaTokenAuthRegistrationModelRequestCopyWith(
+          EsiaTokenAuthRegistrationModelRequest value,
+          $Res Function(EsiaTokenAuthRegistrationModelRequest) then) =
+      _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+          EsiaTokenAuthRegistrationModelRequest>;
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String middleName,
+      String phoneNumber,
+      String snils,
+      int sex,
+      String birthday,
+      String passportSerial,
+      String passportNumber,
+      String passportIssueDate,
+      String passportIssueId});
+}
+
+/// @nodoc
+class _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthRegistrationModelRequest>
+    implements $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
+  _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? middleName = null,
+    Object? phoneNumber = null,
+    Object? snils = null,
+    Object? sex = null,
+    Object? birthday = null,
+    Object? passportSerial = null,
+    Object? passportNumber = null,
+    Object? passportIssueDate = null,
+    Object? passportIssueId = null,
+  }) {
+    return _then(_value.copyWith(
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      snils: null == snils
+          ? _value.snils
+          : snils // ignore: cast_nullable_to_non_nullable
+              as String,
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as int,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportSerial: null == passportSerial
+          ? _value.passportSerial
+          : passportSerial // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportNumber: null == passportNumber
+          ? _value.passportNumber
+          : passportNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueDate: null == passportIssueDate
+          ? _value.passportIssueDate
+          : passportIssueDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueId: null == passportIssueId
+          ? _value.passportIssueId
+          : passportIssueId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res>
+    implements $EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
+  factory _$$_EsiaTokenAuthRegistrationModelRequestCopyWith(
+          _$_EsiaTokenAuthRegistrationModelRequest value,
+          $Res Function(_$_EsiaTokenAuthRegistrationModelRequest) then) =
+      __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String firstName,
+      String lastName,
+      String middleName,
+      String phoneNumber,
+      String snils,
+      int sex,
+      String birthday,
+      String passportSerial,
+      String passportNumber,
+      String passportIssueDate,
+      String passportIssueId});
+}
+
+/// @nodoc
+class __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthRegistrationModelRequestCopyWithImpl<$Res,
+        _$_EsiaTokenAuthRegistrationModelRequest>
+    implements _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<$Res> {
+  __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl(
+      _$_EsiaTokenAuthRegistrationModelRequest _value,
+      $Res Function(_$_EsiaTokenAuthRegistrationModelRequest) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? middleName = null,
+    Object? phoneNumber = null,
+    Object? snils = null,
+    Object? sex = null,
+    Object? birthday = null,
+    Object? passportSerial = null,
+    Object? passportNumber = null,
+    Object? passportIssueDate = null,
+    Object? passportIssueId = null,
+  }) {
+    return _then(_$_EsiaTokenAuthRegistrationModelRequest(
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNumber: null == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      snils: null == snils
+          ? _value.snils
+          : snils // ignore: cast_nullable_to_non_nullable
+              as String,
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as int,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportSerial: null == passportSerial
+          ? _value.passportSerial
+          : passportSerial // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportNumber: null == passportNumber
+          ? _value.passportNumber
+          : passportNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueDate: null == passportIssueDate
+          ? _value.passportIssueDate
+          : passportIssueDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      passportIssueId: null == passportIssueId
+          ? _value.passportIssueId
+          : passportIssueId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EsiaTokenAuthRegistrationModelRequest
+    implements _EsiaTokenAuthRegistrationModelRequest {
+  const _$_EsiaTokenAuthRegistrationModelRequest(
+      {required this.firstName,
+      required this.lastName,
+      required this.middleName,
+      required this.phoneNumber,
+      required this.snils,
+      required this.sex,
+      required this.birthday,
+      required this.passportSerial,
+      required this.passportNumber,
+      required this.passportIssueDate,
+      required this.passportIssueId});
+
+  factory _$_EsiaTokenAuthRegistrationModelRequest.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_EsiaTokenAuthRegistrationModelRequestFromJson(json);
+
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final String middleName;
+  @override
+  final String phoneNumber;
+  @override
+  final String snils;
+  @override
+  final int sex;
+  @override
+  final String birthday;
+  @override
+  final String passportSerial;
+  @override
+  final String passportNumber;
+  @override
+  final String passportIssueDate;
+  @override
+  final String passportIssueId;
+
+  @override
+  String toString() {
+    return 'EsiaTokenAuthRegistrationModelRequest(firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EsiaTokenAuthRegistrationModelRequest &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.snils, snils) || other.snils == snils) &&
+            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday) &&
+            (identical(other.passportSerial, passportSerial) ||
+                other.passportSerial == passportSerial) &&
+            (identical(other.passportNumber, passportNumber) ||
+                other.passportNumber == passportNumber) &&
+            (identical(other.passportIssueDate, passportIssueDate) ||
+                other.passportIssueDate == passportIssueDate) &&
+            (identical(other.passportIssueId, passportIssueId) ||
+                other.passportIssueId == passportIssueId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      firstName,
+      lastName,
+      middleName,
+      phoneNumber,
+      snils,
+      sex,
+      birthday,
+      passportSerial,
+      passportNumber,
+      passportIssueDate,
+      passportIssueId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<
+          _$_EsiaTokenAuthRegistrationModelRequest>
+      get copyWith => __$$_EsiaTokenAuthRegistrationModelRequestCopyWithImpl<
+          _$_EsiaTokenAuthRegistrationModelRequest>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EsiaTokenAuthRegistrationModelRequestToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EsiaTokenAuthRegistrationModelRequest
+    implements EsiaTokenAuthRegistrationModelRequest {
+  const factory _EsiaTokenAuthRegistrationModelRequest(
+          {required final String firstName,
+          required final String lastName,
+          required final String middleName,
+          required final String phoneNumber,
+          required final String snils,
+          required final int sex,
+          required final String birthday,
+          required final String passportSerial,
+          required final String passportNumber,
+          required final String passportIssueDate,
+          required final String passportIssueId}) =
+      _$_EsiaTokenAuthRegistrationModelRequest;
+
+  factory _EsiaTokenAuthRegistrationModelRequest.fromJson(
+          Map<String, dynamic> json) =
+      _$_EsiaTokenAuthRegistrationModelRequest.fromJson;
+
+  @override
+  String get firstName;
+  @override
+  String get lastName;
+  @override
+  String get middleName;
+  @override
+  String get phoneNumber;
+  @override
+  String get snils;
+  @override
+  int get sex;
+  @override
+  String get birthday;
+  @override
+  String get passportSerial;
+  @override
+  String get passportNumber;
+  @override
+  String get passportIssueDate;
+  @override
+  String get passportIssueId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EsiaTokenAuthRegistrationModelRequestCopyWith<
+          _$_EsiaTokenAuthRegistrationModelRequest>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+EsiaTokenAuthSigninModelRequest _$EsiaTokenAuthSigninModelRequestFromJson(
+    Map<String, dynamic> json) {
+  return _EsiaTokenAuthSigninModelRequest.fromJson(json);
+}
+
+/// @nodoc
+mixin _$EsiaTokenAuthSigninModelRequest {
+  String get token => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EsiaTokenAuthSigninModelRequestCopyWith<EsiaTokenAuthSigninModelRequest>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
+  factory $EsiaTokenAuthSigninModelRequestCopyWith(
+          EsiaTokenAuthSigninModelRequest value,
+          $Res Function(EsiaTokenAuthSigninModelRequest) then) =
+      _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+          EsiaTokenAuthSigninModelRequest>;
+  @useResult
+  $Res call({String token, String refreshToken});
+}
+
+/// @nodoc
+class _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+        $Val extends EsiaTokenAuthSigninModelRequest>
+    implements $EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
+  _$EsiaTokenAuthSigninModelRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? refreshToken = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_EsiaTokenAuthSigninModelRequestCopyWith<$Res>
+    implements $EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
+  factory _$$_EsiaTokenAuthSigninModelRequestCopyWith(
+          _$_EsiaTokenAuthSigninModelRequest value,
+          $Res Function(_$_EsiaTokenAuthSigninModelRequest) then) =
+      __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token, String refreshToken});
+}
+
+/// @nodoc
+class __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res>
+    extends _$EsiaTokenAuthSigninModelRequestCopyWithImpl<$Res,
+        _$_EsiaTokenAuthSigninModelRequest>
+    implements _$$_EsiaTokenAuthSigninModelRequestCopyWith<$Res> {
+  __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl(
+      _$_EsiaTokenAuthSigninModelRequest _value,
+      $Res Function(_$_EsiaTokenAuthSigninModelRequest) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? refreshToken = null,
+  }) {
+    return _then(_$_EsiaTokenAuthSigninModelRequest(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      refreshToken: null == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EsiaTokenAuthSigninModelRequest
+    implements _EsiaTokenAuthSigninModelRequest {
+  const _$_EsiaTokenAuthSigninModelRequest(
+      {required this.token, required this.refreshToken});
+
+  factory _$_EsiaTokenAuthSigninModelRequest.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_EsiaTokenAuthSigninModelRequestFromJson(json);
+
+  @override
+  final String token;
+  @override
+  final String refreshToken;
+
+  @override
+  String toString() {
+    return 'EsiaTokenAuthSigninModelRequest(token: $token, refreshToken: $refreshToken)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EsiaTokenAuthSigninModelRequest &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, token, refreshToken);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EsiaTokenAuthSigninModelRequestCopyWith<
+          _$_EsiaTokenAuthSigninModelRequest>
+      get copyWith => __$$_EsiaTokenAuthSigninModelRequestCopyWithImpl<
+          _$_EsiaTokenAuthSigninModelRequest>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EsiaTokenAuthSigninModelRequestToJson(
+      this,
+    );
+  }
+}
+
+abstract class _EsiaTokenAuthSigninModelRequest
+    implements EsiaTokenAuthSigninModelRequest {
+  const factory _EsiaTokenAuthSigninModelRequest(
+      {required final String token,
+      required final String refreshToken}) = _$_EsiaTokenAuthSigninModelRequest;
+
+  factory _EsiaTokenAuthSigninModelRequest.fromJson(Map<String, dynamic> json) =
+      _$_EsiaTokenAuthSigninModelRequest.fromJson;
+
+  @override
+  String get token;
+  @override
+  String get refreshToken;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EsiaTokenAuthSigninModelRequestCopyWith<
+          _$_EsiaTokenAuthSigninModelRequest>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+CreateUserProfileAndMedicalCardRequestModel
+    _$CreateUserProfileAndMedicalCardRequestModelFromJson(
+        Map<String, dynamic> json) {
+  return _CreateUserProfileAndMedicalCardRequestModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CreateUserProfileAndMedicalCardRequestModel {
+  bool get result => throw _privateConstructorUsedError;
+  String get profileId => throw _privateConstructorUsedError;
+  String get error => throw _privateConstructorUsedError;
+  CreateUserProfileAndMedicalCardIntegrationResponseModel
+      get integrationResponse => throw _privateConstructorUsedError;
+  bool get forceToSite => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateUserProfileAndMedicalCardRequestModelCopyWith<
+          CreateUserProfileAndMedicalCardRequestModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
+  factory $CreateUserProfileAndMedicalCardRequestModelCopyWith(
+          CreateUserProfileAndMedicalCardRequestModel value,
+          $Res Function(CreateUserProfileAndMedicalCardRequestModel) then) =
+      _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+          CreateUserProfileAndMedicalCardRequestModel>;
+  @useResult
+  $Res call(
+      {bool result,
+      String profileId,
+      String error,
+      CreateUserProfileAndMedicalCardIntegrationResponseModel
+          integrationResponse,
+      bool forceToSite});
+
+  $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res>
+      get integrationResponse;
+}
+
+/// @nodoc
+class _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+        $Val extends CreateUserProfileAndMedicalCardRequestModel>
+    implements $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
+  _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl(
+      this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+    Object? profileId = null,
+    Object? error = null,
+    Object? integrationResponse = null,
+    Object? forceToSite = null,
+  }) {
+    return _then(_value.copyWith(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+      integrationResponse: null == integrationResponse
+          ? _value.integrationResponse
+          : integrationResponse // ignore: cast_nullable_to_non_nullable
+              as CreateUserProfileAndMedicalCardIntegrationResponseModel,
+      forceToSite: null == forceToSite
+          ? _value.forceToSite
+          : forceToSite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res>
+      get integrationResponse {
+    return $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+        $Res>(_value.integrationResponse, (value) {
+      return _then(_value.copyWith(integrationResponse: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res>
+    implements $CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
+  factory _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith(
+          _$_CreateUserProfileAndMedicalCardRequestModel value,
+          $Res Function(_$_CreateUserProfileAndMedicalCardRequestModel) then) =
+      __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool result,
+      String profileId,
+      String error,
+      CreateUserProfileAndMedicalCardIntegrationResponseModel
+          integrationResponse,
+      bool forceToSite});
+
+  @override
+  $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res>
+      get integrationResponse;
+}
+
+/// @nodoc
+class __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res>
+    extends _$CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<$Res,
+        _$_CreateUserProfileAndMedicalCardRequestModel>
+    implements _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<$Res> {
+  __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl(
+      _$_CreateUserProfileAndMedicalCardRequestModel _value,
+      $Res Function(_$_CreateUserProfileAndMedicalCardRequestModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+    Object? profileId = null,
+    Object? error = null,
+    Object? integrationResponse = null,
+    Object? forceToSite = null,
+  }) {
+    return _then(_$_CreateUserProfileAndMedicalCardRequestModel(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+      integrationResponse: null == integrationResponse
+          ? _value.integrationResponse
+          : integrationResponse // ignore: cast_nullable_to_non_nullable
+              as CreateUserProfileAndMedicalCardIntegrationResponseModel,
+      forceToSite: null == forceToSite
+          ? _value.forceToSite
+          : forceToSite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CreateUserProfileAndMedicalCardRequestModel
+    implements _CreateUserProfileAndMedicalCardRequestModel {
+  const _$_CreateUserProfileAndMedicalCardRequestModel(
+      {required this.result,
+      required this.profileId,
+      required this.error,
+      required this.integrationResponse,
+      required this.forceToSite});
+
+  factory _$_CreateUserProfileAndMedicalCardRequestModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_CreateUserProfileAndMedicalCardRequestModelFromJson(json);
+
+  @override
+  final bool result;
+  @override
+  final String profileId;
+  @override
+  final String error;
+  @override
+  final CreateUserProfileAndMedicalCardIntegrationResponseModel
+      integrationResponse;
+  @override
+  final bool forceToSite;
+
+  @override
+  String toString() {
+    return 'CreateUserProfileAndMedicalCardRequestModel(result: $result, profileId: $profileId, error: $error, integrationResponse: $integrationResponse, forceToSite: $forceToSite)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_CreateUserProfileAndMedicalCardRequestModel &&
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.integrationResponse, integrationResponse) ||
+                other.integrationResponse == integrationResponse) &&
+            (identical(other.forceToSite, forceToSite) ||
+                other.forceToSite == forceToSite));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, result, profileId, error, integrationResponse, forceToSite);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<
+          _$_CreateUserProfileAndMedicalCardRequestModel>
+      get copyWith =>
+          __$$_CreateUserProfileAndMedicalCardRequestModelCopyWithImpl<
+              _$_CreateUserProfileAndMedicalCardRequestModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CreateUserProfileAndMedicalCardRequestModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateUserProfileAndMedicalCardRequestModel
+    implements CreateUserProfileAndMedicalCardRequestModel {
+  const factory _CreateUserProfileAndMedicalCardRequestModel(
+          {required final bool result,
+          required final String profileId,
+          required final String error,
+          required final CreateUserProfileAndMedicalCardIntegrationResponseModel
+              integrationResponse,
+          required final bool forceToSite}) =
+      _$_CreateUserProfileAndMedicalCardRequestModel;
+
+  factory _CreateUserProfileAndMedicalCardRequestModel.fromJson(
+          Map<String, dynamic> json) =
+      _$_CreateUserProfileAndMedicalCardRequestModel.fromJson;
+
+  @override
+  bool get result;
+  @override
+  String get profileId;
+  @override
+  String get error;
+  @override
+  CreateUserProfileAndMedicalCardIntegrationResponseModel
+      get integrationResponse;
+  @override
+  bool get forceToSite;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateUserProfileAndMedicalCardRequestModelCopyWith<
+          _$_CreateUserProfileAndMedicalCardRequestModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+CreateUserProfileAndMedicalCardIntegrationResponseModel
+    _$CreateUserProfileAndMedicalCardIntegrationResponseModelFromJson(
+        Map<String, dynamic> json) {
+  return _CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson(
+      json);
+}
+
+/// @nodoc
+mixin _$CreateUserProfileAndMedicalCardIntegrationResponseModel {
+  bool get result => throw _privateConstructorUsedError;
+  String get profileId => throw _privateConstructorUsedError;
+  String get errorCode => throw _privateConstructorUsedError;
+  String get errorText => throw _privateConstructorUsedError;
+  String get accountId => throw _privateConstructorUsedError;
+  bool get forceErrorToSite => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+          CreateUserProfileAndMedicalCardIntegrationResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+    $Res> {
+  factory $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith(
+          CreateUserProfileAndMedicalCardIntegrationResponseModel value,
+          $Res Function(CreateUserProfileAndMedicalCardIntegrationResponseModel)
+              then) =
+      _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+          $Res, CreateUserProfileAndMedicalCardIntegrationResponseModel>;
+  @useResult
+  $Res call(
+      {bool result,
+      String profileId,
+      String errorCode,
+      String errorText,
+      String accountId,
+      bool forceErrorToSite});
+}
+
+/// @nodoc
+class _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+        $Res,
+        $Val extends CreateUserProfileAndMedicalCardIntegrationResponseModel>
+    implements
+        $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res> {
+  _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl(
+      this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+    Object? profileId = null,
+    Object? errorCode = null,
+    Object? errorText = null,
+    Object? accountId = null,
+    Object? forceErrorToSite = null,
+  }) {
+    return _then(_value.copyWith(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorCode: null == errorCode
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorText: null == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String,
+      forceErrorToSite: null == forceErrorToSite
+          ? _value.forceErrorToSite
+          : forceErrorToSite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+        $Res>
+    implements
+        $CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<$Res> {
+  factory _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith(
+          _$_CreateUserProfileAndMedicalCardIntegrationResponseModel value,
+          $Res Function(
+                  _$_CreateUserProfileAndMedicalCardIntegrationResponseModel)
+              then) =
+      __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+          $Res>;
+  @override
+  @useResult
+  $Res call(
+      {bool result,
+      String profileId,
+      String errorCode,
+      String errorText,
+      String accountId,
+      bool forceErrorToSite});
+}
+
+/// @nodoc
+class __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+        $Res>
+    extends _$CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+        $Res, _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>
+    implements
+        _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+            $Res> {
+  __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl(
+      _$_CreateUserProfileAndMedicalCardIntegrationResponseModel _value,
+      $Res Function(_$_CreateUserProfileAndMedicalCardIntegrationResponseModel)
+          _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+    Object? profileId = null,
+    Object? errorCode = null,
+    Object? errorText = null,
+    Object? accountId = null,
+    Object? forceErrorToSite = null,
+  }) {
+    return _then(_$_CreateUserProfileAndMedicalCardIntegrationResponseModel(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as bool,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorCode: null == errorCode
+          ? _value.errorCode
+          : errorCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      errorText: null == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String,
+      accountId: null == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String,
+      forceErrorToSite: null == forceErrorToSite
+          ? _value.forceErrorToSite
+          : forceErrorToSite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_CreateUserProfileAndMedicalCardIntegrationResponseModel
+    implements _CreateUserProfileAndMedicalCardIntegrationResponseModel {
+  const _$_CreateUserProfileAndMedicalCardIntegrationResponseModel(
+      {required this.result,
+      required this.profileId,
+      required this.errorCode,
+      required this.errorText,
+      required this.accountId,
+      required this.forceErrorToSite});
+
+  factory _$_CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelFromJson(json);
+
+  @override
+  final bool result;
+  @override
+  final String profileId;
+  @override
+  final String errorCode;
+  @override
+  final String errorText;
+  @override
+  final String accountId;
+  @override
+  final bool forceErrorToSite;
+
+  @override
+  String toString() {
+    return 'CreateUserProfileAndMedicalCardIntegrationResponseModel(result: $result, profileId: $profileId, errorCode: $errorCode, errorText: $errorText, accountId: $accountId, forceErrorToSite: $forceErrorToSite)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other
+                is _$_CreateUserProfileAndMedicalCardIntegrationResponseModel &&
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
+            (identical(other.errorCode, errorCode) ||
+                other.errorCode == errorCode) &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
+            (identical(other.forceErrorToSite, forceErrorToSite) ||
+                other.forceErrorToSite == forceErrorToSite));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, result, profileId, errorCode,
+      errorText, accountId, forceErrorToSite);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+          _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>
+      get copyWith =>
+          __$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWithImpl<
+                  _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CreateUserProfileAndMedicalCardIntegrationResponseModel
+    implements CreateUserProfileAndMedicalCardIntegrationResponseModel {
+  const factory _CreateUserProfileAndMedicalCardIntegrationResponseModel(
+          {required final bool result,
+          required final String profileId,
+          required final String errorCode,
+          required final String errorText,
+          required final String accountId,
+          required final bool forceErrorToSite}) =
+      _$_CreateUserProfileAndMedicalCardIntegrationResponseModel;
+
+  factory _CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson(
+          Map<String, dynamic> json) =
+      _$_CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson;
+
+  @override
+  bool get result;
+  @override
+  String get profileId;
+  @override
+  String get errorCode;
+  @override
+  String get errorText;
+  @override
+  String get accountId;
+  @override
+  bool get forceErrorToSite;
+  @override
+  @JsonKey(ignore: true)
+  _$$_CreateUserProfileAndMedicalCardIntegrationResponseModelCopyWith<
+          _$_CreateUserProfileAndMedicalCardIntegrationResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
