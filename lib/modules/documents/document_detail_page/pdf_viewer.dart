@@ -32,8 +32,10 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   }
 
   Future<void> getFile() async {
-    file = await context.read<DocumentsCubit>().getDocumentByUrl(widget.pdfUrl);
+    File f =
+        await context.read<DocumentsCubit>().getDocumentByUrl(widget.pdfUrl);
     setState(() {
+      file = f;
       isLoaded = true;
     });
   }
@@ -52,16 +54,16 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      getPageCount();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   getPageCount();
+    // });
 
     return isLoaded == true
         ? Column(
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: pageCount * 500,
+                height: 300,
                 child: PdfViewer.openFile(
                   file!.path,
                   viewerController: viewerController,
@@ -74,7 +76,8 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
                   ])),
                 ),
               ),
-              Text(pageCount.toString())
+              // Text(pageCount.toString()),
+              // Text('data')
             ],
           )
         : const Center(

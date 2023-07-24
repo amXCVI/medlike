@@ -99,15 +99,36 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
     ));
   }
 
+  /// Получает документ пользователя по id
+  void getDocumentMeta({required String documentId}) async {
+    emit(state.copyWith(
+      getDocumentMetaStatus: GetDocumentMetaStatuses.loading,
+    ));
+    try {
+      final DocumentMetaModel response;
+      response =
+          await documentsRepository.getDocumentMetaData(documentId: documentId);
+      emit(state.copyWith(
+        getDocumentMetaStatus: GetDocumentMetaStatuses.success,
+        selectedDocumentMetaData: response,
+      ));
+    } catch (e) {
+      addError(e);
+      emit(state.copyWith(
+          getDocumentMetaStatus: GetDocumentMetaStatuses.failed));
+    }
+  }
+
   /// Получение документа по url
   Future<File> getDocumentByUrl(String fileUrl) async {
+    print('GET FILE BY $fileUrl');
     try {
       File file = await DefaultCacheManager().getSingleFile(
         fileUrl,
         key: fileUrl,
         headers: {
           'Authorization':
-              'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}'
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
         },
       );
       return file;

@@ -3,7 +3,7 @@ import 'package:medlike/data/models/document_models/document_models.dart';
 List<DocumentModel> documentsMock = [
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: 'ac6a9bd4-f6d7-4b1c-bbfc-083fd8a4ea69',
     status: 4,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -12,7 +12,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Пользовательское соглашение',
-    documentURL: 'documentURL',
+    documentURL: 'ac6a9bd4-f6d7-4b1c-bbfc-083fd8a4ea69',
     status: 1,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -21,7 +21,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: 'ac6a9bd4-f6d7-4b1c-bbfc-083fd8a4ea69',
     status: 2,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -31,7 +31,7 @@ List<DocumentModel> documentsMock = [
   DocumentModel(
     documentName:
         'Дополнительное соглашение к договору №1 Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: 'ac6a9bd4-f6d7-4b1c-bbfc-083fd8a4ea69',
     status: 3,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -40,7 +40,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: '118b27ff-667e-4a33-9330-456aadcc5390',
     status: 1,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -49,7 +49,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: '118b27ff-667e-4a33-9330-456aadcc5390',
     status: 4,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -58,7 +58,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: '118b27ff-667e-4a33-9330-456aadcc5390',
     status: 2,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),
@@ -67,7 +67,7 @@ List<DocumentModel> documentsMock = [
   ),
   DocumentModel(
     documentName: 'Дополнительное соглашение к договору №1',
-    documentURL: 'documentURL',
+    documentURL: '118b27ff-667e-4a33-9330-456aadcc5390',
     status: 3,
     clinicAddress: '“Наименование клиники №1” ул. Октябрьская, 24Б',
     documentSubscribeDate: DateTime(2022),

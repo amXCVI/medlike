@@ -379,6 +379,33 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const UnauthSupportPage(),
       );
     },
+    EsiaLoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EsiaLoginPage(),
+      );
+    },
+    EsiaRegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<EsiaRegisterRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EsiaRegisterPage(
+          key: args.key,
+          firstName: args.firstName,
+          lastName: args.lastName,
+          middleName: args.middleName,
+          phoneNumber: args.phoneNumber,
+          snils: args.snils,
+          sex: args.sex,
+          birthday: args.birthday,
+          passportSerial: args.passportSerial,
+          passportNumber: args.passportNumber,
+          passportIssueDate: args.passportIssueDate,
+          passportIssueId: args.passportIssueId,
+          esiaToken: args.esiaToken,
+        ),
+      );
+    },
     RecoverPasswordNewRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordNewRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -435,33 +462,6 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           phoneNumber: args.phoneNumber,
         ),
-      );
-    },
-    EsiaRegisterRoute.name: (routeData) {
-      final args = routeData.argsAs<EsiaRegisterRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: EsiaRegisterPage(
-          key: args.key,
-          firstName: args.firstName,
-          lastName: args.lastName,
-          middleName: args.middleName,
-          phoneNumber: args.phoneNumber,
-          snils: args.snils,
-          sex: args.sex,
-          birthday: args.birthday,
-          passportSerial: args.passportSerial,
-          passportNumber: args.passportNumber,
-          passportIssueDate: args.passportIssueDate,
-          passportIssueId: args.passportIssueId,
-          esiaToken: args.esiaToken,
-        ),
-      );
-    },
-    EsiaLoginRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const EsiaLoginPage(),
       );
     },
   };
@@ -1806,6 +1806,113 @@ class UnauthSupportRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [EsiaLoginPage]
+class EsiaLoginRoute extends PageRouteInfo<void> {
+  const EsiaLoginRoute({List<PageRouteInfo>? children})
+      : super(
+          EsiaLoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EsiaLoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EsiaRegisterPage]
+class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
+  EsiaRegisterRoute({
+    Key? key,
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EsiaRegisterRoute.name,
+          args: EsiaRegisterRouteArgs(
+            key: key,
+            firstName: firstName,
+            lastName: lastName,
+            middleName: middleName,
+            phoneNumber: phoneNumber,
+            snils: snils,
+            sex: sex,
+            birthday: birthday,
+            passportSerial: passportSerial,
+            passportNumber: passportNumber,
+            passportIssueDate: passportIssueDate,
+            passportIssueId: passportIssueId,
+            esiaToken: esiaToken,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EsiaRegisterRoute';
+
+  static const PageInfo<EsiaRegisterRouteArgs> page =
+      PageInfo<EsiaRegisterRouteArgs>(name);
+}
+
+class EsiaRegisterRouteArgs {
+  const EsiaRegisterRouteArgs({
+    this.key,
+    required this.firstName,
+    required this.lastName,
+    required this.middleName,
+    required this.phoneNumber,
+    required this.snils,
+    required this.sex,
+    required this.birthday,
+    required this.passportSerial,
+    required this.passportNumber,
+    required this.passportIssueDate,
+    required this.passportIssueId,
+    required this.esiaToken,
+  });
+
+  final Key? key;
+
+  final String firstName;
+
+  final String lastName;
+
+  final String middleName;
+
+  final String phoneNumber;
+
+  final String snils;
+
+  final int sex;
+
+  final String birthday;
+
+  final String passportSerial;
+
+  final String passportNumber;
+
+  final String passportIssueDate;
+
+  final String passportIssueId;
+
+  final String esiaToken;
+
+  @override
+  String toString() {
+    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId, esiaToken: $esiaToken}';
+  }
+}
+
+/// generated route for
 /// [RecoverPasswordNewPage]
 class RecoverPasswordNewRoute
     extends PageRouteInfo<RecoverPasswordNewRouteArgs> {
@@ -2010,218 +2117,4 @@ class PasswordRouteArgs {
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
   }
-}
-
-/// generated route for
-/// [EsiaRegisterPage]
-class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
-  EsiaRegisterRoute({
-    Key? key,
-    required String firstName,
-    required String lastName,
-    required String middleName,
-    required String phoneNumber,
-    required String snils,
-    required int sex,
-    required String birthday,
-    required String passportSerial,
-    required String passportNumber,
-    required String passportIssueDate,
-    required String passportIssueId,
-    required String esiaToken,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EsiaRegisterRoute.name,
-          args: EsiaRegisterRouteArgs(
-            key: key,
-            firstName: firstName,
-            lastName: lastName,
-            middleName: middleName,
-            phoneNumber: phoneNumber,
-            snils: snils,
-            sex: sex,
-            birthday: birthday,
-            passportSerial: passportSerial,
-            passportNumber: passportNumber,
-            passportIssueDate: passportIssueDate,
-            passportIssueId: passportIssueId,
-            esiaToken: esiaToken,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EsiaRegisterRoute';
-
-  static const PageInfo<EsiaRegisterRouteArgs> page =
-      PageInfo<EsiaRegisterRouteArgs>(name);
-}
-
-class EsiaRegisterRouteArgs {
-  const EsiaRegisterRouteArgs({
-    this.key,
-    required this.firstName,
-    required this.lastName,
-    required this.middleName,
-    required this.phoneNumber,
-    required this.snils,
-    required this.sex,
-    required this.birthday,
-    required this.passportSerial,
-    required this.passportNumber,
-    required this.passportIssueDate,
-    required this.passportIssueId,
-    required this.esiaToken,
-  });
-
-  final Key? key;
-
-  final String firstName;
-
-  final String lastName;
-
-  final String middleName;
-
-  final String phoneNumber;
-
-  final String snils;
-
-  final int sex;
-
-  final String birthday;
-
-  final String passportSerial;
-
-  final String passportNumber;
-
-  final String passportIssueDate;
-
-  final String passportIssueId;
-
-  final String esiaToken;
-
-  @override
-  String toString() {
-    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId, esiaToken: $esiaToken}';
-  }
-}
-
-/// generated route for
-/// [EsiaLoginPage]
-class EsiaLoginRoute extends PageRouteInfo<void> {
-  const EsiaLoginRoute({List<PageRouteInfo>? children})
-      : super(
-          EsiaLoginRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'EsiaLoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-/// generated route for
-/// [EsiaLoginPage]
-class EsiaLoginRoute extends PageRouteInfo<void> {
-  const EsiaLoginRoute({List<PageRouteInfo>? children})
-      : super(
-          EsiaLoginRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'EsiaLoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [EsiaRegisterPage]
-class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
-  EsiaRegisterRoute({
-    Key? key,
-    required String firstName,
-    required String lastName,
-    required String middleName,
-    required String phoneNumber,
-    required String snils,
-    required int sex,
-    required String birthday,
-    required String passportSerial,
-    required String passportNumber,
-    required String passportIssueDate,
-    required String passportIssueId,
-    required String esiaToken,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EsiaRegisterRoute.name,
-          args: EsiaRegisterRouteArgs(
-            key: key,
-            firstName: firstName,
-            lastName: lastName,
-            middleName: middleName,
-            phoneNumber: phoneNumber,
-            snils: snils,
-            sex: sex,
-            birthday: birthday,
-            passportSerial: passportSerial,
-            passportNumber: passportNumber,
-            passportIssueDate: passportIssueDate,
-            passportIssueId: passportIssueId,
-            esiaToken: esiaToken,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EsiaRegisterRoute';
-
-  static const PageInfo<EsiaRegisterRouteArgs> page =
-      PageInfo<EsiaRegisterRouteArgs>(name);
-}
-
-class EsiaRegisterRouteArgs {
-  const EsiaRegisterRouteArgs({
-    this.key,
-    required this.firstName,
-    required this.lastName,
-    required this.middleName,
-    required this.phoneNumber,
-    required this.snils,
-    required this.sex,
-    required this.birthday,
-    required this.passportSerial,
-    required this.passportNumber,
-    required this.passportIssueDate,
-    required this.passportIssueId,
-    required this.esiaToken,
-  });
-
-  final Key? key;
-
-  final String firstName;
-
-  final String lastName;
-
-  final String middleName;
-
-  final String phoneNumber;
-
-  final String snils;
-
-  final int sex;
-
-  final String birthday;
-
-  final String passportSerial;
-
-  final String passportNumber;
-
-  final String passportIssueDate;
-
-  final String passportIssueId;
-
-  final String esiaToken;
-
-  @override
-  String toString() {
-    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId, esiaToken: $esiaToken}';
-  }
-}
-
 }

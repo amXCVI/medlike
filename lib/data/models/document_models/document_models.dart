@@ -21,6 +21,76 @@ class DocumentModel with _$DocumentModel {
 }
 
 @freezed
+class DocumentMetaModel with _$DocumentMetaModel {
+  const factory DocumentMetaModel({
+    required String id,
+    required String name,
+    required DocumentMetaLpuModel lpu,
+    required DocumentMetaPatientModel patient,
+    required DocumentMetaDocumentCreatorModel? documentCreator,
+    required DocumentMetaSignEmployerModel? signEmployer,
+    required bool isSignByPatient,
+    required DateTime? signedByPatientAt,
+    required bool isSignByEmployee,
+    required DateTime? SignedByEmployeeAt,
+  }) = _DocumentMetaModel;
+
+  factory DocumentMetaModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentMetaModelFromJson(json);
+}
+
+@freezed
+class DocumentMetaLpuModel with _$DocumentMetaLpuModel {
+  const factory DocumentMetaLpuModel({
+    required String name,
+    required String address,
+  }) = _DocumentMetaLpuModel;
+
+  factory DocumentMetaLpuModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentMetaLpuModelFromJson(json);
+}
+
+@freezed
+class DocumentMetaPatientModel with _$DocumentMetaPatientModel {
+  const factory DocumentMetaPatientModel({
+    required String lastname,
+    required String firstname,
+    required String middlename,
+    required String adresses,
+    required String birthday,
+    required String sex,
+  }) = _DocumentMetaPatientModel;
+
+  factory DocumentMetaPatientModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentMetaPatientModelFromJson(json);
+}
+
+@freezed
+class DocumentMetaDocumentCreatorModel with _$DocumentMetaDocumentCreatorModel {
+  const factory DocumentMetaDocumentCreatorModel({
+    required String firstname,
+    required String middlename,
+    required String lastname,
+  }) = _DocumentMetaDocumentCreatorModel;
+
+  factory DocumentMetaDocumentCreatorModel.fromJson(
+          Map<String, Object?> json) =>
+      _$DocumentMetaDocumentCreatorModelFromJson(json);
+}
+
+@freezed
+class DocumentMetaSignEmployerModel with _$DocumentMetaSignEmployerModel {
+  const factory DocumentMetaSignEmployerModel({
+    required String firstname,
+    required String middlename,
+    required String lastname,
+  }) = _DocumentMetaSignEmployerModel;
+
+  factory DocumentMetaSignEmployerModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentMetaSignEmployerModelFromJson(json);
+}
+
+@freezed
 class DocumentFilterItemModel with _$DocumentFilterItemModel {
   const factory DocumentFilterItemModel({
     required String label,

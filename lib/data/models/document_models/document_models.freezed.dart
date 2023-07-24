@@ -289,6 +289,1187 @@ abstract class _DocumentModelModel implements DocumentModel {
       throw _privateConstructorUsedError;
 }
 
+DocumentMetaModel _$DocumentMetaModelFromJson(Map<String, dynamic> json) {
+  return _DocumentMetaModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DocumentMetaModel {
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  DocumentMetaLpuModel get lpu => throw _privateConstructorUsedError;
+  DocumentMetaPatientModel get patient => throw _privateConstructorUsedError;
+  DocumentMetaDocumentCreatorModel? get documentCreator =>
+      throw _privateConstructorUsedError;
+  DocumentMetaSignEmployerModel? get signEmployer =>
+      throw _privateConstructorUsedError;
+  bool get isSignByPatient => throw _privateConstructorUsedError;
+  DateTime? get signedByPatientAt => throw _privateConstructorUsedError;
+  bool get isSignByEmployee => throw _privateConstructorUsedError;
+  DateTime? get SignedByEmployeeAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DocumentMetaModelCopyWith<DocumentMetaModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DocumentMetaModelCopyWith<$Res> {
+  factory $DocumentMetaModelCopyWith(
+          DocumentMetaModel value, $Res Function(DocumentMetaModel) then) =
+      _$DocumentMetaModelCopyWithImpl<$Res, DocumentMetaModel>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      DocumentMetaLpuModel lpu,
+      DocumentMetaPatientModel patient,
+      DocumentMetaDocumentCreatorModel? documentCreator,
+      DocumentMetaSignEmployerModel? signEmployer,
+      bool isSignByPatient,
+      DateTime? signedByPatientAt,
+      bool isSignByEmployee,
+      DateTime? SignedByEmployeeAt});
+
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu;
+  $DocumentMetaPatientModelCopyWith<$Res> get patient;
+  $DocumentMetaDocumentCreatorModelCopyWith<$Res>? get documentCreator;
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer;
+}
+
+/// @nodoc
+class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
+    implements $DocumentMetaModelCopyWith<$Res> {
+  _$DocumentMetaModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? lpu = null,
+    Object? patient = null,
+    Object? documentCreator = freezed,
+    Object? signEmployer = freezed,
+    Object? isSignByPatient = null,
+    Object? signedByPatientAt = freezed,
+    Object? isSignByEmployee = null,
+    Object? SignedByEmployeeAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      lpu: null == lpu
+          ? _value.lpu
+          : lpu // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaLpuModel,
+      patient: null == patient
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaPatientModel,
+      documentCreator: freezed == documentCreator
+          ? _value.documentCreator
+          : documentCreator // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaDocumentCreatorModel?,
+      signEmployer: freezed == signEmployer
+          ? _value.signEmployer
+          : signEmployer // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaSignEmployerModel?,
+      isSignByPatient: null == isSignByPatient
+          ? _value.isSignByPatient
+          : isSignByPatient // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByPatientAt: freezed == signedByPatientAt
+          ? _value.signedByPatientAt
+          : signedByPatientAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isSignByEmployee: null == isSignByEmployee
+          ? _value.isSignByEmployee
+          : isSignByEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
+      SignedByEmployeeAt: freezed == SignedByEmployeeAt
+          ? _value.SignedByEmployeeAt
+          : SignedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu {
+    return $DocumentMetaLpuModelCopyWith<$Res>(_value.lpu, (value) {
+      return _then(_value.copyWith(lpu: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaPatientModelCopyWith<$Res> get patient {
+    return $DocumentMetaPatientModelCopyWith<$Res>(_value.patient, (value) {
+      return _then(_value.copyWith(patient: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaDocumentCreatorModelCopyWith<$Res>? get documentCreator {
+    if (_value.documentCreator == null) {
+      return null;
+    }
+
+    return $DocumentMetaDocumentCreatorModelCopyWith<$Res>(
+        _value.documentCreator!, (value) {
+      return _then(_value.copyWith(documentCreator: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer {
+    if (_value.signEmployer == null) {
+      return null;
+    }
+
+    return $DocumentMetaSignEmployerModelCopyWith<$Res>(_value.signEmployer!,
+        (value) {
+      return _then(_value.copyWith(signEmployer: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_DocumentMetaModelCopyWith<$Res>
+    implements $DocumentMetaModelCopyWith<$Res> {
+  factory _$$_DocumentMetaModelCopyWith(_$_DocumentMetaModel value,
+          $Res Function(_$_DocumentMetaModel) then) =
+      __$$_DocumentMetaModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      DocumentMetaLpuModel lpu,
+      DocumentMetaPatientModel patient,
+      DocumentMetaDocumentCreatorModel? documentCreator,
+      DocumentMetaSignEmployerModel? signEmployer,
+      bool isSignByPatient,
+      DateTime? signedByPatientAt,
+      bool isSignByEmployee,
+      DateTime? SignedByEmployeeAt});
+
+  @override
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu;
+  @override
+  $DocumentMetaPatientModelCopyWith<$Res> get patient;
+  @override
+  $DocumentMetaDocumentCreatorModelCopyWith<$Res>? get documentCreator;
+  @override
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer;
+}
+
+/// @nodoc
+class __$$_DocumentMetaModelCopyWithImpl<$Res>
+    extends _$DocumentMetaModelCopyWithImpl<$Res, _$_DocumentMetaModel>
+    implements _$$_DocumentMetaModelCopyWith<$Res> {
+  __$$_DocumentMetaModelCopyWithImpl(
+      _$_DocumentMetaModel _value, $Res Function(_$_DocumentMetaModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? lpu = null,
+    Object? patient = null,
+    Object? documentCreator = freezed,
+    Object? signEmployer = freezed,
+    Object? isSignByPatient = null,
+    Object? signedByPatientAt = freezed,
+    Object? isSignByEmployee = null,
+    Object? SignedByEmployeeAt = freezed,
+  }) {
+    return _then(_$_DocumentMetaModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      lpu: null == lpu
+          ? _value.lpu
+          : lpu // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaLpuModel,
+      patient: null == patient
+          ? _value.patient
+          : patient // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaPatientModel,
+      documentCreator: freezed == documentCreator
+          ? _value.documentCreator
+          : documentCreator // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaDocumentCreatorModel?,
+      signEmployer: freezed == signEmployer
+          ? _value.signEmployer
+          : signEmployer // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaSignEmployerModel?,
+      isSignByPatient: null == isSignByPatient
+          ? _value.isSignByPatient
+          : isSignByPatient // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByPatientAt: freezed == signedByPatientAt
+          ? _value.signedByPatientAt
+          : signedByPatientAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isSignByEmployee: null == isSignByEmployee
+          ? _value.isSignByEmployee
+          : isSignByEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
+      SignedByEmployeeAt: freezed == SignedByEmployeeAt
+          ? _value.SignedByEmployeeAt
+          : SignedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DocumentMetaModel implements _DocumentMetaModel {
+  const _$_DocumentMetaModel(
+      {required this.id,
+      required this.name,
+      required this.lpu,
+      required this.patient,
+      required this.documentCreator,
+      required this.signEmployer,
+      required this.isSignByPatient,
+      required this.signedByPatientAt,
+      required this.isSignByEmployee,
+      required this.SignedByEmployeeAt});
+
+  factory _$_DocumentMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DocumentMetaModelFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final DocumentMetaLpuModel lpu;
+  @override
+  final DocumentMetaPatientModel patient;
+  @override
+  final DocumentMetaDocumentCreatorModel? documentCreator;
+  @override
+  final DocumentMetaSignEmployerModel? signEmployer;
+  @override
+  final bool isSignByPatient;
+  @override
+  final DateTime? signedByPatientAt;
+  @override
+  final bool isSignByEmployee;
+  @override
+  final DateTime? SignedByEmployeeAt;
+
+  @override
+  String toString() {
+    return 'DocumentMetaModel(id: $id, name: $name, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, SignedByEmployeeAt: $SignedByEmployeeAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentMetaModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.lpu, lpu) || other.lpu == lpu) &&
+            (identical(other.patient, patient) || other.patient == patient) &&
+            (identical(other.documentCreator, documentCreator) ||
+                other.documentCreator == documentCreator) &&
+            (identical(other.signEmployer, signEmployer) ||
+                other.signEmployer == signEmployer) &&
+            (identical(other.isSignByPatient, isSignByPatient) ||
+                other.isSignByPatient == isSignByPatient) &&
+            (identical(other.signedByPatientAt, signedByPatientAt) ||
+                other.signedByPatientAt == signedByPatientAt) &&
+            (identical(other.isSignByEmployee, isSignByEmployee) ||
+                other.isSignByEmployee == isSignByEmployee) &&
+            (identical(other.SignedByEmployeeAt, SignedByEmployeeAt) ||
+                other.SignedByEmployeeAt == SignedByEmployeeAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      lpu,
+      patient,
+      documentCreator,
+      signEmployer,
+      isSignByPatient,
+      signedByPatientAt,
+      isSignByEmployee,
+      SignedByEmployeeAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentMetaModelCopyWith<_$_DocumentMetaModel> get copyWith =>
+      __$$_DocumentMetaModelCopyWithImpl<_$_DocumentMetaModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DocumentMetaModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DocumentMetaModel implements DocumentMetaModel {
+  const factory _DocumentMetaModel(
+      {required final String id,
+      required final String name,
+      required final DocumentMetaLpuModel lpu,
+      required final DocumentMetaPatientModel patient,
+      required final DocumentMetaDocumentCreatorModel? documentCreator,
+      required final DocumentMetaSignEmployerModel? signEmployer,
+      required final bool isSignByPatient,
+      required final DateTime? signedByPatientAt,
+      required final bool isSignByEmployee,
+      required final DateTime? SignedByEmployeeAt}) = _$_DocumentMetaModel;
+
+  factory _DocumentMetaModel.fromJson(Map<String, dynamic> json) =
+      _$_DocumentMetaModel.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  DocumentMetaLpuModel get lpu;
+  @override
+  DocumentMetaPatientModel get patient;
+  @override
+  DocumentMetaDocumentCreatorModel? get documentCreator;
+  @override
+  DocumentMetaSignEmployerModel? get signEmployer;
+  @override
+  bool get isSignByPatient;
+  @override
+  DateTime? get signedByPatientAt;
+  @override
+  bool get isSignByEmployee;
+  @override
+  DateTime? get SignedByEmployeeAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DocumentMetaModelCopyWith<_$_DocumentMetaModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DocumentMetaLpuModel _$DocumentMetaLpuModelFromJson(Map<String, dynamic> json) {
+  return _DocumentMetaLpuModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DocumentMetaLpuModel {
+  String get name => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DocumentMetaLpuModelCopyWith<DocumentMetaLpuModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DocumentMetaLpuModelCopyWith<$Res> {
+  factory $DocumentMetaLpuModelCopyWith(DocumentMetaLpuModel value,
+          $Res Function(DocumentMetaLpuModel) then) =
+      _$DocumentMetaLpuModelCopyWithImpl<$Res, DocumentMetaLpuModel>;
+  @useResult
+  $Res call({String name, String address});
+}
+
+/// @nodoc
+class _$DocumentMetaLpuModelCopyWithImpl<$Res,
+        $Val extends DocumentMetaLpuModel>
+    implements $DocumentMetaLpuModelCopyWith<$Res> {
+  _$DocumentMetaLpuModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? address = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DocumentMetaLpuModelCopyWith<$Res>
+    implements $DocumentMetaLpuModelCopyWith<$Res> {
+  factory _$$_DocumentMetaLpuModelCopyWith(_$_DocumentMetaLpuModel value,
+          $Res Function(_$_DocumentMetaLpuModel) then) =
+      __$$_DocumentMetaLpuModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String name, String address});
+}
+
+/// @nodoc
+class __$$_DocumentMetaLpuModelCopyWithImpl<$Res>
+    extends _$DocumentMetaLpuModelCopyWithImpl<$Res, _$_DocumentMetaLpuModel>
+    implements _$$_DocumentMetaLpuModelCopyWith<$Res> {
+  __$$_DocumentMetaLpuModelCopyWithImpl(_$_DocumentMetaLpuModel _value,
+      $Res Function(_$_DocumentMetaLpuModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? address = null,
+  }) {
+    return _then(_$_DocumentMetaLpuModel(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DocumentMetaLpuModel implements _DocumentMetaLpuModel {
+  const _$_DocumentMetaLpuModel({required this.name, required this.address});
+
+  factory _$_DocumentMetaLpuModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DocumentMetaLpuModelFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String address;
+
+  @override
+  String toString() {
+    return 'DocumentMetaLpuModel(name: $name, address: $address)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentMetaLpuModel &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.address, address) || other.address == address));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, address);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentMetaLpuModelCopyWith<_$_DocumentMetaLpuModel> get copyWith =>
+      __$$_DocumentMetaLpuModelCopyWithImpl<_$_DocumentMetaLpuModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DocumentMetaLpuModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DocumentMetaLpuModel implements DocumentMetaLpuModel {
+  const factory _DocumentMetaLpuModel(
+      {required final String name,
+      required final String address}) = _$_DocumentMetaLpuModel;
+
+  factory _DocumentMetaLpuModel.fromJson(Map<String, dynamic> json) =
+      _$_DocumentMetaLpuModel.fromJson;
+
+  @override
+  String get name;
+  @override
+  String get address;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DocumentMetaLpuModelCopyWith<_$_DocumentMetaLpuModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DocumentMetaPatientModel _$DocumentMetaPatientModelFromJson(
+    Map<String, dynamic> json) {
+  return _DocumentMetaPatientModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DocumentMetaPatientModel {
+  String get lastname => throw _privateConstructorUsedError;
+  String get firstname => throw _privateConstructorUsedError;
+  String get middlename => throw _privateConstructorUsedError;
+  String get adresses => throw _privateConstructorUsedError;
+  String get birthday => throw _privateConstructorUsedError;
+  String get sex => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DocumentMetaPatientModelCopyWith<DocumentMetaPatientModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DocumentMetaPatientModelCopyWith<$Res> {
+  factory $DocumentMetaPatientModelCopyWith(DocumentMetaPatientModel value,
+          $Res Function(DocumentMetaPatientModel) then) =
+      _$DocumentMetaPatientModelCopyWithImpl<$Res, DocumentMetaPatientModel>;
+  @useResult
+  $Res call(
+      {String lastname,
+      String firstname,
+      String middlename,
+      String adresses,
+      String birthday,
+      String sex});
+}
+
+/// @nodoc
+class _$DocumentMetaPatientModelCopyWithImpl<$Res,
+        $Val extends DocumentMetaPatientModel>
+    implements $DocumentMetaPatientModelCopyWith<$Res> {
+  _$DocumentMetaPatientModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lastname = null,
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? adresses = null,
+    Object? birthday = null,
+    Object? sex = null,
+  }) {
+    return _then(_value.copyWith(
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      adresses: null == adresses
+          ? _value.adresses
+          : adresses // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DocumentMetaPatientModelCopyWith<$Res>
+    implements $DocumentMetaPatientModelCopyWith<$Res> {
+  factory _$$_DocumentMetaPatientModelCopyWith(
+          _$_DocumentMetaPatientModel value,
+          $Res Function(_$_DocumentMetaPatientModel) then) =
+      __$$_DocumentMetaPatientModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String lastname,
+      String firstname,
+      String middlename,
+      String adresses,
+      String birthday,
+      String sex});
+}
+
+/// @nodoc
+class __$$_DocumentMetaPatientModelCopyWithImpl<$Res>
+    extends _$DocumentMetaPatientModelCopyWithImpl<$Res,
+        _$_DocumentMetaPatientModel>
+    implements _$$_DocumentMetaPatientModelCopyWith<$Res> {
+  __$$_DocumentMetaPatientModelCopyWithImpl(_$_DocumentMetaPatientModel _value,
+      $Res Function(_$_DocumentMetaPatientModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lastname = null,
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? adresses = null,
+    Object? birthday = null,
+    Object? sex = null,
+  }) {
+    return _then(_$_DocumentMetaPatientModel(
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      adresses: null == adresses
+          ? _value.adresses
+          : adresses // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      sex: null == sex
+          ? _value.sex
+          : sex // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DocumentMetaPatientModel implements _DocumentMetaPatientModel {
+  const _$_DocumentMetaPatientModel(
+      {required this.lastname,
+      required this.firstname,
+      required this.middlename,
+      required this.adresses,
+      required this.birthday,
+      required this.sex});
+
+  factory _$_DocumentMetaPatientModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DocumentMetaPatientModelFromJson(json);
+
+  @override
+  final String lastname;
+  @override
+  final String firstname;
+  @override
+  final String middlename;
+  @override
+  final String adresses;
+  @override
+  final String birthday;
+  @override
+  final String sex;
+
+  @override
+  String toString() {
+    return 'DocumentMetaPatientModel(lastname: $lastname, firstname: $firstname, middlename: $middlename, adresses: $adresses, birthday: $birthday, sex: $sex)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentMetaPatientModel &&
+            (identical(other.lastname, lastname) ||
+                other.lastname == lastname) &&
+            (identical(other.firstname, firstname) ||
+                other.firstname == firstname) &&
+            (identical(other.middlename, middlename) ||
+                other.middlename == middlename) &&
+            (identical(other.adresses, adresses) ||
+                other.adresses == adresses) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday) &&
+            (identical(other.sex, sex) || other.sex == sex));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, lastname, firstname, middlename, adresses, birthday, sex);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentMetaPatientModelCopyWith<_$_DocumentMetaPatientModel>
+      get copyWith => __$$_DocumentMetaPatientModelCopyWithImpl<
+          _$_DocumentMetaPatientModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DocumentMetaPatientModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DocumentMetaPatientModel implements DocumentMetaPatientModel {
+  const factory _DocumentMetaPatientModel(
+      {required final String lastname,
+      required final String firstname,
+      required final String middlename,
+      required final String adresses,
+      required final String birthday,
+      required final String sex}) = _$_DocumentMetaPatientModel;
+
+  factory _DocumentMetaPatientModel.fromJson(Map<String, dynamic> json) =
+      _$_DocumentMetaPatientModel.fromJson;
+
+  @override
+  String get lastname;
+  @override
+  String get firstname;
+  @override
+  String get middlename;
+  @override
+  String get adresses;
+  @override
+  String get birthday;
+  @override
+  String get sex;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DocumentMetaPatientModelCopyWith<_$_DocumentMetaPatientModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+DocumentMetaDocumentCreatorModel _$DocumentMetaDocumentCreatorModelFromJson(
+    Map<String, dynamic> json) {
+  return _DocumentMetaDocumentCreatorModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DocumentMetaDocumentCreatorModel {
+  String get firstname => throw _privateConstructorUsedError;
+  String get middlename => throw _privateConstructorUsedError;
+  String get lastname => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DocumentMetaDocumentCreatorModelCopyWith<DocumentMetaDocumentCreatorModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DocumentMetaDocumentCreatorModelCopyWith<$Res> {
+  factory $DocumentMetaDocumentCreatorModelCopyWith(
+          DocumentMetaDocumentCreatorModel value,
+          $Res Function(DocumentMetaDocumentCreatorModel) then) =
+      _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
+          DocumentMetaDocumentCreatorModel>;
+  @useResult
+  $Res call({String firstname, String middlename, String lastname});
+}
+
+/// @nodoc
+class _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
+        $Val extends DocumentMetaDocumentCreatorModel>
+    implements $DocumentMetaDocumentCreatorModelCopyWith<$Res> {
+  _$DocumentMetaDocumentCreatorModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? lastname = null,
+  }) {
+    return _then(_value.copyWith(
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DocumentMetaDocumentCreatorModelCopyWith<$Res>
+    implements $DocumentMetaDocumentCreatorModelCopyWith<$Res> {
+  factory _$$_DocumentMetaDocumentCreatorModelCopyWith(
+          _$_DocumentMetaDocumentCreatorModel value,
+          $Res Function(_$_DocumentMetaDocumentCreatorModel) then) =
+      __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String firstname, String middlename, String lastname});
+}
+
+/// @nodoc
+class __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<$Res>
+    extends _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
+        _$_DocumentMetaDocumentCreatorModel>
+    implements _$$_DocumentMetaDocumentCreatorModelCopyWith<$Res> {
+  __$$_DocumentMetaDocumentCreatorModelCopyWithImpl(
+      _$_DocumentMetaDocumentCreatorModel _value,
+      $Res Function(_$_DocumentMetaDocumentCreatorModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? lastname = null,
+  }) {
+    return _then(_$_DocumentMetaDocumentCreatorModel(
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DocumentMetaDocumentCreatorModel
+    implements _DocumentMetaDocumentCreatorModel {
+  const _$_DocumentMetaDocumentCreatorModel(
+      {required this.firstname,
+      required this.middlename,
+      required this.lastname});
+
+  factory _$_DocumentMetaDocumentCreatorModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_DocumentMetaDocumentCreatorModelFromJson(json);
+
+  @override
+  final String firstname;
+  @override
+  final String middlename;
+  @override
+  final String lastname;
+
+  @override
+  String toString() {
+    return 'DocumentMetaDocumentCreatorModel(firstname: $firstname, middlename: $middlename, lastname: $lastname)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentMetaDocumentCreatorModel &&
+            (identical(other.firstname, firstname) ||
+                other.firstname == firstname) &&
+            (identical(other.middlename, middlename) ||
+                other.middlename == middlename) &&
+            (identical(other.lastname, lastname) ||
+                other.lastname == lastname));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, firstname, middlename, lastname);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentMetaDocumentCreatorModelCopyWith<
+          _$_DocumentMetaDocumentCreatorModel>
+      get copyWith => __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<
+          _$_DocumentMetaDocumentCreatorModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DocumentMetaDocumentCreatorModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DocumentMetaDocumentCreatorModel
+    implements DocumentMetaDocumentCreatorModel {
+  const factory _DocumentMetaDocumentCreatorModel(
+      {required final String firstname,
+      required final String middlename,
+      required final String lastname}) = _$_DocumentMetaDocumentCreatorModel;
+
+  factory _DocumentMetaDocumentCreatorModel.fromJson(
+      Map<String, dynamic> json) = _$_DocumentMetaDocumentCreatorModel.fromJson;
+
+  @override
+  String get firstname;
+  @override
+  String get middlename;
+  @override
+  String get lastname;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DocumentMetaDocumentCreatorModelCopyWith<
+          _$_DocumentMetaDocumentCreatorModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+DocumentMetaSignEmployerModel _$DocumentMetaSignEmployerModelFromJson(
+    Map<String, dynamic> json) {
+  return _DocumentMetaSignEmployerModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DocumentMetaSignEmployerModel {
+  String get firstname => throw _privateConstructorUsedError;
+  String get middlename => throw _privateConstructorUsedError;
+  String get lastname => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DocumentMetaSignEmployerModelCopyWith<DocumentMetaSignEmployerModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DocumentMetaSignEmployerModelCopyWith<$Res> {
+  factory $DocumentMetaSignEmployerModelCopyWith(
+          DocumentMetaSignEmployerModel value,
+          $Res Function(DocumentMetaSignEmployerModel) then) =
+      _$DocumentMetaSignEmployerModelCopyWithImpl<$Res,
+          DocumentMetaSignEmployerModel>;
+  @useResult
+  $Res call({String firstname, String middlename, String lastname});
+}
+
+/// @nodoc
+class _$DocumentMetaSignEmployerModelCopyWithImpl<$Res,
+        $Val extends DocumentMetaSignEmployerModel>
+    implements $DocumentMetaSignEmployerModelCopyWith<$Res> {
+  _$DocumentMetaSignEmployerModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? lastname = null,
+  }) {
+    return _then(_value.copyWith(
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DocumentMetaSignEmployerModelCopyWith<$Res>
+    implements $DocumentMetaSignEmployerModelCopyWith<$Res> {
+  factory _$$_DocumentMetaSignEmployerModelCopyWith(
+          _$_DocumentMetaSignEmployerModel value,
+          $Res Function(_$_DocumentMetaSignEmployerModel) then) =
+      __$$_DocumentMetaSignEmployerModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String firstname, String middlename, String lastname});
+}
+
+/// @nodoc
+class __$$_DocumentMetaSignEmployerModelCopyWithImpl<$Res>
+    extends _$DocumentMetaSignEmployerModelCopyWithImpl<$Res,
+        _$_DocumentMetaSignEmployerModel>
+    implements _$$_DocumentMetaSignEmployerModelCopyWith<$Res> {
+  __$$_DocumentMetaSignEmployerModelCopyWithImpl(
+      _$_DocumentMetaSignEmployerModel _value,
+      $Res Function(_$_DocumentMetaSignEmployerModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? firstname = null,
+    Object? middlename = null,
+    Object? lastname = null,
+  }) {
+    return _then(_$_DocumentMetaSignEmployerModel(
+      firstname: null == firstname
+          ? _value.firstname
+          : firstname // ignore: cast_nullable_to_non_nullable
+              as String,
+      middlename: null == middlename
+          ? _value.middlename
+          : middlename // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastname: null == lastname
+          ? _value.lastname
+          : lastname // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DocumentMetaSignEmployerModel
+    implements _DocumentMetaSignEmployerModel {
+  const _$_DocumentMetaSignEmployerModel(
+      {required this.firstname,
+      required this.middlename,
+      required this.lastname});
+
+  factory _$_DocumentMetaSignEmployerModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$$_DocumentMetaSignEmployerModelFromJson(json);
+
+  @override
+  final String firstname;
+  @override
+  final String middlename;
+  @override
+  final String lastname;
+
+  @override
+  String toString() {
+    return 'DocumentMetaSignEmployerModel(firstname: $firstname, middlename: $middlename, lastname: $lastname)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentMetaSignEmployerModel &&
+            (identical(other.firstname, firstname) ||
+                other.firstname == firstname) &&
+            (identical(other.middlename, middlename) ||
+                other.middlename == middlename) &&
+            (identical(other.lastname, lastname) ||
+                other.lastname == lastname));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, firstname, middlename, lastname);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentMetaSignEmployerModelCopyWith<_$_DocumentMetaSignEmployerModel>
+      get copyWith => __$$_DocumentMetaSignEmployerModelCopyWithImpl<
+          _$_DocumentMetaSignEmployerModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DocumentMetaSignEmployerModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DocumentMetaSignEmployerModel
+    implements DocumentMetaSignEmployerModel {
+  const factory _DocumentMetaSignEmployerModel(
+      {required final String firstname,
+      required final String middlename,
+      required final String lastname}) = _$_DocumentMetaSignEmployerModel;
+
+  factory _DocumentMetaSignEmployerModel.fromJson(Map<String, dynamic> json) =
+      _$_DocumentMetaSignEmployerModel.fromJson;
+
+  @override
+  String get firstname;
+  @override
+  String get middlename;
+  @override
+  String get lastname;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DocumentMetaSignEmployerModelCopyWith<_$_DocumentMetaSignEmployerModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
 DocumentFilterItemModel _$DocumentFilterItemModelFromJson(
     Map<String, dynamic> json) {
   return _DocumentFilterItemModel.fromJson(json);

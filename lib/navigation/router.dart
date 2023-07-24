@@ -224,6 +224,16 @@ class AppRouter extends _$AppRouter {
             page: DiaryAddRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Мои документы
+        AdaptiveRoute(
+            path: AppRoutes.documents,
+            page: DocumentsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.documentDetail,
+            page: DocumentRoute.page,
+            guards: [CheckIsAuthUser()]),
+
         AdaptiveRoute(
             path: AppRoutes.requireUpdater, page: RequireUpdateAppRoute.page),
 

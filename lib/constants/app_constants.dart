@@ -1,3 +1,5 @@
+import 'package:medlike/utils/api/api_constants.dart';
+
 class AppConstants {
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
@@ -79,8 +81,7 @@ class AppConstants {
   // Меняется в интерсепторе, проверяется в Guards
   static const String isActualAppVersion = 'true';
 
-  static const String esiaOAuthPageURL =
-      'https://tgn.medotrade.ru:23340/MedLike/Env04/esia/login';
+  static String esiaOAuthPageURL = '${ApiConstants.baseUrl}/esia/login';
 }
 
 // Способы авторизации

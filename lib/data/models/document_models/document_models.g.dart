@@ -31,6 +31,114 @@ Map<String, dynamic> _$$_DocumentModelModelToJson(
       'userName': instance.userName,
     };
 
+_$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
+    _$_DocumentMetaModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      lpu: DocumentMetaLpuModel.fromJson(json['lpu'] as Map<String, dynamic>),
+      patient: DocumentMetaPatientModel.fromJson(
+          json['patient'] as Map<String, dynamic>),
+      documentCreator: json['documentCreator'] == null
+          ? null
+          : DocumentMetaDocumentCreatorModel.fromJson(
+              json['documentCreator'] as Map<String, dynamic>),
+      signEmployer: json['signEmployer'] == null
+          ? null
+          : DocumentMetaSignEmployerModel.fromJson(
+              json['signEmployer'] as Map<String, dynamic>),
+      isSignByPatient: json['isSignByPatient'] as bool,
+      signedByPatientAt: json['signedByPatientAt'] == null
+          ? null
+          : DateTime.parse(json['signedByPatientAt'] as String),
+      isSignByEmployee: json['isSignByEmployee'] as bool,
+      SignedByEmployeeAt: json['SignedByEmployeeAt'] == null
+          ? null
+          : DateTime.parse(json['SignedByEmployeeAt'] as String),
+    );
+
+Map<String, dynamic> _$$_DocumentMetaModelToJson(
+        _$_DocumentMetaModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'lpu': instance.lpu,
+      'patient': instance.patient,
+      'documentCreator': instance.documentCreator,
+      'signEmployer': instance.signEmployer,
+      'isSignByPatient': instance.isSignByPatient,
+      'signedByPatientAt': instance.signedByPatientAt?.toIso8601String(),
+      'isSignByEmployee': instance.isSignByEmployee,
+      'SignedByEmployeeAt': instance.SignedByEmployeeAt?.toIso8601String(),
+    };
+
+_$_DocumentMetaLpuModel _$$_DocumentMetaLpuModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DocumentMetaLpuModel(
+      name: json['name'] as String,
+      address: json['address'] as String,
+    );
+
+Map<String, dynamic> _$$_DocumentMetaLpuModelToJson(
+        _$_DocumentMetaLpuModel instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'address': instance.address,
+    };
+
+_$_DocumentMetaPatientModel _$$_DocumentMetaPatientModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DocumentMetaPatientModel(
+      lastname: json['lastname'] as String,
+      firstname: json['firstname'] as String,
+      middlename: json['middlename'] as String,
+      adresses: json['adresses'] as String,
+      birthday: json['birthday'] as String,
+      sex: json['sex'] as String,
+    );
+
+Map<String, dynamic> _$$_DocumentMetaPatientModelToJson(
+        _$_DocumentMetaPatientModel instance) =>
+    <String, dynamic>{
+      'lastname': instance.lastname,
+      'firstname': instance.firstname,
+      'middlename': instance.middlename,
+      'adresses': instance.adresses,
+      'birthday': instance.birthday,
+      'sex': instance.sex,
+    };
+
+_$_DocumentMetaDocumentCreatorModel
+    _$$_DocumentMetaDocumentCreatorModelFromJson(Map<String, dynamic> json) =>
+        _$_DocumentMetaDocumentCreatorModel(
+          firstname: json['firstname'] as String,
+          middlename: json['middlename'] as String,
+          lastname: json['lastname'] as String,
+        );
+
+Map<String, dynamic> _$$_DocumentMetaDocumentCreatorModelToJson(
+        _$_DocumentMetaDocumentCreatorModel instance) =>
+    <String, dynamic>{
+      'firstname': instance.firstname,
+      'middlename': instance.middlename,
+      'lastname': instance.lastname,
+    };
+
+_$_DocumentMetaSignEmployerModel _$$_DocumentMetaSignEmployerModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DocumentMetaSignEmployerModel(
+      firstname: json['firstname'] as String,
+      middlename: json['middlename'] as String,
+      lastname: json['lastname'] as String,
+    );
+
+Map<String, dynamic> _$$_DocumentMetaSignEmployerModelToJson(
+        _$_DocumentMetaSignEmployerModel instance) =>
+    <String, dynamic>{
+      'firstname': instance.firstname,
+      'middlename': instance.middlename,
+      'lastname': instance.lastname,
+    };
+
 _$_DocumentFilterItemModel _$$_DocumentFilterItemModelFromJson(
         Map<String, dynamic> json) =>
     _$_DocumentFilterItemModel(
