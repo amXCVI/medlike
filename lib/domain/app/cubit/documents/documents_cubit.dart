@@ -121,7 +121,6 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
 
   /// Получение документа по url
   Future<File> getDocumentByUrl(String fileUrl) async {
-    print('GET FILE BY $fileUrl');
     try {
       File file = await DefaultCacheManager().getSingleFile(
         fileUrl,
@@ -134,6 +133,33 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
       return file;
     } catch (err) {
       rethrow;
+    }
+  }
+
+  /// Отправить документ на подпись (нужен токен есиа)
+  void subscribeDocument({
+    required String documentId,
+    required String userId,
+    required String lpuId,
+    required String esiaToken,
+  }) async {
+    emit(state.copyWith(
+      subscribeDocumentStatuses: SubscribeDocumentStatuses.loading,
+    ));
+    try {
+      await documentsRepository.subscribeDocument(
+        documentId: documentId,
+        userId: userId,
+        lpuId: lpuId,
+        esiaToken: esiaToken,
+      );
+      emit(state.copyWith(
+        subscribeDocumentStatuses: SubscribeDocumentStatuses.success,
+      ));
+    } catch (e) {
+      addError(e);
+      emit(state.copyWith(
+          subscribeDocumentStatuses: SubscribeDocumentStatuses.failed));
     }
   }
 }

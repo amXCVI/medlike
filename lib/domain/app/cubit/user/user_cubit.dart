@@ -181,6 +181,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           token: response.signinModel?.token,
           refreshToken: response.signinModel?.refreshToken,
           tryCount: 5,
+          esiaAuthToken: esiaToken,
         ));
         getUserProfiles(true);
         return response;
@@ -314,6 +315,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       authScreen: UserAuthScreens.inputPhone,
       userProfiles: null,
       selectedUserId: null,
+      esiaAuthToken: '',
     ));
   }
 
@@ -985,6 +987,16 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
       addError(e);
       rethrow;
+    }
+  }
+
+  /// Возвращает токен есиа
+  String getEsiaToken() {
+    try {
+      String esiaToken = state.esiaAuthToken!;
+      return esiaToken;
+    } catch (err) {
+      throw ('Нет токена есиа');
     }
   }
 }

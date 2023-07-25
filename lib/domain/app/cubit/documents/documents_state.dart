@@ -4,6 +4,8 @@ enum GetDocumentsListStatuses { initial, loading, success, failed }
 
 enum GetDocumentMetaStatuses { initial, loading, success, failed }
 
+enum SubscribeDocumentStatuses { initial, loading, success, failed }
+
 @immutable
 class DocumentsState {
   final GetDocumentsListStatuses? getDocumentsListStatus;
@@ -12,6 +14,7 @@ class DocumentsState {
   final List<DocumentModel>? filteredDocumentsList;
   final GetDocumentMetaStatuses? getDocumentMetaStatus;
   final DocumentMetaModel? selectedDocumentMetaData;
+  final SubscribeDocumentStatuses? subscribeDocumentStatuses;
 
   const DocumentsState({
     this.getDocumentsListStatus = GetDocumentsListStatuses.initial,
@@ -20,6 +23,7 @@ class DocumentsState {
     this.filteredDocumentsList,
     this.getDocumentMetaStatus,
     this.selectedDocumentMetaData,
+    this.subscribeDocumentStatuses,
   });
 
   DocumentsState copyWith({
@@ -29,6 +33,7 @@ class DocumentsState {
     final List<DocumentModel>? filteredDocumentsList,
     GetDocumentMetaStatuses? getDocumentMetaStatus,
     DocumentMetaModel? selectedDocumentMetaData,
+    SubscribeDocumentStatuses? subscribeDocumentStatuses,
   }) {
     return DocumentsState(
       getDocumentsListStatus:
@@ -42,6 +47,8 @@ class DocumentsState {
           getDocumentMetaStatus ?? this.getDocumentMetaStatus,
       selectedDocumentMetaData:
           selectedDocumentMetaData ?? this.selectedDocumentMetaData,
+      subscribeDocumentStatuses:
+          subscribeDocumentStatuses ?? this.subscribeDocumentStatuses,
     );
   }
 
