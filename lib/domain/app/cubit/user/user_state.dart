@@ -40,11 +40,22 @@ enum GetLastNotReadEventStatuses { initial, loading, success, failed }
 
 enum UpdatingNotificationStatusStatuses { initial, loading, success, failed }
 
-enum NotificationEventType { 
-  AppointmentCompleted, 
-  AppointmentCanceled, 
-  NewMedcardEventPdf, 
-  NewMedcardEventJson, 
+enum GetTokenOrUserDataByEsiaTokenStatuses { initial, loading, success, failed }
+
+enum CreateUserProfileAndMedicalCardStatuses {
+  initial,
+  loading,
+  success,
+  failed
+}
+
+enum CreateUserAndProfileStatuses { initial, loading, success, failed }
+
+enum NotificationEventType {
+  AppointmentCompleted,
+  AppointmentCanceled,
+  NewMedcardEventPdf,
+  NewMedcardEventJson,
   AppointmentScheduled
 }
 
@@ -78,6 +89,12 @@ class UserState {
   final NotificationModel? lastNotification;
   final bool? isLastNotificationShow;
   final UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus;
+  final GetTokenOrUserDataByEsiaTokenStatuses?
+      getTokenOrUserDataByEsiaTokenStatus;
+  final String? esiaAuthToken;
+  final CreateUserProfileAndMedicalCardStatuses?
+      createUserProfileAndMedicalCardStatus;
+  final CreateUserAndProfileStatuses? createUserAndProfileStatuses;
 
   UserState({
     this.authStatus = UserAuthStatuses.unAuth,
@@ -111,6 +128,10 @@ class UserState {
     this.lastNotification,
     this.isLastNotificationShow,
     this.updatingNotificationStatusStatus,
+    this.getTokenOrUserDataByEsiaTokenStatus,
+    this.esiaAuthToken,
+    this.createUserProfileAndMedicalCardStatus,
+    this.createUserAndProfileStatuses,
   });
 
   UserState copyWith({
@@ -143,6 +164,11 @@ class UserState {
     NotificationModel? lastNotification,
     bool? isLastNotificationShow,
     UpdatingNotificationStatusStatuses? updatingNotificationStatusStatus,
+    GetTokenOrUserDataByEsiaTokenStatuses? getTokenOrUserDataByEsiaTokenStatus,
+    String? esiaAuthToken,
+    CreateUserProfileAndMedicalCardStatuses?
+        createUserProfileAndMedicalCardStatus,
+    CreateUserAndProfileStatuses? createUserAndProfileStatuses,
   }) {
     return UserState(
       authStatus: authStatus ?? this.authStatus,
@@ -183,9 +209,19 @@ class UserState {
       getLastNotReadEventStatus:
           getLastNotReadEventStatus ?? this.getLastNotReadEventStatus,
       lastNotification: lastNotification ?? this.lastNotification,
-      isLastNotificationShow: isLastNotificationShow ?? this.isLastNotificationShow,
+      isLastNotificationShow:
+          isLastNotificationShow ?? this.isLastNotificationShow,
       updatingNotificationStatusStatus: updatingNotificationStatusStatus ??
           this.updatingNotificationStatusStatus,
+      getTokenOrUserDataByEsiaTokenStatus:
+          getTokenOrUserDataByEsiaTokenStatus ??
+              this.getTokenOrUserDataByEsiaTokenStatus,
+      esiaAuthToken: esiaAuthToken ?? this.esiaAuthToken,
+      createUserProfileAndMedicalCardStatus:
+          createUserProfileAndMedicalCardStatus ??
+              this.createUserProfileAndMedicalCardStatus,
+      createUserAndProfileStatuses:
+          createUserAndProfileStatuses ?? this.createUserAndProfileStatuses,
     );
   }
 

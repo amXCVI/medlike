@@ -17,7 +17,6 @@ class AppointmentsListWidget extends StatelessWidget {
   final DateTime selectedDate;
   final String userId;
 
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
@@ -62,16 +61,20 @@ class AppointmentsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if(appointmentsList.where((element) => element.status != 2 && element.status != 3).isNotEmpty) Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: Text(
-            'Приемы на ${DateFormat('dd.MM.yyyy').format(dateTimeToUTC(selectedDate, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))}',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontWeight: FontWeight.w600),
+        if (appointmentsList
+            .where((element) => element.status != 2 && element.status != 3)
+            .isNotEmpty)
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            child: Text(
+              'Приемы на ${DateFormat('dd.MM.yyyy').format(dateTimeToUTC(selectedDate, int.parse(DateTime.now().timeZoneOffset.inHours.toString())))}',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
-        ),
         ...appointmentsList
             .map(
               (appointmentItem) => Container(
@@ -87,7 +90,7 @@ class AppointmentsList extends StatelessWidget {
                         offset: Offset(0, 8),
                       ),
                     ],
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

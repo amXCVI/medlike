@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
@@ -66,8 +66,8 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
       return '$initials, ${appointmentItem.researches.isNotEmpty ? appointmentItem.researches[0].name : ''}, $date';
     }
 
-  
-    return BlocBuilder<AppointmentsCubit, AppointmentsState>(builder: (context, state) {
+    return BlocBuilder<AppointmentsCubit, AppointmentsState>(
+        builder: (context, state) {
       final eventsCount = state.confirmCounter ?? 1;
 
       const title = 'Ожидает подтверждения';
@@ -95,8 +95,7 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
                       vertical: 2.0, horizontal: 12.0),
                   decoration: const BoxDecoration(
                       color: AppColors.mainError,
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(24))),
+                      borderRadius: BorderRadius.all(Radius.circular(24))),
                   child: Text(
                     eventsCount.toString(),
                     style: const TextStyle(
@@ -120,9 +119,7 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
               maxLines: 3,
             ),
             const SizedBox(height: 14),
-            NotificationBottom(
-              appointment: widget.appointment
-            )
+            NotificationBottom(appointment: widget.appointment)
           ],
         ),
       );
@@ -139,32 +136,24 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
                 offset: Offset(0, 8),
               ),
             ],
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
             child: Material(
-              child: InkWell(
-                onTap: () {
-                  context.router.push(
-                    AppointmentsRoute(
-                      initDay: widget.appointment.appointmentDateTime
-                    )
-                  );
-                },
-                child: content
-              )
-            ),
-          )
-        );
-      }
-    );
+                child: InkWell(
+                    onTap: () {
+                      context.router.push(AppointmentsRoute(
+                          initDay: widget.appointment.appointmentDateTime));
+                    },
+                    child: content)),
+          ));
+    });
   }
 }
 
 class NotificationBottom extends StatelessWidget {
-  const NotificationBottom(
-      {Key? key, required this.appointment})
+  const NotificationBottom({Key? key, required this.appointment})
       : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointment;
@@ -173,8 +162,9 @@ class NotificationBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
       builder: (context, state) {
-        final isDisabled = state.putAppointmentStatus == PutAppointmentsStatuses.loading
-          || state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading;
+        final isDisabled = state.putAppointmentStatus ==
+                PutAppointmentsStatuses.loading ||
+            state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading;
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 14),
@@ -182,25 +172,26 @@ class NotificationBottom extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: SimpleButton(
-                  isPrimary: true,
-                  isDisabled: isDisabled,
-                  isLoading: state.putAppointmentStatus == PutAppointmentsStatuses.loading,
-                  labelText: 'Подтвердить',
-                  onTap: () {
-                    context.read<AppointmentsCubit>().confirmAppointment(
-                        appointmentId: appointment.id,
-                        userId: appointment.patientInfo.id ?? '');
-                  },
-                )
-              ),
+                  child: SimpleButton(
+                isPrimary: true,
+                isDisabled: isDisabled,
+                isLoading: state.putAppointmentStatus ==
+                    PutAppointmentsStatuses.loading,
+                labelText: 'Подтвердить',
+                onTap: () {
+                  context.read<AppointmentsCubit>().confirmAppointment(
+                      appointmentId: appointment.id,
+                      userId: appointment.patientInfo.id ?? '');
+                },
+              )),
               const SizedBox(
                 width: 12,
               ),
               Expanded(
                   child: SimpleButton(
                       labelText: 'Отменить',
-                      isLoading: state.deleteAppointmentStatus == DeleteAppointmentStatuses.loading,
+                      isLoading: state.deleteAppointmentStatus ==
+                          DeleteAppointmentStatuses.loading,
                       isDisabled: isDisabled,
                       onTap: () {
                         context.read<AppointmentsCubit>().deleteAppointment(

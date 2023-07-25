@@ -13,6 +13,7 @@ import 'package:medlike/widgets/attach_files_button/attach_file_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
+@RoutePage()
 class SupportPage extends StatefulWidget {
   const SupportPage({Key? key}) : super(key: key);
 

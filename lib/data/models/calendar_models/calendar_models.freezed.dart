@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'calendar_models.dart';
 
@@ -34,39 +34,42 @@ mixin _$CalendarModel {
 abstract class $CalendarModelCopyWith<$Res> {
   factory $CalendarModelCopyWith(
           CalendarModel value, $Res Function(CalendarModel) then) =
-      _$CalendarModelCopyWithImpl<$Res>;
+      _$CalendarModelCopyWithImpl<$Res, CalendarModel>;
+  @useResult
   $Res call({DateTime date, bool hasAvailableCells, bool hasLogs});
 }
 
 /// @nodoc
-class _$CalendarModelCopyWithImpl<$Res>
+class _$CalendarModelCopyWithImpl<$Res, $Val extends CalendarModel>
     implements $CalendarModelCopyWith<$Res> {
   _$CalendarModelCopyWithImpl(this._value, this._then);
 
-  final CalendarModel _value;
   // ignore: unused_field
-  final $Res Function(CalendarModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? hasAvailableCells = freezed,
-    Object? hasLogs = freezed,
+    Object? date = null,
+    Object? hasAvailableCells = null,
+    Object? hasLogs = null,
   }) {
     return _then(_value.copyWith(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      hasAvailableCells: hasAvailableCells == freezed
+      hasAvailableCells: null == hasAvailableCells
           ? _value.hasAvailableCells
           : hasAvailableCells // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasLogs: hasLogs == freezed
+      hasLogs: null == hasLogs
           ? _value.hasLogs
           : hasLogs // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -77,36 +80,35 @@ abstract class _$$_CalendarModelCopyWith<$Res>
           _$_CalendarModel value, $Res Function(_$_CalendarModel) then) =
       __$$_CalendarModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({DateTime date, bool hasAvailableCells, bool hasLogs});
 }
 
 /// @nodoc
 class __$$_CalendarModelCopyWithImpl<$Res>
-    extends _$CalendarModelCopyWithImpl<$Res>
+    extends _$CalendarModelCopyWithImpl<$Res, _$_CalendarModel>
     implements _$$_CalendarModelCopyWith<$Res> {
   __$$_CalendarModelCopyWithImpl(
       _$_CalendarModel _value, $Res Function(_$_CalendarModel) _then)
-      : super(_value, (v) => _then(v as _$_CalendarModel));
+      : super(_value, _then);
 
-  @override
-  _$_CalendarModel get _value => super._value as _$_CalendarModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? hasAvailableCells = freezed,
-    Object? hasLogs = freezed,
+    Object? date = null,
+    Object? hasAvailableCells = null,
+    Object? hasLogs = null,
   }) {
     return _then(_$_CalendarModel(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      hasAvailableCells: hasAvailableCells == freezed
+      hasAvailableCells: null == hasAvailableCells
           ? _value.hasAvailableCells
           : hasAvailableCells // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasLogs: hasLogs == freezed
+      hasLogs: null == hasLogs
           ? _value.hasLogs
           : hasLogs // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -142,28 +144,28 @@ class _$_CalendarModel implements _CalendarModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CalendarModel &&
-            const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality()
-                .equals(other.hasAvailableCells, hasAvailableCells) &&
-            const DeepCollectionEquality().equals(other.hasLogs, hasLogs));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.hasAvailableCells, hasAvailableCells) ||
+                other.hasAvailableCells == hasAvailableCells) &&
+            (identical(other.hasLogs, hasLogs) || other.hasLogs == hasLogs));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(hasAvailableCells),
-      const DeepCollectionEquality().hash(hasLogs));
+  int get hashCode =>
+      Object.hash(runtimeType, date, hasAvailableCells, hasLogs);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CalendarModelCopyWith<_$_CalendarModel> get copyWith =>
       __$$_CalendarModelCopyWithImpl<_$_CalendarModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CalendarModelToJson(this);
+    return _$$_CalendarModelToJson(
+      this,
+    );
   }
 }
 
@@ -177,11 +179,11 @@ abstract class _CalendarModel implements CalendarModel {
       _$_CalendarModel.fromJson;
 
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  bool get hasAvailableCells => throw _privateConstructorUsedError;
+  bool get hasAvailableCells;
   @override
-  bool get hasLogs => throw _privateConstructorUsedError;
+  bool get hasLogs;
   @override
   @JsonKey(ignore: true)
   _$$_CalendarModelCopyWith<_$_CalendarModel> get copyWith =>
@@ -211,7 +213,8 @@ mixin _$TimetableCellModel {
 abstract class $TimetableCellModelCopyWith<$Res> {
   factory $TimetableCellModelCopyWith(
           TimetableCellModel value, $Res Function(TimetableCellModel) then) =
-      _$TimetableCellModelCopyWithImpl<$Res>;
+      _$TimetableCellModelCopyWithImpl<$Res, TimetableCellModel>;
+  @useResult
   $Res call(
       {@TimestampConverter() DateTime time,
       String scheduleId,
@@ -221,44 +224,46 @@ abstract class $TimetableCellModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TimetableCellModelCopyWithImpl<$Res>
+class _$TimetableCellModelCopyWithImpl<$Res, $Val extends TimetableCellModel>
     implements $TimetableCellModelCopyWith<$Res> {
   _$TimetableCellModelCopyWithImpl(this._value, this._then);
 
-  final TimetableCellModel _value;
   // ignore: unused_field
-  final $Res Function(TimetableCellModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? time = freezed,
-    Object? scheduleId = freezed,
-    Object? cabinetName = freezed,
-    Object? buildingId = freezed,
-    Object? doctorAvailable = freezed,
+    Object? time = null,
+    Object? scheduleId = null,
+    Object? cabinetName = null,
+    Object? buildingId = null,
+    Object? doctorAvailable = null,
   }) {
     return _then(_value.copyWith(
-      time: time == freezed
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      cabinetName: cabinetName == freezed
+      cabinetName: null == cabinetName
           ? _value.cabinetName
           : cabinetName // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      doctorAvailable: doctorAvailable == freezed
+      doctorAvailable: null == doctorAvailable
           ? _value.doctorAvailable
           : doctorAvailable // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
@@ -269,6 +274,7 @@ abstract class _$$_TimetableCellModelCopyWith<$Res>
           $Res Function(_$_TimetableCellModel) then) =
       __$$_TimetableCellModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@TimestampConverter() DateTime time,
       String scheduleId,
@@ -279,41 +285,39 @@ abstract class _$$_TimetableCellModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_TimetableCellModelCopyWithImpl<$Res>
-    extends _$TimetableCellModelCopyWithImpl<$Res>
+    extends _$TimetableCellModelCopyWithImpl<$Res, _$_TimetableCellModel>
     implements _$$_TimetableCellModelCopyWith<$Res> {
   __$$_TimetableCellModelCopyWithImpl(
       _$_TimetableCellModel _value, $Res Function(_$_TimetableCellModel) _then)
-      : super(_value, (v) => _then(v as _$_TimetableCellModel));
+      : super(_value, _then);
 
-  @override
-  _$_TimetableCellModel get _value => super._value as _$_TimetableCellModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? time = freezed,
-    Object? scheduleId = freezed,
-    Object? cabinetName = freezed,
-    Object? buildingId = freezed,
-    Object? doctorAvailable = freezed,
+    Object? time = null,
+    Object? scheduleId = null,
+    Object? cabinetName = null,
+    Object? buildingId = null,
+    Object? doctorAvailable = null,
   }) {
     return _then(_$_TimetableCellModel(
-      time: time == freezed
+      time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      scheduleId: scheduleId == freezed
+      scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as String,
-      cabinetName: cabinetName == freezed
+      cabinetName: null == cabinetName
           ? _value.cabinetName
           : cabinetName // ignore: cast_nullable_to_non_nullable
               as String,
-      buildingId: buildingId == freezed
+      buildingId: null == buildingId
           ? _value.buildingId
           : buildingId // ignore: cast_nullable_to_non_nullable
               as String,
-      doctorAvailable: doctorAvailable == freezed
+      doctorAvailable: null == doctorAvailable
           ? _value.doctorAvailable
           : doctorAvailable // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -356,36 +360,34 @@ class _$_TimetableCellModel implements _TimetableCellModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TimetableCellModel &&
-            const DeepCollectionEquality().equals(other.time, time) &&
-            const DeepCollectionEquality()
-                .equals(other.scheduleId, scheduleId) &&
-            const DeepCollectionEquality()
-                .equals(other.cabinetName, cabinetName) &&
-            const DeepCollectionEquality()
-                .equals(other.buildingId, buildingId) &&
-            const DeepCollectionEquality()
-                .equals(other.doctorAvailable, doctorAvailable));
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.scheduleId, scheduleId) ||
+                other.scheduleId == scheduleId) &&
+            (identical(other.cabinetName, cabinetName) ||
+                other.cabinetName == cabinetName) &&
+            (identical(other.buildingId, buildingId) ||
+                other.buildingId == buildingId) &&
+            (identical(other.doctorAvailable, doctorAvailable) ||
+                other.doctorAvailable == doctorAvailable));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(time),
-      const DeepCollectionEquality().hash(scheduleId),
-      const DeepCollectionEquality().hash(cabinetName),
-      const DeepCollectionEquality().hash(buildingId),
-      const DeepCollectionEquality().hash(doctorAvailable));
+      runtimeType, time, scheduleId, cabinetName, buildingId, doctorAvailable);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TimetableCellModelCopyWith<_$_TimetableCellModel> get copyWith =>
       __$$_TimetableCellModelCopyWithImpl<_$_TimetableCellModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableCellModelToJson(this);
+    return _$$_TimetableCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -402,15 +404,15 @@ abstract class _TimetableCellModel implements TimetableCellModel {
 
   @override
   @TimestampConverter()
-  DateTime get time => throw _privateConstructorUsedError;
+  DateTime get time;
   @override
-  String get scheduleId => throw _privateConstructorUsedError;
+  String get scheduleId;
   @override
-  String get cabinetName => throw _privateConstructorUsedError;
+  String get cabinetName;
   @override
-  String get buildingId => throw _privateConstructorUsedError;
+  String get buildingId;
   @override
-  bool get doctorAvailable => throw _privateConstructorUsedError;
+  bool get doctorAvailable;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableCellModelCopyWith<_$_TimetableCellModel> get copyWith =>
@@ -436,34 +438,37 @@ mixin _$TimetableLogModel {
 abstract class $TimetableLogModelCopyWith<$Res> {
   factory $TimetableLogModelCopyWith(
           TimetableLogModel value, $Res Function(TimetableLogModel) then) =
-      _$TimetableLogModelCopyWithImpl<$Res>;
+      _$TimetableLogModelCopyWithImpl<$Res, TimetableLogModel>;
+  @useResult
   $Res call({DateTime date, String description});
 }
 
 /// @nodoc
-class _$TimetableLogModelCopyWithImpl<$Res>
+class _$TimetableLogModelCopyWithImpl<$Res, $Val extends TimetableLogModel>
     implements $TimetableLogModelCopyWith<$Res> {
   _$TimetableLogModelCopyWithImpl(this._value, this._then);
 
-  final TimetableLogModel _value;
   // ignore: unused_field
-  final $Res Function(TimetableLogModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? description = freezed,
+    Object? date = null,
+    Object? description = null,
   }) {
     return _then(_value.copyWith(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -474,31 +479,30 @@ abstract class _$$_TimetableLogModelCopyWith<$Res>
           $Res Function(_$_TimetableLogModel) then) =
       __$$_TimetableLogModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({DateTime date, String description});
 }
 
 /// @nodoc
 class __$$_TimetableLogModelCopyWithImpl<$Res>
-    extends _$TimetableLogModelCopyWithImpl<$Res>
+    extends _$TimetableLogModelCopyWithImpl<$Res, _$_TimetableLogModel>
     implements _$$_TimetableLogModelCopyWith<$Res> {
   __$$_TimetableLogModelCopyWithImpl(
       _$_TimetableLogModel _value, $Res Function(_$_TimetableLogModel) _then)
-      : super(_value, (v) => _then(v as _$_TimetableLogModel));
+      : super(_value, _then);
 
-  @override
-  _$_TimetableLogModel get _value => super._value as _$_TimetableLogModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
-    Object? description = freezed,
+    Object? date = null,
+    Object? description = null,
   }) {
     return _then(_$_TimetableLogModel(
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
@@ -529,27 +533,27 @@ class _$_TimetableLogModel implements _TimetableLogModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TimetableLogModel &&
-            const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description));
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(description));
+  int get hashCode => Object.hash(runtimeType, date, description);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TimetableLogModelCopyWith<_$_TimetableLogModel> get copyWith =>
       __$$_TimetableLogModelCopyWithImpl<_$_TimetableLogModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableLogModelToJson(this);
+    return _$$_TimetableLogModelToJson(
+      this,
+    );
   }
 }
 
@@ -562,9 +566,9 @@ abstract class _TimetableLogModel implements TimetableLogModel {
       _$_TimetableLogModel.fromJson;
 
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableLogModelCopyWith<_$_TimetableLogModel> get copyWith =>
@@ -591,34 +595,38 @@ mixin _$TimetableResponseModel {
 abstract class $TimetableResponseModelCopyWith<$Res> {
   factory $TimetableResponseModelCopyWith(TimetableResponseModel value,
           $Res Function(TimetableResponseModel) then) =
-      _$TimetableResponseModelCopyWithImpl<$Res>;
+      _$TimetableResponseModelCopyWithImpl<$Res, TimetableResponseModel>;
+  @useResult
   $Res call({List<TimetableCellModel> cells, List<TimetableLogModel> logs});
 }
 
 /// @nodoc
-class _$TimetableResponseModelCopyWithImpl<$Res>
+class _$TimetableResponseModelCopyWithImpl<$Res,
+        $Val extends TimetableResponseModel>
     implements $TimetableResponseModelCopyWith<$Res> {
   _$TimetableResponseModelCopyWithImpl(this._value, this._then);
 
-  final TimetableResponseModel _value;
   // ignore: unused_field
-  final $Res Function(TimetableResponseModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cells = freezed,
-    Object? logs = freezed,
+    Object? cells = null,
+    Object? logs = null,
   }) {
     return _then(_value.copyWith(
-      cells: cells == freezed
+      cells: null == cells
           ? _value.cells
           : cells // ignore: cast_nullable_to_non_nullable
               as List<TimetableCellModel>,
-      logs: logs == freezed
+      logs: null == logs
           ? _value.logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<TimetableLogModel>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -629,32 +637,31 @@ abstract class _$$_TimetableResponseModelCopyWith<$Res>
           $Res Function(_$_TimetableResponseModel) then) =
       __$$_TimetableResponseModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<TimetableCellModel> cells, List<TimetableLogModel> logs});
 }
 
 /// @nodoc
 class __$$_TimetableResponseModelCopyWithImpl<$Res>
-    extends _$TimetableResponseModelCopyWithImpl<$Res>
+    extends _$TimetableResponseModelCopyWithImpl<$Res,
+        _$_TimetableResponseModel>
     implements _$$_TimetableResponseModelCopyWith<$Res> {
   __$$_TimetableResponseModelCopyWithImpl(_$_TimetableResponseModel _value,
       $Res Function(_$_TimetableResponseModel) _then)
-      : super(_value, (v) => _then(v as _$_TimetableResponseModel));
+      : super(_value, _then);
 
-  @override
-  _$_TimetableResponseModel get _value =>
-      super._value as _$_TimetableResponseModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cells = freezed,
-    Object? logs = freezed,
+    Object? cells = null,
+    Object? logs = null,
   }) {
     return _then(_$_TimetableResponseModel(
-      cells: cells == freezed
+      cells: null == cells
           ? _value._cells
           : cells // ignore: cast_nullable_to_non_nullable
               as List<TimetableCellModel>,
-      logs: logs == freezed
+      logs: null == logs
           ? _value._logs
           : logs // ignore: cast_nullable_to_non_nullable
               as List<TimetableLogModel>,
@@ -677,6 +684,7 @@ class _$_TimetableResponseModel implements _TimetableResponseModel {
   final List<TimetableCellModel> _cells;
   @override
   List<TimetableCellModel> get cells {
+    if (_cells is EqualUnmodifiableListView) return _cells;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cells);
   }
@@ -684,6 +692,7 @@ class _$_TimetableResponseModel implements _TimetableResponseModel {
   final List<TimetableLogModel> _logs;
   @override
   List<TimetableLogModel> get logs {
+    if (_logs is EqualUnmodifiableListView) return _logs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_logs);
   }
@@ -711,13 +720,16 @@ class _$_TimetableResponseModel implements _TimetableResponseModel {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TimetableResponseModelCopyWith<_$_TimetableResponseModel> get copyWith =>
       __$$_TimetableResponseModelCopyWithImpl<_$_TimetableResponseModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TimetableResponseModelToJson(this);
+    return _$$_TimetableResponseModelToJson(
+      this,
+    );
   }
 }
 
@@ -730,9 +742,9 @@ abstract class _TimetableResponseModel implements TimetableResponseModel {
       _$_TimetableResponseModel.fromJson;
 
   @override
-  List<TimetableCellModel> get cells => throw _privateConstructorUsedError;
+  List<TimetableCellModel> get cells;
   @override
-  List<TimetableLogModel> get logs => throw _privateConstructorUsedError;
+  List<TimetableLogModel> get logs;
   @override
   @JsonKey(ignore: true)
   _$$_TimetableResponseModelCopyWith<_$_TimetableResponseModel> get copyWith =>
@@ -759,34 +771,38 @@ mixin _$CheckAndLockCellModel {
 abstract class $CheckAndLockCellModelCopyWith<$Res> {
   factory $CheckAndLockCellModelCopyWith(CheckAndLockCellModel value,
           $Res Function(CheckAndLockCellModel) then) =
-      _$CheckAndLockCellModelCopyWithImpl<$Res>;
+      _$CheckAndLockCellModelCopyWithImpl<$Res, CheckAndLockCellModel>;
+  @useResult
   $Res call({int duration, String? information});
 }
 
 /// @nodoc
-class _$CheckAndLockCellModelCopyWithImpl<$Res>
+class _$CheckAndLockCellModelCopyWithImpl<$Res,
+        $Val extends CheckAndLockCellModel>
     implements $CheckAndLockCellModelCopyWith<$Res> {
   _$CheckAndLockCellModelCopyWithImpl(this._value, this._then);
 
-  final CheckAndLockCellModel _value;
   // ignore: unused_field
-  final $Res Function(CheckAndLockCellModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? duration = freezed,
+    Object? duration = null,
     Object? information = freezed,
   }) {
     return _then(_value.copyWith(
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -797,32 +813,30 @@ abstract class _$$_CheckAndLockCellModelCopyWith<$Res>
           $Res Function(_$_CheckAndLockCellModel) then) =
       __$$_CheckAndLockCellModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int duration, String? information});
 }
 
 /// @nodoc
 class __$$_CheckAndLockCellModelCopyWithImpl<$Res>
-    extends _$CheckAndLockCellModelCopyWithImpl<$Res>
+    extends _$CheckAndLockCellModelCopyWithImpl<$Res, _$_CheckAndLockCellModel>
     implements _$$_CheckAndLockCellModelCopyWith<$Res> {
   __$$_CheckAndLockCellModelCopyWithImpl(_$_CheckAndLockCellModel _value,
       $Res Function(_$_CheckAndLockCellModel) _then)
-      : super(_value, (v) => _then(v as _$_CheckAndLockCellModel));
+      : super(_value, _then);
 
-  @override
-  _$_CheckAndLockCellModel get _value =>
-      super._value as _$_CheckAndLockCellModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? duration = freezed,
+    Object? duration = null,
     Object? information = freezed,
   }) {
     return _then(_$_CheckAndLockCellModel(
-      duration: duration == freezed
+      duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -854,27 +868,28 @@ class _$_CheckAndLockCellModel implements _CheckAndLockCellModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CheckAndLockCellModel &&
-            const DeepCollectionEquality().equals(other.duration, duration) &&
-            const DeepCollectionEquality()
-                .equals(other.information, information));
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.information, information) ||
+                other.information == information));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(duration),
-      const DeepCollectionEquality().hash(information));
+  int get hashCode => Object.hash(runtimeType, duration, information);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CheckAndLockCellModelCopyWith<_$_CheckAndLockCellModel> get copyWith =>
       __$$_CheckAndLockCellModelCopyWithImpl<_$_CheckAndLockCellModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckAndLockCellModelToJson(this);
+    return _$$_CheckAndLockCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -887,9 +902,9 @@ abstract class _CheckAndLockCellModel implements CheckAndLockCellModel {
       _$_CheckAndLockCellModel.fromJson;
 
   @override
-  int get duration => throw _privateConstructorUsedError;
+  int get duration;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_CheckAndLockCellModelCopyWith<_$_CheckAndLockCellModel> get copyWith =>
@@ -915,34 +930,37 @@ mixin _$UnlockCellModel {
 abstract class $UnlockCellModelCopyWith<$Res> {
   factory $UnlockCellModelCopyWith(
           UnlockCellModel value, $Res Function(UnlockCellModel) then) =
-      _$UnlockCellModelCopyWithImpl<$Res>;
+      _$UnlockCellModelCopyWithImpl<$Res, UnlockCellModel>;
+  @useResult
   $Res call({bool result, String? information});
 }
 
 /// @nodoc
-class _$UnlockCellModelCopyWithImpl<$Res>
+class _$UnlockCellModelCopyWithImpl<$Res, $Val extends UnlockCellModel>
     implements $UnlockCellModelCopyWith<$Res> {
   _$UnlockCellModelCopyWithImpl(this._value, this._then);
 
-  final UnlockCellModel _value;
   // ignore: unused_field
-  final $Res Function(UnlockCellModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
+    Object? result = null,
     Object? information = freezed,
   }) {
     return _then(_value.copyWith(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -953,31 +971,30 @@ abstract class _$$_UnlockCellModelCopyWith<$Res>
           _$_UnlockCellModel value, $Res Function(_$_UnlockCellModel) then) =
       __$$_UnlockCellModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool result, String? information});
 }
 
 /// @nodoc
 class __$$_UnlockCellModelCopyWithImpl<$Res>
-    extends _$UnlockCellModelCopyWithImpl<$Res>
+    extends _$UnlockCellModelCopyWithImpl<$Res, _$_UnlockCellModel>
     implements _$$_UnlockCellModelCopyWith<$Res> {
   __$$_UnlockCellModelCopyWithImpl(
       _$_UnlockCellModel _value, $Res Function(_$_UnlockCellModel) _then)
-      : super(_value, (v) => _then(v as _$_UnlockCellModel));
+      : super(_value, _then);
 
-  @override
-  _$_UnlockCellModel get _value => super._value as _$_UnlockCellModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? result = freezed,
+    Object? result = null,
     Object? information = freezed,
   }) {
     return _then(_$_UnlockCellModel(
-      result: result == freezed
+      result: null == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
               as bool,
-      information: information == freezed
+      information: freezed == information
           ? _value.information
           : information // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1008,26 +1025,26 @@ class _$_UnlockCellModel implements _UnlockCellModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UnlockCellModel &&
-            const DeepCollectionEquality().equals(other.result, result) &&
-            const DeepCollectionEquality()
-                .equals(other.information, information));
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.information, information) ||
+                other.information == information));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(result),
-      const DeepCollectionEquality().hash(information));
+  int get hashCode => Object.hash(runtimeType, result, information);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UnlockCellModelCopyWith<_$_UnlockCellModel> get copyWith =>
       __$$_UnlockCellModelCopyWithImpl<_$_UnlockCellModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UnlockCellModelToJson(this);
+    return _$$_UnlockCellModelToJson(
+      this,
+    );
   }
 }
 
@@ -1040,9 +1057,9 @@ abstract class _UnlockCellModel implements UnlockCellModel {
       _$_UnlockCellModel.fromJson;
 
   @override
-  bool get result => throw _privateConstructorUsedError;
+  bool get result;
   @override
-  String? get information => throw _privateConstructorUsedError;
+  String? get information;
   @override
   @JsonKey(ignore: true)
   _$$_UnlockCellModelCopyWith<_$_UnlockCellModel> get copyWith =>

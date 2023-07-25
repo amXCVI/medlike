@@ -1,10 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:medlike/data/models/diary_models/diary_models.dart';
+import 'package:medlike/data/models/models.dart';
 import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_page.dart';
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/clinic_detail_with_bottom_sheets_page.dart';
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointment_detail/appointment_detail_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
+import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
+import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';
@@ -12,6 +17,8 @@ import 'package:medlike/modules/health/diary_page/diary_page.dart';
 import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
+import 'package:medlike/modules/login/esia_auth/esia_login_page.dart';
+import 'package:medlike/modules/login/esia_register/esia_register_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
@@ -39,153 +46,190 @@ import 'package:medlike/modules/subscribe/specialisations_list/specialisations_l
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 
-@AdaptiveAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    AdaptiveRoute(path: AppRoutes.loginPhone, page: StartPhoneNumberPage),
-    AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordPage),
-    AdaptiveRoute(path: AppRoutes.loginPinCodeCreate, page: CreatePinCodePage),
-    AdaptiveRoute(
-        path: AppRoutes.loginPinCodeCheck,
-        page: CheckPinCodePage,
-        guards: [CheckIsSavedPinCode]),
-    AdaptiveRoute(
-        path: AppRoutes.loginRecoverPasswordSms, page: RecoverPasswordSmsPage),
-    AdaptiveRoute(
-        path: AppRoutes.loginRecoverPasswordNew, page: RecoverPasswordNewPage),
-    AdaptiveRoute(
-        path: AppRoutes.loginAuthUserAgreements, page: AuthUserAgreementsPage),
-    AdaptiveRoute(path: AppRoutes.loginUnauthSupport, page: UnauthSupportPage),
+part 'router.gr.dart';
 
-    AdaptiveRoute(
-        path: AppRoutes.main,
-        page: MainPage,
-        guards: [CheckIsAuthUser],
-        initial: true),
+@AutoRouterConfig(replaceInRouteName: 'Page,Route')
+class AppRouter extends _$AppRouter {
+  @override
+  RouteType get defaultRouteType =>
+      const RouteType.adaptive(); //.cupertino, .adaptive ..etc
 
-    AdaptiveRoute(
-        path: AppRoutes.myAppointments,
-        page: AppointmentsPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.appointmentDetails,
-        page: AppointmentDetailPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeProfiles,
-        page: SubscribeProfilesListPage,
-        guards: [CheckIsOneProfileForSubscribe, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeClinics,
-        page: ClinicsListPage,
-        guards: [CheckIsOneClinicForSubscribe, CheckIsAuthUser]),
-    //AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: SubscribeProfilesListPage, guards: [CheckIsAuthUser]),
-    //AdaptiveRoute(path: AppRoutes.subscribeClinics, page: ClinicsListPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeServices,
-        page: ServicesListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeResearches,
-        page: ResearchesListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeSpecialisations,
-        page: SpecialisationsListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeDoctors,
-        page: DoctorsListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeResearchCabinets,
-        page: ResearchCabinetsListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeFavoriteDoctors,
-        page: FavoriteDoctorsListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeSchedule,
-        page: SchedulePage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribeConfirmation,
-        page: ConfirmationSubscribePage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.subscribePayment,
-        page: PaymentPage,
-        guards: [CheckIsAuthUser]),
+  @override
+  List<AutoRoute> get routes => [
+        /// Логин
+        AdaptiveRoute(
+            path: AppRoutes.loginPhone, page: StartPhoneNumberRoute.page),
+        AdaptiveRoute(path: AppRoutes.loginPassword, page: PasswordRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginPinCodeCreate, page: CreatePinCodeRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginPinCodeCheck,
+            page: CheckPinCodeRoute.page,
+            guards: [CheckIsSavedPinCode()]),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordSms,
+            page: RecoverPasswordSmsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordNew,
+            page: RecoverPasswordNewRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginAuthUserAgreements,
+            page: AuthUserAgreementsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginUnauthSupport, page: UnauthSupportRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginPinCodeCheck,
+            page: CheckPinCodeRoute.page,
+            guards: [CheckIsSavedPinCode()]),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordSms,
+            page: RecoverPasswordSmsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordNew,
+            page: RecoverPasswordNewRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginAuthUserAgreements,
+            page: AuthUserAgreementsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginUnauthSupport, page: UnauthSupportRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginEsiaLoginPage, page: EsiaLoginRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginEsiaRegisterPage,
+            page: EsiaRegisterRoute.page),
 
-    AdaptiveRoute(
-        path: AppRoutes.medcard,
-        page: MedcardProfilesListPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.medcardFilesList,
-        page: MedcardPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.medcardUserFilesList,
-        page: FilesPage,
-        guards: [CheckIsAuthUser]),
+        AdaptiveRoute(
+            path: AppRoutes.main,
+            page: MainRoute.page,
+            guards: [CheckIsAuthUser()],
+            initial: true),
 
-    AdaptiveRoute(
-        path: AppRoutes.settings,
-        page: SettingsPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(path: AppRoutes.settingsAgreements, page: AgreementsPage),
-    AdaptiveRoute(
-        path: AppRoutes.settingsSupport,
-        page: SupportPage,
-        guards: [CheckIsAuthUser]),
+        AdaptiveRoute(
+            path: AppRoutes.myAppointments,
+            page: AppointmentsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeProfiles,
+            page: SubscribeProfilesListRoute.page,
+            guards: [CheckIsOneProfileForSubscribe(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeClinics,
+            page: ClinicsListRoute.page,
+            guards: [CheckIsOneClinicForSubscribe(), CheckIsAuthUser()]),
+        //AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: SubscribeProfilesListRoute.page, guards: [CheckIsAuthUser()]),
+        //AdaptiveRoute(path: AppRoutes.subscribeClinics, page: ClinicsListRoute.page, guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeServices,
+            page: ServicesListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeResearches,
+            page: ResearchesListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeSpecialisations,
+            page: SpecialisationsListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeDoctors,
+            page: DoctorsListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeResearchCabinets,
+            page: ResearchCabinetsListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeFavoriteDoctors,
+            page: FavoriteDoctorsListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeSchedule,
+            page: ScheduleRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribeConfirmation,
+            page: ConfirmationSubscribeRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.subscribePayment,
+            page: PaymentRoute.page,
+            guards: [CheckIsAuthUser()]),
 
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfo,
-        page: AllClinicsListPage,
-        guards: [CheckIsOneClinicForPrice, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfoForDetails,
-        page: ClinicPageForDetails,
-        guards: [CheckIsOneClinicForDetails, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfoForMain,
-        page: ClinicPageForMain,
-        guards: [CheckIsOneClinicForMain, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfoDetails,
-        page: ClinicDetailWithBottomSheetsPage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfoPrice,
-        page: PricePage,
-        guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.clinicInfoSales,
-        page: SalesPage,
-        guards: [CheckIsAuthUser]),
+        AdaptiveRoute(
+            path: AppRoutes.medcard,
+            page: MedcardProfilesListRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.medcardFilesList,
+            page: MedcardRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.medcardUserFilesList,
+            page: FilesRoute.page,
+            guards: [CheckIsAuthUser()]),
 
-    AdaptiveRoute(
-        path: AppRoutes.healthProfiles,
-        page: HealthPage,
-        guards: [CheckIsOneProfileForHealth, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.healthProfilesForMain,
-        page: HealthPageForMain,
-        guards: [CheckIsOneProfileForMain, CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.health, page: CardsPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.diary, page: DiaryPage, guards: [CheckIsAuthUser]),
-    AdaptiveRoute(
-        path: AppRoutes.diaryAdd,
-        page: DiaryAddPage,
-        guards: [CheckIsAuthUser]),
+        AdaptiveRoute(
+            path: AppRoutes.settings,
+            page: SettingsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.settingsAgreements, page: AgreementsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.settingsSupport,
+            page: SupportRoute.page,
+            guards: [CheckIsAuthUser()]),
 
-    AdaptiveRoute(path: AppRoutes.requireUpdater, page: RequireUpdateAppPage),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfo,
+            page: AllClinicsListRoute.page,
+            guards: [CheckIsOneClinicForPrice(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfoForDetails,
+            page: ClinicForDetailsRoute.page,
+            guards: [CheckIsOneClinicForDetails(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfoForMain,
+            page: ClinicForMainRoute.page,
+            guards: [CheckIsOneClinicForMain(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfoDetails,
+            page: ClinicDetailWithBottomSheetsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfoPrice,
+            page: PriceRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.clinicInfoSales,
+            page: SalesRoute.page,
+            guards: [CheckIsAuthUser()]),
 
-    // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
-  ],
-)
+        AdaptiveRoute(
+            path: AppRoutes.healthProfiles,
+            page: HealthRoute.page,
+            guards: [CheckIsOneProfileForHealth(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.healthProfilesForMain,
+            page: HealthForMainRoute.page,
+            guards: [CheckIsOneProfileForMain(), CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.health,
+            page: CardsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.diary,
+            page: DiaryRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.diaryAdd,
+            page: DiaryAddRoute.page,
+            guards: [CheckIsAuthUser()]),
+
+        AdaptiveRoute(
+            path: AppRoutes.requireUpdater, page: RequireUpdateAppRoute.page),
+
+        // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
+      ];
+}
+
 class $AppRouter {}

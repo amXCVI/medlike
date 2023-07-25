@@ -93,7 +93,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           child: Container(
             height: 100,
             decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               borderRadius: const BorderRadius.all(Radius.circular(28)),
               boxShadow: const [
                 BoxShadow(
@@ -112,7 +112,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
             child: Container(
               padding: const EdgeInsets.all(17),
               decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).colorScheme.background,
                 borderRadius: const BorderRadius.all(Radius.circular(28)),
               ),
             )),

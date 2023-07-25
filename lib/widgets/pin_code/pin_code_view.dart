@@ -252,7 +252,7 @@ class _PinCodeViewState extends State<PinCodeView> {
             ),
           ),
           Material(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             child: SizedBox(
               width: 300,
               child: GridView(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:medlike/constants/entity_types.dart';
 import 'package:get_it/get_it.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -44,7 +44,7 @@ void pushHandler(String? payload, {
     appointment:
     case EntityType.appointmentReminder24h:
       final date = getFromAppointment(data['message']);
-      
+
       final _route = AppointmentsRoute(
         initDay: date,
         notificationId: notificationId

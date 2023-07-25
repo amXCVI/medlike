@@ -126,11 +126,13 @@ class PaymentItem extends StatelessWidget {
       child: Container(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-            color: isDisabled ? AppColors.circleBgFirst : Theme.of(context).backgroundColor,
+            color: isDisabled
+                ? AppColors.circleBgFirst
+                : Theme.of(context).colorScheme.background,
             border: Border.all(
                 color: isSelected
                     ? Theme.of(context).primaryColor
-                    : Theme.of(context).backgroundColor),
+                    : Theme.of(context).colorScheme.background),
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             boxShadow: const [
               BoxShadow(

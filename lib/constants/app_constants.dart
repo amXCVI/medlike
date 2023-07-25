@@ -9,6 +9,9 @@ class AppConstants {
   // Ключ для сохранения номера телефона пользователя
   static const String userPhoneNumber = 'userPhoneNumber';
 
+  // Ключ для показа bottomSheet со стартовой информацией
+  static const String startBottomSheetShowed = 'startBottomSheetShowed';
+
   // Ключ для пользовательских соглашений. Подписаны или нет.
   static const String isAcceptedAgreements = 'isAcceptedAgreements';
 
@@ -75,6 +78,9 @@ class AppConstants {
   // Ключ, проверяет актуальная версия приложения установлена или нет.
   // Меняется в интерсепторе, проверяется в Guards
   static const String isActualAppVersion = 'true';
+
+  static const String esiaOAuthPageURL =
+      'https://tgn.medotrade.ru:23340/MedLike/Env04/esia/login';
 }
 
 // Способы авторизации

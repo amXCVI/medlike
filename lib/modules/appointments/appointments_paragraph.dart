@@ -61,7 +61,7 @@ class AppointmentsParagraph extends StatelessWidget {
                             offset: Offset(0, 8),
                           ),
                         ],
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: AppointmentStatuses.cancellableStatusIds
                                   .contains(item.status) &&

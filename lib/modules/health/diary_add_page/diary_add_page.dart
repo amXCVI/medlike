@@ -10,20 +10,21 @@ import 'package:auto_route/auto_route.dart';
 
 import '../../../utils/helpers/value_helper.dart';
 
+@RoutePage()
 class DiaryAddPage extends StatefulWidget {
-  const DiaryAddPage({
-    Key? key, 
-    required this.title,
-    required this.measureItem,
-    required this.decimalDigits,
-    required this.paramName,
-    required this.grouping,
-    required this.onSubmit,
-    required this.minValue,
-    required this.maxValue,
-    this.initialValues,
-    this.initialDate
-  }) : super(key: key);
+  const DiaryAddPage(
+      {Key? key,
+      required this.title,
+      required this.measureItem,
+      required this.decimalDigits,
+      required this.paramName,
+      required this.grouping,
+      required this.onSubmit,
+      required this.minValue,
+      required this.maxValue,
+      this.initialValues,
+      this.initialDate})
+      : super(key: key);
 
   final String title;
   final String measureItem;
@@ -44,19 +45,12 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
   final _formKey = GlobalKey<FormState>();
   DateTime? _initialDate;
   DateTime? _initialTime;
-  
-  late final List<TextEditingController> _controllers = widget.paramName.map(
-    (e) => TextEditingController()
-  ).toList();
-  late List<bool> isEmpties = widget.paramName.map(
-    (e) => true
-  ).toList();
-  late List<String> initialValues = widget.paramName.map(
-    (e) => ''
-  ).toList();
-  late List<bool> isValidate = widget.paramName.map(
-    (e) => false
-  ).toList();
+
+  late final List<TextEditingController> _controllers =
+      widget.paramName.map((e) => TextEditingController()).toList();
+  late List<bool> isEmpties = widget.paramName.map((e) => true).toList();
+  late List<String> initialValues = widget.paramName.map((e) => '').toList();
+  late List<bool> isValidate = widget.paramName.map((e) => false).toList();
 
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
@@ -67,23 +61,23 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
   @override
   void initState() {
-    if(widget.initialDate != null) {
+    if (widget.initialDate != null) {
       date = widget.initialDate;
       time = widget.initialDate;
       _initialDate = widget.initialDate;
       _initialTime = widget.initialDate;
     }
 
-    if(widget.initialValues != null) {
-      for(int i = 0; i < widget.paramName.length; i++) {
-        initialValues[i] = 
-          widget.initialValues![i].toStringAsFixed(widget.decimalDigits);
+    if (widget.initialValues != null) {
+      for (int i = 0; i < widget.paramName.length; i++) {
+        initialValues[i] =
+            widget.initialValues![i].toStringAsFixed(widget.decimalDigits);
         _controllers[i].text = initialValues[i];
       }
     }
 
     final initDate = widget.initialDate ?? DateTime.now();
-    if(widget.initialDate != null) {
+    if (widget.initialDate != null) {
       isDisabledButton = true;
     }
 
@@ -92,7 +86,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     date = initDate;
     time = initDate;
-    
+
     super.initState();
   }
 
@@ -111,24 +105,24 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
       return FormField(
         labelText: e,
         isValidate: isValidate[index],
-        onFocus: () => onFocus(index, false), 
-        controller: _controllers[index], 
+        onFocus: () => onFocus(index, false),
+        controller: _controllers[index],
         isEmpty: isEmpties[index],
         decimalDigits: widget.decimalDigits,
         validator: (str) {
           final num = double.tryParse(str ?? '');
 
-          if(!isValidate[index]) {
+          if (!isValidate[index]) {
             return null;
           }
 
-          if(num == null) {
+          if (num == null) {
             return 'Введите число';
           }
-          if(num < widget.minValue[index]) {
+          if (num < widget.minValue[index]) {
             return 'Введённое значение ниже минимального';
           }
-          if(num > widget.maxValue[index]) {
+          if (num > widget.maxValue[index]) {
             return 'Введённое значение выше максимального';
           }
           return null;
@@ -136,7 +130,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         onChange: (text) {
           onFocus(index, false);
           setState(() {
-            if(_formKey.currentState!.validate()) {
+            if (_formKey.currentState!.validate()) {
               isDisabledButton = false;
             }
             isEmpties[index] = text == '';
@@ -147,7 +141,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onDateChange(DateTime date, String text) {
       setState(() {
-        if(_formKey.currentState!.validate()) {
+        if (_formKey.currentState!.validate()) {
           isDisabledButton = false;
         }
         dateController.text = text;
@@ -167,7 +161,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onTimeChange(DateTime time, String text) {
       setState(() {
-        if(_formKey.currentState!.validate()) {
+        if (_formKey.currentState!.validate()) {
           isDisabledButton = false;
         }
         timeController.text = text;
@@ -193,72 +187,70 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
               onTimeChange: onTimeChange,
               dateController: dateController,
               timeController: timeController,
-              setEnabled: (status) => setState(() => isDisabledButton = !status),
+              setEnabled: (status) =>
+                  setState(() => isDisabledButton = !status),
             ),
           ),
           appBarTitle: widget.title,
           actionButton: FloatingActionButton.extended(
             backgroundColor: !isDisabledButton
-              ? Theme.of(context).primaryColor
-              : AppColors.lightText,
+                ? Theme.of(context).primaryColor
+                : AppColors.lightText,
             onPressed: isDisabledButton || !noError
-              ? () {} : () {
-              isValidate.asMap().map((k, v) {
-                setState(() {
-                  isValidate[k] = true;
-                });
-                return MapEntry(k, v);
-              });
+                ? () {}
+                : () {
+                    isValidate.asMap().map((k, v) {
+                      setState(() {
+                        isValidate[k] = true;
+                      });
+                      return MapEntry(k, v);
+                    });
 
-              if (!_formKey.currentState!.validate()) {
-                setState(() {
-                  isDisabledButton = true;
-                });
-                return;
-              }
+                    if (!_formKey.currentState!.validate()) {
+                      setState(() {
+                        isDisabledButton = true;
+                      });
+                      return;
+                    }
 
-              final newDate = DateTime(
-                date!.year,
-                date!.month,
-                date!.day,
-                time!.hour,
-                time!.minute,
-                DateTime.now().second
-              );
+                    final newDate = DateTime(date!.year, date!.month, date!.day,
+                        time!.hour, time!.minute, DateTime.now().second);
 
-              final dates = ValueHelper.getPeriodTiming(newDate, widget.grouping);
-              
-              if(widget.initialDate != null || widget.initialValues != null) {
-                final dates = ValueHelper.getPeriodTiming(widget.initialDate!, widget.grouping);
-                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+                    final dates =
+                        ValueHelper.getPeriodTiming(newDate, widget.grouping);
 
-                context.read<DiaryCubit>().putDiaryEntry(
-                  date: newDate,
-                  oldDate: widget.initialDate!,
-                  syn: state.selectedDiary!.syn,
-                  values: _controllers.map((e) => 
-                    double.parse(e.text) 
-                  ).toList(),
-                  updateFrom: dates[0],
-                  updateTo: dates[1]
-                );
-              } else {
-                widget.onSubmit(widget.grouping, dates[0], dates[1]);
+                    if (widget.initialDate != null ||
+                        widget.initialValues != null) {
+                      final dates = ValueHelper.getPeriodTiming(
+                          widget.initialDate!, widget.grouping);
+                      widget.onSubmit(widget.grouping, dates[0], dates[1]);
 
-                context.read<DiaryCubit>().postDiaryEntry(
-                  date: newDate,
-                  syn: state.selectedDiary!.syn,
-                  values: _controllers.map((e) => 
-                    double.parse(e.text) 
-                  ).toList(),
-                  updateFrom: dates[0],
-                  updateTo: dates[1]
-                );
-              }
-              context.router.pop();
-            },
+                      context.read<DiaryCubit>().putDiaryEntry(
+                          date: newDate,
+                          oldDate: widget.initialDate!,
+                          syn: state.selectedDiary!.syn,
+                          values: _controllers
+                              .map((e) => double.parse(e.text))
+                              .toList(),
+                          updateFrom: dates[0],
+                          updateTo: dates[1]);
+                    } else {
+                      widget.onSubmit(widget.grouping, dates[0], dates[1]);
+
+                      context.read<DiaryCubit>().postDiaryEntry(
+                          date: newDate,
+                          syn: state.selectedDiary!.syn,
+                          values: _controllers
+                              .map((e) => double.parse(e.text))
+                              .toList(),
+                          updateFrom: dates[0],
+                          updateTo: dates[1]);
+                    }
+                    context.router.pop();
+                  },
             label: Text(
-              (widget.initialValues == null ? 'Добавить' : 'Сохранить').toUpperCase(),
+              (widget.initialValues == null ? 'Добавить' : 'Сохранить')
+                  .toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),

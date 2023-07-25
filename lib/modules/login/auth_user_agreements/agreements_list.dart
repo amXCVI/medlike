@@ -23,20 +23,22 @@ class _AgreementsListState extends State<AgreementsList> {
   String? body;
 
   _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      //await launchUrl(uri);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
     } else {
       AppToast.showAppToast(msg: 'Не удалось откыть файл $url');
     }
   }
 
   /// Запрашивается №7. Никто не знает, почему именно так и от чего это зависит
-    void _onLoadDada() {
-      context
-          .read<UserCubit>()
-          .getUserAgreementDocument(typeAgreement: 'userAgreement');
-    }
+  void _onLoadDada() {
+    context
+        .read<UserCubit>()
+        .getUserAgreementDocument(typeAgreement: 'userAgreement');
+  }
 
   @override
   void initState() {
@@ -54,16 +56,17 @@ class _AgreementsListState extends State<AgreementsList> {
         } else if (state.getUserAgreementDocumentStatus ==
             GetUserAgreementDocumentStatuses.success) {
           return LayoutBuilder(
-            /// Фикс высоты для webview
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return ListView(
-                children: [
-                  SizedBox(
-                      //? Задается высота для webview. Без этого не получилось сделать
-                      height: constraints.maxHeight,
-                      child: WebView(
-                        onWebViewCreated: (WebViewController webViewController) {
-                          const js = '''
+
+              /// Фикс высоты для webview
+              builder: (BuildContext context, BoxConstraints constraints) {
+            return ListView(
+              children: [
+                SizedBox(
+                    //? Задается высота для webview. Без этого не получилось сделать
+                    height: constraints.maxHeight,
+                    child: WebView(
+                      onWebViewCreated: (WebViewController webViewController) {
+                        const js = '''
                             <script>
                               var body = document.body,
                               html = document.documentElement;
@@ -72,17 +75,16 @@ class _AgreementsListState extends State<AgreementsList> {
                               html.clientHeight, html.scrollHeight, html.offsetHeight );
 
                               Print.postMessage(height);
-                            </script>'''; 
+                            </script>''';
 
-                          _controller.complete(webViewController);
-                          _con = webViewController;
-                          _con.loadHtmlString(
-                            body ?? (state.userAgreementDocument!.body + js)
-                          );
-                        },
-                        javascriptMode: JavascriptMode.unrestricted,
-                        javascriptChannels: {
-                          JavascriptChannel(
+                        _controller.complete(webViewController);
+                        _con = webViewController;
+                        _con.loadHtmlString(
+                            body ?? (state.userAgreementDocument!.body + js));
+                      },
+                      javascriptMode: JavascriptMode.unrestricted,
+                      javascriptChannels: {
+                        JavascriptChannel(
                             name: 'Print',
                             onMessageReceived: (JavascriptMessage message) {
                               setState(() {
@@ -90,21 +92,20 @@ class _AgreementsListState extends State<AgreementsList> {
                                 body = state.userAgreementDocument!.body;
                               });
                             })
-                        },
-                        navigationDelegate: (NavigationRequest request) async {
-                          if (request.url == 'about:blank') {
-                            return NavigationDecision.navigate;
-                          } else {
-                            _launchURL(request.url);
-                            return NavigationDecision.prevent;
-                          }
-                        },
-                        gestureNavigationEnabled: true,
-                      ))
-                ],
-              );
-            }
-          );
+                      },
+                      navigationDelegate: (NavigationRequest request) async {
+                        if (request.url == 'about:blank') {
+                          return NavigationDecision.navigate;
+                        } else {
+                          _launchURL(request.url);
+                          return NavigationDecision.prevent;
+                        }
+                      },
+                      gestureNavigationEnabled: true,
+                    ))
+              ],
+            );
+          });
         } else {
           return const AgreementsListSkeleton();
         }

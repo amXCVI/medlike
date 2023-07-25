@@ -34,7 +34,7 @@ class MainMenuItem extends StatelessWidget {
                       : AppColors.mainText)),
           selected: isSelected,
           selectedTileColor: Theme.of(context).hoverColor,
-          tileColor: Theme.of(context).backgroundColor,
+          tileColor: Theme.of(context).colorScheme.background,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           onTap: () {
             Navigator.pop(context);

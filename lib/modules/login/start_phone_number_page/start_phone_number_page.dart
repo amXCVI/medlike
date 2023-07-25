@@ -8,13 +8,14 @@ import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.
 import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.dart';
 import 'package:medlike/modules/login/start_phone_number_page/phone_number_bottom_navigator.dart';
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_view.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
+@RoutePage()
 class StartPhoneNumberPage extends StatefulWidget {
   const StartPhoneNumberPage({Key? key, this.isDeletingProfile = false})
       : super(key: key);
@@ -37,10 +38,10 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
   }
 
   void getUserPhoneNumber() async {
-    String? userPhoneNumber =
-        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    String? showedStartBottomSheet =
+        await UserSecureStorage.getField(AppConstants.startBottomSheetShowed);
 
-    if (userPhoneNumber == null && !widget.isDeletingProfile) {
+    if (showedStartBottomSheet == null && !widget.isDeletingProfile) {
       setState(() {
         isShowingFirstAuthAppAlert = true;
       });
@@ -100,12 +101,12 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         },
         child: TapCanvas(
           child: DefaultScaffold(
-            child: const StartPhoneNumberView(),
             appBarTitle: AppConstants.appName,
             isChildrenPage: false,
             onPressedAppLogo: () {},
             actions: const [UnauthSupportButton()],
             bottomNavigationBar: const LoginPageBottomNavigationBar(),
+            child: const StartPhoneNumberView(),
           ),
         ),
       ),

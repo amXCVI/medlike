@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/category_types.dart';
@@ -8,6 +9,7 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
+@RoutePage()
 class SpecialisationsListPage extends StatelessWidget {
   const SpecialisationsListPage({
     Key? key,

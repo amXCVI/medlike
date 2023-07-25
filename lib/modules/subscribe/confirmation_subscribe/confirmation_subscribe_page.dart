@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +14,11 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
 
+@RoutePage()
 class ConfirmationSubscribePage extends StatefulWidget {
-  const ConfirmationSubscribePage({
-    Key? key, 
-    required this.userId,
-    required this.timeZoneHours
-  }) : super(key: key);
+  const ConfirmationSubscribePage(
+      {Key? key, required this.userId, required this.timeZoneHours})
+      : super(key: key);
 
   final String userId;
   final int timeZoneHours;
@@ -46,21 +46,17 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
       /// Если оплата картой
       if (selectedPayType == AppConstants.cardPayType) {
         context.read<SubscribeCubit>().createNewAppointment(
-              userId: widget.userId,
-              userName:
-                  context.read<UserCubit>().getShortUserName(widget.userId),
-              timezoneHours: widget.timeZoneHours
-            );
+            userId: widget.userId,
+            userName: context.read<UserCubit>().getShortUserName(widget.userId),
+            timezoneHours: widget.timeZoneHours);
         return;
 
         /// Оплата наличкой в кассе
       } else {
         context.read<SubscribeCubit>().createNewAppointment(
-              userId: widget.userId,
-              userName:
-                  context.read<UserCubit>().getShortUserName(widget.userId),
-              timezoneHours: widget.timeZoneHours
-            );
+            userId: widget.userId,
+            userName: context.read<UserCubit>().getShortUserName(widget.userId),
+            timezoneHours: widget.timeZoneHours);
       }
     }
 

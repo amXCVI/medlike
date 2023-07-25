@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_models.dart';
 
@@ -40,7 +40,8 @@ mixin _$NotificationModel {
 abstract class $NotificationModelCopyWith<$Res> {
   factory $NotificationModelCopyWith(
           NotificationModel value, $Res Function(NotificationModel) then) =
-      _$NotificationModelCopyWithImpl<$Res>;
+      _$NotificationModelCopyWithImpl<$Res, NotificationModel>;
+  @useResult
   $Res call(
       {String id,
       String title,
@@ -53,59 +54,61 @@ abstract class $NotificationModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotificationModelCopyWithImpl<$Res>
+class _$NotificationModelCopyWithImpl<$Res, $Val extends NotificationModel>
     implements $NotificationModelCopyWith<$Res> {
   _$NotificationModelCopyWithImpl(this._value, this._then);
 
-  final NotificationModel _value;
   // ignore: unused_field
-  final $Res Function(NotificationModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? eventDate = freezed,
-    Object? eventsCount = freezed,
-    Object? userId = freezed,
-    Object? eventType = freezed,
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? eventDate = null,
+    Object? eventsCount = null,
+    Object? userId = null,
+    Object? eventType = null,
     Object? entityId = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      eventDate: eventDate == freezed
+      eventDate: null == eventDate
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      eventsCount: eventsCount == freezed
+      eventsCount: null == eventsCount
           ? _value.eventsCount
           : eventsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventType: eventType == freezed
+      eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
               as String,
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -116,6 +119,7 @@ abstract class _$$_NotificationModelCopyWith<$Res>
           $Res Function(_$_NotificationModel) then) =
       __$$_NotificationModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String title,
@@ -129,56 +133,54 @@ abstract class _$$_NotificationModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_NotificationModelCopyWithImpl<$Res>
-    extends _$NotificationModelCopyWithImpl<$Res>
+    extends _$NotificationModelCopyWithImpl<$Res, _$_NotificationModel>
     implements _$$_NotificationModelCopyWith<$Res> {
   __$$_NotificationModelCopyWithImpl(
       _$_NotificationModel _value, $Res Function(_$_NotificationModel) _then)
-      : super(_value, (v) => _then(v as _$_NotificationModel));
+      : super(_value, _then);
 
-  @override
-  _$_NotificationModel get _value => super._value as _$_NotificationModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
-    Object? eventDate = freezed,
-    Object? eventsCount = freezed,
-    Object? userId = freezed,
-    Object? eventType = freezed,
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? eventDate = null,
+    Object? eventsCount = null,
+    Object? userId = null,
+    Object? eventType = null,
     Object? entityId = freezed,
   }) {
     return _then(_$_NotificationModel(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      eventDate: eventDate == freezed
+      eventDate: null == eventDate
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      eventsCount: eventsCount == freezed
+      eventsCount: null == eventsCount
           ? _value.eventsCount
           : eventsCount // ignore: cast_nullable_to_non_nullable
               as int,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      eventType: eventType == freezed
+      eventType: null == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
               as String,
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -230,40 +232,38 @@ class _$_NotificationModel implements _NotificationModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NotificationModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.eventDate, eventDate) &&
-            const DeepCollectionEquality()
-                .equals(other.eventsCount, eventsCount) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.eventType, eventType) &&
-            const DeepCollectionEquality().equals(other.entityId, entityId));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.eventDate, eventDate) ||
+                other.eventDate == eventDate) &&
+            (identical(other.eventsCount, eventsCount) ||
+                other.eventsCount == eventsCount) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.entityId, entityId) ||
+                other.entityId == entityId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(eventDate),
-      const DeepCollectionEquality().hash(eventsCount),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(eventType),
-      const DeepCollectionEquality().hash(entityId));
+  int get hashCode => Object.hash(runtimeType, id, title, description,
+      eventDate, eventsCount, userId, eventType, entityId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>
       __$$_NotificationModelCopyWithImpl<_$_NotificationModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotificationModelToJson(this);
+    return _$$_NotificationModelToJson(
+      this,
+    );
   }
 }
 
@@ -282,22 +282,22 @@ abstract class _NotificationModel implements NotificationModel {
       _$_NotificationModel.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
   @TimestampConverter()
-  DateTime get eventDate => throw _privateConstructorUsedError;
+  DateTime get eventDate;
   @override
-  int get eventsCount => throw _privateConstructorUsedError;
+  int get eventsCount;
   @override
-  String get userId => throw _privateConstructorUsedError;
+  String get userId;
   @override
-  String get eventType => throw _privateConstructorUsedError;
+  String get eventType;
   @override
-  String? get entityId => throw _privateConstructorUsedError;
+  String? get entityId;
   @override
   @JsonKey(ignore: true)
   _$$_NotificationModelCopyWith<_$_NotificationModel> get copyWith =>

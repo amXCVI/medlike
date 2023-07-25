@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 
 class FirstAuthAppBottomSheet extends StatelessWidget {
   const FirstAuthAppBottomSheet({Key? key}) : super(key: key);
+
+  void closeBottomSheet(BuildContext context) {
+    UserSecureStorage.setField(AppConstants.startBottomSheetShowed, 'true');
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12)),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +39,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                       ?.copyWith(fontSize: 20)),
               const SizedBox(height: 16),
               const Text(
-                  'Для входа в приложение обратитесь в регистратуру клиники, услугами которой собираетесь пользоваться. Если Вы уже получили доступ — можете продолжить вход.'),
+                  'Для регистрации в приложении обратитесь в регистратуру клиники, услугами которой собираетесь пользоваться или зарегистрируйтесь через Госуслуги.'),
               const SizedBox(height: 32),
               PrimaryButton(
                   label: Text(
@@ -44,7 +51,7 @@ class FirstAuthAppBottomSheet extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   onTap: () {
-                    Navigator.pop(context);
+                    closeBottomSheet(context);
                   }),
               const SizedBox(height: 16),
             ],

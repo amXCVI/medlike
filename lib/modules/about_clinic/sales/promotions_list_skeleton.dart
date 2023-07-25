@@ -15,7 +15,7 @@ class PromotionsListSkeleton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             border:
                 Border.all(color: Theme.of(context).dividerColor, width: 0.5),
             borderRadius: const BorderRadius.all(Radius.circular(12)),

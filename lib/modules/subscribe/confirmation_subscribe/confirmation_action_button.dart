@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 
 class ConfirmationActionButtonLabel extends StatefulWidget {
   const ConfirmationActionButtonLabel({Key? key, required this.userId})

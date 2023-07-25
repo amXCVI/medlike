@@ -4,12 +4,13 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/error_models/error_models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/data/repository/user_repository.dart';
-import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -37,7 +38,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   @override
   void onError(Object error, StackTrace stacktrace) {
-    if (error is DioError &&
+    if (error is DioException &&
         error.message ==
             'CertificateNotVerifiedException: Connection is not secure') {
       AppToast.showAppToast(
@@ -60,12 +61,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняем номер для последующей проверки
   void tempSavePhoneNumber(String phone) {
-    emit(state.copyWith(
-      userPhoneNumber: phone
-    ));
+    emit(state.copyWith(userPhoneNumber: phone));
   }
 
-  /// Обновляем количество секунд до 
+  /// Обновляем количество секунд до
   void setTimer(DateTime time) {
     emit(state.copyWith(timerEnd: time));
   }
@@ -73,14 +72,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
   /// Сохраняем номер телефона в кубит
   void savePhoneNumber(String phone) {
     emit(state.copyWith(
-        authScreen: UserAuthScreens.inputPassword,
-        checkUserAccountStatus: CheckUserAccountStatuses.continued,
+      authScreen: UserAuthScreens.inputPassword,
+      checkUserAccountStatus: CheckUserAccountStatuses.continued,
     ));
     UserSecureStorage.setField(AppConstants.userPhoneNumber, phone);
   }
 
   void getPhoneNumber() async {
-    String? phone = await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    String? phone =
+        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
     emit(state.copyWith(userPhoneNumber: phone));
   }
 
@@ -127,16 +127,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         refreshToken: response.refreshToken,
         tryCount: 5,
       ));
+
       /// Обновляем токен, есть вероятность, что он устарел
-      Future.delayed(Duration.zero, () async {
-        /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-        await addFirebaseDeviceId();
-      });
+      if (kDebugMode) {
+        await deleteFirebaseDeviceId();
+      }
+      await addFirebaseDeviceId();
       await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
       return Future(() => null);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       emit(state.copyWith(
         authStatus: UserAuthStatuses.failureAuth,
         tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
@@ -149,6 +150,137 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
       addError(e);
       rethrow;
+    }
+  }
+
+  /// Авторизация по токену госуслуг
+  /// Получаем либо внутренний токен, либо данные пользователя для его регистрации
+  Future<EsiaTokenAuthRequest?> esiaAuth(
+    String esiaToken,
+  ) async {
+    emit(state.copyWith(
+        authStatus: UserAuthStatuses.loadingAuth,
+        getTokenOrUserDataByEsiaTokenStatus:
+            GetTokenOrUserDataByEsiaTokenStatuses.loading));
+    try {
+      final response =
+          await userRepository.esiaGetTokenOrUserData(esiaToken: esiaToken);
+      if (!response.isUserExists) {
+        // Если пользователя в системе нет, возвращаем его данные для регистации
+        emit(state.copyWith(
+            getTokenOrUserDataByEsiaTokenStatus:
+                GetTokenOrUserDataByEsiaTokenStatuses.success));
+        return response;
+      } else {
+        UserSecureStorage.setField(
+            AppConstants.accessToken, response.signinModel?.token);
+        UserSecureStorage.setField(
+            AppConstants.refreshToken, response.signinModel?.refreshToken);
+        emit(state.copyWith(
+          authStatus: UserAuthStatuses.successAuth,
+          token: response.signinModel?.token,
+          refreshToken: response.signinModel?.refreshToken,
+          tryCount: 5,
+        ));
+        getUserProfiles(true);
+        return response;
+      }
+    } on DioException catch (e) {
+      emit(state.copyWith(
+        authStatus: UserAuthStatuses.failureAuth,
+        tryCount: AuthTokenResponseError.fromJson(e.response?.data).tryCount,
+      ));
+      addError(e);
+    } catch (e) {
+      emit(state.copyWith(
+        authStatus: UserAuthStatuses.failureAuth,
+      ));
+      addError(e);
+      rethrow;
+    }
+    return null;
+  }
+
+  /// Создать мед. карту и пофиль с помощью сервиса интеграции
+  Future<bool> createUserProfileAndMedicalCard({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+  }) async {
+    emit(state.copyWith(
+      createUserProfileAndMedicalCardStatus:
+          CreateUserProfileAndMedicalCardStatuses.loading,
+    ));
+    try {
+      await userRepository.createUserProfileAndMedicalCard(
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        phoneNumber: phoneNumber,
+        snils: snils,
+        sex: sex,
+        birthday: birthday,
+      );
+      emit(state.copyWith(
+        createUserProfileAndMedicalCardStatus:
+            CreateUserProfileAndMedicalCardStatuses.success,
+      ));
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        createUserProfileAndMedicalCardStatus:
+            CreateUserProfileAndMedicalCardStatuses.failed,
+      ));
+      return false;
+    }
+  }
+
+  /// Создать ЛК и профиль пользователя с помощью сервиса интеграции
+  Future<bool> createUserAndProfile({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
+  }) async {
+    emit(state.copyWith(
+      createUserAndProfileStatuses: CreateUserAndProfileStatuses.loading,
+    ));
+    try {
+      await userRepository.createUserAndProfile(
+        firstName: firstName,
+        lastName: lastName,
+        middleName: middleName,
+        phoneNumber: phoneNumber,
+        snils: snils,
+        sex: sex,
+        birthday: DateFormat('d.M.y').parse(birthday),
+        passportSerial: passportSerial,
+        passportNumber: passportNumber,
+        passportIssueDate: DateFormat('d.M.y').parse(passportIssueDate),
+        passportIssueId: passportIssueId,
+        esiaToken: esiaToken,
+      );
+      emit(state.copyWith(
+        createUserAndProfileStatuses: CreateUserAndProfileStatuses.success,
+      ));
+      return true;
+    } catch (e) {
+      emit(state.copyWith(
+        createUserAndProfileStatuses: CreateUserAndProfileStatuses.failed,
+      ));
+      return false;
     }
   }
 
@@ -175,6 +307,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.deleteField(AppConstants.authPinCode);
     UserSecureStorage.deleteField(AppConstants.isAcceptedAgreements);
 
+    // ! FCMService.cleanFCMToken();
+
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
@@ -190,17 +324,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.successAuth,
     ));
+
     /// Обновляем токен, есть вероятность, что он устарел
-    Future.delayed(Duration.zero, () async {
-      /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-      await addFirebaseDeviceId();
-    });
+    if (kDebugMode) {
+      await deleteFirebaseDeviceId();
+    }
+    await addFirebaseDeviceId();
   }
 
   /// Сохраняет deviceId устройства на бэке
   Future<void> addFirebaseDeviceId() async {
     try {
-
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       Sentry.configureScope((scope) {
         scope.setExtra('fcmToken', fcmToken);
@@ -208,6 +342,18 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       await FirebaseMessaging.instance.getAPNSToken();
       await userRepository.registerDeviceFirebaseToken(token: fcmToken);
       Sentry.captureMessage('FCM Token: $fcmToken');
+    } catch (e) {
+      Sentry.captureException(e);
+    }
+  }
+
+  /// Удаляет deviceId устройства на бэке
+  Future<void> deleteFirebaseDeviceId() async {
+    try {
+      String fcmToken = await FirebaseMessaging.instance.getToken() as String;
+      userRepository.deleteDeviceFirebaseToken(token: fcmToken);
+      Sentry.captureMessage('Удаляем токен $fcmToken');
+      await FirebaseMessaging.instance.deleteToken();
     } catch (e) {
       Sentry.captureException(e);
     }
@@ -296,11 +442,12 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     if (sha256savedCode == sha256.convert(pinCode).toString()) {
       UserSecureStorage.setField(AppConstants.isAuth, 'true');
       emit(state.copyWith(authStatus: UserAuthStatuses.successAuth));
+
       /// Обновляем токен, есть вероятность, что он устарел
-      Future.delayed(Duration.zero, () async {
-        /// Запрашиваем токен фоном, чтобы не тормозить переход на следующий экран
-        await addFirebaseDeviceId();
-      });
+      if (kDebugMode) {
+        await deleteFirebaseDeviceId();
+      }
+      await addFirebaseDeviceId();
       return true;
     } else {
       AppToast.showAppToast(msg: 'Неверный пин-код,\nОсталось попыток $count');
@@ -328,7 +475,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       emit(state.copyWith(
         getNewSmsCodeStatus: GetNewSmsCodeStatuses.success,
       ));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
       return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
@@ -357,7 +504,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
             SendingResetPasswordCodeStatuses.success,
       ));
       return null;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
       return DefaultErrorModel.fromJson(e.response?.data);
     } catch (e) {
@@ -465,20 +612,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       /// Если телефон не совпадает с кубитом, то сбрасываем таймер
       if (state.userPhoneNumber != phoneNumber) {
-        setTimer(DateTime.now().subtract(
-          const Duration(minutes: 5)
-        ));
+        setTimer(DateTime.now().subtract(const Duration(minutes: 5)));
       }
-
 
       emit(state.copyWith(
           checkUserAccountStatus: CheckUserAccountStatuses.success,
           userPhoneNumber: phoneNumber,
           isFound: response.found));
       return response;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       addError(e);
-      if(e.type == DioErrorType.other) {
+      if (e.type == DioExceptionType.unknown) {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }

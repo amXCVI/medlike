@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
@@ -7,6 +8,7 @@ import 'package:medlike/modules/about_clinic/sales/promotions_list_skeleton.dart
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/not_found_data/empty_list_widget.dart';
 
+@RoutePage()
 class SalesPage extends StatelessWidget {
   const SalesPage({Key? key, required this.clinicId}) : super(key: key);
 

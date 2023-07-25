@@ -8,7 +8,7 @@ import 'package:medlike/modules/settings/biometric_authentication/biometric_auth
 import 'package:medlike/modules/settings/delete_profile/delete_profile_dialog.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/modules/settings/settings_list_item.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class SettingsList extends StatelessWidget {

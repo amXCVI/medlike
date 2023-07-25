@@ -92,7 +92,6 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
         foregroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         centerTitle: true,

@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/auth_user_agreements/agreements_list.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/checkbox/custom_checkbox.dart';
