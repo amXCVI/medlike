@@ -1060,6 +1060,7 @@ mixin _$UserProfile {
   String? get lastName => throw _privateConstructorUsedError;
   DateTime? get birthday => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
   List<UserProfileClinic> get clinics => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1082,6 +1083,7 @@ abstract class $UserProfileCopyWith<$Res> {
       String? lastName,
       DateTime? birthday,
       String? avatar,
+      String? phone,
       List<UserProfileClinic> clinics});
 }
 
@@ -1105,6 +1107,7 @@ class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
     Object? lastName = freezed,
     Object? birthday = freezed,
     Object? avatar = freezed,
+    Object? phone = freezed,
     Object? clinics = null,
   }) {
     return _then(_value.copyWith(
@@ -1136,6 +1139,10 @@ class _$UserProfileCopyWithImpl<$Res, $Val extends UserProfile>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
       clinics: null == clinics
           ? _value.clinics
           : clinics // ignore: cast_nullable_to_non_nullable
@@ -1160,6 +1167,7 @@ abstract class _$$_UserProfileCopyWith<$Res>
       String? lastName,
       DateTime? birthday,
       String? avatar,
+      String? phone,
       List<UserProfileClinic> clinics});
 }
 
@@ -1181,6 +1189,7 @@ class __$$_UserProfileCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? birthday = freezed,
     Object? avatar = freezed,
+    Object? phone = freezed,
     Object? clinics = null,
   }) {
     return _then(_$_UserProfile(
@@ -1212,6 +1221,10 @@ class __$$_UserProfileCopyWithImpl<$Res>
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
       clinics: null == clinics
           ? _value._clinics
           : clinics // ignore: cast_nullable_to_non_nullable
@@ -1231,6 +1244,7 @@ class _$_UserProfile implements _UserProfile {
       this.lastName,
       this.birthday,
       this.avatar,
+      this.phone,
       required final List<UserProfileClinic> clinics})
       : _clinics = clinics;
 
@@ -1251,6 +1265,8 @@ class _$_UserProfile implements _UserProfile {
   final DateTime? birthday;
   @override
   final String? avatar;
+  @override
+  final String? phone;
   final List<UserProfileClinic> _clinics;
   @override
   List<UserProfileClinic> get clinics {
@@ -1261,7 +1277,7 @@ class _$_UserProfile implements _UserProfile {
 
   @override
   String toString() {
-    return 'UserProfile(id: $id, barCode: $barCode, firstName: $firstName, middleName: $middleName, lastName: $lastName, birthday: $birthday, avatar: $avatar, clinics: $clinics)';
+    return 'UserProfile(id: $id, barCode: $barCode, firstName: $firstName, middleName: $middleName, lastName: $lastName, birthday: $birthday, avatar: $avatar, phone: $phone, clinics: $clinics)';
   }
 
   @override
@@ -1280,6 +1296,7 @@ class _$_UserProfile implements _UserProfile {
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
             const DeepCollectionEquality().equals(other._clinics, _clinics));
   }
 
@@ -1294,6 +1311,7 @@ class _$_UserProfile implements _UserProfile {
       lastName,
       birthday,
       avatar,
+      phone,
       const DeepCollectionEquality().hash(_clinics));
 
   @JsonKey(ignore: true)
@@ -1319,6 +1337,7 @@ abstract class _UserProfile implements UserProfile {
       final String? lastName,
       final DateTime? birthday,
       final String? avatar,
+      final String? phone,
       required final List<UserProfileClinic> clinics}) = _$_UserProfile;
 
   factory _UserProfile.fromJson(Map<String, dynamic> json) =
@@ -1338,6 +1357,8 @@ abstract class _UserProfile implements UserProfile {
   DateTime? get birthday;
   @override
   String? get avatar;
+  @override
+  String? get phone;
   @override
   List<UserProfileClinic> get clinics;
   @override

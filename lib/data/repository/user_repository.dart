@@ -123,7 +123,8 @@ class UserRepository {
     required String newPassword,
   }) async {
     try {
-      final response = await _dioClient.post('уesi', data: {
+      final response =
+          await _dioClient.post('/api/v1.0/auth/password/change', data: {
         'userName': userName,
         'newPassword': newPassword,
       });
