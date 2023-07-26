@@ -42,6 +42,15 @@ class AppointmentStatuses {
     return findStatus;
   }
 
+  /// Проверяю, прошел ли уже прием или еще нет
+  static bool checkIsPastAppointment(int statusId) {
+    if (statusId == 1 || statusId == 2 || statusId == 3) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static List<int> cancellableStatusIds = [0, 4];
 }
 

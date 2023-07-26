@@ -8,6 +8,7 @@ import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointment_detail/appointment_detail_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
+import 'package:medlike/modules/appointments/feedback/feedback_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
@@ -104,10 +105,20 @@ class AppRouter extends _$AppRouter {
             guards: [CheckIsAuthUser()],
             initial: true),
 
+        /// Мои приемы
         AdaptiveRoute(
             path: AppRoutes.myAppointments,
             page: AppointmentsRoute.page,
             guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.appointmentDetails,
+            page: AppointmentDetailRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.feedback,
+            page: FeedbackRoute.page,
+            guards: [CheckIsAuthUser()]),
+
         AdaptiveRoute(
             path: AppRoutes.subscribeProfiles,
             page: SubscribeProfilesListRoute.page,

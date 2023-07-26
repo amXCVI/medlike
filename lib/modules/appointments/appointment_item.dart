@@ -8,7 +8,7 @@ import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
-import 'package:medlike/navigation/router.gr.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
@@ -28,36 +28,38 @@ class AppointmentItem extends StatelessWidget {
                 appointmentItem.categoryType)
             .russianCategoryTypeName;
 
-    void _handleTapOnAppointment() {
+    void handleTapOnAppointment() {
       context.read<AppointmentsCubit>().getAppointmentById(
             appointmentId: appointmentItem.id,
             userId: appointmentItem.patientInfo.id!,
           );
 
       context.router.push(AppointmentDetailRoute(
-          appointmentItem: AppointmentModel(
-        status: appointmentItem.status,
-        needConfirmation: appointmentItem.needConfirmation,
-        comment: appointmentItem.comment,
-        researchPlace: appointmentItem.researchPlace,
-        id: appointmentItem.id,
-        appointmentDateTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
-            .format(appointmentItem.appointmentDateTime),
-        patientInfo: appointmentItem.patientInfo,
-        clinicInfo: appointmentItem.clinicInfo,
-        doctorInfo: appointmentItem.doctorInfo,
-        researches: appointmentItem.researches,
-        categoryType: appointmentItem.categoryType,
-        isVideo: appointmentItem.isVideo,
-        payType: appointmentItem.payType,
-        isDraft: appointmentItem.isDraft,
-        orderId: appointmentItem.orderId,
-        scheduleId: appointmentItem.scheduleId,
-        paymentStatus: appointmentItem.paymentStatus,
-        recommendations: appointmentItem.recommendations,
-        items: appointmentItem.items,
-        checkURI: appointmentItem.checkURI,
-      )));
+        appointmentItem: AppointmentModel(
+          status: appointmentItem.status,
+          needConfirmation: appointmentItem.needConfirmation,
+          comment: appointmentItem.comment,
+          researchPlace: appointmentItem.researchPlace,
+          id: appointmentItem.id,
+          appointmentDateTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
+              .format(appointmentItem.appointmentDateTime),
+          patientInfo: appointmentItem.patientInfo,
+          clinicInfo: appointmentItem.clinicInfo,
+          doctorInfo: appointmentItem.doctorInfo,
+          researches: appointmentItem.researches,
+          categoryType: appointmentItem.categoryType,
+          isVideo: appointmentItem.isVideo,
+          payType: appointmentItem.payType,
+          isDraft: appointmentItem.isDraft,
+          orderId: appointmentItem.orderId,
+          scheduleId: appointmentItem.scheduleId,
+          paymentStatus: appointmentItem.paymentStatus,
+          recommendations: appointmentItem.recommendations,
+          items: appointmentItem.items,
+          checkURI: appointmentItem.checkURI,
+          review: appointmentItem.review,
+        ),
+      ));
     }
 
     return Padding(
@@ -68,7 +70,7 @@ class AppointmentItem extends StatelessWidget {
         children: [
           // Название приема
           GestureDetector(
-            onTap: _handleTapOnAppointment,
+            onTap: handleTapOnAppointment,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,11 +114,11 @@ class AppointmentItem extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 15,
+                            backgroundColor: AppColors.mainBrand[100],
                             child: Text(
                               appointmentItem.doctorInfo.lastName![0],
                               style: const TextStyle(fontFamily: 'AquawaxPro'),
                             ),
-                            backgroundColor: AppColors.mainBrand[100],
                           ),
                           const SizedBox(width: 8.0),
                           Text(
@@ -149,9 +151,7 @@ class AppointmentItem extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 100,
                       child: Text(
-                          ClinicAddressHelper.getShortAddress(
-                                  appointmentItem.clinicInfo.address ?? '') +
-                              ', ${appointmentItem.researchPlace ?? ''}',
+                          '${ClinicAddressHelper.getShortAddress(appointmentItem.clinicInfo.address ?? '')}, ${appointmentItem.researchPlace ?? ''}',
                           overflow: TextOverflow.fade,
                           maxLines: 2,
                           softWrap: true,

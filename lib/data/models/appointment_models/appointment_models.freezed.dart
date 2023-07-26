@@ -41,6 +41,7 @@ mixin _$AppointmentModel {
   List<ResearchWidthPriceInAppointmentModel>? get items =>
       throw _privateConstructorUsedError;
   String? get checkURI => throw _privateConstructorUsedError;
+  AppointmentReviewModel? get review => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,11 +75,13 @@ abstract class $AppointmentModelCopyWith<$Res> {
       int paymentStatus,
       String? recommendations,
       List<ResearchWidthPriceInAppointmentModel>? items,
-      String? checkURI});
+      String? checkURI,
+      AppointmentReviewModel? review});
 
   $PatientInfoModelCopyWith<$Res> get patientInfo;
   $ClinicInfoModelCopyWith<$Res> get clinicInfo;
   $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+  $AppointmentReviewModelCopyWith<$Res>? get review;
 }
 
 /// @nodoc
@@ -114,6 +117,7 @@ class _$AppointmentModelCopyWithImpl<$Res, $Val extends AppointmentModel>
     Object? recommendations = freezed,
     Object? items = freezed,
     Object? checkURI = freezed,
+    Object? review = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -196,6 +200,10 @@ class _$AppointmentModelCopyWithImpl<$Res, $Val extends AppointmentModel>
           ? _value.checkURI
           : checkURI // ignore: cast_nullable_to_non_nullable
               as String?,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as AppointmentReviewModel?,
     ) as $Val);
   }
 
@@ -220,6 +228,18 @@ class _$AppointmentModelCopyWithImpl<$Res, $Val extends AppointmentModel>
   $DoctorInfoModelCopyWith<$Res> get doctorInfo {
     return $DoctorInfoModelCopyWith<$Res>(_value.doctorInfo, (value) {
       return _then(_value.copyWith(doctorInfo: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AppointmentReviewModelCopyWith<$Res>? get review {
+    if (_value.review == null) {
+      return null;
+    }
+
+    return $AppointmentReviewModelCopyWith<$Res>(_value.review!, (value) {
+      return _then(_value.copyWith(review: value) as $Val);
     });
   }
 }
@@ -252,7 +272,8 @@ abstract class _$$_AppointmentModelCopyWith<$Res>
       int paymentStatus,
       String? recommendations,
       List<ResearchWidthPriceInAppointmentModel>? items,
-      String? checkURI});
+      String? checkURI,
+      AppointmentReviewModel? review});
 
   @override
   $PatientInfoModelCopyWith<$Res> get patientInfo;
@@ -260,6 +281,8 @@ abstract class _$$_AppointmentModelCopyWith<$Res>
   $ClinicInfoModelCopyWith<$Res> get clinicInfo;
   @override
   $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+  @override
+  $AppointmentReviewModelCopyWith<$Res>? get review;
 }
 
 /// @nodoc
@@ -293,6 +316,7 @@ class __$$_AppointmentModelCopyWithImpl<$Res>
     Object? recommendations = freezed,
     Object? items = freezed,
     Object? checkURI = freezed,
+    Object? review = freezed,
   }) {
     return _then(_$_AppointmentModel(
       status: null == status
@@ -375,6 +399,10 @@ class __$$_AppointmentModelCopyWithImpl<$Res>
           ? _value.checkURI
           : checkURI // ignore: cast_nullable_to_non_nullable
               as String?,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as AppointmentReviewModel?,
     ));
   }
 }
@@ -402,7 +430,8 @@ class _$_AppointmentModel implements _AppointmentModel {
       required this.paymentStatus,
       required this.recommendations,
       required final List<ResearchWidthPriceInAppointmentModel>? items,
-      required this.checkURI})
+      required this.checkURI,
+      required this.review})
       : _researches = researches,
         _items = items;
 
@@ -463,10 +492,12 @@ class _$_AppointmentModel implements _AppointmentModel {
 
   @override
   final String? checkURI;
+  @override
+  final AppointmentReviewModel? review;
 
   @override
   String toString() {
-    return 'AppointmentModel(status: $status, needConfirmation: $needConfirmation, comment: $comment, researchPlace: $researchPlace, id: $id, appointmentDateTime: $appointmentDateTime, patientInfo: $patientInfo, clinicInfo: $clinicInfo, doctorInfo: $doctorInfo, researches: $researches, categoryType: $categoryType, isVideo: $isVideo, payType: $payType, isDraft: $isDraft, orderId: $orderId, scheduleId: $scheduleId, paymentStatus: $paymentStatus, recommendations: $recommendations, items: $items, checkURI: $checkURI)';
+    return 'AppointmentModel(status: $status, needConfirmation: $needConfirmation, comment: $comment, researchPlace: $researchPlace, id: $id, appointmentDateTime: $appointmentDateTime, patientInfo: $patientInfo, clinicInfo: $clinicInfo, doctorInfo: $doctorInfo, researches: $researches, categoryType: $categoryType, isVideo: $isVideo, payType: $payType, isDraft: $isDraft, orderId: $orderId, scheduleId: $scheduleId, paymentStatus: $paymentStatus, recommendations: $recommendations, items: $items, checkURI: $checkURI, review: $review)';
   }
 
   @override
@@ -505,7 +536,8 @@ class _$_AppointmentModel implements _AppointmentModel {
                 other.recommendations == recommendations) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.checkURI, checkURI) ||
-                other.checkURI == checkURI));
+                other.checkURI == checkURI) &&
+            (identical(other.review, review) || other.review == review));
   }
 
   @JsonKey(ignore: true)
@@ -531,7 +563,8 @@ class _$_AppointmentModel implements _AppointmentModel {
         paymentStatus,
         recommendations,
         const DeepCollectionEquality().hash(_items),
-        checkURI
+        checkURI,
+        review
       ]);
 
   @JsonKey(ignore: true)
@@ -569,7 +602,8 @@ abstract class _AppointmentModel implements AppointmentModel {
       required final int paymentStatus,
       required final String? recommendations,
       required final List<ResearchWidthPriceInAppointmentModel>? items,
-      required final String? checkURI}) = _$_AppointmentModel;
+      required final String? checkURI,
+      required final AppointmentReviewModel? review}) = _$_AppointmentModel;
 
   factory _AppointmentModel.fromJson(Map<String, dynamic> json) =
       _$_AppointmentModel.fromJson;
@@ -615,6 +649,8 @@ abstract class _AppointmentModel implements AppointmentModel {
   @override
   String? get checkURI;
   @override
+  AppointmentReviewModel? get review;
+  @override
   @JsonKey(ignore: true)
   _$$_AppointmentModelCopyWith<_$_AppointmentModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -650,6 +686,7 @@ mixin _$AppointmentModelWithTimeZoneOffset {
   List<ResearchWidthPriceInAppointmentModel>? get items =>
       throw _privateConstructorUsedError;
   String? get checkURI => throw _privateConstructorUsedError;
+  AppointmentReviewModel? get review => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -687,11 +724,13 @@ abstract class $AppointmentModelWithTimeZoneOffsetCopyWith<$Res> {
       int paymentStatus,
       String? recommendations,
       List<ResearchWidthPriceInAppointmentModel>? items,
-      String? checkURI});
+      String? checkURI,
+      AppointmentReviewModel? review});
 
   $PatientInfoModelCopyWith<$Res> get patientInfo;
   $ClinicInfoModelCopyWith<$Res> get clinicInfo;
   $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+  $AppointmentReviewModelCopyWith<$Res>? get review;
 }
 
 /// @nodoc
@@ -729,6 +768,7 @@ class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
     Object? recommendations = freezed,
     Object? items = freezed,
     Object? checkURI = freezed,
+    Object? review = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -815,6 +855,10 @@ class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
           ? _value.checkURI
           : checkURI // ignore: cast_nullable_to_non_nullable
               as String?,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as AppointmentReviewModel?,
     ) as $Val);
   }
 
@@ -839,6 +883,18 @@ class _$AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res,
   $DoctorInfoModelCopyWith<$Res> get doctorInfo {
     return $DoctorInfoModelCopyWith<$Res>(_value.doctorInfo, (value) {
       return _then(_value.copyWith(doctorInfo: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AppointmentReviewModelCopyWith<$Res>? get review {
+    if (_value.review == null) {
+      return null;
+    }
+
+    return $AppointmentReviewModelCopyWith<$Res>(_value.review!, (value) {
+      return _then(_value.copyWith(review: value) as $Val);
     });
   }
 }
@@ -873,7 +929,8 @@ abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
       int paymentStatus,
       String? recommendations,
       List<ResearchWidthPriceInAppointmentModel>? items,
-      String? checkURI});
+      String? checkURI,
+      AppointmentReviewModel? review});
 
   @override
   $PatientInfoModelCopyWith<$Res> get patientInfo;
@@ -881,6 +938,8 @@ abstract class _$$_AppointmentModelWithTimeZoneOffsetCopyWith<$Res>
   $ClinicInfoModelCopyWith<$Res> get clinicInfo;
   @override
   $DoctorInfoModelCopyWith<$Res> get doctorInfo;
+  @override
+  $AppointmentReviewModelCopyWith<$Res>? get review;
 }
 
 /// @nodoc
@@ -917,6 +976,7 @@ class __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
     Object? recommendations = freezed,
     Object? items = freezed,
     Object? checkURI = freezed,
+    Object? review = freezed,
   }) {
     return _then(_$_AppointmentModelWithTimeZoneOffset(
       status: null == status
@@ -1003,6 +1063,10 @@ class __$$_AppointmentModelWithTimeZoneOffsetCopyWithImpl<$Res>
           ? _value.checkURI
           : checkURI // ignore: cast_nullable_to_non_nullable
               as String?,
+      review: freezed == review
+          ? _value.review
+          : review // ignore: cast_nullable_to_non_nullable
+              as AppointmentReviewModel?,
     ));
   }
 }
@@ -1032,7 +1096,8 @@ class _$_AppointmentModelWithTimeZoneOffset
       required this.paymentStatus,
       required this.recommendations,
       required final List<ResearchWidthPriceInAppointmentModel>? items,
-      required this.checkURI})
+      required this.checkURI,
+      required this.review})
       : _researches = researches,
         _items = items;
 
@@ -1097,10 +1162,12 @@ class _$_AppointmentModelWithTimeZoneOffset
 
   @override
   final String? checkURI;
+  @override
+  final AppointmentReviewModel? review;
 
   @override
   String toString() {
-    return 'AppointmentModelWithTimeZoneOffset(status: $status, needConfirmation: $needConfirmation, comment: $comment, researchPlace: $researchPlace, id: $id, appointmentDateTime: $appointmentDateTime, timeZoneOffset: $timeZoneOffset, patientInfo: $patientInfo, clinicInfo: $clinicInfo, doctorInfo: $doctorInfo, researches: $researches, categoryType: $categoryType, isVideo: $isVideo, payType: $payType, isDraft: $isDraft, orderId: $orderId, scheduleId: $scheduleId, paymentStatus: $paymentStatus, recommendations: $recommendations, items: $items, checkURI: $checkURI)';
+    return 'AppointmentModelWithTimeZoneOffset(status: $status, needConfirmation: $needConfirmation, comment: $comment, researchPlace: $researchPlace, id: $id, appointmentDateTime: $appointmentDateTime, timeZoneOffset: $timeZoneOffset, patientInfo: $patientInfo, clinicInfo: $clinicInfo, doctorInfo: $doctorInfo, researches: $researches, categoryType: $categoryType, isVideo: $isVideo, payType: $payType, isDraft: $isDraft, orderId: $orderId, scheduleId: $scheduleId, paymentStatus: $paymentStatus, recommendations: $recommendations, items: $items, checkURI: $checkURI, review: $review)';
   }
 
   @override
@@ -1141,7 +1208,8 @@ class _$_AppointmentModelWithTimeZoneOffset
                 other.recommendations == recommendations) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.checkURI, checkURI) ||
-                other.checkURI == checkURI));
+                other.checkURI == checkURI) &&
+            (identical(other.review, review) || other.review == review));
   }
 
   @JsonKey(ignore: true)
@@ -1168,7 +1236,8 @@ class _$_AppointmentModelWithTimeZoneOffset
         paymentStatus,
         recommendations,
         const DeepCollectionEquality().hash(_items),
-        checkURI
+        checkURI,
+        review
       ]);
 
   @JsonKey(ignore: true)
@@ -1190,27 +1259,29 @@ class _$_AppointmentModelWithTimeZoneOffset
 abstract class _AppointmentModelWithTimeZoneOffset
     implements AppointmentModelWithTimeZoneOffset {
   const factory _AppointmentModelWithTimeZoneOffset(
-      {required final int status,
-      required final bool needConfirmation,
-      required final String? comment,
-      required final String? researchPlace,
-      required final String id,
-      @TimestampConverter() required final DateTime appointmentDateTime,
-      required final int timeZoneOffset,
-      required final PatientInfoModel patientInfo,
-      required final ClinicInfoModel clinicInfo,
-      required final DoctorInfoModel doctorInfo,
-      required final List<ResearchesModel> researches,
-      required final int categoryType,
-      required final bool isVideo,
-      required final String payType,
-      required final bool isDraft,
-      required final String? orderId,
-      required final String scheduleId,
-      required final int paymentStatus,
-      required final String? recommendations,
-      required final List<ResearchWidthPriceInAppointmentModel>? items,
-      required final String? checkURI}) = _$_AppointmentModelWithTimeZoneOffset;
+          {required final int status,
+          required final bool needConfirmation,
+          required final String? comment,
+          required final String? researchPlace,
+          required final String id,
+          @TimestampConverter() required final DateTime appointmentDateTime,
+          required final int timeZoneOffset,
+          required final PatientInfoModel patientInfo,
+          required final ClinicInfoModel clinicInfo,
+          required final DoctorInfoModel doctorInfo,
+          required final List<ResearchesModel> researches,
+          required final int categoryType,
+          required final bool isVideo,
+          required final String payType,
+          required final bool isDraft,
+          required final String? orderId,
+          required final String scheduleId,
+          required final int paymentStatus,
+          required final String? recommendations,
+          required final List<ResearchWidthPriceInAppointmentModel>? items,
+          required final String? checkURI,
+          required final AppointmentReviewModel? review}) =
+      _$_AppointmentModelWithTimeZoneOffset;
 
   factory _AppointmentModelWithTimeZoneOffset.fromJson(
           Map<String, dynamic> json) =
@@ -1259,6 +1330,8 @@ abstract class _AppointmentModelWithTimeZoneOffset
   List<ResearchWidthPriceInAppointmentModel>? get items;
   @override
   String? get checkURI;
+  @override
+  AppointmentReviewModel? get review;
   @override
   @JsonKey(ignore: true)
   _$$_AppointmentModelWithTimeZoneOffsetCopyWith<
@@ -1589,6 +1662,204 @@ abstract class _ClinicInfoModel implements ClinicInfoModel {
   @override
   @JsonKey(ignore: true)
   _$$_ClinicInfoModelCopyWith<_$_ClinicInfoModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AppointmentReviewModel _$AppointmentReviewModelFromJson(
+    Map<String, dynamic> json) {
+  return _AppointmentReviewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AppointmentReviewModel {
+  int get id => throw _privateConstructorUsedError;
+  String get caption => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  int get visibility => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AppointmentReviewModelCopyWith<AppointmentReviewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppointmentReviewModelCopyWith<$Res> {
+  factory $AppointmentReviewModelCopyWith(AppointmentReviewModel value,
+          $Res Function(AppointmentReviewModel) then) =
+      _$AppointmentReviewModelCopyWithImpl<$Res, AppointmentReviewModel>;
+  @useResult
+  $Res call({int id, String caption, String message, int visibility});
+}
+
+/// @nodoc
+class _$AppointmentReviewModelCopyWithImpl<$Res,
+        $Val extends AppointmentReviewModel>
+    implements $AppointmentReviewModelCopyWith<$Res> {
+  _$AppointmentReviewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? caption = null,
+    Object? message = null,
+    Object? visibility = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      caption: null == caption
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      visibility: null == visibility
+          ? _value.visibility
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AppointmentReviewModelCopyWith<$Res>
+    implements $AppointmentReviewModelCopyWith<$Res> {
+  factory _$$_AppointmentReviewModelCopyWith(_$_AppointmentReviewModel value,
+          $Res Function(_$_AppointmentReviewModel) then) =
+      __$$_AppointmentReviewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String caption, String message, int visibility});
+}
+
+/// @nodoc
+class __$$_AppointmentReviewModelCopyWithImpl<$Res>
+    extends _$AppointmentReviewModelCopyWithImpl<$Res,
+        _$_AppointmentReviewModel>
+    implements _$$_AppointmentReviewModelCopyWith<$Res> {
+  __$$_AppointmentReviewModelCopyWithImpl(_$_AppointmentReviewModel _value,
+      $Res Function(_$_AppointmentReviewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? caption = null,
+    Object? message = null,
+    Object? visibility = null,
+  }) {
+    return _then(_$_AppointmentReviewModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      caption: null == caption
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      visibility: null == visibility
+          ? _value.visibility
+          : visibility // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AppointmentReviewModel implements _AppointmentReviewModel {
+  const _$_AppointmentReviewModel(
+      {required this.id,
+      required this.caption,
+      required this.message,
+      required this.visibility});
+
+  factory _$_AppointmentReviewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_AppointmentReviewModelFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String caption;
+  @override
+  final String message;
+  @override
+  final int visibility;
+
+  @override
+  String toString() {
+    return 'AppointmentReviewModel(id: $id, caption: $caption, message: $message, visibility: $visibility)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AppointmentReviewModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.caption, caption) || other.caption == caption) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.visibility, visibility) ||
+                other.visibility == visibility));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, caption, message, visibility);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AppointmentReviewModelCopyWith<_$_AppointmentReviewModel> get copyWith =>
+      __$$_AppointmentReviewModelCopyWithImpl<_$_AppointmentReviewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AppointmentReviewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AppointmentReviewModel implements AppointmentReviewModel {
+  const factory _AppointmentReviewModel(
+      {required final int id,
+      required final String caption,
+      required final String message,
+      required final int visibility}) = _$_AppointmentReviewModel;
+
+  factory _AppointmentReviewModel.fromJson(Map<String, dynamic> json) =
+      _$_AppointmentReviewModel.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get caption;
+  @override
+  String get message;
+  @override
+  int get visibility;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AppointmentReviewModelCopyWith<_$_AppointmentReviewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3107,44 +3378,5 @@ abstract class _ResearchWidthPriceInAppointmentModel
   @JsonKey(ignore: true)
   _$$_ResearchWidthPriceInAppointmentModelCopyWith<
           _$_ResearchWidthPriceInAppointmentModel>
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_researches is EqualUnmodifiableListView) return _researches;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_researches is EqualUnmodifiableListView) return _researches;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_recommendations is EqualUnmodifiableListView) return _recommendations;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
       get copyWith => throw _privateConstructorUsedError;
 }

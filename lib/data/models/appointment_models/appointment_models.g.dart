@@ -36,6 +36,10 @@ _$_AppointmentModel _$$_AppointmentModelFromJson(Map<String, dynamic> json) =>
               e as Map<String, dynamic>))
           .toList(),
       checkURI: json['checkURI'] as String?,
+      review: json['review'] == null
+          ? null
+          : AppointmentReviewModel.fromJson(
+              json['review'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
@@ -60,6 +64,7 @@ Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
       'recommendations': instance.recommendations,
       'items': instance.items,
       'checkURI': instance.checkURI,
+      'review': instance.review,
     };
 
 _$_AppointmentModelWithTimeZoneOffset
@@ -95,6 +100,10 @@ _$_AppointmentModelWithTimeZoneOffset
                   e as Map<String, dynamic>))
               .toList(),
           checkURI: json['checkURI'] as String?,
+          review: json['review'] == null
+              ? null
+              : AppointmentReviewModel.fromJson(
+                  json['review'] as Map<String, dynamic>),
         );
 
 Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
@@ -122,6 +131,7 @@ Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
       'recommendations': instance.recommendations,
       'items': instance.items,
       'checkURI': instance.checkURI,
+      'review': instance.review,
     };
 
 _$_PatientInfoModel _$$_PatientInfoModelFromJson(Map<String, dynamic> json) =>
@@ -148,6 +158,24 @@ Map<String, dynamic> _$$_ClinicInfoModelToJson(_$_ClinicInfoModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'address': instance.address,
+    };
+
+_$_AppointmentReviewModel _$$_AppointmentReviewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_AppointmentReviewModel(
+      id: json['id'] as int,
+      caption: json['caption'] as String,
+      message: json['message'] as String,
+      visibility: json['visibility'] as int,
+    );
+
+Map<String, dynamic> _$$_AppointmentReviewModelToJson(
+        _$_AppointmentReviewModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'caption': instance.caption,
+      'message': instance.message,
+      'visibility': instance.visibility,
     };
 
 _$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>

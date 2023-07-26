@@ -71,6 +71,7 @@ class AppointmentsCubit
                 recommendations: e.recommendations,
                 items: e.items,
                 checkURI: e.checkURI,
+                review: e.review,
               ))
           .toList();
 
@@ -114,6 +115,7 @@ class AppointmentsCubit
                     recommendations: e.recommendations,
                     items: e.items,
                     checkURI: e.checkURI,
+                    review: e.review,
                   ))
               .toList(),
           filteredAppointmentsList: response
@@ -141,6 +143,7 @@ class AppointmentsCubit
                     recommendations: e.recommendations,
                     items: e.items,
                     checkURI: e.checkURI,
+                    review: e.review,
                   ))
               .toList(),
           confirmCounter: response.where((e) {
@@ -226,28 +229,30 @@ class AppointmentsCubit
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.success,
           lastAppointment: AppointmentModelWithTimeZoneOffset(
-              status: response.status,
-              needConfirmation: response.needConfirmation,
-              comment: response.comment,
-              researchPlace: response.researchPlace,
-              id: response.id,
-              appointmentDateTime: const TimestampConverter()
-                  .fromJson(response.appointmentDateTime),
-              timeZoneOffset: getTimezoneOffset(response.appointmentDateTime),
-              patientInfo: response.patientInfo,
-              clinicInfo: response.clinicInfo,
-              doctorInfo: response.doctorInfo,
-              researches: response.researches,
-              categoryType: response.categoryType,
-              isVideo: response.isVideo,
-              payType: response.payType,
-              isDraft: response.isDraft,
-              orderId: response.orderId,
-              scheduleId: response.scheduleId,
-              paymentStatus: response.paymentStatus,
-              recommendations: response.recommendations,
-              items: response.items,
-              checkURI: response.checkURI)));
+            status: response.status,
+            needConfirmation: response.needConfirmation,
+            comment: response.comment,
+            researchPlace: response.researchPlace,
+            id: response.id,
+            appointmentDateTime: const TimestampConverter()
+                .fromJson(response.appointmentDateTime),
+            timeZoneOffset: getTimezoneOffset(response.appointmentDateTime),
+            patientInfo: response.patientInfo,
+            clinicInfo: response.clinicInfo,
+            doctorInfo: response.doctorInfo,
+            researches: response.researches,
+            categoryType: response.categoryType,
+            isVideo: response.isVideo,
+            payType: response.payType,
+            isDraft: response.isDraft,
+            orderId: response.orderId,
+            scheduleId: response.scheduleId,
+            paymentStatus: response.paymentStatus,
+            recommendations: response.recommendations,
+            items: response.items,
+            checkURI: response.checkURI,
+            review: response.review,
+          )));
     } catch (e) {
       clearAppointment();
       emit(state.copyWith(

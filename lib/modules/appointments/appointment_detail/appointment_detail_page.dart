@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +15,14 @@ import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 
+import 'appointment_detail_action_button.dart';
+
+@RoutePage()
 class AppointmentDetailPage extends StatefulWidget {
-  const AppointmentDetailPage({Key? key, required this.appointmentItem})
-      : super(key: key);
+  const AppointmentDetailPage({
+    Key? key,
+    required this.appointmentItem,
+  }) : super(key: key);
 
   final AppointmentModel appointmentItem;
 
@@ -54,6 +60,10 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
       }
       return DefaultScaffold(
           appBarTitle: title,
+          actionButton: AppointmentDetailActionButton(
+            appointmentId: selectedAppointment.id,
+            appointmentStatus: selectedAppointment.status,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

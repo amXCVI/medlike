@@ -2103,32 +2103,5 @@ abstract class _AssessmentModel implements AssessmentModel {
   @override
   @JsonKey(ignore: true)
   _$$_AssessmentModelCopyWith<_$_AssessmentModel> get copyWith =>
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_navigationItems is EqualUnmodifiableListView) return _navigationItems;
-    if (_doctors is EqualUnmodifiableListView) return _doctors;
-    if (_researches is EqualUnmodifiableListView) return _researches;
-    if (_cabinets is EqualUnmodifiableListView) return _cabinets;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_cabinets is EqualUnmodifiableListView) return _cabinets;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-    if (_categories is EqualUnmodifiableListView) return _categories;
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
-  @pragma('vm:prefer-inline')
-  @useResult
-  @pragma('vm:prefer-inline')
       throw _privateConstructorUsedError;
 }

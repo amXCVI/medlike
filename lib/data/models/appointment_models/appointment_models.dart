@@ -30,6 +30,7 @@ class AppointmentModel with _$AppointmentModel {
     required String? recommendations,
     required List<ResearchWidthPriceInAppointmentModel>? items,
     required String? checkURI,
+    required AppointmentReviewModel? review,
   }) = _AppointmentModel;
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
@@ -61,6 +62,7 @@ class AppointmentModelWithTimeZoneOffset
     required String? recommendations,
     required List<ResearchWidthPriceInAppointmentModel>? items,
     required String? checkURI,
+    required AppointmentReviewModel? review,
   }) = _AppointmentModelWithTimeZoneOffset;
 
   factory AppointmentModelWithTimeZoneOffset.fromJson(
@@ -89,6 +91,19 @@ class ClinicInfoModel with _$ClinicInfoModel {
 
   factory ClinicInfoModel.fromJson(Map<String, Object?> json) =>
       _$ClinicInfoModelFromJson(json);
+}
+
+@freezed
+class AppointmentReviewModel with _$AppointmentReviewModel {
+  const factory AppointmentReviewModel({
+    required int id,
+    required String caption,
+    required String message,
+    required int visibility,
+  }) = _AppointmentReviewModel;
+
+  factory AppointmentReviewModel.fromJson(Map<String, Object?> json) =>
+      _$AppointmentReviewModelFromJson(json);
 }
 
 @freezed

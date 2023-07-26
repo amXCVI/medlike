@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlike/modules/appointments/feedback/rating_starts.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
-class SupportForm extends StatelessWidget {
-  const SupportForm({
-    Key? key,
-    required this.controllerTheme,
-    required this.controllerMessage,
-    required this.controllerEmail,
-    required this.formKey,
-  }) : super(key: key);
+import 'captions_list.dart';
 
+class FeedbackForm extends StatelessWidget {
+  const FeedbackForm(
+      {Key? key,
+      required this.ratingValue,
+      required this.setRating,
+      required this.formKey,
+      required this.controllerCaption,
+      required this.controllerMessage,
+      required this.controllerEmail,
+      required this.setCaption})
+      : super(key: key);
+
+  final int ratingValue;
+  final void Function(int e) setRating;
   final GlobalKey<FormState> formKey;
-  final TextEditingController controllerTheme;
+  final TextEditingController controllerCaption;
   final TextEditingController controllerMessage;
   final TextEditingController controllerEmail;
+  final void Function(String e) setCaption;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +33,60 @@ class SupportForm extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16.0),
       child: Form(
         key: formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text('Оцените прием',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.w700)),
+            RatingStarsWidget(ratingValue: ratingValue, setRating: setRating),
+            DropdownMenu<String>(
+              controller: controllerCaption,
+              width: MediaQuery.of(context).size.width - 32,
+              enableFilter: false,
+              // isExpanded: true,
+              label: const Text(
+                'Тема',
+                style: TextStyle(
+                    color: AppColors.lightText,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300),
+              ),
+              trailingIcon: RotatedBox(
+                quarterTurns: 0,
+                child: SvgPicture.asset(
+                  'assets/icons/appointments/trailing_icon.svg',
+                ),
+              ),
+              dropdownMenuEntries: captionsList,
+              inputDecorationTheme: InputDecorationTheme(
+                labelStyle: const TextStyle(
+                    color: AppColors.lightText,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300),
+                floatingLabelStyle: TextStyle(
+                    color: controllerCaption.text.isEmpty
+                        ? AppColors.lightText
+                        : AppColors.mainText,
+                    fontWeight: FontWeight.w300),
+                floatingLabelAlignment: FloatingLabelAlignment.start,
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: AppColors.lightText),
+              ),
+              menuStyle: MenuStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).colorScheme.background)),
+              onSelected: (String? e) {
+                setCaption(e.toString());
+              },
+            ),
             TapOutsideDetectorWidget(
               onTappedOutside: unFocus,
               child: TextFormField(
@@ -71,14 +130,14 @@ class SupportForm extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             TapOutsideDetectorWidget(
               onTappedOutside: unFocus,
               child: TextFormField(
                 controller: controllerMessage,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
-                  labelText: 'Сообщение',
+                  labelText: 'Отзыв',
                   labelStyle: const TextStyle(
                       color: AppColors.lightText,
                       fontSize: 17,

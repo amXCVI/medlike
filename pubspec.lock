@@ -554,9 +554,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: dev
-      resolved-ref: aba956bae35433ad82a6aefea7f915222aa66888
-      url: "../flutter_holo_date_picker"
+      ref: "intl0.18.0"
+      resolved-ref: "3a8c06368bb7c23ab4f09f66ef3a10e9fd072481"
+      url: "git@10.5.55.13:Medotrade/medlike_flutter/flutter_holo_date_picker.git"
     source: git
     version: "1.0.6"
   flutter_launcher_icons:

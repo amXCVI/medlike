@@ -463,6 +463,26 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    AppointmentDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<AppointmentDetailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AppointmentDetailPage(
+          key: args.key,
+          appointmentItem: args.appointmentItem,
+        ),
+      );
+    },
+    FeedbackRoute.name: (routeData) {
+      final args = routeData.argsAs<FeedbackRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FeedbackPage(
+          key: args.key,
+          appointmentId: args.appointmentId,
+        ),
+      );
+    },
   };
 }
 
@@ -2110,5 +2130,81 @@ class PasswordRouteArgs {
   @override
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
+  }
+}
+
+/// generated route for
+/// [AppointmentDetailPage]
+class AppointmentDetailRoute extends PageRouteInfo<AppointmentDetailRouteArgs> {
+  AppointmentDetailRoute({
+    Key? key,
+    required AppointmentModel appointmentItem,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AppointmentDetailRoute.name,
+          args: AppointmentDetailRouteArgs(
+            key: key,
+            appointmentItem: appointmentItem,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AppointmentDetailRoute';
+
+  static const PageInfo<AppointmentDetailRouteArgs> page =
+      PageInfo<AppointmentDetailRouteArgs>(name);
+}
+
+class AppointmentDetailRouteArgs {
+  const AppointmentDetailRouteArgs({
+    this.key,
+    required this.appointmentItem,
+  });
+
+  final Key? key;
+
+  final AppointmentModel appointmentItem;
+
+  @override
+  String toString() {
+    return 'AppointmentDetailRouteArgs{key: $key, appointmentItem: $appointmentItem}';
+  }
+}
+
+/// generated route for
+/// [FeedbackPage]
+class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
+  FeedbackRoute({
+    Key? key,
+    required String appointmentId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FeedbackRoute.name,
+          args: FeedbackRouteArgs(
+            key: key,
+            appointmentId: appointmentId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FeedbackRoute';
+
+  static const PageInfo<FeedbackRouteArgs> page =
+      PageInfo<FeedbackRouteArgs>(name);
+}
+
+class FeedbackRouteArgs {
+  const FeedbackRouteArgs({
+    this.key,
+    required this.appointmentId,
+  });
+
+  final Key? key;
+
+  final String appointmentId;
+
+  @override
+  String toString() {
+    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId}';
   }
 }
