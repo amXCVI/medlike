@@ -8,7 +8,6 @@ import 'package:medlike/data/repository/documents_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
-import 'package:medlike/modules/documents/documents_mock.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'documents_state.dart';
@@ -37,7 +36,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
     ));
     try {
       final List<DocumentModel> response;
-      response = documentsMock;
+      response = await documentsRepository.getDocumentsList();
       emit(state.copyWith(
         getDocumentsListStatus: GetDocumentsListStatuses.success,
         documentsList: response,
@@ -65,7 +64,10 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
       filteredList = state.documentsList!
           .where((element) => documentsFilters.entries
               .map((e) => e.value.value)
-              .contains(DocumentStatuses.getStatus(element.status).filterValue))
+              .contains(DocumentStatuses.getStatus(
+                isSignByEmployee: element.isSignByEmployee,
+                isSignByPatient: element.isSignByPatient,
+              ).filterValue))
           .toList();
     } else {
       filteredList = state.documentsList ?? [];
@@ -89,9 +91,8 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   void filterDocumentsList(String filterStr) {
     final List<DocumentModel> filteredList;
     filteredList = state.documentsList!
-        .where((element) => element.documentName
-            .toLowerCase()
-            .contains(filterStr.toLowerCase()))
+        .where((element) =>
+            element.name.toLowerCase().contains(filterStr.toLowerCase()))
         .toList();
 
     emit(state.copyWith(
@@ -161,5 +162,12 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
       emit(state.copyWith(
           subscribeDocumentStatuses: SubscribeDocumentStatuses.failed));
     }
+    Future.delayed(const Duration(seconds: 5), () {
+      emit(
+        state.copyWith(
+          subscribeDocumentStatuses: SubscribeDocumentStatuses.initial,
+        ),
+      );
+    });
   }
 }

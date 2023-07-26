@@ -24,6 +24,7 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   File? file;
   late PdfViewerController viewerController = PdfViewerController();
   late int pageCount = 0;
+  late String fileLoadError = '';
 
   @override
   void initState() {
@@ -32,12 +33,19 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   }
 
   Future<void> getFile() async {
-    File f =
-        await context.read<DocumentsCubit>().getDocumentByUrl(widget.pdfUrl);
-    setState(() {
-      file = f;
-      isLoaded = true;
-    });
+    try {
+      File f =
+          await context.read<DocumentsCubit>().getDocumentByUrl(widget.pdfUrl);
+      setState(() {
+        file = f;
+        isLoaded = true;
+      });
+    } catch (err) {
+      setState(() {
+        fileLoadError = err.toString();
+        isLoaded = false;
+      });
+    }
   }
 
   void getPageCount() {
@@ -82,10 +90,12 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
               // Text('data')
             ],
           )
-        : const Center(
-            child: CircularLoader(
-              radius: 50,
-            ),
-          );
+        : fileLoadError.isNotEmpty
+            ? Text('Не удалось загрузить содержимое файла. \n$fileLoadError')
+            : const Center(
+                child: CircularLoader(
+                  radius: 50,
+                ),
+              );
   }
 }

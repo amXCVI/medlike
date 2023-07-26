@@ -7,7 +7,7 @@ class EsiaLoginButton extends StatelessWidget {
   const EsiaLoginButton({Key? key}) : super(key: key);
 
   Future<void> handleTapOnEsiaLogin(BuildContext context) async {
-    context.router.push(const EsiaLoginRoute());
+    context.router.push(EsiaLoginRoute());
   }
 
   @override

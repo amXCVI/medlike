@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
@@ -15,7 +16,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 @RoutePage()
 class EsiaLoginPage extends StatefulWidget {
-  const EsiaLoginPage({Key? key}) : super(key: key);
+  const EsiaLoginPage({
+    Key? key,
+    this.isFromSubscribeDoc = false,
+    this.subscribedDocument,
+  }) : super(key: key);
+
+  final bool isFromSubscribeDoc;
+  final DocumentModel? subscribedDocument;
 
   @override
   State<EsiaLoginPage> createState() => _EsiaLoginPageState();
@@ -43,6 +51,14 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
       await context.read<UserCubit>().esiaAuth(esiaToken).then((esiaAuthRes) {
         if (esiaAuthRes!.isUserExists) {
           // Если чел уже зарегистриррован в системе
+          if (widget.isFromSubscribeDoc) {
+            // Если пришел из подписи документов
+            context.router.push(DocumentRoute(
+              document: widget.subscribedDocument as DocumentModel,
+              isFromEsiaAuthPage: true,
+            ));
+            return;
+          }
           checkIsAcceptedUserAgreements();
         } else {
           context.router.replaceAll([

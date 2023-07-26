@@ -20,13 +20,15 @@ DocumentModel _$DocumentModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DocumentModel {
-  String get documentName => throw _privateConstructorUsedError;
-  String get documentURL => throw _privateConstructorUsedError;
-  int get status => throw _privateConstructorUsedError;
-  String get clinicAddress => throw _privateConstructorUsedError;
-  DateTime get documentSubscribeDate => throw _privateConstructorUsedError;
-  DateTime get documentCreateDate => throw _privateConstructorUsedError;
-  String get userName => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  DocumentMetaLpuModel get lpu => throw _privateConstructorUsedError;
+  DocumentMetaSignEmployerModel? get signEmployer =>
+      throw _privateConstructorUsedError;
+  bool get isSignByPatient => throw _privateConstructorUsedError;
+  DateTime? get signedByPatientAt => throw _privateConstructorUsedError;
+  bool get isSignByEmployee => throw _privateConstructorUsedError;
+  DateTime? get signedByEmployeeAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,13 +43,17 @@ abstract class $DocumentModelCopyWith<$Res> {
       _$DocumentModelCopyWithImpl<$Res, DocumentModel>;
   @useResult
   $Res call(
-      {String documentName,
-      String documentURL,
-      int status,
-      String clinicAddress,
-      DateTime documentSubscribeDate,
-      DateTime documentCreateDate,
-      String userName});
+      {String id,
+      String name,
+      DocumentMetaLpuModel lpu,
+      DocumentMetaSignEmployerModel? signEmployer,
+      bool isSignByPatient,
+      DateTime? signedByPatientAt,
+      bool isSignByEmployee,
+      DateTime? signedByEmployeeAt});
+
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu;
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer;
 }
 
 /// @nodoc
@@ -63,44 +69,70 @@ class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentName = null,
-    Object? documentURL = null,
-    Object? status = null,
-    Object? clinicAddress = null,
-    Object? documentSubscribeDate = null,
-    Object? documentCreateDate = null,
-    Object? userName = null,
+    Object? id = null,
+    Object? name = null,
+    Object? lpu = null,
+    Object? signEmployer = freezed,
+    Object? isSignByPatient = null,
+    Object? signedByPatientAt = freezed,
+    Object? isSignByEmployee = null,
+    Object? signedByEmployeeAt = freezed,
   }) {
     return _then(_value.copyWith(
-      documentName: null == documentName
-          ? _value.documentName
-          : documentName // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      documentURL: null == documentURL
-          ? _value.documentURL
-          : documentURL // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      clinicAddress: null == clinicAddress
-          ? _value.clinicAddress
-          : clinicAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      documentSubscribeDate: null == documentSubscribeDate
-          ? _value.documentSubscribeDate
-          : documentSubscribeDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      documentCreateDate: null == documentCreateDate
-          ? _value.documentCreateDate
-          : documentCreateDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+      lpu: null == lpu
+          ? _value.lpu
+          : lpu // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaLpuModel,
+      signEmployer: freezed == signEmployer
+          ? _value.signEmployer
+          : signEmployer // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaSignEmployerModel?,
+      isSignByPatient: null == isSignByPatient
+          ? _value.isSignByPatient
+          : isSignByPatient // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByPatientAt: freezed == signedByPatientAt
+          ? _value.signedByPatientAt
+          : signedByPatientAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isSignByEmployee: null == isSignByEmployee
+          ? _value.isSignByEmployee
+          : isSignByEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByEmployeeAt: freezed == signedByEmployeeAt
+          ? _value.signedByEmployeeAt
+          : signedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu {
+    return $DocumentMetaLpuModelCopyWith<$Res>(_value.lpu, (value) {
+      return _then(_value.copyWith(lpu: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer {
+    if (_value.signEmployer == null) {
+      return null;
+    }
+
+    return $DocumentMetaSignEmployerModelCopyWith<$Res>(_value.signEmployer!,
+        (value) {
+      return _then(_value.copyWith(signEmployer: value) as $Val);
+    });
   }
 }
 
@@ -113,13 +145,19 @@ abstract class _$$_DocumentModelModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String documentName,
-      String documentURL,
-      int status,
-      String clinicAddress,
-      DateTime documentSubscribeDate,
-      DateTime documentCreateDate,
-      String userName});
+      {String id,
+      String name,
+      DocumentMetaLpuModel lpu,
+      DocumentMetaSignEmployerModel? signEmployer,
+      bool isSignByPatient,
+      DateTime? signedByPatientAt,
+      bool isSignByEmployee,
+      DateTime? signedByEmployeeAt});
+
+  @override
+  $DocumentMetaLpuModelCopyWith<$Res> get lpu;
+  @override
+  $DocumentMetaSignEmployerModelCopyWith<$Res>? get signEmployer;
 }
 
 /// @nodoc
@@ -133,43 +171,48 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentName = null,
-    Object? documentURL = null,
-    Object? status = null,
-    Object? clinicAddress = null,
-    Object? documentSubscribeDate = null,
-    Object? documentCreateDate = null,
-    Object? userName = null,
+    Object? id = null,
+    Object? name = null,
+    Object? lpu = null,
+    Object? signEmployer = freezed,
+    Object? isSignByPatient = null,
+    Object? signedByPatientAt = freezed,
+    Object? isSignByEmployee = null,
+    Object? signedByEmployeeAt = freezed,
   }) {
     return _then(_$_DocumentModelModel(
-      documentName: null == documentName
-          ? _value.documentName
-          : documentName // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      documentURL: null == documentURL
-          ? _value.documentURL
-          : documentURL // ignore: cast_nullable_to_non_nullable
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int,
-      clinicAddress: null == clinicAddress
-          ? _value.clinicAddress
-          : clinicAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      documentSubscribeDate: null == documentSubscribeDate
-          ? _value.documentSubscribeDate
-          : documentSubscribeDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      documentCreateDate: null == documentCreateDate
-          ? _value.documentCreateDate
-          : documentCreateDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      userName: null == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+      lpu: null == lpu
+          ? _value.lpu
+          : lpu // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaLpuModel,
+      signEmployer: freezed == signEmployer
+          ? _value.signEmployer
+          : signEmployer // ignore: cast_nullable_to_non_nullable
+              as DocumentMetaSignEmployerModel?,
+      isSignByPatient: null == isSignByPatient
+          ? _value.isSignByPatient
+          : isSignByPatient // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByPatientAt: freezed == signedByPatientAt
+          ? _value.signedByPatientAt
+          : signedByPatientAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isSignByEmployee: null == isSignByEmployee
+          ? _value.isSignByEmployee
+          : isSignByEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
+      signedByEmployeeAt: freezed == signedByEmployeeAt
+          ? _value.signedByEmployeeAt
+          : signedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -178,35 +221,38 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_DocumentModelModel implements _DocumentModelModel {
   const _$_DocumentModelModel(
-      {required this.documentName,
-      required this.documentURL,
-      required this.status,
-      required this.clinicAddress,
-      required this.documentSubscribeDate,
-      required this.documentCreateDate,
-      required this.userName});
+      {required this.id,
+      required this.name,
+      required this.lpu,
+      required this.signEmployer,
+      required this.isSignByPatient,
+      required this.signedByPatientAt,
+      required this.isSignByEmployee,
+      required this.signedByEmployeeAt});
 
   factory _$_DocumentModelModel.fromJson(Map<String, dynamic> json) =>
       _$$_DocumentModelModelFromJson(json);
 
   @override
-  final String documentName;
+  final String id;
   @override
-  final String documentURL;
+  final String name;
   @override
-  final int status;
+  final DocumentMetaLpuModel lpu;
   @override
-  final String clinicAddress;
+  final DocumentMetaSignEmployerModel? signEmployer;
   @override
-  final DateTime documentSubscribeDate;
+  final bool isSignByPatient;
   @override
-  final DateTime documentCreateDate;
+  final DateTime? signedByPatientAt;
   @override
-  final String userName;
+  final bool isSignByEmployee;
+  @override
+  final DateTime? signedByEmployeeAt;
 
   @override
   String toString() {
-    return 'DocumentModel(documentName: $documentName, documentURL: $documentURL, status: $status, clinicAddress: $clinicAddress, documentSubscribeDate: $documentSubscribeDate, documentCreateDate: $documentCreateDate, userName: $userName)';
+    return 'DocumentModel(id: $id, name: $name, lpu: $lpu, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
   }
 
   @override
@@ -214,32 +260,25 @@ class _$_DocumentModelModel implements _DocumentModelModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentModelModel &&
-            (identical(other.documentName, documentName) ||
-                other.documentName == documentName) &&
-            (identical(other.documentURL, documentURL) ||
-                other.documentURL == documentURL) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.clinicAddress, clinicAddress) ||
-                other.clinicAddress == clinicAddress) &&
-            (identical(other.documentSubscribeDate, documentSubscribeDate) ||
-                other.documentSubscribeDate == documentSubscribeDate) &&
-            (identical(other.documentCreateDate, documentCreateDate) ||
-                other.documentCreateDate == documentCreateDate) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.lpu, lpu) || other.lpu == lpu) &&
+            (identical(other.signEmployer, signEmployer) ||
+                other.signEmployer == signEmployer) &&
+            (identical(other.isSignByPatient, isSignByPatient) ||
+                other.isSignByPatient == isSignByPatient) &&
+            (identical(other.signedByPatientAt, signedByPatientAt) ||
+                other.signedByPatientAt == signedByPatientAt) &&
+            (identical(other.isSignByEmployee, isSignByEmployee) ||
+                other.isSignByEmployee == isSignByEmployee) &&
+            (identical(other.signedByEmployeeAt, signedByEmployeeAt) ||
+                other.signedByEmployeeAt == signedByEmployeeAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      documentName,
-      documentURL,
-      status,
-      clinicAddress,
-      documentSubscribeDate,
-      documentCreateDate,
-      userName);
+  int get hashCode => Object.hash(runtimeType, id, name, lpu, signEmployer,
+      isSignByPatient, signedByPatientAt, isSignByEmployee, signedByEmployeeAt);
 
   @JsonKey(ignore: true)
   @override
@@ -258,31 +297,34 @@ class _$_DocumentModelModel implements _DocumentModelModel {
 
 abstract class _DocumentModelModel implements DocumentModel {
   const factory _DocumentModelModel(
-      {required final String documentName,
-      required final String documentURL,
-      required final int status,
-      required final String clinicAddress,
-      required final DateTime documentSubscribeDate,
-      required final DateTime documentCreateDate,
-      required final String userName}) = _$_DocumentModelModel;
+      {required final String id,
+      required final String name,
+      required final DocumentMetaLpuModel lpu,
+      required final DocumentMetaSignEmployerModel? signEmployer,
+      required final bool isSignByPatient,
+      required final DateTime? signedByPatientAt,
+      required final bool isSignByEmployee,
+      required final DateTime? signedByEmployeeAt}) = _$_DocumentModelModel;
 
   factory _DocumentModelModel.fromJson(Map<String, dynamic> json) =
       _$_DocumentModelModel.fromJson;
 
   @override
-  String get documentName;
+  String get id;
   @override
-  String get documentURL;
+  String get name;
   @override
-  int get status;
+  DocumentMetaLpuModel get lpu;
   @override
-  String get clinicAddress;
+  DocumentMetaSignEmployerModel? get signEmployer;
   @override
-  DateTime get documentSubscribeDate;
+  bool get isSignByPatient;
   @override
-  DateTime get documentCreateDate;
+  DateTime? get signedByPatientAt;
   @override
-  String get userName;
+  bool get isSignByEmployee;
+  @override
+  DateTime? get signedByEmployeeAt;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentModelModelCopyWith<_$_DocumentModelModel> get copyWith =>
@@ -306,7 +348,7 @@ mixin _$DocumentMetaModel {
   bool get isSignByPatient => throw _privateConstructorUsedError;
   DateTime? get signedByPatientAt => throw _privateConstructorUsedError;
   bool get isSignByEmployee => throw _privateConstructorUsedError;
-  DateTime? get SignedByEmployeeAt => throw _privateConstructorUsedError;
+  DateTime? get signedByEmployeeAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -330,7 +372,7 @@ abstract class $DocumentMetaModelCopyWith<$Res> {
       bool isSignByPatient,
       DateTime? signedByPatientAt,
       bool isSignByEmployee,
-      DateTime? SignedByEmployeeAt});
+      DateTime? signedByEmployeeAt});
 
   $DocumentMetaLpuModelCopyWith<$Res> get lpu;
   $DocumentMetaPatientModelCopyWith<$Res> get patient;
@@ -360,7 +402,7 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
     Object? isSignByEmployee = null,
-    Object? SignedByEmployeeAt = freezed,
+    Object? signedByEmployeeAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -399,9 +441,9 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
           ? _value.isSignByEmployee
           : isSignByEmployee // ignore: cast_nullable_to_non_nullable
               as bool,
-      SignedByEmployeeAt: freezed == SignedByEmployeeAt
-          ? _value.SignedByEmployeeAt
-          : SignedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+      signedByEmployeeAt: freezed == signedByEmployeeAt
+          ? _value.signedByEmployeeAt
+          : signedByEmployeeAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
   }
@@ -467,7 +509,7 @@ abstract class _$$_DocumentMetaModelCopyWith<$Res>
       bool isSignByPatient,
       DateTime? signedByPatientAt,
       bool isSignByEmployee,
-      DateTime? SignedByEmployeeAt});
+      DateTime? signedByEmployeeAt});
 
   @override
   $DocumentMetaLpuModelCopyWith<$Res> get lpu;
@@ -499,7 +541,7 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
     Object? isSignByEmployee = null,
-    Object? SignedByEmployeeAt = freezed,
+    Object? signedByEmployeeAt = freezed,
   }) {
     return _then(_$_DocumentMetaModel(
       id: null == id
@@ -538,9 +580,9 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
           ? _value.isSignByEmployee
           : isSignByEmployee // ignore: cast_nullable_to_non_nullable
               as bool,
-      SignedByEmployeeAt: freezed == SignedByEmployeeAt
-          ? _value.SignedByEmployeeAt
-          : SignedByEmployeeAt // ignore: cast_nullable_to_non_nullable
+      signedByEmployeeAt: freezed == signedByEmployeeAt
+          ? _value.signedByEmployeeAt
+          : signedByEmployeeAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ));
   }
@@ -559,7 +601,7 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
       required this.isSignByPatient,
       required this.signedByPatientAt,
       required this.isSignByEmployee,
-      required this.SignedByEmployeeAt});
+      required this.signedByEmployeeAt});
 
   factory _$_DocumentMetaModel.fromJson(Map<String, dynamic> json) =>
       _$$_DocumentMetaModelFromJson(json);
@@ -583,11 +625,11 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
   @override
   final bool isSignByEmployee;
   @override
-  final DateTime? SignedByEmployeeAt;
+  final DateTime? signedByEmployeeAt;
 
   @override
   String toString() {
-    return 'DocumentMetaModel(id: $id, name: $name, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, SignedByEmployeeAt: $SignedByEmployeeAt)';
+    return 'DocumentMetaModel(id: $id, name: $name, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
   }
 
   @override
@@ -609,8 +651,8 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
                 other.signedByPatientAt == signedByPatientAt) &&
             (identical(other.isSignByEmployee, isSignByEmployee) ||
                 other.isSignByEmployee == isSignByEmployee) &&
-            (identical(other.SignedByEmployeeAt, SignedByEmployeeAt) ||
-                other.SignedByEmployeeAt == SignedByEmployeeAt));
+            (identical(other.signedByEmployeeAt, signedByEmployeeAt) ||
+                other.signedByEmployeeAt == signedByEmployeeAt));
   }
 
   @JsonKey(ignore: true)
@@ -626,7 +668,7 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
       isSignByPatient,
       signedByPatientAt,
       isSignByEmployee,
-      SignedByEmployeeAt);
+      signedByEmployeeAt);
 
   @JsonKey(ignore: true)
   @override
@@ -654,7 +696,7 @@ abstract class _DocumentMetaModel implements DocumentMetaModel {
       required final bool isSignByPatient,
       required final DateTime? signedByPatientAt,
       required final bool isSignByEmployee,
-      required final DateTime? SignedByEmployeeAt}) = _$_DocumentMetaModel;
+      required final DateTime? signedByEmployeeAt}) = _$_DocumentMetaModel;
 
   factory _DocumentMetaModel.fromJson(Map<String, dynamic> json) =
       _$_DocumentMetaModel.fromJson;
@@ -678,7 +720,7 @@ abstract class _DocumentMetaModel implements DocumentMetaModel {
   @override
   bool get isSignByEmployee;
   @override
-  DateTime? get SignedByEmployeeAt;
+  DateTime? get signedByEmployeeAt;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentMetaModelCopyWith<_$_DocumentMetaModel> get copyWith =>
@@ -691,6 +733,7 @@ DocumentMetaLpuModel _$DocumentMetaLpuModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DocumentMetaLpuModel {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
 
@@ -706,7 +749,7 @@ abstract class $DocumentMetaLpuModelCopyWith<$Res> {
           $Res Function(DocumentMetaLpuModel) then) =
       _$DocumentMetaLpuModelCopyWithImpl<$Res, DocumentMetaLpuModel>;
   @useResult
-  $Res call({String name, String address});
+  $Res call({String id, String name, String address});
 }
 
 /// @nodoc
@@ -723,10 +766,15 @@ class _$DocumentMetaLpuModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? address = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -747,7 +795,7 @@ abstract class _$$_DocumentMetaLpuModelCopyWith<$Res>
       __$$_DocumentMetaLpuModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String address});
+  $Res call({String id, String name, String address});
 }
 
 /// @nodoc
@@ -761,10 +809,15 @@ class __$$_DocumentMetaLpuModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? address = null,
   }) {
     return _then(_$_DocumentMetaLpuModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -780,11 +833,14 @@ class __$$_DocumentMetaLpuModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_DocumentMetaLpuModel implements _DocumentMetaLpuModel {
-  const _$_DocumentMetaLpuModel({required this.name, required this.address});
+  const _$_DocumentMetaLpuModel(
+      {required this.id, required this.name, required this.address});
 
   factory _$_DocumentMetaLpuModel.fromJson(Map<String, dynamic> json) =>
       _$$_DocumentMetaLpuModelFromJson(json);
 
+  @override
+  final String id;
   @override
   final String name;
   @override
@@ -792,7 +848,7 @@ class _$_DocumentMetaLpuModel implements _DocumentMetaLpuModel {
 
   @override
   String toString() {
-    return 'DocumentMetaLpuModel(name: $name, address: $address)';
+    return 'DocumentMetaLpuModel(id: $id, name: $name, address: $address)';
   }
 
   @override
@@ -800,13 +856,14 @@ class _$_DocumentMetaLpuModel implements _DocumentMetaLpuModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentMetaLpuModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, address);
+  int get hashCode => Object.hash(runtimeType, id, name, address);
 
   @JsonKey(ignore: true)
   @override
@@ -825,12 +882,15 @@ class _$_DocumentMetaLpuModel implements _DocumentMetaLpuModel {
 
 abstract class _DocumentMetaLpuModel implements DocumentMetaLpuModel {
   const factory _DocumentMetaLpuModel(
-      {required final String name,
+      {required final String id,
+      required final String name,
       required final String address}) = _$_DocumentMetaLpuModel;
 
   factory _DocumentMetaLpuModel.fromJson(Map<String, dynamic> json) =
       _$_DocumentMetaLpuModel.fromJson;
 
+  @override
+  String get id;
   @override
   String get name;
   @override

@@ -9,26 +9,34 @@ part of 'document_models.dart';
 _$_DocumentModelModel _$$_DocumentModelModelFromJson(
         Map<String, dynamic> json) =>
     _$_DocumentModelModel(
-      documentName: json['documentName'] as String,
-      documentURL: json['documentURL'] as String,
-      status: json['status'] as int,
-      clinicAddress: json['clinicAddress'] as String,
-      documentSubscribeDate:
-          DateTime.parse(json['documentSubscribeDate'] as String),
-      documentCreateDate: DateTime.parse(json['documentCreateDate'] as String),
-      userName: json['userName'] as String,
+      id: json['id'] as String,
+      name: json['name'] as String,
+      lpu: DocumentMetaLpuModel.fromJson(json['lpu'] as Map<String, dynamic>),
+      signEmployer: json['signEmployer'] == null
+          ? null
+          : DocumentMetaSignEmployerModel.fromJson(
+              json['signEmployer'] as Map<String, dynamic>),
+      isSignByPatient: json['isSignByPatient'] as bool,
+      signedByPatientAt: json['signedByPatientAt'] == null
+          ? null
+          : DateTime.parse(json['signedByPatientAt'] as String),
+      isSignByEmployee: json['isSignByEmployee'] as bool,
+      signedByEmployeeAt: json['signedByEmployeeAt'] == null
+          ? null
+          : DateTime.parse(json['signedByEmployeeAt'] as String),
     );
 
 Map<String, dynamic> _$$_DocumentModelModelToJson(
         _$_DocumentModelModel instance) =>
     <String, dynamic>{
-      'documentName': instance.documentName,
-      'documentURL': instance.documentURL,
-      'status': instance.status,
-      'clinicAddress': instance.clinicAddress,
-      'documentSubscribeDate': instance.documentSubscribeDate.toIso8601String(),
-      'documentCreateDate': instance.documentCreateDate.toIso8601String(),
-      'userName': instance.userName,
+      'id': instance.id,
+      'name': instance.name,
+      'lpu': instance.lpu,
+      'signEmployer': instance.signEmployer,
+      'isSignByPatient': instance.isSignByPatient,
+      'signedByPatientAt': instance.signedByPatientAt?.toIso8601String(),
+      'isSignByEmployee': instance.isSignByEmployee,
+      'signedByEmployeeAt': instance.signedByEmployeeAt?.toIso8601String(),
     };
 
 _$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
@@ -51,9 +59,9 @@ _$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['signedByPatientAt'] as String),
       isSignByEmployee: json['isSignByEmployee'] as bool,
-      SignedByEmployeeAt: json['SignedByEmployeeAt'] == null
+      signedByEmployeeAt: json['signedByEmployeeAt'] == null
           ? null
-          : DateTime.parse(json['SignedByEmployeeAt'] as String),
+          : DateTime.parse(json['signedByEmployeeAt'] as String),
     );
 
 Map<String, dynamic> _$$_DocumentMetaModelToJson(
@@ -68,12 +76,13 @@ Map<String, dynamic> _$$_DocumentMetaModelToJson(
       'isSignByPatient': instance.isSignByPatient,
       'signedByPatientAt': instance.signedByPatientAt?.toIso8601String(),
       'isSignByEmployee': instance.isSignByEmployee,
-      'SignedByEmployeeAt': instance.SignedByEmployeeAt?.toIso8601String(),
+      'signedByEmployeeAt': instance.signedByEmployeeAt?.toIso8601String(),
     };
 
 _$_DocumentMetaLpuModel _$$_DocumentMetaLpuModelFromJson(
         Map<String, dynamic> json) =>
     _$_DocumentMetaLpuModel(
+      id: json['id'] as String,
       name: json['name'] as String,
       address: json['address'] as String,
     );
@@ -81,6 +90,7 @@ _$_DocumentMetaLpuModel _$$_DocumentMetaLpuModelFromJson(
 Map<String, dynamic> _$$_DocumentMetaLpuModelToJson(
         _$_DocumentMetaLpuModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'address': instance.address,
     };

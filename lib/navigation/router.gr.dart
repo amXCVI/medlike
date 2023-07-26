@@ -353,6 +353,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: DocumentPage(
           key: args.key,
           document: args.document,
+          isFromEsiaAuthPage: args.isFromEsiaAuthPage,
         ),
       );
     },
@@ -380,9 +381,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EsiaLoginRoute.name: (routeData) {
+      final args = routeData.argsAs<EsiaLoginRouteArgs>(
+          orElse: () => const EsiaLoginRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EsiaLoginPage(),
+        child: EsiaLoginPage(
+          key: args.key,
+          isFromSubscribeDoc: args.isFromSubscribeDoc,
+          subscribedDocument: args.subscribedDocument,
+        ),
       );
     },
     EsiaRegisterRoute.name: (routeData) {
@@ -1707,12 +1714,14 @@ class DocumentRoute extends PageRouteInfo<DocumentRouteArgs> {
   DocumentRoute({
     Key? key,
     required DocumentModel document,
+    bool isFromEsiaAuthPage = false,
     List<PageRouteInfo>? children,
   }) : super(
           DocumentRoute.name,
           args: DocumentRouteArgs(
             key: key,
             document: document,
+            isFromEsiaAuthPage: isFromEsiaAuthPage,
           ),
           initialChildren: children,
         );
@@ -1727,15 +1736,18 @@ class DocumentRouteArgs {
   const DocumentRouteArgs({
     this.key,
     required this.document,
+    this.isFromEsiaAuthPage = false,
   });
 
   final Key? key;
 
   final DocumentModel document;
 
+  final bool isFromEsiaAuthPage;
+
   @override
   String toString() {
-    return 'DocumentRouteArgs{key: $key, document: $document}';
+    return 'DocumentRouteArgs{key: $key, document: $document, isFromEsiaAuthPage: $isFromEsiaAuthPage}';
   }
 }
 
@@ -1807,16 +1819,45 @@ class UnauthSupportRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EsiaLoginPage]
-class EsiaLoginRoute extends PageRouteInfo<void> {
-  const EsiaLoginRoute({List<PageRouteInfo>? children})
-      : super(
+class EsiaLoginRoute extends PageRouteInfo<EsiaLoginRouteArgs> {
+  EsiaLoginRoute({
+    Key? key,
+    bool isFromSubscribeDoc = false,
+    DocumentModel? subscribedDocument,
+    List<PageRouteInfo>? children,
+  }) : super(
           EsiaLoginRoute.name,
+          args: EsiaLoginRouteArgs(
+            key: key,
+            isFromSubscribeDoc: isFromSubscribeDoc,
+            subscribedDocument: subscribedDocument,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EsiaLoginRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<EsiaLoginRouteArgs> page =
+      PageInfo<EsiaLoginRouteArgs>(name);
+}
+
+class EsiaLoginRouteArgs {
+  const EsiaLoginRouteArgs({
+    this.key,
+    this.isFromSubscribeDoc = false,
+    this.subscribedDocument,
+  });
+
+  final Key? key;
+
+  final bool isFromSubscribeDoc;
+
+  final DocumentModel? subscribedDocument;
+
+  @override
+  String toString() {
+    return 'EsiaLoginRouteArgs{key: $key, isFromSubscribeDoc: $isFromSubscribeDoc, subscribedDocument: $subscribedDocument}';
+  }
 }
 
 /// generated route for

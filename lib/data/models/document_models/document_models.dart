@@ -7,13 +7,14 @@ part 'document_models.g.dart';
 @freezed
 class DocumentModel with _$DocumentModel {
   const factory DocumentModel({
-    required String documentName,
-    required String documentURL,
-    required int status,
-    required String clinicAddress,
-    required DateTime documentSubscribeDate,
-    required DateTime documentCreateDate,
-    required String userName,
+    required String id,
+    required String name,
+    required DocumentMetaLpuModel lpu,
+    required DocumentMetaSignEmployerModel? signEmployer,
+    required bool isSignByPatient,
+    required DateTime? signedByPatientAt,
+    required bool isSignByEmployee,
+    required DateTime? signedByEmployeeAt,
   }) = _DocumentModelModel;
 
   factory DocumentModel.fromJson(Map<String, Object?> json) =>
@@ -32,7 +33,7 @@ class DocumentMetaModel with _$DocumentMetaModel {
     required bool isSignByPatient,
     required DateTime? signedByPatientAt,
     required bool isSignByEmployee,
-    required DateTime? SignedByEmployeeAt,
+    required DateTime? signedByEmployeeAt,
   }) = _DocumentMetaModel;
 
   factory DocumentMetaModel.fromJson(Map<String, Object?> json) =>
@@ -42,6 +43,7 @@ class DocumentMetaModel with _$DocumentMetaModel {
 @freezed
 class DocumentMetaLpuModel with _$DocumentMetaLpuModel {
   const factory DocumentMetaLpuModel({
+    required String id,
     required String name,
     required String address,
   }) = _DocumentMetaLpuModel;
