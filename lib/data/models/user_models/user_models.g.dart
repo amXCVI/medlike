@@ -107,6 +107,7 @@ _$_UserProfile _$$_UserProfileFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['birthday'] as String),
       avatar: json['avatar'] as String?,
+      phone: json['phone'] as String?,
       clinics: (json['clinics'] as List<dynamic>)
           .map((e) => UserProfileClinic.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -121,6 +122,7 @@ Map<String, dynamic> _$$_UserProfileToJson(_$_UserProfile instance) =>
       'lastName': instance.lastName,
       'birthday': instance.birthday?.toIso8601String(),
       'avatar': instance.avatar,
+      'phone': instance.phone,
       'clinics': instance.clinics,
     };
 
