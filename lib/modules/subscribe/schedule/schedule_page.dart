@@ -182,91 +182,98 @@ class _SchedulePageState extends State<SchedulePage> {
           _getCellsList(isRefresh: true);
         }
 
-        return DefaultScaffold(
-          appBarTitle: widget.pageTitle,
-          appBarSubtitle: widget.pageSubtitle,
-          isChildrenPage: true,
-          actions: widget.doctorId != null
-              ? [
-                  FavoriteDoctorButton(
-                    userId: widget.userId,
-                    buildingId: widget.buildingId,
-                    clinicId: widget.clinicId,
-                    doctorId: widget.doctorId as String,
-                    categoryTypeId: widget.categoryTypeId,
-                    isFavorite: state.selectedDoctor != null
-                        ? state.selectedDoctor!.isFavorite
-                        : false,
-                  )
-                ]
-              : [],
-          child: RefreshIndicator(
-            onRefresh: () => _onRefreshData(),
-            child: DefaultScrollbar(
-              child: ListView(
-                children: [
-                  state.getCalendarStatus == GetCalendarStatuses.failed
-                      ? const Text('')
-                      : Calendar(
-                          isLoading: state.getCalendarStatus ==
-                                  GetCalendarStatuses.loading
-                              ? true
-                              : false,
-                          startDate: state.startDate,
-                          endDate: state.endDate,
-                          selectedDate: state.selectedDate,
-                          calendarList: state.getCalendarStatus ==
-                                  GetCalendarStatuses.success
-                              ? state.calendarList as List<CalendarModel>
-                              : [],
-                          onChangeSelectedDate: _setSelectedDate,
-                          onChangeStartDate: _setStartDate,
-                          onChangeEndDate: _setEndDate,
-                          firstDay: DateTime.now(),
-                        ),
-                  state.getTimetableCellsStatus ==
-                              GetTimetableCellsStatuses.success &&
-                          state.timetableCellsList!.isEmpty
-                      ? const NotFoundData(text: 'Нет свободного времени')
-                      : const SizedBox(),
-                  state.getTimetableCellsStatus ==
-                          GetTimetableCellsStatuses.success
-                      ? TimeCellsList(
-                          timetableCellsList: state.timetableCellsList
-                              as List<TimetableCellModel>,
-                          selectedTimetableCellId:
-                              state.selectedTimetableCell != null
-                                  ? state.selectedTimetableCell!.scheduleId
-                                  : '',
-                          timezoneHours: clinic?.timeZoneOffset,
-                          handleTapOnCell: (model) => _handleTapOnCell(
-                            model,
-                            isDoctorSelected: state.selectedDoctor != null 
-                              && state.selectedDoctor != Doctor.emptyDoctor
+        return WillPopScope(
+          onWillPop: () async {
+            context.read<SubscribeCubit>().clearSelectedDoctor();
+            Navigator.pop(context);
+            return false;
+          },
+          child: DefaultScaffold(
+            appBarTitle: widget.pageTitle,
+            appBarSubtitle: widget.pageSubtitle,
+            isChildrenPage: true,
+            actions: widget.doctorId != null
+                ? [
+                    FavoriteDoctorButton(
+                      userId: widget.userId,
+                      buildingId: widget.buildingId,
+                      clinicId: widget.clinicId,
+                      doctorId: widget.doctorId as String,
+                      categoryTypeId: widget.categoryTypeId,
+                      isFavorite: state.selectedDoctor != null
+                          ? state.selectedDoctor!.isFavorite
+                          : false,
+                    )
+                  ]
+                : [],
+            child: RefreshIndicator(
+              onRefresh: () => _onRefreshData(),
+              child: DefaultScrollbar(
+                child: ListView(
+                  children: [
+                    state.getCalendarStatus == GetCalendarStatuses.failed
+                        ? const Text('')
+                        : Calendar(
+                            isLoading: state.getCalendarStatus ==
+                                    GetCalendarStatuses.loading
+                                ? true
+                                : false,
+                            startDate: state.startDate,
+                            endDate: state.endDate,
+                            selectedDate: state.selectedDate,
+                            calendarList: state.getCalendarStatus ==
+                                    GetCalendarStatuses.success
+                                ? state.calendarList as List<CalendarModel>
+                                : [],
+                            onChangeSelectedDate: _setSelectedDate,
+                            onChangeStartDate: _setStartDate,
+                            onChangeEndDate: _setEndDate,
+                            firstDay: DateTime.now(),
                           ),
-                        )
-                      : state.getTimetableCellsStatus ==
-                                  GetTimetableCellsStatuses.loading &&
-                              state.selectedCalendarItem != null &&
-                              clinicsList != null &&
-                              state.selectedCalendarItem!.hasAvailableCells
-                          ? const TimeCellsListSkeleton()
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 50),
-                              child: Center(
-                                child: Text(
-                                  'Нет свободного времени',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(color: AppColors.lightText),
-                                ),
-                              )),
-                 AppointmentsListWidget(
-                    selectedDate: state.selectedDate,
-                    userId: widget.userId,
-                  ),
-                ],
+                    state.getTimetableCellsStatus ==
+                                GetTimetableCellsStatuses.success &&
+                            state.timetableCellsList!.isEmpty
+                        ? const NotFoundData(text: 'Нет свободного времени')
+                        : const SizedBox(),
+                    state.getTimetableCellsStatus ==
+                            GetTimetableCellsStatuses.success
+                        ? TimeCellsList(
+                            timetableCellsList: state.timetableCellsList
+                                as List<TimetableCellModel>,
+                            selectedTimetableCellId:
+                                state.selectedTimetableCell != null
+                                    ? state.selectedTimetableCell!.scheduleId
+                                    : '',
+                            timezoneHours: clinic?.timeZoneOffset,
+                            handleTapOnCell: (model) => _handleTapOnCell(
+                              model,
+                              isDoctorSelected: state.selectedDoctor != null 
+                                && state.selectedDoctor != Doctor.emptyDoctor
+                            ),
+                          )
+                        : state.getTimetableCellsStatus ==
+                                    GetTimetableCellsStatuses.loading &&
+                                state.selectedCalendarItem != null &&
+                                clinicsList != null &&
+                                state.selectedCalendarItem!.hasAvailableCells
+                            ? const TimeCellsListSkeleton()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 50),
+                                child: Center(
+                                  child: Text(
+                                    'Нет свободного времени',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(color: AppColors.lightText),
+                                  ),
+                                )),
+                   AppointmentsListWidget(
+                      selectedDate: state.selectedDate,
+                      userId: widget.userId,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
