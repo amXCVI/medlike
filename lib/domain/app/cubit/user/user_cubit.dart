@@ -183,7 +183,15 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           tryCount: 5,
           esiaAuthToken: esiaToken,
         ));
-        getUserProfiles(true);
+        getUserProfiles(true).then((value) {
+          // Сохраняем номер первого из профилей как номер владельца аккаунта. Сомнительно.
+          if (value != null && value.isNotEmpty) {
+            savePhoneNumber(value[0].phone!);
+            emit(state.copyWith(
+              userPhoneNumber: value[0].phone!,
+            ));
+          }
+        });
         return response;
       }
     } on DioException catch (e) {

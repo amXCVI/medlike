@@ -84,6 +84,7 @@ class UserProfile with _$UserProfile {
     String? lastName,
     DateTime? birthday,
     String? avatar,
+    String? phone,
     required List<UserProfileClinic> clinics,
   }) = _UserProfile;
 
