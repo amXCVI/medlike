@@ -936,9 +936,11 @@ mixin _$Doctor {
   List<int> get categories => throw _privateConstructorUsedError;
   String? get imagePreviewLocation => throw _privateConstructorUsedError;
   String? get imageFullSizeLocation => throw _privateConstructorUsedError;
-  num get avergareRating => throw _privateConstructorUsedError;
-  List<AssessmentModel> get assessments => throw _privateConstructorUsedError;
+  num get avergareRating =>
+      throw _privateConstructorUsedError; // required List<AssessmentModel> assessments,
   String? get shortinfo => throw _privateConstructorUsedError;
+  num get rateAsSotr => throw _privateConstructorUsedError;
+  num get rateAsUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -964,8 +966,9 @@ abstract class $DoctorCopyWith<$Res> {
       String? imagePreviewLocation,
       String? imageFullSizeLocation,
       num avergareRating,
-      List<AssessmentModel> assessments,
-      String? shortinfo});
+      String? shortinfo,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -994,8 +997,9 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
     Object? imagePreviewLocation = freezed,
     Object? imageFullSizeLocation = freezed,
     Object? avergareRating = null,
-    Object? assessments = null,
     Object? shortinfo = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1050,14 +1054,18 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
           ? _value.avergareRating
           : avergareRating // ignore: cast_nullable_to_non_nullable
               as num,
-      assessments: null == assessments
-          ? _value.assessments
-          : assessments // ignore: cast_nullable_to_non_nullable
-              as List<AssessmentModel>,
       shortinfo: freezed == shortinfo
           ? _value.shortinfo
           : shortinfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ) as $Val);
   }
 }
@@ -1082,8 +1090,9 @@ abstract class _$$_DoctorCopyWith<$Res> implements $DoctorCopyWith<$Res> {
       String? imagePreviewLocation,
       String? imageFullSizeLocation,
       num avergareRating,
-      List<AssessmentModel> assessments,
-      String? shortinfo});
+      String? shortinfo,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -1109,8 +1118,9 @@ class __$$_DoctorCopyWithImpl<$Res>
     Object? imagePreviewLocation = freezed,
     Object? imageFullSizeLocation = freezed,
     Object? avergareRating = null,
-    Object? assessments = null,
     Object? shortinfo = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_$_Doctor(
       id: null == id
@@ -1165,14 +1175,18 @@ class __$$_DoctorCopyWithImpl<$Res>
           ? _value.avergareRating
           : avergareRating // ignore: cast_nullable_to_non_nullable
               as num,
-      assessments: null == assessments
-          ? _value._assessments
-          : assessments // ignore: cast_nullable_to_non_nullable
-              as List<AssessmentModel>,
       shortinfo: freezed == shortinfo
           ? _value.shortinfo
           : shortinfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -1194,10 +1208,10 @@ class _$_Doctor implements _Doctor {
       required this.imagePreviewLocation,
       required this.imageFullSizeLocation,
       required this.avergareRating,
-      required final List<AssessmentModel> assessments,
-      required this.shortinfo})
-      : _categories = categories,
-        _assessments = assessments;
+      required this.shortinfo,
+      required this.rateAsSotr,
+      required this.rateAsUser})
+      : _categories = categories;
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1234,20 +1248,17 @@ class _$_Doctor implements _Doctor {
   final String? imageFullSizeLocation;
   @override
   final num avergareRating;
-  final List<AssessmentModel> _assessments;
-  @override
-  List<AssessmentModel> get assessments {
-    if (_assessments is EqualUnmodifiableListView) return _assessments;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_assessments);
-  }
-
+// required List<AssessmentModel> assessments,
   @override
   final String? shortinfo;
+  @override
+  final num rateAsSotr;
+  @override
+  final num rateAsUser;
 
   @override
   String toString() {
-    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, avergareRating: $avergareRating, assessments: $assessments, shortinfo: $shortinfo)';
+    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, avergareRating: $avergareRating, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -1279,10 +1290,12 @@ class _$_Doctor implements _Doctor {
                 other.imageFullSizeLocation == imageFullSizeLocation) &&
             (identical(other.avergareRating, avergareRating) ||
                 other.avergareRating == avergareRating) &&
-            const DeepCollectionEquality()
-                .equals(other._assessments, _assessments) &&
             (identical(other.shortinfo, shortinfo) ||
-                other.shortinfo == shortinfo));
+                other.shortinfo == shortinfo) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser));
   }
 
   @JsonKey(ignore: true)
@@ -1302,8 +1315,9 @@ class _$_Doctor implements _Doctor {
       imagePreviewLocation,
       imageFullSizeLocation,
       avergareRating,
-      const DeepCollectionEquality().hash(_assessments),
-      shortinfo);
+      shortinfo,
+      rateAsSotr,
+      rateAsUser);
 
   @JsonKey(ignore: true)
   @override
@@ -1334,8 +1348,9 @@ abstract class _Doctor implements Doctor {
       required final String? imagePreviewLocation,
       required final String? imageFullSizeLocation,
       required final num avergareRating,
-      required final List<AssessmentModel> assessments,
-      required final String? shortinfo}) = _$_Doctor;
+      required final String? shortinfo,
+      required final num rateAsSotr,
+      required final num rateAsUser}) = _$_Doctor;
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 
@@ -1365,10 +1380,12 @@ abstract class _Doctor implements Doctor {
   String? get imageFullSizeLocation;
   @override
   num get avergareRating;
-  @override
-  List<AssessmentModel> get assessments;
-  @override
+  @override // required List<AssessmentModel> assessments,
   String? get shortinfo;
+  @override
+  num get rateAsSotr;
+  @override
+  num get rateAsUser;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorCopyWith<_$_Doctor> get copyWith =>

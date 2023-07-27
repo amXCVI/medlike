@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/appointment_payment_statuses.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
@@ -29,37 +28,15 @@ class AppointmentItem extends StatelessWidget {
             .russianCategoryTypeName;
 
     void handleTapOnAppointment() {
-      context.read<AppointmentsCubit>().getAppointmentById(
+      context
+          .read<AppointmentsCubit>()
+          .getAppointmentById(
             appointmentId: appointmentItem.id,
             userId: appointmentItem.patientInfo.id!,
-          );
-
-      context.router.push(AppointmentDetailRoute(
-        appointmentItem: AppointmentModel(
-          status: appointmentItem.status,
-          needConfirmation: appointmentItem.needConfirmation,
-          comment: appointmentItem.comment,
-          researchPlace: appointmentItem.researchPlace,
-          id: appointmentItem.id,
-          appointmentDateTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
-              .format(appointmentItem.appointmentDateTime),
-          patientInfo: appointmentItem.patientInfo,
-          clinicInfo: appointmentItem.clinicInfo,
-          doctorInfo: appointmentItem.doctorInfo,
-          researches: appointmentItem.researches,
-          categoryType: appointmentItem.categoryType,
-          isVideo: appointmentItem.isVideo,
-          payType: appointmentItem.payType,
-          isDraft: appointmentItem.isDraft,
-          orderId: appointmentItem.orderId,
-          scheduleId: appointmentItem.scheduleId,
-          paymentStatus: appointmentItem.paymentStatus,
-          recommendations: appointmentItem.recommendations,
-          items: appointmentItem.items,
-          checkURI: appointmentItem.checkURI,
-          review: appointmentItem.review,
-        ),
-      ));
+          )
+          .then((value) {
+        context.router.push(AppointmentDetailRoute(appointmentItem: value));
+      });
     }
 
     return Padding(
@@ -129,14 +106,16 @@ class AppointmentItem extends StatelessWidget {
                                   ?.copyWith(color: AppColors.lightText)),
                         ],
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                              'assets/icons/appointments/raiting_gold_star.svg'),
-                          const SizedBox(width: 6),
-                          const Text('4.8')
-                        ],
-                      ),
+                      appointmentItem.review != null
+                          ? Row(
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/icons/appointments/raiting_gold_star.svg'),
+                                const SizedBox(width: 6),
+                                Text(appointmentItem.review!.rate.toString())
+                              ],
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 )

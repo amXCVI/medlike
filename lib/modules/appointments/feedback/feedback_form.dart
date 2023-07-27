@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/modules/appointments/feedback/rating_starts.dart';
+import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/dropdownButton/dropdown_button.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 import 'captions_list.dart';
 
 class FeedbackForm extends StatelessWidget {
-  const FeedbackForm(
-      {Key? key,
-      required this.ratingValue,
-      required this.setRating,
-      required this.formKey,
-      required this.controllerCaption,
-      required this.controllerMessage,
-      required this.controllerEmail,
-      required this.setCaption})
-      : super(key: key);
+  const FeedbackForm({
+    Key? key,
+    required this.ratingValue,
+    required this.setRating,
+    required this.formKey,
+    required this.controllerCaption,
+    required this.controllerMessage,
+    required this.controllerEmail,
+    required this.setCaption,
+    required this.controllerVisible,
+    required this.setVisible,
+    required this.setMessage,
+    required this.setEmail,
+  }) : super(key: key);
 
   final int ratingValue;
   final void Function(int e) setRating;
   final GlobalKey<FormState> formKey;
-  final TextEditingController controllerCaption;
+  final String controllerCaption;
+  final String controllerVisible;
   final TextEditingController controllerMessage;
   final TextEditingController controllerEmail;
   final void Function(String e) setCaption;
+  final void Function(String e) setVisible;
+  final void Function(String e) setMessage;
+  final void Function(String e) setEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -45,52 +54,29 @@ class FeedbackForm extends StatelessWidget {
                     .headlineMedium
                     ?.copyWith(fontWeight: FontWeight.w700)),
             RatingStarsWidget(ratingValue: ratingValue, setRating: setRating),
-            DropdownMenu<String>(
-              controller: controllerCaption,
-              width: MediaQuery.of(context).size.width - 32,
-              enableFilter: false,
-              // isExpanded: true,
-              label: const Text(
-                'Тема',
-                style: TextStyle(
-                    color: AppColors.lightText,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w300),
+            const SizedBox(height: 16),
+            const Text(
+              'Тема',
+              style: TextStyle(
+                color: AppColors.lightText,
+                fontSize: 14,
+                fontWeight: FontWeight.w300,
+                height: 1,
               ),
-              trailingIcon: RotatedBox(
-                quarterTurns: 0,
-                child: SvgPicture.asset(
-                  'assets/icons/appointments/trailing_icon.svg',
-                ),
-              ),
-              dropdownMenuEntries: captionsList,
-              inputDecorationTheme: InputDecorationTheme(
-                labelStyle: const TextStyle(
-                    color: AppColors.lightText,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w300),
-                floatingLabelStyle: TextStyle(
-                    color: controllerCaption.text.isEmpty
-                        ? AppColors.lightText
-                        : AppColors.mainText,
-                    fontWeight: FontWeight.w300),
-                floatingLabelAlignment: FloatingLabelAlignment.start,
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.lightText),
-              ),
-              menuStyle: MenuStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Theme.of(context).colorScheme.background)),
-              onSelected: (String? e) {
-                setCaption(e.toString());
-              },
             ),
+            DropdownButtonWidget(
+              value: controllerCaption,
+              itemsList: captionsList,
+              onChanged: setCaption,
+            ),
+            const SizedBox(height: 16),
             TapOutsideDetectorWidget(
               onTappedOutside: unFocus,
               child: TextFormField(
                 controller: controllerEmail,
+                onChanged: (text) {
+                  setEmail(text);
+                },
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   labelText: 'E-mail',
@@ -108,6 +94,12 @@ class FeedbackForm extends StatelessWidget {
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.mainText),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.mainText),
+                  ),
                 ),
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.start,
@@ -135,6 +127,9 @@ class FeedbackForm extends StatelessWidget {
               onTappedOutside: unFocus,
               child: TextFormField(
                 controller: controllerMessage,
+                onChanged: (text) {
+                  setMessage(text);
+                },
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
                   labelText: 'Отзыв',
@@ -152,6 +147,12 @@ class FeedbackForm extends StatelessWidget {
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.mainText),
+                  ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.mainText),
+                  ),
                 ),
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.start,
@@ -164,6 +165,12 @@ class FeedbackForm extends StatelessWidget {
                   return null;
                 },
               ),
+            ),
+            const SizedBox(height: 32),
+            DropdownButtonWidget(
+              value: controllerVisible,
+              itemsList: visibilityList,
+              onChanged: setVisible,
             ),
           ],
         ),

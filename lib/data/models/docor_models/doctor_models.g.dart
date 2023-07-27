@@ -101,10 +101,9 @@ _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
       imagePreviewLocation: json['imagePreviewLocation'] as String?,
       imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
       avergareRating: json['avergareRating'] as num,
-      assessments: (json['assessments'] as List<dynamic>)
-          .map((e) => AssessmentModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
       shortinfo: json['shortinfo'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num,
+      rateAsUser: json['rateAsUser'] as num,
     );
 
 Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
@@ -121,8 +120,9 @@ Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
       'imagePreviewLocation': instance.imagePreviewLocation,
       'imageFullSizeLocation': instance.imageFullSizeLocation,
       'avergareRating': instance.avergareRating,
-      'assessments': instance.assessments,
       'shortinfo': instance.shortinfo,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
     };
 
 _$_Research _$$_ResearchFromJson(Map<String, dynamic> json) => _$_Research(

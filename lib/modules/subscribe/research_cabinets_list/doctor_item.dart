@@ -22,6 +22,7 @@ class DoctorItem extends StatelessWidget {
           ? 'от ${rublesFormat.format(doctorItem.price! / 100)}'
           : '',
       onTap: onTap,
+      rating: doctorItem.rateAsUser,
     );
   }
 }

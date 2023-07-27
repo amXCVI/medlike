@@ -65,6 +65,30 @@ class AppointmentsRepository {
       rethrow;
     }
   }
+
+  Future<bool> saveAppointmentRate({
+    required String appointmentId,
+    required String reviewVisibility,
+    required String caption,
+    required String message,
+    required String email,
+    required int rate,
+  }) async {
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/schedule/review', data: {
+        "AppointmentId": appointmentId,
+        "ReviewVisibility": reviewVisibility,
+        "Caption": caption,
+        "Message": message,
+        "Email": email,
+        "Rate": rate,
+      });
+      return response.statusCode == 200 ? true : false;
+    } catch (err) {
+      rethrow;
+    }
+  }
 }
 
 class MockAppointmentsRepository extends Mock

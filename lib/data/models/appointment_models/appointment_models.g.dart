@@ -163,7 +163,7 @@ Map<String, dynamic> _$$_ClinicInfoModelToJson(_$_ClinicInfoModel instance) =>
 _$_AppointmentReviewModel _$$_AppointmentReviewModelFromJson(
         Map<String, dynamic> json) =>
     _$_AppointmentReviewModel(
-      id: json['id'] as int,
+      rate: json['rate'] as num,
       caption: json['caption'] as String,
       message: json['message'] as String,
       visibility: json['visibility'] as int,
@@ -172,7 +172,7 @@ _$_AppointmentReviewModel _$$_AppointmentReviewModelFromJson(
 Map<String, dynamic> _$$_AppointmentReviewModelToJson(
         _$_AppointmentReviewModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'rate': instance.rate,
       'caption': instance.caption,
       'message': instance.message,
       'visibility': instance.visibility,

@@ -1672,7 +1672,7 @@ AppointmentReviewModel _$AppointmentReviewModelFromJson(
 
 /// @nodoc
 mixin _$AppointmentReviewModel {
-  int get id => throw _privateConstructorUsedError;
+  num get rate => throw _privateConstructorUsedError;
   String get caption => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   int get visibility => throw _privateConstructorUsedError;
@@ -1689,7 +1689,7 @@ abstract class $AppointmentReviewModelCopyWith<$Res> {
           $Res Function(AppointmentReviewModel) then) =
       _$AppointmentReviewModelCopyWithImpl<$Res, AppointmentReviewModel>;
   @useResult
-  $Res call({int id, String caption, String message, int visibility});
+  $Res call({num rate, String caption, String message, int visibility});
 }
 
 /// @nodoc
@@ -1706,16 +1706,16 @@ class _$AppointmentReviewModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? rate = null,
     Object? caption = null,
     Object? message = null,
     Object? visibility = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      rate: null == rate
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as num,
       caption: null == caption
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
@@ -1740,7 +1740,7 @@ abstract class _$$_AppointmentReviewModelCopyWith<$Res>
       __$$_AppointmentReviewModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String caption, String message, int visibility});
+  $Res call({num rate, String caption, String message, int visibility});
 }
 
 /// @nodoc
@@ -1755,16 +1755,16 @@ class __$$_AppointmentReviewModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? rate = null,
     Object? caption = null,
     Object? message = null,
     Object? visibility = null,
   }) {
     return _then(_$_AppointmentReviewModel(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      rate: null == rate
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as num,
       caption: null == caption
           ? _value.caption
           : caption // ignore: cast_nullable_to_non_nullable
@@ -1785,7 +1785,7 @@ class __$$_AppointmentReviewModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AppointmentReviewModel implements _AppointmentReviewModel {
   const _$_AppointmentReviewModel(
-      {required this.id,
+      {required this.rate,
       required this.caption,
       required this.message,
       required this.visibility});
@@ -1794,7 +1794,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
       _$$_AppointmentReviewModelFromJson(json);
 
   @override
-  final int id;
+  final num rate;
   @override
   final String caption;
   @override
@@ -1804,7 +1804,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
 
   @override
   String toString() {
-    return 'AppointmentReviewModel(id: $id, caption: $caption, message: $message, visibility: $visibility)';
+    return 'AppointmentReviewModel(rate: $rate, caption: $caption, message: $message, visibility: $visibility)';
   }
 
   @override
@@ -1812,7 +1812,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppointmentReviewModel &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.rate, rate) || other.rate == rate) &&
             (identical(other.caption, caption) || other.caption == caption) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.visibility, visibility) ||
@@ -1822,7 +1822,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, caption, message, visibility);
+      Object.hash(runtimeType, rate, caption, message, visibility);
 
   @JsonKey(ignore: true)
   @override
@@ -1841,7 +1841,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
 
 abstract class _AppointmentReviewModel implements AppointmentReviewModel {
   const factory _AppointmentReviewModel(
-      {required final int id,
+      {required final num rate,
       required final String caption,
       required final String message,
       required final int visibility}) = _$_AppointmentReviewModel;
@@ -1850,7 +1850,7 @@ abstract class _AppointmentReviewModel implements AppointmentReviewModel {
       _$_AppointmentReviewModel.fromJson;
 
   @override
-  int get id;
+  num get rate;
   @override
   String get caption;
   @override

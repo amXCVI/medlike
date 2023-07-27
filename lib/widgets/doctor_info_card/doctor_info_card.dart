@@ -6,9 +6,11 @@ import 'package:medlike/utils/api/api_constants.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 class DoctorInfoCard extends StatelessWidget {
-  const DoctorInfoCard({Key? key, required this.doctorInfo}) : super(key: key);
+  const DoctorInfoCard({Key? key, required this.doctorInfo, this.review})
+      : super(key: key);
 
   final DoctorInfoModel doctorInfo;
+  final AppointmentReviewModel? review;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class DoctorInfoCard extends StatelessWidget {
               : CircleAvatar(
                   radius: 20,
                   backgroundColor: AppColors.mainBrand[100],
-                  child: Text(doctorInfo.lastName![0].toUpperCase(),
+                  child: Text((doctorInfo.lastName ?? ' ')[0].toUpperCase(),
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: Theme.of(context).primaryColor,
                             fontSize: 22.0,
@@ -46,17 +48,19 @@ class DoctorInfoCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${doctorInfo.lastName!} ${doctorInfo.firstName![0]}. ${doctorInfo.middleName![0]}.',
+                    '${doctorInfo.lastName ?? ''} ${(doctorInfo.firstName ?? ' ')[0]}. ${(doctorInfo.middleName ?? ' ')[0]}.',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                          'assets/icons/appointments/raiting_gold_star.svg'),
-                      const SizedBox(width: 6),
-                      const Text('4.8')
-                    ],
-                  ),
+                  review != null
+                      ? Row(
+                          children: [
+                            SvgPicture.asset(
+                                'assets/icons/appointments/raiting_gold_star.svg'),
+                            const SizedBox(width: 6),
+                            Text(review!.rate.toString())
+                          ],
+                        )
+                      : const SizedBox(),
                 ],
               ),
               const SizedBox(height: 4),

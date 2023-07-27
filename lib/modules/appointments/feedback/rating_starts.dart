@@ -24,7 +24,7 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
         ...starsArray.map((e) => GestureDetector(
               onTap: () => widget.setRating(e),
               child: StarItem(
-                isFilled: e <= widget.ratingValue,
+                isFilled: e < widget.ratingValue,
                 index: e,
               ),
             ))

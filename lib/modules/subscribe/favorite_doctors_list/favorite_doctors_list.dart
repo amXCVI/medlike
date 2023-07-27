@@ -47,7 +47,9 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
       imagePreviewLocation: '', //! Переделать
       imageFullSizeLocation: '', //!
       avergareRating: 0, //!
-      assessments: [], shortinfo: '', //!
+      shortinfo: '', //!
+      rateAsSotr: 0, // !
+      rateAsUser: 0, // !
     );
     context.read<SubscribeCubit>().setSelectedDoctor(favoriteDoctor);
     if (CategoryTypes.serviceCategoryTypeIds.contains(categoryTypeId)) {

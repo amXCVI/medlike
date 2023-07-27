@@ -5,11 +5,15 @@ import 'package:medlike/navigation/router.dart';
 
 class AppointmentDetailActionButton extends StatelessWidget {
   const AppointmentDetailActionButton(
-      {Key? key, required this.appointmentId, required this.appointmentStatus})
+      {Key? key,
+      required this.appointmentId,
+      required this.appointmentStatus,
+      required this.isRated})
       : super(key: key);
 
   final String appointmentId;
   final int appointmentStatus;
+  final bool isRated;
 
   void handleChangeRatig(BuildContext context) {
     context.router.push(FeedbackRoute(appointmentId: appointmentId));
@@ -17,7 +21,8 @@ class AppointmentDetailActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (AppointmentStatuses.checkIsPastAppointment(appointmentStatus)) {
+    if (AppointmentStatuses.checkIsPastAppointment(appointmentStatus) &&
+        !isRated) {
       return FloatingActionButton.extended(
         onPressed: () => handleChangeRatig(context),
         label: Text(

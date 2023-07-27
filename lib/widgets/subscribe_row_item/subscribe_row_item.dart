@@ -17,6 +17,7 @@ class SubscribeRowItem extends StatelessWidget {
     this.radius = 20,
     this.onTap,
     this.customRightAction,
+    this.rating,
   }) : super(key: key);
 
   final String title;
@@ -29,6 +30,7 @@ class SubscribeRowItem extends StatelessWidget {
   final bool isOverflowHiddenTitle;
   final bool isOverflowHiddenSubtitle;
   final double radius;
+  final num? rating;
   final void Function()? onTap;
   final Widget? customRightAction;
 
@@ -89,18 +91,39 @@ class SubscribeRowItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              title,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: true,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      color: isSelected
-                                          ? Theme.of(context).primaryColor
-                                          : AppColors.mainText),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    title.characters
+                                        .replaceAll(Characters(''),
+                                            Characters('\u{200B}'))
+                                        .toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                            color: isSelected
+                                                ? Theme.of(context).primaryColor
+                                                : AppColors.mainText),
+                                  ),
+                                ),
+                                rating != null && rating! > 0
+                                    ? Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/appointments/raiting_gold_star.svg'),
+                                          const SizedBox(width: 6),
+                                          Text(rating!.toStringAsFixed(1)),
+                                          const SizedBox(width: 4),
+                                        ],
+                                      )
+                                    : const SizedBox()
+                              ],
                             ),
                             const SizedBox(height: 4),
                             subtitle.isNotEmpty
@@ -128,7 +151,7 @@ class SubscribeRowItem extends StatelessWidget {
                       ? SvgPicture.asset(
                           'assets/icons/profile/checked_icon.svg')
                       : const Text(''),
-                  customRightAction ?? const SizedBox(),
+                  customRightAction ?? const SizedBox()
                 ],
               ),
             ),

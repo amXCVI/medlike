@@ -96,7 +96,7 @@ class ClinicInfoModel with _$ClinicInfoModel {
 @freezed
 class AppointmentReviewModel with _$AppointmentReviewModel {
   const factory AppointmentReviewModel({
-    required int id,
+    required num rate,
     required String caption,
     required String message,
     required int visibility,

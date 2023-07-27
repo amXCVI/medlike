@@ -368,4 +368,49 @@ class AppointmentsCubit
       rethrow;
     }
   }
+
+  /// Отправить отзыв
+  Future<bool> saveAppointmentReview({
+    required String appointmentId,
+    required String reviewVisibility,
+    required String caption,
+    required String message,
+    required String email,
+    required int rate,
+  }) async {
+    emit(state.copyWith(
+      sendAppointmentReviewStatus: SendAppointmentReviewStatuses.loading,
+    ));
+
+    try {
+      final bool response;
+      response = (await appointmentsRepository.saveAppointmentRate(
+        appointmentId: appointmentId,
+        reviewVisibility: reviewVisibility,
+        caption: caption,
+        message: message,
+        email: email,
+        rate: rate,
+      ));
+
+      emit(state.copyWith(
+        sendAppointmentReviewStatus: SendAppointmentReviewStatuses.success,
+      ));
+
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(
+          state.copyWith(
+            sendAppointmentReviewStatus: SendAppointmentReviewStatuses.initial,
+          ),
+        );
+      });
+      return response;
+    } catch (e) {
+      clearAppointment();
+      emit(state.copyWith(
+        sendAppointmentReviewStatus: SendAppointmentReviewStatuses.failed,
+      ));
+      return false;
+    }
+  }
 }

@@ -73,8 +73,10 @@ class Doctor with _$Doctor {
     required String? imagePreviewLocation,
     required String? imageFullSizeLocation,
     required num avergareRating,
-    required List<AssessmentModel> assessments,
+    // required List<AssessmentModel> assessments,
     required String? shortinfo,
+    required num rateAsSotr,
+    required num rateAsUser,
   }) = _Doctor;
 
   factory Doctor.fromJson(Map<String, Object?> json) => _$DoctorFromJson(json);

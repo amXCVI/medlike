@@ -10,6 +10,8 @@ enum DeleteAppointmentStatuses { initial, loading, success, failed }
 
 enum GetAppointmentStatuses { initial, loading, success, failed }
 
+enum SendAppointmentReviewStatuses { initial, loading, success, failed }
+
 @immutable
 class AppointmentsState {
   final GetAppointmentsStatuses? getAppointmentsStatus;
@@ -27,6 +29,7 @@ class AppointmentsState {
   final DateTime selectedDate;
   final GetAppointmentStatuses? getAppointmentStatus;
   final AppointmentModel? selectedAppointment;
+  final SendAppointmentReviewStatuses? sendAppointmentReviewStatus;
 
   AppointmentsState({
     this.getAppointmentsStatus,
@@ -41,6 +44,7 @@ class AppointmentsState {
     this.appointmentLoadingId,
     this.getAppointmentStatus,
     this.selectedAppointment,
+    this.sendAppointmentReviewStatus,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -66,6 +70,7 @@ class AppointmentsState {
     DateTime? selectedDate,
     GetAppointmentStatuses? getAppointmentStatus,
     AppointmentModel? selectedAppointment,
+    SendAppointmentReviewStatuses? sendAppointmentReviewStatus,
   }) {
     return AppointmentsState(
       getAppointmentsStatus:
@@ -88,6 +93,8 @@ class AppointmentsState {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       selectedDate: selectedDate ?? this.selectedDate,
+      sendAppointmentReviewStatus:
+          sendAppointmentReviewStatus ?? this.sendAppointmentReviewStatus,
     );
   }
 
@@ -106,6 +113,7 @@ class AppointmentsState {
       startDate: startDate,
       endDate: endDate,
       selectedDate: selectedDate,
+      sendAppointmentReviewStatus: sendAppointmentReviewStatus,
     );
   }
 }
