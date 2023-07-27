@@ -60,6 +60,13 @@ class _CalendarState extends State<Calendar> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _focusedDay.value = widget.selectedDate;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
