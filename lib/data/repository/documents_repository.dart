@@ -34,7 +34,7 @@ class DocumentsRepository {
     required String esiaToken,
   }) async {
     try {
-      final response = await _dioClient.post('/api/v1.0/profile/documents/sign',
+      final response = await _dioClient.post('/api/v1.0/profile/document/sign',
           data: {
             'documentId': documentId,
             'userId': userId,

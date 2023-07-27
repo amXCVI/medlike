@@ -30,16 +30,12 @@ class DocumentPage extends StatelessWidget {
     required String userId,
     required String lpuId,
   }) {
-    String esiaToken = '';
-    try {
-      esiaToken = context.read<UserCubit>().getEsiaToken();
-    } catch (err) {
+    String esiaToken = context.read<UserCubit>().getEsiaToken();
+
+    if (esiaToken == 'null' || esiaToken.isEmpty) {
       AppToast.showAppToast(
           msg:
               'Для подписания документа пожалуйста войдите в систему через госуслуги');
-      if (kDebugMode) {
-        print(err);
-      }
       context.router.push(EsiaLoginRoute(
         isFromSubscribeDoc: true,
         subscribedDocument: document,
@@ -72,7 +68,7 @@ class DocumentPage extends StatelessWidget {
                       onPressed: () => _handleSubscribeDocument(
                             context: context,
                             documentId: document.id,
-                            userId: 'userid',
+                            userId: context.read<UserCubit>().getFirstProfile(),
                             lpuId: document.lpu.id,
                           ),
                       label: ActionButtonWidget(
@@ -99,7 +95,7 @@ class DocumentPage extends StatelessWidget {
             PdfViewerWidget(
               fileId: document.id,
               pdfUrl:
-                  '${ApiConstants.baseUrl}/api/v1.0/profile/document/${document.id}/content',
+                  '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${document.id}/content',
             )
           ],
         ));

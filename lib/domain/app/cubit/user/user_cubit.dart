@@ -1007,4 +1007,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       throw ('Нет токена есиа');
     }
   }
+
+  /// Возвращает id первого  в осписке профиля
+  String getFirstProfile() {
+    try {
+      String userProfileId =
+          (state.userProfiles != null && state.userProfiles!.isNotEmpty)
+              ? state.userProfiles![0].id
+              : '';
+      return userProfileId;
+    } catch (err) {
+      return '';
+    }
+  }
 }
