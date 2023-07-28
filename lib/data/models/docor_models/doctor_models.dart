@@ -58,6 +58,37 @@ class NavigationItem with _$NavigationItem {
 }
 
 @freezed
+class AvailableDoctor with _$AvailableDoctor {
+  const factory AvailableDoctor({
+    required String id,
+    required String lastName,
+    required String firstName,
+    required String middleName,
+    required String specializationId,
+    required String specialization,
+    @Default(false) bool isFavorite
+  }) = _AvailableDoctor;
+
+  const AvailableDoctor._();
+
+  static AvailableDoctor get emptyDoctor  {
+    return const AvailableDoctor(
+      id: '', 
+      lastName: '', 
+      firstName: '',
+      middleName: '', 
+      specializationId: '', 
+      specialization: '',
+      isFavorite: false
+    );
+  }
+
+  factory AvailableDoctor.fromJson(Map<String, Object?> json) =>
+      _$AvailableDoctorFromJson(json);
+}
+
+
+@freezed
 class Doctor with _$Doctor {
   const factory Doctor({
     required String id,
@@ -72,6 +103,8 @@ class Doctor with _$Doctor {
     required List<int> categories,
   }) = _Doctor;
 
+  const Doctor._();
+
   static Doctor get emptyDoctor  {
     return const Doctor(
       id: '', 
@@ -84,6 +117,18 @@ class Doctor with _$Doctor {
       categoryType: 0, 
       isFavorite: false, 
       categories: []
+    );
+  }
+
+  AvailableDoctor get availableDoctor {
+    return AvailableDoctor(
+      id: id,
+      lastName: lastName,
+      firstName: firstName,
+      middleName: middleName,
+      specializationId: specializationId,
+      specialization: specialization,
+      isFavorite: isFavorite
     );
   }
 

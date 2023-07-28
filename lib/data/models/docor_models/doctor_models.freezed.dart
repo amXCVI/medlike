@@ -905,6 +905,276 @@ abstract class _NavigationItem implements NavigationItem {
       throw _privateConstructorUsedError;
 }
 
+AvailableDoctor _$AvailableDoctorFromJson(Map<String, dynamic> json) {
+  return _AvailableDoctor.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailableDoctor {
+  String get id => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get middleName => throw _privateConstructorUsedError;
+  String get specializationId => throw _privateConstructorUsedError;
+  String get specialization => throw _privateConstructorUsedError;
+  bool get isFavorite => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailableDoctorCopyWith<AvailableDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailableDoctorCopyWith<$Res> {
+  factory $AvailableDoctorCopyWith(
+          AvailableDoctor value, $Res Function(AvailableDoctor) then) =
+      _$AvailableDoctorCopyWithImpl<$Res>;
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      bool isFavorite});
+}
+
+/// @nodoc
+class _$AvailableDoctorCopyWithImpl<$Res>
+    implements $AvailableDoctorCopyWith<$Res> {
+  _$AvailableDoctorCopyWithImpl(this._value, this._then);
+
+  final AvailableDoctor _value;
+  // ignore: unused_field
+  final $Res Function(AvailableDoctor) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? lastName = freezed,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? specializationId = freezed,
+    Object? specialization = freezed,
+    Object? isFavorite = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: middleName == freezed
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: specializationId == freezed
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: specialization == freezed
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_AvailableDoctorCopyWith<$Res>
+    implements $AvailableDoctorCopyWith<$Res> {
+  factory _$$_AvailableDoctorCopyWith(
+          _$_AvailableDoctor value, $Res Function(_$_AvailableDoctor) then) =
+      __$$_AvailableDoctorCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      bool isFavorite});
+}
+
+/// @nodoc
+class __$$_AvailableDoctorCopyWithImpl<$Res>
+    extends _$AvailableDoctorCopyWithImpl<$Res>
+    implements _$$_AvailableDoctorCopyWith<$Res> {
+  __$$_AvailableDoctorCopyWithImpl(
+      _$_AvailableDoctor _value, $Res Function(_$_AvailableDoctor) _then)
+      : super(_value, (v) => _then(v as _$_AvailableDoctor));
+
+  @override
+  _$_AvailableDoctor get _value => super._value as _$_AvailableDoctor;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? lastName = freezed,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? specializationId = freezed,
+    Object? specialization = freezed,
+    Object? isFavorite = freezed,
+  }) {
+    return _then(_$_AvailableDoctor(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: lastName == freezed
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: firstName == freezed
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: middleName == freezed
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: specializationId == freezed
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: specialization == freezed
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AvailableDoctor extends _AvailableDoctor {
+  const _$_AvailableDoctor(
+      {required this.id,
+      required this.lastName,
+      required this.firstName,
+      required this.middleName,
+      required this.specializationId,
+      required this.specialization,
+      this.isFavorite = false})
+      : super._();
+
+  factory _$_AvailableDoctor.fromJson(Map<String, dynamic> json) =>
+      _$$_AvailableDoctorFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String lastName;
+  @override
+  final String firstName;
+  @override
+  final String middleName;
+  @override
+  final String specializationId;
+  @override
+  final String specialization;
+  @override
+  @JsonKey()
+  final bool isFavorite;
+
+  @override
+  String toString() {
+    return 'AvailableDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, isFavorite: $isFavorite)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AvailableDoctor &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.lastName, lastName) &&
+            const DeepCollectionEquality().equals(other.firstName, firstName) &&
+            const DeepCollectionEquality()
+                .equals(other.middleName, middleName) &&
+            const DeepCollectionEquality()
+                .equals(other.specializationId, specializationId) &&
+            const DeepCollectionEquality()
+                .equals(other.specialization, specialization) &&
+            const DeepCollectionEquality()
+                .equals(other.isFavorite, isFavorite));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(lastName),
+      const DeepCollectionEquality().hash(firstName),
+      const DeepCollectionEquality().hash(middleName),
+      const DeepCollectionEquality().hash(specializationId),
+      const DeepCollectionEquality().hash(specialization),
+      const DeepCollectionEquality().hash(isFavorite));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AvailableDoctorCopyWith<_$_AvailableDoctor> get copyWith =>
+      __$$_AvailableDoctorCopyWithImpl<_$_AvailableDoctor>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AvailableDoctorToJson(this);
+  }
+}
+
+abstract class _AvailableDoctor extends AvailableDoctor {
+  const factory _AvailableDoctor(
+      {required final String id,
+      required final String lastName,
+      required final String firstName,
+      required final String middleName,
+      required final String specializationId,
+      required final String specialization,
+      final bool isFavorite}) = _$_AvailableDoctor;
+  const _AvailableDoctor._() : super._();
+
+  factory _AvailableDoctor.fromJson(Map<String, dynamic> json) =
+      _$_AvailableDoctor.fromJson;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  String get lastName => throw _privateConstructorUsedError;
+  @override
+  String get firstName => throw _privateConstructorUsedError;
+  @override
+  String get middleName => throw _privateConstructorUsedError;
+  @override
+  String get specializationId => throw _privateConstructorUsedError;
+  @override
+  String get specialization => throw _privateConstructorUsedError;
+  @override
+  bool get isFavorite => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AvailableDoctorCopyWith<_$_AvailableDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Doctor _$DoctorFromJson(Map<String, dynamic> json) {
   return _Doctor.fromJson(json);
 }
@@ -1097,7 +1367,7 @@ class __$$_DoctorCopyWithImpl<$Res> extends _$DoctorCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Doctor implements _Doctor {
+class _$_Doctor extends _Doctor {
   const _$_Doctor(
       {required this.id,
       required this.lastName,
@@ -1109,7 +1379,8 @@ class _$_Doctor implements _Doctor {
       required this.categoryType,
       required this.isFavorite,
       required final List<int> categories})
-      : _categories = categories;
+      : _categories = categories,
+        super._();
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1193,7 +1464,7 @@ class _$_Doctor implements _Doctor {
   }
 }
 
-abstract class _Doctor implements Doctor {
+abstract class _Doctor extends Doctor {
   const factory _Doctor(
       {required final String id,
       required final String lastName,
@@ -1205,6 +1476,7 @@ abstract class _Doctor implements Doctor {
       required final int categoryType,
       required final bool isFavorite,
       required final List<int> categories}) = _$_Doctor;
+  const _Doctor._() : super._();
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 

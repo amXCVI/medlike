@@ -65,7 +65,7 @@ class SubscribeState {
 
   final GetDoctorsListStatuses? getDoctorsListStatus;
   final List<Doctor>? doctorsList;
-  final Doctor? selectedDoctor;
+  final AvailableDoctor? selectedDoctor;
   final List<Doctor>? filteredDoctorsList;
 
   final GetCabinetsListStatuses? getCabinetsListStatus;
@@ -184,7 +184,7 @@ class SubscribeState {
     List<NavigationItem>? filteredSpecialisationsList,
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
-    Doctor? selectedDoctor,
+    AvailableDoctor? selectedDoctor,
     List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
