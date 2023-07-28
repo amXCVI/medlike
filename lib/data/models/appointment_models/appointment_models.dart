@@ -9,7 +9,7 @@ part 'appointment_models.g.dart';
 
 @freezed
 class AppointmentModel with _$AppointmentModel {
-  const factory AppointmentModel({
+  factory AppointmentModel({
     required int status,
     required bool needConfirmation,
     required String? comment,
@@ -35,6 +35,10 @@ class AppointmentModel with _$AppointmentModel {
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
       _$AppointmentModelFromJson(json);
+
+  // @override
+  // // TODO: implement copyWith
+  // $AppointmentModelCopyWith<AppointmentModel> get copyWith => super.copyWith;
 }
 
 @freezed
@@ -118,6 +122,8 @@ class DoctorInfoModel with _$DoctorInfoModel {
     required String? imagePreviewLocation,
     required String? imageFullSizeLocation,
     required String? shortInfo,
+    required num? rateAsSotr,
+    required num? rateAsUser,
   }) = _DoctorInfoModel;
 
   factory DoctorInfoModel.fromJson(Map<String, Object?> json) =>

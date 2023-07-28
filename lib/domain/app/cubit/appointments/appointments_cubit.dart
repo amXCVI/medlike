@@ -413,4 +413,13 @@ class AppointmentsCubit
       return false;
     }
   }
+
+  void setRatingToSelectedAppointment(num rate) {
+    if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
+      emit(state.copyWith(
+        selectedAppointment:
+            state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
+      ));
+    }
+  }
 }

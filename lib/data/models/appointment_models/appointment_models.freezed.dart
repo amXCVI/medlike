@@ -410,7 +410,7 @@ class __$$_AppointmentModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AppointmentModel implements _AppointmentModel {
-  const _$_AppointmentModel(
+  _$_AppointmentModel(
       {required this.status,
       required this.needConfirmation,
       required this.comment,
@@ -582,7 +582,7 @@ class _$_AppointmentModel implements _AppointmentModel {
 }
 
 abstract class _AppointmentModel implements AppointmentModel {
-  const factory _AppointmentModel(
+  factory _AppointmentModel(
       {required final int status,
       required final bool needConfirmation,
       required final String? comment,
@@ -1878,6 +1878,8 @@ mixin _$DoctorInfoModel {
   String? get imagePreviewLocation => throw _privateConstructorUsedError;
   String? get imageFullSizeLocation => throw _privateConstructorUsedError;
   String? get shortInfo => throw _privateConstructorUsedError;
+  num? get rateAsSotr => throw _privateConstructorUsedError;
+  num? get rateAsUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1900,7 +1902,9 @@ abstract class $DoctorInfoModelCopyWith<$Res> {
       String? specialization,
       String? imagePreviewLocation,
       String? imageFullSizeLocation,
-      String? shortInfo});
+      String? shortInfo,
+      num? rateAsSotr,
+      num? rateAsUser});
 }
 
 /// @nodoc
@@ -1925,6 +1929,8 @@ class _$DoctorInfoModelCopyWithImpl<$Res, $Val extends DoctorInfoModel>
     Object? imagePreviewLocation = freezed,
     Object? imageFullSizeLocation = freezed,
     Object? shortInfo = freezed,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1963,6 +1969,14 @@ class _$DoctorInfoModelCopyWithImpl<$Res, $Val extends DoctorInfoModel>
           ? _value.shortInfo
           : shortInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      rateAsSotr: freezed == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num?,
+      rateAsUser: freezed == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num?,
     ) as $Val);
   }
 }
@@ -1984,7 +1998,9 @@ abstract class _$$_DoctorInfoModelCopyWith<$Res>
       String? specialization,
       String? imagePreviewLocation,
       String? imageFullSizeLocation,
-      String? shortInfo});
+      String? shortInfo,
+      num? rateAsSotr,
+      num? rateAsUser});
 }
 
 /// @nodoc
@@ -2007,6 +2023,8 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
     Object? imagePreviewLocation = freezed,
     Object? imageFullSizeLocation = freezed,
     Object? shortInfo = freezed,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
   }) {
     return _then(_$_DoctorInfoModel(
       id: freezed == id
@@ -2045,6 +2063,14 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
           ? _value.shortInfo
           : shortInfo // ignore: cast_nullable_to_non_nullable
               as String?,
+      rateAsSotr: freezed == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num?,
+      rateAsUser: freezed == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num?,
     ));
   }
 }
@@ -2061,7 +2087,9 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       required this.specialization,
       required this.imagePreviewLocation,
       required this.imageFullSizeLocation,
-      required this.shortInfo});
+      required this.shortInfo,
+      required this.rateAsSotr,
+      required this.rateAsUser});
 
   factory _$_DoctorInfoModel.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorInfoModelFromJson(json);
@@ -2084,10 +2112,14 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
   final String? imageFullSizeLocation;
   @override
   final String? shortInfo;
+  @override
+  final num? rateAsSotr;
+  @override
+  final num? rateAsUser;
 
   @override
   String toString() {
-    return 'DoctorInfoModel(id: $id, firstName: $firstName, middleName: $middleName, lastName: $lastName, specializationId: $specializationId, specialization: $specialization, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, shortInfo: $shortInfo)';
+    return 'DoctorInfoModel(id: $id, firstName: $firstName, middleName: $middleName, lastName: $lastName, specializationId: $specializationId, specialization: $specialization, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, shortInfo: $shortInfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -2111,7 +2143,11 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
             (identical(other.imageFullSizeLocation, imageFullSizeLocation) ||
                 other.imageFullSizeLocation == imageFullSizeLocation) &&
             (identical(other.shortInfo, shortInfo) ||
-                other.shortInfo == shortInfo));
+                other.shortInfo == shortInfo) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser));
   }
 
   @JsonKey(ignore: true)
@@ -2126,7 +2162,9 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       specialization,
       imagePreviewLocation,
       imageFullSizeLocation,
-      shortInfo);
+      shortInfo,
+      rateAsSotr,
+      rateAsUser);
 
   @JsonKey(ignore: true)
   @override
@@ -2152,7 +2190,9 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
       required final String? specialization,
       required final String? imagePreviewLocation,
       required final String? imageFullSizeLocation,
-      required final String? shortInfo}) = _$_DoctorInfoModel;
+      required final String? shortInfo,
+      required final num? rateAsSotr,
+      required final num? rateAsUser}) = _$_DoctorInfoModel;
 
   factory _DoctorInfoModel.fromJson(Map<String, dynamic> json) =
       _$_DoctorInfoModel.fromJson;
@@ -2175,6 +2215,10 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
   String? get imageFullSizeLocation;
   @override
   String? get shortInfo;
+  @override
+  num? get rateAsSotr;
+  @override
+  num? get rateAsUser;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>

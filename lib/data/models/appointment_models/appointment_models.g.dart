@@ -189,6 +189,8 @@ _$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>
       imagePreviewLocation: json['imagePreviewLocation'] as String?,
       imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
       shortInfo: json['shortInfo'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num?,
+      rateAsUser: json['rateAsUser'] as num?,
     );
 
 Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
@@ -202,6 +204,8 @@ Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
       'imagePreviewLocation': instance.imagePreviewLocation,
       'imageFullSizeLocation': instance.imageFullSizeLocation,
       'shortInfo': instance.shortInfo,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
     };
 
 _$_ResearchesModel _$$_ResearchesModelFromJson(Map<String, dynamic> json) =>

@@ -105,6 +105,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
         )
         .then((value) {
       if (value) {
+        context
+            .read<AppointmentsCubit>()
+            .setRatingToSelectedAppointment(rating);
         context.router.pop();
       }
     }).catchError((onError) => print(onError));
