@@ -14,98 +14,124 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 @RoutePage()
-class DocumentPage extends StatelessWidget {
+class DocumentPage extends StatefulWidget {
   const DocumentPage(
       {Key? key, required this.document, this.isFromEsiaAuthPage = false})
       : super(key: key);
 
   final DocumentModel document;
-  final bool
-      isFromEsiaAuthPage; // Если страница уже просмотрена, чел начал подписывать док и ушел в авторизацию
+  final bool isFromEsiaAuthPage;
+  @override
+  State<DocumentPage> createState() => _DocumentPageState();
+}
 
-  void _handleSubscribeDocument({
+class _DocumentPageState extends State<DocumentPage> {
+  final bool isSubscribedDoc = false;
+  // Если страница уже просмотрена, чел начал подписывать док и ушел в авторизацию
+  void goToEsiaAuth(BuildContext context) {
+    AppToast.showAppToast(
+        msg:
+            'Для подписания документа пожалуйста войдите в систему через госуслуги');
+    context.router.push(EsiaLoginRoute(
+      isFromSubscribeDoc: true,
+      subscribedDocument: widget.document,
+    ));
+  }
+
+  Future<void> _handleSubscribeDocument({
     required BuildContext context,
     required String documentId,
     required String userId,
     required String lpuId,
-  }) {
+  }) async {
     String esiaToken = context.read<UserCubit>().getEsiaToken();
 
     if (esiaToken == 'null' || esiaToken.isEmpty) {
-      AppToast.showAppToast(
-          msg:
-              'Для подписания документа пожалуйста войдите в систему через госуслуги');
-      context.router.push(EsiaLoginRoute(
-        isFromSubscribeDoc: true,
-        subscribedDocument: document,
-      ));
+      goToEsiaAuth(context);
       return;
     }
 
-    context.read<DocumentsCubit>().subscribeDocument(
+    await context
+        .read<DocumentsCubit>()
+        .subscribeDocument(
           documentId: documentId,
           userId: userId,
           lpuId: lpuId,
           esiaToken: esiaToken,
-        );
+        )
+        .then((value) {
+      if (value) {}
+    }).catchError((onError) {
+      if (onError.toString().contains('501')) {
+        goToEsiaAuth(context);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     void getDocumentData() {
-      context.read<DocumentsCubit>().getDocumentMeta(documentId: document.id);
+      context
+          .read<DocumentsCubit>()
+          .getDocumentMeta(documentId: widget.document.id);
     }
 
     getDocumentData();
 
-    return DefaultScaffold(
-        appBarTitle: document.name,
-        actionButton: !document.isSignByPatient
-            ? BlocBuilder<DocumentsCubit, DocumentsState>(
-                builder: (context, state) {
-                  return FloatingActionButton.extended(
-                      onPressed: () => _handleSubscribeDocument(
-                            context: context,
-                            documentId: document.id,
-                            userId: context.read<UserCubit>().getFirstProfile(),
-                            lpuId: document.lpu.id,
-                          ),
-                      label: ActionButtonWidget(
-                        subscribeDocumentStatuses:
-                            state.subscribeDocumentStatuses,
-                      ));
-                },
+    return BlocBuilder<DocumentsCubit, DocumentsState>(
+        builder: (context, state) {
+      return DefaultScaffold(
+          appBarTitle: widget.document.name,
+          actionButton: !widget.document.isSignByPatient
+              ? FloatingActionButton.extended(
+                  onPressed: () => _handleSubscribeDocument(
+                        context: context,
+                        documentId: widget.document.id,
+                        userId: context.read<UserCubit>().getFirstProfile(),
+                        lpuId: widget.document.lpu.id,
+                      ),
+                  label: ActionButtonWidget(
+                    subscribeDocumentStatuses: state.subscribeDocumentStatuses,
+                    isSignByPatient:
+                        state.selectedDocumentMetaData?.isSignByPatient ??
+                            false,
+                  ))
+              : const SizedBox(),
+          child: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            children: [
+              DocumentHeader(
+                documentName: widget.document.name,
+                statusStr: DocumentStatuses.getStatus(
+                  isSignByPatient:
+                      state.selectedDocumentMetaData?.isSignByPatient ?? false,
+                  isSignByEmployee: widget.document.isSignByEmployee,
+                ).statusName,
+                signedByPatientAt: widget.document.signedByPatientAt,
+                userName: widget.document.signEmployer != null
+                    ? widget.document.signEmployer!.firstname
+                    : '',
+              ),
+              PdfViewerWidget(
+                fileId: widget.document.id,
+                pdfUrl:
+                    '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${widget.document.id}/content',
               )
-            : const SizedBox(),
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-          children: [
-            DocumentHeader(
-              documentName: document.name,
-              statusStr: DocumentStatuses.getStatus(
-                isSignByPatient: document.isSignByPatient,
-                isSignByEmployee: document.isSignByEmployee,
-              ).statusName,
-              signedByPatientAt: document.signedByPatientAt,
-              userName: document.signEmployer != null
-                  ? document.signEmployer!.firstname
-                  : '',
-            ),
-            PdfViewerWidget(
-              fileId: document.id,
-              pdfUrl:
-                  '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${document.id}/content',
-            )
-          ],
-        ));
+            ],
+          ));
+    });
   }
 }
 
 class ActionButtonWidget extends StatelessWidget {
-  const ActionButtonWidget({Key? key, required this.subscribeDocumentStatuses})
-      : super(key: key);
+  const ActionButtonWidget({
+    Key? key,
+    required this.subscribeDocumentStatuses,
+    required this.isSignByPatient,
+  }) : super(key: key);
 
   final SubscribeDocumentStatuses? subscribeDocumentStatuses;
+  final bool isSignByPatient;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +139,8 @@ class ActionButtonWidget extends StatelessWidget {
       return const Text('Ошибочка');
     } else if (subscribeDocumentStatuses == SubscribeDocumentStatuses.loading) {
       return const CircularLoader();
-    } else if (subscribeDocumentStatuses == SubscribeDocumentStatuses.success) {
+    } else if (subscribeDocumentStatuses == SubscribeDocumentStatuses.success &&
+        isSignByPatient) {
       return const Text('Подписано');
     } else {
       return Text(

@@ -138,7 +138,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   }
 
   /// Отправить документ на подпись (нужен токен есиа)
-  void subscribeDocument({
+  Future<bool> subscribeDocument({
     required String documentId,
     required String userId,
     required String lpuId,
@@ -156,18 +156,28 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
       );
       emit(state.copyWith(
         subscribeDocumentStatuses: SubscribeDocumentStatuses.success,
+        selectedDocumentMetaData:
+            state.selectedDocumentMetaData?.copyWith(isSignByPatient: true),
+        documentsList: state.documentsList!.map((e) {
+          return e.id == documentId ? e.copyWith(isSignByPatient: true) : e;
+        }).toList(),
+        filteredDocumentsList: state.filteredDocumentsList!.map((e) {
+          return e.id == documentId ? e.copyWith(isSignByPatient: true) : e;
+        }).toList(),
       ));
+      Future.delayed(const Duration(seconds: 5), () {
+        emit(
+          state.copyWith(
+            subscribeDocumentStatuses: SubscribeDocumentStatuses.initial,
+          ),
+        );
+      });
+      return true;
     } catch (e) {
       addError(e);
       emit(state.copyWith(
           subscribeDocumentStatuses: SubscribeDocumentStatuses.failed));
+      rethrow;
     }
-    Future.delayed(const Duration(seconds: 5), () {
-      emit(
-        state.copyWith(
-          subscribeDocumentStatuses: SubscribeDocumentStatuses.initial,
-        ),
-      );
-    });
   }
 }

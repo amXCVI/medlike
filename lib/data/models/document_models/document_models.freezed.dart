@@ -339,6 +339,7 @@ DocumentMetaModel _$DocumentMetaModelFromJson(Map<String, dynamic> json) {
 mixin _$DocumentMetaModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   DocumentMetaLpuModel get lpu => throw _privateConstructorUsedError;
   DocumentMetaPatientModel get patient => throw _privateConstructorUsedError;
   DocumentMetaDocumentCreatorModel? get documentCreator =>
@@ -365,6 +366,7 @@ abstract class $DocumentMetaModelCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      DateTime updatedAt,
       DocumentMetaLpuModel lpu,
       DocumentMetaPatientModel patient,
       DocumentMetaDocumentCreatorModel? documentCreator,
@@ -395,6 +397,7 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? updatedAt = null,
     Object? lpu = null,
     Object? patient = null,
     Object? documentCreator = freezed,
@@ -413,6 +416,10 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       lpu: null == lpu
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
@@ -502,6 +509,7 @@ abstract class _$$_DocumentMetaModelCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      DateTime updatedAt,
       DocumentMetaLpuModel lpu,
       DocumentMetaPatientModel patient,
       DocumentMetaDocumentCreatorModel? documentCreator,
@@ -534,6 +542,7 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? updatedAt = null,
     Object? lpu = null,
     Object? patient = null,
     Object? documentCreator = freezed,
@@ -552,6 +561,10 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       lpu: null == lpu
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
@@ -591,9 +604,10 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_DocumentMetaModel implements _DocumentMetaModel {
-  const _$_DocumentMetaModel(
+  _$_DocumentMetaModel(
       {required this.id,
       required this.name,
+      required this.updatedAt,
       required this.lpu,
       required this.patient,
       required this.documentCreator,
@@ -610,6 +624,8 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
   final String id;
   @override
   final String name;
+  @override
+  final DateTime updatedAt;
   @override
   final DocumentMetaLpuModel lpu;
   @override
@@ -629,7 +645,7 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
 
   @override
   String toString() {
-    return 'DocumentMetaModel(id: $id, name: $name, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
+    return 'DocumentMetaModel(id: $id, name: $name, updatedAt: $updatedAt, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
   }
 
   @override
@@ -639,6 +655,8 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
             other is _$_DocumentMetaModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.lpu, lpu) || other.lpu == lpu) &&
             (identical(other.patient, patient) || other.patient == patient) &&
             (identical(other.documentCreator, documentCreator) ||
@@ -661,6 +679,7 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
       runtimeType,
       id,
       name,
+      updatedAt,
       lpu,
       patient,
       documentCreator,
@@ -686,9 +705,10 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
 }
 
 abstract class _DocumentMetaModel implements DocumentMetaModel {
-  const factory _DocumentMetaModel(
+  factory _DocumentMetaModel(
       {required final String id,
       required final String name,
+      required final DateTime updatedAt,
       required final DocumentMetaLpuModel lpu,
       required final DocumentMetaPatientModel patient,
       required final DocumentMetaDocumentCreatorModel? documentCreator,
@@ -705,6 +725,8 @@ abstract class _DocumentMetaModel implements DocumentMetaModel {
   String get id;
   @override
   String get name;
+  @override
+  DateTime get updatedAt;
   @override
   DocumentMetaLpuModel get lpu;
   @override
@@ -911,7 +933,7 @@ mixin _$DocumentMetaPatientModel {
   String get lastname => throw _privateConstructorUsedError;
   String get firstname => throw _privateConstructorUsedError;
   String get middlename => throw _privateConstructorUsedError;
-  String get adresses => throw _privateConstructorUsedError;
+  String? get adresses => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
   String get sex => throw _privateConstructorUsedError;
 
@@ -931,7 +953,7 @@ abstract class $DocumentMetaPatientModelCopyWith<$Res> {
       {String lastname,
       String firstname,
       String middlename,
-      String adresses,
+      String? adresses,
       String birthday,
       String sex});
 }
@@ -953,7 +975,7 @@ class _$DocumentMetaPatientModelCopyWithImpl<$Res,
     Object? lastname = null,
     Object? firstname = null,
     Object? middlename = null,
-    Object? adresses = null,
+    Object? adresses = freezed,
     Object? birthday = null,
     Object? sex = null,
   }) {
@@ -970,10 +992,10 @@ class _$DocumentMetaPatientModelCopyWithImpl<$Res,
           ? _value.middlename
           : middlename // ignore: cast_nullable_to_non_nullable
               as String,
-      adresses: null == adresses
+      adresses: freezed == adresses
           ? _value.adresses
           : adresses // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       birthday: null == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
@@ -999,7 +1021,7 @@ abstract class _$$_DocumentMetaPatientModelCopyWith<$Res>
       {String lastname,
       String firstname,
       String middlename,
-      String adresses,
+      String? adresses,
       String birthday,
       String sex});
 }
@@ -1019,7 +1041,7 @@ class __$$_DocumentMetaPatientModelCopyWithImpl<$Res>
     Object? lastname = null,
     Object? firstname = null,
     Object? middlename = null,
-    Object? adresses = null,
+    Object? adresses = freezed,
     Object? birthday = null,
     Object? sex = null,
   }) {
@@ -1036,10 +1058,10 @@ class __$$_DocumentMetaPatientModelCopyWithImpl<$Res>
           ? _value.middlename
           : middlename // ignore: cast_nullable_to_non_nullable
               as String,
-      adresses: null == adresses
+      adresses: freezed == adresses
           ? _value.adresses
           : adresses // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       birthday: null == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
@@ -1073,7 +1095,7 @@ class _$_DocumentMetaPatientModel implements _DocumentMetaPatientModel {
   @override
   final String middlename;
   @override
-  final String adresses;
+  final String? adresses;
   @override
   final String birthday;
   @override
@@ -1127,7 +1149,7 @@ abstract class _DocumentMetaPatientModel implements DocumentMetaPatientModel {
       {required final String lastname,
       required final String firstname,
       required final String middlename,
-      required final String adresses,
+      required final String? adresses,
       required final String birthday,
       required final String sex}) = _$_DocumentMetaPatientModel;
 
@@ -1141,7 +1163,7 @@ abstract class _DocumentMetaPatientModel implements DocumentMetaPatientModel {
   @override
   String get middlename;
   @override
-  String get adresses;
+  String? get adresses;
   @override
   String get birthday;
   @override

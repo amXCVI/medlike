@@ -1004,7 +1004,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       String esiaToken = state.esiaAuthToken!;
       return esiaToken;
     } catch (err) {
-      throw ('Нет токена есиа');
+      return '';
     }
   }
 

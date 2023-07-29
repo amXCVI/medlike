@@ -23,9 +23,10 @@ class DocumentModel with _$DocumentModel {
 
 @freezed
 class DocumentMetaModel with _$DocumentMetaModel {
-  const factory DocumentMetaModel({
+  factory DocumentMetaModel({
     required String id,
     required String name,
+    required DateTime updatedAt,
     required DocumentMetaLpuModel lpu,
     required DocumentMetaPatientModel patient,
     required DocumentMetaDocumentCreatorModel? documentCreator,
@@ -58,7 +59,7 @@ class DocumentMetaPatientModel with _$DocumentMetaPatientModel {
     required String lastname,
     required String firstname,
     required String middlename,
-    required String adresses,
+    required String? adresses,
     required String birthday,
     required String sex,
   }) = _DocumentMetaPatientModel;

@@ -43,6 +43,7 @@ _$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
     _$_DocumentMetaModel(
       id: json['id'] as String,
       name: json['name'] as String,
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
       lpu: DocumentMetaLpuModel.fromJson(json['lpu'] as Map<String, dynamic>),
       patient: DocumentMetaPatientModel.fromJson(
           json['patient'] as Map<String, dynamic>),
@@ -69,6 +70,7 @@ Map<String, dynamic> _$$_DocumentMetaModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'updatedAt': instance.updatedAt.toIso8601String(),
       'lpu': instance.lpu,
       'patient': instance.patient,
       'documentCreator': instance.documentCreator,
@@ -101,7 +103,7 @@ _$_DocumentMetaPatientModel _$$_DocumentMetaPatientModelFromJson(
       lastname: json['lastname'] as String,
       firstname: json['firstname'] as String,
       middlename: json['middlename'] as String,
-      adresses: json['adresses'] as String,
+      adresses: json['adresses'] as String?,
       birthday: json['birthday'] as String,
       sex: json['sex'] as String,
     );
