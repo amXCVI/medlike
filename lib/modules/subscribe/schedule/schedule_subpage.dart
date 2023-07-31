@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
-import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/appointments_list_widget.dart';
@@ -27,6 +25,9 @@ class ScheduleSubpage extends StatefulWidget {
     required this.categoryTypeId,
     this.cabinet,
     required this.isAny,
+    required this.getCalendarList,
+    required this.getCellsList,
+    required this.setSelectedDate,
   }) : super(key: key);
 
   final String userId;
@@ -38,6 +39,9 @@ class ScheduleSubpage extends StatefulWidget {
   final int categoryTypeId;
   final String? cabinet;
   final bool isAny;
+  final Function({bool? isRefresh}) getCalendarList;
+  final Function({bool? isRefresh}) getCellsList;
+  final Function(CalendarModel) setSelectedDate;
 
   @override
   State<ScheduleSubpage> createState() => _ScheduleSubpageState();
@@ -50,89 +54,19 @@ class _ScheduleSubpageState extends State<ScheduleSubpage> {
   @override
   void initState() {
     super.initState();
-    _onRefreshData();
 
     clinicsList = context.read<ClinicsCubit>().state.clinicsList;
     clinic = clinicsList?.firstWhere(((el) => el.id == widget.clinicId));
   }
 
-  void _getAppointments(DateTime selectedDate) async {
-    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) => context
-            .read<AppointmentsCubit>()
-            .getAppointmentsListForSelectedDay(
-                userId: widget.userId, selectedDate: selectedDate));
-  }
-
-  void _getCalendarList({bool? isRefresh}) async {
-    context.read<SubscribeCubit>().getCalendarList(
-          isRefresh: isRefresh ?? false,
-          userId: widget.userId,
-          buildingId: widget.buildingId,
-          clinicId: widget.clinicId,
-          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
-                  widget.categoryTypeId)
-              .categoryType,
-          doctorId: widget.doctorId,
-          specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
-          researchIds: widget.researchIds,
-          isAny: widget.isAny,
-        );
-  }
-
-  void _getCellsList({bool? isRefresh}) async {
-    context.read<SubscribeCubit>().getTimetableList(
-          isRefresh: isRefresh ?? false,
-          userId: widget.userId,
-          buildingId: widget.buildingId,
-          clinicId: widget.clinicId,
-          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
-                  widget.categoryTypeId)
-              .categoryType,
-          doctorId: widget.doctorId,
-          specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
-          researchIds: widget.researchIds,
-          isAny: widget.isAny,
-        );
-  }
-
-  void _setSelectedDate(CalendarModel selectedDay) {
-    _getAppointments(selectedDay.date);
-    context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
-    context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
-    context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
-    context.read<AppointmentsCubit>().getAppointmentsListForSelectedDay(
-        userId: widget.userId, selectedDate: selectedDay.date);
-    if (selectedDay.hasLogs) {
-      context
-          .read<AppointmentsCubit>()
-          .filterAppointmentsList(selectedDay.date);
-    }
-    if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
-      _getCellsList();
-    } else {
-      context.read<SubscribeCubit>().setEmptyTimetableList();
-    }
-  }
-
   void _setStartDate(DateTime date) {
     context.read<SubscribeCubit>().setStartDate(date);
-    _getCalendarList();
+    widget.getCalendarList();
   }
 
   void _setEndDate(DateTime date) {
     context.read<SubscribeCubit>().setEndDate(date);
-    _getCalendarList();
-  }
-
-  dynamic _onRefreshData() {
-    _setSelectedDate(CalendarModel(
-        date: DateTime.now(), hasAvailableCells: true, hasLogs: true));
-    _getCalendarList(isRefresh: true);
-    _getCellsList(isRefresh: true);
-    return Future(() => null);
+    widget.getCalendarList();
   }
 
   void _handleTapOnCell(
@@ -171,7 +105,7 @@ class _ScheduleSubpageState extends State<ScheduleSubpage> {
         /// при возврате со страницы подтверждения приема нужно заново подгрузить ячейки
         if (state.getTimetableCellsStatus ==
             GetTimetableCellsStatuses.refunded) {
-          _getCellsList(isRefresh: true);
+          widget.getCellsList(isRefresh: true);
         }
 
         return Column(
@@ -190,7 +124,7 @@ class _ScheduleSubpageState extends State<ScheduleSubpage> {
                         state.getCalendarStatus == GetCalendarStatuses.success
                             ? state.calendarList as List<CalendarModel>
                             : [],
-                    onChangeSelectedDate: _setSelectedDate,
+                    onChangeSelectedDate: widget.setSelectedDate,
                     onChangeStartDate: _setStartDate,
                     onChangeEndDate: _setEndDate,
                     firstDay: DateTime.now(),

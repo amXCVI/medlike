@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/category_types.dart';
+import 'package:medlike/data/models/calendar_models/calendar_models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/doctor_info_header.dart';
 import 'package:medlike/modules/subscribe/schedule/doctor_subpage.dart';
@@ -53,6 +56,7 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   void initState() {
     super.initState();
+    _onRefreshData();
   }
 
   void setTogglePageValue(String value) {
@@ -67,6 +71,75 @@ class _SchedulePageState extends State<SchedulePage> {
       context.read<SubscribeCubit>().getDoctorInfo(
           doctorId: widget.doctorId!, categoryTypeId: widget.categoryTypeId);
     }
+  }
+
+  dynamic _onRefreshData() {
+    _setSelectedDate(CalendarModel(
+        date: DateTime.now(), hasAvailableCells: true, hasLogs: true));
+    _getCalendarList(isRefresh: true);
+    _getCellsList(isRefresh: true);
+    return Future(() => null);
+  }
+
+  void _getAppointments(DateTime selectedDate) async {
+    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
+        (value) => context
+            .read<AppointmentsCubit>()
+            .getAppointmentsListForSelectedDay(
+                userId: widget.userId, selectedDate: selectedDate));
+  }
+
+  void _setSelectedDate(CalendarModel selectedDay) {
+    _getAppointments(selectedDay.date);
+    context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
+    context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
+    context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
+    context.read<AppointmentsCubit>().getAppointmentsListForSelectedDay(
+        userId: widget.userId, selectedDate: selectedDay.date);
+    if (selectedDay.hasLogs) {
+      context
+          .read<AppointmentsCubit>()
+          .filterAppointmentsList(selectedDay.date);
+    }
+    if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
+      _getCellsList();
+    } else {
+      context.read<SubscribeCubit>().setEmptyTimetableList();
+    }
+  }
+
+  void _getCalendarList({bool? isRefresh}) async {
+    context.read<SubscribeCubit>().getCalendarList(
+          isRefresh: isRefresh ?? false,
+          userId: widget.userId,
+          buildingId: widget.buildingId,
+          clinicId: widget.clinicId,
+          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
+                  widget.categoryTypeId)
+              .categoryType,
+          doctorId: widget.doctorId,
+          specialisationId: widget.specialisationId,
+          cabinet: widget.cabinet,
+          researchIds: widget.researchIds,
+          isAny: widget.isAny,
+        );
+  }
+
+  void _getCellsList({bool? isRefresh}) async {
+    context.read<SubscribeCubit>().getTimetableList(
+          isRefresh: isRefresh ?? false,
+          userId: widget.userId,
+          buildingId: widget.buildingId,
+          clinicId: widget.clinicId,
+          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
+                  widget.categoryTypeId)
+              .categoryType,
+          doctorId: widget.doctorId,
+          specialisationId: widget.specialisationId,
+          cabinet: widget.cabinet,
+          researchIds: widget.researchIds,
+          isAny: widget.isAny,
+        );
   }
 
   @override
@@ -119,6 +192,9 @@ class _SchedulePageState extends State<SchedulePage> {
                     specialisationId: widget.specialisationId,
                     researchIds: widget.researchIds,
                     cabinet: widget.cabinet,
+                    getCalendarList: _getCalendarList,
+                    getCellsList: _getCellsList,
+                    setSelectedDate: _setSelectedDate,
                   )
                 : const DoctorSubpage(),
           ],
