@@ -41,6 +41,8 @@ enum DeleteDoctorFromFavoritesStatuses { initial, loading, success, failed }
 
 enum RegisterOrderStatuses { initial, loading, success, failed, finished }
 
+enum GetDoctorInfoDataStatuses { initial, loading, success, failed }
+
 @immutable
 class SubscribeState {
   final UserProfile? selectedUser;
@@ -113,6 +115,9 @@ class SubscribeState {
 
   final String? paymentUrl;
 
+  final GetDoctorInfoDataStatuses? getDoctorInfoDataStatus;
+  final DoctorInfoDataModel? selectedDoctorFullData;
+
   SubscribeState({
     this.selectedUser,
     this.getAvailableClinicsStatus,
@@ -162,6 +167,8 @@ class SubscribeState {
     this.registerOrderStatus,
     this.paymentUrl,
     this.createdAppointmentId,
+    this.getDoctorInfoDataStatus,
+    this.selectedDoctorFullData,
   })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
         startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
@@ -215,6 +222,8 @@ class SubscribeState {
     RegisterOrderStatuses? registerOrderStatus,
     String? paymentUrl,
     String? createdAppointmentId,
+    GetDoctorInfoDataStatuses? getDoctorInfoDataStatus,
+    DoctorInfoDataModel? selectedDoctorFullData,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -284,6 +293,10 @@ class SubscribeState {
       registerOrderStatus: registerOrderStatus ?? this.registerOrderStatus,
       paymentUrl: paymentUrl ?? this.paymentUrl,
       createdAppointmentId: createdAppointmentId ?? this.createdAppointmentId,
+      getDoctorInfoDataStatus:
+          getDoctorInfoDataStatus ?? this.getDoctorInfoDataStatus,
+      selectedDoctorFullData:
+          selectedDoctorFullData ?? this.selectedDoctorFullData,
     );
   }
 
@@ -337,6 +350,7 @@ class SubscribeState {
       registerOrderStatus: null,
       paymentUrl: null,
       createdAppointmentId: null,
+      selectedDoctorFullData: null,
     );
   }
 

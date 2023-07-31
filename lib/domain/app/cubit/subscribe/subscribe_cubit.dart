@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
@@ -454,8 +453,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
           /// если найдётя проблема наличия ячейки одновременно
           /// в cells и logs на бэкенде
           /// но мне так и не удалось отследить строгий путь появления
-          return response.logs.where((log) => 
-            log.date == el.time).isEmpty;
+          return response.logs.where((log) => log.date == el.time).isEmpty;
         }).toList(),
         timetableLogsList: response.logs,
       ));
@@ -584,7 +582,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void createNewAppointment({
     required String userId,
     required String userName,
-    required int timezoneHours
+    required int timezoneHours,
   }) async {
     if (state.creatingAppointmentStatus ==
         CreatingAppointmentStatuses.success) {
@@ -594,7 +592,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
-
 
     final time = state.selectedTimetableCell?.time as DateTime;
 
@@ -846,6 +843,36 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       selectedPayType: payType,
     ));
+  }
+
+  /// Получение полной информации о враче
+  Future<void> getDoctorInfo({
+    required String doctorId,
+    required int categoryTypeId,
+  }) async {
+    if (state.selectedDoctorFullData != null &&
+        state.selectedDoctorFullData!.id == doctorId) {
+      return;
+    }
+    emit(state.copyWith(
+      getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.loading,
+    ));
+    try {
+      DoctorInfoDataModel response =
+          await subscribeRepository.getDoctorInfoData(
+        doctorId: doctorId,
+        categoryTypeId: categoryTypeId,
+      );
+      emit(state.copyWith(
+        getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.success,
+        selectedDoctorFullData: response,
+      ));
+      return;
+    } catch (e) {
+      emit(state.copyWith(
+          getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.failed));
+      rethrow;
+    }
   }
 }
 

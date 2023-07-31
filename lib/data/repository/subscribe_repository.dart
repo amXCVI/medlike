@@ -298,4 +298,17 @@ class SubscribeRepository {
       rethrow;
     }
   }
+
+  Future<DoctorInfoDataModel> getDoctorInfoData({
+    required String doctorId,
+    required int categoryTypeId,
+  }) async {
+    try {
+      final response = await _dioClient
+          .get('/api/v1.0/doctors/$doctorId?categoryTypeId=$categoryTypeId');
+      return DoctorInfoDataModel.fromJson(response.data);
+    } catch (err) {
+      rethrow;
+    }
+  }
 }

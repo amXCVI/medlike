@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class SubscribeRowItem extends StatelessWidget {
   const SubscribeRowItem({
@@ -112,17 +113,7 @@ class SubscribeRowItem extends StatelessWidget {
                                                 : AppColors.mainText),
                                   ),
                                 ),
-                                rating != null && rating! > 0
-                                    ? Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/icons/appointments/raiting_gold_star.svg'),
-                                          const SizedBox(width: 6),
-                                          Text(rating!.toStringAsFixed(1)),
-                                          const SizedBox(width: 4),
-                                        ],
-                                      )
-                                    : const SizedBox()
+                                DoctorRating(rating: rating),
                               ],
                             ),
                             const SizedBox(height: 4),

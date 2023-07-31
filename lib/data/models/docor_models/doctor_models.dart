@@ -126,3 +126,48 @@ class AssessmentModel with _$AssessmentModel {
   factory AssessmentModel.fromJson(Map<String, Object?> json) =>
       _$AssessmentModelFromJson(json);
 }
+
+@freezed
+class DoctorInfoDataModel with _$DoctorInfoDataModel {
+  const factory DoctorInfoDataModel({
+    required String id,
+    required String lastName,
+    required String firstName,
+    required String middleName,
+    required String specializationId,
+    required String specialization,
+    required int price,
+    required int categoryType,
+    required bool isFavorite,
+    required List<int> categories,
+    required String? imagePreviewLocation,
+    required String? imageFullSizeLocation,
+    required num avergareRating,
+    required List<DoctorInfoReviewModel> reviews,
+    required String? shortinfo,
+    required num? rateAsSotr,
+    required num? rateAsUser,
+  }) = _DoctorInfoModel;
+
+  factory DoctorInfoDataModel.fromJson(Map<String, Object?> json) =>
+      _$DoctorInfoDataModelFromJson(json);
+}
+
+@freezed
+class DoctorInfoReviewModel with _$DoctorInfoReviewModel {
+  const factory DoctorInfoReviewModel({
+    required String sysUser,
+    required String sotr,
+    required DateTime date,
+    required num rate,
+    required String? caption,
+    required String? message,
+    required bool anonimous,
+    required String? peopleId,
+    required String? account_id,
+    required String? fio,
+  }) = _DoctorInfoReviewModel;
+
+  factory DoctorInfoReviewModel.fromJson(Map<String, Object?> json) =>
+      _$DoctorInfoReviewModelFromJson(json);
+}

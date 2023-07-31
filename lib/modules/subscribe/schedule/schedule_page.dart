@@ -1,22 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:medlike/constants/category_types.dart';
-import 'package:medlike/data/models/calendar_models/calendar_models.dart';
-import 'package:medlike/data/models/clinic_models/clinic_models.dart';
-import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
-import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
-import 'package:medlike/modules/subscribe/schedule/appointments_list_widget.dart';
+import 'package:medlike/modules/subscribe/schedule/doctor_info_header.dart';
+import 'package:medlike/modules/subscribe/schedule/doctor_subpage.dart';
 import 'package:medlike/modules/subscribe/schedule/favorit_doctor_button.dart';
-import 'package:medlike/modules/subscribe/schedule/time_cells_list.dart';
-import 'package:medlike/modules/subscribe/schedule/time_cells_list_skeleton.dart';
-import 'package:medlike/navigation/router.dart';
-import 'package:medlike/themes/colors.dart';
-import 'package:medlike/widgets/calendar/calendar.dart';
+import 'package:medlike/modules/subscribe/schedule/schedule_subpage.dart';
+import 'package:medlike/modules/subscribe/schedule/toggle_page_values_list.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
-import 'package:medlike/widgets/not_found_data/not_found_data.dart';
+import 'package:medlike/widgets/toggle_button/toggle_button.dart';
 
 @RoutePage()
 class SchedulePage extends StatefulWidget {
@@ -55,143 +48,40 @@ class SchedulePage extends StatefulWidget {
 }
 
 class _SchedulePageState extends State<SchedulePage> {
-  ClinicModel? clinic;
-  List<ClinicModel>? clinicsList;
+  TogglePageValueItem togglePageValue = togglePageValuesList[0];
 
   @override
   void initState() {
     super.initState();
-    _onRefreshData();
-
-    clinicsList = context.read<ClinicsCubit>().state.clinicsList;
-    clinic = clinicsList?.firstWhere(((el) => el.id == widget.clinicId));
   }
 
-  void _getAppointments(DateTime selectedDate) async {
-    await context.read<AppointmentsCubit>().getAppointmentsList(false).then(
-        (value) => context
-            .read<AppointmentsCubit>()
-            .getAppointmentsListForSelectedDay(
-                userId: widget.userId, selectedDate: selectedDate));
+  void setTogglePageValue(String value) {
+    setState(() {
+      togglePageValue =
+          togglePageValuesList.firstWhere((element) => element.label == value);
+    });
   }
 
-  void _getCalendarList({bool? isRefresh}) async {
-    context.read<SubscribeCubit>().getCalendarList(
-          isRefresh: isRefresh ?? false,
-          userId: widget.userId,
-          buildingId: widget.buildingId,
-          clinicId: widget.clinicId,
-          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
-                  widget.categoryTypeId)
-              .categoryType,
-          doctorId: widget.doctorId,
-          specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
-          researchIds: widget.researchIds,
-          isAny: widget.isAny,
-        );
-  }
-
-  void _getCellsList({bool? isRefresh}) async {
-    context.read<SubscribeCubit>().getTimetableList(
-          isRefresh: isRefresh ?? false,
-          userId: widget.userId,
-          buildingId: widget.buildingId,
-          clinicId: widget.clinicId,
-          categoryType: CategoryTypes.getCategoryTypeByCategoryTypeId(
-                  widget.categoryTypeId)
-              .categoryType,
-          doctorId: widget.doctorId,
-          specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
-          researchIds: widget.researchIds,
-          isAny: widget.isAny,
-        );
-  }
-
-  void _setSelectedDate(CalendarModel selectedDay) {
-    _getAppointments(selectedDay.date);
-    context.read<SubscribeCubit>().setSelectedDate(selectedDay.date);
-    context.read<SubscribeCubit>().setSelectedCalendarItem(selectedDay);
-    context.read<AppointmentsCubit>().setSelectedDate(selectedDay.date);
-    context.read<AppointmentsCubit>().getAppointmentsListForSelectedDay(
-        userId: widget.userId, selectedDate: selectedDay.date);
-    if (selectedDay.hasLogs) {
-      context
-          .read<AppointmentsCubit>()
-          .filterAppointmentsList(selectedDay.date);
+  void getDoctorInfo(BuildContext context) {
+    if (widget.doctorId != null) {
+      context.read<SubscribeCubit>().getDoctorInfo(
+          doctorId: widget.doctorId!, categoryTypeId: widget.categoryTypeId);
     }
-    if (selectedDay.hasAvailableCells || selectedDay.hasLogs) {
-      _getCellsList();
-    } else {
-      context.read<SubscribeCubit>().setEmptyTimetableList();
-    }
-  }
-
-  void _setStartDate(DateTime date) {
-    context.read<SubscribeCubit>().setStartDate(date);
-    _getCalendarList();
-  }
-
-  void _setEndDate(DateTime date) {
-    context.read<SubscribeCubit>().setEndDate(date);
-    _getCalendarList();
-  }
-
-  dynamic _onRefreshData() {
-    _setSelectedDate(CalendarModel(
-        date: DateTime.now(), hasAvailableCells: true, hasLogs: true));
-    _getCalendarList(isRefresh: true);
-    _getCellsList(isRefresh: true);
-    return Future(() => null);
-  }
-
-  void _handleTapOnCell(
-    TimetableCellModel selectedCell, {
-    bool isDoctorSelected = false,
-  }) {
-    context.read<SubscribeCubit>().setSelectedTimetableCell(selectedCell);
-    context.read<SubscribeCubit>().getAppointmentInfoData(
-          scheduleId: selectedCell.scheduleId,
-          userId: widget.userId,
-          researchIds: widget.researchIds != null
-              ? widget.researchIds as List<String>
-              : [],
-          appointmentDate: selectedCell.time,
-        );
-    context.read<SubscribeCubit>().checkAndLockAvailableCell(
-          scheduleId: selectedCell.scheduleId,
-          userId: widget.userId,
-          clinicId: widget.clinicId,
-          appointmentDate: selectedCell.time,
-        );
-    if (selectedCell.doctorAvailable && !isDoctorSelected) {
-      context.read<SubscribeCubit>().getAvailableDoctor(
-            scheduleId: selectedCell.scheduleId,
-            clinicId: widget.clinicId,
-          );
-    }
-    context.router.push(ConfirmationSubscribeRoute(
-        userId: widget.userId, timeZoneHours: clinic?.timeZoneOffset ?? 0));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubscribeCubit, SubscribeState>(
-      builder: (context, state) {
-        /// при возврате со страницы подтверждения приема нужно заново подгрузить ячейки
-        if (state.getTimetableCellsStatus ==
-            GetTimetableCellsStatuses.refunded) {
-          _getCellsList(isRefresh: true);
-        }
+    getDoctorInfo(context);
 
-        return DefaultScaffold(
-          appBarTitle: widget.pageTitle,
-          appBarSubtitle: widget.pageSubtitle,
-          isChildrenPage: true,
-          actions: widget.doctorId != null
-              ? [
-                  FavoriteDoctorButton(
+    return DefaultScaffold(
+      appBarTitle: widget.pageTitle,
+      appBarSubtitle: widget.pageSubtitle,
+      isChildrenPage: true,
+      actions: widget.doctorId != null
+          ? [
+              BlocBuilder<SubscribeCubit, SubscribeState>(
+                builder: (context, state) {
+                  return FavoriteDoctorButton(
                     userId: widget.userId,
                     buildingId: widget.buildingId,
                     clinicId: widget.clinicId,
@@ -200,78 +90,40 @@ class _SchedulePageState extends State<SchedulePage> {
                     isFavorite: state.selectedDoctor != null
                         ? state.selectedDoctor!.isFavorite
                         : false,
-                  )
-                ]
-              : [],
-          child: RefreshIndicator(
-            onRefresh: () => _onRefreshData(),
-            child: DefaultScrollbar(
-              child: ListView(
-                children: [
-                  state.getCalendarStatus == GetCalendarStatuses.failed
-                      ? const Text('')
-                      : Calendar(
-                          isLoading: state.getCalendarStatus ==
-                                  GetCalendarStatuses.loading
-                              ? true
-                              : false,
-                          startDate: state.startDate,
-                          endDate: state.endDate,
-                          selectedDate: state.selectedDate,
-                          calendarList: state.getCalendarStatus ==
-                                  GetCalendarStatuses.success
-                              ? state.calendarList as List<CalendarModel>
-                              : [],
-                          onChangeSelectedDate: _setSelectedDate,
-                          onChangeStartDate: _setStartDate,
-                          onChangeEndDate: _setEndDate,
-                          firstDay: DateTime.now(),
-                        ),
-                  state.getTimetableCellsStatus ==
-                              GetTimetableCellsStatuses.success &&
-                          state.timetableCellsList!.isEmpty
-                      ? const NotFoundData(text: 'Нет свободного времени')
-                      : const SizedBox(),
-                  state.getTimetableCellsStatus ==
-                          GetTimetableCellsStatuses.success
-                      ? TimeCellsList(
-                          timetableCellsList: state.timetableCellsList
-                              as List<TimetableCellModel>,
-                          selectedTimetableCellId:
-                              state.selectedTimetableCell != null
-                                  ? state.selectedTimetableCell!.scheduleId
-                                  : '',
-                          timezoneHours: clinic?.timeZoneOffset,
-                          handleTapOnCell: (model) => _handleTapOnCell(model,
-                              isDoctorSelected: state.selectedDoctor != null),
-                        )
-                      : state.getTimetableCellsStatus ==
-                                  GetTimetableCellsStatuses.loading &&
-                              state.selectedCalendarItem != null &&
-                              clinicsList != null &&
-                              state.selectedCalendarItem!.hasAvailableCells
-                          ? const TimeCellsListSkeleton()
-                          : Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 50),
-                              child: Center(
-                                child: Text(
-                                  'Нет свободного времени',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(color: AppColors.lightText),
-                                ),
-                              )),
-                  AppointmentsListWidget(
-                    selectedDate: state.selectedDate,
-                    userId: widget.userId,
-                  ),
-                ],
+                  );
+                },
+              )
+            ]
+          : [],
+      child: DefaultScrollbar(
+        child: ListView(
+          children: [
+            widget.doctorId != null
+                ? const DoctorInfoHeader()
+                : const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 18),
+              child: ToggleButton(
+                itemsList: togglePageValuesList.map((e) => e.label).toList(),
+                setValue: setTogglePageValue,
               ),
             ),
-          ),
-        );
-      },
+            togglePageValue.id == togglePageValuesList[0].id
+                ? ScheduleSubpage(
+                    userId: widget.userId,
+                    buildingId: widget.buildingId,
+                    clinicId: widget.clinicId,
+                    categoryTypeId: widget.categoryTypeId,
+                    isAny: widget.isAny,
+                    doctorId: widget.doctorId,
+                    specialisationId: widget.specialisationId,
+                    researchIds: widget.researchIds,
+                    cabinet: widget.cabinet,
+                  )
+                : const DoctorSubpage(),
+          ],
+        ),
+      ),
     );
   }
 }

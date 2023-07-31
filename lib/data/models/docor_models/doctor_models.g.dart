@@ -183,3 +183,78 @@ Map<String, dynamic> _$$_AssessmentModelToJson(_$_AssessmentModel instance) =>
       'isPublic': instance.isPublic,
       'user': instance.user,
     };
+
+_$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>
+    _$_DoctorInfoModel(
+      id: json['id'] as String,
+      lastName: json['lastName'] as String,
+      firstName: json['firstName'] as String,
+      middleName: json['middleName'] as String,
+      specializationId: json['specializationId'] as String,
+      specialization: json['specialization'] as String,
+      price: json['price'] as int,
+      categoryType: json['categoryType'] as int,
+      isFavorite: json['isFavorite'] as bool,
+      categories:
+          (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
+      imagePreviewLocation: json['imagePreviewLocation'] as String?,
+      imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
+      avergareRating: json['avergareRating'] as num,
+      reviews: (json['reviews'] as List<dynamic>)
+          .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      shortinfo: json['shortinfo'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num?,
+      rateAsUser: json['rateAsUser'] as num?,
+    );
+
+Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lastName': instance.lastName,
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'specializationId': instance.specializationId,
+      'specialization': instance.specialization,
+      'price': instance.price,
+      'categoryType': instance.categoryType,
+      'isFavorite': instance.isFavorite,
+      'categories': instance.categories,
+      'imagePreviewLocation': instance.imagePreviewLocation,
+      'imageFullSizeLocation': instance.imageFullSizeLocation,
+      'avergareRating': instance.avergareRating,
+      'reviews': instance.reviews,
+      'shortinfo': instance.shortinfo,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
+    };
+
+_$_DoctorInfoReviewModel _$$_DoctorInfoReviewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DoctorInfoReviewModel(
+      sysUser: json['sysUser'] as String,
+      sotr: json['sotr'] as String,
+      date: DateTime.parse(json['date'] as String),
+      rate: json['rate'] as num,
+      caption: json['caption'] as String?,
+      message: json['message'] as String?,
+      anonimous: json['anonimous'] as bool,
+      peopleId: json['peopleId'] as String?,
+      account_id: json['account_id'] as String?,
+      fio: json['fio'] as String?,
+    );
+
+Map<String, dynamic> _$$_DoctorInfoReviewModelToJson(
+        _$_DoctorInfoReviewModel instance) =>
+    <String, dynamic>{
+      'sysUser': instance.sysUser,
+      'sotr': instance.sotr,
+      'date': instance.date.toIso8601String(),
+      'rate': instance.rate,
+      'caption': instance.caption,
+      'message': instance.message,
+      'anonimous': instance.anonimous,
+      'peopleId': instance.peopleId,
+      'account_id': instance.account_id,
+      'fio': instance.fio,
+    };
