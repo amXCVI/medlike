@@ -5,7 +5,9 @@ import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/documents/document_detail_page/clinic_widget.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_header.dart';
+import 'package:medlike/modules/documents/document_detail_page/patient_widget.dart';
 import 'package:medlike/modules/documents/document_detail_page/pdf_viewer.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/api/api_constants.dart';
@@ -107,11 +109,23 @@ class _DocumentPageState extends State<DocumentPage> {
                       state.selectedDocumentMetaData?.isSignByPatient ?? false,
                   isSignByEmployee: widget.document.isSignByEmployee,
                 ).statusName,
-                signedByPatientAt: widget.document.signedByPatientAt,
-                userName: widget.document.signEmployer != null
-                    ? widget.document.signEmployer!.firstname
+                updatedAt: widget.document.updatedAt,
+                userName: state.selectedDocumentMetaData != null
+                    ? '${state.selectedDocumentMetaData!.patient.firstname} ${state.selectedDocumentMetaData!.patient.lastname[0]}.'
                     : '',
               ),
+              const SizedBox(height: 32),
+              PatientWidget(
+                patient: state.selectedDocumentMetaData!.patient,
+                patientSignUrl: '',
+              ),
+              const SizedBox(height: 32),
+              ClinicWidget(
+                clinic: state.selectedDocumentMetaData!.lpu,
+                documentCreator:
+                    state.selectedDocumentMetaData!.documentCreator,
+              ),
+              const SizedBox(height: 32),
               PdfViewerWidget(
                 fileId: widget.document.id,
                 pdfUrl:

@@ -23,6 +23,7 @@ mixin _$DocumentModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DocumentMetaLpuModel get lpu => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   DocumentMetaSignEmployerModel? get signEmployer =>
       throw _privateConstructorUsedError;
   bool get isSignByPatient => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $DocumentModelCopyWith<$Res> {
       {String id,
       String name,
       DocumentMetaLpuModel lpu,
+      DateTime? updatedAt,
       DocumentMetaSignEmployerModel? signEmployer,
       bool isSignByPatient,
       DateTime? signedByPatientAt,
@@ -72,6 +74,7 @@ class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
     Object? id = null,
     Object? name = null,
     Object? lpu = null,
+    Object? updatedAt = freezed,
     Object? signEmployer = freezed,
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
@@ -91,6 +94,10 @@ class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
               as DocumentMetaLpuModel,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       signEmployer: freezed == signEmployer
           ? _value.signEmployer
           : signEmployer // ignore: cast_nullable_to_non_nullable
@@ -148,6 +155,7 @@ abstract class _$$_DocumentModelModelCopyWith<$Res>
       {String id,
       String name,
       DocumentMetaLpuModel lpu,
+      DateTime? updatedAt,
       DocumentMetaSignEmployerModel? signEmployer,
       bool isSignByPatient,
       DateTime? signedByPatientAt,
@@ -174,6 +182,7 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? lpu = null,
+    Object? updatedAt = freezed,
     Object? signEmployer = freezed,
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
@@ -193,6 +202,10 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
               as DocumentMetaLpuModel,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       signEmployer: freezed == signEmployer
           ? _value.signEmployer
           : signEmployer // ignore: cast_nullable_to_non_nullable
@@ -224,6 +237,7 @@ class _$_DocumentModelModel implements _DocumentModelModel {
       {required this.id,
       required this.name,
       required this.lpu,
+      required this.updatedAt,
       required this.signEmployer,
       required this.isSignByPatient,
       required this.signedByPatientAt,
@@ -240,6 +254,8 @@ class _$_DocumentModelModel implements _DocumentModelModel {
   @override
   final DocumentMetaLpuModel lpu;
   @override
+  final DateTime? updatedAt;
+  @override
   final DocumentMetaSignEmployerModel? signEmployer;
   @override
   final bool isSignByPatient;
@@ -252,7 +268,7 @@ class _$_DocumentModelModel implements _DocumentModelModel {
 
   @override
   String toString() {
-    return 'DocumentModel(id: $id, name: $name, lpu: $lpu, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
+    return 'DocumentModel(id: $id, name: $name, lpu: $lpu, updatedAt: $updatedAt, signEmployer: $signEmployer, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt)';
   }
 
   @override
@@ -263,6 +279,8 @@ class _$_DocumentModelModel implements _DocumentModelModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.lpu, lpu) || other.lpu == lpu) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.signEmployer, signEmployer) ||
                 other.signEmployer == signEmployer) &&
             (identical(other.isSignByPatient, isSignByPatient) ||
@@ -277,8 +295,17 @@ class _$_DocumentModelModel implements _DocumentModelModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, lpu, signEmployer,
-      isSignByPatient, signedByPatientAt, isSignByEmployee, signedByEmployeeAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      lpu,
+      updatedAt,
+      signEmployer,
+      isSignByPatient,
+      signedByPatientAt,
+      isSignByEmployee,
+      signedByEmployeeAt);
 
   @JsonKey(ignore: true)
   @override
@@ -300,6 +327,7 @@ abstract class _DocumentModelModel implements DocumentModel {
       {required final String id,
       required final String name,
       required final DocumentMetaLpuModel lpu,
+      required final DateTime? updatedAt,
       required final DocumentMetaSignEmployerModel? signEmployer,
       required final bool isSignByPatient,
       required final DateTime? signedByPatientAt,
@@ -315,6 +343,8 @@ abstract class _DocumentModelModel implements DocumentModel {
   String get name;
   @override
   DocumentMetaLpuModel get lpu;
+  @override
+  DateTime? get updatedAt;
   @override
   DocumentMetaSignEmployerModel? get signEmployer;
   @override

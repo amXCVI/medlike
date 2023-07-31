@@ -12,6 +12,9 @@ _$_DocumentModelModel _$$_DocumentModelModelFromJson(
       id: json['id'] as String,
       name: json['name'] as String,
       lpu: DocumentMetaLpuModel.fromJson(json['lpu'] as Map<String, dynamic>),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
       signEmployer: json['signEmployer'] == null
           ? null
           : DocumentMetaSignEmployerModel.fromJson(
@@ -32,6 +35,7 @@ Map<String, dynamic> _$$_DocumentModelModelToJson(
       'id': instance.id,
       'name': instance.name,
       'lpu': instance.lpu,
+      'updatedAt': instance.updatedAt?.toIso8601String(),
       'signEmployer': instance.signEmployer,
       'isSignByPatient': instance.isSignByPatient,
       'signedByPatientAt': instance.signedByPatientAt?.toIso8601String(),

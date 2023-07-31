@@ -8,13 +8,13 @@ class DocumentHeader extends StatelessWidget {
     Key? key,
     required this.documentName,
     required this.statusStr,
-    this.signedByPatientAt,
+    this.updatedAt,
     required this.userName,
   }) : super(key: key);
 
   final String documentName;
   final String statusStr;
-  final DateTime? signedByPatientAt;
+  final DateTime? updatedAt;
   final String userName;
 
   @override
@@ -43,7 +43,7 @@ class DocumentHeader extends StatelessWidget {
         const SizedBox(height: 24.0),
         Row(
           children: [
-            signedByPatientAt != null
+            updatedAt != null
                 ? RichText(
                     text: WidgetSpan(
                       child: Container(
@@ -58,7 +58,7 @@ class DocumentHeader extends StatelessWidget {
                                 'assets/icons/appointments/clock.svg'),
                             const SizedBox(width: 8.0),
                             Text(DateFormat('HH:mm DD.MM.yy')
-                                .format(signedByPatientAt!)),
+                                .format(updatedAt!)),
                           ],
                         ),
                       ),
