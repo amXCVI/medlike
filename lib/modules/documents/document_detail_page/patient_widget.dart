@@ -6,12 +6,12 @@ import 'package:skeletons/skeletons.dart';
 class PatientWidget extends StatelessWidget {
   const PatientWidget(
       {Key? key,
-      required this.patient,
+      this.patient,
       required this.patientSignUrl,
       required this.isLoadingData})
       : super(key: key);
 
-  final DocumentMetaPatientModel patient;
+  final DocumentMetaPatientModel? patient;
   final String patientSignUrl;
   final bool isLoadingData;
 
@@ -49,7 +49,7 @@ class PatientWidget extends StatelessWidget {
                   )
                 : Flexible(
                     child: Text(
-                      '${patient.lastname} ${patient.firstname} ${patient.middlename}, ${patient.sex}, ${/*DateFormat('DD.MM.yy').format*/ (patient.birthday)} г., ${patient.adresses ?? ''}',
+                      '${patient!.lastname} ${patient!.firstname} ${patient!.middlename}, ${patient!.sex}, ${/*DateFormat('DD.MM.yy').format*/ (patient!.birthday)} г., ${patient!.adresses ?? ''}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       softWrap: true,

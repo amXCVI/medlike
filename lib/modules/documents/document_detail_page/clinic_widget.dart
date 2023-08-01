@@ -4,14 +4,14 @@ import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:skeletons/skeletons.dart';
 
 class ClinicWidget extends StatelessWidget {
-  const ClinicWidget(
-      {Key? key,
-      required this.clinic,
-      this.documentCreator,
-      required this.isLoadingData})
-      : super(key: key);
+  const ClinicWidget({
+    Key? key,
+    this.clinic,
+    this.documentCreator,
+    required this.isLoadingData,
+  }) : super(key: key);
 
-  final DocumentMetaLpuModel clinic;
+  final DocumentMetaLpuModel? clinic;
   final DocumentMetaDocumentCreatorModel? documentCreator;
   final bool isLoadingData;
 
@@ -49,7 +49,7 @@ class ClinicWidget extends StatelessWidget {
                   )
                 : Flexible(
                     child: Text(
-                      '"${clinic.name}", ${clinic.address}',
+                      '"${clinic!.name}", ${clinic!.address}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 4,
                       softWrap: true,

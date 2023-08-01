@@ -116,16 +116,16 @@ class _DocumentPageState extends State<DocumentPage> {
               ),
               const SizedBox(height: 32),
               PatientWidget(
-                patient: state.selectedDocumentMetaData!.patient,
+                patient: state.selectedDocumentMetaData?.patient,
                 patientSignUrl: '',
                 isLoadingData: state.getDocumentMetaStatus ==
                     GetDocumentMetaStatuses.loading,
               ),
               const SizedBox(height: 32),
               ClinicWidget(
-                clinic: state.selectedDocumentMetaData!.lpu,
+                clinic: state.selectedDocumentMetaData?.lpu,
                 documentCreator:
-                    state.selectedDocumentMetaData!.documentCreator,
+                    state.selectedDocumentMetaData?.documentCreator,
                 isLoadingData: state.getDocumentMetaStatus ==
                     GetDocumentMetaStatuses.loading,
               ),
