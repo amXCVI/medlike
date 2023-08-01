@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
-import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:skeletons/skeletons.dart';
 
 class PdfViewerWidget extends StatefulWidget {
   const PdfViewerWidget({Key? key, required this.pdfUrl, required this.fileId})
@@ -94,9 +94,17 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
           )
         : fileLoadError.isNotEmpty
             ? Text('Не удалось загрузить содержимое файла. \n$fileLoadError')
-            : const Center(
-                child: CircularLoader(
-                  radius: 50,
+            : Expanded(
+                child: SkeletonParagraph(
+                  style: SkeletonParagraphStyle(
+                      padding: const EdgeInsets.all(0),
+                      lines: 50,
+                      spacing: 4,
+                      lineStyle: SkeletonLineStyle(
+                        randomLength: true,
+                        height: 10,
+                        borderRadius: BorderRadius.circular(8),
+                      )),
                 ),
               );
   }
