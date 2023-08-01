@@ -1646,6 +1646,8 @@ mixin _$FavoriteDoctor {
   String get specializationId => throw _privateConstructorUsedError;
   String get specialization => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
+  num get rateAsSotr => throw _privateConstructorUsedError;
+  num get rateAsUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1666,7 +1668,9 @@ abstract class $FavoriteDoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int categoryType});
+      int categoryType,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -1689,6 +1693,8 @@ class _$FavoriteDoctorCopyWithImpl<$Res, $Val extends FavoriteDoctor>
     Object? specializationId = null,
     Object? specialization = null,
     Object? categoryType = null,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1719,6 +1725,14 @@ class _$FavoriteDoctorCopyWithImpl<$Res, $Val extends FavoriteDoctor>
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ) as $Val);
   }
 }
@@ -1738,7 +1752,9 @@ abstract class _$$_FavoriteDoctorCopyWith<$Res>
       String middleName,
       String specializationId,
       String specialization,
-      int categoryType});
+      int categoryType,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -1759,6 +1775,8 @@ class __$$_FavoriteDoctorCopyWithImpl<$Res>
     Object? specializationId = null,
     Object? specialization = null,
     Object? categoryType = null,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_$_FavoriteDoctor(
       id: null == id
@@ -1789,6 +1807,14 @@ class __$$_FavoriteDoctorCopyWithImpl<$Res>
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -1803,7 +1829,9 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
       required this.middleName,
       required this.specializationId,
       required this.specialization,
-      required this.categoryType});
+      required this.categoryType,
+      required this.rateAsSotr,
+      required this.rateAsUser});
 
   factory _$_FavoriteDoctor.fromJson(Map<String, dynamic> json) =>
       _$$_FavoriteDoctorFromJson(json);
@@ -1822,10 +1850,14 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
   final String specialization;
   @override
   final int categoryType;
+  @override
+  final num rateAsSotr;
+  @override
+  final num rateAsUser;
 
   @override
   String toString() {
-    return 'FavoriteDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, categoryType: $categoryType)';
+    return 'FavoriteDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, categoryType: $categoryType, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -1845,13 +1877,26 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
             (identical(other.specialization, specialization) ||
                 other.specialization == specialization) &&
             (identical(other.categoryType, categoryType) ||
-                other.categoryType == categoryType));
+                other.categoryType == categoryType) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, lastName, firstName,
-      middleName, specializationId, specialization, categoryType);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      lastName,
+      firstName,
+      middleName,
+      specializationId,
+      specialization,
+      categoryType,
+      rateAsSotr,
+      rateAsUser);
 
   @JsonKey(ignore: true)
   @override
@@ -1875,7 +1920,9 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
       required final String middleName,
       required final String specializationId,
       required final String specialization,
-      required final int categoryType}) = _$_FavoriteDoctor;
+      required final int categoryType,
+      required final num rateAsSotr,
+      required final num rateAsUser}) = _$_FavoriteDoctor;
 
   factory _FavoriteDoctor.fromJson(Map<String, dynamic> json) =
       _$_FavoriteDoctor.fromJson;
@@ -1894,6 +1941,10 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
   String get specialization;
   @override
   int get categoryType;
+  @override
+  num get rateAsSotr;
+  @override
+  num get rateAsUser;
   @override
   @JsonKey(ignore: true)
   _$$_FavoriteDoctorCopyWith<_$_FavoriteDoctor> get copyWith =>

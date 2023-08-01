@@ -19,6 +19,7 @@ class FavoriteDoctorItem extends StatelessWidget {
       subtitle:
           '${CategoryTypes.getCategoryTypeByCategoryTypeId(doctorItem.categoryType).russianCategoryTypeName}, ${doctorItem.specialization}',
       onTap: onTap,
+      rating: doctorItem.rateAsUser,
     );
   }
 }

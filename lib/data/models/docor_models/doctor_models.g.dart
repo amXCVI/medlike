@@ -153,6 +153,8 @@ _$_FavoriteDoctor _$$_FavoriteDoctorFromJson(Map<String, dynamic> json) =>
       specializationId: json['specializationId'] as String,
       specialization: json['specialization'] as String,
       categoryType: json['categoryType'] as int,
+      rateAsSotr: json['rateAsSotr'] as num,
+      rateAsUser: json['rateAsUser'] as num,
     );
 
 Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
@@ -164,6 +166,8 @@ Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
       'specializationId': instance.specializationId,
       'specialization': instance.specialization,
       'categoryType': instance.categoryType,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
     };
 
 _$_AssessmentModel _$$_AssessmentModelFromJson(Map<String, dynamic> json) =>
