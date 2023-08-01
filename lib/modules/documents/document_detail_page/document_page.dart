@@ -118,14 +118,25 @@ class _DocumentPageState extends State<DocumentPage> {
               PatientWidget(
                 patient: state.selectedDocumentMetaData!.patient,
                 patientSignUrl: '',
+                isLoadingData: state.getDocumentMetaStatus ==
+                    GetDocumentMetaStatuses.loading,
               ),
               const SizedBox(height: 32),
               ClinicWidget(
                 clinic: state.selectedDocumentMetaData!.lpu,
                 documentCreator:
                     state.selectedDocumentMetaData!.documentCreator,
+                isLoadingData: state.getDocumentMetaStatus ==
+                    GetDocumentMetaStatuses.loading,
               ),
               const SizedBox(height: 32),
+              Text(
+                'Документ',
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium
+                    ?.copyWith(fontWeight: FontWeight.w700),
+              ),
               PdfViewerWidget(
                 fileId: widget.document.id,
                 pdfUrl:

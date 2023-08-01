@@ -64,7 +64,9 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (pageCount < 1) {
-        getPageCount();
+        Future.delayed(const Duration(seconds: 1), () {
+          getPageCount();
+        });
       }
     });
 
