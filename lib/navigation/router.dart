@@ -8,6 +8,7 @@ import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
+import 'package:medlike/modules/documents/document_detail_page/full_screen_pdf_viewer_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
@@ -232,6 +233,10 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.documentDetail,
             page: DocumentRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.fullScreenDocument,
+            page: FullScreenPdfViewerRoute.page,
             guards: [CheckIsAuthUser()]),
 
         AdaptiveRoute(

@@ -141,6 +141,7 @@ class _DocumentPageState extends State<DocumentPage> {
                 fileId: widget.document.id,
                 pdfUrl:
                     '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${widget.document.id}/content',
+                fileName: widget.document.name,
               )
             ],
           ));
