@@ -383,19 +383,47 @@ class AppointmentsCubit
     ));
 
     try {
-      final bool response;
-      response = (await appointmentsRepository.saveAppointmentRate(
+      await appointmentsRepository.saveAppointmentRate(
         appointmentId: appointmentId,
         reviewVisibility: reviewVisibility,
         caption: caption,
         message: message,
         email: email,
         rate: rate,
-      ));
+      );
+
+      List<AppointmentModelWithTimeZoneOffset>? appointmentsListWithNewRating =
+          state.appointmentsList
+              ?.map((e) => e.id == appointmentId
+                  ? e.copyWith(
+                      doctorInfo: e.doctorInfo.copyWith(
+                        rateAsUser: rate,
+                        rateAsSotr: rate,
+                      ),
+                      review: AppointmentReviewModel(
+                        rate: rate,
+                        caption: caption,
+                        message: message,
+                        visibility: int.parse(reviewVisibility),
+                      ))
+                  : e)
+              .toList();
 
       emit(state.copyWith(
-        sendAppointmentReviewStatus: SendAppointmentReviewStatuses.success,
-      ));
+          sendAppointmentReviewStatus: SendAppointmentReviewStatuses.success,
+          appointmentsList: appointmentsListWithNewRating,
+          selectedAppointment: state.selectedAppointment!.copyWith(
+            doctorInfo: state.selectedAppointment!.doctorInfo.copyWith(
+              rateAsUser:
+                  state.selectedAppointment!.doctorInfo.rateAsUser ?? rate,
+            ),
+            review: AppointmentReviewModel(
+              rate: rate,
+              caption: caption,
+              message: message,
+              visibility: int.parse(reviewVisibility),
+            ),
+          )));
 
       Future.delayed(const Duration(seconds: 2), () {
         emit(
@@ -404,8 +432,9 @@ class AppointmentsCubit
           ),
         );
       });
-      return response;
+      return true;
     } catch (e) {
+      print(e);
       clearAppointment();
       emit(state.copyWith(
         sendAppointmentReviewStatus: SendAppointmentReviewStatuses.failed,

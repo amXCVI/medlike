@@ -35,10 +35,6 @@ class AppointmentModel with _$AppointmentModel {
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
       _$AppointmentModelFromJson(json);
-
-  // @override
-  // // TODO: implement copyWith
-  // $AppointmentModelCopyWith<AppointmentModel> get copyWith => super.copyWith;
 }
 
 @freezed

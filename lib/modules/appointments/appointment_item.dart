@@ -19,6 +19,18 @@ class AppointmentItem extends StatelessWidget {
 
   final AppointmentModelWithTimeZoneOffset appointmentItem;
 
+  void handleTapOnAppointment(BuildContext context) async {
+    context.router
+        .push(AppointmentDetailRoute(appointmentItem: appointmentItem));
+    await context
+        .read<AppointmentsCubit>()
+        .getAppointmentById(
+          appointmentId: appointmentItem.id,
+          userId: appointmentItem.patientInfo.id!,
+        )
+        .then((value) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final title = appointmentItem.doctorInfo.specialization != null
@@ -26,18 +38,6 @@ class AppointmentItem extends StatelessWidget {
         : CategoryTypes.getCategoryTypeByCategoryTypeId(
                 appointmentItem.categoryType)
             .russianCategoryTypeName;
-
-    void handleTapOnAppointment() {
-      context
-          .read<AppointmentsCubit>()
-          .getAppointmentById(
-            appointmentId: appointmentItem.id,
-            userId: appointmentItem.patientInfo.id!,
-          )
-          .then((value) {
-        context.router.push(AppointmentDetailRoute(appointmentItem: value));
-      });
-    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -47,7 +47,7 @@ class AppointmentItem extends StatelessWidget {
         children: [
           // Название приема
           GestureDetector(
-            onTap: handleTapOnAppointment,
+            onTap: () => handleTapOnAppointment(context),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,13 +106,14 @@ class AppointmentItem extends StatelessWidget {
                                   ?.copyWith(color: AppColors.lightText)),
                         ],
                       ),
-                      appointmentItem.review != null
+                      appointmentItem.doctorInfo.rateAsSotr != null
                           ? Row(
                               children: [
                                 SvgPicture.asset(
                                     'assets/icons/appointments/raiting_gold_star.svg'),
                                 const SizedBox(width: 6),
-                                Text(appointmentItem.review!.rate.toString())
+                                Text(appointmentItem.doctorInfo.rateAsSotr
+                                    .toString())
                               ],
                             )
                           : const SizedBox(),

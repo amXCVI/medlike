@@ -6,10 +6,10 @@ const List<String> visibilityList = [
 String getValueVisibilityByLabel(String label) {
   switch (label) {
     case 'Виден всем':
-      return 'Public';
+      return '1';
     case 'Виден только администратору':
-      return 'Private';
+      return '0';
     default:
-      return 'Private';
+      return '0';
   }
 }

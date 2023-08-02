@@ -51,13 +51,13 @@ class DoctorInfoCard extends StatelessWidget {
                     '${doctorInfo.lastName ?? ''} ${(doctorInfo.firstName ?? ' ')[0]}. ${(doctorInfo.middleName ?? ' ')[0]}.',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  review != null
+                  doctorInfo.rateAsSotr != null
                       ? Row(
                           children: [
                             SvgPicture.asset(
                                 'assets/icons/appointments/raiting_gold_star.svg'),
                             const SizedBox(width: 6),
-                            Text(review!.rate.toString())
+                            Text(doctorInfo.rateAsSotr.toString())
                           ],
                         )
                       : const SizedBox(),

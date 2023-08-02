@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
 import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
 import 'package:medlike/themes/colors.dart';
@@ -13,47 +15,48 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
+import 'package:skeletons/skeletons.dart';
 
 import 'appointment_detail_action_button.dart';
 
 @RoutePage()
-class AppointmentDetailPage extends StatefulWidget {
+class AppointmentDetailPage extends StatelessWidget {
   const AppointmentDetailPage({
     Key? key,
     required this.appointmentItem,
   }) : super(key: key);
 
-  final AppointmentModel appointmentItem;
-
-  @override
-  State<AppointmentDetailPage> createState() => _AppointmentDetailPageState();
-}
-
-class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
-  late AppointmentModel selectedAppointment = widget.appointmentItem;
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.appointmentItem.doctorInfo.specialization != null
-        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(widget.appointmentItem.categoryType).russianCategoryTypeName}, ${widget.appointmentItem.doctorInfo.specialization}'
+    final title = appointmentItem.doctorInfo.specialization != null
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
         : CategoryTypes.getCategoryTypeByCategoryTypeId(
-                widget.appointmentItem.categoryType)
+                appointmentItem.categoryType)
             .russianCategoryTypeName;
 
-    final serviceName = widget.appointmentItem.categoryType == 1 ||
-            widget.appointmentItem.categoryType == 0
-        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(widget.appointmentItem.categoryType).russianCategoryTypeName}, ${widget.appointmentItem.doctorInfo.specialization}'
-        : '${CategoryTypes.getCategoryTypeByCategoryTypeId(widget.appointmentItem.categoryType).russianCategoryTypeName}, ${widget.appointmentItem.researches.map(
+    final serviceName = appointmentItem.categoryType == 1 ||
+            appointmentItem.categoryType == 0
+        ? '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.doctorInfo.specialization}'
+        : '${CategoryTypes.getCategoryTypeByCategoryTypeId(appointmentItem.categoryType).russianCategoryTypeName}, ${appointmentItem.researches.map(
               (e) => e.name as String,
             ).join(', ')}';
 
     return DefaultScaffold(
         appBarTitle: title,
-        actionButton: AppointmentDetailActionButton(
-          appointmentId: selectedAppointment.id,
-          appointmentStatus: selectedAppointment.status,
-          isRated: selectedAppointment.review != null,
-        ),
+        actionButton: BlocBuilder<AppointmentsCubit, AppointmentsState>(
+            builder: (context, state) {
+          if (state.getAppointmentStatus == GetAppointmentStatuses.success) {
+            return AppointmentDetailActionButton(
+              appointmentId: state.selectedAppointment!.id,
+              appointmentStatus: state.selectedAppointment!.status,
+              isRated: state.selectedAppointment!.review != null,
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,14 +67,33 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    NextAppointmentTimeChip(
-                      appointmentDateTime: const TimestampConverter()
-                          .fromJson(selectedAppointment.appointmentDateTime),
-                      timeZoneOffset: getTimezoneOffset(
-                          selectedAppointment.appointmentDateTime),
-                      isBottomLabel: true,
-                      isFullDateTime: true,
-                    ),
+                    BlocBuilder<AppointmentsCubit, AppointmentsState>(
+                        builder: (context, state) {
+                      if (state.getAppointmentStatus !=
+                          GetAppointmentStatuses.success) {
+                        return Expanded(
+                          child: SkeletonParagraph(
+                            style: SkeletonParagraphStyle(
+                                lines: 1,
+                                lineStyle: SkeletonLineStyle(
+                                  randomLength: true,
+                                  height: 20,
+                                  borderRadius: BorderRadius.circular(8),
+                                )),
+                          ),
+                        );
+                      } else {
+                        return NextAppointmentTimeChip(
+                          appointmentDateTime: const TimestampConverter()
+                              .fromJson(state
+                                  .selectedAppointment!.appointmentDateTime),
+                          timeZoneOffset: getTimezoneOffset(
+                              state.selectedAppointment!.appointmentDateTime),
+                          isBottomLabel: true,
+                          isFullDateTime: true,
+                        );
+                      }
+                    }),
                     const SizedBox(width: 8),
                     RichText(
                       text: WidgetSpan(
@@ -86,8 +108,7 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                               SvgPicture.asset(
                                   'assets/icons/appointments/profile.svg'),
                               const SizedBox(width: 8.0),
-                              Text(selectedAppointment.patientInfo.name
-                                  .toString()),
+                              Text(appointmentItem.patientInfo.name.toString()),
                             ],
                           ),
                         ),
@@ -96,7 +117,7 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                   ],
                 ),
               ),
-              selectedAppointment.clinicInfo.address != null
+              appointmentItem.clinicInfo.address != null
                   ? Padding(
                       padding: const EdgeInsets.only(
                           top: 0, right: 16, bottom: 24, left: 16),
@@ -109,7 +130,7 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width - 100,
                             child: Text(
-                                '${selectedAppointment.clinicInfo.name!}, ${selectedAppointment.researchPlace ?? ''} ${selectedAppointment.clinicInfo.address!}',
+                                '${appointmentItem.clinicInfo.name!}, ${appointmentItem.researchPlace ?? ''} ${appointmentItem.clinicInfo.address!}',
                                 style: Theme.of(context).textTheme.bodySmall),
                           ),
                         ],
@@ -127,18 +148,25 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                child: DoctorInfoCard(
-                  doctorInfo: selectedAppointment.doctorInfo,
-                  review: selectedAppointment.review,
-                ),
-              ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                  child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
+                      builder: (context, state) {
+                    if (state.getAppointmentStatus ==
+                        GetAppointmentStatuses.success) {
+                      return DoctorInfoCard(
+                        doctorInfo: appointmentItem.doctorInfo,
+                        review: state.selectedAppointment?.review,
+                      );
+                    } else {
+                      return const SizedBox(height: 60);
+                    }
+                  })),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 0, right: 16, bottom: 24, left: 26),
                 child: AppointmentItemRecommendations(
-                  recommendations: selectedAppointment.recommendations ?? '',
+                  recommendations: appointmentItem.recommendations ?? '',
                   serviceName: serviceName,
                   maxLines: 3,
                   onTap: () => {
@@ -154,17 +182,38 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                         builder: (context) => RecommendationBottomSheet(
                             serviceName: serviceName,
                             recommendationsText:
-                                selectedAppointment.recommendations ?? ''))
+                                appointmentItem.recommendations ?? ''))
                   },
                 ),
               ),
-              if (selectedAppointment.status == 4)
-                ApplyAndCancellAppointment(
-                  appointmentId: selectedAppointment.id,
-                  userId: selectedAppointment.patientInfo.id as String,
-                ),
-              if (selectedAppointment.review != null)
-                ReviewWidget(review: selectedAppointment.review!),
+              BlocBuilder<AppointmentsCubit, AppointmentsState>(
+                  builder: (context, state) {
+                if (state.getAppointmentStatus ==
+                    GetAppointmentStatuses.success) {
+                  return Column(
+                    children: [
+                      if (state.selectedAppointment!.status == 4)
+                        ApplyAndCancellAppointment(
+                          appointmentId: appointmentItem.id,
+                          userId: appointmentItem.patientInfo.id as String,
+                        ),
+                      if (state.selectedAppointment!.review != null)
+                        ReviewWidget(
+                            review: state.selectedAppointment!.review!),
+                    ],
+                  );
+                } else {
+                  return SkeletonParagraph(
+                    style: SkeletonParagraphStyle(
+                        lines: 5,
+                        lineStyle: SkeletonLineStyle(
+                          randomLength: true,
+                          height: 20,
+                          borderRadius: BorderRadius.circular(8),
+                        )),
+                  );
+                }
+              }),
             ],
           ),
         ));

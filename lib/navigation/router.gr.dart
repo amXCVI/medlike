@@ -2176,7 +2176,7 @@ class FeedbackRouteArgs {
 class AppointmentDetailRoute extends PageRouteInfo<AppointmentDetailRouteArgs> {
   AppointmentDetailRoute({
     Key? key,
-    required AppointmentModel appointmentItem,
+    required AppointmentModelWithTimeZoneOffset appointmentItem,
     List<PageRouteInfo>? children,
   }) : super(
           AppointmentDetailRoute.name,
@@ -2201,7 +2201,7 @@ class AppointmentDetailRouteArgs {
 
   final Key? key;
 
-  final AppointmentModel appointmentItem;
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
 
   @override
   String toString() {
