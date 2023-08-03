@@ -6,18 +6,18 @@ class ToggleButton extends StatefulWidget {
     super.key,
     required this.itemsList,
     required this.setValue,
+    required this.value,
   });
 
   final List<String> itemsList;
   final Function(String) setValue;
+  final String value;
 
   @override
   ToggleButtonState createState() => ToggleButtonState();
 }
 
 const double height = 32.0;
-const double loginAlign = -1;
-const double signInAlign = 1;
 const Color selectedColor = Colors.white;
 const Color normalColor = Colors.black54;
 
@@ -27,7 +27,9 @@ class ToggleButtonState extends State<ToggleButton> {
   @override
   void initState() {
     super.initState();
-    xAlign = loginAlign;
+    xAlign = (2 / (widget.itemsList.length - 1)) *
+            widget.itemsList.indexOf(widget.value).toDouble() -
+        1;
   }
 
   @override

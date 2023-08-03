@@ -179,6 +179,7 @@ class _SchedulePageState extends State<SchedulePage> {
               child: ToggleButton(
                 itemsList: togglePageValuesList.map((e) => e.label).toList(),
                 setValue: setTogglePageValue,
+                value: togglePageValue.label,
               ),
             ),
             togglePageValue.id == togglePageValuesList[0].id

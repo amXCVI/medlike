@@ -16,8 +16,9 @@ class DoctorInfoHeader extends StatelessWidget {
           : '';
       num doctorRating =
           state.selectedDoctor != null ? state.selectedDoctor!.rateAsSotr : 0;
-      String? doctorDescription =
-          state.selectedDoctor != null ? state.selectedDoctor!.shortinfo : '';
+      String? doctorDescription = state.selectedDoctor != null
+          ? state.selectedDoctor!.specialization
+          : '';
 
       return Padding(
         padding: const EdgeInsets.only(left: 16, top: 24, right: 16),

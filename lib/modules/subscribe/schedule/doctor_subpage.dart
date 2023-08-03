@@ -4,6 +4,8 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/reviews_widget.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 
+import 'doctor_info_widget.dart';
+
 class DoctorSubpage extends StatelessWidget {
   const DoctorSubpage({Key? key}) : super(key: key);
 
@@ -15,8 +17,15 @@ class DoctorSubpage extends StatelessWidget {
         return const Text('Ошибка загрузки');
       } else if (state.getDoctorInfoDataStatus ==
           GetDoctorInfoDataStatuses.success) {
-        return ReviewsWidget(
-          reviews: state.selectedDoctorFullData!.reviews,
+        return Column(
+          children: [
+            DoctorInfoWidget(
+              markdownSource: state.selectedDoctorFullData!.shortinfo,
+            ),
+            ReviewsWidget(
+              reviews: state.selectedDoctorFullData!.reviews,
+            ),
+          ],
         );
       } else {
         return const CircularLoader();
