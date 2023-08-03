@@ -44,12 +44,11 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
       categoryType: categoryTypeId,
       isFavorite: true,
       categories: [],
-      imagePreviewLocation: '', //! Переделать
-      imageFullSizeLocation: '', //!
-      avergareRating: 0, //!
+      imageId: '', //! Переделать
       shortinfo: '', //!
       rateAsSotr: 0, // !
       rateAsUser: 0, // !
+      reviews: [], // !
     );
     context.read<SubscribeCubit>().setSelectedDoctor(favoriteDoctor);
     if (CategoryTypes.serviceCategoryTypeIds.contains(categoryTypeId)) {

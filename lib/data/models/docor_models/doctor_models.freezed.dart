@@ -934,10 +934,8 @@ mixin _$Doctor {
   int get categoryType => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   List<int> get categories => throw _privateConstructorUsedError;
-  String? get imagePreviewLocation => throw _privateConstructorUsedError;
-  String? get imageFullSizeLocation => throw _privateConstructorUsedError;
-  num get avergareRating =>
-      throw _privateConstructorUsedError; // required List<AssessmentModel> assessments,
+  String? get imageId => throw _privateConstructorUsedError;
+  List<DoctorInfoReviewModel> get reviews => throw _privateConstructorUsedError;
   String? get shortinfo => throw _privateConstructorUsedError;
   num get rateAsSotr => throw _privateConstructorUsedError;
   num get rateAsUser => throw _privateConstructorUsedError;
@@ -963,9 +961,8 @@ abstract class $DoctorCopyWith<$Res> {
       int categoryType,
       bool isFavorite,
       List<int> categories,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
-      num avergareRating,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
       String? shortinfo,
       num rateAsSotr,
       num rateAsUser});
@@ -994,9 +991,8 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
-    Object? avergareRating = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
     Object? shortinfo = freezed,
     Object? rateAsSotr = null,
     Object? rateAsUser = null,
@@ -1042,18 +1038,14 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avergareRating: null == avergareRating
-          ? _value.avergareRating
-          : avergareRating // ignore: cast_nullable_to_non_nullable
-              as num,
+      reviews: null == reviews
+          ? _value.reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
       shortinfo: freezed == shortinfo
           ? _value.shortinfo
           : shortinfo // ignore: cast_nullable_to_non_nullable
@@ -1087,9 +1079,8 @@ abstract class _$$_DoctorCopyWith<$Res> implements $DoctorCopyWith<$Res> {
       int categoryType,
       bool isFavorite,
       List<int> categories,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
-      num avergareRating,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
       String? shortinfo,
       num rateAsSotr,
       num rateAsUser});
@@ -1115,9 +1106,8 @@ class __$$_DoctorCopyWithImpl<$Res>
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
-    Object? avergareRating = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
     Object? shortinfo = freezed,
     Object? rateAsSotr = null,
     Object? rateAsUser = null,
@@ -1163,18 +1153,14 @@ class __$$_DoctorCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avergareRating: null == avergareRating
-          ? _value.avergareRating
-          : avergareRating // ignore: cast_nullable_to_non_nullable
-              as num,
+      reviews: null == reviews
+          ? _value._reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
       shortinfo: freezed == shortinfo
           ? _value.shortinfo
           : shortinfo // ignore: cast_nullable_to_non_nullable
@@ -1205,13 +1191,13 @@ class _$_Doctor implements _Doctor {
       required this.categoryType,
       required this.isFavorite,
       required final List<int> categories,
-      required this.imagePreviewLocation,
-      required this.imageFullSizeLocation,
-      required this.avergareRating,
+      required this.imageId,
+      required final List<DoctorInfoReviewModel> reviews,
       required this.shortinfo,
       required this.rateAsSotr,
       required this.rateAsUser})
-      : _categories = categories;
+      : _categories = categories,
+        _reviews = reviews;
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1243,12 +1229,15 @@ class _$_Doctor implements _Doctor {
   }
 
   @override
-  final String? imagePreviewLocation;
+  final String? imageId;
+  final List<DoctorInfoReviewModel> _reviews;
   @override
-  final String? imageFullSizeLocation;
-  @override
-  final num avergareRating;
-// required List<AssessmentModel> assessments,
+  List<DoctorInfoReviewModel> get reviews {
+    if (_reviews is EqualUnmodifiableListView) return _reviews;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reviews);
+  }
+
   @override
   final String? shortinfo;
   @override
@@ -1258,7 +1247,7 @@ class _$_Doctor implements _Doctor {
 
   @override
   String toString() {
-    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, avergareRating: $avergareRating, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
+    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imageId: $imageId, reviews: $reviews, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -1284,12 +1273,8 @@ class _$_Doctor implements _Doctor {
                 other.isFavorite == isFavorite) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            (identical(other.imagePreviewLocation, imagePreviewLocation) ||
-                other.imagePreviewLocation == imagePreviewLocation) &&
-            (identical(other.imageFullSizeLocation, imageFullSizeLocation) ||
-                other.imageFullSizeLocation == imageFullSizeLocation) &&
-            (identical(other.avergareRating, avergareRating) ||
-                other.avergareRating == avergareRating) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            const DeepCollectionEquality().equals(other._reviews, _reviews) &&
             (identical(other.shortinfo, shortinfo) ||
                 other.shortinfo == shortinfo) &&
             (identical(other.rateAsSotr, rateAsSotr) ||
@@ -1312,9 +1297,8 @@ class _$_Doctor implements _Doctor {
       categoryType,
       isFavorite,
       const DeepCollectionEquality().hash(_categories),
-      imagePreviewLocation,
-      imageFullSizeLocation,
-      avergareRating,
+      imageId,
+      const DeepCollectionEquality().hash(_reviews),
       shortinfo,
       rateAsSotr,
       rateAsUser);
@@ -1345,9 +1329,8 @@ abstract class _Doctor implements Doctor {
       required final int categoryType,
       required final bool isFavorite,
       required final List<int> categories,
-      required final String? imagePreviewLocation,
-      required final String? imageFullSizeLocation,
-      required final num avergareRating,
+      required final String? imageId,
+      required final List<DoctorInfoReviewModel> reviews,
       required final String? shortinfo,
       required final num rateAsSotr,
       required final num rateAsUser}) = _$_Doctor;
@@ -1375,12 +1358,10 @@ abstract class _Doctor implements Doctor {
   @override
   List<int> get categories;
   @override
-  String? get imagePreviewLocation;
+  String? get imageId;
   @override
-  String? get imageFullSizeLocation;
+  List<DoctorInfoReviewModel> get reviews;
   @override
-  num get avergareRating;
-  @override // required List<AssessmentModel> assessments,
   String? get shortinfo;
   @override
   num get rateAsSotr;
@@ -2190,9 +2171,7 @@ mixin _$DoctorInfoDataModel {
   int get categoryType => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   List<int> get categories => throw _privateConstructorUsedError;
-  String? get imagePreviewLocation => throw _privateConstructorUsedError;
-  String? get imageFullSizeLocation => throw _privateConstructorUsedError;
-  num get avergareRating => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
   List<DoctorInfoReviewModel> get reviews => throw _privateConstructorUsedError;
   String? get shortinfo => throw _privateConstructorUsedError;
   num? get rateAsSotr => throw _privateConstructorUsedError;
@@ -2221,9 +2200,7 @@ abstract class $DoctorInfoDataModelCopyWith<$Res> {
       int categoryType,
       bool isFavorite,
       List<int> categories,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
-      num avergareRating,
+      String? imageId,
       List<DoctorInfoReviewModel> reviews,
       String? shortinfo,
       num? rateAsSotr,
@@ -2253,9 +2230,7 @@ class _$DoctorInfoDataModelCopyWithImpl<$Res, $Val extends DoctorInfoDataModel>
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
-    Object? avergareRating = null,
+    Object? imageId = freezed,
     Object? reviews = null,
     Object? shortinfo = freezed,
     Object? rateAsSotr = freezed,
@@ -2302,18 +2277,10 @@ class _$DoctorInfoDataModelCopyWithImpl<$Res, $Val extends DoctorInfoDataModel>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avergareRating: null == avergareRating
-          ? _value.avergareRating
-          : avergareRating // ignore: cast_nullable_to_non_nullable
-              as num,
       reviews: null == reviews
           ? _value.reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -2353,9 +2320,7 @@ abstract class _$$_DoctorInfoModelCopyWith<$Res>
       int categoryType,
       bool isFavorite,
       List<int> categories,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
-      num avergareRating,
+      String? imageId,
       List<DoctorInfoReviewModel> reviews,
       String? shortinfo,
       num? rateAsSotr,
@@ -2383,9 +2348,7 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
-    Object? avergareRating = null,
+    Object? imageId = freezed,
     Object? reviews = null,
     Object? shortinfo = freezed,
     Object? rateAsSotr = freezed,
@@ -2432,18 +2395,10 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avergareRating: null == avergareRating
-          ? _value.avergareRating
-          : avergareRating // ignore: cast_nullable_to_non_nullable
-              as num,
       reviews: null == reviews
           ? _value._reviews
           : reviews // ignore: cast_nullable_to_non_nullable
@@ -2478,9 +2433,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       required this.categoryType,
       required this.isFavorite,
       required final List<int> categories,
-      required this.imagePreviewLocation,
-      required this.imageFullSizeLocation,
-      required this.avergareRating,
+      required this.imageId,
       required final List<DoctorInfoReviewModel> reviews,
       required this.shortinfo,
       required this.rateAsSotr,
@@ -2518,11 +2471,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
   }
 
   @override
-  final String? imagePreviewLocation;
-  @override
-  final String? imageFullSizeLocation;
-  @override
-  final num avergareRating;
+  final String? imageId;
   final List<DoctorInfoReviewModel> _reviews;
   @override
   List<DoctorInfoReviewModel> get reviews {
@@ -2540,7 +2489,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
 
   @override
   String toString() {
-    return 'DoctorInfoDataModel(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, avergareRating: $avergareRating, reviews: $reviews, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
+    return 'DoctorInfoDataModel(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imageId: $imageId, reviews: $reviews, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -2566,12 +2515,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
                 other.isFavorite == isFavorite) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            (identical(other.imagePreviewLocation, imagePreviewLocation) ||
-                other.imagePreviewLocation == imagePreviewLocation) &&
-            (identical(other.imageFullSizeLocation, imageFullSizeLocation) ||
-                other.imageFullSizeLocation == imageFullSizeLocation) &&
-            (identical(other.avergareRating, avergareRating) ||
-                other.avergareRating == avergareRating) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
             const DeepCollectionEquality().equals(other._reviews, _reviews) &&
             (identical(other.shortinfo, shortinfo) ||
                 other.shortinfo == shortinfo) &&
@@ -2595,9 +2539,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       categoryType,
       isFavorite,
       const DeepCollectionEquality().hash(_categories),
-      imagePreviewLocation,
-      imageFullSizeLocation,
-      avergareRating,
+      imageId,
       const DeepCollectionEquality().hash(_reviews),
       shortinfo,
       rateAsSotr,
@@ -2629,9 +2571,7 @@ abstract class _DoctorInfoModel implements DoctorInfoDataModel {
       required final int categoryType,
       required final bool isFavorite,
       required final List<int> categories,
-      required final String? imagePreviewLocation,
-      required final String? imageFullSizeLocation,
-      required final num avergareRating,
+      required final String? imageId,
       required final List<DoctorInfoReviewModel> reviews,
       required final String? shortinfo,
       required final num? rateAsSotr,
@@ -2661,11 +2601,7 @@ abstract class _DoctorInfoModel implements DoctorInfoDataModel {
   @override
   List<int> get categories;
   @override
-  String? get imagePreviewLocation;
-  @override
-  String? get imageFullSizeLocation;
-  @override
-  num get avergareRating;
+  String? get imageId;
   @override
   List<DoctorInfoReviewModel> get reviews;
   @override
@@ -2695,7 +2631,8 @@ mixin _$DoctorInfoReviewModel {
   String? get message => throw _privateConstructorUsedError;
   bool get anonimous => throw _privateConstructorUsedError;
   String? get peopleId => throw _privateConstructorUsedError;
-  String? get account_id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'account_id')
+  String? get accountId => throw _privateConstructorUsedError;
   String? get fio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2719,7 +2656,7 @@ abstract class $DoctorInfoReviewModelCopyWith<$Res> {
       String? message,
       bool anonimous,
       String? peopleId,
-      String? account_id,
+      @JsonKey(name: 'account_id') String? accountId,
       String? fio});
 }
 
@@ -2745,7 +2682,7 @@ class _$DoctorInfoReviewModelCopyWithImpl<$Res,
     Object? message = freezed,
     Object? anonimous = null,
     Object? peopleId = freezed,
-    Object? account_id = freezed,
+    Object? accountId = freezed,
     Object? fio = freezed,
   }) {
     return _then(_value.copyWith(
@@ -2781,9 +2718,9 @@ class _$DoctorInfoReviewModelCopyWithImpl<$Res,
           ? _value.peopleId
           : peopleId // ignore: cast_nullable_to_non_nullable
               as String?,
-      account_id: freezed == account_id
-          ? _value.account_id
-          : account_id // ignore: cast_nullable_to_non_nullable
+      accountId: freezed == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
               as String?,
       fio: freezed == fio
           ? _value.fio
@@ -2810,7 +2747,7 @@ abstract class _$$_DoctorInfoReviewModelCopyWith<$Res>
       String? message,
       bool anonimous,
       String? peopleId,
-      String? account_id,
+      @JsonKey(name: 'account_id') String? accountId,
       String? fio});
 }
 
@@ -2833,7 +2770,7 @@ class __$$_DoctorInfoReviewModelCopyWithImpl<$Res>
     Object? message = freezed,
     Object? anonimous = null,
     Object? peopleId = freezed,
-    Object? account_id = freezed,
+    Object? accountId = freezed,
     Object? fio = freezed,
   }) {
     return _then(_$_DoctorInfoReviewModel(
@@ -2869,9 +2806,9 @@ class __$$_DoctorInfoReviewModelCopyWithImpl<$Res>
           ? _value.peopleId
           : peopleId // ignore: cast_nullable_to_non_nullable
               as String?,
-      account_id: freezed == account_id
-          ? _value.account_id
-          : account_id // ignore: cast_nullable_to_non_nullable
+      accountId: freezed == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
               as String?,
       fio: freezed == fio
           ? _value.fio
@@ -2893,7 +2830,7 @@ class _$_DoctorInfoReviewModel implements _DoctorInfoReviewModel {
       required this.message,
       required this.anonimous,
       required this.peopleId,
-      required this.account_id,
+      @JsonKey(name: 'account_id') this.accountId,
       required this.fio});
 
   factory _$_DoctorInfoReviewModel.fromJson(Map<String, dynamic> json) =>
@@ -2916,13 +2853,14 @@ class _$_DoctorInfoReviewModel implements _DoctorInfoReviewModel {
   @override
   final String? peopleId;
   @override
-  final String? account_id;
+  @JsonKey(name: 'account_id')
+  final String? accountId;
   @override
   final String? fio;
 
   @override
   String toString() {
-    return 'DoctorInfoReviewModel(sysUser: $sysUser, sotr: $sotr, date: $date, rate: $rate, caption: $caption, message: $message, anonimous: $anonimous, peopleId: $peopleId, account_id: $account_id, fio: $fio)';
+    return 'DoctorInfoReviewModel(sysUser: $sysUser, sotr: $sotr, date: $date, rate: $rate, caption: $caption, message: $message, anonimous: $anonimous, peopleId: $peopleId, accountId: $accountId, fio: $fio)';
   }
 
   @override
@@ -2940,15 +2878,15 @@ class _$_DoctorInfoReviewModel implements _DoctorInfoReviewModel {
                 other.anonimous == anonimous) &&
             (identical(other.peopleId, peopleId) ||
                 other.peopleId == peopleId) &&
-            (identical(other.account_id, account_id) ||
-                other.account_id == account_id) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
             (identical(other.fio, fio) || other.fio == fio));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, sysUser, sotr, date, rate,
-      caption, message, anonimous, peopleId, account_id, fio);
+      caption, message, anonimous, peopleId, accountId, fio);
 
   @JsonKey(ignore: true)
   @override
@@ -2975,7 +2913,7 @@ abstract class _DoctorInfoReviewModel implements DoctorInfoReviewModel {
       required final String? message,
       required final bool anonimous,
       required final String? peopleId,
-      required final String? account_id,
+      @JsonKey(name: 'account_id') final String? accountId,
       required final String? fio}) = _$_DoctorInfoReviewModel;
 
   factory _DoctorInfoReviewModel.fromJson(Map<String, dynamic> json) =
@@ -2998,7 +2936,8 @@ abstract class _DoctorInfoReviewModel implements DoctorInfoReviewModel {
   @override
   String? get peopleId;
   @override
-  String? get account_id;
+  @JsonKey(name: 'account_id')
+  String? get accountId;
   @override
   String? get fio;
   @override

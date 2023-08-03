@@ -98,9 +98,10 @@ _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
       isFavorite: json['isFavorite'] as bool,
       categories:
           (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
-      imagePreviewLocation: json['imagePreviewLocation'] as String?,
-      imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
-      avergareRating: json['avergareRating'] as num,
+      imageId: json['imageId'] as String?,
+      reviews: (json['reviews'] as List<dynamic>)
+          .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       shortinfo: json['shortinfo'] as String?,
       rateAsSotr: json['rateAsSotr'] as num,
       rateAsUser: json['rateAsUser'] as num,
@@ -117,9 +118,8 @@ Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
       'categoryType': instance.categoryType,
       'isFavorite': instance.isFavorite,
       'categories': instance.categories,
-      'imagePreviewLocation': instance.imagePreviewLocation,
-      'imageFullSizeLocation': instance.imageFullSizeLocation,
-      'avergareRating': instance.avergareRating,
+      'imageId': instance.imageId,
+      'reviews': instance.reviews,
       'shortinfo': instance.shortinfo,
       'rateAsSotr': instance.rateAsSotr,
       'rateAsUser': instance.rateAsUser,
@@ -201,9 +201,7 @@ _$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>
       isFavorite: json['isFavorite'] as bool,
       categories:
           (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
-      imagePreviewLocation: json['imagePreviewLocation'] as String?,
-      imageFullSizeLocation: json['imageFullSizeLocation'] as String?,
-      avergareRating: json['avergareRating'] as num,
+      imageId: json['imageId'] as String?,
       reviews: (json['reviews'] as List<dynamic>)
           .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -224,9 +222,7 @@ Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
       'categoryType': instance.categoryType,
       'isFavorite': instance.isFavorite,
       'categories': instance.categories,
-      'imagePreviewLocation': instance.imagePreviewLocation,
-      'imageFullSizeLocation': instance.imageFullSizeLocation,
-      'avergareRating': instance.avergareRating,
+      'imageId': instance.imageId,
       'reviews': instance.reviews,
       'shortinfo': instance.shortinfo,
       'rateAsSotr': instance.rateAsSotr,
@@ -244,7 +240,7 @@ _$_DoctorInfoReviewModel _$$_DoctorInfoReviewModelFromJson(
       message: json['message'] as String?,
       anonimous: json['anonimous'] as bool,
       peopleId: json['peopleId'] as String?,
-      account_id: json['account_id'] as String?,
+      accountId: json['account_id'] as String?,
       fio: json['fio'] as String?,
     );
 
@@ -259,6 +255,6 @@ Map<String, dynamic> _$$_DoctorInfoReviewModelToJson(
       'message': instance.message,
       'anonimous': instance.anonimous,
       'peopleId': instance.peopleId,
-      'account_id': instance.account_id,
+      'account_id': instance.accountId,
       'fio': instance.fio,
     };
