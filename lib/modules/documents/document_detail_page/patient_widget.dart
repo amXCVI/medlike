@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -49,9 +50,9 @@ class PatientWidget extends StatelessWidget {
                   )
                 : Flexible(
                     child: Text(
-                      '${patient!.lastname} ${patient!.firstname} ${patient!.middlename}, ${patient!.sex}, ${/*DateFormat('DD.MM.yy').format*/ (patient!.birthday)} г., ${patient!.adresses ?? ''}',
+                      '${patient!.lastname} ${patient!.firstname} ${patient!.middlename}, ${patient!.sex}, ${DateFormat('dd.MM.yy').format(patient!.birthday)} г., ${patient!.adresses ?? ''}',
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                      maxLines: 5,
                       softWrap: true,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),

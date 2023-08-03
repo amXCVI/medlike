@@ -346,6 +346,17 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const DocumentsPage(),
       );
     },
+    FullScreenPdfViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<FullScreenPdfViewerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FullScreenPdfViewerPage(
+          key: args.key,
+          filePath: args.filePath,
+          fileName: args.fileName,
+        ),
+      );
+    },
     DocumentRoute.name: (routeData) {
       final args = routeData.argsAs<DocumentRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -468,17 +479,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: PasswordPage(
           key: args.key,
           phoneNumber: args.phoneNumber,
-        ),
-      );
-    },
-    FullScreenPdfViewerRoute.name: (routeData) {
-      final args = routeData.argsAs<FullScreenPdfViewerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: FullScreenPdfViewerPage(
-          key: args.key,
-          filePath: args.filePath,
-          fileName: args.fileName,
         ),
       );
     },
@@ -1720,6 +1720,50 @@ class DocumentsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FullScreenPdfViewerPage]
+class FullScreenPdfViewerRoute
+    extends PageRouteInfo<FullScreenPdfViewerRouteArgs> {
+  FullScreenPdfViewerRoute({
+    Key? key,
+    required String filePath,
+    required String fileName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FullScreenPdfViewerRoute.name,
+          args: FullScreenPdfViewerRouteArgs(
+            key: key,
+            filePath: filePath,
+            fileName: fileName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FullScreenPdfViewerRoute';
+
+  static const PageInfo<FullScreenPdfViewerRouteArgs> page =
+      PageInfo<FullScreenPdfViewerRouteArgs>(name);
+}
+
+class FullScreenPdfViewerRouteArgs {
+  const FullScreenPdfViewerRouteArgs({
+    this.key,
+    required this.filePath,
+    required this.fileName,
+  });
+
+  final Key? key;
+
+  final String filePath;
+
+  final String fileName;
+
+  @override
+  String toString() {
+    return 'FullScreenPdfViewerRouteArgs{key: $key, filePath: $filePath, fileName: $fileName}';
+  }
+}
+
+/// generated route for
 /// [DocumentPage]
 class DocumentRoute extends PageRouteInfo<DocumentRouteArgs> {
   DocumentRoute({
@@ -2168,49 +2212,5 @@ class PasswordRouteArgs {
   @override
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
-  }
-}
-
-/// generated route for
-/// [FullScreenPdfViewerPage]
-class FullScreenPdfViewerRoute
-    extends PageRouteInfo<FullScreenPdfViewerRouteArgs> {
-  FullScreenPdfViewerRoute({
-    Key? key,
-    required String filePath,
-    required String fileName,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FullScreenPdfViewerRoute.name,
-          args: FullScreenPdfViewerRouteArgs(
-            key: key,
-            filePath: filePath,
-            fileName: fileName,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FullScreenPdfViewerRoute';
-
-  static const PageInfo<FullScreenPdfViewerRouteArgs> page =
-      PageInfo<FullScreenPdfViewerRouteArgs>(name);
-}
-
-class FullScreenPdfViewerRouteArgs {
-  const FullScreenPdfViewerRouteArgs({
-    this.key,
-    required this.filePath,
-    required this.fileName,
-  });
-
-  final Key? key;
-
-  final String filePath;
-
-  final String fileName;
-
-  @override
-  String toString() {
-    return 'FullScreenPdfViewerRouteArgs{key: $key, filePath: $filePath, fileName: $fileName}';
   }
 }

@@ -103,7 +103,7 @@ class DocumentItem extends StatelessWidget {
                                       SvgPicture.asset(
                                           'assets/icons/appointments/clock.svg'),
                                       const SizedBox(width: 8.0),
-                                      Text(DateFormat('HH:mm DD.MM.yy')
+                                      Text(DateFormat('HH:mm dd.MM.yy')
                                           .format(documentItem.updatedAt!)),
                                     ],
                                   ),
@@ -112,7 +112,7 @@ class DocumentItem extends StatelessWidget {
                             )
                           : const SizedBox(),
                       const SizedBox(width: 8.0),
-                      documentItem.signEmployer != null
+                      documentItem.patient != null
                           ? RichText(
                               text: WidgetSpan(
                                 child: Container(
@@ -127,7 +127,7 @@ class DocumentItem extends StatelessWidget {
                                           'assets/icons/appointments/profile.svg'),
                                       const SizedBox(width: 8.0),
                                       Text(
-                                          documentItem.signEmployer!.firstname),
+                                          '${documentItem.patient!.firstname} ${documentItem.patient!.lastname[0]}.'),
                                     ],
                                   ),
                                 ),

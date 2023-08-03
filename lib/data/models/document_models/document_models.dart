@@ -11,7 +11,7 @@ class DocumentModel with _$DocumentModel {
     required String name,
     required DocumentMetaLpuModel lpu,
     required DateTime? updatedAt,
-    required DocumentMetaSignEmployerModel? signEmployer,
+    required DocumentPatientModel? patient,
     required bool isSignByPatient,
     required DateTime? signedByPatientAt,
     required bool isSignByEmployee,
@@ -57,11 +57,12 @@ class DocumentMetaLpuModel with _$DocumentMetaLpuModel {
 @freezed
 class DocumentMetaPatientModel with _$DocumentMetaPatientModel {
   const factory DocumentMetaPatientModel({
+    required String id,
     required String lastname,
     required String firstname,
     required String middlename,
     required String? adresses,
-    required String birthday,
+    required DateTime birthday,
     required String sex,
   }) = _DocumentMetaPatientModel;
 
@@ -92,6 +93,19 @@ class DocumentMetaSignEmployerModel with _$DocumentMetaSignEmployerModel {
 
   factory DocumentMetaSignEmployerModel.fromJson(Map<String, Object?> json) =>
       _$DocumentMetaSignEmployerModelFromJson(json);
+}
+
+@freezed
+class DocumentPatientModel with _$DocumentPatientModel {
+  const factory DocumentPatientModel({
+    required String id,
+    required String firstname,
+    required String middlename,
+    required String lastname,
+  }) = _DocumentPatientModel;
+
+  factory DocumentPatientModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentPatientModelFromJson(json);
 }
 
 @freezed

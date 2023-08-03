@@ -15,10 +15,10 @@ _$_DocumentModelModel _$$_DocumentModelModelFromJson(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      signEmployer: json['signEmployer'] == null
+      patient: json['patient'] == null
           ? null
-          : DocumentMetaSignEmployerModel.fromJson(
-              json['signEmployer'] as Map<String, dynamic>),
+          : DocumentPatientModel.fromJson(
+              json['patient'] as Map<String, dynamic>),
       isSignByPatient: json['isSignByPatient'] as bool,
       signedByPatientAt: json['signedByPatientAt'] == null
           ? null
@@ -36,7 +36,7 @@ Map<String, dynamic> _$$_DocumentModelModelToJson(
       'name': instance.name,
       'lpu': instance.lpu,
       'updatedAt': instance.updatedAt?.toIso8601String(),
-      'signEmployer': instance.signEmployer,
+      'patient': instance.patient,
       'isSignByPatient': instance.isSignByPatient,
       'signedByPatientAt': instance.signedByPatientAt?.toIso8601String(),
       'isSignByEmployee': instance.isSignByEmployee,
@@ -104,22 +104,24 @@ Map<String, dynamic> _$$_DocumentMetaLpuModelToJson(
 _$_DocumentMetaPatientModel _$$_DocumentMetaPatientModelFromJson(
         Map<String, dynamic> json) =>
     _$_DocumentMetaPatientModel(
+      id: json['id'] as String,
       lastname: json['lastname'] as String,
       firstname: json['firstname'] as String,
       middlename: json['middlename'] as String,
       adresses: json['adresses'] as String?,
-      birthday: json['birthday'] as String,
+      birthday: DateTime.parse(json['birthday'] as String),
       sex: json['sex'] as String,
     );
 
 Map<String, dynamic> _$$_DocumentMetaPatientModelToJson(
         _$_DocumentMetaPatientModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'lastname': instance.lastname,
       'firstname': instance.firstname,
       'middlename': instance.middlename,
       'adresses': instance.adresses,
-      'birthday': instance.birthday,
+      'birthday': instance.birthday.toIso8601String(),
       'sex': instance.sex,
     };
 
@@ -150,6 +152,24 @@ _$_DocumentMetaSignEmployerModel _$$_DocumentMetaSignEmployerModelFromJson(
 Map<String, dynamic> _$$_DocumentMetaSignEmployerModelToJson(
         _$_DocumentMetaSignEmployerModel instance) =>
     <String, dynamic>{
+      'firstname': instance.firstname,
+      'middlename': instance.middlename,
+      'lastname': instance.lastname,
+    };
+
+_$_DocumentPatientModel _$$_DocumentPatientModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DocumentPatientModel(
+      id: json['id'] as String,
+      firstname: json['firstname'] as String,
+      middlename: json['middlename'] as String,
+      lastname: json['lastname'] as String,
+    );
+
+Map<String, dynamic> _$$_DocumentPatientModelToJson(
+        _$_DocumentPatientModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
       'firstname': instance.firstname,
       'middlename': instance.middlename,
       'lastname': instance.lastname,
