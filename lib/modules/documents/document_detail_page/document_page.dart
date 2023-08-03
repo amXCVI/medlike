@@ -84,12 +84,13 @@ class _DocumentPageState extends State<DocumentPage> {
         builder: (context, state) {
       return DefaultScaffold(
           appBarTitle: widget.document.name,
-          actionButton: !widget.document.isSignByPatient
+          actionButton: state.selectedDocumentMetaData != null &&
+                  !state.selectedDocumentMetaData!.isSignByPatient
               ? FloatingActionButton.extended(
                   onPressed: () => _handleSubscribeDocument(
                         context: context,
                         documentId: widget.document.id,
-                        userId: context.read<UserCubit>().getFirstProfile(),
+                        userId: widget.document.patient!.id,
                         lpuId: widget.document.lpu.id,
                       ),
                   label: ActionButtonWidget(
