@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/subscribe/confirmation_subscribe/clinic_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_action_button.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/payment_widget.dart';
+import 'package:medlike/modules/subscribe/confirmation_subscribe/researches_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -106,31 +108,33 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const SizedBox(height: 20),
-              UserInfo(userId: widget.userId),
-              const SizedBox(height: 19),
-              const DashDivider(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                UserInfo(userId: widget.userId),
+                const SizedBox(height: 24),
+                const ClinicInfo(),
 
-              /// Карточки с выбором способа оплаты.
-              /// Не работает оплата картой, поэтому закомментировано
-              /// Раскомментировать в кубите
-              /// получение информации о приеме
-              const SizedBox(height: 24),
-              const PaymentWidget(),
-              const AppointmentInfo(),
-              const SizedBox(height: 24),
-              const DashDivider(),
-              const SizedBox(height: 24),
-              AgreementsChecker(
-                isChecked: isCheckedAgreements,
-                setIsCheckedValue: setIsCheckedValue,
-              ),
-              const SizedBox(width: 15),
-              const SizedBox(height: 24),
-            ],
+                /// Карточки с выбором способа оплаты.
+                /// Не работает оплата картой, поэтому закомментировано
+                /// Раскомментировать в кубите
+                /// получение информации о приеме
+                const SizedBox(height: 24),
+                const PaymentWidget(),
+                const SizedBox(height: 24),
+                const ResearchesInfo(),
+                const DashDivider(),
+                const SizedBox(height: 24),
+                AgreementsChecker(
+                  isChecked: isCheckedAgreements,
+                  setIsCheckedValue: setIsCheckedValue,
+                ),
+                const SizedBox(width: 15),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),

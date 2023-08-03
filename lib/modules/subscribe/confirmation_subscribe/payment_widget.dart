@@ -28,65 +28,67 @@ class PaymentWidget extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: AppointmentInfoSubtitle(title: 'Способ оплаты'),
+                  Text(
+                    'Оплата ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 8.0, right: 8.0, bottom: 16.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () {
-                              _handleSelectPayType(
-                                AppConstants.noPayedPayType,
-                                state.getAppointmentInfoStatus
-                                    as GetAppointmentInfoStatuses,
-                              );
-                            },
-                            child: PaymentItem(
-                              isSelected: state.selectedPayType ==
-                                  AppConstants.noPayedPayType,
-                              isDisabled: state.getAppointmentInfoStatus ==
-                                  GetAppointmentInfoStatuses.loading,
-                              title: 'Клиника',
-                              subtitle: 'Регистратура',
-                              icon: SvgPicture.asset(
-                                  'assets/icons/subscribe/ic_payment_clinic_normal_outline.svg'),
-                              activeIcon: SvgPicture.asset(
-                                  'assets/icons/subscribe/ic_payment_clinic_active_outline.svg'),
-                            ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            _handleSelectPayType(
+                              AppConstants.cardPayType,
+                              state.getAppointmentInfoStatus
+                                  as GetAppointmentInfoStatuses,
+                            );
+                          },
+                          child: PaymentItem(
+                            isSelected: state.selectedPayType ==
+                                AppConstants.cardPayType,
+                            isDisabled: state.getAppointmentInfoStatus ==
+                                GetAppointmentInfoStatuses.loading,
+                            title: 'Онлайн',
+                            subtitle: 'Оплатить сейчас',
+                            price: state.appointmentInfoData!.price,
+                            icon: SvgPicture.asset(
+                                'assets/icons/subscribe/ic_payment_card_normal_outline.svg'),
+                            activeIcon: SvgPicture.asset(
+                                'assets/icons/subscribe/ic_payment_card_active_outline.svg'),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () {
-                              _handleSelectPayType(
-                                AppConstants.cardPayType,
-                                state.getAppointmentInfoStatus
-                                    as GetAppointmentInfoStatuses,
-                              );
-                            },
-                            child: PaymentItem(
-                              isSelected: state.selectedPayType ==
-                                  AppConstants.cardPayType,
-                              isDisabled: state.getAppointmentInfoStatus ==
-                                  GetAppointmentInfoStatuses.loading,
-                              title: 'Карта',
-                              price: state.appointmentInfoData!.price,
-                              icon: SvgPicture.asset(
-                                  'assets/icons/subscribe/ic_payment_card_normal_outline.svg'),
-                              activeIcon: SvgPicture.asset(
-                                  'assets/icons/subscribe/ic_payment_card_active_outline.svg'),
-                            ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            _handleSelectPayType(
+                              AppConstants.noPayedPayType,
+                              state.getAppointmentInfoStatus
+                                  as GetAppointmentInfoStatuses,
+                            );
+                          },
+                          child: PaymentItem(
+                            isSelected: state.selectedPayType ==
+                                AppConstants.noPayedPayType,
+                            isDisabled: state.getAppointmentInfoStatus ==
+                                GetAppointmentInfoStatuses.loading,
+                            title: 'Клиника',
+                            subtitle: 'Оплатить потом\nв регистратуре',
+                            icon: SvgPicture.asset(
+                                'assets/icons/subscribe/ic_payment_clinic_normal_outline.svg'),
+                            activeIcon: SvgPicture.asset(
+                                'assets/icons/subscribe/ic_payment_clinic_active_outline.svg'),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )
@@ -121,74 +123,78 @@ class PaymentItem extends StatelessWidget {
     var rublesFormat =
         NumberFormat.currency(locale: "ru_RU", symbol: 'P', decimalDigits: 0);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-          padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: isDisabled
-                ? AppColors.circleBgFirst
-                : Theme.of(context).colorScheme.background,
-            border: Border.all(
-                color: isSelected
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).colorScheme.background),
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 20,
-                offset: Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  isSelected ? activeIcon : icon,
-                  const SizedBox(width: 10),
-                  Text(
-                    title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontWeight: FontWeight.w500),
-                    overflow: TextOverflow.ellipsis,
-                  )
-                ],
-              ),
-              const SizedBox(height: 4),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 34),
-                  Flexible(
-                    child: Text(
-                      subtitle ?? '',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.lightText),
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                    ),
+    return Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          color: isDisabled
+              ? AppColors.circleBgFirst
+              : Theme.of(context).colorScheme.background,
+          border: Border.all(
+              color: isSelected
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).colorScheme.background),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 20,
+              offset: Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                isSelected ? activeIcon : icon,
+                const SizedBox(width: 10),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 34),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        subtitle ?? '',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: AppColors.lightText),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                      ),
+                      price != null
+                          ? Text(
+                              rublesFormat.format(price! / 100),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(color: AppColors.mainBrandColor),
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
-                  Text(
-                    price != null ? rublesFormat.format(price! / 100) : '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppColors.lightText),
-                  )
-                ],
-              )
-            ],
-          )),
-    );
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }
