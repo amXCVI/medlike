@@ -42,6 +42,7 @@ class DoctorInfoCard extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width - 100,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
@@ -65,7 +66,7 @@ class DoctorInfoCard extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                doctorInfo.shortInfo ?? '',
+                doctorInfo.specialization ?? '',
                 style: Theme.of(context)
                     .textTheme
                     .labelSmall

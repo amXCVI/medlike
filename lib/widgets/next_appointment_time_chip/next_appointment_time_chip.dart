@@ -100,8 +100,13 @@ class _NextAppointmentTimeChipState extends State<NextAppointmentTimeChip> {
                             widget.timeZoneOffset, // Стандарт МСК
                           ),
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: AppointmentTimeStatusItems.getTextColorByTime(
-                            _differenceInMinutes)),
+                          color: AppointmentTimeStatusItems.getTextColorByTime(
+                              _differenceInMinutes),
+                          fontWeight: _differenceInMinutes >= 0 &&
+                                  _differenceInMinutes <= 120
+                              ? FontWeight.w700
+                              : FontWeight.w400,
+                        ),
                   ),
                 ],
               ),

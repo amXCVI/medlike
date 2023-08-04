@@ -142,6 +142,7 @@ class AppointmentItem extends StatelessWidget {
               : const SizedBox(),
           // Рекомендации
           AppointmentItemRecommendations(
+            withOpenerArrow: false,
             recommendations: appointmentItem.recommendations ?? '',
             serviceName: appointmentItem.categoryType == 1 ||
                     appointmentItem.categoryType == 0
