@@ -90,7 +90,7 @@ class _DocumentPageState extends State<DocumentPage> {
                   onPressed: () => _handleSubscribeDocument(
                         context: context,
                         documentId: widget.document.id,
-                        userId: widget.document.patient!.id,
+                        userId: context.read<UserCubit>().getFirstProfile(),
                         lpuId: widget.document.lpu.id,
                       ),
                   label: ActionButtonWidget(
