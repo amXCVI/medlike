@@ -6,6 +6,8 @@ import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
+import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/timestamp_converter.dart';
 import 'package:medlike/utils/helpers/timestamp_helper.dart';
@@ -25,6 +27,18 @@ class AppointmentDetailPage extends StatelessWidget {
   }) : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointmentItem;
+
+  void handleChangeReview(BuildContext context) {
+    context.router.push(FeedbackRoute(
+      appointmentId: appointmentItem.id,
+      rating: appointmentItem.review!.rate.toInt(),
+      controllerCaption: appointmentItem.review!.caption,
+      controllerVisible:
+          getLabelVisibilityByValue(appointmentItem.review!.visibility),
+      controllerMessage: appointmentItem.review!.message,
+      controllerEmail: '',
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +179,11 @@ class AppointmentDetailPage extends StatelessWidget {
                           ),
                         ),
                       if (state.selectedAppointment!.review != null)
-                        ReviewWidget(
-                            review: state.selectedAppointment!.review!),
+                        GestureDetector(
+                          onTap: () => handleChangeReview(context),
+                          child: ReviewWidget(
+                              review: state.selectedAppointment!.review!),
+                        ),
                     ],
                   );
                 } else {

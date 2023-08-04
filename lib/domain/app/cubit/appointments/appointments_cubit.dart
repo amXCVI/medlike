@@ -444,11 +444,15 @@ class AppointmentsCubit
   }
 
   void setRatingToSelectedAppointment(num rate) {
-    if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
-      emit(state.copyWith(
-        selectedAppointment:
-            state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
-      ));
+    try {
+      if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
+        emit(state.copyWith(
+          selectedAppointment:
+              state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
+        ));
+      }
+    } catch (err) {
+      print(err);
     }
   }
 }

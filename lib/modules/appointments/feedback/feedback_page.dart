@@ -12,9 +12,23 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 @RoutePage()
 class FeedbackPage extends StatefulWidget {
-  const FeedbackPage({Key? key, required this.appointmentId}) : super(key: key);
+  const FeedbackPage({
+    Key? key,
+    required this.appointmentId,
+    this.rating,
+    this.controllerCaption,
+    this.controllerVisible,
+    this.controllerMessage,
+    this.controllerEmail,
+  }) : super(key: key);
 
   final String appointmentId;
+
+  final int? rating;
+  final String? controllerCaption;
+  final String? controllerVisible;
+  final String? controllerMessage;
+  final String? controllerEmail;
 
   @override
   State<FeedbackPage> createState() => _FeedbackPageState();
@@ -25,15 +39,28 @@ class _FeedbackPageState extends State<FeedbackPage> {
   late int rating = 0;
   final _formKey = GlobalKey<FormState>();
 
-  String _controllerCaption = captionsList[0];
-  String _controllerVisible = visibilityList[0];
-  String controllerMessage = '';
-  String controllerEmail = '';
+  late String _controllerCaption = captionsList[0];
+  late String _controllerVisible = visibilityList[0];
+  late String controllerMessage = '';
+  late String controllerEmail = '';
   late final TextEditingController _controllerMessage =
       TextEditingController(text: '');
   late final TextEditingController _controllerEmail =
       TextEditingController(text: '');
   late String reviewVisibility = '';
+
+  @override
+  void initState() {
+    _controllerCaption = widget.controllerCaption ?? captionsList[0];
+    _controllerVisible = widget.controllerVisible ?? visibilityList[0];
+    _controllerMessage.text = widget.controllerMessage ?? '';
+    _controllerEmail.text = widget.controllerEmail ?? '';
+    rating = widget.rating ?? 0;
+
+    controllerMessage = widget.controllerMessage ?? '';
+    controllerEmail = widget.controllerEmail ?? '';
+    super.initState();
+  }
 
   void setRating(int value) {
     setState(() {
@@ -106,7 +133,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
         .then((value) {
       context.read<AppointmentsCubit>().setRatingToSelectedAppointment(rating);
       context.router.pop();
-    }).catchError((onError) => print(onError));
+    }).catchError((onError) {
+      print(onError);
+      context.read<AppointmentsCubit>().setRatingToSelectedAppointment(rating);
+      context.router.pop();
+    });
   }
 
   @override
