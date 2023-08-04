@@ -7,14 +7,14 @@ import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/clinic_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/agreements_checker.dart';
-import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/confirmation_action_button.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/payment_widget.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/researches_info.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
-import 'package:medlike/widgets/dividers/dash_divider.dart';
+
+import 'doctor_info.dart';
 
 @RoutePage()
 class ConfirmationSubscribePage extends StatefulWidget {
@@ -125,7 +125,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                 const PaymentWidget(),
                 const SizedBox(height: 24),
                 const ResearchesInfo(),
-                const DashDivider(),
+                const DoctorInfo(),
                 const SizedBox(height: 24),
                 AgreementsChecker(
                   isChecked: isCheckedAgreements,
