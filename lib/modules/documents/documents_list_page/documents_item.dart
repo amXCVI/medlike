@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
+import 'package:medlike/modules/documents/get_last_date.dart';
 import 'package:medlike/themes/colors.dart';
 
 class DocumentItem extends StatelessWidget {
@@ -104,7 +105,13 @@ class DocumentItem extends StatelessWidget {
                                           'assets/icons/appointments/clock.svg'),
                                       const SizedBox(width: 8.0),
                                       Text(DateFormat('HH:mm dd.MM.yy')
-                                          .format(documentItem.updatedAt!)),
+                                          .format(getLastDate(
+                                        dateOne: documentItem.updatedAt,
+                                        dateTwo:
+                                            documentItem.signedByEmployeeAt,
+                                        dateThree:
+                                            documentItem.signedByPatientAt,
+                                      ))),
                                     ],
                                   ),
                                 ),

@@ -9,6 +9,7 @@ import 'package:medlike/modules/documents/document_detail_page/clinic_widget.dar
 import 'package:medlike/modules/documents/document_detail_page/document_header.dart';
 import 'package:medlike/modules/documents/document_detail_page/patient_widget.dart';
 import 'package:medlike/modules/documents/document_detail_page/pdf_viewer.dart';
+import 'package:medlike/modules/documents/get_last_date.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
@@ -110,7 +111,11 @@ class _DocumentPageState extends State<DocumentPage> {
                       state.selectedDocumentMetaData?.isSignByPatient ?? false,
                   isSignByEmployee: widget.document.isSignByEmployee,
                 ).statusName,
-                updatedAt: widget.document.updatedAt,
+                updatedAt: getLastDate(
+                  dateOne: widget.document.updatedAt,
+                  dateTwo: widget.document.signedByEmployeeAt,
+                  dateThree: widget.document.signedByPatientAt,
+                ),
                 userName: state.selectedDocumentMetaData != null
                     ? '${state.selectedDocumentMetaData!.patient.firstname} ${state.selectedDocumentMetaData!.patient.lastname[0]}.'
                     : '',

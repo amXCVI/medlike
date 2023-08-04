@@ -23,7 +23,7 @@ mixin _$DocumentModel {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   DocumentMetaLpuModel get lpu => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt => throw _privateConstructorUsedError;
   DocumentPatientModel? get patient => throw _privateConstructorUsedError;
   bool get isSignByPatient => throw _privateConstructorUsedError;
   DateTime? get signedByPatientAt => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $DocumentModelCopyWith<$Res> {
       {String id,
       String name,
       DocumentMetaLpuModel lpu,
-      DateTime? updatedAt,
+      DateTime updatedAt,
       DocumentPatientModel? patient,
       bool isSignByPatient,
       DateTime? signedByPatientAt,
@@ -73,7 +73,7 @@ class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
     Object? id = null,
     Object? name = null,
     Object? lpu = null,
-    Object? updatedAt = freezed,
+    Object? updatedAt = null,
     Object? patient = freezed,
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
@@ -93,10 +93,10 @@ class _$DocumentModelCopyWithImpl<$Res, $Val extends DocumentModel>
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
               as DocumentMetaLpuModel,
-      updatedAt: freezed == updatedAt
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       patient: freezed == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ abstract class _$$_DocumentModelModelCopyWith<$Res>
       {String id,
       String name,
       DocumentMetaLpuModel lpu,
-      DateTime? updatedAt,
+      DateTime updatedAt,
       DocumentPatientModel? patient,
       bool isSignByPatient,
       DateTime? signedByPatientAt,
@@ -180,7 +180,7 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? lpu = null,
-    Object? updatedAt = freezed,
+    Object? updatedAt = null,
     Object? patient = freezed,
     Object? isSignByPatient = null,
     Object? signedByPatientAt = freezed,
@@ -200,10 +200,10 @@ class __$$_DocumentModelModelCopyWithImpl<$Res>
           ? _value.lpu
           : lpu // ignore: cast_nullable_to_non_nullable
               as DocumentMetaLpuModel,
-      updatedAt: freezed == updatedAt
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       patient: freezed == patient
           ? _value.patient
           : patient // ignore: cast_nullable_to_non_nullable
@@ -252,7 +252,7 @@ class _$_DocumentModelModel implements _DocumentModelModel {
   @override
   final DocumentMetaLpuModel lpu;
   @override
-  final DateTime? updatedAt;
+  final DateTime updatedAt;
   @override
   final DocumentPatientModel? patient;
   @override
@@ -324,7 +324,7 @@ abstract class _DocumentModelModel implements DocumentModel {
       {required final String id,
       required final String name,
       required final DocumentMetaLpuModel lpu,
-      required final DateTime? updatedAt,
+      required final DateTime updatedAt,
       required final DocumentPatientModel? patient,
       required final bool isSignByPatient,
       required final DateTime? signedByPatientAt,
@@ -341,7 +341,7 @@ abstract class _DocumentModelModel implements DocumentModel {
   @override
   DocumentMetaLpuModel get lpu;
   @override
-  DateTime? get updatedAt;
+  DateTime get updatedAt;
   @override
   DocumentPatientModel? get patient;
   @override

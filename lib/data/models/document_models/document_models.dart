@@ -10,7 +10,7 @@ class DocumentModel with _$DocumentModel {
     required String id,
     required String name,
     required DocumentMetaLpuModel lpu,
-    required DateTime? updatedAt,
+    required DateTime updatedAt,
     required DocumentPatientModel? patient,
     required bool isSignByPatient,
     required DateTime? signedByPatientAt,
