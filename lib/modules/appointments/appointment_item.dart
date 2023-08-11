@@ -11,6 +11,7 @@ import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
+import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 
 class AppointmentItem extends StatelessWidget {
@@ -92,10 +93,17 @@ class AppointmentItem extends StatelessWidget {
                           CircleAvatar(
                             radius: 15,
                             backgroundColor: AppColors.mainBrand[100],
-                            child: Text(
-                              appointmentItem.doctorInfo.lastName![0],
-                              style: const TextStyle(fontFamily: 'AquawaxPro'),
-                            ),
+                            child: appointmentItem.doctorInfo.imageId == null
+                                ? Text(
+                                    appointmentItem.doctorInfo.lastName![0],
+                                    style: const TextStyle(
+                                        fontFamily: 'AquawaxPro'),
+                                  )
+                                : DoctorCachedAvatar(
+                                    avatarId:
+                                        appointmentItem.doctorInfo.imageId!,
+                                    isThumbnail: true,
+                                  ),
                           ),
                           const SizedBox(width: 8.0),
                           Text(

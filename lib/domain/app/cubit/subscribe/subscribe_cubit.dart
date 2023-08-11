@@ -1,3 +1,5 @@
+import 'package:flutter_cache_manager/file.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
@@ -8,6 +10,7 @@ import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -843,6 +846,24 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       selectedPayType: payType,
     ));
+  }
+
+  /// Получение аватарки врача по id
+  Future<File> getDoctorAvatarById(
+      {required String avatarId, required bool isThumbnail}) async {
+    try {
+      File file = await DefaultCacheManager().getSingleFile(
+        '${ApiConstants.baseUrl}/api/v1.0/doctors/image/$avatarId?isThumbnail=$isThumbnail',
+        key: avatarId,
+        headers: {
+          'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        },
+      );
+      return file;
+    } catch (err) {
+      rethrow;
+    }
   }
 
   /// Получение полной информации о враче

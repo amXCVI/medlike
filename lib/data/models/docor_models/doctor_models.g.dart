@@ -103,6 +103,8 @@ _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
           .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       shortinfo: json['shortinfo'] as String?,
+      comment: json['comment'] as String?,
+      experience: json['experience'] as String?,
       rateAsSotr: json['rateAsSotr'] as num,
       rateAsUser: json['rateAsUser'] as num,
     );
@@ -121,6 +123,8 @@ Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
       'imageId': instance.imageId,
       'reviews': instance.reviews,
       'shortinfo': instance.shortinfo,
+      'comment': instance.comment,
+      'experience': instance.experience,
       'rateAsSotr': instance.rateAsSotr,
       'rateAsUser': instance.rateAsUser,
     };
@@ -153,8 +157,11 @@ _$_FavoriteDoctor _$$_FavoriteDoctorFromJson(Map<String, dynamic> json) =>
       specializationId: json['specializationId'] as String,
       specialization: json['specialization'] as String,
       categoryType: json['categoryType'] as int,
+      imageId: json['imageId'] as String?,
       rateAsSotr: json['rateAsSotr'] as num,
       rateAsUser: json['rateAsUser'] as num,
+      experience: json['experience'] as String?,
+      comment: json['comment'] as String?,
     );
 
 Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
@@ -166,8 +173,11 @@ Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
       'specializationId': instance.specializationId,
       'specialization': instance.specialization,
       'categoryType': instance.categoryType,
+      'imageId': instance.imageId,
       'rateAsSotr': instance.rateAsSotr,
       'rateAsUser': instance.rateAsUser,
+      'experience': instance.experience,
+      'comment': instance.comment,
     };
 
 _$_AssessmentModel _$$_AssessmentModelFromJson(Map<String, dynamic> json) =>

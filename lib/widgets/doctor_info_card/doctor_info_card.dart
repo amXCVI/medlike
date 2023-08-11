@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/api/api_constants.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
 
 class DoctorInfoCard extends StatelessWidget {
   const DoctorInfoCard({Key? key, required this.doctorInfo, this.review})
@@ -17,15 +16,10 @@ class DoctorInfoCard extends StatelessWidget {
     return Row(
       children: [
         Center(
-          child: doctorInfo.imagePreviewLocation != null
-              ? CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    '${ApiConstants.baseUrl}/${doctorInfo.imagePreviewLocation}',
-                  ),
-                  onBackgroundImageError: (exception, stackTrace) {
-                    Sentry.captureException(exception, stackTrace: stackTrace);
-                  },
+          child: doctorInfo.imageId != null
+              ? DoctorCachedAvatar(
+                  avatarId: doctorInfo.imageId!,
+                  isThumbnail: true,
                 )
               : CircleAvatar(
                   radius: 20,

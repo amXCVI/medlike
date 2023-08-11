@@ -73,6 +73,8 @@ class Doctor with _$Doctor {
     required String? imageId,
     required List<DoctorInfoReviewModel> reviews,
     required String? shortinfo,
+    required String? comment,
+    required String? experience,
     required num rateAsSotr,
     required num rateAsUser,
   }) = _Doctor;
@@ -105,8 +107,11 @@ class FavoriteDoctor with _$FavoriteDoctor {
     required String specializationId,
     required String specialization,
     required int categoryType,
+    required String? imageId,
     required num rateAsSotr,
     required num rateAsUser,
+    required String? experience,
+    required String? comment,
   }) = _FavoriteDoctor;
 
   factory FavoriteDoctor.fromJson(Map<String, Object?> json) =>

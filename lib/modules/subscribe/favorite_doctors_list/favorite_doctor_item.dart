@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class FavoriteDoctorItem extends StatelessWidget {
@@ -20,6 +21,11 @@ class FavoriteDoctorItem extends StatelessWidget {
           '${CategoryTypes.getCategoryTypeByCategoryTypeId(doctorItem.categoryType).russianCategoryTypeName}, ${doctorItem.specialization}',
       onTap: onTap,
       rating: doctorItem.rateAsUser,
+      isFirstSymbolForIcon: doctorItem.imageId == null,
+      customIcon: DoctorCachedAvatar(
+        avatarId: doctorItem.imageId!,
+        isThumbnail: true,
+      ),
     );
   }
 }

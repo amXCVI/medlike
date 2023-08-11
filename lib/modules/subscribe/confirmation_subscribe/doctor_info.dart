@@ -26,15 +26,15 @@ class DoctorInfo extends StatelessWidget {
               lastName: state.selectedDoctor?.lastName,
               specializationId: state.selectedDoctor?.specializationId,
               specialization: state.selectedDoctor?.specialization,
-              imagePreviewLocation: state.selectedDoctor?.imageId,
-              imageFullSizeLocation: state.selectedDoctor?.imageId,
               shortInfo: state.selectedDoctor?.shortinfo,
               rateAsSotr: state.selectedDoctor?.rateAsSotr,
               rateAsUser: state.selectedDoctor?.rateAsUser,
+              imageId: state.selectedDoctor?.imageId,
             )),
             const SizedBox(height: 16),
             state.appointmentInfoData != null &&
-                    state.appointmentInfoData!.recommendations != null
+                    state.appointmentInfoData!.recommendations != null &&
+                    state.appointmentInfoData!.recommendations.isNotEmpty
                 ? AppointmentRecommendations(
                     recommendations: state
                         .appointmentInfoData!.recommendations[0].recommendation,

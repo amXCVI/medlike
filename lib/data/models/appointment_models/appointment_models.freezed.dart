@@ -1875,8 +1875,7 @@ mixin _$DoctorInfoModel {
   String? get lastName => throw _privateConstructorUsedError;
   String? get specializationId => throw _privateConstructorUsedError;
   String? get specialization => throw _privateConstructorUsedError;
-  String? get imagePreviewLocation => throw _privateConstructorUsedError;
-  String? get imageFullSizeLocation => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
   String? get shortInfo => throw _privateConstructorUsedError;
   num? get rateAsSotr => throw _privateConstructorUsedError;
   num? get rateAsUser => throw _privateConstructorUsedError;
@@ -1900,8 +1899,7 @@ abstract class $DoctorInfoModelCopyWith<$Res> {
       String? lastName,
       String? specializationId,
       String? specialization,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
+      String? imageId,
       String? shortInfo,
       num? rateAsSotr,
       num? rateAsUser});
@@ -1926,8 +1924,7 @@ class _$DoctorInfoModelCopyWithImpl<$Res, $Val extends DoctorInfoModel>
     Object? lastName = freezed,
     Object? specializationId = freezed,
     Object? specialization = freezed,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
+    Object? imageId = freezed,
     Object? shortInfo = freezed,
     Object? rateAsSotr = freezed,
     Object? rateAsUser = freezed,
@@ -1957,13 +1954,9 @@ class _$DoctorInfoModelCopyWithImpl<$Res, $Val extends DoctorInfoModel>
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String?,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
       shortInfo: freezed == shortInfo
           ? _value.shortInfo
@@ -1996,8 +1989,7 @@ abstract class _$$_DoctorInfoModelCopyWith<$Res>
       String? lastName,
       String? specializationId,
       String? specialization,
-      String? imagePreviewLocation,
-      String? imageFullSizeLocation,
+      String? imageId,
       String? shortInfo,
       num? rateAsSotr,
       num? rateAsUser});
@@ -2020,8 +2012,7 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? specializationId = freezed,
     Object? specialization = freezed,
-    Object? imagePreviewLocation = freezed,
-    Object? imageFullSizeLocation = freezed,
+    Object? imageId = freezed,
     Object? shortInfo = freezed,
     Object? rateAsSotr = freezed,
     Object? rateAsUser = freezed,
@@ -2051,13 +2042,9 @@ class __$$_DoctorInfoModelCopyWithImpl<$Res>
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String?,
-      imagePreviewLocation: freezed == imagePreviewLocation
-          ? _value.imagePreviewLocation
-          : imagePreviewLocation // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageFullSizeLocation: freezed == imageFullSizeLocation
-          ? _value.imageFullSizeLocation
-          : imageFullSizeLocation // ignore: cast_nullable_to_non_nullable
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
               as String?,
       shortInfo: freezed == shortInfo
           ? _value.shortInfo
@@ -2085,8 +2072,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       required this.lastName,
       required this.specializationId,
       required this.specialization,
-      required this.imagePreviewLocation,
-      required this.imageFullSizeLocation,
+      required this.imageId,
       required this.shortInfo,
       required this.rateAsSotr,
       required this.rateAsUser});
@@ -2107,9 +2093,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
   @override
   final String? specialization;
   @override
-  final String? imagePreviewLocation;
-  @override
-  final String? imageFullSizeLocation;
+  final String? imageId;
   @override
   final String? shortInfo;
   @override
@@ -2119,7 +2103,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
 
   @override
   String toString() {
-    return 'DoctorInfoModel(id: $id, firstName: $firstName, middleName: $middleName, lastName: $lastName, specializationId: $specializationId, specialization: $specialization, imagePreviewLocation: $imagePreviewLocation, imageFullSizeLocation: $imageFullSizeLocation, shortInfo: $shortInfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
+    return 'DoctorInfoModel(id: $id, firstName: $firstName, middleName: $middleName, lastName: $lastName, specializationId: $specializationId, specialization: $specialization, imageId: $imageId, shortInfo: $shortInfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -2138,10 +2122,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
                 other.specializationId == specializationId) &&
             (identical(other.specialization, specialization) ||
                 other.specialization == specialization) &&
-            (identical(other.imagePreviewLocation, imagePreviewLocation) ||
-                other.imagePreviewLocation == imagePreviewLocation) &&
-            (identical(other.imageFullSizeLocation, imageFullSizeLocation) ||
-                other.imageFullSizeLocation == imageFullSizeLocation) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
             (identical(other.shortInfo, shortInfo) ||
                 other.shortInfo == shortInfo) &&
             (identical(other.rateAsSotr, rateAsSotr) ||
@@ -2160,8 +2141,7 @@ class _$_DoctorInfoModel implements _DoctorInfoModel {
       lastName,
       specializationId,
       specialization,
-      imagePreviewLocation,
-      imageFullSizeLocation,
+      imageId,
       shortInfo,
       rateAsSotr,
       rateAsUser);
@@ -2188,8 +2168,7 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
       required final String? lastName,
       required final String? specializationId,
       required final String? specialization,
-      required final String? imagePreviewLocation,
-      required final String? imageFullSizeLocation,
+      required final String? imageId,
       required final String? shortInfo,
       required final num? rateAsSotr,
       required final num? rateAsUser}) = _$_DoctorInfoModel;
@@ -2210,9 +2189,7 @@ abstract class _DoctorInfoModel implements DoctorInfoModel {
   @override
   String? get specialization;
   @override
-  String? get imagePreviewLocation;
-  @override
-  String? get imageFullSizeLocation;
+  String? get imageId;
   @override
   String? get shortInfo;
   @override

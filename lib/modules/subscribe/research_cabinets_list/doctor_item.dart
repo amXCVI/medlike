@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
+import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
 import 'package:medlike/widgets/subscribe_row_item/subscribe_row_item.dart';
 
 class DoctorItem extends StatelessWidget {
@@ -23,6 +24,11 @@ class DoctorItem extends StatelessWidget {
           : '',
       onTap: onTap,
       rating: doctorItem.rateAsUser,
+      isFirstSymbolForIcon: doctorItem.imageId == null,
+      customIcon: DoctorCachedAvatar(
+        avatarId: doctorItem.imageId!,
+        isThumbnail: true,
+      ),
     );
   }
 }
