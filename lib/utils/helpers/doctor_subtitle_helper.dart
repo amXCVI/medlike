@@ -11,7 +11,7 @@ class DoctorSubtitleHelper {
     String commentText =
         comment != null && comment.isNotEmpty ? '$comment, ' : '';
     String experienceText = experience != null && experience.isNotEmpty
-        ? 'Стаж - $experience лет'
+        ? 'стаж с $experienceг.'
         : '';
     String subtitle = specialisationText + commentText + experienceText;
 

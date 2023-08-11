@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/doctor_subtitle_helper.dart';
 
 class DoctorInfoHeader extends StatelessWidget {
   const DoctorInfoHeader({Key? key}) : super(key: key);
@@ -17,7 +18,11 @@ class DoctorInfoHeader extends StatelessWidget {
       num doctorRating =
           state.selectedDoctor != null ? state.selectedDoctor!.rateAsSotr : 0;
       String? doctorDescription = state.selectedDoctor != null
-          ? state.selectedDoctor!.specialization
+          ? DoctorSubtitleHelper.getSubtitle(
+              specialization: state.selectedDoctor?.specialization ?? '',
+              comment: state.selectedDoctor?.comment,
+              experience: state.selectedDoctor?.experience,
+            )
           : '';
 
       return Padding(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_recommendations.dart';
+import 'package:medlike/utils/helpers/doctor_subtitle_helper.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
 import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 
@@ -25,7 +26,11 @@ class DoctorInfo extends StatelessWidget {
               middleName: state.selectedDoctor?.middleName,
               lastName: state.selectedDoctor?.lastName,
               specializationId: state.selectedDoctor?.specializationId,
-              specialization: state.selectedDoctor?.specialization,
+              specialization: DoctorSubtitleHelper.getSubtitle(
+                specialization: state.selectedDoctor?.specialization ?? '',
+                comment: state.selectedDoctor?.comment,
+                experience: state.selectedDoctor?.experience,
+              ),
               shortInfo: state.selectedDoctor?.shortinfo,
               rateAsSotr: state.selectedDoctor?.rateAsSotr,
               rateAsUser: state.selectedDoctor?.rateAsUser,
