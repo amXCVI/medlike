@@ -436,6 +436,23 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    FaqsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FaqsPage(),
+      );
+    },
+    FaqItemRoute.name: (routeData) {
+      final args = routeData.argsAs<FaqItemRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FaqItemPage(
+          key: args.key,
+          question: args.question,
+          answer: args.answer,
+        ),
+      );
+    },
   };
 }
 
@@ -1976,5 +1993,62 @@ class PasswordRouteArgs {
   @override
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
+  }
+}
+
+/// generated route for
+/// [FaqsPage]
+class FaqsRoute extends PageRouteInfo<void> {
+  const FaqsRoute({List<PageRouteInfo>? children})
+      : super(
+          FaqsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FaqsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FaqItemPage]
+class FaqItemRoute extends PageRouteInfo<FaqItemRouteArgs> {
+  FaqItemRoute({
+    Key? key,
+    required String question,
+    required String answer,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FaqItemRoute.name,
+          args: FaqItemRouteArgs(
+            key: key,
+            question: question,
+            answer: answer,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FaqItemRoute';
+
+  static const PageInfo<FaqItemRouteArgs> page =
+      PageInfo<FaqItemRouteArgs>(name);
+}
+
+class FaqItemRouteArgs {
+  const FaqItemRouteArgs({
+    this.key,
+    required this.question,
+    required this.answer,
+  });
+
+  final Key? key;
+
+  final String question;
+
+  final String answer;
+
+  @override
+  String toString() {
+    return 'FaqItemRouteArgs{key: $key, question: $question, answer: $answer}';
   }
 }

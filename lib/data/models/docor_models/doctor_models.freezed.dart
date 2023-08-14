@@ -159,13 +159,10 @@ class __$$_DoctorsResponseModelCopyWithImpl<$Res>
 class _$_DoctorsResponseModel implements _DoctorsResponseModel {
   const _$_DoctorsResponseModel(
       {@JsonKey(name: 'navigationItems')
-          final List<NavigationItem>? navigationItems,
-      @JsonKey(name: 'doctors')
-          final List<Doctor>? doctors,
-      @JsonKey(name: 'researches')
-          final List<Research>? researches,
-      @JsonKey(name: 'cabinets')
-          final List<Cabinet>? cabinets,
+      final List<NavigationItem>? navigationItems,
+      @JsonKey(name: 'doctors') final List<Doctor>? doctors,
+      @JsonKey(name: 'researches') final List<Research>? researches,
+      @JsonKey(name: 'cabinets') final List<Cabinet>? cabinets,
       this.price})
       : _navigationItems = navigationItems,
         _doctors = doctors,
@@ -269,13 +266,10 @@ class _$_DoctorsResponseModel implements _DoctorsResponseModel {
 abstract class _DoctorsResponseModel implements DoctorsResponseModel {
   const factory _DoctorsResponseModel(
       {@JsonKey(name: 'navigationItems')
-          final List<NavigationItem>? navigationItems,
-      @JsonKey(name: 'doctors')
-          final List<Doctor>? doctors,
-      @JsonKey(name: 'researches')
-          final List<Research>? researches,
-      @JsonKey(name: 'cabinets')
-          final List<Cabinet>? cabinets,
+      final List<NavigationItem>? navigationItems,
+      @JsonKey(name: 'doctors') final List<Doctor>? doctors,
+      @JsonKey(name: 'researches') final List<Research>? researches,
+      @JsonKey(name: 'cabinets') final List<Cabinet>? cabinets,
       final int? price}) = _$_DoctorsResponseModel;
 
   factory _DoctorsResponseModel.fromJson(Map<String, dynamic> json) =
