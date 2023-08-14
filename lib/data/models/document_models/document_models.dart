@@ -76,6 +76,7 @@ class DocumentMetaDocumentCreatorModel with _$DocumentMetaDocumentCreatorModel {
     required String firstname,
     required String middlename,
     required String lastname,
+    required String jobTitle,
   }) = _DocumentMetaDocumentCreatorModel;
 
   factory DocumentMetaDocumentCreatorModel.fromJson(

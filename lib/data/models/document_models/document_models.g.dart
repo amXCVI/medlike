@@ -129,6 +129,7 @@ _$_DocumentMetaDocumentCreatorModel
           firstname: json['firstname'] as String,
           middlename: json['middlename'] as String,
           lastname: json['lastname'] as String,
+          jobTitle: json['jobTitle'] as String,
         );
 
 Map<String, dynamic> _$$_DocumentMetaDocumentCreatorModelToJson(
@@ -137,6 +138,7 @@ Map<String, dynamic> _$$_DocumentMetaDocumentCreatorModelToJson(
       'firstname': instance.firstname,
       'middlename': instance.middlename,
       'lastname': instance.lastname,
+      'jobTitle': instance.jobTitle,
     };
 
 _$_DocumentMetaSignEmployerModel _$$_DocumentMetaSignEmployerModelFromJson(

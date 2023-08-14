@@ -1231,6 +1231,7 @@ mixin _$DocumentMetaDocumentCreatorModel {
   String get firstname => throw _privateConstructorUsedError;
   String get middlename => throw _privateConstructorUsedError;
   String get lastname => throw _privateConstructorUsedError;
+  String get jobTitle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1246,7 +1247,8 @@ abstract class $DocumentMetaDocumentCreatorModelCopyWith<$Res> {
       _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
           DocumentMetaDocumentCreatorModel>;
   @useResult
-  $Res call({String firstname, String middlename, String lastname});
+  $Res call(
+      {String firstname, String middlename, String lastname, String jobTitle});
 }
 
 /// @nodoc
@@ -1266,6 +1268,7 @@ class _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
     Object? firstname = null,
     Object? middlename = null,
     Object? lastname = null,
+    Object? jobTitle = null,
   }) {
     return _then(_value.copyWith(
       firstname: null == firstname
@@ -1280,6 +1283,10 @@ class _$DocumentMetaDocumentCreatorModelCopyWithImpl<$Res,
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String,
+      jobTitle: null == jobTitle
+          ? _value.jobTitle
+          : jobTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -1293,7 +1300,8 @@ abstract class _$$_DocumentMetaDocumentCreatorModelCopyWith<$Res>
       __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String firstname, String middlename, String lastname});
+  $Res call(
+      {String firstname, String middlename, String lastname, String jobTitle});
 }
 
 /// @nodoc
@@ -1312,6 +1320,7 @@ class __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<$Res>
     Object? firstname = null,
     Object? middlename = null,
     Object? lastname = null,
+    Object? jobTitle = null,
   }) {
     return _then(_$_DocumentMetaDocumentCreatorModel(
       firstname: null == firstname
@@ -1326,6 +1335,10 @@ class __$$_DocumentMetaDocumentCreatorModelCopyWithImpl<$Res>
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String,
+      jobTitle: null == jobTitle
+          ? _value.jobTitle
+          : jobTitle // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -1337,7 +1350,8 @@ class _$_DocumentMetaDocumentCreatorModel
   const _$_DocumentMetaDocumentCreatorModel(
       {required this.firstname,
       required this.middlename,
-      required this.lastname});
+      required this.lastname,
+      required this.jobTitle});
 
   factory _$_DocumentMetaDocumentCreatorModel.fromJson(
           Map<String, dynamic> json) =>
@@ -1349,10 +1363,12 @@ class _$_DocumentMetaDocumentCreatorModel
   final String middlename;
   @override
   final String lastname;
+  @override
+  final String jobTitle;
 
   @override
   String toString() {
-    return 'DocumentMetaDocumentCreatorModel(firstname: $firstname, middlename: $middlename, lastname: $lastname)';
+    return 'DocumentMetaDocumentCreatorModel(firstname: $firstname, middlename: $middlename, lastname: $lastname, jobTitle: $jobTitle)';
   }
 
   @override
@@ -1365,12 +1381,15 @@ class _$_DocumentMetaDocumentCreatorModel
             (identical(other.middlename, middlename) ||
                 other.middlename == middlename) &&
             (identical(other.lastname, lastname) ||
-                other.lastname == lastname));
+                other.lastname == lastname) &&
+            (identical(other.jobTitle, jobTitle) ||
+                other.jobTitle == jobTitle));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, firstname, middlename, lastname);
+  int get hashCode =>
+      Object.hash(runtimeType, firstname, middlename, lastname, jobTitle);
 
   @JsonKey(ignore: true)
   @override
@@ -1393,7 +1412,8 @@ abstract class _DocumentMetaDocumentCreatorModel
   const factory _DocumentMetaDocumentCreatorModel(
       {required final String firstname,
       required final String middlename,
-      required final String lastname}) = _$_DocumentMetaDocumentCreatorModel;
+      required final String lastname,
+      required final String jobTitle}) = _$_DocumentMetaDocumentCreatorModel;
 
   factory _DocumentMetaDocumentCreatorModel.fromJson(
       Map<String, dynamic> json) = _$_DocumentMetaDocumentCreatorModel.fromJson;
@@ -1404,6 +1424,8 @@ abstract class _DocumentMetaDocumentCreatorModel
   String get middlename;
   @override
   String get lastname;
+  @override
+  String get jobTitle;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentMetaDocumentCreatorModelCopyWith<

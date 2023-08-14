@@ -81,7 +81,7 @@ class ClinicWidget extends StatelessWidget {
                         )
                       : Flexible(
                           child: Text(
-                            'Создал документ:\n${documentCreator!.lastname} ${documentCreator!.firstname} ${documentCreator!.middlename}',
+                            'Создал документ:\n${documentCreator!.lastname} ${documentCreator!.firstname} ${documentCreator!.middlename}, ${documentCreator!.jobTitle}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 4,
                             softWrap: true,
