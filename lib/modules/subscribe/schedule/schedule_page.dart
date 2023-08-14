@@ -10,8 +10,8 @@ import 'package:medlike/modules/subscribe/schedule/doctor_subpage.dart';
 import 'package:medlike/modules/subscribe/schedule/favorit_doctor_button.dart';
 import 'package:medlike/modules/subscribe/schedule/schedule_subpage.dart';
 import 'package:medlike/modules/subscribe/schedule/toggle_page_values_list.dart';
-import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
-import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
+import 'package:medlike/utils/api/api_constants.dart';
+import 'package:medlike/widgets/app_bar/schedule_app_bar/schedule_app_bar.dart';
 import 'package:medlike/widgets/toggle_button/toggle_button.dart';
 
 @RoutePage()
@@ -146,61 +146,80 @@ class _SchedulePageState extends State<SchedulePage> {
   Widget build(BuildContext context) {
     getDoctorInfo(context);
 
-    return DefaultScaffold(
-      appBarTitle: widget.pageTitle,
-      appBarSubtitle: widget.pageSubtitle,
-      isChildrenPage: true,
-      actions: widget.doctorId != null
-          ? [
-              BlocBuilder<SubscribeCubit, SubscribeState>(
-                builder: (context, state) {
-                  return FavoriteDoctorButton(
-                    userId: widget.userId,
-                    buildingId: widget.buildingId,
-                    clinicId: widget.clinicId,
-                    doctorId: widget.doctorId as String,
-                    categoryTypeId: widget.categoryTypeId,
-                    isFavorite: state.selectedDoctor != null
-                        ? state.selectedDoctor!.isFavorite
-                        : false,
-                  );
-                },
-              )
-            ]
-          : [],
-      child: DefaultScrollbar(
-        child: ListView(
-          children: [
-            widget.doctorId != null
-                ? const DoctorInfoHeader()
-                : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 18),
-              child: ToggleButton(
-                itemsList: togglePageValuesList.map((e) => e.label).toList(),
-                setValue: setTogglePageValue,
-                value: togglePageValue.label,
-              ),
-            ),
-            togglePageValue.id == togglePageValuesList[0].id
-                ? ScheduleSubpage(
-                    userId: widget.userId,
-                    buildingId: widget.buildingId,
-                    clinicId: widget.clinicId,
-                    categoryTypeId: widget.categoryTypeId,
-                    isAny: widget.isAny,
-                    doctorId: widget.doctorId,
-                    specialisationId: widget.specialisationId,
-                    researchIds: widget.researchIds,
-                    cabinet: widget.cabinet,
-                    getCalendarList: _getCalendarList,
-                    getCellsList: _getCellsList,
-                    setSelectedDate: _setSelectedDate,
-                  )
-                : const DoctorSubpage(),
-          ],
+    return Scaffold(
+        body: CustomScrollView(
+      slivers: <Widget>[
+        BlocBuilder<SubscribeCubit, SubscribeState>(
+          builder: (context, state) {
+            return ScheduleAppBar(
+              title: widget.pageTitle,
+              isChildrenPage: true,
+              isDoctorAppBar: widget.doctorId != null,
+              actions: widget.doctorId != null
+                  ? [
+                      FavoriteDoctorButton(
+                        userId: widget.userId,
+                        buildingId: widget.buildingId,
+                        clinicId: widget.clinicId,
+                        doctorId: widget.doctorId as String,
+                        categoryTypeId: widget.categoryTypeId,
+                        isFavorite: state.selectedDoctor != null
+                            ? state.selectedDoctor!.isFavorite
+                            : false,
+                      )
+                    ]
+                  : [],
+              backgroundImageUrl: state.selectedDoctor != null &&
+                      state.selectedDoctor!.imageId != null
+                  ? '${ApiConstants.baseUrl}/api/v1.0/doctors/image/${state.selectedDoctor?.imageId}?isThumbnail=false'
+                  : null,
+            );
+          },
         ),
-      ),
-    );
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, int index) {
+              return Column(
+                children: [
+                  widget.doctorId != null
+                      ? const DoctorInfoHeader()
+                      : const SizedBox(),
+                  widget.doctorId != null
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 24, horizontal: 18),
+                          child: ToggleButton(
+                            itemsList: togglePageValuesList
+                                .map((e) => e.label)
+                                .toList(),
+                            setValue: setTogglePageValue,
+                            value: togglePageValue.label,
+                          ),
+                        )
+                      : const SizedBox(),
+                  togglePageValue.id == togglePageValuesList[0].id
+                      ? ScheduleSubpage(
+                          userId: widget.userId,
+                          buildingId: widget.buildingId,
+                          clinicId: widget.clinicId,
+                          categoryTypeId: widget.categoryTypeId,
+                          isAny: widget.isAny,
+                          doctorId: widget.doctorId,
+                          specialisationId: widget.specialisationId,
+                          researchIds: widget.researchIds,
+                          cabinet: widget.cabinet,
+                          getCalendarList: _getCalendarList,
+                          getCellsList: _getCellsList,
+                          setSelectedDate: _setSelectedDate,
+                        )
+                      : const DoctorSubpage(),
+                ],
+              );
+            },
+            childCount: 1,
+          ),
+        ),
+      ],
+    ));
   }
 }

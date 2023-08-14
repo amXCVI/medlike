@@ -26,7 +26,7 @@ class DoctorInfoHeader extends StatelessWidget {
           : '';
 
       return Padding(
-        padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 0, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
