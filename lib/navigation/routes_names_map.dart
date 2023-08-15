@@ -28,6 +28,7 @@ class AppRoutes {
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
+  static const medcardPDFViewer = '/medcard_pdf_file_viewer';
   static const healthProfiles = '/health_profiles';
   static const healthProfilesForMain = '/health_profiles_for_main';
   static const health = '/health';

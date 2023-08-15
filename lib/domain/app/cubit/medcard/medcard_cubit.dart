@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
@@ -158,16 +160,23 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
     Completer<File> completer = Completer();
     try {
       emit(state.copyWith(downloadingFileId: fileId));
-      var response = await medcardRepository.downloadFile(url: fileUrl);
-      var bytes = await consolidateHttpClientResponseBytes(response);
-      var dir = await getApplicationDocumentsDirectory();
-      File file = File("${dir.path}/$fileName");
-
-      await file.writeAsBytes(bytes, flush: true);
-      completer.complete(file);
+      // var response = await medcardRepository.downloadFile(url: fileUrl);
+      // var bytes = await consolidateHttpClientResponseBytes(response);
+      // var dir = await getApplicationDocumentsDirectory();
+      // File file = File("${dir.path}/$fileName");
+      //
+      // await file.writeAsBytes(bytes, flush: true);
+      // completer.complete(file);
+      File file = await DefaultCacheManager().getSingleFile(
+        fileUrl,
+        headers: {
+          'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        },
+      );
       if (state.downloadingFileId!.isNotEmpty) {
         OpenFile.open(
-          "${dir.path}/$fileName",
+          file.path,
         );
       }
 

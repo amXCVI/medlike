@@ -318,6 +318,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MedcardProfilesListPage(),
       );
     },
+    PdfFileViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfFileViewerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfFileViewerPage(
+          key: args.key,
+          pdfUrl: args.pdfUrl,
+          fileId: args.fileId,
+          fileName: args.fileName,
+        ),
+      );
+    },
     MedcardRoute.name: (routeData) {
       final args = routeData.argsAs<MedcardRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -1618,6 +1630,54 @@ class MedcardProfilesListRoute extends PageRouteInfo<void> {
   static const String name = 'MedcardProfilesListRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfFileViewerPage]
+class PdfFileViewerRoute extends PageRouteInfo<PdfFileViewerRouteArgs> {
+  PdfFileViewerRoute({
+    Key? key,
+    required String pdfUrl,
+    required String fileId,
+    required String fileName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfFileViewerRoute.name,
+          args: PdfFileViewerRouteArgs(
+            key: key,
+            pdfUrl: pdfUrl,
+            fileId: fileId,
+            fileName: fileName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfFileViewerRoute';
+
+  static const PageInfo<PdfFileViewerRouteArgs> page =
+      PageInfo<PdfFileViewerRouteArgs>(name);
+}
+
+class PdfFileViewerRouteArgs {
+  const PdfFileViewerRouteArgs({
+    this.key,
+    required this.pdfUrl,
+    required this.fileId,
+    required this.fileName,
+  });
+
+  final Key? key;
+
+  final String pdfUrl;
+
+  final String fileId;
+
+  final String fileName;
+
+  @override
+  String toString() {
+    return 'PdfFileViewerRouteArgs{key: $key, pdfUrl: $pdfUrl, fileId: $fileId, fileName: $fileName}';
+  }
 }
 
 /// generated route for

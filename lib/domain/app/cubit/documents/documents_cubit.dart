@@ -125,7 +125,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
     try {
       File file = await DefaultCacheManager().getSingleFile(
         fileUrl,
-        key: fileUrl,
+        // key: fileUrl,
         headers: {
           'Authorization':
               'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'

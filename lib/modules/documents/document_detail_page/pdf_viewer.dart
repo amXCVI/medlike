@@ -98,22 +98,6 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
                     center: doubleTapDetails!.localPosition,
                   ),
                   onTap: () => handleTapOnDocument(file!.path),
-                  // child: PdfDocumentLoader.openFile(
-                  //   file!.path,
-                  //   documentBuilder: (context, pdfDocument, pageCount) =>
-                  //       LayoutBuilder(
-                  //           builder: (context, constraints) =>
-                  //               ListView.builder(
-                  //                   itemCount: pageCount,
-                  //                   itemBuilder: (context, index) => Container(
-                  //                       // margin: EdgeInsets.all(margin),
-                  //                       // padding: EdgeInsets.all(padding),
-                  //                       color: Colors.black12,
-                  //                       child: PdfPageView(
-                  //                         pdfDocument: pdfDocument,
-                  //                         pageNumber: index + 1,
-                  //                       )))),
-                  // )
                   child: PdfViewer.openFile(
                     file!.path,
                     viewerController: viewerController,
@@ -127,8 +111,6 @@ class _PdfViewerWidgetState extends State<PdfViewerWidget> {
                   ),
                 ),
               ),
-              // Text(pageCount.toString()),
-              // Text('data')
             ],
           )
         : fileLoadError.isNotEmpty

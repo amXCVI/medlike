@@ -27,6 +27,7 @@ import 'package:medlike/modules/login/unauth_support/unauth_support_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
+import 'package:medlike/modules/medcard/pdf_file_viewer/pdf_file_viewer.dart';
 import 'package:medlike/modules/medcard/profiles_list/profiles_list_page.dart';
 import 'package:medlike/modules/require_update_app/require_update_app_page.dart';
 import 'package:medlike/modules/settings/agreements/agreements_page.dart';
@@ -166,6 +167,10 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.medcardUserFilesList,
             page: FilesRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.medcardPDFViewer,
+            page: PdfFileViewerRoute.page,
             guards: [CheckIsAuthUser()]),
 
         AdaptiveRoute(
