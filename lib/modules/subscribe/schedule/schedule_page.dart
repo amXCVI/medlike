@@ -248,7 +248,7 @@ class _SchedulePageState extends State<SchedulePage> {
                             handleTapOnCell: (model) => _handleTapOnCell(
                               model,
                               isDoctorSelected: state.selectedDoctor != null 
-                                && state.selectedDoctor != Doctor.emptyDoctor
+                                && state.selectedDoctor != AvailableDoctor.emptyDoctor
                             ),
                           )
                         : state.getTimetableCellsStatus ==

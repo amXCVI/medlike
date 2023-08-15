@@ -14,11 +14,9 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
 
 class ConfirmationSubscribePage extends StatefulWidget {
-  const ConfirmationSubscribePage({
-    Key? key, 
-    required this.userId,
-    required this.timeZoneHours
-  }) : super(key: key);
+  const ConfirmationSubscribePage(
+      {Key? key, required this.userId, required this.timeZoneHours})
+      : super(key: key);
 
   final String userId;
   final int timeZoneHours;
@@ -46,98 +44,99 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
       /// Если оплата картой
       if (selectedPayType == AppConstants.cardPayType) {
         context.read<SubscribeCubit>().createNewAppointment(
-              userId: widget.userId,
-              userName:
-                  context.read<UserCubit>().getShortUserName(widget.userId),
-              timezoneHours: widget.timeZoneHours
-            );
+            userId: widget.userId,
+            userName: context.read<UserCubit>().getShortUserName(widget.userId),
+            timezoneHours: widget.timeZoneHours);
         return;
 
         /// Оплата наличкой в кассе
       } else {
         context.read<SubscribeCubit>().createNewAppointment(
-              userId: widget.userId,
-              userName:
-                  context.read<UserCubit>().getShortUserName(widget.userId),
-              timezoneHours: widget.timeZoneHours
-            );
+            userId: widget.userId,
+            userName: context.read<UserCubit>().getShortUserName(widget.userId),
+            timezoneHours: widget.timeZoneHours);
       }
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        context.read<SubscribeCubit>().unlockCell(userId: widget.userId);
-        Navigator.pop(context);
-        return false;
-      },
-      child: DefaultScaffold(
-        appBarTitle: 'Запись на прием',
-        isChildrenPage: true,
-        actionButton: BlocBuilder<SubscribeCubit, SubscribeState>(
-          builder: (context, state) {
-            bool isDisabledButton = !isCheckedAgreements ||
-                state.getAppointmentInfoStatus ==
-                    GetAppointmentInfoStatuses.loading ||
-                state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.loading ||
-                state.registerOrderStatus == RegisterOrderStatuses.loading;
-            return SizedBox(
-              width: 200,
-              child: AnimatedFractionallySizedBox(
-                duration: const Duration(milliseconds: 500),
-                widthFactor: state.creatingAppointmentStatus ==
-                        CreatingAppointmentStatuses.finished
-                    ? 0.25
-                    : 1,
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    isDisabledButton
-                        ? {}
-                        : _createNewAppointment(
-                            state.selectedPayType!,
-                            state.createdAppointmentId,
-                          );
-                  },
-                  backgroundColor: !isDisabledButton
-                      ? Theme.of(context).primaryColor
-                      : AppColors.lightText,
-                  extendedPadding: const EdgeInsets.all(15),
-                  label: ConfirmationActionButtonLabel(userId: widget.userId),
-                ),
-              ),
-            );
-          },
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              const SizedBox(height: 20),
-              UserInfo(userId: widget.userId),
-              const SizedBox(height: 19),
-              const DashDivider(),
+    return BlocBuilder<SubscribeCubit, SubscribeState>(
+      builder: (context, state) {
+        bool isDisabledButton = !isCheckedAgreements ||
+          state.getAppointmentInfoStatus ==
+              GetAppointmentInfoStatuses.loading ||
+          state.creatingAppointmentStatus ==
+              CreatingAppointmentStatuses.loading ||
+          state.registerOrderStatus == RegisterOrderStatuses.loading;
 
-              /// Карточки с выбором способа оплаты.
-              /// Не работает оплата картой, поэтому закомментировано
-              /// Раскомментировать в кубите
-              /// получение информации о приеме
-              const SizedBox(height: 24),
-              const PaymentWidget(),
-              const AppointmentInfo(),
-              const SizedBox(height: 24),
-              const DashDivider(),
-              const SizedBox(height: 24),
-              AgreementsChecker(
-                isChecked: isCheckedAgreements,
-                setIsCheckedValue: setIsCheckedValue,
+        return WillPopScope(
+          onWillPop: () async {
+            context.read<SubscribeCubit>().unlockCell(userId: widget.userId);
+            if (state.isAnyDoctor == true) {
+              context.read<SubscribeCubit>().clearSelectedDoctor();
+            }
+            Navigator.pop(context);
+            return false;
+          },
+          child: DefaultScaffold(
+            appBarTitle: 'Запись на прием',
+            isChildrenPage: true,
+            actionButton: SizedBox(
+                  width: 200,
+                  child: AnimatedFractionallySizedBox(
+                    duration: const Duration(milliseconds: 500),
+                    widthFactor: state.creatingAppointmentStatus ==
+                            CreatingAppointmentStatuses.finished
+                        ? 0.25
+                        : 1,
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        isDisabledButton
+                            ? {}
+                            : _createNewAppointment(
+                                state.selectedPayType!,
+                                state.createdAppointmentId,
+                              );
+                      },
+                      backgroundColor: !isDisabledButton
+                          ? Theme.of(context).primaryColor
+                          : AppColors.lightText,
+                      extendedPadding: const EdgeInsets.all(15),
+                      label:
+                          ConfirmationActionButtonLabel(userId: widget.userId),
+                    ),
+                  ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  const SizedBox(height: 20),
+                  UserInfo(userId: widget.userId),
+                  const SizedBox(height: 19),
+                  const DashDivider(),
+
+                  /// Карточки с выбором способа оплаты.
+                  /// Не работает оплата картой, поэтому закомментировано
+                  /// Раскомментировать в кубите
+                  /// получение информации о приеме
+                  const SizedBox(height: 24),
+                  const PaymentWidget(),
+                  const AppointmentInfo(),
+                  const SizedBox(height: 24),
+                  const DashDivider(),
+                  const SizedBox(height: 24),
+                  AgreementsChecker(
+                    isChecked: isCheckedAgreements,
+                    setIsCheckedValue: setIsCheckedValue,
+                  ),
+                  const SizedBox(width: 15),
+                  const SizedBox(height: 24),
+                ],
               ),
-              const SizedBox(width: 15),
-              const SizedBox(height: 24),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

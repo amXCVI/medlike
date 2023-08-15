@@ -66,6 +66,7 @@ class SubscribeState {
   final GetDoctorsListStatuses? getDoctorsListStatus;
   final List<Doctor>? doctorsList;
   final AvailableDoctor? selectedDoctor;
+  final bool? isAnyDoctor;
   final List<Doctor>? filteredDoctorsList;
 
   final GetCabinetsListStatuses? getCabinetsListStatus;
@@ -132,6 +133,7 @@ class SubscribeState {
     this.getDoctorsListStatus,
     this.doctorsList,
     this.selectedDoctor,
+    this.isAnyDoctor,
     this.filteredDoctorsList,
     this.getCabinetsListStatus,
     this.cabinetsList,
@@ -185,6 +187,7 @@ class SubscribeState {
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
     AvailableDoctor? selectedDoctor,
+    bool? isAnyDoctor,
     List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
@@ -242,6 +245,7 @@ class SubscribeState {
           filteredSpecialisationsList ?? this.filteredSpecialisationsList,
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
+      isAnyDoctor: isAnyDoctor ?? this.isAnyDoctor, 
       selectedDoctor: selectedDoctor ?? this.selectedDoctor,
       filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
       getCabinetsListStatus:
@@ -307,6 +311,7 @@ class SubscribeState {
       getDoctorsListStatus: null,
       doctorsList: null,
       selectedDoctor: null,
+      isAnyDoctor: null,
       filteredDoctorsList: null,
       getCabinetsListStatus: null,
       cabinetsList: null,

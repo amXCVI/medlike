@@ -241,12 +241,18 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void setSelectedDoctor(Doctor selectedDoctor) {
     // cast Doctor to AvailableDoctor
     final availableDoctor = selectedDoctor.availableDoctor;
-    emit(state.copyWith(selectedDoctor: availableDoctor));
+    emit(state.copyWith(
+      isAnyDoctor: false,
+      selectedDoctor: availableDoctor
+    ));
   }
 
   /// Сохранить выбранного доктора
   void setAvailableDoctor(AvailableDoctor availableDoctor) {
-    emit(state.copyWith(selectedDoctor: availableDoctor));
+    emit(state.copyWith(
+      isAnyDoctor: true,
+      selectedDoctor: availableDoctor
+    ));
   }
 
   /// Получает список кабинетов и список докторов для записи на услугу
@@ -766,6 +772,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       );
       emit(state.copyWith(
         getAvailableDoctorStatus: GetAvailableDoctorStatuses.success,
+        isAnyDoctor: true,
         selectedDoctor: response,
       ));
     } catch (e) {
@@ -777,6 +784,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
 
   void clearSelectedDoctor() async {
     emit(state.copyWith(
+      isAnyDoctor: false,
       selectedDoctor: AvailableDoctor.emptyDoctor
     ));
   }
