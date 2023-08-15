@@ -166,6 +166,7 @@ _$_AppointmentReviewModel _$$_AppointmentReviewModelFromJson(
       rate: json['rate'] as num,
       caption: json['caption'] as String,
       message: json['message'] as String,
+      email: json['email'] as String?,
       visibility: json['visibility'] as int,
     );
 
@@ -175,6 +176,7 @@ Map<String, dynamic> _$$_AppointmentReviewModelToJson(
       'rate': instance.rate,
       'caption': instance.caption,
       'message': instance.message,
+      'email': instance.email,
       'visibility': instance.visibility,
     };
 

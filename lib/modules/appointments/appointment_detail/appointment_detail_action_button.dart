@@ -16,7 +16,14 @@ class AppointmentDetailActionButton extends StatelessWidget {
   final bool isRated;
 
   void handleChangeRatig(BuildContext context) {
-    context.router.push(FeedbackRoute(appointmentId: appointmentId));
+    context.router.push(FeedbackRoute(
+      appointmentId: appointmentId,
+      rating: 0,
+      controllerCaption: '',
+      controllerVisible: '',
+      controllerMessage: '',
+      controllerEmail: '',
+    ));
   }
 
   @override

@@ -405,6 +405,7 @@ class AppointmentsCubit
                         caption: caption,
                         message: message,
                         visibility: int.parse(reviewVisibility),
+                        email: email,
                       ))
                   : e)
               .toList();
@@ -422,6 +423,7 @@ class AppointmentsCubit
               caption: caption,
               message: message,
               visibility: int.parse(reviewVisibility),
+              email: email,
             ),
           )));
 

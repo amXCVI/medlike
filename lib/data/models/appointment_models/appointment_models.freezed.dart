@@ -1675,6 +1675,7 @@ mixin _$AppointmentReviewModel {
   num get rate => throw _privateConstructorUsedError;
   String get caption => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   int get visibility => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1689,7 +1690,12 @@ abstract class $AppointmentReviewModelCopyWith<$Res> {
           $Res Function(AppointmentReviewModel) then) =
       _$AppointmentReviewModelCopyWithImpl<$Res, AppointmentReviewModel>;
   @useResult
-  $Res call({num rate, String caption, String message, int visibility});
+  $Res call(
+      {num rate,
+      String caption,
+      String message,
+      String? email,
+      int visibility});
 }
 
 /// @nodoc
@@ -1709,6 +1715,7 @@ class _$AppointmentReviewModelCopyWithImpl<$Res,
     Object? rate = null,
     Object? caption = null,
     Object? message = null,
+    Object? email = freezed,
     Object? visibility = null,
   }) {
     return _then(_value.copyWith(
@@ -1724,6 +1731,10 @@ class _$AppointmentReviewModelCopyWithImpl<$Res,
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
@@ -1740,7 +1751,12 @@ abstract class _$$_AppointmentReviewModelCopyWith<$Res>
       __$$_AppointmentReviewModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({num rate, String caption, String message, int visibility});
+  $Res call(
+      {num rate,
+      String caption,
+      String message,
+      String? email,
+      int visibility});
 }
 
 /// @nodoc
@@ -1758,6 +1774,7 @@ class __$$_AppointmentReviewModelCopyWithImpl<$Res>
     Object? rate = null,
     Object? caption = null,
     Object? message = null,
+    Object? email = freezed,
     Object? visibility = null,
   }) {
     return _then(_$_AppointmentReviewModel(
@@ -1773,6 +1790,10 @@ class __$$_AppointmentReviewModelCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       visibility: null == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
@@ -1788,6 +1809,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
       {required this.rate,
       required this.caption,
       required this.message,
+      required this.email,
       required this.visibility});
 
   factory _$_AppointmentReviewModel.fromJson(Map<String, dynamic> json) =>
@@ -1800,11 +1822,13 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
   @override
   final String message;
   @override
+  final String? email;
+  @override
   final int visibility;
 
   @override
   String toString() {
-    return 'AppointmentReviewModel(rate: $rate, caption: $caption, message: $message, visibility: $visibility)';
+    return 'AppointmentReviewModel(rate: $rate, caption: $caption, message: $message, email: $email, visibility: $visibility)';
   }
 
   @override
@@ -1815,6 +1839,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
             (identical(other.rate, rate) || other.rate == rate) &&
             (identical(other.caption, caption) || other.caption == caption) &&
             (identical(other.message, message) || other.message == message) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.visibility, visibility) ||
                 other.visibility == visibility));
   }
@@ -1822,7 +1847,7 @@ class _$_AppointmentReviewModel implements _AppointmentReviewModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, rate, caption, message, visibility);
+      Object.hash(runtimeType, rate, caption, message, email, visibility);
 
   @JsonKey(ignore: true)
   @override
@@ -1844,6 +1869,7 @@ abstract class _AppointmentReviewModel implements AppointmentReviewModel {
       {required final num rate,
       required final String caption,
       required final String message,
+      required final String? email,
       required final int visibility}) = _$_AppointmentReviewModel;
 
   factory _AppointmentReviewModel.fromJson(Map<String, dynamic> json) =
@@ -1855,6 +1881,8 @@ abstract class _AppointmentReviewModel implements AppointmentReviewModel {
   String get caption;
   @override
   String get message;
+  @override
+  String? get email;
   @override
   int get visibility;
   @override

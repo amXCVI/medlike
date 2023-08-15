@@ -99,6 +99,7 @@ class AppointmentReviewModel with _$AppointmentReviewModel {
     required num rate,
     required String caption,
     required String message,
+    required String? email,
     required int visibility,
   }) = _AppointmentReviewModel;
 

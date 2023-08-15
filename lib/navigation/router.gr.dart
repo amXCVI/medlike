@@ -611,11 +611,11 @@ class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
   FeedbackRoute({
     Key? key,
     required String appointmentId,
-    int? rating,
-    String? controllerCaption,
-    String? controllerVisible,
-    String? controllerMessage,
-    String? controllerEmail,
+    required int rating,
+    required String controllerCaption,
+    required String controllerVisible,
+    required String controllerMessage,
+    required String controllerEmail,
     List<PageRouteInfo>? children,
   }) : super(
           FeedbackRoute.name,
@@ -641,26 +641,26 @@ class FeedbackRouteArgs {
   const FeedbackRouteArgs({
     this.key,
     required this.appointmentId,
-    this.rating,
-    this.controllerCaption,
-    this.controllerVisible,
-    this.controllerMessage,
-    this.controllerEmail,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
   });
 
   final Key? key;
 
   final String appointmentId;
 
-  final int? rating;
+  final int rating;
 
-  final String? controllerCaption;
+  final String controllerCaption;
 
-  final String? controllerVisible;
+  final String controllerVisible;
 
-  final String? controllerMessage;
+  final String controllerMessage;
 
-  final String? controllerEmail;
+  final String controllerEmail;
 
   @override
   String toString() {

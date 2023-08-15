@@ -36,7 +36,7 @@ class AppointmentDetailPage extends StatelessWidget {
       controllerVisible:
           getLabelVisibilityByValue(appointmentItem.review!.visibility),
       controllerMessage: appointmentItem.review!.message,
-      controllerEmail: '',
+      controllerEmail: appointmentItem.review!.email ?? '',
     ));
   }
 

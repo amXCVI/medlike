@@ -15,20 +15,20 @@ class FeedbackPage extends StatefulWidget {
   const FeedbackPage({
     Key? key,
     required this.appointmentId,
-    this.rating,
-    this.controllerCaption,
-    this.controllerVisible,
-    this.controllerMessage,
-    this.controllerEmail,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
   }) : super(key: key);
 
   final String appointmentId;
 
-  final int? rating;
-  final String? controllerCaption;
-  final String? controllerVisible;
-  final String? controllerMessage;
-  final String? controllerEmail;
+  final int rating;
+  final String controllerCaption;
+  final String controllerVisible;
+  final String controllerMessage;
+  final String controllerEmail;
 
   @override
   State<FeedbackPage> createState() => _FeedbackPageState();
@@ -51,14 +51,23 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   void initState() {
-    _controllerCaption = widget.controllerCaption ?? captionsList[0];
-    _controllerVisible = widget.controllerVisible ?? visibilityList[0];
-    _controllerMessage.text = widget.controllerMessage ?? '';
-    _controllerEmail.text = widget.controllerEmail ?? '';
-    rating = widget.rating ?? 0;
+    void setDataToState() {
+      _controllerCaption = widget.controllerCaption.isNotEmpty
+          ? widget.controllerCaption
+          : captionsList[0];
+      _controllerVisible = widget.controllerVisible.isNotEmpty
+          ? widget.controllerVisible
+          : visibilityList[0];
+      _controllerMessage.text = widget.controllerMessage ?? '';
+      _controllerEmail.text = widget.controllerEmail ?? '';
+      rating = widget.rating ?? 0;
 
-    controllerMessage = widget.controllerMessage ?? '';
-    controllerEmail = widget.controllerEmail ?? '';
+      controllerMessage = widget.controllerMessage ?? '';
+      controllerEmail = widget.controllerEmail ?? '';
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
+
     super.initState();
   }
 
