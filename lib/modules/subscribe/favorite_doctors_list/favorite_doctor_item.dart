@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/utils/helpers/doctor_subtitle_helper.dart';
 import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
@@ -23,7 +24,8 @@ class FavoriteDoctorItem extends StatelessWidget {
     return SubscribeRowItem(
       title:
           '${doctorItem.lastName.toString()} ${doctorItem.firstName[0]}. ${doctorItem.middleName[0]}.',
-      subtitle: subtitle,
+      subtitle:
+          '${CategoryTypes.getCategoryTypeByCategoryTypeId(doctorItem.categoryType).russianCategoryTypeName} | $subtitle',
       onTap: onTap,
       rating: doctorItem.rateAsUser,
       isFirstSymbolForIcon: doctorItem.imageId == null,
