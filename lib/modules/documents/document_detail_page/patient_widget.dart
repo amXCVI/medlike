@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:skeletons/skeletons.dart';
 
 class PatientWidget extends StatelessWidget {
-  const PatientWidget(
-      {Key? key,
-      this.patient,
-      required this.patientSignUrl,
-      required this.isLoadingData})
-      : super(key: key);
+  const PatientWidget({
+    Key? key,
+    this.patient,
+    required this.patientSignUrl,
+    required this.isLoadingData,
+    required this.isSignByPatient,
+  }) : super(key: key);
 
   final DocumentMetaPatientModel? patient;
   final String patientSignUrl;
   final bool isLoadingData;
+  final bool isSignByPatient;
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +59,36 @@ class PatientWidget extends StatelessWidget {
                       softWrap: true,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                  )
+                  ),
           ],
-        )
+        ),
+        !isLoadingData && isSignByPatient
+            ? Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    border: Border.all(
+                      color: AppColors.signedBlueColor,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Center(
+                      child: Text(
+                    'ДОКУМЕНТ ПОДПИСАН\nПАЦИЕНТОМ',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.signedBlueColor,
+                        ),
+                  )),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

@@ -16,6 +16,8 @@ class DocumentModel with _$DocumentModel {
     required DateTime? signedByPatientAt,
     required bool isSignByEmployee,
     required DateTime? signedByEmployeeAt,
+    required bool isSignByClinic,
+    required DateTime? signedByClinicAt,
   }) = _DocumentModelModel;
 
   factory DocumentModel.fromJson(Map<String, Object?> json) =>
@@ -31,11 +33,14 @@ class DocumentMetaModel with _$DocumentMetaModel {
     required DocumentMetaLpuModel lpu,
     required DocumentMetaPatientModel patient,
     required DocumentMetaDocumentCreatorModel? documentCreator,
-    required DocumentMetaSignEmployerModel? signEmployer,
+    required DocumentMetaSignEmployerModel? signEmployee,
+    required DocumentMetaSignClinicModel? signClinic,
     required bool isSignByPatient,
     required DateTime? signedByPatientAt,
     required bool isSignByEmployee,
     required DateTime? signedByEmployeeAt,
+    required bool isSignByClinic,
+    required DateTime? signedByClinicAt,
   }) = _DocumentMetaModel;
 
   factory DocumentMetaModel.fromJson(Map<String, Object?> json) =>
@@ -90,10 +95,27 @@ class DocumentMetaSignEmployerModel with _$DocumentMetaSignEmployerModel {
     required String firstname,
     required String middlename,
     required String lastname,
+    required DateTime validFrom,
+    required DateTime validTo,
+    required String organization,
+    required String certNumber,
   }) = _DocumentMetaSignEmployerModel;
 
   factory DocumentMetaSignEmployerModel.fromJson(Map<String, Object?> json) =>
       _$DocumentMetaSignEmployerModelFromJson(json);
+}
+
+@freezed
+class DocumentMetaSignClinicModel with _$DocumentMetaSignClinicModel {
+  const factory DocumentMetaSignClinicModel({
+    required String owner,
+    required DateTime validFrom,
+    required DateTime validTo,
+    required String certNumber,
+  }) = _DocumentMetaSignClinicModel;
+
+  factory DocumentMetaSignClinicModel.fromJson(Map<String, Object?> json) =>
+      _$DocumentMetaSignClinicModelFromJson(json);
 }
 
 @freezed

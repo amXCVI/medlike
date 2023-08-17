@@ -40,12 +40,12 @@ class DocumentStatuses {
 
   static StatusItem getStatus({
     required bool isSignByPatient,
-    required bool isSignByEmployee,
+    required bool isSignByClinic,
   }) {
     try {
       StatusItem findStatus = statusesList.firstWhere((e) =>
           e.isSignByPatient == isSignByPatient &&
-          e.isSignByEmployee == isSignByEmployee);
+          e.isSignByEmployee == isSignByClinic);
       return findStatus;
     } catch (err) {
       return StatusItem(

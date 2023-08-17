@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:flutter/foundation.dart';
@@ -10,6 +9,7 @@ import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/cache_manager/custom_cache_maneger.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
@@ -167,8 +167,9 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       //
       // await file.writeAsBytes(bytes, flush: true);
       // completer.complete(file);
-      File file = await DefaultCacheManager().getSingleFile(
+      File file = await CustomCacheManager.instance.getSingleFile(
         fileUrl,
+        key: fileUrl,
         headers: {
           'Authorization':
               'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'

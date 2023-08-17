@@ -109,7 +109,7 @@ class _DocumentPageState extends State<DocumentPage> {
                 statusStr: DocumentStatuses.getStatus(
                   isSignByPatient:
                       state.selectedDocumentMetaData?.isSignByPatient ?? false,
-                  isSignByEmployee: widget.document.isSignByEmployee,
+                  isSignByClinic: widget.document.isSignByClinic,
                 ).statusName,
                 updatedAt: getLastDate(
                   dateOne: widget.document.updatedAt,
@@ -126,6 +126,9 @@ class _DocumentPageState extends State<DocumentPage> {
                 patientSignUrl: '',
                 isLoadingData: state.getDocumentMetaStatus ==
                     GetDocumentMetaStatuses.loading,
+                isSignByPatient: state.selectedDocumentMetaData != null
+                    ? state.selectedDocumentMetaData!.isSignByPatient
+                    : false,
               ),
               const SizedBox(height: 32),
               ClinicWidget(
@@ -134,6 +137,11 @@ class _DocumentPageState extends State<DocumentPage> {
                     state.selectedDocumentMetaData?.documentCreator,
                 isLoadingData: state.getDocumentMetaStatus ==
                     GetDocumentMetaStatuses.loading,
+                isSignByClinic: state.selectedDocumentMetaData != null
+                    ? state.selectedDocumentMetaData!.isSignByClinic
+                    : false,
+                signClinic: state.selectedDocumentMetaData?.signClinic,
+                signEmployee: state.selectedDocumentMetaData?.signEmployee,
               ),
               const SizedBox(height: 32),
               Text(

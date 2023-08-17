@@ -64,7 +64,7 @@ class DocumentItem extends StatelessWidget {
                   Text(
                     DocumentStatuses.getStatus(
                       isSignByPatient: documentItem.isSignByPatient,
-                      isSignByEmployee: documentItem.isSignByEmployee,
+                      isSignByClinic: documentItem.isSignByClinic,
                     ).statusName,
                     style: Theme.of(context)
                         .textTheme
