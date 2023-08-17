@@ -83,82 +83,90 @@ class _DocumentPageState extends State<DocumentPage> {
 
     return BlocBuilder<DocumentsCubit, DocumentsState>(
         builder: (context, state) {
-      return DefaultScaffold(
-          appBarTitle: widget.document.name,
-          actionButton: state.selectedDocumentMetaData != null &&
-                  !state.selectedDocumentMetaData!.isSignByPatient
-              ? FloatingActionButton.extended(
-                  onPressed: () => _handleSubscribeDocument(
-                        context: context,
-                        documentId: widget.document.id,
-                        userId: context.read<UserCubit>().getFirstProfile(),
-                        lpuId: widget.document.lpu.id,
-                      ),
-                  label: ActionButtonWidget(
-                    subscribeDocumentStatuses: state.subscribeDocumentStatuses,
+      return WillPopScope(
+        onWillPop: () async {
+          context.router.push(const DocumentsRoute());
+          return false;
+        },
+        child: DefaultScaffold(
+            appBarTitle: widget.document.name,
+            actionButton: state.selectedDocumentMetaData != null &&
+                    !state.selectedDocumentMetaData!.isSignByPatient
+                ? FloatingActionButton.extended(
+                    onPressed: () => _handleSubscribeDocument(
+                          context: context,
+                          documentId: widget.document.id,
+                          userId: context.read<UserCubit>().getFirstProfile(),
+                          lpuId: widget.document.lpu.id,
+                        ),
+                    label: ActionButtonWidget(
+                      subscribeDocumentStatuses:
+                          state.subscribeDocumentStatuses,
+                      isSignByPatient:
+                          state.selectedDocumentMetaData?.isSignByPatient ??
+                              false,
+                    ))
+                : const SizedBox(),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              children: [
+                DocumentHeader(
+                  documentName: widget.document.name,
+                  statusStr: DocumentStatuses.getStatus(
                     isSignByPatient:
                         state.selectedDocumentMetaData?.isSignByPatient ??
                             false,
-                  ))
-              : const SizedBox(),
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-            children: [
-              DocumentHeader(
-                documentName: widget.document.name,
-                statusStr: DocumentStatuses.getStatus(
-                  isSignByPatient:
-                      state.selectedDocumentMetaData?.isSignByPatient ?? false,
-                  isSignByClinic: widget.document.isSignByClinic,
-                ).statusName,
-                updatedAt: getLastDate(
-                  dateOne: widget.document.updatedAt,
-                  dateTwo: widget.document.signedByEmployeeAt,
-                  dateThree: widget.document.signedByPatientAt,
+                    isSignByClinic: widget.document.isSignByClinic,
+                  ).statusName,
+                  updatedAt: getLastDate(
+                    dateOne: widget.document.updatedAt,
+                    dateTwo: widget.document.signedByEmployeeAt,
+                    dateThree: widget.document.signedByPatientAt,
+                  ),
+                  userName: state.selectedDocumentMetaData != null
+                      ? '${state.selectedDocumentMetaData!.patient.firstname} ${state.selectedDocumentMetaData!.patient.lastname[0]}.'
+                      : '',
                 ),
-                userName: state.selectedDocumentMetaData != null
-                    ? '${state.selectedDocumentMetaData!.patient.firstname} ${state.selectedDocumentMetaData!.patient.lastname[0]}.'
-                    : '',
-              ),
-              const SizedBox(height: 32),
-              PatientWidget(
-                patient: state.selectedDocumentMetaData?.patient,
-                patientSignUrl: '',
-                isLoadingData: state.getDocumentMetaStatus ==
-                    GetDocumentMetaStatuses.loading,
-                isSignByPatient: state.selectedDocumentMetaData != null
-                    ? state.selectedDocumentMetaData!.isSignByPatient
-                    : false,
-              ),
-              const SizedBox(height: 32),
-              ClinicWidget(
-                clinic: state.selectedDocumentMetaData?.lpu,
-                documentCreator:
-                    state.selectedDocumentMetaData?.documentCreator,
-                isLoadingData: state.getDocumentMetaStatus ==
-                    GetDocumentMetaStatuses.loading,
-                isSignByClinic: state.selectedDocumentMetaData != null
-                    ? state.selectedDocumentMetaData!.isSignByClinic
-                    : false,
-                signClinic: state.selectedDocumentMetaData?.signClinic,
-                signEmployee: state.selectedDocumentMetaData?.signEmployee,
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Документ',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
-              PdfViewerWidget(
-                fileId: widget.document.id,
-                pdfUrl:
-                    '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${widget.document.id}/content',
-                fileName: widget.document.name,
-              )
-            ],
-          ));
+                const SizedBox(height: 32),
+                PatientWidget(
+                  patient: state.selectedDocumentMetaData?.patient,
+                  patientSignUrl: '',
+                  isLoadingData: state.getDocumentMetaStatus ==
+                      GetDocumentMetaStatuses.loading,
+                  isSignByPatient: state.selectedDocumentMetaData != null
+                      ? state.selectedDocumentMetaData!.isSignByPatient
+                      : false,
+                ),
+                const SizedBox(height: 32),
+                ClinicWidget(
+                  clinic: state.selectedDocumentMetaData?.lpu,
+                  documentCreator:
+                      state.selectedDocumentMetaData?.documentCreator,
+                  isLoadingData: state.getDocumentMetaStatus ==
+                      GetDocumentMetaStatuses.loading,
+                  isSignByClinic: state.selectedDocumentMetaData != null
+                      ? state.selectedDocumentMetaData!.isSignByClinic
+                      : false,
+                  signClinic: state.selectedDocumentMetaData?.signClinic,
+                  signEmployee: state.selectedDocumentMetaData?.signEmployee,
+                ),
+                const SizedBox(height: 32),
+                Text(
+                  'Документ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+                PdfViewerWidget(
+                  fileId: widget.document.id,
+                  pdfUrl:
+                      '${ApiConstants.baseUrl}/api/v1.0/profile/documents/${widget.document.id}/content',
+                  fileName: widget.document.name,
+                )
+              ],
+            )),
+      );
     });
   }
 }
