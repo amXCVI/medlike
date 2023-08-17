@@ -84,7 +84,7 @@ class TextPopup {
 
   /// Returns calculated widget offset using [context]
   Offset _calculateOffset(BuildContext context, Offset offset) {
-    double dx = _showRect.left +_showRect.width / 2.0 - _popupWidth / 2.0;
+    double dx = _showRect.left + _showRect.width / 2.0 - _popupWidth / 2.0;
     if (dx < 10.0) {
       dx = 10.0;
     }
@@ -97,7 +97,7 @@ class TextPopup {
     dx -= offset.dx;
 
     double dy = _showRect.top - _popupHeight;
-    /* 
+    /*
     if (dy <= MediaQuery.of(context).padding.top + 10) {
       // not enough space above, show popup under the widget.
       dy = arrowHeight + _showRect.height + _showRect.top;
@@ -149,13 +149,18 @@ class TextPopup {
                     width: _popupWidth,
                     height: _popupHeight,
                     decoration: BoxDecoration(
-                        color: _backgroundColor,
-                        borderRadius: _borderRadius,
-                      ),
+                      color: _backgroundColor,
+                      borderRadius: _borderRadius,
+                    ),
                     child: SingleChildScrollView(
-                      child: Text(
-                        _text,
-                        style: _textStyle,
+                      // TODO: Нужен ли на scrollView?
+                      child: FittedBox(
+                        // Используем, чтобы на маленьких экранах отображался весь текст
+                        // TODO: В иделае подсчитывать размер в зависимости от размера текста
+                        child: Text(
+                          _text,
+                          style: _textStyle,
+                        ),
                       ),
                     )),
               )

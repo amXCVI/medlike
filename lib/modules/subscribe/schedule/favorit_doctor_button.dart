@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/category_types.dart';
+import 'package:medlike/constants/tour_tooltip.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
+import 'package:medlike/modules/tour/tour_widget.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class FavoriteDoctorButton extends StatefulWidget {
@@ -42,27 +44,23 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
       _lottieAnimationController.forward();
     }
 
-    Future.delayed(const Duration(
-      milliseconds: 100
-    ), () {
+    // Задерживаем появление подсказки, пока не завершится анимация появления страницы
+    // Иначе может появиться не в том месте, где нужно
+    Future.delayed(
+        _lottieAnimationController.duration ??
+            const Duration(milliseconds: 100), () {
       final state = context.read<TourCubit>().state;
       final tooltip = TourTooltip.of(context).create(
-          'Добавьте врача в избранные',
+          TourTooltips.addDocToFavorite,
           width: 221,
-          height: 44,
-          onDismiss: () {
-            context.read<TourCubit>().checkFavorite();
-          }
-        );
+          height: 44, onDismiss: () {
+        context.read<TourCubit>().checkFavorite();
+      });
 
-        if(state.tourStatuses == TourStatuses.first
-          && state.isFavoriteShown != true
-        ) {
-          tooltip.show(
-            widgetKey: _key,
-            offset: const Offset(0, 16)
-          );
-        }
+      if (state.tourStatuses == TourStatuses.first &&
+          state.isFavoriteShown != true) {
+        tooltip.show(widgetKey: _key, offset: const Offset(0, 16));
+      }
     });
   }
 
@@ -102,8 +100,10 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
             alignment: Alignment.center,
             repeat: false,
           ),
-          tooltip: widget.isFavorite ? 'Удалить из избранных' : 'Добавить в избранные',
-        );   
+          tooltip: widget.isFavorite
+              ? 'Удалить из избранных'
+              : 'Добавить в избранные',
+        );
       },
     );
   }
