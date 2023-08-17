@@ -14,12 +14,14 @@ class ClinicWidget extends StatelessWidget {
     required this.isSignByClinic,
     this.signClinic,
     this.signEmployee,
+    required this.isSignByEmployee,
   }) : super(key: key);
 
   final DocumentMetaLpuModel? clinic;
   final DocumentMetaDocumentCreatorModel? documentCreator;
   final bool isLoadingData;
   final bool isSignByClinic;
+  final bool isSignByEmployee;
   final DocumentMetaSignClinicModel? signClinic;
   final DocumentMetaSignEmployerModel? signEmployee;
 
@@ -99,7 +101,9 @@ class ClinicWidget extends StatelessWidget {
                 ],
               )
             : const SizedBox(),
-        !isLoadingData && isSignByClinic && signClinic != null
+        !isLoadingData &&
+                (isSignByClinic && signClinic != null ||
+                    isSignByEmployee && signEmployee != null)
             ? Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Container(
@@ -124,47 +128,96 @@ class ClinicWidget extends StatelessWidget {
                             ),
                       ),
                       const SizedBox(height: 8),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: AppColors.signedBlueColor,
-                        padding: const EdgeInsets.all(2),
-                        child: const Center(
-                          child: Text(
-                            'СВЕДЕНИЯ О СЕРТИФИКАТЕ',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SignClinicDataStr(
-                                value: 'С/Н: ${signClinic!.certNumber}',
-                              ),
-                              SignClinicDataStr(
-                                value: 'Владелец: ${signClinic!.owner}',
-                              ),
-                              SignClinicDataStr(
-                                value:
-                                    'Срок действия с ${DateFormat('dd.MM.yy').format(signClinic!.validFrom)} по ${DateFormat('dd.MM.yy').format(signClinic!.validTo)}',
-                              ),
-                              signEmployee != null
-                                  ? SignClinicDataStr(
+                      isSignByClinic
+                          ? Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          60,
+                                      color: AppColors.signedBlueColor,
+                                      padding: const EdgeInsets.all(2),
+                                      child: const Center(
+                                        child: Text(
+                                          'СВЕДЕНИЯ О СЕРТИФИКАТЕ КЛИНИКИ',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    SignClinicDataStr(
+                                      value: 'С/Н: ${signClinic!.certNumber}',
+                                    ),
+                                    SignClinicDataStr(
+                                      value: 'Владелец: ${signClinic!.owner}',
+                                    ),
+                                    SignClinicDataStr(
                                       value:
-                                          'МО: ${signEmployee?.organization}',
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ],
-                      ),
+                                          'Срок действия с ${DateFormat('dd.MM.yy').format(signClinic!.validFrom)} по ${DateFormat('dd.MM.yy').format(signClinic!.validTo)}',
+                                    ),
+                                    signEmployee != null
+                                        ? SignClinicDataStr(
+                                            value:
+                                                'МО: ${signClinic?.organization}',
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      isSignByEmployee
+                          ? Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width -
+                                          60,
+                                      color: AppColors.signedBlueColor,
+                                      padding: const EdgeInsets.all(2),
+                                      child: const Center(
+                                        child: Text(
+                                          'СВЕДЕНИЯ О СЕРТИФИКАТЕ СОТРУДНИКА',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    SignClinicDataStr(
+                                      value: 'С/Н: ${signEmployee!.certNumber}',
+                                    ),
+                                    SignClinicDataStr(
+                                      value:
+                                          'ФИО: ${signEmployee!.lastname} ${signEmployee!.firstname} ${signEmployee!.middlename}',
+                                    ),
+                                    SignClinicDataStr(
+                                      value:
+                                          'Срок действия с ${DateFormat('dd.MM.yy').format(signEmployee!.validFrom)} по ${DateFormat('dd.MM.yy').format(signEmployee!.validTo)}',
+                                    ),
+                                    signEmployee != null
+                                        ? SignClinicDataStr(
+                                            value:
+                                                'МО: ${signEmployee?.organization}',
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),

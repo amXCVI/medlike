@@ -41,6 +41,7 @@ class DocumentMetaModel with _$DocumentMetaModel {
     required DateTime? signedByEmployeeAt,
     required bool isSignByClinic,
     required DateTime? signedByClinicAt,
+    required int? signType,
   }) = _DocumentMetaModel;
 
   factory DocumentMetaModel.fromJson(Map<String, Object?> json) =>
@@ -112,6 +113,7 @@ class DocumentMetaSignClinicModel with _$DocumentMetaSignClinicModel {
     required DateTime validFrom,
     required DateTime validTo,
     required String certNumber,
+    required String organization,
   }) = _DocumentMetaSignClinicModel;
 
   factory DocumentMetaSignClinicModel.fromJson(Map<String, Object?> json) =>

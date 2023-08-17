@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/document_statuses.dart';
+import 'package:medlike/constants/sign_types.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -133,7 +134,11 @@ class _DocumentPageState extends State<DocumentPage> {
                   patientSignUrl: '',
                   isLoadingData: state.getDocumentMetaStatus ==
                       GetDocumentMetaStatuses.loading,
-                  isSignByPatient: state.selectedDocumentMetaData != null
+                  isSignByPatient: state.selectedDocumentMetaData != null &&
+                          SignTypes.getSignTypeById(
+                                      state.selectedDocumentMetaData?.signType)
+                                  .signTypeId ==
+                              4
                       ? state.selectedDocumentMetaData!.isSignByPatient
                       : false,
                 ),
@@ -146,6 +151,9 @@ class _DocumentPageState extends State<DocumentPage> {
                       GetDocumentMetaStatuses.loading,
                   isSignByClinic: state.selectedDocumentMetaData != null
                       ? state.selectedDocumentMetaData!.isSignByClinic
+                      : false,
+                  isSignByEmployee: state.selectedDocumentMetaData != null
+                      ? state.selectedDocumentMetaData!.isSignByEmployee
                       : false,
                   signClinic: state.selectedDocumentMetaData?.signClinic,
                   signEmployee: state.selectedDocumentMetaData?.signEmployee,

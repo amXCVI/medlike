@@ -79,6 +79,7 @@ _$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
       signedByClinicAt: json['signedByClinicAt'] == null
           ? null
           : DateTime.parse(json['signedByClinicAt'] as String),
+      signType: json['signType'] as int?,
     );
 
 Map<String, dynamic> _$$_DocumentMetaModelToJson(
@@ -98,6 +99,7 @@ Map<String, dynamic> _$$_DocumentMetaModelToJson(
       'signedByEmployeeAt': instance.signedByEmployeeAt?.toIso8601String(),
       'isSignByClinic': instance.isSignByClinic,
       'signedByClinicAt': instance.signedByClinicAt?.toIso8601String(),
+      'signType': instance.signType,
     };
 
 _$_DocumentMetaLpuModel _$$_DocumentMetaLpuModelFromJson(
@@ -189,6 +191,7 @@ _$_DocumentMetaSignClinicModel _$$_DocumentMetaSignClinicModelFromJson(
       validFrom: DateTime.parse(json['validFrom'] as String),
       validTo: DateTime.parse(json['validTo'] as String),
       certNumber: json['certNumber'] as String,
+      organization: json['organization'] as String,
     );
 
 Map<String, dynamic> _$$_DocumentMetaSignClinicModelToJson(
@@ -198,6 +201,7 @@ Map<String, dynamic> _$$_DocumentMetaSignClinicModelToJson(
       'validFrom': instance.validFrom.toIso8601String(),
       'validTo': instance.validTo.toIso8601String(),
       'certNumber': instance.certNumber,
+      'organization': instance.organization,
     };
 
 _$_DocumentPatientModel _$$_DocumentPatientModelFromJson(
