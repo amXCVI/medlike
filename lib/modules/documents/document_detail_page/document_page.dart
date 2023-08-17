@@ -176,7 +176,7 @@ class ActionButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (subscribeDocumentStatuses == SubscribeDocumentStatuses.failed) {
-      return const Text('Ошибочка');
+      return const Text('Подписать');
     } else if (subscribeDocumentStatuses == SubscribeDocumentStatuses.loading) {
       return const CircularLoader();
     } else if (subscribeDocumentStatuses == SubscribeDocumentStatuses.success &&
