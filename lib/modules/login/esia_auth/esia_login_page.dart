@@ -85,9 +85,15 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
     // Получаю токен со страницы webView
     // Не уверен, что решение адекватное. Скорее наоборот
     // Бэкендеры утверждают, что класть токен в url - плохой тон, поэтому так
-    void getAuthEsiaTokenFromHTMLPage() async {
-      String? esiaToken = await _webViewController.runJavascriptReturningResult(
-          'document.getElementById("esia").value');
+    // PS. Нашел самостоятельно токен в url. Взял его. Не знаю, сработает или нет
+    void getAuthEsiaTokenFromHTMLPage(String url) async {
+      String? esiaToken = '';
+      if (url.contains('?code=')) {
+        esiaToken = url.substring(url.lastIndexOf('?code='));
+      } else {
+        esiaToken = await _webViewController.runJavascriptReturningResult(
+            'document.getElementById("esia").value');
+      }
       if (kDebugMode) {
         print('esiaToken: $esiaToken');
       }
@@ -134,7 +140,7 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
                 isHideWebView = true;
               });
               Future.delayed(const Duration(seconds: 1), () {
-                getAuthEsiaTokenFromHTMLPage();
+                getAuthEsiaTokenFromHTMLPage(navReq.url);
               });
             } else {
               setState(() {
