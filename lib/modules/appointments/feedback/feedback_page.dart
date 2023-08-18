@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +50,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   void initState() {
-    void setDataToState() {
+    super.initState();
+  }
+
+  void setDataToState() {
+    setState(() {
       _controllerCaption = widget.controllerCaption.isNotEmpty
           ? widget.controllerCaption
           : captionsList[0];
@@ -64,11 +67,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
       controllerMessage = widget.controllerMessage ?? '';
       controllerEmail = widget.controllerEmail ?? '';
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
-
-    super.initState();
+    });
   }
 
   void setRating(int value) {
@@ -151,6 +150,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
     return DefaultScaffold(
       appBarTitle: 'Отзыв',
       actionButton: FloatingActionButton.extended(

@@ -11,6 +11,7 @@ import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/clinic_address_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
 
 class AppointmentItem extends StatelessWidget {
@@ -106,17 +107,9 @@ class AppointmentItem extends StatelessWidget {
                                   ?.copyWith(color: AppColors.lightText)),
                         ],
                       ),
-                      appointmentItem.doctorInfo.rateAsSotr != null
-                          ? Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/appointments/raiting_gold_star.svg'),
-                                const SizedBox(width: 6),
-                                Text(appointmentItem.doctorInfo.rateAsSotr
-                                    .toString())
-                              ],
-                            )
-                          : const SizedBox(),
+                      DoctorRating(
+                        rating: appointmentItem.doctorInfo.rateAsSotr,
+                      )
                     ],
                   ),
                 )
