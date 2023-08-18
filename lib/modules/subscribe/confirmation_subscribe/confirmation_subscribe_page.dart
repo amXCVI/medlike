@@ -69,6 +69,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
 
         return WillPopScope(
           onWillPop: () async {
+            context.read<SubscribeCubit>().syncUnlockCell();
             context.read<SubscribeCubit>().unlockCell(userId: widget.userId);
             if (state.isAnyDoctor == true) {
               context.read<SubscribeCubit>().clearSelectedDoctor();

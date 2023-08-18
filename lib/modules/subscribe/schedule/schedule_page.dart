@@ -251,8 +251,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                 && state.selectedDoctor != AvailableDoctor.emptyDoctor
                             ),
                           )
-                        : state.getTimetableCellsStatus ==
-                                    GetTimetableCellsStatuses.loading &&
+                        : (state.getTimetableCellsStatus == GetTimetableCellsStatuses.loading ||
+                              state.getTimetableCellsStatus == GetTimetableCellsStatuses.refunded) &&
                                 state.selectedCalendarItem != null &&
                                 clinicsList != null &&
                                 state.selectedCalendarItem!.hasAvailableCells

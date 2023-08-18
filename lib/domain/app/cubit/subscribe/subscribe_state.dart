@@ -164,8 +164,8 @@ class SubscribeState {
     this.registerOrderStatus,
     this.paymentUrl,
     this.createdAppointmentId,
-  })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
-        startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
+  })  : endDate = endDate ?? date_utils.DateUtils.lastDayOfMonth(DateTime.now()),
+        startDate = startDate ?? date_utils.DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
 
   SubscribeState copyWith({
@@ -202,7 +202,7 @@ class SubscribeState {
     GetTimetableCellsStatuses? getTimetableCellsStatus,
     List<TimetableCellModel>? timetableCellsList,
     List<TimetableLogModel>? timetableLogsList,
-    TimetableCellModel? selectedTimetableCell,
+    ValueGetter<TimetableCellModel?>? selectedTimetableCell,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -217,7 +217,7 @@ class SubscribeState {
     String? selectedPayType,
     RegisterOrderStatuses? registerOrderStatus,
     String? paymentUrl,
-    String? createdAppointmentId,
+    ValueGetter<String?>? createdAppointmentId,
   }) {
     return SubscribeState(
       selectedUser: selectedUser ?? this.selectedUser,
@@ -269,7 +269,7 @@ class SubscribeState {
       timetableCellsList: timetableCellsList ?? this.timetableCellsList,
       timetableLogsList: timetableLogsList ?? this.timetableLogsList,
       selectedTimetableCell:
-          selectedTimetableCell ?? this.selectedTimetableCell,
+          selectedTimetableCell != null ? selectedTimetableCell() : this.selectedTimetableCell,
       getAppointmentInfoStatus:
           getAppointmentInfoStatus ?? this.getAppointmentInfoStatus,
       appointmentInfoData: appointmentInfoData ?? this.appointmentInfoData,
@@ -287,7 +287,8 @@ class SubscribeState {
       selectedPayType: selectedPayType ?? this.selectedPayType,
       registerOrderStatus: registerOrderStatus ?? this.registerOrderStatus,
       paymentUrl: paymentUrl ?? this.paymentUrl,
-      createdAppointmentId: createdAppointmentId ?? this.createdAppointmentId,
+      createdAppointmentId: 
+          createdAppointmentId != null ? createdAppointmentId() : this.createdAppointmentId,
     );
   }
 
