@@ -405,6 +405,7 @@ class AppointmentsCubit
                         caption: caption,
                         message: message,
                         visibility: int.parse(reviewVisibility),
+                        email: email,
                       ))
                   : e)
               .toList();
@@ -422,6 +423,7 @@ class AppointmentsCubit
               caption: caption,
               message: message,
               visibility: int.parse(reviewVisibility),
+              email: email,
             ),
           )));
 
@@ -444,11 +446,15 @@ class AppointmentsCubit
   }
 
   void setRatingToSelectedAppointment(num rate) {
-    if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
-      emit(state.copyWith(
-        selectedAppointment:
-            state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
-      ));
+    try {
+      if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
+        emit(state.copyWith(
+          selectedAppointment:
+              state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
+        ));
+      }
+    } catch (err) {
+      print(err);
     }
   }
 }

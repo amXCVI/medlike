@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/modules/appointments/feedback/rating_starts.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/themes/colors.dart';
@@ -172,6 +173,22 @@ class FeedbackForm extends StatelessWidget {
               itemsList: visibilityList,
               onChanged: setVisible,
             ),
+            const SizedBox(height: 16),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SvgPicture.asset('assets/icons/appointments/info.svg'),
+                const SizedBox(width: 8.0),
+                const Flexible(
+                  child: Text(
+                    'Ваши контактные данные будут доступны только администратору для возможной обратной связи, и не будут выводиться публично.',
+                    overflow: TextOverflow.fade,
+                    softWrap: true,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),

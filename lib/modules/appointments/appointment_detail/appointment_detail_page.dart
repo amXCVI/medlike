@@ -6,18 +6,18 @@ import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
-import 'package:medlike/modules/appointments/appointment_item_recomendations.dart';
+import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/timestamp_converter.dart';
 import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
-import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
-import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 import 'package:skeletons/skeletons.dart';
 
 import 'appointment_detail_action_button.dart';
+import 'doctor_appointment_detail_info.dart';
 
 @RoutePage()
 class AppointmentDetailPage extends StatelessWidget {
@@ -27,6 +27,18 @@ class AppointmentDetailPage extends StatelessWidget {
   }) : super(key: key);
 
   final AppointmentModelWithTimeZoneOffset appointmentItem;
+
+  void handleChangeReview(BuildContext context) {
+    context.router.push(FeedbackRoute(
+      appointmentId: appointmentItem.id,
+      rating: appointmentItem.review!.rate.toInt(),
+      controllerCaption: appointmentItem.review!.caption,
+      controllerVisible:
+          getLabelVisibilityByValue(appointmentItem.review!.visibility),
+      controllerMessage: appointmentItem.review!.message,
+      controllerEmail: appointmentItem.review!.email ?? '',
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,44 +159,9 @@ class AppointmentDetailPage extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  child: BlocBuilder<AppointmentsCubit, AppointmentsState>(
-                      builder: (context, state) {
-                    if (state.getAppointmentStatus ==
-                        GetAppointmentStatuses.success) {
-                      return DoctorInfoCard(
-                        doctorInfo: appointmentItem.doctorInfo,
-                        review: state.selectedAppointment?.review,
-                      );
-                    } else {
-                      return const SizedBox(height: 60);
-                    }
-                  })),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 0, right: 16, bottom: 24, left: 26),
-                child: AppointmentItemRecommendations(
-                  recommendations: appointmentItem.recommendations ?? '',
-                  serviceName: serviceName,
-                  maxLines: 3,
-                  onTap: () => {
-                    showModalBottomSheet(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(12),
-                            topLeft: Radius.circular(12),
-                          ),
-                        ),
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) => RecommendationBottomSheet(
-                            serviceName: serviceName,
-                            recommendationsText:
-                                appointmentItem.recommendations ?? ''))
-                  },
-                ),
+              DoctorAppointmentDetailInfo(
+                appointmentItem: appointmentItem,
+                serviceName: serviceName,
               ),
               BlocBuilder<AppointmentsCubit, AppointmentsState>(
                   builder: (context, state) {
@@ -193,13 +170,20 @@ class AppointmentDetailPage extends StatelessWidget {
                   return Column(
                     children: [
                       if (state.selectedAppointment!.status == 4)
-                        ApplyAndCancellAppointment(
-                          appointmentId: appointmentItem.id,
-                          userId: appointmentItem.patientInfo.id as String,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16),
+                          child: ApplyAndCancellAppointment(
+                            appointmentId: appointmentItem.id,
+                            userId: appointmentItem.patientInfo.id as String,
+                          ),
                         ),
                       if (state.selectedAppointment!.review != null)
-                        ReviewWidget(
-                            review: state.selectedAppointment!.review!),
+                        GestureDetector(
+                          onTap: () => handleChangeReview(context),
+                          child: ReviewWidget(
+                              review: state.selectedAppointment!.review!),
+                        ),
                     ],
                   );
                 } else {

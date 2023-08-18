@@ -58,6 +58,11 @@ abstract class _$AppRouter extends RootStackRouter {
         child: FeedbackPage(
           key: args.key,
           appointmentId: args.appointmentId,
+          rating: args.rating,
+          controllerCaption: args.controllerCaption,
+          controllerVisible: args.controllerVisible,
+          controllerMessage: args.controllerMessage,
+          controllerEmail: args.controllerEmail,
         ),
       );
     },
@@ -606,12 +611,22 @@ class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
   FeedbackRoute({
     Key? key,
     required String appointmentId,
+    required int rating,
+    required String controllerCaption,
+    required String controllerVisible,
+    required String controllerMessage,
+    required String controllerEmail,
     List<PageRouteInfo>? children,
   }) : super(
           FeedbackRoute.name,
           args: FeedbackRouteArgs(
             key: key,
             appointmentId: appointmentId,
+            rating: rating,
+            controllerCaption: controllerCaption,
+            controllerVisible: controllerVisible,
+            controllerMessage: controllerMessage,
+            controllerEmail: controllerEmail,
           ),
           initialChildren: children,
         );
@@ -626,15 +641,30 @@ class FeedbackRouteArgs {
   const FeedbackRouteArgs({
     this.key,
     required this.appointmentId,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
   });
 
   final Key? key;
 
   final String appointmentId;
 
+  final int rating;
+
+  final String controllerCaption;
+
+  final String controllerVisible;
+
+  final String controllerMessage;
+
+  final String controllerEmail;
+
   @override
   String toString() {
-    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId}';
+    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId, rating: $rating, controllerCaption: $controllerCaption, controllerVisible: $controllerVisible, controllerMessage: $controllerMessage, controllerEmail: $controllerEmail}';
   }
 }
 

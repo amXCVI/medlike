@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +11,23 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 @RoutePage()
 class FeedbackPage extends StatefulWidget {
-  const FeedbackPage({Key? key, required this.appointmentId}) : super(key: key);
+  const FeedbackPage({
+    Key? key,
+    required this.appointmentId,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
+  }) : super(key: key);
 
   final String appointmentId;
+
+  final int rating;
+  final String controllerCaption;
+  final String controllerVisible;
+  final String controllerMessage;
+  final String controllerEmail;
 
   @override
   State<FeedbackPage> createState() => _FeedbackPageState();
@@ -25,15 +38,37 @@ class _FeedbackPageState extends State<FeedbackPage> {
   late int rating = 0;
   final _formKey = GlobalKey<FormState>();
 
-  String _controllerCaption = captionsList[0];
-  String _controllerVisible = visibilityList[0];
-  String controllerMessage = '';
-  String controllerEmail = '';
+  late String _controllerCaption = captionsList[0];
+  late String _controllerVisible = visibilityList[0];
+  late String controllerMessage = '';
+  late String controllerEmail = '';
   late final TextEditingController _controllerMessage =
       TextEditingController(text: '');
   late final TextEditingController _controllerEmail =
       TextEditingController(text: '');
   late String reviewVisibility = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void setDataToState() {
+    setState(() {
+      _controllerCaption = widget.controllerCaption.isNotEmpty
+          ? widget.controllerCaption
+          : captionsList[0];
+      _controllerVisible = widget.controllerVisible.isNotEmpty
+          ? widget.controllerVisible
+          : visibilityList[0];
+      _controllerMessage.text = widget.controllerMessage ?? '';
+      _controllerEmail.text = widget.controllerEmail ?? '';
+      rating = widget.rating ?? 0;
+
+      controllerMessage = widget.controllerMessage ?? '';
+      controllerEmail = widget.controllerEmail ?? '';
+    });
+  }
 
   void setRating(int value) {
     setState(() {
@@ -106,11 +141,16 @@ class _FeedbackPageState extends State<FeedbackPage> {
         .then((value) {
       context.read<AppointmentsCubit>().setRatingToSelectedAppointment(rating);
       context.router.pop();
-    }).catchError((onError) => print(onError));
+    }).catchError((onError) {
+      print(onError);
+      context.read<AppointmentsCubit>().setRatingToSelectedAppointment(rating);
+      context.router.pop();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
     return DefaultScaffold(
       appBarTitle: 'Отзыв',
       actionButton: FloatingActionButton.extended(

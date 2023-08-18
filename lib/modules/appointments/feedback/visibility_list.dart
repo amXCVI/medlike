@@ -13,3 +13,14 @@ String getValueVisibilityByLabel(String label) {
       return '0';
   }
 }
+
+String getLabelVisibilityByValue(int value) {
+  switch (value) {
+    case 1:
+      return 'Виден всем';
+    case 0:
+      return 'Виден только администратору';
+    default:
+      return 'Виден всем';
+  }
+}
