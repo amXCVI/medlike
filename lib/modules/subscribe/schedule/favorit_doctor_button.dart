@@ -5,7 +5,6 @@ import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/constants/tour_tooltip.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
-import 'package:medlike/modules/tour/tour_widget.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class FavoriteDoctorButton extends StatefulWidget {
