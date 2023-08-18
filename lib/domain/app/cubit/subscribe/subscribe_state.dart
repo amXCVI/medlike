@@ -186,7 +186,7 @@ class SubscribeState {
     List<NavigationItem>? filteredSpecialisationsList,
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
-    AvailableDoctor? selectedDoctor,
+    ValueGetter<AvailableDoctor?>? selectedDoctor,
     bool? isAnyDoctor,
     List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
@@ -246,7 +246,7 @@ class SubscribeState {
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       isAnyDoctor: isAnyDoctor ?? this.isAnyDoctor, 
-      selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+      selectedDoctor: selectedDoctor != null ? selectedDoctor() : this.selectedDoctor,
       filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
       getCabinetsListStatus:
           getCabinetsListStatus ?? this.getCabinetsListStatus,

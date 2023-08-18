@@ -242,7 +242,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     final availableDoctor = selectedDoctor.availableDoctor;
     emit(state.copyWith(
       isAnyDoctor: false,
-      selectedDoctor: availableDoctor
+      selectedDoctor: () => availableDoctor
     ));
   }
 
@@ -250,7 +250,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void setAvailableDoctor(AvailableDoctor availableDoctor) {
     emit(state.copyWith(
       isAnyDoctor: true,
-      selectedDoctor: availableDoctor
+      selectedDoctor: () => availableDoctor
     ));
   }
 
@@ -628,7 +628,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         'PatientInfo': {'Id': userId, 'Name': userName},
         'DoctorInfo':
             state.selectedDoctor != null
-            && state.selectedDoctor != AvailableDoctor.emptyDoctor 
             && state.selectedDoctor!.id.isNotEmpty
                 ? {
                     'Id': state.selectedDoctor?.id,
@@ -779,7 +778,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       emit(state.copyWith(
         getAvailableDoctorStatus: GetAvailableDoctorStatuses.success,
         isAnyDoctor: true,
-        selectedDoctor: response,
+        selectedDoctor: () => response,
       ));
     } catch (e) {
       addError(e);
@@ -791,7 +790,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void clearSelectedDoctor() async {
     emit(state.copyWith(
       isAnyDoctor: false,
-      selectedDoctor: AvailableDoctor.emptyDoctor
+      selectedDoctor: () => null
     ));
   }
 
@@ -817,7 +816,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       emit(
         state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.success,
-          selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: true),
+          selectedDoctor: () => state.selectedDoctor?.copyWith(isFavorite: true),
           filteredDoctorsList: state.filteredDoctorsList
               ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: true))
               .toList(),
@@ -850,7 +849,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       emit(state.copyWith(
         deleteDoctorFromFavoritesStatus:
             DeleteDoctorFromFavoritesStatuses.success,
-        selectedDoctor: state.selectedDoctor?.copyWith(isFavorite: false),
+        selectedDoctor: () => state.selectedDoctor?.copyWith(isFavorite: false),
         filteredDoctorsList: state.filteredDoctorsList
             ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: false))
             .toList(),

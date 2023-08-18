@@ -71,18 +71,6 @@ class AvailableDoctor with _$AvailableDoctor {
 
   const AvailableDoctor._();
 
-  static AvailableDoctor get emptyDoctor  {
-    return const AvailableDoctor(
-      id: '', 
-      lastName: '', 
-      firstName: '',
-      middleName: '', 
-      specializationId: '', 
-      specialization: '',
-      isFavorite: false
-    );
-  }
-
   factory AvailableDoctor.fromJson(Map<String, Object?> json) =>
       _$AvailableDoctorFromJson(json);
 }
@@ -104,21 +92,6 @@ class Doctor with _$Doctor {
   }) = _Doctor;
 
   const Doctor._();
-
-  static Doctor get emptyDoctor  {
-    return const Doctor(
-      id: '', 
-      lastName: '', 
-      firstName: '',
-      middleName: '', 
-      specializationId: '', 
-      specialization: '', 
-      price: 0, 
-      categoryType: 0, 
-      isFavorite: false, 
-      categories: []
-    );
-  }
 
   AvailableDoctor get availableDoctor {
     return AvailableDoctor(
