@@ -86,6 +86,7 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
               ? DefaultClipRRect(child:
                   BlocBuilder<UserCubit, UserState>(builder: (context, state) {
                   return CachedNetworkImage(
+                    height: 249,
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                     imageUrl: widget.backgroundImageUrl as String,

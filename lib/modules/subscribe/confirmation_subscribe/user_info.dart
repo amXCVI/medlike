@@ -34,7 +34,7 @@ class UserInfo extends StatelessWidget {
                       children: [
                         SvgPicture.asset('assets/icons/appointments/clock.svg'),
                         const SizedBox(width: 8.0),
-                        Text(DateFormat("dd.MM.yyyy").format(
+                        Text(DateFormat("HH:mm dd.MM.yyyy").format(
                             subscribeState.selectedTimetableCell!.time)),
                       ],
                     ),

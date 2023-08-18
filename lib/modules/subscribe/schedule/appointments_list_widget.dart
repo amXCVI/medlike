@@ -9,6 +9,7 @@ import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dar
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class AppointmentsListWidget extends StatelessWidget {
   const AppointmentsListWidget(
@@ -149,16 +150,16 @@ class AppointmentsList extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 8.0),
                                 Text(
-                                  '${appointmentItem.doctorInfo.lastName} ' +
-                                      '${appointmentItem.doctorInfo.firstName}'[
-                                          0] +
-                                      '. ${appointmentItem.doctorInfo.middleName![0]}' +
-                                      '.',
+                                  '${appointmentItem.doctorInfo.lastName} ${'${appointmentItem.doctorInfo.firstName}'[0]}. ${appointmentItem.doctorInfo.middleName![0]}.',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(color: AppColors.lightText),
                                   overflow: TextOverflow.ellipsis,
+                                ),
+                                const Spacer(),
+                                DoctorRating(
+                                  rating: appointmentItem.doctorInfo.rateAsUser,
                                 ),
                               ],
                             )
