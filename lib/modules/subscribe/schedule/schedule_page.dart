@@ -187,9 +187,10 @@ class _SchedulePageState extends State<SchedulePage> {
                         // Тогда рисуем переключатель
                         widget.doctorId != null &&
                                 state.selectedDoctorFullData != null &&
-                                state.selectedDoctorFullData!.shortinfo !=
-                                    null &&
-                                state.selectedDoctorFullData!.reviews.isNotEmpty
+                                (state.selectedDoctorFullData!.shortinfo !=
+                                        null ||
+                                    state.selectedDoctorFullData!.reviews
+                                        .isNotEmpty)
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 24, horizontal: 18),
