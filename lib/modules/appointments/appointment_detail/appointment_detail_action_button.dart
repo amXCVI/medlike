@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/navigation/router.dart';
 
 class AppointmentDetailActionButton extends StatelessWidget {
@@ -28,8 +27,7 @@ class AppointmentDetailActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (AppointmentStatuses.checkIsPastAppointment(appointmentStatus) &&
-        !isRated) {
+    if (appointmentStatus == 1 && !isRated) {
       return FloatingActionButton.extended(
         onPressed: () => handleChangeRatig(context),
         label: Text(

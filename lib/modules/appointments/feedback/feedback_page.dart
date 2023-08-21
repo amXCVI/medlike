@@ -50,6 +50,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
     super.initState();
   }
 
@@ -63,7 +64,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           : visibilityList[0];
       _controllerMessage.text = widget.controllerMessage ?? '';
       _controllerEmail.text = widget.controllerEmail ?? '';
-      rating = widget.rating ?? 0;
+      rating = widget.rating != null && widget.rating != 0 ? widget.rating : 0;
 
       controllerMessage = widget.controllerMessage ?? '';
       controllerEmail = widget.controllerEmail ?? '';
@@ -150,7 +151,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
+    // WidgetsBinding.instance.addPostFrameCallback((_) => setDataToState());
     return DefaultScaffold(
       appBarTitle: 'Отзыв',
       actionButton: FloatingActionButton.extended(
