@@ -13,6 +13,12 @@ class TourCubit extends Cubit<TourState> {
     ));
   }
 
+  void checkFile(){
+    emit(state.copyWith(
+      isFileShown: true,
+    ));
+  }
+
   void checkAppointment() {
     emit(state.copyWith(
       isAppointmentShown: true,

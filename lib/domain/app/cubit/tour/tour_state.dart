@@ -10,27 +10,27 @@ class TourState {
   final bool? isSupportShown;
   final bool? isCabinetsInfoPlaceShow;
   final bool? isNotificationCloseShown;
+  final bool? isFileShown;
 
+  TourState(
+      {this.tourStatuses,
+      this.isNotificationShown,
+      this.isFavoriteShown,
+      this.isAppointmentShown,
+      this.isSupportShown,
+      this.isCabinetsInfoPlaceShow,
+      this.isNotificationCloseShown,
+      this.isFileShown});
 
-  TourState({
-    this.tourStatuses,
-    this.isNotificationShown,
-    this.isFavoriteShown,
-    this.isAppointmentShown,
-    this.isSupportShown,
-    this.isCabinetsInfoPlaceShow,
-    this.isNotificationCloseShown
-  });
-
-  TourState copyWith({
-    TourStatuses? tourStatuses,
-    bool? isNotificationShown,
-    bool? isFavoriteShown,
-    bool? isAppointmentShown,
-    bool? isSupportShown,
-    bool? isCabinetsInfoPlaceShow,
-    bool? isNotificationCloseShown
-  }) {
+  TourState copyWith(
+      {TourStatuses? tourStatuses,
+      bool? isNotificationShown,
+      bool? isFavoriteShown,
+      bool? isAppointmentShown,
+      bool? isSupportShown,
+      bool? isCabinetsInfoPlaceShow,
+      bool? isNotificationCloseShown,
+      bool? isFileShown}) {
     return TourState(
       tourStatuses: tourStatuses ?? this.tourStatuses,
       isNotificationShown: isNotificationShown ?? this.isNotificationShown,
@@ -40,7 +40,8 @@ class TourState {
       isCabinetsInfoPlaceShow:
           isCabinetsInfoPlaceShow ?? this.isCabinetsInfoPlaceShow,
       isNotificationCloseShown:
-        isNotificationCloseShown ?? this.isNotificationCloseShown
+          isNotificationCloseShown ?? this.isNotificationCloseShown,
+      isFileShown: isFileShown ?? this.isFileShown,
     );
   }
 }

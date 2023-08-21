@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/medcard_models/medcard_models.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/animation/animate_slidable.dart';
 import 'package:medlike/utils/helpers/file_icons_helper.dart';
 import 'package:medlike/utils/helpers/file_size_helpers.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
@@ -23,6 +26,9 @@ class FileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(!(context.read<TourCubit>().state.isFileShown ?? false)) {
+      animateDeleting(context, () => context.read<TourCubit>().checkFile());
+    }
     return SubscribeRowItem(
       title: fileItem.filename,
       subtitle:

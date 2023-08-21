@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/notications_types.dart';
+import 'package:medlike/constants/tour_tooltip.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/data/models/notification_models/notification_models.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
@@ -98,16 +99,14 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         ),
                         BlocBuilder<TourCubit, TourState>(
                           buildWhen: (_, state) {
-                            final tooltip = TourTooltip.of(context).create(
-                                'Отслеживайте события по всем своим закрепленным пользователям',
-                                onDismiss: () {
-                              context.read<TourCubit>().checkNotification();
-                            });
-
                             if (state.tourStatuses == TourStatuses.first &&
                                 state.isNotificationShown != true) {
-                              tooltip.show(
-                                  widgetKey: _key, offset: const Offset(24, 0));
+                              TourTooltip.of(context).create(
+                                  TourTooltips.resultEvent, _key,
+                                  offset: const Offset(24, 0),
+                                  onDismiss: () => context
+                                      .read<TourCubit>()
+                                      .checkNotification());
                             }
 
                             return true;

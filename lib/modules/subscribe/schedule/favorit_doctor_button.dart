@@ -49,17 +49,15 @@ class _FavoriteDoctorButtonState extends State<FavoriteDoctorButton>
         _lottieAnimationController.duration ??
             const Duration(milliseconds: 100), () {
       final state = context.read<TourCubit>().state;
-      final tooltip = TourTooltip.of(context).create(
-          TourTooltips.addDocToFavorite,
-          width: 221,
-          height: 44, onDismiss: () {
-        context.read<TourCubit>().checkFavorite();
-      });
 
       if (state.tourStatuses == TourStatuses.first &&
           state.isFavoriteShown != true) {
-        tooltip.show(widgetKey: _key, offset: const Offset(0, 16));
-      }
+      // TODO:  "If" removed for debug purposes => return later
+      TourTooltip.of(context).create(TourTooltips.addDocToFavorite, _key,
+          onDismiss: () => context.read<TourCubit>().checkFavorite(),
+          width: 221, height: 44,
+          offset: const Offset(0, 16));
+     }
     });
   }
 

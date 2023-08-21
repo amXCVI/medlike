@@ -1,8 +1,13 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:medlike/themes/colors.dart';
-import 'package:medlike/widgets/tour_tooltip/text_popup.dart';
+import './popup.dart';
 
 class TourTooltip {
+
+  /// Just a flag so we won't display more then 1 popup at the time
+  static bool _isOnScreen = false;
+
   BuildContext context;
 
   TourTooltip(this.context);
@@ -11,28 +16,42 @@ class TourTooltip {
     return TourTooltip(context);
   }
 
-  TextPopup create(String text, {
-    double? width,
-    double? height,
-    Function? onDismiss
-  }) {
-    return TextPopup(
-      context,
-      text: text,
-      textStyle: const TextStyle(
-        color: AppColors.mainAppBackground,
-        fontWeight: FontWeight.w300,
-        fontSize: 14,
-        height: 1.42
-      ),
-      height: height ?? 64,
-      width: width ?? 272,
-      backgroundColor: AppColors.mainText,
-      padding: const EdgeInsets.all(12.0),
-      borderRadius: BorderRadius.circular(8.0),
-      onDismiss: () {
-        onDismiss?.call();
-      }
-    );
+  /// Show popup on provided [widgetKey] Widget. Popup'll block
+  /// any interaction with ui till dismissed
+  ///
+  /// [height] - height of the popup
+  ///
+  /// [width] - width of the popup
+  ///
+  /// [onDismiss] - callback that'll be fired up after popup'll be closed
+  void create(String text, GlobalKey widgetKey,
+      {double? height,
+      double? width,
+      Function? onDismiss,
+      Offset? offset}) async {
+    // Не рисуем, если какой-то popup уже отрисован и если наш виджет всё ещё отрисован
+    if(_isOnScreen || widgetKey.currentContext == null) return;
+    // Проверяем - находится ли цель нашего popup'a наверху отрисовки(Стэка)
+    if(!ModalRoute.of(context)!.isCurrent) return;
+    _isOnScreen = true;
+    await showDialog(
+        barrierColor: Colors.transparent,
+        context: context,
+        builder: (context) => Popup(context,
+                offset: offset,
+                text: text,
+                widgetKey: widgetKey,
+                textStyle: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14,
+                    height: 1.42,
+                    color: Colors.white),
+                height: height ?? 64,
+                width: width ?? 272,
+                padding: const EdgeInsets.all(12.0),
+                borderRadius: BorderRadius.circular(8.0), onDismiss: () {
+              _isOnScreen = false;
+              onDismiss?.call();
+            }));
   }
 }

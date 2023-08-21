@@ -8,6 +8,7 @@ import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
+import 'package:medlike/utils/animation/animate_slidable.dart';
 
 class AppointmentsParagraph extends StatelessWidget {
   const AppointmentsParagraph({
@@ -143,19 +144,11 @@ class _SliderChildState extends State<SliderChild> {
         if (state!.tourStatuses == TourStatuses.first &&
             state.isAppointmentShown != true &&
             widget.index == 0) {
-          onShow(context);
+          animateDeleting(context, () => context.read<TourCubit>().checkAppointment());
         }
       } catch (err) {
         print(err);
       }
-    });
-  }
-
-  void onShow(BuildContext context) {
-    Slidable.of(context)!.openEndActionPane();
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      Slidable.of(context)!.close();
-      context.read<TourCubit>().checkAppointment();
     });
   }
 
