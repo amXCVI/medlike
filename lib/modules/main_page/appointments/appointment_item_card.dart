@@ -5,6 +5,7 @@ import 'package:medlike/data/models/models.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class AppointmentItemCard extends StatelessWidget {
   const AppointmentItemCard(
@@ -99,6 +100,10 @@ class AppointmentItemCard extends StatelessWidget {
                               ?.copyWith(color: AppColors.lightText),
                           overflow: TextOverflow.ellipsis,
                         ),
+                        const Spacer(),
+                        DoctorRating(
+                          rating: appointmentItem.doctorInfo.rateAsSotr,
+                        )
                       ],
                     )
                   : const SizedBox(height: 26),

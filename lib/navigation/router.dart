@@ -112,6 +112,14 @@ class AppRouter extends _$AppRouter {
             path: AppRoutes.myAppointments,
             page: AppointmentsRoute.page,
             guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.appointmentDetails,
+            page: AppointmentDetailRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.feedback,
+            page: FeedbackRoute.page,
+            guards: [CheckIsAuthUser()]),
 
         /// Запись
         AdaptiveRoute(
