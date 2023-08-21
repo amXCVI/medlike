@@ -147,6 +147,7 @@ class _SchedulePageState extends State<SchedulePage> {
     getDoctorInfo(context);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           return CustomScrollView(

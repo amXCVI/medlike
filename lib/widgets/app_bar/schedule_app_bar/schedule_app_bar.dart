@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 
 class ScheduleAppBar extends StatefulWidget {
   const ScheduleAppBar({
@@ -43,6 +42,7 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
         return FlexibleSpaceBar(
           titlePadding: EdgeInsets.zero,
           expandedTitleScale: 1,
+          collapseMode: CollapseMode.pin,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -64,6 +64,7 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
               Container(
                 alignment: Alignment.bottomCenter,
                 height: 24,
+                // margin: EdgeInsets.only(bottom: 5),
                 padding: const EdgeInsets.all(0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
@@ -75,7 +76,14 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
                     BoxShadow(
                       color: Colors.black54,
                       blurRadius: 4,
-                      offset: Offset(0, 0),
+                      offset: Offset(0, -1),
+                      spreadRadius: 0,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
                     ),
                   ],
                 ),
@@ -83,19 +91,22 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
             ],
           ),
           background: widget.backgroundImageUrl != null && widget.isDoctorAppBar
-              ? DefaultClipRRect(child:
-                  BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-                  return CachedNetworkImage(
-                    height: 249,
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                    imageUrl: widget.backgroundImageUrl as String,
-                    placeholder: (context, url) => const SizedBox(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    httpHeaders: {'Authorization': 'Bearer ${state.token}'},
-                  );
-                }))
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 1),
+                  child: BlocBuilder<UserCubit, UserState>(
+                      builder: (context, state) {
+                    return CachedNetworkImage(
+                      height: 250,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      imageUrl: widget.backgroundImageUrl as String,
+                      placeholder: (context, url) => const SizedBox(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      httpHeaders: {'Authorization': 'Bearer ${state.token}'},
+                    );
+                  }),
+                )
               : const SizedBox(),
         );
       }),
