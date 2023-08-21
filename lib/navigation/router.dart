@@ -247,6 +247,16 @@ class AppRouter extends _$AppRouter {
             page: DocumentRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// FAQ
+        AdaptiveRoute(
+            path: AppRoutes.settingsFaqsPage,
+            page: FaqsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.settingsFaqItemPage,
+            page: FaqItemRoute.page,
+            guards: [CheckIsAuthUser()]),
+
         /// Служебное
         AdaptiveRoute(
           path: AppRoutes.requireUpdater,
