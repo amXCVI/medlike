@@ -11,6 +11,8 @@ import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/appointments/feedback/feedback_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
+import 'package:medlike/modules/settings/faq/faq_item_page/faq_item_page.dart';
+import 'package:medlike/modules/settings/faq/faqs_page/faqs_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';
@@ -105,20 +107,13 @@ class AppRouter extends _$AppRouter {
             guards: [CheckIsAuthUser()],
             initial: true),
 
-        /// Мои приемы
+        /// Приемы
         AdaptiveRoute(
             path: AppRoutes.myAppointments,
             page: AppointmentsRoute.page,
             guards: [CheckIsAuthUser()]),
-        AdaptiveRoute(
-            path: AppRoutes.appointmentDetails,
-            page: AppointmentDetailRoute.page,
-            guards: [CheckIsAuthUser()]),
-        AdaptiveRoute(
-            path: AppRoutes.feedback,
-            page: FeedbackRoute.page,
-            guards: [CheckIsAuthUser()]),
 
+        /// Запись
         AdaptiveRoute(
             path: AppRoutes.subscribeProfiles,
             page: SubscribeProfilesListRoute.page,
@@ -166,6 +161,7 @@ class AppRouter extends _$AppRouter {
             page: PaymentRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Медкарта
         AdaptiveRoute(
             path: AppRoutes.medcard,
             page: MedcardProfilesListRoute.page,
@@ -179,17 +175,21 @@ class AppRouter extends _$AppRouter {
             page: FilesRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Настройки
         AdaptiveRoute(
             path: AppRoutes.settings,
             page: SettingsRoute.page,
             guards: [CheckIsAuthUser()]),
         AdaptiveRoute(
-            path: AppRoutes.settingsAgreements, page: AgreementsRoute.page),
+          path: AppRoutes.settingsAgreements,
+          page: AgreementsRoute.page,
+        ),
         AdaptiveRoute(
             path: AppRoutes.settingsSupport,
             page: SupportRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Клиники
         AdaptiveRoute(
             path: AppRoutes.clinicInfo,
             page: AllClinicsListRoute.page,
@@ -215,6 +215,7 @@ class AppRouter extends _$AppRouter {
             page: SalesRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Показатели здоровья
         AdaptiveRoute(
             path: AppRoutes.healthProfiles,
             page: HealthRoute.page,
@@ -236,10 +237,23 @@ class AppRouter extends _$AppRouter {
             page: DiaryAddRoute.page,
             guards: [CheckIsAuthUser()]),
 
+        /// Документы
         AdaptiveRoute(
-            path: AppRoutes.requireUpdater, page: RequireUpdateAppRoute.page),
+            path: AppRoutes.documents,
+            page: DocumentsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.documentDetail,
+            page: DocumentRoute.page,
+            guards: [CheckIsAuthUser()]),
 
-        // RedirectRoute(path: '*', redirectTo: AppRoutes.main),
+        /// Служебное
+        AdaptiveRoute(
+          path: AppRoutes.requireUpdater,
+          page: RequireUpdateAppRoute.page,
+        ),
+
+        RedirectRoute(path: '*', redirectTo: AppRoutes.main),
       ];
 }
 
