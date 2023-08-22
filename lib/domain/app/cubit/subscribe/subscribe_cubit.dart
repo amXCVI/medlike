@@ -871,10 +871,10 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     required String doctorId,
     required int categoryTypeId,
   }) async {
-    if (state.selectedDoctorFullData != null &&
-        state.selectedDoctorFullData!.id == doctorId) {
-      return;
-    }
+    // if (state.selectedDoctorFullData != null &&
+    //     state.selectedDoctorFullData!.id == doctorId) {
+    //   return;
+    // }
     emit(state.copyWith(
       getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.loading,
     ));

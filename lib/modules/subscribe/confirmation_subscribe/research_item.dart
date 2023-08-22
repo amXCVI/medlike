@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
-import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_recommendations.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/dividers/dash_divider.dart';
 
@@ -41,12 +40,6 @@ class ResearchItem extends StatelessWidget {
             ),
           ],
         ),
-        researchRecommendations != null
-            ? AppointmentRecommendations(
-                recommendations: researchRecommendations!.recommendation,
-                serviceName: researchRecommendations!.serviceName,
-              )
-            : const SizedBox(),
         const SizedBox(height: 16),
         const DashDivider(),
       ],

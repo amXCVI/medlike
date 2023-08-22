@@ -49,15 +49,18 @@ class _ScheduleAppBarState extends State<ScheduleAppBar> {
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
                 opacity: top < 150 ? 1.0 : 0.0,
-                child: Text(
-                  widget.title.characters
-                      .replaceAll(Characters(''), Characters('\u{200B}'))
-                      .toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                  overflow: TextOverflow.ellipsis,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 90,
+                  child: Text(
+                    widget.title.characters
+                        .replaceAll(Characters(''), Characters('\u{200B}'))
+                        .toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium
+                        ?.copyWith(fontWeight: FontWeight.w500),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),

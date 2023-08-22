@@ -32,7 +32,9 @@ class ReviewWidget extends StatelessWidget {
                   SvgPicture.asset('assets/icons/appointments/ic_rating.svg'),
                   const SizedBox(width: 8),
                   Text(
-                    'Публичный отзыв',
+                    review.visibility == 1
+                        ? 'Публичный отзыв'
+                        : 'Скрытый отзыв',
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall

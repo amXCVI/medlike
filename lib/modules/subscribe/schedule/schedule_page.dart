@@ -12,6 +12,7 @@ import 'package:medlike/modules/subscribe/schedule/schedule_subpage.dart';
 import 'package:medlike/modules/subscribe/schedule/toggle_page_values_list.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/app_bar/schedule_app_bar/schedule_app_bar.dart';
+import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/toggle_button/toggle_button.dart';
 
 @RoutePage()
@@ -148,6 +149,7 @@ class _SchedulePageState extends State<SchedulePage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      bottomNavigationBar: const BottomBar(),
       body: BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
           return CustomScrollView(

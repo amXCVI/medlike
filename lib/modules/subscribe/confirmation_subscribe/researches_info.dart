@@ -4,6 +4,7 @@ import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/docor_models/doctor_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/research_item.dart';
+import 'package:medlike/modules/subscribe/confirmation_subscribe/research_recommendations.dart';
 
 class ResearchesInfo extends StatelessWidget {
   const ResearchesInfo({Key? key}) : super(key: key);
@@ -39,8 +40,8 @@ class ResearchesInfo extends StatelessWidget {
                               null) {
                             recommendation = state
                                 .appointmentInfoData?.recommendations
-                                .firstWhere(
-                                    (element) => element.serviceId == e);
+                                .firstWhere((element) =>
+                                    element.serviceName == research?.name);
                           }
                         } catch (err) {
                           print(err);
@@ -55,6 +56,10 @@ class ResearchesInfo extends StatelessWidget {
                           return const SizedBox();
                         }
                       }),
+                      ResearchRecommendations(
+                        recommendationsList:
+                            state.appointmentInfoData?.recommendations,
+                      ),
                     ],
                   )
                 : const SizedBox(),

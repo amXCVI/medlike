@@ -9,6 +9,9 @@ class DoctorInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (markdownSource == null) {
+      return const SizedBox();
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 16),
       child: Column(
@@ -21,7 +24,10 @@ class DoctorInfoWidget extends StatelessWidget {
                 .headlineMedium
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 16),
+          SizedBox(
+            height: 16,
+            width: MediaQuery.of(context).size.width,
+          ),
           MarkdownBody(data: markdownSource ?? ''),
         ],
       ),

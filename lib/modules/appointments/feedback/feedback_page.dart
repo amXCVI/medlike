@@ -133,7 +133,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         .read<AppointmentsCubit>()
         .saveAppointmentReview(
           appointmentId: widget.appointmentId,
-          reviewVisibility: getValueVisibilityByLabel(reviewVisibility),
+          reviewVisibility: getValueVisibilityByLabel(_controllerVisible),
           caption: _controllerCaption,
           message: _controllerMessage.text,
           email: _controllerEmail.text,
