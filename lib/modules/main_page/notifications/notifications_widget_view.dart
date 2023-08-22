@@ -13,6 +13,7 @@ import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/animation/animate_slidable.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
@@ -34,19 +35,15 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 100), () {
-      final state = context.read<TourCubit>().state;
-      if (state.tourStatuses == TourStatuses.first &&
-          state.isNotificationCloseShown != true) {
-        onShow(context);
-      }
-    });
-  }
+      final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
 
-  void onShow(BuildContext context) {
-    Slidable.of(context)!.openEndActionPane();
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      Slidable.of(context)!.close();
-      context.read<TourCubit>().checkNotificationClose();
+      if (!(tourState?[TourChecked.notificationClose] ?? false)) {
+        animateDeleting(
+            context,
+            () => context
+                .read<TourCubit>()
+                .checkItem(TourChecked.notificationClose));
+      }
     });
   }
 
@@ -99,14 +96,15 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
                         ),
                         BlocBuilder<TourCubit, TourState>(
                           buildWhen: (_, state) {
-                            if (state.tourStatuses == TourStatuses.first &&
-                                state.isNotificationShown != true) {
+                            final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
+
+                            if (!(tourState?[TourChecked.event]??false)) {
                               TourTooltip.of(context).create(
                                   TourTooltips.resultEvent, _key,
                                   offset: const Offset(24, 0),
                                   onDismiss: () => context
                                       .read<TourCubit>()
-                                      .checkNotification());
+                                      .checkItem(TourChecked.event));
                             }
 
                             return true;

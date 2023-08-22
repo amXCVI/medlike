@@ -139,11 +139,10 @@ class _SliderChildState extends State<SliderChild> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 100), () {
-      final TourState state = context.read<TourCubit>().state;
-      if (!(state.isAppointmentShown ?? false) &&
-          state.tourStatuses != TourStatuses.late) {
+      final Map<TourChecked, bool>? tourState  = context.read<TourCubit>().state.tourChecked;
+      if(!(tourState?[TourChecked.removeAppointment] ?? false)){
         animateDeleting(
-            context, () => context.read<TourCubit>().checkAppointment());
+            context, () => context.read<TourCubit>().checkItem(TourChecked.removeAppointment));
       }
     });
   }

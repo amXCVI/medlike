@@ -20,7 +20,9 @@ CalendarBuilders calendarBuilder({
     } else {
       return Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: Theme
+              .of(context)
+              .primaryColor,
           shape: BoxShape.circle,
         ),
         margin: const EdgeInsets.symmetric(vertical: 3),
@@ -32,138 +34,166 @@ CalendarBuilders calendarBuilder({
         ),
       );
     }
-  }, defaultBuilder: (context, date, _) {
-    if (isLoading) {
-      return const CalendarSkeletonItem();
-    } else {
-      return hasAvailableCellsDatesList
+  },
+      defaultBuilder: (context, date, _) {
+        if (isLoading) {
+          return const CalendarSkeletonItem();
+        } else {
+          return hasAvailableCellsDatesList
               .contains(DateFormat("yyyy-MM-dd").format(date))
-          ? Container(
-              decoration: BoxDecoration(
-                color: isSameDay(selectedDay, date)
-                    ? Theme.of(context).primaryColor
-                    : AppColors.circleBgFirst,
-                shape: BoxShape.circle,
+              ? Container(
+            decoration: BoxDecoration(
+              color: isSameDay(selectedDay, date)
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : AppColors.circleBgFirst,
+              shape: BoxShape.circle,
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 3),
+            child: Center(
+              child: Text(
+                date.day.toString(),
+                style: TextStyle(
+                    color: isSameDay(selectedDay, date)
+                        ? Colors.white
+                        : AppColors.mainText),
               ),
-              margin: const EdgeInsets.symmetric(vertical: 3),
-              child: Center(
-                child: Text(
-                  date.day.toString(),
-                  style: TextStyle(
-                      color: isSameDay(selectedDay, date)
-                          ? Colors.white
-                          : AppColors.mainText),
-                ),
-              ),
-            )
-          : Center(
-              child: Text(date.day.toString()),
-            );
-    }
-  }, todayBuilder: (context, date, _) {
-    if (isLoading) {
-      return const CalendarSkeletonItem();
-    } else {
-      return Container(
-        decoration: BoxDecoration(
-          color: isSameDay(selectedDay, date)
-              ? Theme.of(context).primaryColor
-              : hasAvailableCellsDatesList
-                      .contains(DateFormat("yyyy-MM-dd").format(date))
+            ),
+          )
+              : Center(
+            child: Text(date.day.toString()),
+          );
+        }
+      },
+      todayBuilder: (context, date, _) {
+        if (isLoading) {
+          return const CalendarSkeletonItem();
+        } else {
+          return Container(
+            decoration: BoxDecoration(
+              color: isSameDay(selectedDay, date)
+                  ? Theme
+                  .of(context)
+                  .primaryColor
+                  : hasAvailableCellsDatesList
+                  .contains(DateFormat("yyyy-MM-dd").format(date))
                   ? AppColors.circleBgFirst
-                  : Theme.of(context).colorScheme.background,
-          shape: BoxShape.circle,
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 3),
-        child: Center(
-          child: Text(
-            date.day.toString(),
-            style: isSameDay(selectedDay, date)
-                ? Theme.of(context)
+                  : Theme
+                  .of(context)
+                  .colorScheme
+                  .background,
+              shape: BoxShape.circle,
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 3),
+            child: Center(
+              child: Text(
+                date.day.toString(),
+                style: isSameDay(selectedDay, date)
+                    ? Theme
+                    .of(context)
                     .textTheme
                     .labelSmall
                     ?.copyWith(fontWeight: FontWeight.w500, color: Colors.white)
-                : Theme.of(context).textTheme.labelSmall?.copyWith(
+                    : Theme
+                    .of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.mainBrandColor),
-          ),
-        ),
-      );
-    }
-  }, outsideBuilder: (context, date, _) {
-    if (isLoading) {
-      return const CalendarSkeletonItem();
-    } else {
-      return Container(
-        decoration: BoxDecoration(
-          color: hasAvailableCellsDatesList
+              ),
+            ),
+          );
+        }
+      },
+      outsideBuilder: (context, date, _) {
+        if (isLoading) {
+          return const CalendarSkeletonItem();
+        } else {
+          return Container(
+            decoration: BoxDecoration(
+              color: hasAvailableCellsDatesList
                   .contains(DateFormat("yyyy-MM-dd").format(date))
-              ? AppColors.circleBgFirst
-              : Theme.of(context).colorScheme.background,
-          shape: BoxShape.circle,
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 3),
-        child: Center(
-          child: Text(
-            date.day.toString(),
-            style: isSameDay(selectedDay, date)
-                ? Theme.of(context)
+                  ? AppColors.circleBgFirst
+                  : Theme
+                  .of(context)
+                  .colorScheme
+                  .background,
+              shape: BoxShape.circle,
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 3),
+            child: Center(
+              child: Text(
+                date.day.toString(),
+                style: isSameDay(selectedDay, date)
+                    ? Theme
+                    .of(context)
                     .textTheme
                     .labelSmall
                     ?.copyWith(fontWeight: FontWeight.w500, color: Colors.white)
-                : Theme.of(context)
+                    : Theme
+                    .of(context)
                     .textTheme
                     .labelSmall
                     ?.copyWith(color: AppColors.lightText),
-          ),
-        ),
-      );
-    }
-  }, markerBuilder: (context, date, _) {
-    if (isLoading) {
-      return const CalendarSkeletonItem();
-    } else {
-      /// Смотрим есть ли записи в календаре
-      bool hasAppointments =
+              ),
+            ),
+          );
+        }
+      },
+      markerBuilder: (context, date, _) {
+        if (isLoading) {
+          return const CalendarSkeletonItem();
+        } else {
+          /// Смотрим есть ли записи в календаре
+          bool hasAppointments =
           hasLogsDatesList.contains(DateFormat("yyyy-MM-dd").format(date));
 
-      final GlobalKey markerKey =
+          final GlobalKey markerKey =
           GlobalKey(); // Используем, чтобы рисовать подсказки на маркере наличия записи
-      final state = context.read<TourCubit>().state;
 
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        // Если не записей в календаре, или уведомление уже показано, или запускаем не первый раз => не рисуем popup
-        if (!hasAppointments ||
-            (state.isAppointmentShown ?? false) ||
-            (state.tourStatuses ==
-                TourStatuses.late)) {
-          return;
-        }
-        TourTooltip.of(context).create(
-            TourTooltips.calendarAppointment, markerKey,
-            onDismiss: () => context.read<TourCubit>().checkAppointment());
-      });
 
-      return Center(
-        child: Stack(
-          children: [
-            hasAppointments
-                ? Align(
-                    alignment: AlignmentDirectional.topEnd,
-                    child: Container(
-                      key: markerKey,
-                      width: 6.0,
-                      height: 6.0,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle,
-                      ),
+          final Map<TourChecked, bool>? tourState = context
+              .read<TourCubit>()
+              .state.tourChecked;
+          bool wasChecked = tourState?[TourChecked.calendarAppointment] ?? false;
+
+
+          Future.delayed(const Duration(milliseconds: 1000), () {
+            // Если не записей в календаре, или уведомление уже показано => не рисуем popup
+            if (!hasAppointments || wasChecked) {
+              return;
+            }
+            TourTooltip.of(context).create(
+                TourTooltips.calendarAppointment, markerKey,
+                onDismiss: () =>
+                    context.read<TourCubit>().checkItem(
+                        TourChecked.calendarAppointment));
+          });
+
+          return Center(
+            child: Stack(
+              children: [
+                hasAppointments
+                    ? Align(
+                  alignment: AlignmentDirectional.topEnd,
+                  child: Container(
+                    key: markerKey,
+                    width: 6.0,
+                    height: 6.0,
+                    decoration: BoxDecoration(
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
+                      shape: BoxShape.circle,
                     ),
-                  )
-                : const SizedBox(),
-          ],
-        ),
-      );
-    }
-  });
+                  ),
+                )
+                    : const SizedBox(),
+              ],
+            ),
+          );
+        }
+      });
 }

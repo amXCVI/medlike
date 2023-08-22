@@ -91,9 +91,6 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
       ));
     }
 
-    void _onCloseInfoPlace() {
-      context.read<TourCubit>().closeCabinetsInfoPlace();
-    }
 
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
@@ -101,12 +98,12 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
         child: ListView(shrinkWrap: true, children: [
           BlocBuilder<TourCubit, TourState>(
             builder: (context, state) {
-              return state.tourStatuses == TourStatuses.first &&
-                      state.isCabinetsInfoPlaceShow != true
+              final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
+              return !(tourState?[TourChecked.cabinetInfo] ?? false)
                   ? InfoPlace(
                       text:
                           'При записи на кабинет специалист подбирается автоматически, закрепленный за выбранным кабинетом',
-                      onClosePlace: _onCloseInfoPlace,
+                      onClosePlace: () => context.read<TourCubit>().checkItem(TourChecked.cabinetInfo),
                       margin: const EdgeInsets.all(16.0),
                     )
                   : const SizedBox();

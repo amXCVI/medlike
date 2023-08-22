@@ -1,72 +1,31 @@
 import 'package:bloc/bloc.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'tour_state.dart';
 
-
 class TourCubit extends Cubit<TourState> {
   TourCubit() : super(TourState());
 
-  void checkNotification() {
-    emit(state.copyWith(
-      isNotificationShown: true,
-    ));
-  }
+  Map<TourChecked, bool> _generateDefaultChecked() =>
+      {for (TourChecked item in TourChecked.values) item: false};
 
-  void checkFile() {
-    emit(state.copyWith(
-      isFileShown: true,
-    ));
-  }
+  void checkItem(TourChecked checked) async{
+    Map<TourChecked, bool> tc = state.tourChecked ?? _generateDefaultChecked();
+    tc[checked] = true;
 
-  void checkAppointment() {
     emit(state.copyWith(
-      isAppointmentShown: true,
+      tourChecked: tc,
     ));
-  }
-
-  void checkFavorite() {
-    emit(state.copyWith(
-      isFavoriteShown: true,
-    ));
-  }
-
-  void checkSupport() {
-    emit(state.copyWith(
-      isSupportShown: true,
-    ));
-  }
-
-  void checkNotificationClose() {
-    emit(state.copyWith(
-      isNotificationCloseShown: true,
-    ));
+    await UserSecureStorage.setField(checked.toString(), "true");
   }
 
   void fetchStatus() async {
-
     // Fetching statuses for all fields
-    String? demoTourStatus =
-        await UserSecureStorage.getField(AppConstants.demoTourStatus);
-
-    if (demoTourStatus == null) {
-      setStatus(TourStatuses.first);
-      await UserSecureStorage.setField(AppConstants.demoTourStatus, 'true');
-    } else {
-      setStatus(TourStatuses.late);
+    for(TourChecked item in TourChecked.values){
+      String? itemStatus = await UserSecureStorage.getField(item.toString());
+      if(itemStatus == null) continue;
+      if(itemStatus != "true") continue;
+      checkItem(item);
     }
-  }
-
-  void setStatus(TourStatuses status) {
-    emit(state.copyWith(
-      tourStatuses: status,
-    ));
-  }
-
-  void closeCabinetsInfoPlace() {
-    emit(state.copyWith(
-      isCabinetsInfoPlaceShow: true,
-    ));
   }
 }
