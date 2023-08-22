@@ -165,28 +165,28 @@ class AppointmentItem extends StatelessWidget {
               NextAppointmentTimeChip(
                   appointmentDateTime: appointmentItem.appointmentDateTime,
                   timeZoneOffset: appointmentItem.timeZoneOffset),
-              const SizedBox(width: 8.0),
-              RichText(
-                text: WidgetSpan(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.circleBgFirst,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(
-                            'assets/icons/appointments/ic_rub.svg'),
-                        const SizedBox(width: 8.0),
-                        Text(AppointmentPaymentStatuses.getPaymentStatus(
-                                appointmentItem.paymentStatus)
-                            .description),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // const SizedBox(width: 8.0),
+              // RichText(
+              //   text: WidgetSpan(
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         color: AppColors.circleBgFirst,
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Row(
+              //         children: [
+              //           SvgPicture.asset(
+              //               'assets/icons/appointments/ic_rub.svg'),
+              //           const SizedBox(width: 8.0),
+              //           Text(AppointmentPaymentStatuses.getPaymentStatus(
+              //                   appointmentItem.paymentStatus)
+              //               .description),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           if (appointmentItem.status == 4) const SizedBox(height: 14.0),
