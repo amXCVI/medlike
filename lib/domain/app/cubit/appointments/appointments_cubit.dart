@@ -72,6 +72,7 @@ class AppointmentsCubit
                 items: e.items,
                 checkURI: e.checkURI,
                 review: e.review,
+                cabinetInfo: e.cabinetInfo,
               ))
           .toList();
 
@@ -116,6 +117,7 @@ class AppointmentsCubit
                     items: e.items,
                     checkURI: e.checkURI,
                     review: e.review,
+                    cabinetInfo: e.cabinetInfo,
                   ))
               .toList(),
           filteredAppointmentsList: response
@@ -144,6 +146,7 @@ class AppointmentsCubit
                     items: e.items,
                     checkURI: e.checkURI,
                     review: e.review,
+                    cabinetInfo: e.cabinetInfo,
                   ))
               .toList(),
           confirmCounter: response.where((e) {
@@ -252,6 +255,7 @@ class AppointmentsCubit
             items: response.items,
             checkURI: response.checkURI,
             review: response.review,
+            cabinetInfo: response.cabinetInfo,
           )));
     } catch (e) {
       clearAppointment();

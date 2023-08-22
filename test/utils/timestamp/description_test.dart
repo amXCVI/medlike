@@ -36,6 +36,7 @@ void main() {
               items: e.items,
               checkURI: e.checkURI,
               review: e.review,
+              cabinetInfo: e.cabinetInfo,
             ))
         .toList();
 

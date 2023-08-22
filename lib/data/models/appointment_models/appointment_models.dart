@@ -19,6 +19,7 @@ class AppointmentModel with _$AppointmentModel {
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,
     required DoctorInfoModel doctorInfo,
+    required CabinetInfoModel? cabinetInfo,
     required List<ResearchesModel> researches,
     required int categoryType,
     required bool isVideo,
@@ -51,6 +52,7 @@ class AppointmentModelWithTimeZoneOffset
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,
     required DoctorInfoModel doctorInfo,
+    required CabinetInfoModel? cabinetInfo,
     required List<ResearchesModel> researches,
     required int categoryType,
     required bool isVideo,
@@ -68,6 +70,22 @@ class AppointmentModelWithTimeZoneOffset
   factory AppointmentModelWithTimeZoneOffset.fromJson(
           Map<String, Object?> json) =>
       _$AppointmentModelWithTimeZoneOffsetFromJson(json);
+}
+
+@freezed
+class CabinetInfoModel with _$CabinetInfoModel {
+  const factory CabinetInfoModel({
+    required String id,
+    required String name,
+    required String building,
+    required String floor,
+    required String researchPlace,
+    required String? cabinetImageId,
+    required String? description,
+  }) = _CabinetInfoModel;
+
+  factory CabinetInfoModel.fromJson(Map<String, Object?> json) =>
+      _$CabinetInfoModelFromJson(json);
 }
 
 @freezed

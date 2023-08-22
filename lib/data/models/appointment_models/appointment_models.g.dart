@@ -20,6 +20,10 @@ _$_AppointmentModel _$$_AppointmentModelFromJson(Map<String, dynamic> json) =>
           ClinicInfoModel.fromJson(json['clinicInfo'] as Map<String, dynamic>),
       doctorInfo:
           DoctorInfoModel.fromJson(json['doctorInfo'] as Map<String, dynamic>),
+      cabinetInfo: json['cabinetInfo'] == null
+          ? null
+          : CabinetInfoModel.fromJson(
+              json['cabinetInfo'] as Map<String, dynamic>),
       researches: (json['researches'] as List<dynamic>)
           .map((e) => ResearchesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -53,6 +57,7 @@ Map<String, dynamic> _$$_AppointmentModelToJson(_$_AppointmentModel instance) =>
       'patientInfo': instance.patientInfo,
       'clinicInfo': instance.clinicInfo,
       'doctorInfo': instance.doctorInfo,
+      'cabinetInfo': instance.cabinetInfo,
       'researches': instance.researches,
       'categoryType': instance.categoryType,
       'isVideo': instance.isVideo,
@@ -84,6 +89,10 @@ _$_AppointmentModelWithTimeZoneOffset
               json['clinicInfo'] as Map<String, dynamic>),
           doctorInfo: DoctorInfoModel.fromJson(
               json['doctorInfo'] as Map<String, dynamic>),
+          cabinetInfo: json['cabinetInfo'] == null
+              ? null
+              : CabinetInfoModel.fromJson(
+                  json['cabinetInfo'] as Map<String, dynamic>),
           researches: (json['researches'] as List<dynamic>)
               .map((e) => ResearchesModel.fromJson(e as Map<String, dynamic>))
               .toList(),
@@ -120,6 +129,7 @@ Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
       'patientInfo': instance.patientInfo,
       'clinicInfo': instance.clinicInfo,
       'doctorInfo': instance.doctorInfo,
+      'cabinetInfo': instance.cabinetInfo,
       'researches': instance.researches,
       'categoryType': instance.categoryType,
       'isVideo': instance.isVideo,
@@ -132,6 +142,28 @@ Map<String, dynamic> _$$_AppointmentModelWithTimeZoneOffsetToJson(
       'items': instance.items,
       'checkURI': instance.checkURI,
       'review': instance.review,
+    };
+
+_$_CabinetInfoModel _$$_CabinetInfoModelFromJson(Map<String, dynamic> json) =>
+    _$_CabinetInfoModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      building: json['building'] as String,
+      floor: json['floor'] as String,
+      researchPlace: json['researchPlace'] as String,
+      cabinetImageId: json['cabinetImageId'] as String?,
+      description: json['description'] as String?,
+    );
+
+Map<String, dynamic> _$$_CabinetInfoModelToJson(_$_CabinetInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'building': instance.building,
+      'floor': instance.floor,
+      'researchPlace': instance.researchPlace,
+      'cabinetImageId': instance.cabinetImageId,
+      'description': instance.description,
     };
 
 _$_PatientInfoModel _$$_PatientInfoModelFromJson(Map<String, dynamic> json) =>
