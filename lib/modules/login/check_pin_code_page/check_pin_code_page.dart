@@ -22,12 +22,14 @@ class CheckPinCodePage extends StatelessWidget {
         SystemNavigator.pop();
         return false;
       },
-      child: DefaultScaffold(
-        child: const CheckPinCode(),
+      child: const DefaultScaffold(
+        // Force provide page as no child so we display a clinic icon
+        isChildrenPage: false,
         appBarTitle: AppConstants.appName,
-        actions: const [UnauthSupportButton()],
-        bottomNavigationBar: const PasswordPageBottomNavigationBar(),
-        onPressedAppLogo: _onPressedAppLogo,
+        actions: [UnauthSupportButton()],
+        bottomNavigationBar: PasswordPageBottomNavigationBar(),
+        child: CheckPinCode(),
+        //onPressedAppLogo: _onPressedAppLogo,
       ),
     );
   }
