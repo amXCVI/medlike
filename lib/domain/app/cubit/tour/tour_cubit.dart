@@ -4,6 +4,7 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'tour_state.dart';
 
+
 class TourCubit extends Cubit<TourState> {
   TourCubit() : super(TourState());
 
@@ -13,7 +14,7 @@ class TourCubit extends Cubit<TourState> {
     ));
   }
 
-  void checkFile(){
+  void checkFile() {
     emit(state.copyWith(
       isFileShown: true,
     ));
@@ -44,10 +45,12 @@ class TourCubit extends Cubit<TourState> {
   }
 
   void fetchStatus() async {
+
+    // Fetching statuses for all fields
     String? demoTourStatus =
-      await UserSecureStorage.getField(AppConstants.demoTourStatus);
-    
-    if(demoTourStatus == null) {
+        await UserSecureStorage.getField(AppConstants.demoTourStatus);
+
+    if (demoTourStatus == null) {
       setStatus(TourStatuses.first);
       await UserSecureStorage.setField(AppConstants.demoTourStatus, 'true');
     } else {

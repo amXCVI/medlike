@@ -139,15 +139,11 @@ class _SliderChildState extends State<SliderChild> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 100), () {
-      try {
-        final TourState? state = context.read<TourCubit>().state;
-        if (state!.tourStatuses == TourStatuses.first &&
-            state.isAppointmentShown != true &&
-            widget.index == 0) {
-          animateDeleting(context, () => context.read<TourCubit>().checkAppointment());
-        }
-      } catch (err) {
-        print(err);
+      final TourState state = context.read<TourCubit>().state;
+      if (!(state.isAppointmentShown ?? false) &&
+          state.tourStatuses != TourStatuses.late) {
+        animateDeleting(
+            context, () => context.read<TourCubit>().checkAppointment());
       }
     });
   }

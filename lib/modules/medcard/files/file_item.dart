@@ -26,7 +26,9 @@ class FileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(!(context.read<TourCubit>().state.isFileShown ?? false)) {
+    final TourState state = context.read<TourCubit>().state;
+    if (!(state.isFileShown ?? false) &&
+        state.tourStatuses != TourStatuses.late) {
       animateDeleting(context, () => context.read<TourCubit>().checkFile());
     }
     return SubscribeRowItem(
