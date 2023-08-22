@@ -135,8 +135,8 @@ CalendarBuilders calendarBuilder({
         // Если не записей в календаре, или уведомление уже показано, или запускаем не первый раз => не рисуем popup
         if (!hasAppointments ||
             (state.isAppointmentShown ?? false) ||
-            ((state.tourStatuses ?? TourStatuses.first) !=
-                TourStatuses.first)) {
+            (state.tourStatuses ==
+                TourStatuses.late)) {
           return;
         }
         TourTooltip.of(context).create(

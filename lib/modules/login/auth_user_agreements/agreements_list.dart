@@ -25,7 +25,7 @@ class _AgreementsListState extends State<AgreementsList> {
   _launchURL(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      //await launchUrl(uri);
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       AppToast.showAppToast(msg: 'Не удалось откыть файл $url');
     }
