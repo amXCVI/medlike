@@ -97,8 +97,10 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
       if (kDebugMode) {
         print('esiaToken: $esiaToken');
       }
-      if (esiaToken != null && esiaToken.isNotEmpty) {
+      if (esiaToken != null && esiaToken.isNotEmpty && esiaToken != 'null') {
         authenticateWithEsiaToken(esiaToken: esiaToken.replaceAll('"', ''));
+      } else {
+        getAuthEsiaTokenFromHTMLPage(url);
       }
     }
 
