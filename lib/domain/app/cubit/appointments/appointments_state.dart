@@ -16,6 +16,8 @@ enum SendAppointmentReviewStatuses { initial, loading, success, failed }
 class AppointmentsState {
   final GetAppointmentsStatuses? getAppointmentsStatus;
   final List<AppointmentModelWithTimeZoneOffset>? appointmentsList;
+  List<AppointmentModelWithTimeZoneOffset>?
+      globalFilteredAppointmentsList; // приемы в календарь, отфильтрованные по пользователю
   final List<AppointmentModelWithTimeZoneOffset>? filteredAppointmentsList;
   final List<AppointmentModelWithTimeZoneOffset>? selectedDayAppointmentsList;
   final PutAppointmentsStatuses? putAppointmentStatus;
@@ -30,11 +32,13 @@ class AppointmentsState {
   final GetAppointmentStatuses? getAppointmentStatus;
   final AppointmentModel? selectedAppointment;
   final SendAppointmentReviewStatuses? sendAppointmentReviewStatus;
+  final String? selectedAppointmentFilterId;
 
   AppointmentsState({
     this.getAppointmentsStatus,
     this.appointmentsList,
     this.lastAppointment,
+    this.globalFilteredAppointmentsList,
     this.filteredAppointmentsList,
     this.selectedDayAppointmentsList,
     this.putAppointmentStatus,
@@ -45,6 +49,7 @@ class AppointmentsState {
     this.getAppointmentStatus,
     this.selectedAppointment,
     this.sendAppointmentReviewStatus,
+    this.selectedAppointmentFilterId = '',
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -57,6 +62,8 @@ class AppointmentsState {
   AppointmentsState copyWith({
     GetAppointmentsStatuses? getAppointmentsStatus,
     List<AppointmentModelWithTimeZoneOffset>? appointmentsList,
+    List<AppointmentModelWithTimeZoneOffset>?
+        globalFilteredAppointmentsList, // приемы в календарь, отфильтрованные по пользователю
     List<AppointmentModelWithTimeZoneOffset>? filteredAppointmentsList,
     List<AppointmentModelWithTimeZoneOffset>? selectedDayAppointmentsList,
     PutAppointmentsStatuses? putAppointmentStatus,
@@ -71,11 +78,14 @@ class AppointmentsState {
     GetAppointmentStatuses? getAppointmentStatus,
     AppointmentModel? selectedAppointment,
     SendAppointmentReviewStatuses? sendAppointmentReviewStatus,
+    String? selectedAppointmentFilterId,
   }) {
     return AppointmentsState(
       getAppointmentsStatus:
           getAppointmentsStatus ?? this.getAppointmentsStatus,
       appointmentsList: appointmentsList ?? this.appointmentsList,
+      globalFilteredAppointmentsList:
+          globalFilteredAppointmentsList ?? this.globalFilteredAppointmentsList,
       filteredAppointmentsList:
           filteredAppointmentsList ?? this.filteredAppointmentsList,
       selectedDayAppointmentsList:
@@ -95,6 +105,8 @@ class AppointmentsState {
       selectedDate: selectedDate ?? this.selectedDate,
       sendAppointmentReviewStatus:
           sendAppointmentReviewStatus ?? this.sendAppointmentReviewStatus,
+      selectedAppointmentFilterId:
+          selectedAppointmentFilterId ?? this.selectedAppointmentFilterId,
     );
   }
 
@@ -102,6 +114,7 @@ class AppointmentsState {
     return AppointmentsState(
       getAppointmentsStatus: getAppointmentsStatus,
       appointmentsList: appointmentsList,
+      globalFilteredAppointmentsList: globalFilteredAppointmentsList,
       filteredAppointmentsList: filteredAppointmentsList,
       selectedDayAppointmentsList: selectedDayAppointmentsList,
       putAppointmentStatus: putAppointmentStatus,
@@ -114,6 +127,7 @@ class AppointmentsState {
       endDate: endDate,
       selectedDate: selectedDate,
       sendAppointmentReviewStatus: sendAppointmentReviewStatus,
+      selectedAppointmentFilterId: '',
     );
   }
 }

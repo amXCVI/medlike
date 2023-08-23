@@ -14,6 +14,7 @@ class MedcardAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.handleTapOnFiltersButton,
     required this.handleResetFilters,
     required this.isFilteringMode,
+    this.isSearch = true,
   })  : preferredSize = const Size.fromHeight(56),
         super(key: key);
   @override
@@ -21,6 +22,7 @@ class MedcardAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool isChildrenPage;
   final bool isFilteringMode;
+  final bool isSearch;
   final void Function(String searchingStr) filteringFunction;
   final void Function() handleTapOnFiltersButton;
   final void Function() handleResetFilters;
@@ -173,7 +175,9 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                   },
                   icon: SvgPicture.asset(
                       'assets/icons/app_bar/ic_check_filters.svg'))
-              : IconButton(
+              : const SizedBox(),
+          widget.isSearch
+              ? IconButton(
                   onPressed: () {
                     if (_isSearchMode) {
                       _stopSearching();
@@ -185,6 +189,7 @@ class _MedcardAppBarState extends State<MedcardAppBar> {
                   icon: SvgPicture.asset(_isSearchMode
                       ? 'assets/icons/app_bar/close_search.svg'
                       : 'assets/icons/app_bar/search_icon.svg'))
+              : const SizedBox(),
         ]);
   }
 }
