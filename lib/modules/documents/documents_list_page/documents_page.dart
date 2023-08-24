@@ -65,7 +65,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.router.push(const MainRoute());
+        context.router.replaceAll([const MainRoute()]);
         return false;
       },
       child: DefaultScaffold(
