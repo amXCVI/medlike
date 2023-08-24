@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/tour_tooltip.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/widgets/buttons/simple_button.dart';
+import 'package:medlike/widgets/tour_tooltip/tour_tooltip.dart';
 
 class AppointmentConfirmView extends StatefulWidget {
   const AppointmentConfirmView({Key? key, required this.appointment})
@@ -25,23 +28,16 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
   void initState() {
     /// TODO: разбораться с таймером
     super.initState();
-    /*
-    Future.delayed(const Duration(milliseconds: 100), () {
-      final state = context.read<TourCubit>().state;
-      if (state.tourStatuses == TourStatuses.first &&
-          state.isNotificationCloseShown != true) {
-        onShow(context);
-      }
-    });
-    */
   }
 
-  void onShow(BuildContext context) {
-    /*
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      context.read<TourCubit>().checkNotificationClose();
+  void _showTourTooltip(BuildContext context){
+    final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
+
+    if(tourState?[TourChecked.event] ?? true) return;
+
+    TourTooltip.of(context).create(TourTooltips.resultEvent, _key, onDismiss: (){
+      context.read<TourCubit>().checkItem(TourChecked.event);
     });
-    */
   }
 
   @override
@@ -68,6 +64,10 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
 
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
         builder: (context, state) {
+
+          _showTourTooltip(context);
+
+
       final eventsCount = state.confirmCounter ?? 1;
 
       const title = 'Ожидает подтверждения';

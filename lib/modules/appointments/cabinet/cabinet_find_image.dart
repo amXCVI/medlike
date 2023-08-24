@@ -30,37 +30,6 @@ class _CabinetFindImageState extends State<CabinetFindImage>
     super.initState();
   }
 
-  // Widget _loadViaCachedNetwork(BuildContext context) => CachedNetworkImage(
-  //       placeholder: (context, url) => Text("loading image..."),
-  //       cacheKey: _cacheKey,
-  //       key: _key,
-  //       cacheManager: _cacheManager,
-  //       alignment: Alignment.center,
-  //       filterQuality: FilterQuality.high,
-  //       //imageBuilder: (context, imageProvider) =>  ,
-  //       width: MediaQuery.of(context).size.width,
-  //       fit: BoxFit.cover,
-  //       repeat: ImageRepeat.repeat,
-  //       imageUrl:
-  //           '${ApiConstants.baseUrl}/api/v1.0/doctors/image/${widget.cabinetId}?isThumbnail=false',
-  //       httpHeaders: {
-  //         'Authorization':
-  //             'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}'
-  //       },
-  //     );
-  //
-  // Widget _loadViaImageNetwork(BuildContext context) => Image.network(
-  //       '${ApiConstants.baseUrl}/api/v1.0/doctors/image/${widget.cabinetId}?isThumbnail=false',
-  //       filterQuality: FilterQuality.high,
-  //       gaplessPlayback: true,
-  //       width: MediaQuery.of(context).size.width,
-  //       fit: BoxFit.cover,
-  //       headers: {
-  //         'Authorization':
-  //             'Bearer ${UserSecureStorage.getField(AppConstants.accessToken)}'
-  //       },
-  //     );
-
   Widget _loadAsGif(BuildContext context) => Gif(
         key: _gifKey,
         fit: BoxFit.cover,

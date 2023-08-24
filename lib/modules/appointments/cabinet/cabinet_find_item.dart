@@ -42,7 +42,7 @@ class CabinetFindItem extends StatelessWidget {
                           ? <Widget>[const SizedBox()]
                           : [
                               Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.only(right: 10, ),
                                 child: SvgPicture.asset(
                                     'assets/icons/appointments/solid.svg'),
                               ),
