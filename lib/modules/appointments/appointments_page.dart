@@ -5,15 +5,17 @@ import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/appointments/appointments_calendar.dart';
+import 'package:medlike/modules/appointments/appointments_filters_widget.dart';
 import 'package:medlike/modules/appointments/appointments_list.dart';
 import 'package:medlike/modules/appointments/appointments_list_skeleton.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 @RoutePage()
-class AppointmentsPage extends StatelessWidget {
+class AppointmentsPage extends StatefulWidget {
   const AppointmentsPage(
       {Key? key, this.isRefresh = false, this.initDay, this.notificationId})
       : super(key: key);
@@ -29,6 +31,46 @@ class AppointmentsPage extends StatelessWidget {
   final String? notificationId;
 
   @override
+  State<AppointmentsPage> createState() => _AppointmentsPageState();
+}
+
+class _AppointmentsPageState extends State<AppointmentsPage> {
+  late bool isFilteringMode = false;
+  late bool isShowingFilters = false;
+  GlobalKey widgetOverBodyGlobalKey = GlobalKey();
+
+  @override
+  void initState() {
+    handleResetFilters();
+    super.initState();
+  }
+
+  void handleTapOnFiltersButton() {
+    if (isFilteringMode) {
+      setState(() {
+        isShowingFilters = true;
+        isFilteringMode = false;
+      });
+    } else {
+      setState(() {
+        isFilteringMode = true;
+      });
+    }
+  }
+
+  void handleResetFilters() {
+    setState(() {
+      isShowingFilters = false;
+      isFilteringMode = false;
+    });
+    context.read<AppointmentsCubit>().setSelectedFilterId('');
+  }
+
+  void _filteringAppointments(String str) {
+    context.read<AppointmentsCubit>().setSelectedFilterId(str);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Future<void> _onLoadDada({bool isRefresh = true, DateTime? initDay}) async {
       if (initDay != null) {
@@ -41,13 +83,15 @@ class AppointmentsPage extends StatelessWidget {
         context.read<AppointmentsCubit>().setSelectedDate(initDay);
       }
 
-      if (notificationId != null) {
-        context.read<UserCubit>().updateNotificationStatus(notificationId!);
+      if (widget.notificationId != null) {
+        context
+            .read<UserCubit>()
+            .updateNotificationStatus(widget.notificationId!);
       }
       context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
     }
 
-    _onLoadDada(isRefresh: isRefresh as bool, initDay: initDay);
+    _onLoadDada(isRefresh: widget.isRefresh as bool, initDay: widget.initDay);
 
     return WillPopScope(
       onWillPop: () async {
@@ -56,6 +100,25 @@ class AppointmentsPage extends StatelessWidget {
       },
       child: DefaultScaffold(
         appBarTitle: 'Мои приемы',
+        filteringFunction: _filteringAppointments,
+        appBar: MedcardAppBar(
+          title: 'Мои приемы',
+          filteringFunction: _filteringAppointments,
+          isChildrenPage: true,
+          handleTapOnFiltersButton: handleTapOnFiltersButton,
+          handleResetFilters: handleResetFilters,
+          isFilteringMode: isFilteringMode,
+          isSearch: false,
+        ),
+        widgetOverBody: isFilteringMode
+            ? AppointmentsFiltersWidget(key: widgetOverBodyGlobalKey)
+            : Container(
+                key: widgetOverBodyGlobalKey,
+                height: 16,
+              ),
+        widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
+            ? widgetOverBodyGlobalKey
+            : null,
         child: RefreshIndicator(
           onRefresh: () {
             return _onLoadDada(isRefresh: true);

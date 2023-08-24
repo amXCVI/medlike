@@ -84,6 +84,7 @@ class UserProfile with _$UserProfile {
     String? lastName,
     DateTime? birthday,
     String? avatar,
+    String? phone,
     required List<UserProfileClinic> clinics,
   }) = _UserProfile;
 
@@ -115,10 +116,10 @@ class CheckUserAccountResponse with _$CheckUserAccountResponse {
 @freezed
 class UserAgreementsModel with _$UserAgreementsModel {
   const factory UserAgreementsModel({
-  required int id,
-  required String type,
-  required int version,
-  required bool accepted,
+    required int id,
+    required String type,
+    required int version,
+    required bool accepted,
   }) = _UserAgreementsModel;
 
   factory UserAgreementsModel.fromJson(Map<String, Object?> json) =>
@@ -149,12 +150,91 @@ class UserUploadAvatarResponseModel with _$UserUploadAvatarResponseModel {
 @freezed
 class UserAgreementItemModel with _$UserAgreementItemModel {
   const factory UserAgreementItemModel({
-  required int id,
-  required String type,
-  required int version,
-  required bool accepted,
+    required int id,
+    required String type,
+    required int version,
+    required bool accepted,
   }) = _UserAgreementItemModel;
 
   factory UserAgreementItemModel.fromJson(Map<String, Object?> json) =>
       _$UserAgreementItemModelFromJson(json);
+}
+
+@freezed
+class EsiaTokenAuthRequest with _$EsiaTokenAuthRequest {
+  const factory EsiaTokenAuthRequest({
+    required bool isUserExists,
+    required EsiaTokenAuthSigninModelRequest? signinModel,
+    required EsiaTokenAuthRegistrationModelRequest? registrationModel,
+  }) = _EsiaTokenAuthRequest;
+
+  factory EsiaTokenAuthRequest.fromJson(Map<String, Object?> json) =>
+      _$EsiaTokenAuthRequestFromJson(json);
+}
+
+@freezed
+class EsiaTokenAuthRegistrationModelRequest
+    with _$EsiaTokenAuthRegistrationModelRequest {
+  const factory EsiaTokenAuthRegistrationModelRequest({
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+  }) = _EsiaTokenAuthRegistrationModelRequest;
+
+  factory EsiaTokenAuthRegistrationModelRequest.fromJson(
+          Map<String, Object?> json) =>
+      _$EsiaTokenAuthRegistrationModelRequestFromJson(json);
+}
+
+@freezed
+class EsiaTokenAuthSigninModelRequest with _$EsiaTokenAuthSigninModelRequest {
+  const factory EsiaTokenAuthSigninModelRequest({
+    required String token,
+    required String refreshToken,
+  }) = _EsiaTokenAuthSigninModelRequest;
+
+  factory EsiaTokenAuthSigninModelRequest.fromJson(Map<String, Object?> json) =>
+      _$EsiaTokenAuthSigninModelRequestFromJson(json);
+}
+
+@freezed
+class CreateUserProfileAndMedicalCardRequestModel
+    with _$CreateUserProfileAndMedicalCardRequestModel {
+  const factory CreateUserProfileAndMedicalCardRequestModel({
+    required bool result,
+    required String profileId,
+    required String error,
+    required CreateUserProfileAndMedicalCardIntegrationResponseModel
+        integrationResponse,
+    required bool forceToSite,
+  }) = _CreateUserProfileAndMedicalCardRequestModel;
+
+  factory CreateUserProfileAndMedicalCardRequestModel.fromJson(
+          Map<String, Object?> json) =>
+      _$CreateUserProfileAndMedicalCardRequestModelFromJson(json);
+}
+
+@freezed
+class CreateUserProfileAndMedicalCardIntegrationResponseModel
+    with _$CreateUserProfileAndMedicalCardIntegrationResponseModel {
+  const factory CreateUserProfileAndMedicalCardIntegrationResponseModel({
+    required bool result,
+    required String profileId,
+    required String errorCode,
+    required String errorText,
+    required String accountId,
+    required bool forceErrorToSite,
+  }) = _CreateUserProfileAndMedicalCardIntegrationResponseModel;
+
+  factory CreateUserProfileAndMedicalCardIntegrationResponseModel.fromJson(
+          Map<String, Object?> json) =>
+      _$CreateUserProfileAndMedicalCardIntegrationResponseModelFromJson(json);
 }

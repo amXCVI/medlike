@@ -44,6 +44,13 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
       categoryType: categoryTypeId,
       isFavorite: true,
       categories: [],
+      imageId: doctor.imageId,
+      shortinfo: '', //
+      experience: doctor.experience,
+      rateAsSotr: doctor.rateAsSotr,
+      rateAsUser: doctor.rateAsUser,
+      reviews: [],
+      comment: '',
     );
     context.read<SubscribeCubit>().setSelectedDoctor(favoriteDoctor);
     if (CategoryTypes.serviceCategoryTypeIds.contains(categoryTypeId)) {
@@ -74,7 +81,7 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
       onRefresh: () async => widget.onRefreshData(),
       child: widget.doctorsList.isNotEmpty
           ? DefaultScrollbar(
-        child: ListView(shrinkWrap: true, children: [
+              child: ListView(shrinkWrap: true, children: [
                 ...widget.doctorsList
                     .map((item) => FavoriteDoctorItem(
                           doctorItem: item,
@@ -84,7 +91,7 @@ class _FavoriteDoctorsListState extends State<FavoriteDoctorsList> {
                         ))
                     .toList()
               ]),
-          )
+            )
           : const NotFoundFavoriteDoctors(),
     );
   }

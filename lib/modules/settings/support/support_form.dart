@@ -45,16 +45,12 @@ class SupportForm extends StatelessWidget {
                           : AppColors.mainText,
                       fontWeight: FontWeight.w300),
                   floatingLabelAlignment: FloatingLabelAlignment.start,
-                  hintStyle: Theme
-                      .of(context)
+                  hintStyle: Theme.of(context)
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
                 ),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.start,
                 enableSuggestions: false,
                 textInputAction: TextInputAction.next,
@@ -93,16 +89,12 @@ class SupportForm extends StatelessWidget {
                           : AppColors.mainText,
                       fontWeight: FontWeight.w300),
                   floatingLabelAlignment: FloatingLabelAlignment.start,
-                  hintStyle: Theme
-                      .of(context)
+                  hintStyle: Theme.of(context)
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
                 ),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelLarge,
+                style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.start,
                 enableSuggestions: false,
                 maxLines: null,

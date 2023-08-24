@@ -159,13 +159,10 @@ class __$$_DoctorsResponseModelCopyWithImpl<$Res>
 class _$_DoctorsResponseModel implements _DoctorsResponseModel {
   const _$_DoctorsResponseModel(
       {@JsonKey(name: 'navigationItems')
-          final List<NavigationItem>? navigationItems,
-      @JsonKey(name: 'doctors')
-          final List<Doctor>? doctors,
-      @JsonKey(name: 'researches')
-          final List<Research>? researches,
-      @JsonKey(name: 'cabinets')
-          final List<Cabinet>? cabinets,
+      final List<NavigationItem>? navigationItems,
+      @JsonKey(name: 'doctors') final List<Doctor>? doctors,
+      @JsonKey(name: 'researches') final List<Research>? researches,
+      @JsonKey(name: 'cabinets') final List<Cabinet>? cabinets,
       this.price})
       : _navigationItems = navigationItems,
         _doctors = doctors,
@@ -269,13 +266,10 @@ class _$_DoctorsResponseModel implements _DoctorsResponseModel {
 abstract class _DoctorsResponseModel implements DoctorsResponseModel {
   const factory _DoctorsResponseModel(
       {@JsonKey(name: 'navigationItems')
-          final List<NavigationItem>? navigationItems,
-      @JsonKey(name: 'doctors')
-          final List<Doctor>? doctors,
-      @JsonKey(name: 'researches')
-          final List<Research>? researches,
-      @JsonKey(name: 'cabinets')
-          final List<Cabinet>? cabinets,
+      final List<NavigationItem>? navigationItems,
+      @JsonKey(name: 'doctors') final List<Doctor>? doctors,
+      @JsonKey(name: 'researches') final List<Research>? researches,
+      @JsonKey(name: 'cabinets') final List<Cabinet>? cabinets,
       final int? price}) = _$_DoctorsResponseModel;
 
   factory _DoctorsResponseModel.fromJson(Map<String, dynamic> json) =
@@ -936,10 +930,17 @@ mixin _$Doctor {
   String get middleName => throw _privateConstructorUsedError;
   String get specializationId => throw _privateConstructorUsedError;
   String get specialization => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
   List<int> get categories => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
+  List<DoctorInfoReviewModel> get reviews => throw _privateConstructorUsedError;
+  String? get shortinfo => throw _privateConstructorUsedError;
+  String? get comment => throw _privateConstructorUsedError;
+  String? get experience => throw _privateConstructorUsedError;
+  num get rateAsSotr => throw _privateConstructorUsedError;
+  num get rateAsUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -958,10 +959,17 @@ abstract class $DoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int price,
+      int? price,
       int categoryType,
       bool isFavorite,
-      List<int> categories});
+      List<int> categories,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
+      String? shortinfo,
+      String? comment,
+      String? experience,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -983,10 +991,17 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
     Object? middleName = null,
     Object? specializationId = null,
     Object? specialization = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
+    Object? shortinfo = freezed,
+    Object? comment = freezed,
+    Object? experience = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1013,10 +1028,10 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1029,6 +1044,34 @@ class _$DoctorCopyWithImpl<$Res, $Val extends Doctor>
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reviews: null == reviews
+          ? _value.reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ) as $Val);
   }
 }
@@ -1046,10 +1089,17 @@ abstract class _$$_DoctorCopyWith<$Res> implements $DoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int price,
+      int? price,
       int categoryType,
       bool isFavorite,
-      List<int> categories});
+      List<int> categories,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
+      String? shortinfo,
+      String? comment,
+      String? experience,
+      num rateAsSotr,
+      num rateAsUser});
 }
 
 /// @nodoc
@@ -1068,10 +1118,17 @@ class __$$_DoctorCopyWithImpl<$Res>
     Object? middleName = null,
     Object? specializationId = null,
     Object? specialization = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? categoryType = null,
     Object? isFavorite = null,
     Object? categories = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
+    Object? shortinfo = freezed,
+    Object? comment = freezed,
+    Object? experience = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
   }) {
     return _then(_$_Doctor(
       id: null == id
@@ -1098,10 +1155,10 @@ class __$$_DoctorCopyWithImpl<$Res>
           ? _value.specialization
           : specialization // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1114,6 +1171,34 @@ class __$$_DoctorCopyWithImpl<$Res>
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reviews: null == reviews
+          ? _value._reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -1131,8 +1216,16 @@ class _$_Doctor implements _Doctor {
       required this.price,
       required this.categoryType,
       required this.isFavorite,
-      required final List<int> categories})
-      : _categories = categories;
+      required final List<int> categories,
+      required this.imageId,
+      required final List<DoctorInfoReviewModel> reviews,
+      required this.shortinfo,
+      required this.comment,
+      required this.experience,
+      required this.rateAsSotr,
+      required this.rateAsUser})
+      : _categories = categories,
+        _reviews = reviews;
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1150,7 +1243,7 @@ class _$_Doctor implements _Doctor {
   @override
   final String specialization;
   @override
-  final int price;
+  final int? price;
   @override
   final int categoryType;
   @override
@@ -1164,8 +1257,29 @@ class _$_Doctor implements _Doctor {
   }
 
   @override
+  final String? imageId;
+  final List<DoctorInfoReviewModel> _reviews;
+  @override
+  List<DoctorInfoReviewModel> get reviews {
+    if (_reviews is EqualUnmodifiableListView) return _reviews;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reviews);
+  }
+
+  @override
+  final String? shortinfo;
+  @override
+  final String? comment;
+  @override
+  final String? experience;
+  @override
+  final num rateAsSotr;
+  @override
+  final num rateAsUser;
+
+  @override
   String toString() {
-    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories)';
+    return 'Doctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imageId: $imageId, reviews: $reviews, shortinfo: $shortinfo, comment: $comment, experience: $experience, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
   }
 
   @override
@@ -1190,7 +1304,18 @@ class _$_Doctor implements _Doctor {
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite) &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            const DeepCollectionEquality().equals(other._reviews, _reviews) &&
+            (identical(other.shortinfo, shortinfo) ||
+                other.shortinfo == shortinfo) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser));
   }
 
   @JsonKey(ignore: true)
@@ -1206,7 +1331,14 @@ class _$_Doctor implements _Doctor {
       price,
       categoryType,
       isFavorite,
-      const DeepCollectionEquality().hash(_categories));
+      const DeepCollectionEquality().hash(_categories),
+      imageId,
+      const DeepCollectionEquality().hash(_reviews),
+      shortinfo,
+      comment,
+      experience,
+      rateAsSotr,
+      rateAsUser);
 
   @JsonKey(ignore: true)
   @override
@@ -1230,10 +1362,17 @@ abstract class _Doctor implements Doctor {
       required final String middleName,
       required final String specializationId,
       required final String specialization,
-      required final int price,
+      required final int? price,
       required final int categoryType,
       required final bool isFavorite,
-      required final List<int> categories}) = _$_Doctor;
+      required final List<int> categories,
+      required final String? imageId,
+      required final List<DoctorInfoReviewModel> reviews,
+      required final String? shortinfo,
+      required final String? comment,
+      required final String? experience,
+      required final num rateAsSotr,
+      required final num rateAsUser}) = _$_Doctor;
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 
@@ -1250,13 +1389,27 @@ abstract class _Doctor implements Doctor {
   @override
   String get specialization;
   @override
-  int get price;
+  int? get price;
   @override
   int get categoryType;
   @override
   bool get isFavorite;
   @override
   List<int> get categories;
+  @override
+  String? get imageId;
+  @override
+  List<DoctorInfoReviewModel> get reviews;
+  @override
+  String? get shortinfo;
+  @override
+  String? get comment;
+  @override
+  String? get experience;
+  @override
+  num get rateAsSotr;
+  @override
+  num get rateAsUser;
   @override
   @JsonKey(ignore: true)
   _$$_DoctorCopyWith<_$_Doctor> get copyWith =>
@@ -1271,7 +1424,7 @@ Research _$ResearchFromJson(Map<String, dynamic> json) {
 mixin _$Research {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int get price => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
   int get scheduleType => throw _privateConstructorUsedError;
   String get buildingId => throw _privateConstructorUsedError;
@@ -1290,7 +1443,7 @@ abstract class $ResearchCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      int price,
+      int? price,
       int categoryType,
       int scheduleType,
       String buildingId});
@@ -1311,7 +1464,7 @@ class _$ResearchCopyWithImpl<$Res, $Val extends Research>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? categoryType = null,
     Object? scheduleType = null,
     Object? buildingId = null,
@@ -1325,10 +1478,10 @@ class _$ResearchCopyWithImpl<$Res, $Val extends Research>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1355,7 +1508,7 @@ abstract class _$$_ResearchCopyWith<$Res> implements $ResearchCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      int price,
+      int? price,
       int categoryType,
       int scheduleType,
       String buildingId});
@@ -1374,7 +1527,7 @@ class __$$_ResearchCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? price = null,
+    Object? price = freezed,
     Object? categoryType = null,
     Object? scheduleType = null,
     Object? buildingId = null,
@@ -1388,10 +1541,10 @@ class __$$_ResearchCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      price: null == price
+      price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       categoryType: null == categoryType
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
@@ -1427,7 +1580,7 @@ class _$_Research implements _Research {
   @override
   final String name;
   @override
-  final int price;
+  final int? price;
   @override
   final int categoryType;
   @override
@@ -1479,7 +1632,7 @@ abstract class _Research implements Research {
   const factory _Research(
       {required final String id,
       required final String name,
-      required final int price,
+      required final int? price,
       required final int categoryType,
       required final int scheduleType,
       required final String buildingId}) = _$_Research;
@@ -1491,7 +1644,7 @@ abstract class _Research implements Research {
   @override
   String get name;
   @override
-  int get price;
+  int? get price;
   @override
   int get categoryType;
   @override
@@ -1517,6 +1670,11 @@ mixin _$FavoriteDoctor {
   String get specializationId => throw _privateConstructorUsedError;
   String get specialization => throw _privateConstructorUsedError;
   int get categoryType => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
+  num get rateAsSotr => throw _privateConstructorUsedError;
+  num get rateAsUser => throw _privateConstructorUsedError;
+  String? get experience => throw _privateConstructorUsedError;
+  String? get comment => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1537,7 +1695,12 @@ abstract class $FavoriteDoctorCopyWith<$Res> {
       String middleName,
       String specializationId,
       String specialization,
-      int categoryType});
+      int categoryType,
+      String? imageId,
+      num rateAsSotr,
+      num rateAsUser,
+      String? experience,
+      String? comment});
 }
 
 /// @nodoc
@@ -1560,6 +1723,11 @@ class _$FavoriteDoctorCopyWithImpl<$Res, $Val extends FavoriteDoctor>
     Object? specializationId = null,
     Object? specialization = null,
     Object? categoryType = null,
+    Object? imageId = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
+    Object? experience = freezed,
+    Object? comment = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1590,6 +1758,26 @@ class _$FavoriteDoctorCopyWithImpl<$Res, $Val extends FavoriteDoctor>
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -1609,7 +1797,12 @@ abstract class _$$_FavoriteDoctorCopyWith<$Res>
       String middleName,
       String specializationId,
       String specialization,
-      int categoryType});
+      int categoryType,
+      String? imageId,
+      num rateAsSotr,
+      num rateAsUser,
+      String? experience,
+      String? comment});
 }
 
 /// @nodoc
@@ -1630,6 +1823,11 @@ class __$$_FavoriteDoctorCopyWithImpl<$Res>
     Object? specializationId = null,
     Object? specialization = null,
     Object? categoryType = null,
+    Object? imageId = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
+    Object? experience = freezed,
+    Object? comment = freezed,
   }) {
     return _then(_$_FavoriteDoctor(
       id: null == id
@@ -1660,6 +1858,26 @@ class __$$_FavoriteDoctorCopyWithImpl<$Res>
           ? _value.categoryType
           : categoryType // ignore: cast_nullable_to_non_nullable
               as int,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1674,7 +1892,12 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
       required this.middleName,
       required this.specializationId,
       required this.specialization,
-      required this.categoryType});
+      required this.categoryType,
+      required this.imageId,
+      required this.rateAsSotr,
+      required this.rateAsUser,
+      required this.experience,
+      required this.comment});
 
   factory _$_FavoriteDoctor.fromJson(Map<String, dynamic> json) =>
       _$$_FavoriteDoctorFromJson(json);
@@ -1693,10 +1916,20 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
   final String specialization;
   @override
   final int categoryType;
+  @override
+  final String? imageId;
+  @override
+  final num rateAsSotr;
+  @override
+  final num rateAsUser;
+  @override
+  final String? experience;
+  @override
+  final String? comment;
 
   @override
   String toString() {
-    return 'FavoriteDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, categoryType: $categoryType)';
+    return 'FavoriteDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, categoryType: $categoryType, imageId: $imageId, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser, experience: $experience, comment: $comment)';
   }
 
   @override
@@ -1716,13 +1949,33 @@ class _$_FavoriteDoctor implements _FavoriteDoctor {
             (identical(other.specialization, specialization) ||
                 other.specialization == specialization) &&
             (identical(other.categoryType, categoryType) ||
-                other.categoryType == categoryType));
+                other.categoryType == categoryType) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.comment, comment) || other.comment == comment));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, lastName, firstName,
-      middleName, specializationId, specialization, categoryType);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      lastName,
+      firstName,
+      middleName,
+      specializationId,
+      specialization,
+      categoryType,
+      imageId,
+      rateAsSotr,
+      rateAsUser,
+      experience,
+      comment);
 
   @JsonKey(ignore: true)
   @override
@@ -1746,7 +1999,12 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
       required final String middleName,
       required final String specializationId,
       required final String specialization,
-      required final int categoryType}) = _$_FavoriteDoctor;
+      required final int categoryType,
+      required final String? imageId,
+      required final num rateAsSotr,
+      required final num rateAsUser,
+      required final String? experience,
+      required final String? comment}) = _$_FavoriteDoctor;
 
   factory _FavoriteDoctor.fromJson(Map<String, dynamic> json) =
       _$_FavoriteDoctor.fromJson;
@@ -1766,7 +2024,1031 @@ abstract class _FavoriteDoctor implements FavoriteDoctor {
   @override
   int get categoryType;
   @override
+  String? get imageId;
+  @override
+  num get rateAsSotr;
+  @override
+  num get rateAsUser;
+  @override
+  String? get experience;
+  @override
+  String? get comment;
+  @override
   @JsonKey(ignore: true)
   _$$_FavoriteDoctorCopyWith<_$_FavoriteDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+AssessmentModel _$AssessmentModelFromJson(Map<String, dynamic> json) {
+  return _AssessmentModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AssessmentModel {
+  int get rating => throw _privateConstructorUsedError;
+  String get header => throw _privateConstructorUsedError;
+  String get assessment => throw _privateConstructorUsedError;
+  bool get isPublic => throw _privateConstructorUsedError;
+  String get user => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AssessmentModelCopyWith<AssessmentModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AssessmentModelCopyWith<$Res> {
+  factory $AssessmentModelCopyWith(
+          AssessmentModel value, $Res Function(AssessmentModel) then) =
+      _$AssessmentModelCopyWithImpl<$Res, AssessmentModel>;
+  @useResult
+  $Res call(
+      {int rating,
+      String header,
+      String assessment,
+      bool isPublic,
+      String user});
+}
+
+/// @nodoc
+class _$AssessmentModelCopyWithImpl<$Res, $Val extends AssessmentModel>
+    implements $AssessmentModelCopyWith<$Res> {
+  _$AssessmentModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rating = null,
+    Object? header = null,
+    Object? assessment = null,
+    Object? isPublic = null,
+    Object? user = null,
+  }) {
+    return _then(_value.copyWith(
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      header: null == header
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      assessment: null == assessment
+          ? _value.assessment
+          : assessment // ignore: cast_nullable_to_non_nullable
+              as String,
+      isPublic: null == isPublic
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AssessmentModelCopyWith<$Res>
+    implements $AssessmentModelCopyWith<$Res> {
+  factory _$$_AssessmentModelCopyWith(
+          _$_AssessmentModel value, $Res Function(_$_AssessmentModel) then) =
+      __$$_AssessmentModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int rating,
+      String header,
+      String assessment,
+      bool isPublic,
+      String user});
+}
+
+/// @nodoc
+class __$$_AssessmentModelCopyWithImpl<$Res>
+    extends _$AssessmentModelCopyWithImpl<$Res, _$_AssessmentModel>
+    implements _$$_AssessmentModelCopyWith<$Res> {
+  __$$_AssessmentModelCopyWithImpl(
+      _$_AssessmentModel _value, $Res Function(_$_AssessmentModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? rating = null,
+    Object? header = null,
+    Object? assessment = null,
+    Object? isPublic = null,
+    Object? user = null,
+  }) {
+    return _then(_$_AssessmentModel(
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      header: null == header
+          ? _value.header
+          : header // ignore: cast_nullable_to_non_nullable
+              as String,
+      assessment: null == assessment
+          ? _value.assessment
+          : assessment // ignore: cast_nullable_to_non_nullable
+              as String,
+      isPublic: null == isPublic
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AssessmentModel implements _AssessmentModel {
+  const _$_AssessmentModel(
+      {required this.rating,
+      required this.header,
+      required this.assessment,
+      required this.isPublic,
+      required this.user});
+
+  factory _$_AssessmentModel.fromJson(Map<String, dynamic> json) =>
+      _$$_AssessmentModelFromJson(json);
+
+  @override
+  final int rating;
+  @override
+  final String header;
+  @override
+  final String assessment;
+  @override
+  final bool isPublic;
+  @override
+  final String user;
+
+  @override
+  String toString() {
+    return 'AssessmentModel(rating: $rating, header: $header, assessment: $assessment, isPublic: $isPublic, user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AssessmentModel &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.header, header) || other.header == header) &&
+            (identical(other.assessment, assessment) ||
+                other.assessment == assessment) &&
+            (identical(other.isPublic, isPublic) ||
+                other.isPublic == isPublic) &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, rating, header, assessment, isPublic, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AssessmentModelCopyWith<_$_AssessmentModel> get copyWith =>
+      __$$_AssessmentModelCopyWithImpl<_$_AssessmentModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AssessmentModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AssessmentModel implements AssessmentModel {
+  const factory _AssessmentModel(
+      {required final int rating,
+      required final String header,
+      required final String assessment,
+      required final bool isPublic,
+      required final String user}) = _$_AssessmentModel;
+
+  factory _AssessmentModel.fromJson(Map<String, dynamic> json) =
+      _$_AssessmentModel.fromJson;
+
+  @override
+  int get rating;
+  @override
+  String get header;
+  @override
+  String get assessment;
+  @override
+  bool get isPublic;
+  @override
+  String get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AssessmentModelCopyWith<_$_AssessmentModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DoctorInfoDataModel _$DoctorInfoDataModelFromJson(Map<String, dynamic> json) {
+  return _DoctorInfoModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DoctorInfoDataModel {
+  String get id => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get middleName => throw _privateConstructorUsedError;
+  String get specializationId => throw _privateConstructorUsedError;
+  String get specialization => throw _privateConstructorUsedError;
+  int get price => throw _privateConstructorUsedError;
+  int get categoryType => throw _privateConstructorUsedError;
+  bool get isFavorite => throw _privateConstructorUsedError;
+  List<int> get categories => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
+  List<DoctorInfoReviewModel> get reviews => throw _privateConstructorUsedError;
+  String? get shortinfo => throw _privateConstructorUsedError;
+  num? get rateAsSotr => throw _privateConstructorUsedError;
+  num? get rateAsUser => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DoctorInfoDataModelCopyWith<DoctorInfoDataModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DoctorInfoDataModelCopyWith<$Res> {
+  factory $DoctorInfoDataModelCopyWith(
+          DoctorInfoDataModel value, $Res Function(DoctorInfoDataModel) then) =
+      _$DoctorInfoDataModelCopyWithImpl<$Res, DoctorInfoDataModel>;
+  @useResult
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      int price,
+      int categoryType,
+      bool isFavorite,
+      List<int> categories,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
+      String? shortinfo,
+      num? rateAsSotr,
+      num? rateAsUser});
+}
+
+/// @nodoc
+class _$DoctorInfoDataModelCopyWithImpl<$Res, $Val extends DoctorInfoDataModel>
+    implements $DoctorInfoDataModelCopyWith<$Res> {
+  _$DoctorInfoDataModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lastName = null,
+    Object? firstName = null,
+    Object? middleName = null,
+    Object? specializationId = null,
+    Object? specialization = null,
+    Object? price = null,
+    Object? categoryType = null,
+    Object? isFavorite = null,
+    Object? categories = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
+    Object? shortinfo = freezed,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: null == specializationId
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: null == specialization
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      categoryType: null == categoryType
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+      categories: null == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reviews: null == reviews
+          ? _value.reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: freezed == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num?,
+      rateAsUser: freezed == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DoctorInfoModelCopyWith<$Res>
+    implements $DoctorInfoDataModelCopyWith<$Res> {
+  factory _$$_DoctorInfoModelCopyWith(
+          _$_DoctorInfoModel value, $Res Function(_$_DoctorInfoModel) then) =
+      __$$_DoctorInfoModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      int price,
+      int categoryType,
+      bool isFavorite,
+      List<int> categories,
+      String? imageId,
+      List<DoctorInfoReviewModel> reviews,
+      String? shortinfo,
+      num? rateAsSotr,
+      num? rateAsUser});
+}
+
+/// @nodoc
+class __$$_DoctorInfoModelCopyWithImpl<$Res>
+    extends _$DoctorInfoDataModelCopyWithImpl<$Res, _$_DoctorInfoModel>
+    implements _$$_DoctorInfoModelCopyWith<$Res> {
+  __$$_DoctorInfoModelCopyWithImpl(
+      _$_DoctorInfoModel _value, $Res Function(_$_DoctorInfoModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lastName = null,
+    Object? firstName = null,
+    Object? middleName = null,
+    Object? specializationId = null,
+    Object? specialization = null,
+    Object? price = null,
+    Object? categoryType = null,
+    Object? isFavorite = null,
+    Object? categories = null,
+    Object? imageId = freezed,
+    Object? reviews = null,
+    Object? shortinfo = freezed,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
+  }) {
+    return _then(_$_DoctorInfoModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: null == specializationId
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: null == specialization
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int,
+      categoryType: null == categoryType
+          ? _value.categoryType
+          : categoryType // ignore: cast_nullable_to_non_nullable
+              as int,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+      categories: null == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      reviews: null == reviews
+          ? _value._reviews
+          : reviews // ignore: cast_nullable_to_non_nullable
+              as List<DoctorInfoReviewModel>,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: freezed == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num?,
+      rateAsUser: freezed == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DoctorInfoModel implements _DoctorInfoModel {
+  const _$_DoctorInfoModel(
+      {required this.id,
+      required this.lastName,
+      required this.firstName,
+      required this.middleName,
+      required this.specializationId,
+      required this.specialization,
+      required this.price,
+      required this.categoryType,
+      required this.isFavorite,
+      required final List<int> categories,
+      required this.imageId,
+      required final List<DoctorInfoReviewModel> reviews,
+      required this.shortinfo,
+      required this.rateAsSotr,
+      required this.rateAsUser})
+      : _categories = categories,
+        _reviews = reviews;
+
+  factory _$_DoctorInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DoctorInfoModelFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String lastName;
+  @override
+  final String firstName;
+  @override
+  final String middleName;
+  @override
+  final String specializationId;
+  @override
+  final String specialization;
+  @override
+  final int price;
+  @override
+  final int categoryType;
+  @override
+  final bool isFavorite;
+  final List<int> _categories;
+  @override
+  List<int> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
+
+  @override
+  final String? imageId;
+  final List<DoctorInfoReviewModel> _reviews;
+  @override
+  List<DoctorInfoReviewModel> get reviews {
+    if (_reviews is EqualUnmodifiableListView) return _reviews;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reviews);
+  }
+
+  @override
+  final String? shortinfo;
+  @override
+  final num? rateAsSotr;
+  @override
+  final num? rateAsUser;
+
+  @override
+  String toString() {
+    return 'DoctorInfoDataModel(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, price: $price, categoryType: $categoryType, isFavorite: $isFavorite, categories: $categories, imageId: $imageId, reviews: $reviews, shortinfo: $shortinfo, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DoctorInfoModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.specializationId, specializationId) ||
+                other.specializationId == specializationId) &&
+            (identical(other.specialization, specialization) ||
+                other.specialization == specialization) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.categoryType, categoryType) ||
+                other.categoryType == categoryType) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            const DeepCollectionEquality().equals(other._reviews, _reviews) &&
+            (identical(other.shortinfo, shortinfo) ||
+                other.shortinfo == shortinfo) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      lastName,
+      firstName,
+      middleName,
+      specializationId,
+      specialization,
+      price,
+      categoryType,
+      isFavorite,
+      const DeepCollectionEquality().hash(_categories),
+      imageId,
+      const DeepCollectionEquality().hash(_reviews),
+      shortinfo,
+      rateAsSotr,
+      rateAsUser);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>
+      __$$_DoctorInfoModelCopyWithImpl<_$_DoctorInfoModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DoctorInfoModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DoctorInfoModel implements DoctorInfoDataModel {
+  const factory _DoctorInfoModel(
+      {required final String id,
+      required final String lastName,
+      required final String firstName,
+      required final String middleName,
+      required final String specializationId,
+      required final String specialization,
+      required final int price,
+      required final int categoryType,
+      required final bool isFavorite,
+      required final List<int> categories,
+      required final String? imageId,
+      required final List<DoctorInfoReviewModel> reviews,
+      required final String? shortinfo,
+      required final num? rateAsSotr,
+      required final num? rateAsUser}) = _$_DoctorInfoModel;
+
+  factory _DoctorInfoModel.fromJson(Map<String, dynamic> json) =
+      _$_DoctorInfoModel.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get lastName;
+  @override
+  String get firstName;
+  @override
+  String get middleName;
+  @override
+  String get specializationId;
+  @override
+  String get specialization;
+  @override
+  int get price;
+  @override
+  int get categoryType;
+  @override
+  bool get isFavorite;
+  @override
+  List<int> get categories;
+  @override
+  String? get imageId;
+  @override
+  List<DoctorInfoReviewModel> get reviews;
+  @override
+  String? get shortinfo;
+  @override
+  num? get rateAsSotr;
+  @override
+  num? get rateAsUser;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DoctorInfoModelCopyWith<_$_DoctorInfoModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DoctorInfoReviewModel _$DoctorInfoReviewModelFromJson(
+    Map<String, dynamic> json) {
+  return _DoctorInfoReviewModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DoctorInfoReviewModel {
+  String get sysUser => throw _privateConstructorUsedError;
+  String get sotr => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
+  num get rate => throw _privateConstructorUsedError;
+  String? get caption => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+  bool get anonimous => throw _privateConstructorUsedError;
+  String? get peopleId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'account_id')
+  String? get accountId => throw _privateConstructorUsedError;
+  String? get fio => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $DoctorInfoReviewModelCopyWith<DoctorInfoReviewModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DoctorInfoReviewModelCopyWith<$Res> {
+  factory $DoctorInfoReviewModelCopyWith(DoctorInfoReviewModel value,
+          $Res Function(DoctorInfoReviewModel) then) =
+      _$DoctorInfoReviewModelCopyWithImpl<$Res, DoctorInfoReviewModel>;
+  @useResult
+  $Res call(
+      {String sysUser,
+      String sotr,
+      DateTime date,
+      num rate,
+      String? caption,
+      String? message,
+      bool anonimous,
+      String? peopleId,
+      @JsonKey(name: 'account_id') String? accountId,
+      String? fio});
+}
+
+/// @nodoc
+class _$DoctorInfoReviewModelCopyWithImpl<$Res,
+        $Val extends DoctorInfoReviewModel>
+    implements $DoctorInfoReviewModelCopyWith<$Res> {
+  _$DoctorInfoReviewModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sysUser = null,
+    Object? sotr = null,
+    Object? date = null,
+    Object? rate = null,
+    Object? caption = freezed,
+    Object? message = freezed,
+    Object? anonimous = null,
+    Object? peopleId = freezed,
+    Object? accountId = freezed,
+    Object? fio = freezed,
+  }) {
+    return _then(_value.copyWith(
+      sysUser: null == sysUser
+          ? _value.sysUser
+          : sysUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      sotr: null == sotr
+          ? _value.sotr
+          : sotr // ignore: cast_nullable_to_non_nullable
+              as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      rate: null == rate
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as num,
+      caption: freezed == caption
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      anonimous: null == anonimous
+          ? _value.anonimous
+          : anonimous // ignore: cast_nullable_to_non_nullable
+              as bool,
+      peopleId: freezed == peopleId
+          ? _value.peopleId
+          : peopleId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accountId: freezed == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fio: freezed == fio
+          ? _value.fio
+          : fio // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_DoctorInfoReviewModelCopyWith<$Res>
+    implements $DoctorInfoReviewModelCopyWith<$Res> {
+  factory _$$_DoctorInfoReviewModelCopyWith(_$_DoctorInfoReviewModel value,
+          $Res Function(_$_DoctorInfoReviewModel) then) =
+      __$$_DoctorInfoReviewModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String sysUser,
+      String sotr,
+      DateTime date,
+      num rate,
+      String? caption,
+      String? message,
+      bool anonimous,
+      String? peopleId,
+      @JsonKey(name: 'account_id') String? accountId,
+      String? fio});
+}
+
+/// @nodoc
+class __$$_DoctorInfoReviewModelCopyWithImpl<$Res>
+    extends _$DoctorInfoReviewModelCopyWithImpl<$Res, _$_DoctorInfoReviewModel>
+    implements _$$_DoctorInfoReviewModelCopyWith<$Res> {
+  __$$_DoctorInfoReviewModelCopyWithImpl(_$_DoctorInfoReviewModel _value,
+      $Res Function(_$_DoctorInfoReviewModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sysUser = null,
+    Object? sotr = null,
+    Object? date = null,
+    Object? rate = null,
+    Object? caption = freezed,
+    Object? message = freezed,
+    Object? anonimous = null,
+    Object? peopleId = freezed,
+    Object? accountId = freezed,
+    Object? fio = freezed,
+  }) {
+    return _then(_$_DoctorInfoReviewModel(
+      sysUser: null == sysUser
+          ? _value.sysUser
+          : sysUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      sotr: null == sotr
+          ? _value.sotr
+          : sotr // ignore: cast_nullable_to_non_nullable
+              as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      rate: null == rate
+          ? _value.rate
+          : rate // ignore: cast_nullable_to_non_nullable
+              as num,
+      caption: freezed == caption
+          ? _value.caption
+          : caption // ignore: cast_nullable_to_non_nullable
+              as String?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      anonimous: null == anonimous
+          ? _value.anonimous
+          : anonimous // ignore: cast_nullable_to_non_nullable
+              as bool,
+      peopleId: freezed == peopleId
+          ? _value.peopleId
+          : peopleId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accountId: freezed == accountId
+          ? _value.accountId
+          : accountId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fio: freezed == fio
+          ? _value.fio
+          : fio // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_DoctorInfoReviewModel implements _DoctorInfoReviewModel {
+  const _$_DoctorInfoReviewModel(
+      {required this.sysUser,
+      required this.sotr,
+      required this.date,
+      required this.rate,
+      required this.caption,
+      required this.message,
+      required this.anonimous,
+      required this.peopleId,
+      @JsonKey(name: 'account_id') this.accountId,
+      required this.fio});
+
+  factory _$_DoctorInfoReviewModel.fromJson(Map<String, dynamic> json) =>
+      _$$_DoctorInfoReviewModelFromJson(json);
+
+  @override
+  final String sysUser;
+  @override
+  final String sotr;
+  @override
+  final DateTime date;
+  @override
+  final num rate;
+  @override
+  final String? caption;
+  @override
+  final String? message;
+  @override
+  final bool anonimous;
+  @override
+  final String? peopleId;
+  @override
+  @JsonKey(name: 'account_id')
+  final String? accountId;
+  @override
+  final String? fio;
+
+  @override
+  String toString() {
+    return 'DoctorInfoReviewModel(sysUser: $sysUser, sotr: $sotr, date: $date, rate: $rate, caption: $caption, message: $message, anonimous: $anonimous, peopleId: $peopleId, accountId: $accountId, fio: $fio)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DoctorInfoReviewModel &&
+            (identical(other.sysUser, sysUser) || other.sysUser == sysUser) &&
+            (identical(other.sotr, sotr) || other.sotr == sotr) &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.rate, rate) || other.rate == rate) &&
+            (identical(other.caption, caption) || other.caption == caption) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.anonimous, anonimous) ||
+                other.anonimous == anonimous) &&
+            (identical(other.peopleId, peopleId) ||
+                other.peopleId == peopleId) &&
+            (identical(other.accountId, accountId) ||
+                other.accountId == accountId) &&
+            (identical(other.fio, fio) || other.fio == fio));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, sysUser, sotr, date, rate,
+      caption, message, anonimous, peopleId, accountId, fio);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DoctorInfoReviewModelCopyWith<_$_DoctorInfoReviewModel> get copyWith =>
+      __$$_DoctorInfoReviewModelCopyWithImpl<_$_DoctorInfoReviewModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_DoctorInfoReviewModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _DoctorInfoReviewModel implements DoctorInfoReviewModel {
+  const factory _DoctorInfoReviewModel(
+      {required final String sysUser,
+      required final String sotr,
+      required final DateTime date,
+      required final num rate,
+      required final String? caption,
+      required final String? message,
+      required final bool anonimous,
+      required final String? peopleId,
+      @JsonKey(name: 'account_id') final String? accountId,
+      required final String? fio}) = _$_DoctorInfoReviewModel;
+
+  factory _DoctorInfoReviewModel.fromJson(Map<String, dynamic> json) =
+      _$_DoctorInfoReviewModel.fromJson;
+
+  @override
+  String get sysUser;
+  @override
+  String get sotr;
+  @override
+  DateTime get date;
+  @override
+  num get rate;
+  @override
+  String? get caption;
+  @override
+  String? get message;
+  @override
+  bool get anonimous;
+  @override
+  String? get peopleId;
+  @override
+  @JsonKey(name: 'account_id')
+  String? get accountId;
+  @override
+  String? get fio;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DoctorInfoReviewModelCopyWith<_$_DoctorInfoReviewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,16 +9,17 @@ part 'appointment_models.g.dart';
 
 @freezed
 class AppointmentModel with _$AppointmentModel {
-  const factory AppointmentModel({
+  factory AppointmentModel({
     required int status,
     required bool needConfirmation,
     required String? comment,
-    required String researchPlace,
+    required String? researchPlace,
     required String id,
     required String appointmentDateTime,
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,
     required DoctorInfoModel doctorInfo,
+    required CabinetInfoModel? cabinetInfo,
     required List<ResearchesModel> researches,
     required int categoryType,
     required bool isVideo,
@@ -28,6 +29,9 @@ class AppointmentModel with _$AppointmentModel {
     required String scheduleId,
     required int paymentStatus,
     required String? recommendations,
+    required List<ResearchWidthPriceInAppointmentModel>? items,
+    required String? checkURI,
+    required AppointmentReviewModel? review,
   }) = _AppointmentModel;
 
   factory AppointmentModel.fromJson(Map<String, Object?> json) =>
@@ -41,13 +45,14 @@ class AppointmentModelWithTimeZoneOffset
     required int status,
     required bool needConfirmation,
     required String? comment,
-    required String researchPlace,
+    required String? researchPlace,
     required String id,
     @TimestampConverter() required DateTime appointmentDateTime,
     required int timeZoneOffset,
     required PatientInfoModel patientInfo,
     required ClinicInfoModel clinicInfo,
     required DoctorInfoModel doctorInfo,
+    required CabinetInfoModel? cabinetInfo,
     required List<ResearchesModel> researches,
     required int categoryType,
     required bool isVideo,
@@ -57,11 +62,30 @@ class AppointmentModelWithTimeZoneOffset
     required String scheduleId,
     required int paymentStatus,
     required String? recommendations,
+    required List<ResearchWidthPriceInAppointmentModel>? items,
+    required String? checkURI,
+    required AppointmentReviewModel? review,
   }) = _AppointmentModelWithTimeZoneOffset;
 
   factory AppointmentModelWithTimeZoneOffset.fromJson(
           Map<String, Object?> json) =>
       _$AppointmentModelWithTimeZoneOffsetFromJson(json);
+}
+
+@freezed
+class CabinetInfoModel with _$CabinetInfoModel {
+  const factory CabinetInfoModel({
+    required String id,
+    required String name,
+    required String building,
+    required String floor,
+    required String researchPlace,
+    required String? cabinetImageId,
+    required String? description,
+  }) = _CabinetInfoModel;
+
+  factory CabinetInfoModel.fromJson(Map<String, Object?> json) =>
+      _$CabinetInfoModelFromJson(json);
 }
 
 @freezed
@@ -88,6 +112,20 @@ class ClinicInfoModel with _$ClinicInfoModel {
 }
 
 @freezed
+class AppointmentReviewModel with _$AppointmentReviewModel {
+  const factory AppointmentReviewModel({
+    required num rate,
+    required String caption,
+    required String message,
+    required String? email,
+    required int visibility,
+  }) = _AppointmentReviewModel;
+
+  factory AppointmentReviewModel.fromJson(Map<String, Object?> json) =>
+      _$AppointmentReviewModelFromJson(json);
+}
+
+@freezed
 class DoctorInfoModel with _$DoctorInfoModel {
   const factory DoctorInfoModel({
     required String? id,
@@ -96,6 +134,10 @@ class DoctorInfoModel with _$DoctorInfoModel {
     required String? lastName,
     required String? specializationId,
     required String? specialization,
+    required String? imageId,
+    required String? shortInfo,
+    required num? rateAsSotr,
+    required num? rateAsUser,
   }) = _DoctorInfoModel;
 
   factory DoctorInfoModel.fromJson(Map<String, Object?> json) =>
@@ -162,4 +204,22 @@ class RegisterOrderResponseModel with _$RegisterOrderResponseModel {
 
   factory RegisterOrderResponseModel.fromJson(Map<String, Object?> json) =>
       _$RegisterOrderResponseModelFromJson(json);
+}
+
+@freezed
+class ResearchWidthPriceInAppointmentModel
+    with _$ResearchWidthPriceInAppointmentModel {
+  const factory ResearchWidthPriceInAppointmentModel({
+    required String? id,
+    required String? service,
+    required String? prescType,
+    required int? price,
+    required int? paid,
+    required String? billUslug,
+    required String? presc,
+  }) = _ResearchWidthPriceInAppointmentModel;
+
+  factory ResearchWidthPriceInAppointmentModel.fromJson(
+          Map<String, Object?> json) =>
+      _$ResearchWidthPriceInAppointmentModelFromJson(json);
 }

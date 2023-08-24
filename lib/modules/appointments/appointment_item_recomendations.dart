@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/widgets/recommendation_bottom_sheet/recommendations_bottom_sheet.dart';
 
 class AppointmentItemRecommendations extends StatelessWidget {
-  const AppointmentItemRecommendations(
-      {Key? key, required this.recommendations, required this.serviceName})
-      : super(key: key);
+  const AppointmentItemRecommendations({
+    Key? key,
+    required this.recommendations,
+    required this.serviceName,
+    this.maxLines = 1,
+    this.onTap,
+    required this.withOpenerArrow,
+  }) : super(key: key);
 
   final String recommendations;
   final String serviceName;
+  final int maxLines;
+  final void Function()? onTap;
+  final bool withOpenerArrow;
 
   @override
   Widget build(BuildContext context) {
@@ -16,34 +23,27 @@ class AppointmentItemRecommendations extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: GestureDetector(
-          onTap: () => {
-            showModalBottomSheet(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12),
-                    topLeft: Radius.circular(12),
-                  ),
-                ),
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => RecommendationBottomSheet(
-                      serviceName: serviceName,
-                      recommendationsText: recommendations,
-                    ))
-          },
+          onTap: onTap,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset('assets/icons/appointments/info.svg'),
               const SizedBox(width: 8.0),
               Flexible(
+                  flex: 6,
                   child: Text(
-                recommendations,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                softWrap: true,
-              )),
-              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
+                    recommendations,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: maxLines,
+                    softWrap: true,
+                  )),
+              withOpenerArrow
+                  ? Expanded(
+                      flex: 1,
+                      child: SvgPicture.asset(
+                          'assets/icons/subscribe/right_arrow_icon.svg'),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:medlike/data/repository/appointments_repository.dart';
 import 'package:medlike/data/repository/clinics_repository.dart';
 import 'package:medlike/data/repository/diary_repository.dart';
 import 'package:medlike/data/repository/documents_repository.dart';
+import 'package:medlike/data/repository/faq_repository.dart';
 import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/data/repository/user_repository.dart';
@@ -14,6 +15,7 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/diary/diary_cubit.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
+import 'package:medlike/domain/app/cubit/faq/faq_cubit.dart';
 import 'package:medlike/domain/app/cubit/medcard/medcard_cubit.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
@@ -119,6 +121,7 @@ class App extends StatelessWidget {
           create: (context) => DiaryCubit(DiaryRepository(), mediator)),
       BlocProvider(
           create: (context) => DocumentsCubit(DocumentsRepository(), mediator)),
+      BlocProvider(create: (context) => FAQCubit(FAQRepository(), mediator)),
       BlocProvider(create: (context) => PromptCubit()),
       BlocProvider(create: (context) => TourCubit()..fetchStatus())
     ], child: app);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class SubscribeRowItem extends StatelessWidget {
   const SubscribeRowItem({
@@ -17,6 +18,7 @@ class SubscribeRowItem extends StatelessWidget {
     this.radius = 20,
     this.onTap,
     this.customRightAction,
+    this.rating,
   }) : super(key: key);
 
   final String title;
@@ -29,6 +31,7 @@ class SubscribeRowItem extends StatelessWidget {
   final bool isOverflowHiddenTitle;
   final bool isOverflowHiddenSubtitle;
   final double radius;
+  final num? rating;
   final void Function()? onTap;
   final Widget? customRightAction;
 
@@ -89,18 +92,29 @@ class SubscribeRowItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              title,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: true,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      color: isSelected
-                                          ? Theme.of(context).primaryColor
-                                          : AppColors.mainText),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    title.characters
+                                        .replaceAll(Characters(''),
+                                            Characters('\u{200B}'))
+                                        .toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                            color: isSelected
+                                                ? Theme.of(context).primaryColor
+                                                : AppColors.mainText),
+                                  ),
+                                ),
+                                DoctorRating(rating: rating),
+                              ],
                             ),
                             const SizedBox(height: 4),
                             subtitle.isNotEmpty
@@ -128,7 +142,7 @@ class SubscribeRowItem extends StatelessWidget {
                       ? SvgPicture.asset(
                           'assets/icons/profile/checked_icon.svg')
                       : const Text(''),
-                  customRightAction ?? const SizedBox(),
+                  customRightAction ?? const SizedBox()
                 ],
               ),
             ),

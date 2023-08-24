@@ -15,6 +15,23 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    FaqsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FaqsPage(),
+      );
+    },
+    FaqItemRoute.name: (routeData) {
+      final args = routeData.argsAs<FaqItemRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FaqItemPage(
+          key: args.key,
+          question: args.question,
+          answer: args.answer,
+        ),
+      );
+    },
     AgreementsRoute.name: (routeData) {
       final args = routeData.argsAs<AgreementsRouteArgs>(
           orElse: () => const AgreementsRouteArgs());
@@ -48,6 +65,31 @@ abstract class _$AppRouter extends RootStackRouter {
           isRefresh: args.isRefresh,
           initDay: args.initDay,
           notificationId: args.notificationId,
+        ),
+      );
+    },
+    FeedbackRoute.name: (routeData) {
+      final args = routeData.argsAs<FeedbackRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FeedbackPage(
+          key: args.key,
+          appointmentId: args.appointmentId,
+          rating: args.rating,
+          controllerCaption: args.controllerCaption,
+          controllerVisible: args.controllerVisible,
+          controllerMessage: args.controllerMessage,
+          controllerEmail: args.controllerEmail,
+        ),
+      );
+    },
+    AppointmentDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<AppointmentDetailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AppointmentDetailPage(
+          key: args.key,
+          appointmentItem: args.appointmentItem,
         ),
       );
     },
@@ -378,6 +420,33 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const UnauthSupportPage(),
       );
     },
+    EsiaLoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EsiaLoginPage(),
+      );
+    },
+    EsiaRegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<EsiaRegisterRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EsiaRegisterPage(
+          key: args.key,
+          firstName: args.firstName,
+          lastName: args.lastName,
+          middleName: args.middleName,
+          phoneNumber: args.phoneNumber,
+          snils: args.snils,
+          sex: args.sex,
+          birthday: args.birthday,
+          passportSerial: args.passportSerial,
+          passportNumber: args.passportNumber,
+          passportIssueDate: args.passportIssueDate,
+          passportIssueId: args.passportIssueId,
+          esiaToken: args.esiaToken,
+        ),
+      );
+    },
     RecoverPasswordNewRoute.name: (routeData) {
       final args = routeData.argsAs<RecoverPasswordNewRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -437,6 +506,63 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [FaqsPage]
+class FaqsRoute extends PageRouteInfo<void> {
+  const FaqsRoute({List<PageRouteInfo>? children})
+      : super(
+          FaqsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FaqsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FaqItemPage]
+class FaqItemRoute extends PageRouteInfo<FaqItemRouteArgs> {
+  FaqItemRoute({
+    Key? key,
+    required String question,
+    required String answer,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FaqItemRoute.name,
+          args: FaqItemRouteArgs(
+            key: key,
+            question: question,
+            answer: answer,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FaqItemRoute';
+
+  static const PageInfo<FaqItemRouteArgs> page =
+      PageInfo<FaqItemRouteArgs>(name);
+}
+
+class FaqItemRouteArgs {
+  const FaqItemRouteArgs({
+    this.key,
+    required this.question,
+    required this.answer,
+  });
+
+  final Key? key;
+
+  final String question;
+
+  final String answer;
+
+  @override
+  String toString() {
+    return 'FaqItemRouteArgs{key: $key, question: $question, answer: $answer}';
+  }
 }
 
 /// generated route for
@@ -550,6 +676,107 @@ class AppointmentsRouteArgs {
   @override
   String toString() {
     return 'AppointmentsRouteArgs{key: $key, isRefresh: $isRefresh, initDay: $initDay, notificationId: $notificationId}';
+  }
+}
+
+/// generated route for
+/// [FeedbackPage]
+class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
+  FeedbackRoute({
+    Key? key,
+    required String appointmentId,
+    required int rating,
+    required String controllerCaption,
+    required String controllerVisible,
+    required String controllerMessage,
+    required String controllerEmail,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FeedbackRoute.name,
+          args: FeedbackRouteArgs(
+            key: key,
+            appointmentId: appointmentId,
+            rating: rating,
+            controllerCaption: controllerCaption,
+            controllerVisible: controllerVisible,
+            controllerMessage: controllerMessage,
+            controllerEmail: controllerEmail,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FeedbackRoute';
+
+  static const PageInfo<FeedbackRouteArgs> page =
+      PageInfo<FeedbackRouteArgs>(name);
+}
+
+class FeedbackRouteArgs {
+  const FeedbackRouteArgs({
+    this.key,
+    required this.appointmentId,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
+  });
+
+  final Key? key;
+
+  final String appointmentId;
+
+  final int rating;
+
+  final String controllerCaption;
+
+  final String controllerVisible;
+
+  final String controllerMessage;
+
+  final String controllerEmail;
+
+  @override
+  String toString() {
+    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId, rating: $rating, controllerCaption: $controllerCaption, controllerVisible: $controllerVisible, controllerMessage: $controllerMessage, controllerEmail: $controllerEmail}';
+  }
+}
+
+/// generated route for
+/// [AppointmentDetailPage]
+class AppointmentDetailRoute extends PageRouteInfo<AppointmentDetailRouteArgs> {
+  AppointmentDetailRoute({
+    Key? key,
+    required AppointmentModelWithTimeZoneOffset appointmentItem,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AppointmentDetailRoute.name,
+          args: AppointmentDetailRouteArgs(
+            key: key,
+            appointmentItem: appointmentItem,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AppointmentDetailRoute';
+
+  static const PageInfo<AppointmentDetailRouteArgs> page =
+      PageInfo<AppointmentDetailRouteArgs>(name);
+}
+
+class AppointmentDetailRouteArgs {
+  const AppointmentDetailRouteArgs({
+    this.key,
+    required this.appointmentItem,
+  });
+
+  final Key? key;
+
+  final AppointmentModelWithTimeZoneOffset appointmentItem;
+
+  @override
+  String toString() {
+    return 'AppointmentDetailRouteArgs{key: $key, appointmentItem: $appointmentItem}';
   }
 }
 
@@ -1770,6 +1997,113 @@ class UnauthSupportRoute extends PageRouteInfo<void> {
   static const String name = 'UnauthSupportRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EsiaLoginPage]
+class EsiaLoginRoute extends PageRouteInfo<void> {
+  const EsiaLoginRoute({List<PageRouteInfo>? children})
+      : super(
+          EsiaLoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EsiaLoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EsiaRegisterPage]
+class EsiaRegisterRoute extends PageRouteInfo<EsiaRegisterRouteArgs> {
+  EsiaRegisterRoute({
+    Key? key,
+    required String firstName,
+    required String lastName,
+    required String middleName,
+    required String phoneNumber,
+    required String snils,
+    required int sex,
+    required String birthday,
+    required String passportSerial,
+    required String passportNumber,
+    required String passportIssueDate,
+    required String passportIssueId,
+    required String esiaToken,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EsiaRegisterRoute.name,
+          args: EsiaRegisterRouteArgs(
+            key: key,
+            firstName: firstName,
+            lastName: lastName,
+            middleName: middleName,
+            phoneNumber: phoneNumber,
+            snils: snils,
+            sex: sex,
+            birthday: birthday,
+            passportSerial: passportSerial,
+            passportNumber: passportNumber,
+            passportIssueDate: passportIssueDate,
+            passportIssueId: passportIssueId,
+            esiaToken: esiaToken,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EsiaRegisterRoute';
+
+  static const PageInfo<EsiaRegisterRouteArgs> page =
+      PageInfo<EsiaRegisterRouteArgs>(name);
+}
+
+class EsiaRegisterRouteArgs {
+  const EsiaRegisterRouteArgs({
+    this.key,
+    required this.firstName,
+    required this.lastName,
+    required this.middleName,
+    required this.phoneNumber,
+    required this.snils,
+    required this.sex,
+    required this.birthday,
+    required this.passportSerial,
+    required this.passportNumber,
+    required this.passportIssueDate,
+    required this.passportIssueId,
+    required this.esiaToken,
+  });
+
+  final Key? key;
+
+  final String firstName;
+
+  final String lastName;
+
+  final String middleName;
+
+  final String phoneNumber;
+
+  final String snils;
+
+  final int sex;
+
+  final String birthday;
+
+  final String passportSerial;
+
+  final String passportNumber;
+
+  final String passportIssueDate;
+
+  final String passportIssueId;
+
+  final String esiaToken;
+
+  @override
+  String toString() {
+    return 'EsiaRegisterRouteArgs{key: $key, firstName: $firstName, lastName: $lastName, middleName: $middleName, phoneNumber: $phoneNumber, snils: $snils, sex: $sex, birthday: $birthday, passportSerial: $passportSerial, passportNumber: $passportNumber, passportIssueDate: $passportIssueDate, passportIssueId: $passportIssueId, esiaToken: $esiaToken}';
+  }
 }
 
 /// generated route for

@@ -48,44 +48,88 @@ class AppointmentsCubit
       response = await appointmentsRepository.getAppointmentsList();
 
       final appointmentsList = response
-        .map((e) => AppointmentModelWithTimeZoneOffset(
-            status: e.status,
-            needConfirmation: e.needConfirmation,
-            comment: e.comment,
-            researchPlace: e.researchPlace,
-            id: e.id,
-            appointmentDateTime:
-                const TimestampConverter().fromJson(e.appointmentDateTime),
-            timeZoneOffset: getTimezoneOffset(e.appointmentDateTime),
-            patientInfo: e.patientInfo,
-            clinicInfo: e.clinicInfo,
-            doctorInfo: e.doctorInfo,
-            researches: e.researches,
-            categoryType: e.categoryType,
-            isVideo: e.isVideo,
-            payType: e.payType,
-            isDraft: e.isDraft,
-            orderId: e.orderId,
-            scheduleId: e.scheduleId,
-            paymentStatus: e.paymentStatus,
-            recommendations: e.recommendations))
-        .toList();
+          .map((e) => AppointmentModelWithTimeZoneOffset(
+                status: e.status,
+                needConfirmation: e.needConfirmation,
+                comment: e.comment,
+                researchPlace: e.researchPlace,
+                id: e.id,
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
+                timeZoneOffset: getTimezoneOffset(e.appointmentDateTime),
+                patientInfo: e.patientInfo,
+                clinicInfo: e.clinicInfo,
+                doctorInfo: e.doctorInfo,
+                researches: e.researches,
+                categoryType: e.categoryType,
+                isVideo: e.isVideo,
+                payType: e.payType,
+                isDraft: e.isDraft,
+                orderId: e.orderId,
+                scheduleId: e.scheduleId,
+                paymentStatus: e.paymentStatus,
+                recommendations: e.recommendations,
+                items: e.items,
+                checkURI: e.checkURI,
+                review: e.review,
+                cabinetInfo: e.cabinetInfo,
+              ))
+          .toList();
 
       final awaitedAppointments = response
-        .where((e) => AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
-      .toList();
+          .where((e) =>
+              AppointmentStatuses().getStatus(e.status).statusName == 'Ожидает')
+          .toList();
 
       emit(state.copyWith(
-        getAppointmentsStatus: GetAppointmentsStatuses.success,
-        appointmentsList: appointmentsList,
-        filteredAppointmentsList: appointmentsList,
-        confirmCounter: 
-          awaitedAppointments.where(
-            (e) => isDifferenceIn24h(
-              DateTime.parse(e.appointmentDateTime)
-            )
-          ).length
-      ));
+          getAppointmentsStatus: GetAppointmentsStatuses.success,
+          appointmentsList: appointmentsList,
+          filteredAppointmentsList: appointmentsList,
+          confirmCounter: awaitedAppointments
+              .where((e) =>
+                  isDifferenceIn24h(DateTime.parse(e.appointmentDateTime)))
+              .length));
+
+      final appointmentsListWithTimeZoneOffset = response
+          .map((e) => AppointmentModelWithTimeZoneOffset(
+                status: e.status,
+                needConfirmation: e.needConfirmation,
+                comment: e.comment,
+                researchPlace: e.researchPlace,
+                id: e.id,
+                appointmentDateTime:
+                    const TimestampConverter().fromJson(e.appointmentDateTime),
+                timeZoneOffset: int.parse(
+                    e.appointmentDateTime.split('+').last.substring(0, 2)),
+                patientInfo: e.patientInfo,
+                clinicInfo: e.clinicInfo,
+                doctorInfo: e.doctorInfo,
+                researches: e.researches,
+                categoryType: e.categoryType,
+                isVideo: e.isVideo,
+                payType: e.payType,
+                isDraft: e.isDraft,
+                orderId: e.orderId,
+                scheduleId: e.scheduleId,
+                paymentStatus: e.paymentStatus,
+                recommendations: e.recommendations,
+                items: e.items,
+                checkURI: e.checkURI,
+                review: e.review,
+                cabinetInfo: e.cabinetInfo,
+              ))
+          .toList();
+      emit(state.copyWith(
+          getAppointmentsStatus: GetAppointmentsStatuses.success,
+          appointmentsList: appointmentsListWithTimeZoneOffset,
+          filteredAppointmentsList: appointmentsListWithTimeZoneOffset,
+          globalFilteredAppointmentsList: appointmentsListWithTimeZoneOffset,
+          confirmCounter: response.where((e) {
+            final diff = const TimestampConverter()
+                .fromJson(e.appointmentDateTime)
+                .difference(DateTime.now());
+            return e.status == 4 && diff.inHours < 24 && diff.inHours >= 0;
+          }).length));
       filterAppointmentsList(state.selectedDate);
       return;
     } catch (e) {
@@ -93,6 +137,7 @@ class AppointmentsCubit
         getAppointmentsStatus: GetAppointmentsStatuses.failed,
         appointmentsList: [],
         filteredAppointmentsList: [],
+        globalFilteredAppointmentsList: [],
       ));
       return;
     }
@@ -113,17 +158,14 @@ class AppointmentsCubit
 
   /// Отбираем приемы по выделенному дню
   void filterAppointmentsList(DateTime selectedDate,
-    {
-      List<AppointmentModelWithTimeZoneOffset>? appointmentsList
-    }) {
+      {List<AppointmentModelWithTimeZoneOffset>? appointmentsList}) {
     final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
-    final list = appointmentsList ?? state.appointmentsList;
+    final list = appointmentsList ?? state.globalFilteredAppointmentsList;
 
     if (list == null) return;
     filteredAppointmentsList = list
-        .where((element) => isSameDay(
-            element.appointmentDateTime,
-            state.selectedDate))
+        .where((element) =>
+            isSameDay(element.appointmentDateTime, state.selectedDate))
         .toList();
     emit(state.copyWith(
       filteredAppointmentsList: filteredAppointmentsList,
@@ -166,26 +208,31 @@ class AppointmentsCubit
       emit(state.copyWith(
           getLastAppointmentStatus: GetLastAppointmentStatuses.success,
           lastAppointment: AppointmentModelWithTimeZoneOffset(
-              status: response.status,
-              needConfirmation: response.needConfirmation,
-              comment: response.comment,
-              researchPlace: response.researchPlace,
-              id: response.id,
-              appointmentDateTime: const TimestampConverter()
-                  .fromJson(response.appointmentDateTime),
-              timeZoneOffset: getTimezoneOffset(response.appointmentDateTime),
-              patientInfo: response.patientInfo,
-              clinicInfo: response.clinicInfo,
-              doctorInfo: response.doctorInfo,
-              researches: response.researches,
-              categoryType: response.categoryType,
-              isVideo: response.isVideo,
-              payType: response.payType,
-              isDraft: response.isDraft,
-              orderId: response.orderId,
-              scheduleId: response.scheduleId,
-              paymentStatus: response.paymentStatus,
-              recommendations: response.recommendations)));
+            status: response.status,
+            needConfirmation: response.needConfirmation,
+            comment: response.comment,
+            researchPlace: response.researchPlace,
+            id: response.id,
+            appointmentDateTime: const TimestampConverter()
+                .fromJson(response.appointmentDateTime),
+            timeZoneOffset: getTimezoneOffset(response.appointmentDateTime),
+            patientInfo: response.patientInfo,
+            clinicInfo: response.clinicInfo,
+            doctorInfo: response.doctorInfo,
+            researches: response.researches,
+            categoryType: response.categoryType,
+            isVideo: response.isVideo,
+            payType: response.payType,
+            isDraft: response.isDraft,
+            orderId: response.orderId,
+            scheduleId: response.scheduleId,
+            paymentStatus: response.paymentStatus,
+            recommendations: response.recommendations,
+            items: response.items,
+            checkURI: response.checkURI,
+            review: response.review,
+            cabinetInfo: response.cabinetInfo,
+          )));
     } catch (e) {
       clearAppointment();
       emit(state.copyWith(
@@ -200,14 +247,13 @@ class AppointmentsCubit
     bool doNotShowNotification = false,
   }) async {
     final list = state.appointmentsList
-      ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
-    .toList();
+        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 2))
+        .toList();
 
     emit(state.copyWith(
-      deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
-      appointmentsList: list,
-      appointmentLoadingId: appointmentId
-    ));
+        deleteAppointmentStatus: DeleteAppointmentStatuses.loading,
+        appointmentsList: list,
+        appointmentLoadingId: appointmentId));
 
     try {
       final bool response;
@@ -219,10 +265,7 @@ class AppointmentsCubit
         AppToast.showAppToast(msg: 'Прием успешно отменен');
       }
 
-      filterAppointmentsList(
-        state.selectedDate,
-        appointmentsList: list
-      );
+      filterAppointmentsList(state.selectedDate, appointmentsList: list);
 
       emit(state.copyWith(
         confirmCounter: (state.confirmCounter ?? 2) - 1,
@@ -230,8 +273,7 @@ class AppointmentsCubit
       ));
     } catch (e) {
       emit(state.copyWith(
-        deleteAppointmentStatus: DeleteAppointmentStatuses.failed)
-      );
+          deleteAppointmentStatus: DeleteAppointmentStatuses.failed));
     }
   }
 
@@ -241,14 +283,13 @@ class AppointmentsCubit
     required String userId,
   }) async {
     final list = state.appointmentsList
-      ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
-    .toList();
+        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
+        .toList();
 
     emit(state.copyWith(
-      putAppointmentStatus: PutAppointmentsStatuses.loading,
-      appointmentsList: list,
-      appointmentLoadingId: appointmentId
-    ));
+        putAppointmentStatus: PutAppointmentsStatuses.loading,
+        appointmentsList: list,
+        appointmentLoadingId: appointmentId));
 
     try {
       final bool response;
@@ -260,25 +301,159 @@ class AppointmentsCubit
         AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
 
-      filterAppointmentsList(
-        state.selectedDate,
-        appointmentsList: list
-      );
+      filterAppointmentsList(state.selectedDate, appointmentsList: list);
 
       emit(state.copyWith(
         confirmCounter: (state.confirmCounter ?? 2) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));
-
     } catch (e) {
       emit(
-        state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed)
-      );
+          state.copyWith(putAppointmentStatus: PutAppointmentsStatuses.failed));
     }
   }
 
   /// Очистить приём
   void clearAppointment() {
     emit(state.clearAppointment());
+  }
+
+  /// Получить прием по id
+  Future<AppointmentModel> getAppointmentById({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    emit(state.copyWith(
+      getAppointmentStatus: GetAppointmentStatuses.loading,
+    ));
+
+    try {
+      final AppointmentModel response;
+      response = await appointmentsRepository.getAppointmentById(
+        appointmentId: appointmentId,
+        userId: userId,
+      );
+
+      emit(state.copyWith(
+        getAppointmentStatus: GetAppointmentStatuses.success,
+        selectedAppointment: response,
+      ));
+
+      return response;
+    } catch (e) {
+      clearAppointment();
+      emit(state.copyWith(
+        getAppointmentStatus: GetAppointmentStatuses.failed,
+      ));
+      rethrow;
+    }
+  }
+
+  /// Отправить отзыв
+  Future<bool> saveAppointmentReview({
+    required String appointmentId,
+    required String reviewVisibility,
+    required String caption,
+    required String message,
+    required String email,
+    required int rate,
+  }) async {
+    emit(state.copyWith(
+      sendAppointmentReviewStatus: SendAppointmentReviewStatuses.loading,
+    ));
+
+    try {
+      await appointmentsRepository.saveAppointmentRate(
+        appointmentId: appointmentId,
+        reviewVisibility: reviewVisibility,
+        caption: caption,
+        message: message,
+        email: email,
+        rate: rate,
+      );
+
+      List<AppointmentModelWithTimeZoneOffset>? appointmentsListWithNewRating =
+          state.appointmentsList
+              ?.map((e) => e.id == appointmentId
+                  ? e.copyWith(
+                      doctorInfo: e.doctorInfo.copyWith(
+                        rateAsUser: rate,
+                        rateAsSotr: rate,
+                      ),
+                      review: AppointmentReviewModel(
+                        rate: rate,
+                        caption: caption,
+                        message: message,
+                        visibility: int.parse(reviewVisibility),
+                        email: email,
+                      ))
+                  : e)
+              .toList();
+
+      emit(state.copyWith(
+          sendAppointmentReviewStatus: SendAppointmentReviewStatuses.success,
+          appointmentsList: appointmentsListWithNewRating,
+          selectedAppointment: state.selectedAppointment!.copyWith(
+            doctorInfo: state.selectedAppointment!.doctorInfo.copyWith(
+              rateAsUser:
+                  state.selectedAppointment!.doctorInfo.rateAsUser ?? rate,
+            ),
+            review: AppointmentReviewModel(
+              rate: rate,
+              caption: caption,
+              message: message,
+              visibility: int.parse(reviewVisibility),
+              email: email,
+            ),
+          )));
+
+      Future.delayed(const Duration(seconds: 2), () {
+        emit(
+          state.copyWith(
+            sendAppointmentReviewStatus: SendAppointmentReviewStatuses.initial,
+          ),
+        );
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      clearAppointment();
+      emit(state.copyWith(
+        sendAppointmentReviewStatus: SendAppointmentReviewStatuses.failed,
+      ));
+      return false;
+    }
+  }
+
+  void setRatingToSelectedAppointment(num rate) {
+    try {
+      if (state.selectedAppointment!.doctorInfo.rateAsUser == null) {
+        emit(state.copyWith(
+          selectedAppointment:
+              state.selectedAppointment!.copyWith.doctorInfo(rateAsUser: rate),
+        ));
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  void setSelectedFilterId(String filterId) {
+    final List<AppointmentModelWithTimeZoneOffset> filteredAppointmentsList;
+    if (state.appointmentsList == null) return;
+    if (filterId.isNotEmpty) {
+      filteredAppointmentsList = state.appointmentsList!
+          .where((element) => element.patientInfo.id == filterId)
+          .toList();
+    } else {
+      filteredAppointmentsList = state.appointmentsList!;
+    }
+
+    emit(state.copyWith(
+      selectedAppointmentFilterId: filterId,
+      globalFilteredAppointmentsList: filteredAppointmentsList,
+    ));
+
+    filterAppointmentsList(state.selectedDate);
   }
 }

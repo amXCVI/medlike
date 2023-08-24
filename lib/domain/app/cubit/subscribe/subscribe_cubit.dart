@@ -1,4 +1,5 @@
-import 'package:intl/intl.dart';
+import 'package:flutter_cache_manager/file.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/data/models/calendar_models/calendar_models.dart';
@@ -9,6 +10,7 @@ import 'package:medlike/data/repository/subscribe_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -454,8 +456,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
           /// если найдётя проблема наличия ячейки одновременно
           /// в cells и logs на бэкенде
           /// но мне так и не удалось отследить строгий путь появления
-          return response.logs.where((log) => 
-            log.date == el.time).isEmpty;
+          return response.logs.where((log) => log.date == el.time).isEmpty;
         }).toList(),
         timetableLogsList: response.logs,
       ));
@@ -584,7 +585,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void createNewAppointment({
     required String userId,
     required String userName,
-    required int timezoneHours
+    required int timezoneHours,
   }) async {
     if (state.creatingAppointmentStatus ==
         CreatingAppointmentStatuses.success) {
@@ -594,7 +595,6 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       creatingAppointmentStatus: CreatingAppointmentStatuses.loading,
     ));
-
 
     final time = state.selectedTimetableCell?.time as DateTime;
 
@@ -846,6 +846,54 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     emit(state.copyWith(
       selectedPayType: payType,
     ));
+  }
+
+  /// Получение аватарки врача по id
+  Future<File> getDoctorAvatarById(
+      {required String avatarId, required bool isThumbnail}) async {
+    try {
+      File file = await DefaultCacheManager().getSingleFile(
+        '${ApiConstants.baseUrl}/api/v1.0/doctors/image/$avatarId?isThumbnail=$isThumbnail',
+        key: avatarId,
+        headers: {
+          'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        },
+      );
+      return file;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  /// Получение полной информации о враче
+  Future<void> getDoctorInfo({
+    required String doctorId,
+    required int categoryTypeId,
+  }) async {
+    // if (state.selectedDoctorFullData != null &&
+    //     state.selectedDoctorFullData!.id == doctorId) {
+    //   return;
+    // }
+    emit(state.copyWith(
+      getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.loading,
+    ));
+    try {
+      DoctorInfoDataModel response =
+          await subscribeRepository.getDoctorInfoData(
+        doctorId: doctorId,
+        categoryTypeId: categoryTypeId,
+      );
+      emit(state.copyWith(
+        getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.success,
+        selectedDoctorFullData: response,
+      ));
+      return;
+    } catch (e) {
+      emit(state.copyWith(
+          getDoctorInfoDataStatus: GetDoctorInfoDataStatuses.failed));
+      rethrow;
+    }
   }
 }
 

@@ -8,6 +8,8 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/modules/subscribe/schedule/day_appointments_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/date_time_helper.dart';
+import 'package:medlike/widgets/doctor_cached_avatar/doctor_avatar.dart';
+import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class AppointmentsListWidget extends StatelessWidget {
   const AppointmentsListWidget(
@@ -131,22 +133,33 @@ class AppointmentsList extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 15,
-                                  child: Text(
-                                      appointmentItem.doctorInfo.lastName![0]),
-                                  backgroundColor: AppColors.mainBrand[100],
+                                  child:
+                                      appointmentItem.doctorInfo.imageId == null
+                                          ? Text(
+                                              appointmentItem
+                                                  .doctorInfo.lastName![0],
+                                              style: const TextStyle(
+                                                  fontFamily: 'AquawaxPro'),
+                                            )
+                                          : DoctorCachedAvatar(
+                                              radius: 15,
+                                              avatarId: appointmentItem
+                                                  .doctorInfo.imageId!,
+                                              isThumbnail: true,
+                                            ),
                                 ),
                                 const SizedBox(width: 8.0),
                                 Text(
-                                  '${appointmentItem.doctorInfo.lastName} ' +
-                                      '${appointmentItem.doctorInfo.firstName}'[
-                                          0] +
-                                      '. ${appointmentItem.doctorInfo.middleName![0]}' +
-                                      '.',
+                                  '${appointmentItem.doctorInfo.lastName} ${'${appointmentItem.doctorInfo.firstName}'[0]}. ${appointmentItem.doctorInfo.middleName![0]}.',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
                                       ?.copyWith(color: AppColors.lightText),
                                   overflow: TextOverflow.ellipsis,
+                                ),
+                                const Spacer(),
+                                DoctorRating(
+                                  rating: appointmentItem.doctorInfo.rateAsUser,
                                 ),
                               ],
                             )

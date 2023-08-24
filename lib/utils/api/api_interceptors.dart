@@ -31,8 +31,9 @@ class DioInterceptors extends Interceptor {
       'VerApp': ApiConstants.appVersion,
       'Platform':
           PlatformHelper.getPlatform(), //Platform.isAndroid ? '1' : '2',
-      'Authorization':
-          'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
+      'Authorization': options.headers.keys.contains('Authorization')
+          ? options.headers['Authorization']
+          : 'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}',
     };
 
     return super.onRequest(options, handler);

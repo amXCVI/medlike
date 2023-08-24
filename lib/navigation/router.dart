@@ -6,9 +6,13 @@ import 'package:medlike/modules/about_clinic/all_clinics_list/all_clinics_list_p
 import 'package:medlike/modules/about_clinic/detail_clinic_with_bottom_sheets/clinic_detail_with_bottom_sheets_page.dart';
 import 'package:medlike/modules/about_clinic/price/price_page.dart';
 import 'package:medlike/modules/about_clinic/sales/sales_page.dart';
+import 'package:medlike/modules/appointments/appointment_detail/appointment_detail_page.dart';
 import 'package:medlike/modules/appointments/appointments_page.dart';
+import 'package:medlike/modules/appointments/feedback/feedback_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
+import 'package:medlike/modules/settings/faq/faq_item_page/faq_item_page.dart';
+import 'package:medlike/modules/settings/faq/faqs_page/faqs_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
 import 'package:medlike/modules/login/auth_user_agreements/auth_user_agreements_page.dart';
 import 'package:medlike/modules/health/diary_add_page/diary_add_page.dart';
@@ -16,6 +20,8 @@ import 'package:medlike/modules/health/diary_page/diary_page.dart';
 import 'package:medlike/modules/health/health_page/health_page.dart';
 import 'package:medlike/modules/login/check_pin_code_page/check_pin_code_page.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_page.dart';
+import 'package:medlike/modules/login/esia_auth/esia_login_page.dart';
+import 'package:medlike/modules/login/esia_register/esia_register_page.dart';
 import 'package:medlike/modules/login/password_page/password_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_new_page.dart';
 import 'package:medlike/modules/login/recover_passvord/recover_password_sms_page.dart';
@@ -74,8 +80,27 @@ class AppRouter extends _$AppRouter {
             page: AuthUserAgreementsRoute.page),
         AdaptiveRoute(
             path: AppRoutes.loginUnauthSupport, page: UnauthSupportRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginPinCodeCheck,
+            page: CheckPinCodeRoute.page,
+            guards: [CheckIsSavedPinCode()]),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordSms,
+            page: RecoverPasswordSmsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginRecoverPasswordNew,
+            page: RecoverPasswordNewRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginAuthUserAgreements,
+            page: AuthUserAgreementsRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginUnauthSupport, page: UnauthSupportRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginEsiaLoginPage, page: EsiaLoginRoute.page),
+        AdaptiveRoute(
+            path: AppRoutes.loginEsiaRegisterPage,
+            page: EsiaRegisterRoute.page),
 
-        /// Главная
         AdaptiveRoute(
             path: AppRoutes.main,
             page: MainRoute.page,
@@ -86,6 +111,14 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.myAppointments,
             page: AppointmentsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.appointmentDetails,
+            page: AppointmentDetailRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.feedback,
+            page: FeedbackRoute.page,
             guards: [CheckIsAuthUser()]),
 
         /// Запись
@@ -220,6 +253,16 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.documentDetail,
             page: DocumentRoute.page,
+            guards: [CheckIsAuthUser()]),
+
+        /// FAQ
+        AdaptiveRoute(
+            path: AppRoutes.settingsFaqsPage,
+            page: FaqsRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.settingsFaqItemPage,
+            page: FaqItemRoute.page,
             guards: [CheckIsAuthUser()]),
 
         /// Служебное

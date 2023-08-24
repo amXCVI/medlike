@@ -35,7 +35,7 @@ class AppointmentsCalendar extends StatelessWidget {
           selectedDate: state.selectedDate,
           calendarList:
               state.getAppointmentsStatus == GetAppointmentsStatuses.success
-                  ? state.appointmentsList!
+                  ? state.globalFilteredAppointmentsList!
                       .map((e) => CalendarModel(
                             date: getAppointmentTimeObject(
                                 e.appointmentDateTime, e.timeZoneOffset),

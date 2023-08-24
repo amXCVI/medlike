@@ -93,11 +93,20 @@ _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
       middleName: json['middleName'] as String,
       specializationId: json['specializationId'] as String,
       specialization: json['specialization'] as String,
-      price: json['price'] as int,
+      price: json['price'] as int?,
       categoryType: json['categoryType'] as int,
       isFavorite: json['isFavorite'] as bool,
       categories:
           (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
+      imageId: json['imageId'] as String?,
+      reviews: (json['reviews'] as List<dynamic>)
+          .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      shortinfo: json['shortinfo'] as String?,
+      comment: json['comment'] as String?,
+      experience: json['experience'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num,
+      rateAsUser: json['rateAsUser'] as num,
     );
 
 Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
@@ -111,12 +120,19 @@ Map<String, dynamic> _$$_DoctorToJson(_$_Doctor instance) => <String, dynamic>{
       'categoryType': instance.categoryType,
       'isFavorite': instance.isFavorite,
       'categories': instance.categories,
+      'imageId': instance.imageId,
+      'reviews': instance.reviews,
+      'shortinfo': instance.shortinfo,
+      'comment': instance.comment,
+      'experience': instance.experience,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
     };
 
 _$_Research _$$_ResearchFromJson(Map<String, dynamic> json) => _$_Research(
       id: json['id'] as String,
       name: json['name'] as String,
-      price: json['price'] as int,
+      price: json['price'] as int?,
       categoryType: json['categoryType'] as int,
       scheduleType: json['scheduleType'] as int,
       buildingId: json['buildingId'] as String,
@@ -141,6 +157,11 @@ _$_FavoriteDoctor _$$_FavoriteDoctorFromJson(Map<String, dynamic> json) =>
       specializationId: json['specializationId'] as String,
       specialization: json['specialization'] as String,
       categoryType: json['categoryType'] as int,
+      imageId: json['imageId'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num,
+      rateAsUser: json['rateAsUser'] as num,
+      experience: json['experience'] as String?,
+      comment: json['comment'] as String?,
     );
 
 Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
@@ -152,4 +173,98 @@ Map<String, dynamic> _$$_FavoriteDoctorToJson(_$_FavoriteDoctor instance) =>
       'specializationId': instance.specializationId,
       'specialization': instance.specialization,
       'categoryType': instance.categoryType,
+      'imageId': instance.imageId,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
+      'experience': instance.experience,
+      'comment': instance.comment,
+    };
+
+_$_AssessmentModel _$$_AssessmentModelFromJson(Map<String, dynamic> json) =>
+    _$_AssessmentModel(
+      rating: json['rating'] as int,
+      header: json['header'] as String,
+      assessment: json['assessment'] as String,
+      isPublic: json['isPublic'] as bool,
+      user: json['user'] as String,
+    );
+
+Map<String, dynamic> _$$_AssessmentModelToJson(_$_AssessmentModel instance) =>
+    <String, dynamic>{
+      'rating': instance.rating,
+      'header': instance.header,
+      'assessment': instance.assessment,
+      'isPublic': instance.isPublic,
+      'user': instance.user,
+    };
+
+_$_DoctorInfoModel _$$_DoctorInfoModelFromJson(Map<String, dynamic> json) =>
+    _$_DoctorInfoModel(
+      id: json['id'] as String,
+      lastName: json['lastName'] as String,
+      firstName: json['firstName'] as String,
+      middleName: json['middleName'] as String,
+      specializationId: json['specializationId'] as String,
+      specialization: json['specialization'] as String,
+      price: json['price'] as int,
+      categoryType: json['categoryType'] as int,
+      isFavorite: json['isFavorite'] as bool,
+      categories:
+          (json['categories'] as List<dynamic>).map((e) => e as int).toList(),
+      imageId: json['imageId'] as String?,
+      reviews: (json['reviews'] as List<dynamic>)
+          .map((e) => DoctorInfoReviewModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      shortinfo: json['shortinfo'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num?,
+      rateAsUser: json['rateAsUser'] as num?,
+    );
+
+Map<String, dynamic> _$$_DoctorInfoModelToJson(_$_DoctorInfoModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lastName': instance.lastName,
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'specializationId': instance.specializationId,
+      'specialization': instance.specialization,
+      'price': instance.price,
+      'categoryType': instance.categoryType,
+      'isFavorite': instance.isFavorite,
+      'categories': instance.categories,
+      'imageId': instance.imageId,
+      'reviews': instance.reviews,
+      'shortinfo': instance.shortinfo,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
+    };
+
+_$_DoctorInfoReviewModel _$$_DoctorInfoReviewModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_DoctorInfoReviewModel(
+      sysUser: json['sysUser'] as String,
+      sotr: json['sotr'] as String,
+      date: DateTime.parse(json['date'] as String),
+      rate: json['rate'] as num,
+      caption: json['caption'] as String?,
+      message: json['message'] as String?,
+      anonimous: json['anonimous'] as bool,
+      peopleId: json['peopleId'] as String?,
+      accountId: json['account_id'] as String?,
+      fio: json['fio'] as String?,
+    );
+
+Map<String, dynamic> _$$_DoctorInfoReviewModelToJson(
+        _$_DoctorInfoReviewModel instance) =>
+    <String, dynamic>{
+      'sysUser': instance.sysUser,
+      'sotr': instance.sotr,
+      'date': instance.date.toIso8601String(),
+      'rate': instance.rate,
+      'caption': instance.caption,
+      'message': instance.message,
+      'anonimous': instance.anonimous,
+      'peopleId': instance.peopleId,
+      'account_id': instance.accountId,
+      'fio': instance.fio,
     };

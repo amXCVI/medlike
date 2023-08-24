@@ -7,7 +7,8 @@ class AppointmentsRepository {
 
   Future<AppointmentModel> getLastAppointment() async {
     try {
-      final response = await _dioClient.get('/api/v1.0/schedule/appointments/mainscreen');
+      final response =
+          await _dioClient.get('/api/v1.0/schedule/appointments/mainscreen');
       final appointment = response.data;
       return AppointmentModel.fromJson(appointment);
     } catch (err) {
@@ -30,8 +31,8 @@ class AppointmentsRepository {
     required String userId,
   }) async {
     try {
-      final response = await _dioClient
-        .put('/api/v1.0/schedule/appointments/$appointmentId/confirm?userId=$userId');
+      final response = await _dioClient.put(
+          '/api/v1.0/schedule/appointments/$appointmentId/confirm?userId=$userId');
       return response.statusCode == 200 ? true : false;
     } catch (err) {
       rethrow;
@@ -43,8 +44,46 @@ class AppointmentsRepository {
     required String userId,
   }) async {
     try {
+      final response = await _dioClient.delete(
+          '/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
+      return response.statusCode == 200 ? true : false;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<AppointmentModel> getAppointmentById({
+    required String appointmentId,
+    required String userId,
+  }) async {
+    try {
       final response = await _dioClient
-          .delete('/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
+          .get('/api/v1.0/schedule/appointments/$appointmentId?userId=$userId');
+      final appointment = response.data;
+      return AppointmentModel.fromJson(appointment);
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  Future<bool> saveAppointmentRate({
+    required String appointmentId,
+    required String reviewVisibility,
+    required String caption,
+    required String message,
+    required String email,
+    required int rate,
+  }) async {
+    try {
+      final response =
+          await _dioClient.post('/api/v1.0/schedule/review', data: {
+        "AppointmentId": appointmentId,
+        "ReviewVisibility": reviewVisibility,
+        "Caption": caption,
+        "Message": message,
+        "Email": email,
+        "Rate": rate,
+      });
       return response.statusCode == 200 ? true : false;
     } catch (err) {
       rethrow;
@@ -52,6 +91,5 @@ class AppointmentsRepository {
   }
 }
 
-class MockAppointmentsRepository extends Mock implements AppointmentsRepository {
-
-}
+class MockAppointmentsRepository extends Mock
+    implements AppointmentsRepository {}

@@ -22,7 +22,8 @@ class ResearchItem extends StatelessWidget {
 
     return SubscribeRowItem(
       title: researchItem.name.toString(),
-      subtitle: 'от ${rublesFormat.format(researchItem.price / 100)}',
+      subtitle:
+          'от ${researchItem.price != null ? rublesFormat.format(researchItem.price! / 100) : 0}',
       isRightArrow: false,
       isSelected: isSelected,
       onTap: onTap,

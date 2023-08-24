@@ -38,10 +38,10 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
   }
 
   void getUserPhoneNumber() async {
-    String? userPhoneNumber =
-        await UserSecureStorage.getField(AppConstants.userPhoneNumber);
+    String? showedStartBottomSheet =
+        await UserSecureStorage.getField(AppConstants.startBottomSheetShowed);
 
-    if (userPhoneNumber == null && !widget.isDeletingProfile) {
+    if (showedStartBottomSheet == null && !widget.isDeletingProfile) {
       setState(() {
         isShowingFirstAuthAppAlert = true;
       });
@@ -101,12 +101,12 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         },
         child: TapCanvas(
           child: DefaultScaffold(
-            child: const StartPhoneNumberView(),
             appBarTitle: AppConstants.appName,
             isChildrenPage: false,
             onPressedAppLogo: () {},
             actions: const [UnauthSupportButton()],
             bottomNavigationBar: const LoginPageBottomNavigationBar(),
+            child: const StartPhoneNumberView(),
           ),
         ),
       ),

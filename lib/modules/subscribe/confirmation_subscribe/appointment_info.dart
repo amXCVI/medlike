@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/data/models/models.dart';
+import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_info_item.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_recommendations.dart';
@@ -11,9 +12,34 @@ import 'package:medlike/utils/helpers/date_time_helper.dart';
 class AppointmentInfo extends StatelessWidget {
   const AppointmentInfo({Key? key}) : super(key: key);
 
-  AvailableClinic? getClinic(TimetableCellModel? item, List<AvailableClinic>? clinicsList) {
-    for(AvailableClinic clinic in clinicsList ?? []) {
-      if(clinic.buildingId == item?.buildingId) {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ClinicsCubit, ClinicsState>(
+      builder: (context, state) {
+        if (state.getAllClinicsListStatus == GetAllClinicsListStatuses.failed) {
+          return const Text('');
+        } else if (state.getAllClinicsListStatus ==
+            GetAllClinicsListStatuses.success) {
+          return ClinicsBuilder(
+            clinicsList: state.clinicsList!,
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+}
+
+class ClinicsBuilder extends StatelessWidget {
+  const ClinicsBuilder({Key? key, required this.clinicsList}) : super(key: key);
+
+  final List<ClinicModel> clinicsList;
+
+  ClinicModel? getClinic(
+      TimetableCellModel? item, List<ClinicModel>? clinicsList) {
+    for (ClinicModel clinic in clinicsList ?? []) {
+      if (clinic.buildings.any((el) => el.buildingId == item?.buildingId)) {
         return clinic;
       }
     }
@@ -39,7 +65,7 @@ class AppointmentInfo extends StatelessWidget {
                       state.getAppointmentInfoStatus !=
                           GetAppointmentInfoStatuses.loading
                   ? AppointmentRecommendations(
-                serviceName: state.appointmentInfoData!.serviceName,
+                      serviceName: state.appointmentInfoData!.serviceName,
                       recommendations: state
                           .appointmentInfoData!.recommendations
                           .asMap()
@@ -99,16 +125,16 @@ class AppointmentInfo extends StatelessWidget {
                   ),
                   const SizedBox(width: 24),
                   Expanded(
-                    flex: 2,
-                    child: AppointmentInfoItem(
-                        title: 'Время',
-                        value: getAppointmentTime(
-                          state.selectedTimetableCell!.time,
-                          getClinic(state.selectedTimetableCell, state.availableClinicsList)?.timeZoneOffset ?? 3,
-                          isTimeCell: true
-                        )
-                    )                       
-                  )
+                      flex: 2,
+                      child: AppointmentInfoItem(
+                          title: 'Время',
+                          value: getAppointmentTime(
+                              state.selectedTimetableCell!.time,
+                              getClinic(state.selectedTimetableCell,
+                                          clinicsList)!
+                                      .timeZoneOffset ??
+                                  3,
+                              isTimeCell: true)))
                 ],
               ),
             ],

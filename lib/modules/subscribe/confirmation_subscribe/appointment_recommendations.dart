@@ -13,35 +13,42 @@ class AppointmentRecommendations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (recommendations.length > 2) {
-      return GestureDetector(
-        onTap: () {
-          showModalBottomSheet(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(12),
-                  topLeft: Radius.circular(12),
+      return Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 16),
+        child: GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12),
+                  ),
+                ),
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => RecommendationBottomSheet(
+                      serviceName: serviceName,
+                      recommendationsText: recommendations,
+                    ));
+          },
+          child: Row(
+            children: [
+              const SizedBox(width: 14),
+              Center(
+                  child:
+                      SvgPicture.asset('assets/icons/appointments/info.svg')),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  recommendations,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  softWrap: true,
                 ),
               ),
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => RecommendationBottomSheet(
-                    serviceName: serviceName,
-                    recommendationsText: recommendations.substring(
-                        1, recommendations.length - 1),
-                  ));
-        },
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                recommendations.substring(1, recommendations.length - 1),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                softWrap: true,
-              ),
-            ),
-            SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
-          ],
+              SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
+            ],
+          ),
         ),
       );
     } else {

@@ -24,6 +24,10 @@ class SettingsList extends StatelessWidget {
       context.router.push(AgreementsRoute());
     }
 
+    void handleTapFAQ() {
+      context.router.push(const FaqsRoute());
+    }
+
     void handleTapOnChangePassword() {
       if (context.read<UserCubit>().state.userPhoneNumber == null) {
         context.read<UserCubit>().getPhoneNumber();
@@ -61,6 +65,13 @@ class SettingsList extends StatelessWidget {
                 SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
           SettingsListItem(
+            title: 'Часто задаваемые вопросы',
+            iconSrc: 'assets/icons/settings/ic_faq.svg',
+            onTap: handleTapFAQ,
+            rightActionWidget:
+                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
+          ),
+          SettingsListItem(
             title: 'Документы',
             iconSrc: 'assets/icons/settings/ic_agreement_outline.svg',
             onTap: handleTapAgreements,
@@ -93,7 +104,7 @@ class SettingsList extends StatelessWidget {
                   context: context,
                   builder: (context) => const DeleteProfileDialog());
             },
-            color: Theme.of(context).errorColor,
+            color: Theme.of(context).colorScheme.error,
           )
         ],
       ),

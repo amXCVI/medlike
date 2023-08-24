@@ -8,6 +8,8 @@ class AppRoutes {
   static const loginRecoverPasswordNew = '/login_recover_password_new';
   static const loginAuthUserAgreements = '/login_auth_user_agreements';
   static const loginUnauthSupport = '/login_unauth_support';
+  static const loginEsiaLoginPage = '/login-esia-login-page';
+  static const loginEsiaRegisterPage = '/login-esia-register-page';
   static const main = '/main';
   static const backToMain = '/main';
   static const subscribe = '/subscribe';
@@ -23,6 +25,8 @@ class AppRoutes {
   static const subscribeConfirmation = '/subscribe_confirm';
   static const subscribePayment = '/subscribe_payment_page';
   static const myAppointments = '/my_appointments';
+  static const appointmentDetails = '/my_appointments_details';
+  static const feedback = '/my_appointments_feedback_page';
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
@@ -43,5 +47,7 @@ class AppRoutes {
   static const settings = '/settings';
   static const settingsAgreements = '/settings_agreements';
   static const settingsSupport = '/settings_support';
+  static const settingsFaqsPage = '/settings_faqs_page';
+  static const settingsFaqItemPage = '/settings_faq_item_page';
   static const requireUpdater = '/require_updater_page';
 }
