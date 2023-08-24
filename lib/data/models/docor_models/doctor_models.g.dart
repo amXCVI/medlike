@@ -86,6 +86,40 @@ Map<String, dynamic> _$$_NavigationItemToJson(_$_NavigationItem instance) =>
       'cabinets': instance.cabinets,
     };
 
+_$_AvailableDoctor _$$_AvailableDoctorFromJson(Map<String, dynamic> json) =>
+    _$_AvailableDoctor(
+      id: json['id'] as String,
+      lastName: json['lastName'] as String,
+      firstName: json['firstName'] as String,
+      middleName: json['middleName'] as String,
+      specializationId: json['specializationId'] as String,
+      specialization: json['specialization'] as String,
+      imageId: json['imageId'] as String?,
+      shortinfo: json['shortinfo'] as String?,
+      comment: json['comment'] as String?,
+      experience: json['experience'] as String?,
+      rateAsSotr: json['rateAsSotr'] as num,
+      rateAsUser: json['rateAsUser'] as num,
+      isFavorite: json['isFavorite'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_AvailableDoctorToJson(_$_AvailableDoctor instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lastName': instance.lastName,
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'specializationId': instance.specializationId,
+      'specialization': instance.specialization,
+      'imageId': instance.imageId,
+      'shortinfo': instance.shortinfo,
+      'comment': instance.comment,
+      'experience': instance.experience,
+      'rateAsSotr': instance.rateAsSotr,
+      'rateAsUser': instance.rateAsUser,
+      'isFavorite': instance.isFavorite,
+    };
+
 _$_Doctor _$$_DoctorFromJson(Map<String, dynamic> json) => _$_Doctor(
       id: json['id'] as String,
       lastName: json['lastName'] as String,

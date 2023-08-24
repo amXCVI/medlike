@@ -248,12 +248,12 @@ class SubscribeRepository {
     }
   }
 
-  Future<Doctor> getAvailableDoctor(
+  Future<AvailableDoctor> getAvailableDoctor(
       {required String scheduleId, required String clinicId}) async {
     try {
       final response = await _dioClient.get(
           '/api/v1.0/schedule/available-doctor?scheduleId=$scheduleId&clinicId=$clinicId');
-      return Doctor.fromJson(response.data);
+      return AvailableDoctor.fromJson(response.data);
     } catch (err) {
       rethrow;
     }

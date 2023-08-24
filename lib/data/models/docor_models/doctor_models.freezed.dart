@@ -918,6 +918,413 @@ abstract class _NavigationItem implements NavigationItem {
       throw _privateConstructorUsedError;
 }
 
+AvailableDoctor _$AvailableDoctorFromJson(Map<String, dynamic> json) {
+  return _AvailableDoctor.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AvailableDoctor {
+  String get id => throw _privateConstructorUsedError;
+  String get lastName => throw _privateConstructorUsedError;
+  String get firstName => throw _privateConstructorUsedError;
+  String get middleName => throw _privateConstructorUsedError;
+  String get specializationId => throw _privateConstructorUsedError;
+  String get specialization => throw _privateConstructorUsedError;
+  String? get imageId => throw _privateConstructorUsedError;
+  String? get shortinfo => throw _privateConstructorUsedError;
+  String? get comment => throw _privateConstructorUsedError;
+  String? get experience => throw _privateConstructorUsedError;
+  num get rateAsSotr => throw _privateConstructorUsedError;
+  num get rateAsUser => throw _privateConstructorUsedError;
+  bool get isFavorite => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AvailableDoctorCopyWith<AvailableDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AvailableDoctorCopyWith<$Res> {
+  factory $AvailableDoctorCopyWith(
+          AvailableDoctor value, $Res Function(AvailableDoctor) then) =
+      _$AvailableDoctorCopyWithImpl<$Res, AvailableDoctor>;
+  @useResult
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      String? imageId,
+      String? shortinfo,
+      String? comment,
+      String? experience,
+      num rateAsSotr,
+      num rateAsUser,
+      bool isFavorite});
+}
+
+/// @nodoc
+class _$AvailableDoctorCopyWithImpl<$Res, $Val extends AvailableDoctor>
+    implements $AvailableDoctorCopyWith<$Res> {
+  _$AvailableDoctorCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lastName = null,
+    Object? firstName = null,
+    Object? middleName = null,
+    Object? specializationId = null,
+    Object? specialization = null,
+    Object? imageId = freezed,
+    Object? shortinfo = freezed,
+    Object? comment = freezed,
+    Object? experience = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
+    Object? isFavorite = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: null == specializationId
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: null == specialization
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_AvailableDoctorCopyWith<$Res>
+    implements $AvailableDoctorCopyWith<$Res> {
+  factory _$$_AvailableDoctorCopyWith(
+          _$_AvailableDoctor value, $Res Function(_$_AvailableDoctor) then) =
+      __$$_AvailableDoctorCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String lastName,
+      String firstName,
+      String middleName,
+      String specializationId,
+      String specialization,
+      String? imageId,
+      String? shortinfo,
+      String? comment,
+      String? experience,
+      num rateAsSotr,
+      num rateAsUser,
+      bool isFavorite});
+}
+
+/// @nodoc
+class __$$_AvailableDoctorCopyWithImpl<$Res>
+    extends _$AvailableDoctorCopyWithImpl<$Res, _$_AvailableDoctor>
+    implements _$$_AvailableDoctorCopyWith<$Res> {
+  __$$_AvailableDoctorCopyWithImpl(
+      _$_AvailableDoctor _value, $Res Function(_$_AvailableDoctor) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lastName = null,
+    Object? firstName = null,
+    Object? middleName = null,
+    Object? specializationId = null,
+    Object? specialization = null,
+    Object? imageId = freezed,
+    Object? shortinfo = freezed,
+    Object? comment = freezed,
+    Object? experience = freezed,
+    Object? rateAsSotr = null,
+    Object? rateAsUser = null,
+    Object? isFavorite = null,
+  }) {
+    return _then(_$_AvailableDoctor(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      middleName: null == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String,
+      specializationId: null == specializationId
+          ? _value.specializationId
+          : specializationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      specialization: null == specialization
+          ? _value.specialization
+          : specialization // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageId: freezed == imageId
+          ? _value.imageId
+          : imageId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shortinfo: freezed == shortinfo
+          ? _value.shortinfo
+          : shortinfo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      comment: freezed == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      experience: freezed == experience
+          ? _value.experience
+          : experience // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rateAsSotr: null == rateAsSotr
+          ? _value.rateAsSotr
+          : rateAsSotr // ignore: cast_nullable_to_non_nullable
+              as num,
+      rateAsUser: null == rateAsUser
+          ? _value.rateAsUser
+          : rateAsUser // ignore: cast_nullable_to_non_nullable
+              as num,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_AvailableDoctor extends _AvailableDoctor {
+  const _$_AvailableDoctor(
+      {required this.id,
+      required this.lastName,
+      required this.firstName,
+      required this.middleName,
+      required this.specializationId,
+      required this.specialization,
+      required this.imageId,
+      required this.shortinfo,
+      required this.comment,
+      required this.experience,
+      required this.rateAsSotr,
+      required this.rateAsUser,
+      this.isFavorite = false})
+      : super._();
+
+  factory _$_AvailableDoctor.fromJson(Map<String, dynamic> json) =>
+      _$$_AvailableDoctorFromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String lastName;
+  @override
+  final String firstName;
+  @override
+  final String middleName;
+  @override
+  final String specializationId;
+  @override
+  final String specialization;
+  @override
+  final String? imageId;
+  @override
+  final String? shortinfo;
+  @override
+  final String? comment;
+  @override
+  final String? experience;
+  @override
+  final num rateAsSotr;
+  @override
+  final num rateAsUser;
+  @override
+  @JsonKey()
+  final bool isFavorite;
+
+  @override
+  String toString() {
+    return 'AvailableDoctor(id: $id, lastName: $lastName, firstName: $firstName, middleName: $middleName, specializationId: $specializationId, specialization: $specialization, imageId: $imageId, shortinfo: $shortinfo, comment: $comment, experience: $experience, rateAsSotr: $rateAsSotr, rateAsUser: $rateAsUser, isFavorite: $isFavorite)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AvailableDoctor &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.specializationId, specializationId) ||
+                other.specializationId == specializationId) &&
+            (identical(other.specialization, specialization) ||
+                other.specialization == specialization) &&
+            (identical(other.imageId, imageId) || other.imageId == imageId) &&
+            (identical(other.shortinfo, shortinfo) ||
+                other.shortinfo == shortinfo) &&
+            (identical(other.comment, comment) || other.comment == comment) &&
+            (identical(other.experience, experience) ||
+                other.experience == experience) &&
+            (identical(other.rateAsSotr, rateAsSotr) ||
+                other.rateAsSotr == rateAsSotr) &&
+            (identical(other.rateAsUser, rateAsUser) ||
+                other.rateAsUser == rateAsUser) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      lastName,
+      firstName,
+      middleName,
+      specializationId,
+      specialization,
+      imageId,
+      shortinfo,
+      comment,
+      experience,
+      rateAsSotr,
+      rateAsUser,
+      isFavorite);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AvailableDoctorCopyWith<_$_AvailableDoctor> get copyWith =>
+      __$$_AvailableDoctorCopyWithImpl<_$_AvailableDoctor>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_AvailableDoctorToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AvailableDoctor extends AvailableDoctor {
+  const factory _AvailableDoctor(
+      {required final String id,
+      required final String lastName,
+      required final String firstName,
+      required final String middleName,
+      required final String specializationId,
+      required final String specialization,
+      required final String? imageId,
+      required final String? shortinfo,
+      required final String? comment,
+      required final String? experience,
+      required final num rateAsSotr,
+      required final num rateAsUser,
+      final bool isFavorite}) = _$_AvailableDoctor;
+  const _AvailableDoctor._() : super._();
+
+  factory _AvailableDoctor.fromJson(Map<String, dynamic> json) =
+      _$_AvailableDoctor.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get lastName;
+  @override
+  String get firstName;
+  @override
+  String get middleName;
+  @override
+  String get specializationId;
+  @override
+  String get specialization;
+  @override
+  String? get imageId;
+  @override
+  String? get shortinfo;
+  @override
+  String? get comment;
+  @override
+  String? get experience;
+  @override
+  num get rateAsSotr;
+  @override
+  num get rateAsUser;
+  @override
+  bool get isFavorite;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AvailableDoctorCopyWith<_$_AvailableDoctor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Doctor _$DoctorFromJson(Map<String, dynamic> json) {
   return _Doctor.fromJson(json);
 }
@@ -1205,7 +1612,7 @@ class __$$_DoctorCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Doctor implements _Doctor {
+class _$_Doctor extends _Doctor {
   const _$_Doctor(
       {required this.id,
       required this.lastName,
@@ -1225,7 +1632,8 @@ class _$_Doctor implements _Doctor {
       required this.rateAsSotr,
       required this.rateAsUser})
       : _categories = categories,
-        _reviews = reviews;
+        _reviews = reviews,
+        super._();
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1354,7 +1762,7 @@ class _$_Doctor implements _Doctor {
   }
 }
 
-abstract class _Doctor implements Doctor {
+abstract class _Doctor extends Doctor {
   const factory _Doctor(
       {required final String id,
       required final String lastName,
@@ -1373,6 +1781,7 @@ abstract class _Doctor implements Doctor {
       required final String? experience,
       required final num rateAsSotr,
       required final num rateAsUser}) = _$_Doctor;
+  const _Doctor._() : super._();
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 

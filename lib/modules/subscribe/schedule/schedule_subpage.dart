@@ -55,8 +55,10 @@ class _ScheduleSubpageState extends State<ScheduleSubpage> {
   void initState() {
     super.initState();
 
-    clinicsList = context.read<ClinicsCubit>().state.clinicsList;
-    clinic = clinicsList?.firstWhere(((el) => el.id == widget.clinicId));
+    try {
+      clinicsList = context.read<ClinicsCubit>().state.clinicsList;
+      clinic = clinicsList?.firstWhere(((el) => el.id == widget.clinicId));
+    } catch (err) {}
   }
 
   void _setStartDate(DateTime date) {
