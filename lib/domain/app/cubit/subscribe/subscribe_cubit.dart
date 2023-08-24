@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:medlike/constants/app_constants.dart';
@@ -11,7 +12,6 @@ import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
-import 'package:medlike/utils/helpers/date_helpers.dart';
 import 'package:medlike/utils/helpers/date_helpers.dart' as date_utils;
 import 'package:medlike/utils/helpers/date_time_helper.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -244,17 +244,13 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     // cast Doctor to AvailableDoctor
     final availableDoctor = selectedDoctor.availableDoctor;
     emit(state.copyWith(
-      isAnyDoctor: false,
-      selectedDoctor: () => availableDoctor
-    ));
+        isAnyDoctor: false, selectedDoctor: () => availableDoctor));
   }
 
   /// Сохранить выбранного доктора
   void setAvailableDoctor(AvailableDoctor availableDoctor) {
     emit(state.copyWith(
-      isAnyDoctor: true,
-      selectedDoctor: () => availableDoctor
-    ));
+        isAnyDoctor: true, selectedDoctor: () => availableDoctor));
   }
 
   /// Получает список кабинетов и список докторов для записи на услугу
@@ -373,10 +369,12 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         state.calendarList!.isNotEmpty &&
         state.calendarList!
             .map((e) => date_utils.DateUtils.getDateStr(e.date))
-            .contains(date_utils.DateUtils.getDateStr(startDate ?? state.startDate)) &&
+            .contains(date_utils.DateUtils.getDateStr(
+                startDate ?? state.startDate)) &&
         state.calendarList!
             .map((e) => date_utils.DateUtils.getDateStr(e.date))
-            .contains(date_utils.DateUtils.getDateStr(endDate ?? state.endDate))) {
+            .contains(
+                date_utils.DateUtils.getDateStr(endDate ?? state.endDate))) {
       /// Если этот период уже содержится в массиве календаря, ничего не делаем
       return;
     }
@@ -469,8 +467,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
           /// если найдётя проблема наличия ячейки одновременно
           /// в cells и logs на бэкенде
           /// но мне так и не удалось отследить строгий путь появления
-          return response.logs.where((log) => 
-            log.date == el.time).isEmpty;
+          return response.logs.where((log) => log.date == el.time).isEmpty;
         }).toList(),
         timetableLogsList: response.logs,
       ));
@@ -629,8 +626,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
         },
         'PatientInfo': {'Id': userId, 'Name': userName},
         'DoctorInfo':
-            state.selectedDoctor != null
-            && state.selectedDoctor!.id.isNotEmpty
+            state.selectedDoctor != null && state.selectedDoctor!.id.isNotEmpty
                 ? {
                     'Id': state.selectedDoctor?.id,
                     'FirstName': state.selectedDoctor?.firstName,
@@ -790,10 +786,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   }
 
   void clearSelectedDoctor() async {
-    emit(state.copyWith(
-      isAnyDoctor: false,
-      selectedDoctor: () => null
-    ));
+    emit(state.copyWith(isAnyDoctor: false, selectedDoctor: () => null));
   }
 
   /// Добавляет доктора в избранных
@@ -818,7 +811,8 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
       emit(
         state.copyWith(
           setDoctorToFavoritesStatus: SetDoctorToFavoritesStatuses.success,
-          selectedDoctor: () => state.selectedDoctor?.copyWith(isFavorite: true),
+          selectedDoctor: () =>
+              state.selectedDoctor?.copyWith(isFavorite: true),
           filteredDoctorsList: state.filteredDoctorsList
               ?.map((e) => e.id != doctorId ? e : e.copyWith(isFavorite: true))
               .toList(),

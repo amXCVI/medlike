@@ -171,8 +171,10 @@ class SubscribeState {
     this.createdAppointmentId,
     this.getDoctorInfoDataStatus,
     this.selectedDoctorFullData,
-  })  : endDate = endDate ?? DateUtils.lastDayOfMonth(DateTime.now()),
-        startDate = startDate ?? DateUtils.firstDayOfMonth(DateTime.now()),
+  })  : endDate =
+            endDate ?? date_utils.DateUtils.lastDayOfMonth(DateTime.now()),
+        startDate =
+            startDate ?? date_utils.DateUtils.firstDayOfMonth(DateTime.now()),
         selectedDate = selectedDate ?? DateTime.now();
 
   SubscribeState copyWith({
@@ -224,7 +226,7 @@ class SubscribeState {
     String? selectedPayType,
     RegisterOrderStatuses? registerOrderStatus,
     String? paymentUrl,
-    String? createdAppointmentId,
+    ValueGetter<String?>? createdAppointmentId,
     GetDoctorInfoDataStatuses? getDoctorInfoDataStatus,
     DoctorInfoDataModel? selectedDoctorFullData,
   }) {
@@ -255,7 +257,8 @@ class SubscribeState {
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
       isAnyDoctor: isAnyDoctor ?? this.isAnyDoctor,
-      selectedDoctor: selectedDoctor != null ? selectedDoctor() : this.selectedDoctor,
+      selectedDoctor:
+          selectedDoctor != null ? selectedDoctor() : this.selectedDoctor,
       filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
       getCabinetsListStatus:
           getCabinetsListStatus ?? this.getCabinetsListStatus,
@@ -277,8 +280,9 @@ class SubscribeState {
           getTimetableCellsStatus ?? this.getTimetableCellsStatus,
       timetableCellsList: timetableCellsList ?? this.timetableCellsList,
       timetableLogsList: timetableLogsList ?? this.timetableLogsList,
-      selectedTimetableCell:
-          selectedTimetableCell != null ? selectedTimetableCell() : this.selectedTimetableCell,
+      selectedTimetableCell: selectedTimetableCell != null
+          ? selectedTimetableCell()
+          : this.selectedTimetableCell,
       getAppointmentInfoStatus:
           getAppointmentInfoStatus ?? this.getAppointmentInfoStatus,
       appointmentInfoData: appointmentInfoData ?? this.appointmentInfoData,
@@ -296,7 +300,9 @@ class SubscribeState {
       selectedPayType: selectedPayType ?? this.selectedPayType,
       registerOrderStatus: registerOrderStatus ?? this.registerOrderStatus,
       paymentUrl: paymentUrl ?? this.paymentUrl,
-      createdAppointmentId: createdAppointmentId ?? this.createdAppointmentId,
+      createdAppointmentId: createdAppointmentId != null
+          ? createdAppointmentId()
+          : this.createdAppointmentId,
       getDoctorInfoDataStatus:
           getDoctorInfoDataStatus ?? this.getDoctorInfoDataStatus,
       selectedDoctorFullData:
