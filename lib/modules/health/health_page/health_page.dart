@@ -28,7 +28,7 @@ class HealthPage extends StatelessWidget {
 
       /// Для автоматического пропуска экрана replace всегда
       /// isChildren игнорируем
-      context.router.replace(CardsRoute(isChildrenPage: false));
+      context.router.replace(CardsRoute(isChildrenPage: false, needToGet: false));
     }
 
     return BlocBuilder<DiaryCubit, DiaryState>(builder: (context, state) {
