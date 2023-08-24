@@ -21,7 +21,6 @@ class HealthItem extends StatefulWidget {
       required this.decimalDigits,
       required this.minValue,
       required this.maxValue,
-      required this.onLoadDada,
       required this.onNavigate,
       required this.firstDate,
       required this.lastDate,
@@ -39,7 +38,6 @@ class HealthItem extends StatefulWidget {
   final DiaryFlatModel? data;
   final DateTime firstDate;
   final DateTime lastDate;
-  final Function onLoadDada;
   final Function onNavigate;
   final int index;
   final Function(bool) setSelected;
