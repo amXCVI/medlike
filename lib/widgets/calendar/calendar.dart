@@ -44,6 +44,8 @@ class _CalendarState extends State<Calendar> {
   CalendarFormat _calendarFormat = CalendarFormat.week;
   late PageController _pageController;
   late ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
+  DateTime startDay = DateTime.now().subtract(const Duration(days: 365));
+  DateTime endDay = DateTime.now().add(const Duration(days: 365));
 
   void _hideOrShowFullCalendar() {
     if (_calendarFormat == CalendarFormat.month) {
@@ -55,6 +57,13 @@ class _CalendarState extends State<Calendar> {
         _calendarFormat = CalendarFormat.month;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _focusedDay.value = widget.selectedDate;
   }
 
   @override
@@ -86,10 +95,8 @@ class _CalendarState extends State<Calendar> {
           const DaysOfWeek(),
           TableCalendar(
             locale: Localizations.localeOf(context).languageCode,
-            firstDay: widget.firstDay ??
-                widget.selectedDate.add(const Duration(days: -365)),
-            lastDay: widget.lastDay ??
-                widget.selectedDate.add(const Duration(days: 365)),
+            firstDay: startDay,
+            lastDay: endDay,
             focusedDay: _focusedDay.value,
             onCalendarCreated: (controller) => _pageController = controller,
             onPageChanged: (focusedDay) {

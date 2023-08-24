@@ -73,12 +73,12 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
         isChildrenPage: true,
         actionButton: BlocBuilder<SubscribeCubit, SubscribeState>(
           builder: (context, state) {
-            bool isDisabledButton = !isCheckedAgreements ||
-                state.getAppointmentInfoStatus ==
-                    GetAppointmentInfoStatuses.loading ||
-                state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.loading ||
-                state.registerOrderStatus == RegisterOrderStatuses.loading;
+    bool isDisabledButton = !isCheckedAgreements ||
+    state.getAppointmentInfoStatus ==
+    GetAppointmentInfoStatuses.loading ||
+    state.creatingAppointmentStatus ==
+    CreatingAppointmentStatuses.loading ||
+    state.registerOrderStatus == RegisterOrderStatuses.loading;
             return SizedBox(
               width: 200,
               child: AnimatedFractionallySizedBox(

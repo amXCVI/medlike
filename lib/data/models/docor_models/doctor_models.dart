@@ -58,6 +58,25 @@ class NavigationItem with _$NavigationItem {
 }
 
 @freezed
+class AvailableDoctor with _$AvailableDoctor {
+  const factory AvailableDoctor({
+    required String id,
+    required String lastName,
+    required String firstName,
+    required String middleName,
+    required String specializationId,
+    required String specialization,
+    @Default(false) bool isFavorite
+  }) = _AvailableDoctor;
+
+  const AvailableDoctor._();
+
+  factory AvailableDoctor.fromJson(Map<String, Object?> json) =>
+      _$AvailableDoctorFromJson(json);
+}
+
+
+@freezed
 class Doctor with _$Doctor {
   const factory Doctor({
     required String id,

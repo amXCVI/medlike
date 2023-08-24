@@ -1216,16 +1216,8 @@ class _$_Doctor implements _Doctor {
       required this.price,
       required this.categoryType,
       required this.isFavorite,
-      required final List<int> categories,
-      required this.imageId,
-      required final List<DoctorInfoReviewModel> reviews,
-      required this.shortinfo,
-      required this.comment,
-      required this.experience,
-      required this.rateAsSotr,
-      required this.rateAsUser})
-      : _categories = categories,
-        _reviews = reviews;
+      required final List<int> categories})
+      : _categories = categories;
 
   factory _$_Doctor.fromJson(Map<String, dynamic> json) =>
       _$$_DoctorFromJson(json);
@@ -1365,14 +1357,7 @@ abstract class _Doctor implements Doctor {
       required final int? price,
       required final int categoryType,
       required final bool isFavorite,
-      required final List<int> categories,
-      required final String? imageId,
-      required final List<DoctorInfoReviewModel> reviews,
-      required final String? shortinfo,
-      required final String? comment,
-      required final String? experience,
-      required final num rateAsSotr,
-      required final num rateAsUser}) = _$_Doctor;
+      required final List<int> categories}) = _$_Doctor;
 
   factory _Doctor.fromJson(Map<String, dynamic> json) = _$_Doctor.fromJson;
 

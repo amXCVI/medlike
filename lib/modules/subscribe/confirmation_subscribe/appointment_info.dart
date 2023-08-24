@@ -96,8 +96,8 @@ class ClinicsBuilder extends StatelessWidget {
               ),
               AppointmentInfoItem(
                   title: 'Адрес',
-                  value: ClinicAddressHelper.getShortAddress(
-                      state.selectedBuilding!.address)),
+                  value:
+                      state.selectedBuilding!.address),
               state.selectedDoctor != null &&
                       state.selectedDoctor!.id.isNotEmpty
                   ? Column(

@@ -67,7 +67,8 @@ class SubscribeState {
 
   final GetDoctorsListStatuses? getDoctorsListStatus;
   final List<Doctor>? doctorsList;
-  final Doctor? selectedDoctor;
+  final AvailableDoctor? selectedDoctor;
+  final bool? isAnyDoctor;
   final List<Doctor>? filteredDoctorsList;
 
   final GetCabinetsListStatuses? getCabinetsListStatus;
@@ -137,6 +138,7 @@ class SubscribeState {
     this.getDoctorsListStatus,
     this.doctorsList,
     this.selectedDoctor,
+    this.isAnyDoctor,
     this.filteredDoctorsList,
     this.getCabinetsListStatus,
     this.cabinetsList,
@@ -191,7 +193,8 @@ class SubscribeState {
     List<NavigationItem>? filteredSpecialisationsList,
     GetDoctorsListStatuses? getDoctorsListStatus,
     List<Doctor>? doctorsList,
-    Doctor? selectedDoctor,
+    ValueGetter<AvailableDoctor?>? selectedDoctor,
+    bool? isAnyDoctor,
     List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
@@ -206,7 +209,7 @@ class SubscribeState {
     GetTimetableCellsStatuses? getTimetableCellsStatus,
     List<TimetableCellModel>? timetableCellsList,
     List<TimetableLogModel>? timetableLogsList,
-    TimetableCellModel? selectedTimetableCell,
+    ValueGetter<TimetableCellModel?>? selectedTimetableCell,
     DateTime? startDate,
     DateTime? endDate,
     DateTime? selectedDate,
@@ -251,7 +254,8 @@ class SubscribeState {
           filteredSpecialisationsList ?? this.filteredSpecialisationsList,
       getDoctorsListStatus: getDoctorsListStatus ?? this.getDoctorsListStatus,
       doctorsList: doctorsList ?? this.doctorsList,
-      selectedDoctor: selectedDoctor ?? this.selectedDoctor,
+      isAnyDoctor: isAnyDoctor ?? this.isAnyDoctor,
+      selectedDoctor: selectedDoctor != null ? selectedDoctor() : this.selectedDoctor,
       filteredDoctorsList: filteredDoctorsList ?? this.filteredDoctorsList,
       getCabinetsListStatus:
           getCabinetsListStatus ?? this.getCabinetsListStatus,
@@ -274,7 +278,7 @@ class SubscribeState {
       timetableCellsList: timetableCellsList ?? this.timetableCellsList,
       timetableLogsList: timetableLogsList ?? this.timetableLogsList,
       selectedTimetableCell:
-          selectedTimetableCell ?? this.selectedTimetableCell,
+          selectedTimetableCell != null ? selectedTimetableCell() : this.selectedTimetableCell,
       getAppointmentInfoStatus:
           getAppointmentInfoStatus ?? this.getAppointmentInfoStatus,
       appointmentInfoData: appointmentInfoData ?? this.appointmentInfoData,
@@ -320,6 +324,7 @@ class SubscribeState {
       getDoctorsListStatus: null,
       doctorsList: null,
       selectedDoctor: null,
+      isAnyDoctor: null,
       filteredDoctorsList: null,
       getCabinetsListStatus: null,
       cabinetsList: null,
