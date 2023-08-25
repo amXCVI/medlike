@@ -165,9 +165,7 @@ class AppointmentDetailPage extends StatelessWidget {
                 serviceName: serviceName,
               ),
 
-              CabinetFindItem (
-                appointment: appointmentItem,
-              ),
+
               const SizedBox(
                 height: 15,
               ),
@@ -186,6 +184,9 @@ class AppointmentDetailPage extends StatelessWidget {
                             userId: appointmentItem.patientInfo.id as String,
                           ),
                         ),
+                      CabinetFindItem (
+                        appointment: appointmentItem,
+                      ),
                       if (state.selectedAppointment!.review != null)
                         GestureDetector(
                           onTap: () => handleChangeReview(context),
