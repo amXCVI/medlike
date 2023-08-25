@@ -244,13 +244,17 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     // cast Doctor to AvailableDoctor
     final availableDoctor = selectedDoctor.availableDoctor;
     emit(state.copyWith(
-        isAnyDoctor: false, selectedDoctor: () => availableDoctor));
+      isAnyDoctor: false,
+      selectedDoctor: () => availableDoctor,
+    ));
   }
 
   /// Сохранить выбранного доктора
   void setAvailableDoctor(AvailableDoctor availableDoctor) {
     emit(state.copyWith(
-        isAnyDoctor: true, selectedDoctor: () => availableDoctor));
+      isAnyDoctor: true,
+      selectedDoctor: () => availableDoctor,
+    ));
   }
 
   /// Получает список кабинетов и список докторов для записи на услугу
