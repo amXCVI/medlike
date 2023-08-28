@@ -50,4 +50,5 @@ class AppRoutes {
   static const settingsFaqsPage = '/settings_faqs_page';
   static const settingsFaqItemPage = '/settings_faq_item_page';
   static const requireUpdater = '/require_updater_page';
+  static const splashPage = '/splash_page';
 }

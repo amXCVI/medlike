@@ -11,6 +11,7 @@ import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/appointments/feedback/feedback_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
+import 'package:medlike/modules/main_page/splash_page.dart';
 import 'package:medlike/modules/settings/faq/faq_item_page/faq_item_page.dart';
 import 'package:medlike/modules/settings/faq/faqs_page/faqs_page.dart';
 import 'package:medlike/modules/health/health_page/cards_page.dart';
@@ -270,6 +271,8 @@ class AppRouter extends _$AppRouter {
           path: AppRoutes.requireUpdater,
           page: RequireUpdateAppRoute.page,
         ),
+
+        AdaptiveRoute(path: AppRoutes.splashPage, page: SplashRoute.page),
 
         RedirectRoute(path: '*', redirectTo: AppRoutes.main),
       ];
