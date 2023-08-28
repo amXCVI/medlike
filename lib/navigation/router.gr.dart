@@ -300,7 +300,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: SplashPage(
           key: args.key,
-          nextPage: args.nextPage,
+          parallelAction: args.parallelAction,
         ),
       );
     },
@@ -1540,13 +1540,13 @@ class MainRoute extends PageRouteInfo<void> {
 class SplashRoute extends PageRouteInfo<SplashRouteArgs> {
   SplashRoute({
     Key? key,
-    required String nextPage,
+    required Future<bool> parallelAction,
     List<PageRouteInfo>? children,
   }) : super(
           SplashRoute.name,
           args: SplashRouteArgs(
             key: key,
-            nextPage: nextPage,
+            parallelAction: parallelAction,
           ),
           initialChildren: children,
         );
@@ -1559,16 +1559,16 @@ class SplashRoute extends PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({
     this.key,
-    required this.nextPage,
+    required this.parallelAction,
   });
 
   final Key? key;
 
-  final String nextPage;
+  final Future<bool> parallelAction;
 
   @override
   String toString() {
-    return 'SplashRouteArgs{key: $key, nextPage: $nextPage}';
+    return 'SplashRouteArgs{key: $key, parallelAction: $parallelAction}';
   }
 }
 

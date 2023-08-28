@@ -68,46 +68,33 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
           )
         : InactivityManager(
-            child: FutureBuilder<bool>(
-                future: checkIsSavedPinCode(),
-                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                  return MaterialApp.router(
-                    theme: AppTheme.lightAppTheme.copyWith(
-                      pageTransitionsTheme:
-                          const PageTransitionsTheme(builders: {
-                        // replace default CupertinoPageTransitionsBuilder with this
-                        TargetPlatform.iOS:
-                            NoShadowCupertinoPageTransitionsBuilder(),
-                        TargetPlatform.android:
-                            FadeUpwardsPageTransitionsBuilder(),
-                      }),
-                    ),
-                    title: 'Medlike',
-                    // theme: AppTheme.lightAppTheme,
-                    routerDelegate: AutoRouterDelegate(
-                      _router,
-                      initialRoutes: [
-                        //SplashRoute(isLoggedIn: snapshot.data ?? false)
-                        SplashRoute(
-                            nextPage: (snapshot.data ?? false)
-                                ? AppRoutes.loginPinCodeCheck
-                                : AppRoutes.loginPhone)
-                      ],
-                      navigatorObservers: () => [
-                        FirebaseAnalyticsObserver(
-                            analytics: FirebaseAnalytics.instance),
-                        SentryNavigatorObserver()
-                      ],
-                    ),
-                    routeInformationParser: _router.defaultRouteParser(),
-                    debugShowCheckedModeBanner: false,
-                    localizationsDelegates: const [
-                      GlobalMaterialLocalizations.delegate,
-                    ],
-                    supportedLocales: const [Locale('en')],
-                  );
-                }),
-          );
+            child: MaterialApp.router(
+            theme: AppTheme.lightAppTheme.copyWith(
+              pageTransitionsTheme: const PageTransitionsTheme(builders: {
+                // replace default CupertinoPageTransitionsBuilder with this
+                TargetPlatform.iOS: NoShadowCupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+              }),
+            ),
+            title: 'Medlike',
+            routerDelegate: AutoRouterDelegate(
+              _router,
+              initialRoutes: [
+                 SplashRoute(parallelAction: checkIsSavedPinCode())
+              ],
+              navigatorObservers: () => [
+                FirebaseAnalyticsObserver(
+                    analytics: FirebaseAnalytics.instance),
+                SentryNavigatorObserver()
+              ],
+            ),
+            routeInformationParser: _router.defaultRouteParser(),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('en')],
+          ));
 
     return MultiBlocProvider(providers: [
       BlocProvider(create: (context) => userCubit),
