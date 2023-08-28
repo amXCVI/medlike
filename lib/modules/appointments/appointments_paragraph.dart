@@ -70,11 +70,12 @@ class AppointmentsParagraph extends StatelessWidget {
                           ? Slidable(
                               key: UniqueKey(),
                               endActionPane: ActionPane(
-                                motion: const BehindMotion(),
+                                motion: const ScrollMotion(),
                                 dismissible: DismissiblePane(
                                   onDismissed: () {
                                     _deleteAppointment(
                                         item.id, item.patientInfo.id as String);
+
                                   },
                                 ),
                                 children: [
@@ -91,17 +92,32 @@ class AppointmentsParagraph extends StatelessWidget {
                                           borderRadius: const BorderRadius.only(
                                               topRight: Radius.circular(12),
                                               bottomRight: Radius.circular(12)),
-                                          color: Theme.of(context).errorColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error,
                                         ),
                                         child: Center(
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                                MainAxisAlignment.start,
                                             children: [
                                               const SizedBox(width: 20.0),
                                               SvgPicture.asset(
                                                   'assets/icons/appointments/ic_delete_appointment.svg'),
                                               const SizedBox(width: 20.0),
+                                              Expanded(
+                                                //flex: 1,
+                                                child: Text(
+                                                  "Отменить приём ${(item.paymentStatus == 3 || item.paymentStatus == 6) ? "\nи вернуть денежные средства." : ""}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall
+                                                      ?.copyWith(
+                                                          color: Colors.white),
+                                                  //overflow: TextOverflow.fade,
+                                                  maxLines: 2,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -139,10 +155,14 @@ class _SliderChildState extends State<SliderChild> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 100), () {
-      final Map<TourChecked, bool>? tourState  = context.read<TourCubit>().state.tourChecked;
-      if(!(tourState?[TourChecked.removeAppointment] ?? false)){
+      final Map<TourChecked, bool>? tourState =
+          context.read<TourCubit>().state.tourChecked;
+      if (!(tourState?[TourChecked.removeAppointment] ?? false)) {
         animateDeleting(
-            context, () => context.read<TourCubit>().checkItem(TourChecked.removeAppointment));
+            context,
+            () => context
+                .read<TourCubit>()
+                .checkItem(TourChecked.removeAppointment));
       }
     });
   }

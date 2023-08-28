@@ -15,6 +15,7 @@ import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
+import 'package:medlike/widgets/refund_card/refund_card_slidable_widget.dart';
 import 'package:skeletons/skeletons.dart';
 
 import 'appointment_detail_action_button.dart';
@@ -165,6 +166,35 @@ class AppointmentDetailPage extends StatelessWidget {
                 serviceName: serviceName,
               ),
 
+              // TODO: Write refund card here
+              (appointmentItem.paymentStatus == 3 ||
+                      appointmentItem.paymentStatus == 6)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Оплата',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          child: RefundSlidable(
+                            appointment: appointmentItem,
+                            onDissmis: () {
+                              // TODO: Write action for refund
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
 
               const SizedBox(
                 height: 15,
@@ -184,7 +214,7 @@ class AppointmentDetailPage extends StatelessWidget {
                             userId: appointmentItem.patientInfo.id as String,
                           ),
                         ),
-                      CabinetFindItem (
+                      CabinetFindItem(
                         appointment: appointmentItem,
                       ),
                       if (state.selectedAppointment!.review != null)
