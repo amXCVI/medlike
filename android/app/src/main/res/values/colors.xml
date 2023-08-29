@@ -55,4 +55,5 @@
 <!--    <color name="mainSeparatorAlpha"></color>-->
 <!--    <color name="mainBgAlpha"></color>-->
 <!--    <color name="mainOverlayAlpha"></color>-->
+	<color name="ic_launcher_background">#ffffff</color>
 </resources>
