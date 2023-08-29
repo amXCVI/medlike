@@ -32,6 +32,10 @@ class UnauthSupportForm extends StatelessWidget {
                 controller: controllerEmail,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
                   labelText: 'E-mail для обратной связи',
                   labelStyle: const TextStyle(
                       color: AppColors.lightText,
@@ -76,6 +80,10 @@ class UnauthSupportForm extends StatelessWidget {
                 controller: controllerMessage,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
                   labelText: 'Сообщение',
                   labelStyle: const TextStyle(
                       color: AppColors.lightText,

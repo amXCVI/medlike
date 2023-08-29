@@ -23,7 +23,9 @@ class DefaultScaffold extends StatefulWidget {
     this.rightBottomWidget,
     this.widgetOverBody,
     this.widgetOverBodyGlobalKey,
+    this.footerButtons,
   }) : super(key: key);
+  final List<Widget>? footerButtons;
   final Widget child;
   final String appBarTitle;
   final String appBarSubtitle;
@@ -70,7 +72,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     const Duration _bodyTopPaddingAnimatedDuration =
         Duration(milliseconds: 250);
 
-    return Scaffold(
+    return Theme(data: Theme.of(context).copyWith(dividerColor: Colors.transparent), child:  Scaffold(
       appBar: widget.appBar ??
           CustomAppBar(
             title: widget.appBarTitle,
@@ -78,7 +80,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
             isChildrenPage: widget.isChildrenPage,
             isSearch: widget.isSearch,
             actions:
-                widget.actions != null ? widget.actions as List<Widget> : [],
+            widget.actions != null ? widget.actions as List<Widget> : [],
             filteringFunction: widget.filteringFunction,
             onPressedAppLogo: widget.onPressedAppLogo,
           ),
@@ -131,6 +133,9 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
       ]),
       floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
+      persistentFooterButtons: widget.footerButtons,
+      persistentFooterAlignment: AlignmentDirectional.bottomCenter,
+
+    ));
   }
 }

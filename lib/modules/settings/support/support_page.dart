@@ -86,25 +86,27 @@ class _SupportPageState extends State<SupportPage> {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
-        actionButton: BlocBuilder<UserCubit, UserState>(
-          builder: (context, state) {
-            return FloatingActionButton.extended(
-              onPressed: sendingEmail,
-              label: state.sendingEmailToSupportStatus ==
-                      SendingEmailToSupportStatuses.loading
-                  ? const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
+        footerButtons: [
+          BlocBuilder<UserCubit, UserState>(
+            builder: (context, state) {
+              return FloatingActionButton.extended(
+                onPressed: sendingEmail,
+                label: state.sendingEmailToSupportStatus ==
+                        SendingEmailToSupportStatuses.loading
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        'Отправить'.toUpperCase(),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
-                    )
-                  : Text(
-                      'Отправить'.toUpperCase(),
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-            );
-          },
-        ),
+              );
+            },
+          )
+        ],
         rightBottomWidget: AttachFileButton(
           attachPickedFile: attachPickedFile,
           attachFilePickerResult: attachFilePickerResult,
