@@ -11,7 +11,7 @@ import 'package:medlike/navigation/routes_names_map.dart';
 
 /// Splash screen that will be opened every time user opens up an app
 ///
-/// [nextPage] - route to the page that will be opened afterwards
+/// [parallelAction] - Action that'll be running "parallel" of the splash screen
 @RoutePage()
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, required this.parallelAction});
