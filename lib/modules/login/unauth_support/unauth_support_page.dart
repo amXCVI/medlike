@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/modules/login/unauth_support/unauth_support_form.dart';
-import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
@@ -22,10 +21,13 @@ class UnauthSupportPage extends StatelessWidget {
 
     void sendingEmail() {
       if (_formKey.currentState!.validate()) {
-        context.read<UserCubit>().sendUnauthEmailToSupport(
+        context
+            .read<UserCubit>()
+            .sendUnauthEmailToSupport(
               email: _controllerEmail.text,
               message: _controllerMessage.text,
-            ).then((value) => context.router.pop());
+            )
+            .then((value) => context.router.pop());
       } else {
         return;
       }
@@ -35,6 +37,8 @@ class UnauthSupportPage extends StatelessWidget {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
+        themeOverride:
+            Theme.of(context).copyWith(dividerColor: Colors.transparent),
         footerButtons: [
           BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {

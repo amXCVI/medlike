@@ -86,6 +86,8 @@ class _SupportPageState extends State<SupportPage> {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
+        themeOverride:
+            Theme.of(context).copyWith(dividerColor: Colors.transparent),
         footerButtons: [
           BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {
