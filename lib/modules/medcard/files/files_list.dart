@@ -58,7 +58,7 @@ class FilesList extends StatelessWidget {
                         .map((item) => Slidable(
                               key: UniqueKey(),
                               endActionPane: ActionPane(
-                                motion: const BehindMotion(),
+                                motion: const ScrollMotion(),
                                 dismissible: DismissiblePane(
                                   onDismissed: () {
                                     handleDeleteFile(item.id);
@@ -74,17 +74,29 @@ class FilesList extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 34.0),
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).errorColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error,
                                         ),
                                         child: Center(
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                                MainAxisAlignment.start,
                                             children: [
                                               const SizedBox(width: 20.0),
                                               SvgPicture.asset(
-                                                  'assets/icons/appointments/ic_delete_appointment.svg'),
-                                              const SizedBox(width: 20.0),
+                                                'assets/icons/medcard/ic_close_outline.svg',
+                                                height: 64,
+                                                width: 64,
+                                              ),
+                                              Text(
+                                                "Удалить файл",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.copyWith(
+                                                        color: Colors.white),
+                                              ),
                                             ],
                                           ),
                                         ),
