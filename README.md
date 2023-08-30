@@ -10,9 +10,11 @@
     [] Автогенерация: flutter pub run build_runner build --delete-conflicting-outputs
 
 ### Тестирование
-    [] Отправка в тестирование:
-        [] Андроид: 
-        ```$ firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1083145779008:android:4b162a5ecbd2536a742ca5  --groups "all”```
+    Отправка в тестирование:
+         Андроид: 
+        ```
+        $ firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app 1:1083145779008:android:4b162a5ecbd2536a742ca5  --groups "all”
+        ```
 
 
  
