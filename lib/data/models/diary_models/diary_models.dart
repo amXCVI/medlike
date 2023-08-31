@@ -173,6 +173,7 @@ abstract class DiaryItem with _$DiaryItem {
             isAbnormal: e[1][1] == 1,
             isChangeable: e[1][0] == 1,
             // e[0] could be as int as double "int is not a subtype double" or vice versa
+            // Приходили int значения
             secondsSinceMidnight: (e[0] as num).toDouble(),
             /// Костыль чтобы пофиксить
             ///_CastError (type 'List<dynamic>' is not a subtype of type 'List<double>' in type cast)
