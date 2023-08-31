@@ -2,16 +2,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:medlike/utils/helpers/timestamp_converter.dart';
 
 part 'diary_models.freezed.dart';
+
 part 'diary_models.g.dart';
 
 // Вспомогательный тип
 class DataValue {
-  DataValue({
-    required this.isAbnormal,
-    required this.isChangeable,
-    required this.secondsSinceMidnight,
-    required this.innerData
-  });
+  DataValue(
+      {required this.isAbnormal,
+      required this.isChangeable,
+      required this.secondsSinceMidnight,
+      required this.innerData});
 
   bool isChangeable;
   bool isAbnormal;
@@ -21,10 +21,7 @@ class DataValue {
   List<dynamic> get toList {
     return [
       secondsSinceMidnight,
-      [
-        isChangeable,
-        isAbnormal
-      ],
+      [isChangeable, isAbnormal],
       innerData
     ];
   }
@@ -32,12 +29,11 @@ class DataValue {
 
 /// Вспомогательный тип для использования в ListView
 class DataItem {
-  DataItem({
-    required this.isAbnormal,
-    required this.isChangeable,
-    required this.date,
-    required this.innerData
-  });
+  DataItem(
+      {required this.isAbnormal,
+      required this.isChangeable,
+      required this.date,
+      required this.innerData});
 
   bool isChangeable;
   bool isAbnormal;
@@ -47,17 +43,14 @@ class DataItem {
   static List<DataItem> toFlat(List<DiaryItem>? items) {
     List<DataItem> result = [];
 
-    for(int i = 0; i < (items?.length ?? 0); i++) {
-      result.addAll(items![i].value.map(
-        (e) => DataItem(
-          isAbnormal: e.isAbnormal, 
-          isChangeable: e.isChangeable, 
-          date: items[i].date.add(Duration(
-            seconds: e.secondsSinceMidnight.floor()
-          )), 
-          innerData: e.innerData
-        )
-      ));
+    for (int i = 0; i < (items?.length ?? 0); i++) {
+      result.addAll(items![i].value.map((e) => DataItem(
+          isAbnormal: e.isAbnormal,
+          isChangeable: e.isChangeable,
+          date: items[i]
+              .date
+              .add(Duration(seconds: e.secondsSinceMidnight.floor())),
+          innerData: e.innerData)));
     }
 
     return result;
@@ -66,13 +59,12 @@ class DataItem {
 
 // Вспомогательный тип
 class CurrentValue {
-  CurrentValue({
-    required this.date,
-    required this.isAbnormal,
-    required this.isChangeable,
-    required List<dynamic> innerData
-  }) {
-    // Костыль чтобы пофиксить 
+  CurrentValue(
+      {required this.date,
+      required this.isAbnormal,
+      required this.isChangeable,
+      required List<dynamic> innerData}) {
+    // Костыль чтобы пофиксить
     //_CastError (type 'List<dynamic>' is not a subtype of type 'List<double>' in type cast)
     this.innerData = innerData.map((e) => e as double).toList();
   }
@@ -108,7 +100,6 @@ abstract class DiaryCategoryModel with _$DiaryCategoryModel {
       _$DiaryCategoryModelFromJson(json);
 }
 
-
 @freezed
 abstract class DiaryModel with _$DiaryModel {
   const DiaryModel._();
@@ -122,19 +113,19 @@ abstract class DiaryModel with _$DiaryModel {
   }) = _Diary;
 
   CurrentValue? get getCurrentValue {
-    if(currentValue == null) {
+    if (currentValue == null) {
       return null;
     }
 
     return CurrentValue(
-      isAbnormal: currentValue![1][1] == 1, 
-      isChangeable: currentValue![1][0] == 1, 
-      date: const TimestampConverter().fromJson(currentValue![0] as String), 
-      innerData: currentValue![2] as List<dynamic>
-    );
+        isAbnormal: currentValue![1][1] == 1,
+        isChangeable: currentValue![1][0] == 1,
+        date: const TimestampConverter().fromJson(currentValue![0] as String),
+        innerData: currentValue![2] as List<dynamic>);
   }
 
-  factory DiaryModel.fromJson(Map<String, dynamic> json) => _$DiaryModelFromJson(json);
+  factory DiaryModel.fromJson(Map<String, dynamic> json) =>
+      _$DiaryModelFromJson(json);
 }
 
 class DiaryFlatModel {
@@ -152,20 +143,18 @@ class DiaryFlatModel {
   final List<DataItem> values;
   final int grouping;
 
-  DiaryFlatModel copyWith({
-    String? syn,
-    DateTime? firstValue,
-    CurrentValue? currentValue,
-    List<DataItem>? values,
-    int? grouping
-  }) {
+  DiaryFlatModel copyWith(
+      {String? syn,
+      DateTime? firstValue,
+      CurrentValue? currentValue,
+      List<DataItem>? values,
+      int? grouping}) {
     return DiaryFlatModel(
-      syn: syn ?? this.syn,
-      firstValue: firstValue ?? this.firstValue,
-      currentValue: currentValue ?? this.currentValue,
-      values: values ?? this.values,
-      grouping: grouping ?? this.grouping
-    );
+        syn: syn ?? this.syn,
+        firstValue: firstValue ?? this.firstValue,
+        currentValue: currentValue ?? this.currentValue,
+        values: values ?? this.values,
+        grouping: grouping ?? this.grouping);
   }
 }
 
@@ -179,15 +168,18 @@ abstract class DiaryItem with _$DiaryItem {
   }) = _DiaryItem;
 
   List<DataValue> get value {
-    return data.map((e) => DataValue(
-      isAbnormal: e[1][1] == 1, 
-      isChangeable: e[1][0] == 1, 
-      secondsSinceMidnight: e[0] as double, 
-      /// Костыль чтобы пофиксить 
-      ///_CastError (type 'List<dynamic>' is not a subtype of type 'List<double>' in type cast)
-      innerData: List<double>.from(e[2].map((e) => e as double))
-    )).toList();
+    return data
+        .map((e) => DataValue(
+            isAbnormal: e[1][1] == 1,
+            isChangeable: e[1][0] == 1,
+            // e[0] could be as int as double "int is not a subtype double" or vice versa
+            secondsSinceMidnight: (e[0] as num).toDouble(),
+            /// Костыль чтобы пофиксить
+            ///_CastError (type 'List<dynamic>' is not a subtype of type 'List<double>' in type cast)
+            innerData: List<double>.from(e[2].map((e) => e as double))))
+        .toList();
   }
 
-  factory DiaryItem.fromJson(Map<String, dynamic> json) => _$DiaryItemFromJson(json);
+  factory DiaryItem.fromJson(Map<String, dynamic> json) =>
+      _$DiaryItemFromJson(json);
 }

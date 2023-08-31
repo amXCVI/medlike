@@ -78,8 +78,13 @@ class _FormFieldState extends State<FormField> {
             ),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: widget.isEmpty ? AppColors.lightText : AppColors.mainText
+                color: widget.isEmpty ? AppColors.mainSeparatorAlpha : AppColors.mainText
               )
+            ),
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: widget.controller.text == "" ? AppColors.mainSeparatorAlpha : AppColors.mainText
+                )
             ),
             focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(

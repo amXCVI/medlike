@@ -211,12 +211,13 @@ class _HealthItemState extends State<HealthItem> {
                                   ],
                                 ),
                               ),
-                              if (isPrompted)
+                              if (isPrompted && item != null)
                                 Positioned(
                                   top: 5,
                                   left: blockOffset?.dx,
                                   child: DiarySmallPrompt(
                                     key: _widgetKey,
+                                    // Item could be null => #77729 2nd position happens
                                     item: item!,
                                     decimalDigits: widget.decimalDigits,
                                   ),

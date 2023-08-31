@@ -61,7 +61,7 @@ class DiaryAddForm extends StatelessWidget {
                 setEnabled(false);
                 return 'Нельзя добавить показатель на будущую дату';
               }
-              setEnabled(true);
+              //setEnabled(true);
               return null;
             },
           ),

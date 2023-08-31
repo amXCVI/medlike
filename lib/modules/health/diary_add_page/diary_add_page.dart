@@ -57,7 +57,15 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
   DateTime? date;
   DateTime? time;
-  bool isDisabledButton = false;
+  bool isDisabledButton = true;
+
+  /// Chack if some of input fields of diary card is empty
+  bool isSomeFieldEmpty(){
+    for(bool i in isEmpties){
+      if(i) return true;
+    }
+    return false;
+  }
 
   @override
   void initState() {
@@ -130,10 +138,11 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
         onChange: (text) {
           onFocus(index, false);
           setState(() {
-            if (_formKey.currentState!.validate()) {
+            isDisabledButton = true;
+            isEmpties[index] = text == '';
+            if (_formKey.currentState!.validate() && !isSomeFieldEmpty()) {
               isDisabledButton = false;
             }
-            isEmpties[index] = text == '';
           });
         },
       );
@@ -141,6 +150,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onDateChange(DateTime date, String text) {
       setState(() {
+        isDisabledButton = true;
         if (_formKey.currentState!.validate()) {
           isDisabledButton = false;
         }
@@ -161,6 +171,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
 
     void onTimeChange(DateTime time, String text) {
       setState(() {
+        isDisabledButton = true;
         if (_formKey.currentState!.validate()) {
           isDisabledButton = false;
         }
@@ -249,8 +260,7 @@ class _DiaryAddPageState extends State<DiaryAddPage> {
                     context.router.pop();
                   },
             label: Text(
-              (widget.initialValues == null ? 'Добавить' : 'Сохранить')
-                  .toUpperCase(),
+              "Cохранить".toUpperCase(),
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),

@@ -75,8 +75,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         Duration(milliseconds: 250);
 
     return Theme(
-        data: widget.themeOverride ??
-            Theme.of(context),
+        data: widget.themeOverride ?? Theme.of(context),
         child: Scaffold(
           appBar: widget.appBar ??
               CustomAppBar(
