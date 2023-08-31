@@ -86,29 +86,25 @@ class _SupportPageState extends State<SupportPage> {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
-        themeOverride:
-            Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        footerButtons: [
-          BlocBuilder<UserCubit, UserState>(
-            builder: (context, state) {
-              return FloatingActionButton.extended(
-                onPressed: sendingEmail,
-                label: state.sendingEmailToSupportStatus ==
-                        SendingEmailToSupportStatuses.loading
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    : Text(
-                        'Отправить'.toUpperCase(),
-                        style: Theme.of(context).textTheme.titleSmall,
+        actionButton: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: sendingEmail,
+              label: state.sendingEmailToSupportStatus ==
+                      SendingEmailToSupportStatuses.loading
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
                       ),
-              );
-            },
-          )
-        ],
+                    )
+                  : Text(
+                      'Отправить'.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+            );
+          },
+        ),
         rightBottomWidget: AttachFileButton(
           attachPickedFile: attachPickedFile,
           attachFilePickerResult: attachFilePickerResult,
@@ -123,6 +119,7 @@ class _SupportPageState extends State<SupportPage> {
             ),
             AttachFilesList(
                 filesList: filesList, handleDeleteFile: handleDeleteFile),
+            SizedBox(height: 30,)
           ],
         ),
       ),

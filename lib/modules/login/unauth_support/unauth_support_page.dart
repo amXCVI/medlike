@@ -37,36 +37,30 @@ class UnauthSupportPage extends StatelessWidget {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
-        themeOverride:
-            Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        footerButtons: [
-          BlocBuilder<UserCubit, UserState>(
-            builder: (context, state) {
-              return FloatingActionButton.extended(
-                onPressed: sendingEmail,
-                label: state.sendingEmailToSupportStatus ==
-                        SendingEmailToSupportStatuses.loading
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      )
-                    : Text(
-                        'Отправить'.toUpperCase(),
-                        style: Theme.of(context).textTheme.titleSmall,
+        actionButton: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return FloatingActionButton.extended(
+              onPressed: sendingEmail,
+              label: state.sendingEmailToSupportStatus ==
+                      SendingEmailToSupportStatuses.loading
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
                       ),
-              );
-            },
-          ),
-        ],
-        bottomNavigationBar: const SizedBox(height: 0),
-        child: SingleChildScrollView(
-          child: UnauthSupportForm(
-            controllerEmail: _controllerEmail,
-            formKey: _formKey,
-            controllerMessage: _controllerMessage,
-          ),
+                    )
+                  : Text(
+                      'Отправить'.toUpperCase(),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+            );
+          },
+        ),
+        bottomNavigationBar: const SizedBox(height: 50),
+        child: UnauthSupportForm(
+          controllerEmail: _controllerEmail,
+          formKey: _formKey,
+          controllerMessage: _controllerMessage,
         ),
       ),
     );
