@@ -30,8 +30,7 @@ class _ProfilesListPageState extends State<ProfilesListPage> {
     //? TODO: нарушает принципы BLoC, переделать?
     final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
 
-    if (userList?.length == 1 &&
-        context.router.current.path.contains(widget.routeName)) {
+    if (userList?.length == 1 && widget.routeName.contains(context.router.current.path)) {
       widget.handleTapOnUserProfile(userList![0].id, false);
     }
   }
@@ -44,7 +43,6 @@ class _ProfilesListPageState extends State<ProfilesListPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultScaffold(
       appBarTitle: widget.title,
       child: BlocBuilder<UserCubit, UserState>(
