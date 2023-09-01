@@ -23,7 +23,9 @@ class DefaultScaffold extends StatefulWidget {
     this.rightBottomWidget,
     this.widgetOverBody,
     this.widgetOverBodyGlobalKey,
+    this.needToResize = true
   }) : super(key: key);
+  final bool needToResize;
   final Widget child;
   final String appBarTitle;
   final String appBarSubtitle;
@@ -131,7 +133,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
       ]),
       floatingActionButton: widget.actionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: widget.needToResize,
     );
   }
 }

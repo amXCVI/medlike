@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/category_types.dart';
@@ -165,8 +166,6 @@ class AppointmentDetailPage extends StatelessWidget {
                 appointmentItem: appointmentItem,
                 serviceName: serviceName,
               ),
-
-              // TODO: Write refund card here
               (appointmentItem.paymentStatus == 3 ||
                       appointmentItem.paymentStatus == 6)
                   ? Column(
@@ -188,14 +187,20 @@ class AppointmentDetailPage extends StatelessWidget {
                           child: RefundSlidable(
                             appointment: appointmentItem,
                             onDissmis: () {
-                              // TODO: Write action for refund
+                              HapticFeedback.lightImpact();
+                              context
+                                  .read<AppointmentsCubit>()
+                                  .deleteAppointment(
+                                      appointmentId: appointmentItem.id,
+                                      userId: appointmentItem.patientInfo.id
+                                          as String);
+                              context.router.back();
                             },
                           ),
                         ),
                       ],
                     )
                   : const SizedBox(),
-
               const SizedBox(
                 height: 15,
               ),

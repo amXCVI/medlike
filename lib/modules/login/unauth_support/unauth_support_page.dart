@@ -37,6 +37,7 @@ class UnauthSupportPage extends StatelessWidget {
       child: DefaultScaffold(
         appBarTitle: 'Тех. поддержка',
         isChildrenPage: true,
+        needToResize: false,
         actionButton: BlocBuilder<UserCubit, UserState>(
           builder: (context, state) {
             return FloatingActionButton.extended(
