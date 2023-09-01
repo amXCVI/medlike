@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:medlike/themes/colors.dart';
 
 String getAgeByBirthday(DateTime birthday) {
-  final DateTime currentDate = DateTime.now();
-  final differentYears = currentDate.year - birthday.year;
+  DateTime diff = DateTime.now()
+      .subtract(Duration(days: birthday.difference(DateTime(0)).inDays));
+  final differentYears = diff.year;
   int lastDigit = differentYears;
 
   lastDigit %= 100;
