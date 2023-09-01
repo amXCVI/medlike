@@ -50,13 +50,16 @@ class ReviewWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 24.0),
-              Flexible(
-                  child: Text(
-                review.message,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                softWrap: true,
-              )),
+              Expanded(
+                flex: 6,
+                child: Text(
+                  review.message,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  softWrap: true,
+                ),
+              ),
+              const Spacer(),
               SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg')
             ],
           ),
