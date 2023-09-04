@@ -75,7 +75,6 @@ class AppointmentsParagraph extends StatelessWidget {
                                   onDismissed: () {
                                     _deleteAppointment(
                                         item.id, item.patientInfo.id as String);
-
                                   },
                                 ),
                                 children: [
@@ -154,17 +153,16 @@ class _SliderChildState extends State<SliderChild> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100), () {
-      final Map<TourChecked, bool>? tourState =
-          context.read<TourCubit>().state.tourChecked;
-      if (!(tourState?[TourChecked.removeAppointment] ?? false)) {
-        animateDeleting(
-            context,
-            () => context
-                .read<TourCubit>()
-                .checkItem(TourChecked.removeAppointment));
-      }
-    });
+
+    final Map<TourChecked, bool>? tourState =
+        context.read<TourCubit>().state.tourChecked;
+    if (!(tourState?[TourChecked.removeAppointment] ?? false)) {
+      animateDeleting(
+          context,
+          () => context
+              .read<TourCubit>()
+              .checkItem(TourChecked.removeAppointment));
+    }
   }
 
   @override

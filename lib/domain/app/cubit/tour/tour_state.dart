@@ -1,6 +1,16 @@
 part of 'tour_cubit.dart';
 
-enum TourChecked { event, favoriteDoctor, removeAppointment, removeFile, calendarAppointment, notificationClose, cabinetInfo, gifReload }
+enum TourChecked {
+  event,
+  favoriteDoctor,
+  removeAppointment,
+  removeFile,
+  calendarAppointment,
+  notificationClose,
+  cabinetInfo,
+  gifReload,
+  refundCard,
+}
 
 class TourState {
   final Map<TourChecked, bool>? tourChecked;

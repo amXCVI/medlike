@@ -1,9 +1,11 @@
-import 'package:barcode/barcode.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
+import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
+import 'package:medlike/utils/animation/animate_slidable.dart';
 import 'package:medlike/widgets/refund_card/payed_card_item.dart';
 
 class RefundSlidable extends StatelessWidget {
@@ -77,7 +79,7 @@ class RefundSlidable extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const PayedCardItem(
+                  child: const RefundCardChild(
                     // TODO: Link payment amount here
                     amount: 1000,
                   ),
@@ -85,4 +87,38 @@ class RefundSlidable extends StatelessWidget {
               : const PayedCardItem(amount: 1000),
         ),
       );
+}
+
+class RefundCardChild extends StatefulWidget {
+  const RefundCardChild({super.key, required this.amount});
+  final int amount;
+  @override
+  _RefundCardChildState createState() => _RefundCardChildState();
+}
+
+class _RefundCardChildState extends State<RefundCardChild> {
+  @override
+  void initState() {
+    super.initState();
+
+    //if (context.read<TourCubit>().state.tourChecked)
+    if (!(context
+            .read<TourCubit>()
+            .state
+            .tourChecked?[TourChecked.refundCard] ??
+        false)) {
+      animateDeleting(context, () {
+        context.read<TourCubit>().checkItem(TourChecked.refundCard);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext buildContext) {
+    return BlocBuilder<TourCubit, TourState>(buildWhen: (_, state) {
+      return true;
+    }, builder: (context, state) {
+      return PayedCardItem(amount: widget.amount);
+    });
+  }
 }
