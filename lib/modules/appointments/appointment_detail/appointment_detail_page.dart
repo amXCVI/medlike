@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/modules/appointments/appointment_detail/research_detail_page.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/navigation/router.dart';
@@ -62,6 +63,7 @@ class AppointmentDetailPage extends StatelessWidget {
               appointmentId: state.selectedAppointment!.id,
               appointmentStatus: state.selectedAppointment!.status,
               isRated: state.selectedAppointment!.review != null,
+              isWithDoctor: state.selectedAppointment!.doctorInfo.id != null,
             );
           } else {
             return const SizedBox();
@@ -124,17 +126,11 @@ class AppointmentDetailPage extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Услуга',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
-            ),
             DoctorAppointmentDetailInfo(
+              doctorInfo: appointmentItem.doctorInfo,
+              appointmentReview: appointmentItem.review,
+            ),
+            ResearchesAppointmentDetailInfo(
               appointmentItem: appointmentItem,
               serviceName: serviceName,
             ),

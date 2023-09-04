@@ -128,6 +128,7 @@ class AppointmentsState {
       selectedDate: selectedDate,
       sendAppointmentReviewStatus: sendAppointmentReviewStatus,
       selectedAppointmentFilterId: '',
+      selectedAppointment: null,
     );
   }
 }
