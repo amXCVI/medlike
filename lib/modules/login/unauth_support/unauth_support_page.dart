@@ -57,7 +57,7 @@ class UnauthSupportPage extends StatelessWidget {
             );
           },
         ),
-        bottomNavigationBar: const SizedBox(height: 50),
+        bottomNavigationBar: const SizedBox(height: 56),
         child: UnauthSupportForm(
           controllerEmail: _controllerEmail,
           formKey: _formKey,
