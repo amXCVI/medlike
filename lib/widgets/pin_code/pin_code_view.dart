@@ -47,7 +47,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   @override
   void initState() {
     pointsArray = List<int>.from(initPointsArray);
-    if (widget.noUsedBiometric != null && widget.noUsedBiometric == true) {
+    if (widget.noUsedBiometric ?? false) {
       isShowingBiometricModal = false;
       isSupportedAndEnabledBiometric = false;
       return;
@@ -128,18 +128,13 @@ class _PinCodeViewState extends State<PinCodeView> {
     }
 
     //Check last time if we input the last value
-
     firstEpmtyIndex = pointsArray.indexOf(-1);
     if (firstEpmtyIndex == -1) {
       bool res = await widget.setPinCode(pointsArray);
       if (!res) {
         HapticFeedback.heavyImpact();
         setState(() {
-          for (int i = 0; i < pointsArray.length; i++) {
-            setState(() {
-              pointsArray.setAll(0, initPointsArray);
-            });
-          }
+          pointsArray.setAll(0, initPointsArray);
         });
       }
     }
