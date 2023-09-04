@@ -995,4 +995,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       rethrow;
     }
   }
+
+  /// вернуть количество профилей пользователей
+  num getUserProfilesCount() {
+    if (state.userProfiles != null) {
+      return state.userProfiles!.length;
+    } else {
+      return 0;
+    }
+  }
 }

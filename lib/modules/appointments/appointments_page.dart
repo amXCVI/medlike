@@ -70,6 +70,10 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     context.read<AppointmentsCubit>().setSelectedFilterId(str);
   }
 
+  bool getUserProfilesCount(BuildContext context) {
+    return context.read<UserCubit>().getUserProfilesCount() > 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> _onLoadDada({bool isRefresh = true, DateTime? initDay}) async {
@@ -109,6 +113,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
           handleResetFilters: handleResetFilters,
           isFilteringMode: isFilteringMode,
           isSearch: false,
+          isFiltersAction: getUserProfilesCount(context),
         ),
         widgetOverBody: isFilteringMode
             ? AppointmentsFiltersWidget(key: widgetOverBodyGlobalKey)
