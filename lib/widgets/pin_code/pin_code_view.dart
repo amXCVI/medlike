@@ -46,7 +46,7 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   @override
   void initState() {
-    pointsArray = initPointsArray;
+    pointsArray = List<int>.from(initPointsArray);
     if (widget.noUsedBiometric != null && widget.noUsedBiometric == true) {
       isShowingBiometricModal = false;
       isSupportedAndEnabledBiometric = false;
@@ -100,55 +100,48 @@ class _PinCodeViewState extends State<PinCodeView> {
     });
   }
 
-  void onChangePointsArray(PinCodeKeyboardItem e) async {
-    SystemSound.play(SystemSoundType.click);
-    HapticFeedback.lightImpact();
-    int firstEmptyIndex = pointsArray.indexOf(-1);
-
-    if (e.buttonType == PinCodeKeyboardTypes.number) {
-      if (firstEmptyIndex != -1) {
-        setState(() {
-          pointsArray[firstEmptyIndex] = e.label;
-        });
-      }
-    } else if (e.buttonType == PinCodeKeyboardTypes.biometric &&
+  void onItemInput(PinCodeKeyboardItem e) async {
+    // Check if using biometric input
+    if (e.buttonType == PinCodeKeyboardTypes.biometric &&
         isSupportedAndEnabledBiometric) {
       setState(() {
         isShowingBiometricModal = true;
+        pointsArray.setAll(0, initPointsArray);
       });
-      setState(() {
-        pointsArray = initPointsArray;
-      });
-
       _authenticate();
-    } else {
-      if (firstEmptyIndex != -1 && firstEmptyIndex != 0) {
-        setState(() {
-          pointsArray[firstEmptyIndex - 1] = -1;
-        });
-      } else {
-        setState(() {
-          pointsArray.last = -1;
-        });
-      }
     }
 
-    if (firstEmptyIndex == pointsArray.length - 1) {
-      // Сам знаю, что дичь, но мне плохо
+    int firstEpmtyIndex = pointsArray.indexOf(-1);
+
+    // Just set value for tile
+    if (firstEpmtyIndex != -1) {
+      setState(() {
+        pointsArray[firstEpmtyIndex] = e.label;
+      });
+    }
+
+    // Handling delete icon(Button)
+    if (e.label == -1 && firstEpmtyIndex > 0) {
+      setState(() {
+        pointsArray[firstEpmtyIndex - 1] = -1;
+      });
+    }
+
+    //Check last time if we input the last value
+
+    firstEpmtyIndex = pointsArray.indexOf(-1);
+    if (firstEpmtyIndex == -1) {
       bool res = await widget.setPinCode(pointsArray);
       if (!res) {
-        HapticFeedback.vibrate();
-        for (int i = 0; i < pointsArray.length; i++) {
-          setState(() {
-            pointsArray[i] = -1;
-          });
-        }
+        HapticFeedback.heavyImpact();
         setState(() {
-          firstEmptyIndex = 0;
+          for (int i = 0; i < pointsArray.length; i++) {
+            setState(() {
+              pointsArray.setAll(0, initPointsArray);
+            });
+          }
         });
       }
-
-      return;
     }
   }
 
@@ -265,7 +258,7 @@ class _PinCodeViewState extends State<PinCodeView> {
                 children: [
                   ...keyboardList
                       .map((item) => InkWell(
-                            onTap: () => {onChangePointsArray(item)},
+                            onTap: () => {onItemInput(item)},
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(100)),
                             child: Padding(
