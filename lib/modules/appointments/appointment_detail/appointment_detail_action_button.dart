@@ -7,12 +7,14 @@ class AppointmentDetailActionButton extends StatelessWidget {
       {Key? key,
       required this.appointmentId,
       required this.appointmentStatus,
-      required this.isRated})
+      required this.isRated,
+      required this.isWithDoctor})
       : super(key: key);
 
   final String appointmentId;
   final int appointmentStatus;
   final bool isRated;
+  final bool isWithDoctor; // Есть ли доктор вообще, на которого отзыв будет
 
   void handleChangeRatig(BuildContext context) {
     context.router.push(FeedbackRoute(
@@ -27,7 +29,7 @@ class AppointmentDetailActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (appointmentStatus == 1 && !isRated) {
+    if (appointmentStatus == 1 && !isRated && isWithDoctor) {
       return FloatingActionButton.extended(
         onPressed: () => handleChangeRatig(context),
         label: Text(

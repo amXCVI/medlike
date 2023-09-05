@@ -30,9 +30,9 @@ class AppointmentTimeStatusItems {
   static Color getBackgroundColorByTime(int difference) {
     if (difference >= statusesList[3].startTimeDuration || difference < 0) {
       return statusesList[3].color;
-    } else if (difference > statusesList[2].startTimeDuration) {
-      return statusesList[2].color;
     } else if (difference > statusesList[1].startTimeDuration) {
+      return statusesList[2].color;
+    } else if (difference > statusesList[0].startTimeDuration) {
       return statusesList[1].color;
     } else {
       return statusesList[0].color;
@@ -50,9 +50,9 @@ class AppointmentTimeStatusItems {
   static Color getLabelTextColorByTime(int difference) {
     if (difference >= statusesList[3].startTimeDuration || difference < 0) {
       return AppColors.mainText;
-    } else if (difference > statusesList[2].startTimeDuration) {
-      return statusesList[2].color;
     } else if (difference > statusesList[1].startTimeDuration) {
+      return statusesList[2].color;
+    } else if (difference > statusesList[0].startTimeDuration) {
       return statusesList[1].color;
     } else {
       return statusesList[0].color;

@@ -6,13 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
+import 'package:medlike/modules/appointments/appointment_detail/research_detail_page.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
 import 'package:medlike/modules/appointments/cabinet/cabinet_find_item.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/helpers/timestamp_converter.dart';
-import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
@@ -31,15 +30,16 @@ class AppointmentDetailPage extends StatelessWidget {
 
   final AppointmentModelWithTimeZoneOffset appointmentItem;
 
-  void handleChangeReview(BuildContext context) {
+  void handleChangeReview(
+      BuildContext context, AppointmentReviewModel appointmentReview) {
     context.router.push(FeedbackRoute(
       appointmentId: appointmentItem.id,
-      rating: appointmentItem.review!.rate.toInt(),
-      controllerCaption: appointmentItem.review!.caption,
+      rating: appointmentReview.rate.toInt(),
+      controllerCaption: appointmentReview.caption,
       controllerVisible:
-          getLabelVisibilityByValue(appointmentItem.review!.visibility),
-      controllerMessage: appointmentItem.review!.message,
-      controllerEmail: appointmentItem.review!.email ?? '',
+          getLabelVisibilityByValue(appointmentReview.visibility),
+      controllerMessage: appointmentReview.message,
+      controllerEmail: appointmentReview.email ?? '',
     ));
   }
 
@@ -67,6 +67,7 @@ class AppointmentDetailPage extends StatelessWidget {
               appointmentId: state.selectedAppointment!.id,
               appointmentStatus: state.selectedAppointment!.status,
               isRated: state.selectedAppointment!.review != null,
+              isWithDoctor: state.selectedAppointment!.doctorInfo.id != null,
             );
           } else {
             return const SizedBox();
