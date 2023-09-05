@@ -12,6 +12,8 @@ import 'package:medlike/modules/appointments/cabinet/cabinet_find_item.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/timestamp_converter.dart';
+import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
@@ -164,8 +166,7 @@ class AppointmentDetailPage extends StatelessWidget {
                 ),
               ),
               DoctorAppointmentDetailInfo(
-                appointmentItem: appointmentItem,
-                serviceName: serviceName,
+                doctorInfo: appointmentItem.doctorInfo,
               ),
               (appointmentItem.paymentStatus == 3 ||
                       appointmentItem.paymentStatus == 6)
@@ -225,7 +226,8 @@ class AppointmentDetailPage extends StatelessWidget {
                       ),
                       if (state.selectedAppointment!.review != null)
                         GestureDetector(
-                          onTap: () => handleChangeReview(context),
+                          onTap: () => handleChangeReview(context,
+                              appointmentItem.review as AppointmentReviewModel),
                           child: ReviewWidget(
                               review: state.selectedAppointment!.review!),
                         ),
