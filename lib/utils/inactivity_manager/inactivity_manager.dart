@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/prompt/prompt_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -21,7 +22,8 @@ class InactivityManager extends StatefulWidget {
   State<InactivityManager> createState() => _InactivityManagerState();
 }
 
-class _InactivityManagerState extends State<InactivityManager> with WidgetsBindingObserver {
+class _InactivityManagerState extends State<InactivityManager>
+    with WidgetsBindingObserver {
   late Timer _timer = Timer(const Duration(hours: 1), () {});
   late bool isLogoutApp = false;
 
@@ -33,6 +35,7 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
     _initializeTimer();
 
     LocalNotificationService.requestPermission().then((value) async {
+      if (ProjectDeterminer.getProjectType() == Projects.WEB) return;
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       print('!!!!!!!!! FCM Token: $fcmToken');
 
@@ -43,7 +46,8 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
       FirebaseMessaging.instance.getInitialMessage().then((message) {
         print("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
-          Sentry.captureMessage("FirebaseMessaging.instance.getInitialMessage ${message.data["title"]}");
+          Sentry.captureMessage(
+              "FirebaseMessaging.instance.getInitialMessage ${message.data["title"]}");
           LocalNotificationService.createAndDisplayNotification(message);
         }
       }).catchError((error) {
@@ -55,17 +59,19 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
       FirebaseMessaging.onMessage.listen((message) {
         print("FirebaseMessaging.onMessage.listen");
         //if (message.notification != null) {
-          //print(message.notification.title);
-          //print(message.notification.body);
-          Sentry.captureMessage("FirebaseMessaging.onMessage.listen ${message.data["title"]}");
-          LocalNotificationService.createAndDisplayNotification(message);
+        //print(message.notification.title);
+        //print(message.notification.body);
+        Sentry.captureMessage(
+            "FirebaseMessaging.onMessage.listen ${message.data["title"]}");
+        LocalNotificationService.createAndDisplayNotification(message);
         //}
       });
 
       /// TODO Background State
       /// 3. This method only call when App in background and not terminated(not closed)
       FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        Sentry.captureMessage("FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+        Sentry.captureMessage(
+            "FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
         LocalNotificationService.createAndDisplayNotification(message);
       });
     });
@@ -73,13 +79,14 @@ class _InactivityManagerState extends State<InactivityManager> with WidgetsBindi
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if(state != AppLifecycleState.resumed) {
-      await UserSecureStorage.setField(AppConstants.timeoutStart, DateTime.now().toString());
+    if (state != AppLifecycleState.resumed) {
+      await UserSecureStorage.setField(
+          AppConstants.timeoutStart, DateTime.now().toString());
       context.read<PromptCubit>().unselect();
     } else {
       final isBlocked = await ResumeHelper.isAppBlocked();
       //UserSecureStorage.deleteField(AppConstants.timeoutStart);
-      if(isBlocked) {
+      if (isBlocked) {
         _logOutUser();
       } else {
         ResumeHelper.resume();

@@ -9,22 +9,26 @@ class ReviewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Отзывы',
-            style: Theme.of(context)
-                .textTheme
-                .headlineMedium
-                ?.copyWith(fontWeight: FontWeight.w700),
-          ),
-          ...reviews.map((e) => ReviewCard(review: e)),
-          const SizedBox(height: 16.0),
-        ],
-      ),
-    );
+    if (reviews != null && reviews.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Отзывы',
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            ...reviews.map((e) => ReviewCard(review: e)),
+            const SizedBox(height: 16.0),
+          ],
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

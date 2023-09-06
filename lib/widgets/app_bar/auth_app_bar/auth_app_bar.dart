@@ -112,6 +112,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       .textTheme
                       .headlineMedium
                       ?.copyWith(fontWeight: FontWeight.w500),
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 widget.subtitle.isNotEmpty

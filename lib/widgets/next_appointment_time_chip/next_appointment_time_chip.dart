@@ -81,8 +81,8 @@ class _NextAppointmentTimeChipState extends State<NextAppointmentTimeChip> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/appointments/clock.svg',
-                    color: AppointmentTimeStatusItems.getTextColorByTime(
+                    'assets/icons/appointments/ic_clock.svg',
+                    color: AppointmentTimeStatusItems.getIconColorByTime(
                         _differenceInMinutes),
                   ),
                   const SizedBox(width: 8.0),

@@ -85,3 +85,6 @@ class AppConstants {
 
 // Способы авторизации
 enum SelectedAuthMethods { faceId, touchId, undefined, pinCode }
+
+// Перечень проектов
+enum Projects { IOS, ANDROID, WEB, SMARTAPP, UNDEFINED }

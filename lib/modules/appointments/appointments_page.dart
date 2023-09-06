@@ -42,6 +42,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   void initState() {
     handleResetFilters();
+    _onLoadDada(isRefresh: widget.isRefresh as bool, initDay: widget.initDay);
     super.initState();
   }
 
@@ -74,29 +75,27 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     return context.read<UserCubit>().getUserProfilesCount() > 1;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Future<void> _onLoadDada({bool isRefresh = true, DateTime? initDay}) async {
-      if (initDay != null) {
-        DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(initDay);
-        DateTime dateTo = date_utils.DateUtils.lastDayOfWeekWithHours(initDay);
+  Future<void> _onLoadDada({bool isRefresh = true, DateTime? initDay}) async {
+    if (initDay != null) {
+      DateTime dateFrom = date_utils.DateUtils.firstDayOfWeek(initDay);
+      DateTime dateTo = date_utils.DateUtils.lastDayOfWeekWithHours(initDay);
 
-        context.read<AppointmentsCubit>().setStartDate(dateFrom);
-        context.read<AppointmentsCubit>().setEndDate(dateTo);
+      context.read<AppointmentsCubit>().setStartDate(dateFrom);
+      context.read<AppointmentsCubit>().setEndDate(dateTo);
 
-        context.read<AppointmentsCubit>().setSelectedDate(initDay);
-      }
-
-      if (widget.notificationId != null) {
-        context
-            .read<UserCubit>()
-            .updateNotificationStatus(widget.notificationId!);
-      }
-      context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
+      context.read<AppointmentsCubit>().setSelectedDate(initDay);
     }
 
-    _onLoadDada(isRefresh: widget.isRefresh as bool, initDay: widget.initDay);
+    if (widget.notificationId != null) {
+      context
+          .read<UserCubit>()
+          .updateNotificationStatus(widget.notificationId!);
+    }
+    context.read<AppointmentsCubit>().getAppointmentsList(isRefresh);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         context.router.navigateNamed(AppRoutes.main);

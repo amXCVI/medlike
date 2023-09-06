@@ -282,13 +282,8 @@ class AppointmentsCubit
     required String appointmentId,
     required String userId,
   }) async {
-    final list = state.appointmentsList
-        ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
-        .toList();
-
     emit(state.copyWith(
         putAppointmentStatus: PutAppointmentsStatuses.loading,
-        appointmentsList: list,
         appointmentLoadingId: appointmentId));
 
     try {
@@ -301,9 +296,13 @@ class AppointmentsCubit
         AppToast.showAppToast(msg: 'Прием успешно подтверждён');
       }
 
+      final list = state.appointmentsList
+          ?.map((e) => e.id != appointmentId ? e : e.copyWith(status: 0))
+          .toList();
       filterAppointmentsList(state.selectedDate, appointmentsList: list);
 
       emit(state.copyWith(
+        appointmentsList: list,
         confirmCounter: (state.confirmCounter ?? 2) - 1,
         putAppointmentStatus: PutAppointmentsStatuses.success,
       ));

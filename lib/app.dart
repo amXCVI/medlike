@@ -27,10 +27,12 @@ import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/themes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medlike/utils/helpers/auth_check_helpers.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/utils/inactivity_manager/inactivity_manager.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:get_it/get_it.dart';
 
+import 'constants/app_constants.dart';
 import 'navigation/router.dart';
 
 final getIt = GetIt.instance;
@@ -80,13 +82,16 @@ class App extends StatelessWidget {
             routerDelegate: AutoRouterDelegate(
               _router,
               initialRoutes: [
-                 SplashRoute(parallelAction: checkIsSavedPinCode())
+                SplashRoute(parallelAction: checkIsSavedPinCode())
               ],
-              navigatorObservers: () => [
-                FirebaseAnalyticsObserver(
-                    analytics: FirebaseAnalytics.instance),
-                SentryNavigatorObserver()
-              ],
+              navigatorObservers: () =>
+                  ProjectDeterminer.getProjectType() == Projects.WEB
+                      ? [SentryNavigatorObserver()]
+                      : [
+                          FirebaseAnalyticsObserver(
+                              analytics: FirebaseAnalytics.instance),
+                          SentryNavigatorObserver()
+                        ],
             ),
             routeInformationParser: _router.defaultRouteParser(),
             debugShowCheckedModeBanner: false,

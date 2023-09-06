@@ -14,44 +14,45 @@ class DoctorInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
-      if (state.selectedResearchesIds == null ||
-          state.selectedResearchesIds!.isEmpty) {
-        return Column(
-          children: [
-            const SizedBox(height: 16),
-            DoctorInfoCard(
-                doctorInfo: DoctorInfoModel(
-              id: state.selectedDoctor?.id,
-              firstName: state.selectedDoctor?.firstName,
-              middleName: state.selectedDoctor?.middleName,
-              lastName: state.selectedDoctor?.lastName,
-              specializationId: state.selectedDoctor?.specializationId,
-              specialization: DoctorSubtitleHelper.getSubtitle(
-                specialization: state.selectedDoctor?.specialization ?? '',
-                comment: state.selectedDoctor?.comment,
-                experience: state.selectedDoctor?.experience,
-              ),
-              shortInfo: state.selectedDoctor?.shortinfo,
-              rateAsSotr: state.selectedDoctor?.rateAsSotr,
-              rateAsUser: state.selectedDoctor?.rateAsUser,
-              imageId: state.selectedDoctor?.imageId,
-            )),
-            const SizedBox(height: 16),
-            state.appointmentInfoData != null &&
-                    state.appointmentInfoData!.recommendations != null &&
-                    state.appointmentInfoData!.recommendations.isNotEmpty
-                ? AppointmentRecommendations(
-                    recommendations: state
-                        .appointmentInfoData!.recommendations[0].recommendation,
-                    serviceName: state
-                        .appointmentInfoData!.recommendations[0].serviceName)
-                : const SizedBox(),
-            const DashDivider(),
-          ],
-        );
-      } else {
+      if (state.selectedDoctor == null || state.selectedDoctor!.id == null) {
         return const SizedBox();
       }
+      return Column(
+        children: [
+          const SizedBox(height: 16),
+          DoctorInfoCard(
+              doctorInfo: DoctorInfoModel(
+            id: state.selectedDoctor?.id,
+            firstName: state.selectedDoctor?.firstName,
+            middleName: state.selectedDoctor?.middleName,
+            lastName: state.selectedDoctor?.lastName,
+            specializationId: state.selectedDoctor?.specializationId,
+            specialization: DoctorSubtitleHelper.getSubtitle(
+              specialization: state.selectedDoctor?.specialization ?? '',
+              comment: state.selectedDoctor?.comment,
+              experience: state.selectedDoctor?.experience,
+            ),
+            shortInfo: state.selectedDoctor?.shortinfo,
+            rateAsSotr: state.selectedDoctor?.rateAsSotr,
+            rateAsUser: state.selectedDoctor?.rateAsUser,
+            imageId: state.selectedDoctor?.imageId,
+          )),
+          const SizedBox(height: 16),
+          state.appointmentInfoData != null &&
+                  state.appointmentInfoData!.recommendations != null &&
+                  state.appointmentInfoData!.recommendations.isNotEmpty &&
+                  (state.selectedResearchesIds == null ||
+                      state.selectedResearchesIds!.isEmpty)
+              ? AppointmentRecommendations(
+                  recommendations: state
+                      .appointmentInfoData!.recommendations[0].recommendation,
+                  serviceName:
+                      state.appointmentInfoData!.recommendations[0].serviceName)
+              : const SizedBox(),
+          const DashDivider(),
+          const SizedBox(height: 16),
+        ],
+      );
     });
   }
 }
