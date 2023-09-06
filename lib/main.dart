@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medlike/app.dart';
 import 'package:flutter/widgets.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/navigation/router.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/utils/helpers/push_handle_helper.dart';
 import 'package:medlike/utils/notifications/local_notifications_service.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
@@ -21,6 +23,7 @@ final getIt = GetIt.instance;
 @pragma('vm:entry-point')
 Future<void> backgroundHandler(RemoteMessage message) async {
   /*print(message.notification.title); */
+  if (ProjectDeterminer.getProjectType() == Projects.WEB) return;
   Sentry.captureMessage("background ${message.data.toString()}");
   LocalNotificationService.createAndDisplayNotification(message);
 }
@@ -45,22 +48,24 @@ void main() async {
 
   getIt.registerSingleton(PushNavigationService());
 
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    Sentry.captureMessage(
-        "FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
-    pushHandler(jsonEncode(message.data));
-  });
-  //await FCMService.onMessage();
-  LocalNotificationService.initializeSelect((notificationResponse) {
-    Sentry.captureMessage("On push tap ${notificationResponse.payload}");
-    pushHandler(notificationResponse.payload);
-  });
-  LocalNotificationService.checkNotificationClicked((notificationResponse) {
-    Sentry.captureMessage("On open by push ${notificationResponse.payload}");
-    pushHandler(notificationResponse.payload);
-  });
+  if (ProjectDeterminer.getProjectType() != Projects.WEB) {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      Sentry.captureMessage(
+          "FirebaseMessaging.onMessageOpenedApp.listen ${message.data["title"]}");
+      pushHandler(jsonEncode(message.data));
+    });
+    //await FCMService.onMessage();
+    LocalNotificationService.initializeSelect((notificationResponse) {
+      Sentry.captureMessage("On push tap ${notificationResponse.payload}");
+      pushHandler(notificationResponse.payload);
+    });
+    LocalNotificationService.checkNotificationClicked((notificationResponse) {
+      Sentry.captureMessage("On open by push ${notificationResponse.payload}");
+      pushHandler(notificationResponse.payload);
+    });
+  }
 
   runZonedGuarded(() async {
     await SentryFlutter.init(

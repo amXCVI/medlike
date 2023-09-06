@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 
 class AuthService {
   late LocalAuthentication auth = LocalAuthentication();
@@ -35,6 +37,7 @@ class AuthService {
 
   /// Проверяет, есть ли вообще на устройстве возможность использовать биометрию
   static Future<bool> canCheckBiometrics() async {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) return false;
     final LocalAuthentication _localAuthentication = LocalAuthentication();
     bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;
     bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
