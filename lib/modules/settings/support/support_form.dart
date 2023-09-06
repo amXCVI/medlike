@@ -39,7 +39,7 @@ class SupportForm extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.grey)),
                     focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)),
-                    labelText: 'E-mail',
+                    labelText: 'E-mail для обратной связи',
                     labelStyle: const TextStyle(
                         color: AppColors.lightText,
                         fontSize: 17,
@@ -87,13 +87,13 @@ class SupportForm extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.grey)),
                     focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)),
-                    labelText: 'Сообщение',
+                    labelText: 'E-mail для обратной связи',
                     labelStyle: const TextStyle(
                         color: AppColors.lightText,
                         fontSize: 17,
                         fontWeight: FontWeight.w300),
                     floatingLabelStyle: TextStyle(
-                        color: controllerMessage.text.isEmpty
+                        color: controllerEmail.text.isEmpty
                             ? AppColors.lightText
                             : AppColors.mainText,
                         fontWeight: FontWeight.w300),
