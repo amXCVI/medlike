@@ -47,6 +47,14 @@ class AppointmentTimeStatusItems {
     }
   }
 
+  static Color getIconColorByTime(int difference) {
+    if (difference >= statusesList[3].startTimeDuration || difference < 0) {
+      return AppColors.lightText;
+    } else {
+      return Colors.white;
+    }
+  }
+
   static Color getLabelTextColorByTime(int difference) {
     if (difference >= statusesList[3].startTimeDuration || difference < 0) {
       return AppColors.mainText;
