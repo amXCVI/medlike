@@ -14,6 +14,9 @@ class DoctorInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
         builder: (context, state) {
+      if (state.selectedDoctor == null || state.selectedDoctor!.id == null) {
+        return const SizedBox();
+      }
       return Column(
         children: [
           const SizedBox(height: 16),
