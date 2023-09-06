@@ -94,8 +94,9 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
 
   void _onChanged(bool value) {
     if (!isBiometricAuthenticate) {
+      //TODO: хз как тестить
       AppSettings.openAppSettings(
-          type: AppSettingsType.security, asAnotherTask: false);
+          type: AppSettingsType.lockAndPassword, asAnotherTask: false);
     }
 
     if (value) {
