@@ -15,6 +15,7 @@ import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
 import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/firebase_analitics/firebase_analitics.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -128,12 +129,14 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         tryCount: 5,
       ));
 
-      /// Обновляем токен, есть вероятность, что он устарел
-      if (kDebugMode) {
-        await deleteFirebaseDeviceId();
+      if (ProjectDeterminer.getProjectType() != Projects.WEB) {
+        /// Обновляем токен, есть вероятность, что он устарел
+        if (kDebugMode) {
+          await deleteFirebaseDeviceId();
+        }
+        await addFirebaseDeviceId();
+        await FirebaseAnalyticsService.registerAppLoginEvent();
       }
-      await addFirebaseDeviceId();
-      await FirebaseAnalyticsService.registerAppLoginEvent();
 
       getUserProfiles(true);
       return Future(() => null);
@@ -342,6 +345,8 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Сохраняет deviceId устройства на бэке
   Future<void> addFirebaseDeviceId() async {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB)
+      return; //! WEB не поддерживает пуши у нас
     try {
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       Sentry.configureScope((scope) {
@@ -357,6 +362,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
   /// Удаляет deviceId устройства на бэке
   Future<void> deleteFirebaseDeviceId() async {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) return;
     try {
       String fcmToken = await FirebaseMessaging.instance.getToken() as String;
       userRepository.deleteDeviceFirebaseToken(token: fcmToken);
@@ -439,6 +445,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserSecureStorage.setField(AppConstants.isSavedPinCodeForAuth, 'true');
     UserSecureStorage.setField(AppConstants.isAuth, 'true');
 
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) return;
     await FirebaseAnalyticsService.registerCustomEvent(
         name: 'авторизация по пин-коду');
   }
@@ -453,7 +460,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
 
       /// Обновляем токен, есть вероятность, что он устарел
       if (kDebugMode) {
-        await deleteFirebaseDeviceId();
+        if (ProjectDeterminer.getProjectType() != Projects.WEB) {
+          await deleteFirebaseDeviceId();
+        }
       }
       await addFirebaseDeviceId();
       return true;
