@@ -35,17 +35,20 @@ class SupportForm extends StatelessWidget {
                   controller: controllerEmail,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: controllerEmail.text == ""
+                                ? AppColors.lightText
+                                : AppColors.mainText)),
                     focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
+                        borderSide: BorderSide(color: AppColors.mainText)),
                     labelText: 'E-mail для обратной связи',
                     labelStyle: const TextStyle(
                         color: AppColors.lightText,
                         fontSize: 17,
                         fontWeight: FontWeight.w300),
                     floatingLabelStyle: TextStyle(
-                        color: controllerEmail.text.isEmpty
+                        color: controllerMessage.text.isEmpty
                             ? AppColors.lightText
                             : AppColors.mainText,
                         fontWeight: FontWeight.w300),
@@ -83,17 +86,20 @@ class SupportForm extends StatelessWidget {
                   controller: controllerMessage,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
-                    enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: controllerMessage.text == ""
+                                ? AppColors.lightText
+                                : AppColors.mainText)),
                     focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)),
-                    labelText: 'E-mail для обратной связи',
+                        borderSide: BorderSide(color: AppColors.mainText)),
+                    labelText: 'Сообщение',
                     labelStyle: const TextStyle(
                         color: AppColors.lightText,
                         fontSize: 17,
                         fontWeight: FontWeight.w300),
                     floatingLabelStyle: TextStyle(
-                        color: controllerEmail.text.isEmpty
+                        color: controllerMessage.text.isEmpty
                             ? AppColors.lightText
                             : AppColors.mainText,
                         fontWeight: FontWeight.w300),
