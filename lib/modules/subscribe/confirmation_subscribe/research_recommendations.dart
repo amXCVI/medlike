@@ -32,6 +32,7 @@ class ResearchRecommendations extends StatelessWidget {
                     ));
           },
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 14),
               Center(
@@ -40,7 +41,7 @@ class ResearchRecommendations extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  recommendationsList![0].recommendation,
+                  recommendationsList!.map((e) => e.recommendation).toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   softWrap: true,

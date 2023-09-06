@@ -68,18 +68,22 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
         Navigator.pop(context);
         return false;
       },
-      child: DefaultScaffold(
-        appBarTitle: 'Запись на прием',
-        isChildrenPage: true,
-        actionButton: BlocBuilder<SubscribeCubit, SubscribeState>(
-          builder: (context, state) {
-            bool isDisabledButton = !isCheckedAgreements ||
-                state.getAppointmentInfoStatus ==
-                    GetAppointmentInfoStatuses.loading ||
-                state.creatingAppointmentStatus ==
-                    CreatingAppointmentStatuses.loading ||
-                state.registerOrderStatus == RegisterOrderStatuses.loading;
-            return SizedBox(
+      child: BlocBuilder<SubscribeCubit, SubscribeState>(
+        builder: (context, state) {
+          bool isDisabledButton = !isCheckedAgreements ||
+              state.getAppointmentInfoStatus ==
+                  GetAppointmentInfoStatuses.loading ||
+              state.creatingAppointmentStatus ==
+                  CreatingAppointmentStatuses.loading ||
+              state.registerOrderStatus == RegisterOrderStatuses.loading;
+          return DefaultScaffold(
+            appBarTitle: state.getAppointmentInfoStatus ==
+                        GetAppointmentInfoStatuses.success &&
+                    state.appointmentInfoData?.serviceName != null
+                ? state.appointmentInfoData!.serviceName
+                : 'Запись на прием',
+            isChildrenPage: true,
+            actionButton: SizedBox(
               width: 200,
               child: AnimatedFractionallySizedBox(
                 duration: const Duration(milliseconds: 500),
@@ -103,40 +107,40 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                   label: ConfirmationActionButtonLabel(userId: widget.userId),
                 ),
               ),
-            );
-          },
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                UserInfo(userId: widget.userId),
-                const SizedBox(height: 24),
-                const ClinicInfo(),
-
-                /// Карточки с выбором способа оплаты.
-                /// Не работает оплата картой, поэтому закомментировано
-                /// Раскомментировать в кубите
-                /// получение информации о приеме
-                const SizedBox(height: 24),
-                const PaymentWidget(),
-                const SizedBox(height: 24),
-                const ResearchesInfo(),
-                const DoctorInfo(),
-                const SizedBox(height: 24),
-                AgreementsChecker(
-                  isChecked: isCheckedAgreements,
-                  setIsCheckedValue: setIsCheckedValue,
-                ),
-                const SizedBox(width: 15),
-                const SizedBox(height: 24),
-              ],
             ),
-          ),
-        ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    UserInfo(userId: widget.userId),
+                    const SizedBox(height: 24),
+                    const ClinicInfo(),
+
+                    /// Карточки с выбором способа оплаты.
+                    /// Не работает оплата картой, поэтому закомментировано
+                    /// Раскомментировать в кубите
+                    /// получение информации о приеме
+                    const SizedBox(height: 24),
+                    const PaymentWidget(),
+                    const SizedBox(height: 24),
+                    const DoctorInfo(),
+                    const ResearchesInfo(),
+                    const SizedBox(height: 24),
+                    AgreementsChecker(
+                      isChecked: isCheckedAgreements,
+                      setIsCheckedValue: setIsCheckedValue,
+                    ),
+                    const SizedBox(width: 15),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
