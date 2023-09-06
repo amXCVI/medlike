@@ -12,14 +12,15 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
 
 class CheckPinCode extends StatefulWidget {
-  const CheckPinCode({Key? key}) : super(key: key);
+  CheckPinCode({Key? key, required this.isBiometricAuthenticate})
+      : super(key: key);
+  bool isBiometricAuthenticate;
 
   @override
   State<CheckPinCode> createState() => _CheckPinCodeState();
 }
 
 class _CheckPinCodeState extends State<CheckPinCode> {
-  late bool isBiometricAuthenticate = false;
   int countAttempts = 0;
 
   @override
@@ -41,13 +42,13 @@ class _CheckPinCodeState extends State<CheckPinCode> {
                                     SelectedAuthMethods.faceId.toString()))
                           {
                             setState(() {
-                              isBiometricAuthenticate = true;
+                              widget.isBiometricAuthenticate = true;
                             })
                           }
                         else
                           {
                             setState(() {
-                              isBiometricAuthenticate = false;
+                              widget.isBiometricAuthenticate = false;
                             })
                           }
                       })
@@ -56,7 +57,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
   void onSuccessBiometricAuthenticate(bool result) {
     setState(() {
-      isBiometricAuthenticate = false;
+      widget.isBiometricAuthenticate = false;
     });
     if (result) {
       context.read<UserCubit>().signInBiometric();
@@ -66,13 +67,13 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
   void onCancelBiometricAuthenticate() {
     setState(() {
-      isBiometricAuthenticate = false;
+      widget.isBiometricAuthenticate = false;
     });
   }
 
   void handleBiometricMethod() {
     setState(() {
-      isBiometricAuthenticate = true;
+      widget.isBiometricAuthenticate = true;
     });
   }
 
@@ -93,9 +94,10 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
   void onFinish() {
     final pushNavigationService = getIt<PushNavigationService>();
+
     /// Читаем, не нужно ли перейти на страницу по тапу на пуш
     final page = pushNavigationService.nextPage;
-    if(page != null) {
+    if (page != null) {
       context.router.replaceAll([const MainRoute(), page]);
     } else {
       context.router.replaceAll([const MainRoute()]);
@@ -148,7 +150,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             key: const Key('2'),
             height: constraints.maxHeight,
             handleBiometricMethod: onSuccessBiometricAuthenticate,
-            isForcedShowingBiometricModal: isBiometricAuthenticate,
+            isForcedShowingBiometricModal: widget.isBiometricAuthenticate,
             noUsedBiometric: false,
           ),
         ],

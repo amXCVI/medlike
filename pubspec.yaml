@@ -1,8 +1,7 @@
 name: medlike
 description: A new Flutter project.
 
-
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+86
 environment:
@@ -33,7 +32,7 @@ dependencies:
   flutter_slidable: ^3.0.0
   webview_flutter: ^3.0.4
   flutter_holo_date_picker:
-    git: 
+    git:
       url: git@10.5.55.13:Medotrade/medlike_flutter/flutter_holo_date_picker.git
       ref: intl0.18.0
   carousel_slider: ^4.1.1
@@ -61,7 +60,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   sliding_up_panel: ^2.0.0+1
   in_app_update: ^4.0.1
-  app_settings: ^4.1.8
+  app_settings: ^5.0.0
   testfairy_flutter: any
   sentry_flutter: ^7.7.0
   sentry_dio: ^7.7.0
@@ -83,7 +82,6 @@ dev_dependencies:
   logger: ^1.1.0
   mocktail: ^0.3.0
   change_app_package_name: ^1.1.0
-
 
   flutter_lints: any
   freezed: ^2.0.3+1
@@ -108,7 +106,7 @@ flutter:
     - family: AquawaxPro
       fonts:
         - asset: assets/fonts/aquawax_pro/AquawaxPro-Bold.otf
-          style:  normal
+          style: normal
           weight: 700
         - asset: assets/fonts/aquawax_pro/AquawaxPro-Light.otf
           style: normal

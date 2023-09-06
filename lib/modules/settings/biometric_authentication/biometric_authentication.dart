@@ -93,8 +93,9 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   }
 
   void _onChanged(bool value) {
-    if(!isBiometricAuthenticate) {
-      AppSettings.openSecuritySettings();
+    if (!isBiometricAuthenticate) {
+      AppSettings.openAppSettings(
+          type: AppSettingsType.security, asAnotherTask: false);
     }
 
     if (value) {
@@ -128,22 +129,22 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   @override
   Widget build(BuildContext context) {
     return SettingsListItem(
-            title: isFaceId ? 'Вход по Face ID' : 'Вход по Touch ID',
-            iconSrc: isFaceId
-                ? 'assets/icons/settings/ic_faceid_setting_outline.svg'
-                : 'assets/icons/settings/ic_fingerprint_setting_outline.svg',
-            subtitle: isFaceId
-                ? 'Авторизация в приложении с помощью распознавания лица'
-                : 'Авторизация в приложении по отпечатку пальца',
-            onTap: () {
-              _onChanged(!isEnabled);
-            },
-            rightActionWidget: CupertinoSwitch(
-              value: isEnabled && isBiometricAuthenticate,
-              onChanged: _onChanged,
-              activeColor: Theme.of(context).primaryColor,
-              trackColor: AppColors.secondBackground,
-            ),
-          );
+      title: isFaceId ? 'Вход по Face ID' : 'Вход по Touch ID',
+      iconSrc: isFaceId
+          ? 'assets/icons/settings/ic_faceid_setting_outline.svg'
+          : 'assets/icons/settings/ic_fingerprint_setting_outline.svg',
+      subtitle: isFaceId
+          ? 'Авторизация в приложении с помощью распознавания лица'
+          : 'Авторизация в приложении по отпечатку пальца',
+      onTap: () {
+        _onChanged(!isEnabled);
+      },
+      rightActionWidget: CupertinoSwitch(
+        value: isEnabled && isBiometricAuthenticate,
+        onChanged: _onChanged,
+        activeColor: Theme.of(context).primaryColor,
+        trackColor: AppColors.secondBackground,
+      ),
+    );
   }
 }
