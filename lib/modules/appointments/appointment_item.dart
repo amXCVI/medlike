@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/constants/appointment_payment_statuses.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
@@ -132,7 +131,7 @@ class AppointmentItem extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 100,
                       child: Text(
-                          '${ClinicAddressHelper.getShortAddress(appointmentItem.clinicInfo.address ?? '')}, ${appointmentItem.researchPlace ?? ''}',
+                          '${ClinicAddressHelper.getShortAddress(appointmentItem.clinicInfo.address ?? '')}${appointmentItem.researchPlace ?? ''}',
                           overflow: TextOverflow.fade,
                           maxLines: 2,
                           softWrap: true,

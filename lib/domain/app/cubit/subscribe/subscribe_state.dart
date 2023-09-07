@@ -200,7 +200,7 @@ class SubscribeState {
     List<Doctor>? filteredDoctorsList,
     GetCabinetsListStatuses? getCabinetsListStatus,
     List<Cabinet>? cabinetsList,
-    Cabinet? selectedCabinet,
+    ValueGetter<Cabinet?>? selectedCabinet,
     GetFavoriteDoctorsListStatuses? getFavoriteDoctorsListStatus,
     List<FavoriteDoctor>? favoriteDoctorsList,
     List<FavoriteDoctor>? filteredFavoriteDoctorsList,
@@ -263,7 +263,8 @@ class SubscribeState {
       getCabinetsListStatus:
           getCabinetsListStatus ?? this.getCabinetsListStatus,
       cabinetsList: cabinetsList ?? this.cabinetsList,
-      selectedCabinet: selectedCabinet ?? this.selectedCabinet,
+      selectedCabinet:
+          selectedCabinet != null ? selectedCabinet() : this.selectedCabinet,
       filteredCabinetsList: filteredCabinetsList ?? this.filteredCabinetsList,
       getFavoriteDoctorsListStatus:
           getFavoriteDoctorsListStatus ?? this.getFavoriteDoctorsListStatus,

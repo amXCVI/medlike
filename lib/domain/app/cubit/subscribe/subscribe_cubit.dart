@@ -257,6 +257,16 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
     ));
   }
 
+  /// Сохранить выбранный кабинет
+  void setSelectedCabinet(Cabinet cabinet) {
+    emit(state.copyWith(
+      selectedCabinet: () => cabinet,
+      selectedDoctor: null,
+      // Если записываемся на кабинет - врача из купита удаляю
+      // Очень надеюсь, что эта логика правильная
+    ));
+  }
+
   /// Получает список кабинетов и список докторов для записи на услугу
   void getResearchCabinetsList(
     userId,
