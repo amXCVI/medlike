@@ -63,7 +63,9 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
     bool authenticated = false;
     try {
       authenticated = await auth.authenticate(
-        localizedReason: 'Прикоснитесь к сенсору устройства',
+        localizedReason: isFaceId
+            ? "Посмотрите в камеру"
+            : 'Прикоснитесь к сенсору устройства',
         options: const AuthenticationOptions(
           useErrorDialogs: true,
           stickyAuth: true,
