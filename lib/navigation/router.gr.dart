@@ -240,7 +240,7 @@ abstract class _$AppRouter extends RootStackRouter {
           specialisationId: args.specialisationId,
           researchIds: args.researchIds,
           categoryTypeId: args.categoryTypeId,
-          cabinet: args.cabinet,
+          cabinetId: args.cabinet,
           isAny: args.isAny,
           isFavorite: args.isFavorite,
         ),
