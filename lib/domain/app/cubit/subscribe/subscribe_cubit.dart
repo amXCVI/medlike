@@ -261,7 +261,7 @@ class SubscribeCubit extends MediatorCubit<SubscribeState, UserMediatorEvent>
   void setSelectedCabinet(Cabinet cabinet) {
     emit(state.copyWith(
       selectedCabinet: () => cabinet,
-      selectedDoctor: null,
+      selectedDoctor: () => null,
       // Если записываемся на кабинет - врача из купита удаляю
       // Очень надеюсь, что эта логика правильная
     ));
