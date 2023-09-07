@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/clinic_models/clinic_models.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
+import 'package:medlike/modules/about_clinic/price/price_filters_list.dart';
 import 'package:medlike/modules/about_clinic/price/price_filters_widget.dart';
 import 'package:medlike/modules/about_clinic/price/price_list.dart';
 import 'package:medlike/modules/about_clinic/price/price_list_skeleton.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/filters/active_filters_view.dart';
 import 'package:medlike/widgets/not_found_data/not_found_data.dart';
 
 @RoutePage()
@@ -64,53 +66,9 @@ class _PricePageState extends State<PricePage> {
     setState(() {
       isShowingFilters = false;
       isFilteringMode = false;
-      selectedFilters = [];
+      selectedFilters = [''];
     });
   }
-
-  // void handleTapOnFilterItem(String filterValue) {
-  //   if (selectedFilters.isEmpty) {
-  //     setState(() {
-  //       selectedFilters.add(filterValue);
-  //     });
-  //     return;
-  //   }
-  //   if (filterValue.isEmpty) {
-  //     if (selectedFilters.contains(filterValue)) {
-  //       setState(() {
-  //         selectedFilters.remove(filterValue);
-  //       });
-  //     } else {
-  //       setState(() {
-  //         selectedFilters.clear();
-  //         selectedFilters.add(filterValue);
-  //       });
-  //     }
-  //     return;
-  //   }
-  //   if (selectedFilters.contains(filterValue)) {
-  //     if (selectedFilters.first.isEmpty) {
-  //       setState(() {
-  //         selectedFilters.remove(filterValue);
-  //       });
-  //     } else {
-  //       setState(() {
-  //         selectedFilters.remove(filterValue);
-  //       });
-  //     }
-  //   } else {
-  //     if (selectedFilters.first.isNotEmpty) {
-  //       setState(() {
-  //         selectedFilters.add(filterValue);
-  //       });
-  //     } else {
-  //       setState(() {
-  //         selectedFilters.remove(selectedFilters.first);
-  //         selectedFilters.add(filterValue);
-  //       });
-  //     }
-  //   }
-  // }
 
   void handleTapOnFilterItem(String filterValue) {
     if (selectedFilters.contains(filterValue)) {
@@ -143,13 +101,29 @@ class _PricePageState extends State<PricePage> {
         handleResetFilters: handleResetFilters,
         isFilteringMode: isFilteringMode,
       ),
-      widgetOverBody: PriceFiltersWidget(
-        key: widgetOverBodyGlobalKey,
-        selectedFilters: selectedFilters,
-        handleTapOnFilterItem: handleTapOnFilterItem,
-      ),
+      widgetOverBody: isFilteringMode
+          ? PriceFiltersWidget(
+              key: widgetOverBodyGlobalKey,
+              selectedFilters: selectedFilters,
+              handleTapOnFilterItem: handleTapOnFilterItem,
+            )
+          //TODO: Хоспаде переписать как можно быстрее
+          // Увидят, жопу за такое порвут!
+          // Подумать как переписать фильтры для медкарты и прочего как-нибудь покрасивше
+          : ActiveFiltersView(
+              key: widgetOverBodyGlobalKey,
+              displayedFilters: {
+                "": priceFiltersList
+                    .firstWhere(
+                        (element) => element.value == selectedFilters[0])
+                    .label
+              },
+              display: selectedFilters[0] != ""),
+      //TODO: И всё, что с этим связанно
       widgetOverBodyGlobalKey:
-          isShowingFilters || isFilteringMode ? widgetOverBodyGlobalKey : null,
+          (isShowingFilters || isFilteringMode) || (selectedFilters[0] != "")
+              ? widgetOverBodyGlobalKey
+              : null,
       child: BlocBuilder<ClinicsCubit, ClinicsState>(
         builder: (context, state) {
           if (state.getPriceListStatus == GetPriceListStatuses.failed) {
