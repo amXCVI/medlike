@@ -25,6 +25,8 @@ class PricePage extends StatefulWidget {
 class _PricePageState extends State<PricePage> {
   late bool isFilteringMode = false;
   late bool isShowingFilters = false;
+
+  ///Here's only one item(yet) so use first index to acces value
   List<String> selectedFilters = [''];
   GlobalKey widgetOverBodyGlobalKey = GlobalKey();
 
@@ -107,19 +109,12 @@ class _PricePageState extends State<PricePage> {
               selectedFilters: selectedFilters,
               handleTapOnFilterItem: handleTapOnFilterItem,
             )
-          //TODO: Хоспаде переписать как можно быстрее
-          // Увидят, жопу за такое порвут!
-          // Подумать как переписать фильтры для медкарты и прочего как-нибудь покрасивше
           : ActiveFiltersView(
               key: widgetOverBodyGlobalKey,
-              displayedFilters: {
-                "": priceFiltersList
-                    .firstWhere(
-                        (element) => element.value == selectedFilters[0])
-                    .label
-              },
+              filter: priceFiltersList
+                  .firstWhere((element) => element.value == selectedFilters[0])
+                  .label,
               display: selectedFilters[0] != ""),
-      //TODO: И всё, что с этим связанно
       widgetOverBodyGlobalKey:
           (isShowingFilters || isFilteringMode) || (selectedFilters[0] != "")
               ? widgetOverBodyGlobalKey

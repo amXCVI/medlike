@@ -53,6 +53,7 @@ class _MedcardPageState extends State<MedcardPage> {
         isShowingFilters = true;
         isFilteringMode = false;
       });
+      checkFiltersForAll();
     } else {
       setState(() {
         isFilteringMode = true;
@@ -74,70 +75,65 @@ class _MedcardPageState extends State<MedcardPage> {
     context.read<MedcardCubit>().resetMedcardFilters(userId: widget.userId);
   }
 
+  void checkFiltersForAll() {
+    Map<String, MedcardFilterItemModel>? filters =
+        context.read<MedcardCubit>().state.medcardSelectedFilters;
+    if (filters == null) {
+      handleResetFilters();
+      return;
+    }
+    int allCount = 0;
+
+    filters.forEach((key, value) {
+      if (value.value == 'dateBegin=&dateEnd=' || value.value == "") allCount++;
+    });
+
+    if (allCount == filters.length) handleResetFilters();
+  }
+
   @override
   Widget build(BuildContext context) {
     void _onFilterList(String filterStr) {
       context.read<MedcardCubit>().filterMedcardDocsList(filterStr);
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (isFilteringMode) {
-          handleResetFilters();
-        } else {
-          if (widget.isChildrenPage) {
-            context.router.replace(const MedcardProfilesListRoute());
+    return DefaultScaffold(
+      appBarTitle: 'Медкарта',
+      isSearch: true,
+      appBar: MedcardAppBar(
+        title: 'Медкарта',
+        filteringFunction: _onFilterList,
+        isChildrenPage: true,
+        handleTapOnFiltersButton: handleTapOnFiltersButton,
+        handleResetFilters: handleResetFilters,
+        isFilteringMode: isFilteringMode,
+      ),
+      widgetOverBody: isFilteringMode
+          ? MedcardFiltersWidget(key: widgetOverBodyGlobalKey)
+          : SelectedFiltersWidget(
+              key: widgetOverBodyGlobalKey,
+              isShowingWidget: isShowingFilters && !isFilteringMode),
+      widgetOverBodyGlobalKey:
+          isShowingFilters || isFilteringMode ? widgetOverBodyGlobalKey : null,
+      rightBottomWidget: FilesButton(userId: widget.userId),
+      child: BlocBuilder<MedcardCubit, MedcardState>(
+        builder: (context, state) {
+          if (state.getMedcardDocsListStatus ==
+              GetMedcardDocsListStatuses.failed) {
+            return const Text('');
+          } else if (state.getMedcardDocsListStatus ==
+              GetMedcardDocsListStatuses.success) {
+            return MedcardList(
+              medcardDocsList:
+                  state.filteredMedcardDocsList as List<MedcardDocsModel>,
+              onRefreshData: _onLoadDada,
+              downloadingFileId: state.downloadingFileId ?? '',
+            );
           } else {
-            context.router.replaceAll([const MainRoute()]);
+            return const MedcardDocsListSkeleton();
           }
-        }
-        return false;
-      },
-      child: DefaultScaffold(
-          appBarTitle: 'Медкарта',
-          isSearch: true,
-          appBar: MedcardAppBar(
-            title: 'Медкарта',
-            filteringFunction: _onFilterList,
-            isChildrenPage: true,
-            handleTapOnFiltersButton: handleTapOnFiltersButton,
-            handleResetFilters: handleResetFilters,
-            isFilteringMode: isFilteringMode,
-          ),
-          widgetOverBody: isFilteringMode
-              ? MedcardFiltersWidget(key: widgetOverBodyGlobalKey)
-              : GestureDetector(
-                  onTap: () {
-                    handleTapOnFiltersButton();
-                    ModalRoute.of(context)
-                        ?.addLocalHistoryEntry(LocalHistoryEntry());
-                  },
-                  child: SelectedFiltersWidget(
-                      key: widgetOverBodyGlobalKey,
-                      isShowingWidget: isShowingFilters && !isFilteringMode),
-                ),
-          widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
-              ? widgetOverBodyGlobalKey
-              : null,
-          rightBottomWidget: FilesButton(userId: widget.userId),
-          child: BlocBuilder<MedcardCubit, MedcardState>(
-            builder: (context, state) {
-              if (state.getMedcardDocsListStatus ==
-                  GetMedcardDocsListStatuses.failed) {
-                return const Text('');
-              } else if (state.getMedcardDocsListStatus ==
-                  GetMedcardDocsListStatuses.success) {
-                return MedcardList(
-                  medcardDocsList:
-                      state.filteredMedcardDocsList as List<MedcardDocsModel>,
-                  onRefreshData: _onLoadDada,
-                  downloadingFileId: state.downloadingFileId ?? '',
-                );
-              } else {
-                return const MedcardDocsListSkeleton();
-              }
-            },
-          )),
+        },
+      ),
     );
   }
 }

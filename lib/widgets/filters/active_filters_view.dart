@@ -3,20 +3,9 @@ import 'package:medlike/themes/colors.dart';
 
 class ActiveFiltersView extends StatelessWidget {
   const ActiveFiltersView(
-      {super.key, required this.displayedFilters, required this.display});
-  final Map<String, String> displayedFilters;
+      {super.key, required this.filter, required this.display});
+  final String filter;
   final bool display;
-
-  List<TextSpan> displayedFiltesAsList(BuildContext ctx) {
-    List<TextSpan> texts = <TextSpan>[];
-    displayedFilters.forEach((key, value) {
-      texts.add(TextSpan(text: "$key: "));
-      texts.add(TextSpan(
-          text: value, style: TextStyle(color: Theme.of(ctx).primaryColor)));
-    });
-
-    return texts;
-  }
 
   @override
   Widget build(BuildContext context) => display
@@ -32,8 +21,10 @@ class ActiveFiltersView extends StatelessWidget {
               softWrap: true,
               textAlign: TextAlign.center,
               TextSpan(children: [
-                const TextSpan(text: "Выбраны "),
-                ...displayedFiltesAsList(context)
+                const TextSpan(text: "Выбраны: "),
+                TextSpan(
+                    text: filter,
+                    style: TextStyle(color: Theme.of(context).primaryColor))
               ]),
             ),
           ),
