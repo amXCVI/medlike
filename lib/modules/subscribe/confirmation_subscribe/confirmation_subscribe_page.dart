@@ -13,6 +13,7 @@ import 'package:medlike/modules/subscribe/confirmation_subscribe/researches_info
 import 'package:medlike/modules/subscribe/confirmation_subscribe/user_info.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/dividers/dash_divider.dart';
 
 import 'doctor_info.dart';
 
@@ -128,6 +129,7 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                     const SizedBox(height: 24),
                     const DoctorInfo(),
                     const ResearchesInfo(),
+                    const DashDivider(),
                     const SizedBox(height: 24),
                     AgreementsChecker(
                       isChecked: isCheckedAgreements,
