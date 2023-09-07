@@ -27,8 +27,8 @@ class CheckPinCodePage extends StatelessWidget {
         // Force provide page as no child so we display a clinic icon
         isChildrenPage: false,
         appBarTitle: AppConstants.appName,
-        actions: [UnauthSupportButton()],
-        bottomNavigationBar: PasswordPageBottomNavigationBar(),
+        actions: const [UnauthSupportButton()],
+        bottomNavigationBar: const PasswordPageBottomNavigationBar(),
 
         child: FutureBuilder<bool>(
           future: AuthService.canCheckBiometrics(),

@@ -12,9 +12,9 @@ import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/pin_code/pin_code_view.dart';
 
 class CheckPinCode extends StatefulWidget {
-  CheckPinCode({Key? key, required this.isBiometricAuthenticate})
+  const CheckPinCode({Key? key, required this.isBiometricAuthenticate})
       : super(key: key);
-  bool isBiometricAuthenticate;
+  final bool isBiometricAuthenticate;
 
   @override
   State<CheckPinCode> createState() => _CheckPinCodeState();
@@ -22,42 +22,17 @@ class CheckPinCode extends StatefulWidget {
 
 class _CheckPinCodeState extends State<CheckPinCode> {
   int countAttempts = 0;
+  bool _displayBioAuthBanner = true;
 
   @override
   void initState() {
+    _displayBioAuthBanner = widget.isBiometricAuthenticate;
     super.initState();
-    initBiometricValue();
-  }
-
-  void initBiometricValue() async {
-    await AuthService.canCheckBiometrics()
-        .then((resBiometricSupported) async => {
-              await UserSecureStorage.getField(
-                      AppConstants.useBiometricMethodAuthentication)
-                  .then((resAuthMethod) => {
-                        if (resBiometricSupported &&
-                            (resAuthMethod ==
-                                    SelectedAuthMethods.touchId.toString() ||
-                                resAuthMethod ==
-                                    SelectedAuthMethods.faceId.toString()))
-                          {
-                            setState(() {
-                              widget.isBiometricAuthenticate = true;
-                            })
-                          }
-                        else
-                          {
-                            setState(() {
-                              widget.isBiometricAuthenticate = false;
-                            })
-                          }
-                      })
-            });
   }
 
   void onSuccessBiometricAuthenticate(bool result) {
     setState(() {
-      widget.isBiometricAuthenticate = false;
+      _displayBioAuthBanner = false;
     });
     if (result) {
       context.read<UserCubit>().signInBiometric();
@@ -67,13 +42,13 @@ class _CheckPinCodeState extends State<CheckPinCode> {
 
   void onCancelBiometricAuthenticate() {
     setState(() {
-      widget.isBiometricAuthenticate = false;
+      _displayBioAuthBanner = false;
     });
   }
 
   void handleBiometricMethod() {
     setState(() {
-      widget.isBiometricAuthenticate = true;
+      _displayBioAuthBanner = true;
     });
   }
 
@@ -150,7 +125,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
             key: const Key('2'),
             height: constraints.maxHeight,
             handleBiometricMethod: onSuccessBiometricAuthenticate,
-            isForcedShowingBiometricModal: widget.isBiometricAuthenticate,
+            isForcedShowingBiometricModal: _displayBioAuthBanner,
             noUsedBiometric: false,
           ),
         ],

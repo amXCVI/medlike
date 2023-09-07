@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medlike/constants/appointment_statuses.dart';
 import 'package:medlike/data/models/models.dart';
 import 'package:medlike/modules/appointments/cabinet/cabinet_find_image.dart';
 
@@ -10,7 +11,8 @@ class CabinetFindItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (appointment.cabinetInfo == null || appointment.status == 1) {
+    if (appointment.cabinetInfo == null ||
+        AppointmentStatuses.checkIsPastAppointment(appointment.status)) {
       return const SizedBox();
     }
     return Column(
