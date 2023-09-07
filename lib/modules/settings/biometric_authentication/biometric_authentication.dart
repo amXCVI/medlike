@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -95,7 +97,10 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
   void _onChanged(bool value) {
     if (!isBiometricAuthenticate) {
       AppSettings.openAppSettings(
-          type: AppSettingsType.lockAndPassword, asAnotherTask: false);
+          type: Platform.isAndroid
+              ? AppSettingsType.lockAndPassword
+              : AppSettingsType.security,
+          asAnotherTask: false);
     }
 
     if (value) {
