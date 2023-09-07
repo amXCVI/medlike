@@ -13,6 +13,6 @@ class ClinicAddressHelper {
     addressArray.removeAt(0);
     addressArray.removeAt(0);
     String shortAddress = addressArray.join(', ');
-    return shortAddress;
+    return shortAddress.isNotEmpty ? '$shortAddress, ' : '';
   }
 }

@@ -28,7 +28,7 @@ class SchedulePage extends StatefulWidget {
     this.specialisationId,
     this.researchIds,
     required this.categoryTypeId,
-    this.cabinet,
+    this.cabinetId,
     required this.isAny,
     this.isFavorite = false,
   }) : super(key: key);
@@ -43,7 +43,7 @@ class SchedulePage extends StatefulWidget {
   final String? specialisationId;
   final List<String>? researchIds;
   final int categoryTypeId;
-  final String? cabinet;
+  final String? cabinetId;
   final bool isAny;
   final bool isFavorite;
 
@@ -120,7 +120,7 @@ class _SchedulePageState extends State<SchedulePage> {
               .categoryType,
           doctorId: widget.doctorId,
           specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
+          cabinet: widget.cabinetId,
           researchIds: widget.researchIds,
           isAny: widget.isAny,
         );
@@ -137,7 +137,7 @@ class _SchedulePageState extends State<SchedulePage> {
               .categoryType,
           doctorId: widget.doctorId,
           specialisationId: widget.specialisationId,
-          cabinet: widget.cabinet,
+          cabinet: widget.cabinetId,
           researchIds: widget.researchIds,
           isAny: widget.isAny,
         );
@@ -215,7 +215,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                 doctorId: widget.doctorId,
                                 specialisationId: widget.specialisationId,
                                 researchIds: widget.researchIds,
-                                cabinet: widget.cabinet,
+                                cabinet: widget.cabinetId,
                                 getCalendarList: _getCalendarList,
                                 getCellsList: _getCellsList,
                                 setSelectedDate: _setSelectedDate,
