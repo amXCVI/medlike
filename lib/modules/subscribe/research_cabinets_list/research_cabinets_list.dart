@@ -87,11 +87,10 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
         clinicId: widget.clinicId,
         categoryTypeId: widget.categoryTypeId,
         researchIds: widget.researchIds,
-        cabinet: cabinet.id,
+        cabinetId: cabinet.id,
         isAny: false,
       ));
     }
-
 
     return RefreshIndicator(
       onRefresh: () async => widget.onRefreshData(),
@@ -99,12 +98,15 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
         child: ListView(shrinkWrap: true, children: [
           BlocBuilder<TourCubit, TourState>(
             builder: (context, state) {
-              final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
+              final Map<TourChecked, bool>? tourState =
+                  context.read<TourCubit>().state.tourChecked;
               return !(tourState?[TourChecked.cabinetInfo] ?? false)
                   ? InfoPlace(
                       text:
                           'При записи на кабинет специалист подбирается автоматически, закрепленный за выбранным кабинетом',
-                      onClosePlace: () => context.read<TourCubit>().checkItem(TourChecked.cabinetInfo),
+                      onClosePlace: () => context
+                          .read<TourCubit>()
+                          .checkItem(TourChecked.cabinetInfo),
                       margin: const EdgeInsets.all(16.0),
                     )
                   : const SizedBox();

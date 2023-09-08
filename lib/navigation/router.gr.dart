@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    RequireUpdateAppRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RequireUpdateAppPage(),
+      );
+    },
     AllClinicsListRoute.name: (routeData) {
       final args = routeData.argsAs<AllClinicsListRouteArgs>(
           orElse: () => const AllClinicsListRouteArgs());
@@ -48,16 +54,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    ClinicDetailWithBottomSheetsRoute.name: (routeData) {
-      final args = routeData.argsAs<ClinicDetailWithBottomSheetsRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ClinicDetailWithBottomSheetsPage(
-          key: args.key,
-          selectedClinic: args.selectedClinic,
-        ),
-      );
-    },
     PriceRoute.name: (routeData) {
       final args = routeData.argsAs<PriceRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -68,6 +64,16 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    ClinicDetailWithBottomSheetsRoute.name: (routeData) {
+      final args = routeData.argsAs<ClinicDetailWithBottomSheetsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ClinicDetailWithBottomSheetsPage(
+          key: args.key,
+          selectedClinic: args.selectedClinic,
+        ),
+      );
+    },
     SalesRoute.name: (routeData) {
       final args = routeData.argsAs<SalesRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -75,6 +81,65 @@ abstract class _$AppRouter extends RootStackRouter {
         child: SalesPage(
           key: args.key,
           clinicId: args.clinicId,
+        ),
+      );
+    },
+    FilesRoute.name: (routeData) {
+      final args = routeData.argsAs<FilesRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FilesPage(
+          key: args.key,
+          userId: args.userId,
+        ),
+      );
+    },
+    MedcardRoute.name: (routeData) {
+      final args = routeData.argsAs<MedcardRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: MedcardPage(
+          key: args.key,
+          userId: args.userId,
+          isChildrenPage: args.isChildrenPage,
+          eventId: args.eventId,
+        ),
+      );
+    },
+    MedcardProfilesListRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MedcardProfilesListPage(),
+      );
+    },
+    SplashRoute.name: (routeData) {
+      final args = routeData.argsAs<SplashRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SplashPage(
+          key: args.key,
+          parallelAction: args.parallelAction,
+        ),
+      );
+    },
+    MainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MainPage(),
+      );
+    },
+    FeedbackRoute.name: (routeData) {
+      final args = routeData.argsAs<FeedbackRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FeedbackPage(
+          key: args.key,
+          appointmentId: args.appointmentId,
+          rating: args.rating,
+          controllerCaption: args.controllerCaption,
+          controllerVisible: args.controllerVisible,
+          controllerMessage: args.controllerMessage,
+          controllerEmail: args.controllerEmail,
         ),
       );
     },
@@ -101,35 +166,165 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    FeedbackRoute.name: (routeData) {
-      final args = routeData.argsAs<FeedbackRouteArgs>();
+    ConfirmationSubscribeRoute.name: (routeData) {
+      final args = routeData.argsAs<ConfirmationSubscribeRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: FeedbackPage(
+        child: ConfirmationSubscribePage(
           key: args.key,
-          appointmentId: args.appointmentId,
-          rating: args.rating,
-          controllerCaption: args.controllerCaption,
-          controllerVisible: args.controllerVisible,
-          controllerMessage: args.controllerMessage,
-          controllerEmail: args.controllerEmail,
+          userId: args.userId,
+          timeZoneHours: args.timeZoneHours,
         ),
       );
     },
-    DocumentsRoute.name: (routeData) {
+    PaymentRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const DocumentsPage(),
+        child: PaymentPage(
+          key: args.key,
+          userId: args.userId,
+        ),
       );
     },
-    DocumentRoute.name: (routeData) {
-      final args = routeData.argsAs<DocumentRouteArgs>();
+    ResearchCabinetsListRoute.name: (routeData) {
+      final args = routeData.argsAs<ResearchCabinetsListRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: DocumentPage(
+        child: ResearchCabinetsListPage(
           key: args.key,
-          document: args.document,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+          categoryTypeId: args.categoryTypeId,
+          researchIds: args.researchIds,
         ),
+      );
+    },
+    ClinicsListRoute.name: (routeData) {
+      final args = routeData.argsAs<ClinicsListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ClinicsListPage(
+          key: args.key,
+          userId: args.userId,
+          isChildrenPage: args.isChildrenPage,
+        ),
+      );
+    },
+    ResearchesListRoute.name: (routeData) {
+      final args = routeData.argsAs<ResearchesListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ResearchesListPage(
+          key: args.key,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+          categoryTypeId: args.categoryTypeId,
+        ),
+      );
+    },
+    DoctorsListRoute.name: (routeData) {
+      final args = routeData.argsAs<DoctorsListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: DoctorsListPage(
+          key: args.key,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+          categoryTypeId: args.categoryTypeId,
+          specialisationId: args.specialisationId,
+          specialisationName: args.specialisationName,
+        ),
+      );
+    },
+    SpecialisationsListRoute.name: (routeData) {
+      final args = routeData.argsAs<SpecialisationsListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SpecialisationsListPage(
+          key: args.key,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+          categoryTypeId: args.categoryTypeId,
+        ),
+      );
+    },
+    ScheduleRoute.name: (routeData) {
+      final args = routeData.argsAs<ScheduleRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SchedulePage(
+          key: args.key,
+          pageTitle: args.pageTitle,
+          pageSubtitle: args.pageSubtitle,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+          doctorId: args.doctorId,
+          specialisationId: args.specialisationId,
+          researchIds: args.researchIds,
+          categoryTypeId: args.categoryTypeId,
+          cabinetId: args.cabinetId,
+          isAny: args.isAny,
+          isFavorite: args.isFavorite,
+        ),
+      );
+    },
+    FavoriteDoctorsListRoute.name: (routeData) {
+      final args = routeData.argsAs<FavoriteDoctorsListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FavoriteDoctorsListPage(
+          key: args.key,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+        ),
+      );
+    },
+    ServicesListRoute.name: (routeData) {
+      final args = routeData.argsAs<ServicesListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ServicesListPage(
+          key: args.key,
+          userId: args.userId,
+          buildingId: args.buildingId,
+          clinicId: args.clinicId,
+        ),
+      );
+    },
+    SubscribeProfilesListRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SubscribeProfilesListPage(),
+      );
+    },
+    CardsRoute.name: (routeData) {
+      final args = routeData.argsAs<CardsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CardsPage(
+          key: args.key,
+          isChildrenPage: args.isChildrenPage,
+          needToGet: args.needToGet,
+        ),
+      );
+    },
+    HealthRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HealthPage(),
+      );
+    },
+    HealthForMainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HealthForMainPage(),
       );
     },
     DiaryAddRoute.name: (routeData) {
@@ -163,44 +358,20 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    CardsRoute.name: (routeData) {
-      final args = routeData.argsAs<CardsRouteArgs>();
+    DocumentsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CardsPage(
+        child: const DocumentsPage(),
+      );
+    },
+    DocumentRoute.name: (routeData) {
+      final args = routeData.argsAs<DocumentRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: DocumentPage(
           key: args.key,
-          isChildrenPage: args.isChildrenPage,
-          needToGet: args.needToGet,
+          document: args.document,
         ),
-      );
-    },
-    HealthRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HealthPage(),
-      );
-    },
-    HealthForMainRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HealthForMainPage(),
-      );
-    },
-    AuthUserAgreementsRoute.name: (routeData) {
-      final args = routeData.argsAs<AuthUserAgreementsRouteArgs>(
-          orElse: () => const AuthUserAgreementsRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: AuthUserAgreementsPage(
-          key: args.key,
-          isFullScreen: args.isFullScreen,
-        ),
-      );
-    },
-    CheckPinCodeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const CheckPinCodePage(),
       );
     },
     CreatePinCodeRoute.name: (routeData) {
@@ -214,30 +385,58 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    EsiaLoginRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const EsiaLoginPage(),
-      );
-    },
     EsiaRegisterRoute.name: (routeData) {
       final args = routeData.argsAs<EsiaRegisterRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: EsiaRegisterPage(
           key: args.key,
-          pageTitle: args.pageTitle,
-          pageSubtitle: args.pageSubtitle,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          doctorId: args.doctorId,
-          specialisationId: args.specialisationId,
-          researchIds: args.researchIds,
-          categoryTypeId: args.categoryTypeId,
-          cabinetId: args.cabinet,
-          isAny: args.isAny,
-          isFavorite: args.isFavorite,
+          firstName: args.firstName,
+          lastName: args.lastName,
+          middleName: args.middleName,
+          phoneNumber: args.phoneNumber,
+          snils: args.snils,
+          sex: args.sex,
+          birthday: args.birthday,
+          passportSerial: args.passportSerial,
+          passportNumber: args.passportNumber,
+          passportIssueDate: args.passportIssueDate,
+          passportIssueId: args.passportIssueId,
+          esiaToken: args.esiaToken,
+        ),
+      );
+    },
+    EsiaLoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EsiaLoginPage(),
+      );
+    },
+    AuthUserAgreementsRoute.name: (routeData) {
+      final args = routeData.argsAs<AuthUserAgreementsRouteArgs>(
+          orElse: () => const AuthUserAgreementsRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AuthUserAgreementsPage(
+          key: args.key,
+          isFullScreen: args.isFullScreen,
+        ),
+      );
+    },
+    UnauthSupportRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const UnauthSupportPage(),
+      );
+    },
+    StartPhoneNumberRoute.name: (routeData) {
+      final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
+          orElse: () => const StartPhoneNumberRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: StartPhoneNumberPage(
+          key: args.key,
+          isDeletingProfile: args.isDeletingProfile,
         ),
       );
     },
@@ -246,6 +445,16 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: PasswordPage(
+          key: args.key,
+          phoneNumber: args.phoneNumber,
+        ),
+      );
+    },
+    RecoverPasswordSmsRoute.name: (routeData) {
+      final args = routeData.argsAs<RecoverPasswordSmsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RecoverPasswordSmsPage(
           key: args.key,
           phoneNumber: args.phoneNumber,
         ),
@@ -261,92 +470,10 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    RecoverPasswordSmsRoute.name: (routeData) {
-      final args = routeData.argsAs<RecoverPasswordSmsRouteArgs>();
+    CheckPinCodeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: RecoverPasswordSmsPage(
-          key: args.key,
-          phoneNumber: args.phoneNumber,
-        ),
-      );
-    },
-    StartPhoneNumberRoute.name: (routeData) {
-      final args = routeData.argsAs<StartPhoneNumberRouteArgs>(
-          orElse: () => const StartPhoneNumberRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: StartPhoneNumberPage(
-          key: args.key,
-          isDeletingProfile: args.isDeletingProfile,
-        ),
-      );
-    },
-    UnauthSupportRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const UnauthSupportPage(),
-      );
-    },
-    MainRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MainPage(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      final args = routeData.argsAs<SplashRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SplashPage(
-          key: args.key,
-          parallelAction: args.parallelAction,
-        ),
-      );
-    },
-    FilesRoute.name: (routeData) {
-      final args = routeData.argsAs<FilesRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: FilesPage(
-          key: args.key,
-          userId: args.userId,
-        ),
-      );
-    },
-    MedcardRoute.name: (routeData) {
-      final args = routeData.argsAs<MedcardRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: MedcardPage(
-          key: args.key,
-          userId: args.userId,
-          isChildrenPage: args.isChildrenPage,
-          eventId: args.eventId,
-        ),
-      );
-    },
-    MedcardProfilesListRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MedcardProfilesListPage(),
-      );
-    },
-    RequireUpdateAppRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const RequireUpdateAppPage(),
-      );
-    },
-    AgreementsRoute.name: (routeData) {
-      final args = routeData.argsAs<AgreementsRouteArgs>(
-          orElse: () => const AgreementsRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: AgreementsPage(
-          key: args.key,
-          isAppointmentAgreements: args.isAppointmentAgreements,
-        ),
+        child: const CheckPinCodePage(),
       );
     },
     FaqsRoute.name: (routeData) {
@@ -366,157 +493,44 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    SettingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SettingsPage(),
-      );
-    },
     SupportRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SupportPage(),
       );
     },
-    ClinicsListRoute.name: (routeData) {
-      final args = routeData.argsAs<ClinicsListRouteArgs>();
+    SettingsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ClinicsListPage(
-          key: args.key,
-          userId: args.userId,
-          isChildrenPage: args.isChildrenPage,
-        ),
+        child: const SettingsPage(),
       );
     },
-    ConfirmationSubscribeRoute.name: (routeData) {
-      final args = routeData.argsAs<ConfirmationSubscribeRouteArgs>();
+    AgreementsRoute.name: (routeData) {
+      final args = routeData.argsAs<AgreementsRouteArgs>(
+          orElse: () => const AgreementsRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ConfirmationSubscribePage(
+        child: AgreementsPage(
           key: args.key,
-          userId: args.userId,
-          timeZoneHours: args.timeZoneHours,
-        ),
-      );
-    },
-    PaymentRoute.name: (routeData) {
-      final args = routeData.argsAs<PaymentRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PaymentPage(
-          key: args.key,
-          userId: args.userId,
-        ),
-      );
-    },
-    DoctorsListRoute.name: (routeData) {
-      final args = routeData.argsAs<DoctorsListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: DoctorsListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          categoryTypeId: args.categoryTypeId,
-          specialisationId: args.specialisationId,
-          specialisationName: args.specialisationName,
-        ),
-      );
-    },
-    FavoriteDoctorsListRoute.name: (routeData) {
-      final args = routeData.argsAs<FavoriteDoctorsListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: FavoriteDoctorsListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-        ),
-      );
-    },
-    SubscribeProfilesListRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SubscribeProfilesListPage(),
-      );
-    },
-    ResearchesListRoute.name: (routeData) {
-      final args = routeData.argsAs<ResearchesListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ResearchesListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          categoryTypeId: args.categoryTypeId,
-        ),
-      );
-    },
-    ResearchCabinetsListRoute.name: (routeData) {
-      final args = routeData.argsAs<ResearchCabinetsListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ResearchCabinetsListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          categoryTypeId: args.categoryTypeId,
-          researchIds: args.researchIds,
-        ),
-      );
-    },
-    ScheduleRoute.name: (routeData) {
-      final args = routeData.argsAs<ScheduleRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SchedulePage(
-          key: args.key,
-          pageTitle: args.pageTitle,
-          pageSubtitle: args.pageSubtitle,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          doctorId: args.doctorId,
-          specialisationId: args.specialisationId,
-          researchIds: args.researchIds,
-          categoryTypeId: args.categoryTypeId,
-          cabinet: args.cabinet,
-          isAny: args.isAny,
-          isFavorite: args.isFavorite,
-        ),
-      );
-    },
-    ServicesListRoute.name: (routeData) {
-      final args = routeData.argsAs<ServicesListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ServicesListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-        ),
-      );
-    },
-    SpecialisationsListRoute.name: (routeData) {
-      final args = routeData.argsAs<SpecialisationsListRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SpecialisationsListPage(
-          key: args.key,
-          userId: args.userId,
-          buildingId: args.buildingId,
-          clinicId: args.clinicId,
-          categoryTypeId: args.categoryTypeId,
+          isAppointmentAgreements: args.isAppointmentAgreements,
         ),
       );
     },
   };
+}
+
+/// generated route for
+/// [RequireUpdateAppPage]
+class RequireUpdateAppRoute extends PageRouteInfo<void> {
+  const RequireUpdateAppRoute({List<PageRouteInfo>? children})
+      : super(
+          RequireUpdateAppRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RequireUpdateAppRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -634,6 +648,43 @@ class ClinicForMainRouteArgs {
 }
 
 /// generated route for
+/// [PricePage]
+class PriceRoute extends PageRouteInfo<PriceRouteArgs> {
+  PriceRoute({
+    Key? key,
+    required String clinicId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PriceRoute.name,
+          args: PriceRouteArgs(
+            key: key,
+            clinicId: clinicId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PriceRoute';
+
+  static const PageInfo<PriceRouteArgs> page = PageInfo<PriceRouteArgs>(name);
+}
+
+class PriceRouteArgs {
+  const PriceRouteArgs({
+    this.key,
+    required this.clinicId,
+  });
+
+  final Key? key;
+
+  final String clinicId;
+
+  @override
+  String toString() {
+    return 'PriceRouteArgs{key: $key, clinicId: $clinicId}';
+  }
+}
+
+/// generated route for
 /// [ClinicDetailWithBottomSheetsPage]
 class ClinicDetailWithBottomSheetsRoute
     extends PageRouteInfo<ClinicDetailWithBottomSheetsRouteArgs> {
@@ -673,43 +724,6 @@ class ClinicDetailWithBottomSheetsRouteArgs {
 }
 
 /// generated route for
-/// [PricePage]
-class PriceRoute extends PageRouteInfo<PriceRouteArgs> {
-  PriceRoute({
-    Key? key,
-    required String clinicId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PriceRoute.name,
-          args: PriceRouteArgs(
-            key: key,
-            clinicId: clinicId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PriceRoute';
-
-  static const PageInfo<PriceRouteArgs> page = PageInfo<PriceRouteArgs>(name);
-}
-
-class PriceRouteArgs {
-  const PriceRouteArgs({
-    this.key,
-    required this.clinicId,
-  });
-
-  final Key? key;
-
-  final String clinicId;
-
-  @override
-  String toString() {
-    return 'PriceRouteArgs{key: $key, clinicId: $clinicId}';
-  }
-}
-
-/// generated route for
 /// [SalesPage]
 class SalesRoute extends PageRouteInfo<SalesRouteArgs> {
   SalesRoute({
@@ -743,6 +757,219 @@ class SalesRouteArgs {
   @override
   String toString() {
     return 'SalesRouteArgs{key: $key, clinicId: $clinicId}';
+  }
+}
+
+/// generated route for
+/// [FilesPage]
+class FilesRoute extends PageRouteInfo<FilesRouteArgs> {
+  FilesRoute({
+    Key? key,
+    required String userId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FilesRoute.name,
+          args: FilesRouteArgs(
+            key: key,
+            userId: userId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FilesRoute';
+
+  static const PageInfo<FilesRouteArgs> page = PageInfo<FilesRouteArgs>(name);
+}
+
+class FilesRouteArgs {
+  const FilesRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  @override
+  String toString() {
+    return 'FilesRouteArgs{key: $key, userId: $userId}';
+  }
+}
+
+/// generated route for
+/// [MedcardPage]
+class MedcardRoute extends PageRouteInfo<MedcardRouteArgs> {
+  MedcardRoute({
+    Key? key,
+    required String userId,
+    required bool isChildrenPage,
+    String? eventId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          MedcardRoute.name,
+          args: MedcardRouteArgs(
+            key: key,
+            userId: userId,
+            isChildrenPage: isChildrenPage,
+            eventId: eventId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MedcardRoute';
+
+  static const PageInfo<MedcardRouteArgs> page =
+      PageInfo<MedcardRouteArgs>(name);
+}
+
+class MedcardRouteArgs {
+  const MedcardRouteArgs({
+    this.key,
+    required this.userId,
+    required this.isChildrenPage,
+    this.eventId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final bool isChildrenPage;
+
+  final String? eventId;
+
+  @override
+  String toString() {
+    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage, eventId: $eventId}';
+  }
+}
+
+/// generated route for
+/// [MedcardProfilesListPage]
+class MedcardProfilesListRoute extends PageRouteInfo<void> {
+  const MedcardProfilesListRoute({List<PageRouteInfo>? children})
+      : super(
+          MedcardProfilesListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MedcardProfilesListRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<SplashRouteArgs> {
+  SplashRoute({
+    Key? key,
+    required Future<bool> parallelAction,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SplashRoute.name,
+          args: SplashRouteArgs(
+            key: key,
+            parallelAction: parallelAction,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashRoute';
+
+  static const PageInfo<SplashRouteArgs> page = PageInfo<SplashRouteArgs>(name);
+}
+
+class SplashRouteArgs {
+  const SplashRouteArgs({
+    this.key,
+    required this.parallelAction,
+  });
+
+  final Key? key;
+
+  final Future<bool> parallelAction;
+
+  @override
+  String toString() {
+    return 'SplashRouteArgs{key: $key, parallelAction: $parallelAction}';
+  }
+}
+
+/// generated route for
+/// [MainPage]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FeedbackPage]
+class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
+  FeedbackRoute({
+    Key? key,
+    required String appointmentId,
+    required int rating,
+    required String controllerCaption,
+    required String controllerVisible,
+    required String controllerMessage,
+    required String controllerEmail,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FeedbackRoute.name,
+          args: FeedbackRouteArgs(
+            key: key,
+            appointmentId: appointmentId,
+            rating: rating,
+            controllerCaption: controllerCaption,
+            controllerVisible: controllerVisible,
+            controllerMessage: controllerMessage,
+            controllerEmail: controllerEmail,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FeedbackRoute';
+
+  static const PageInfo<FeedbackRouteArgs> page =
+      PageInfo<FeedbackRouteArgs>(name);
+}
+
+class FeedbackRouteArgs {
+  const FeedbackRouteArgs({
+    this.key,
+    required this.appointmentId,
+    required this.rating,
+    required this.controllerCaption,
+    required this.controllerVisible,
+    required this.controllerMessage,
+    required this.controllerEmail,
+  });
+
+  final Key? key;
+
+  final String appointmentId;
+
+  final int rating;
+
+  final String controllerCaption;
+
+  final String controllerVisible;
+
+  final String controllerMessage;
+
+  final String controllerEmail;
+
+  @override
+  String toString() {
+    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId, rating: $rating, controllerCaption: $controllerCaption, controllerVisible: $controllerVisible, controllerMessage: $controllerMessage, controllerEmail: $controllerEmail}';
   }
 }
 
@@ -833,118 +1060,631 @@ class AppointmentDetailRouteArgs {
 }
 
 /// generated route for
-/// [FeedbackPage]
-class FeedbackRoute extends PageRouteInfo<FeedbackRouteArgs> {
-  FeedbackRoute({
+/// [ConfirmationSubscribePage]
+class ConfirmationSubscribeRoute
+    extends PageRouteInfo<ConfirmationSubscribeRouteArgs> {
+  ConfirmationSubscribeRoute({
     Key? key,
-    required String appointmentId,
-    required int rating,
-    required String controllerCaption,
-    required String controllerVisible,
-    required String controllerMessage,
-    required String controllerEmail,
+    required String userId,
+    required int timeZoneHours,
     List<PageRouteInfo>? children,
   }) : super(
-          FeedbackRoute.name,
-          args: FeedbackRouteArgs(
+          ConfirmationSubscribeRoute.name,
+          args: ConfirmationSubscribeRouteArgs(
             key: key,
-            appointmentId: appointmentId,
-            rating: rating,
-            controllerCaption: controllerCaption,
-            controllerVisible: controllerVisible,
-            controllerMessage: controllerMessage,
-            controllerEmail: controllerEmail,
+            userId: userId,
+            timeZoneHours: timeZoneHours,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'FeedbackRoute';
+  static const String name = 'ConfirmationSubscribeRoute';
 
-  static const PageInfo<FeedbackRouteArgs> page =
-      PageInfo<FeedbackRouteArgs>(name);
+  static const PageInfo<ConfirmationSubscribeRouteArgs> page =
+      PageInfo<ConfirmationSubscribeRouteArgs>(name);
 }
 
-class FeedbackRouteArgs {
-  const FeedbackRouteArgs({
+class ConfirmationSubscribeRouteArgs {
+  const ConfirmationSubscribeRouteArgs({
     this.key,
-    required this.appointmentId,
-    required this.rating,
-    required this.controllerCaption,
-    required this.controllerVisible,
-    required this.controllerMessage,
-    required this.controllerEmail,
+    required this.userId,
+    required this.timeZoneHours,
   });
 
   final Key? key;
 
-  final String appointmentId;
+  final String userId;
 
-  final int rating;
-
-  final String controllerCaption;
-
-  final String controllerVisible;
-
-  final String controllerMessage;
-
-  final String controllerEmail;
+  final int timeZoneHours;
 
   @override
   String toString() {
-    return 'FeedbackRouteArgs{key: $key, appointmentId: $appointmentId, rating: $rating, controllerCaption: $controllerCaption, controllerVisible: $controllerVisible, controllerMessage: $controllerMessage, controllerEmail: $controllerEmail}';
+    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId, timeZoneHours: $timeZoneHours}';
   }
 }
 
 /// generated route for
-/// [DocumentsPage]
-class DocumentsRoute extends PageRouteInfo<void> {
-  const DocumentsRoute({List<PageRouteInfo>? children})
-      : super(
-          DocumentsRoute.name,
+/// [PaymentPage]
+class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
+  PaymentRoute({
+    Key? key,
+    required String userId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PaymentRoute.name,
+          args: PaymentRouteArgs(
+            key: key,
+            userId: userId,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'DocumentsRoute';
+  static const String name = 'PaymentRoute';
+
+  static const PageInfo<PaymentRouteArgs> page =
+      PageInfo<PaymentRouteArgs>(name);
+}
+
+class PaymentRouteArgs {
+  const PaymentRouteArgs({
+    this.key,
+    required this.userId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  @override
+  String toString() {
+    return 'PaymentRouteArgs{key: $key, userId: $userId}';
+  }
+}
+
+/// generated route for
+/// [ResearchCabinetsListPage]
+class ResearchCabinetsListRoute
+    extends PageRouteInfo<ResearchCabinetsListRouteArgs> {
+  ResearchCabinetsListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required int categoryTypeId,
+    required List<String> researchIds,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ResearchCabinetsListRoute.name,
+          args: ResearchCabinetsListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+            categoryTypeId: categoryTypeId,
+            researchIds: researchIds,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ResearchCabinetsListRoute';
+
+  static const PageInfo<ResearchCabinetsListRouteArgs> page =
+      PageInfo<ResearchCabinetsListRouteArgs>(name);
+}
+
+class ResearchCabinetsListRouteArgs {
+  const ResearchCabinetsListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+    required this.categoryTypeId,
+    required this.researchIds,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  final int categoryTypeId;
+
+  final List<String> researchIds;
+
+  @override
+  String toString() {
+    return 'ResearchCabinetsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId, researchIds: $researchIds}';
+  }
+}
+
+/// generated route for
+/// [ClinicsListPage]
+class ClinicsListRoute extends PageRouteInfo<ClinicsListRouteArgs> {
+  ClinicsListRoute({
+    Key? key,
+    required String userId,
+    required bool isChildrenPage,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ClinicsListRoute.name,
+          args: ClinicsListRouteArgs(
+            key: key,
+            userId: userId,
+            isChildrenPage: isChildrenPage,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ClinicsListRoute';
+
+  static const PageInfo<ClinicsListRouteArgs> page =
+      PageInfo<ClinicsListRouteArgs>(name);
+}
+
+class ClinicsListRouteArgs {
+  const ClinicsListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.isChildrenPage,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final bool isChildrenPage;
+
+  @override
+  String toString() {
+    return 'ClinicsListRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
+  }
+}
+
+/// generated route for
+/// [ResearchesListPage]
+class ResearchesListRoute extends PageRouteInfo<ResearchesListRouteArgs> {
+  ResearchesListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required int categoryTypeId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ResearchesListRoute.name,
+          args: ResearchesListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+            categoryTypeId: categoryTypeId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ResearchesListRoute';
+
+  static const PageInfo<ResearchesListRouteArgs> page =
+      PageInfo<ResearchesListRouteArgs>(name);
+}
+
+class ResearchesListRouteArgs {
+  const ResearchesListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+    required this.categoryTypeId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  final int categoryTypeId;
+
+  @override
+  String toString() {
+    return 'ResearchesListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId}';
+  }
+}
+
+/// generated route for
+/// [DoctorsListPage]
+class DoctorsListRoute extends PageRouteInfo<DoctorsListRouteArgs> {
+  DoctorsListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required int categoryTypeId,
+    required String specialisationId,
+    required String specialisationName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DoctorsListRoute.name,
+          args: DoctorsListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+            categoryTypeId: categoryTypeId,
+            specialisationId: specialisationId,
+            specialisationName: specialisationName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DoctorsListRoute';
+
+  static const PageInfo<DoctorsListRouteArgs> page =
+      PageInfo<DoctorsListRouteArgs>(name);
+}
+
+class DoctorsListRouteArgs {
+  const DoctorsListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+    required this.categoryTypeId,
+    required this.specialisationId,
+    required this.specialisationName,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  final int categoryTypeId;
+
+  final String specialisationId;
+
+  final String specialisationName;
+
+  @override
+  String toString() {
+    return 'DoctorsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId, specialisationId: $specialisationId, specialisationName: $specialisationName}';
+  }
+}
+
+/// generated route for
+/// [SpecialisationsListPage]
+class SpecialisationsListRoute
+    extends PageRouteInfo<SpecialisationsListRouteArgs> {
+  SpecialisationsListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    required int categoryTypeId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SpecialisationsListRoute.name,
+          args: SpecialisationsListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+            categoryTypeId: categoryTypeId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SpecialisationsListRoute';
+
+  static const PageInfo<SpecialisationsListRouteArgs> page =
+      PageInfo<SpecialisationsListRouteArgs>(name);
+}
+
+class SpecialisationsListRouteArgs {
+  const SpecialisationsListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+    required this.categoryTypeId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  final int categoryTypeId;
+
+  @override
+  String toString() {
+    return 'SpecialisationsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId}';
+  }
+}
+
+/// generated route for
+/// [SchedulePage]
+class ScheduleRoute extends PageRouteInfo<ScheduleRouteArgs> {
+  ScheduleRoute({
+    Key? key,
+    required String pageTitle,
+    String pageSubtitle = '',
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    String? doctorId,
+    String? specialisationId,
+    List<String>? researchIds,
+    required int categoryTypeId,
+    String? cabinetId,
+    required bool isAny,
+    bool isFavorite = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ScheduleRoute.name,
+          args: ScheduleRouteArgs(
+            key: key,
+            pageTitle: pageTitle,
+            pageSubtitle: pageSubtitle,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+            doctorId: doctorId,
+            specialisationId: specialisationId,
+            researchIds: researchIds,
+            categoryTypeId: categoryTypeId,
+            cabinetId: cabinetId,
+            isAny: isAny,
+            isFavorite: isFavorite,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ScheduleRoute';
+
+  static const PageInfo<ScheduleRouteArgs> page =
+      PageInfo<ScheduleRouteArgs>(name);
+}
+
+class ScheduleRouteArgs {
+  const ScheduleRouteArgs({
+    this.key,
+    required this.pageTitle,
+    this.pageSubtitle = '',
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+    this.doctorId,
+    this.specialisationId,
+    this.researchIds,
+    required this.categoryTypeId,
+    this.cabinetId,
+    required this.isAny,
+    this.isFavorite = false,
+  });
+
+  final Key? key;
+
+  final String pageTitle;
+
+  final String pageSubtitle;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  final String? doctorId;
+
+  final String? specialisationId;
+
+  final List<String>? researchIds;
+
+  final int categoryTypeId;
+
+  final String? cabinetId;
+
+  final bool isAny;
+
+  final bool isFavorite;
+
+  @override
+  String toString() {
+    return 'ScheduleRouteArgs{key: $key, pageTitle: $pageTitle, pageSubtitle: $pageSubtitle, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, doctorId: $doctorId, specialisationId: $specialisationId, researchIds: $researchIds, categoryTypeId: $categoryTypeId, cabinetId: $cabinetId, isAny: $isAny, isFavorite: $isFavorite}';
+  }
+}
+
+/// generated route for
+/// [FavoriteDoctorsListPage]
+class FavoriteDoctorsListRoute
+    extends PageRouteInfo<FavoriteDoctorsListRouteArgs> {
+  FavoriteDoctorsListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FavoriteDoctorsListRoute.name,
+          args: FavoriteDoctorsListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FavoriteDoctorsListRoute';
+
+  static const PageInfo<FavoriteDoctorsListRouteArgs> page =
+      PageInfo<FavoriteDoctorsListRouteArgs>(name);
+}
+
+class FavoriteDoctorsListRouteArgs {
+  const FavoriteDoctorsListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  @override
+  String toString() {
+    return 'FavoriteDoctorsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId}';
+  }
+}
+
+/// generated route for
+/// [ServicesListPage]
+class ServicesListRoute extends PageRouteInfo<ServicesListRouteArgs> {
+  ServicesListRoute({
+    Key? key,
+    required String userId,
+    required String buildingId,
+    required String clinicId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ServicesListRoute.name,
+          args: ServicesListRouteArgs(
+            key: key,
+            userId: userId,
+            buildingId: buildingId,
+            clinicId: clinicId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ServicesListRoute';
+
+  static const PageInfo<ServicesListRouteArgs> page =
+      PageInfo<ServicesListRouteArgs>(name);
+}
+
+class ServicesListRouteArgs {
+  const ServicesListRouteArgs({
+    this.key,
+    required this.userId,
+    required this.buildingId,
+    required this.clinicId,
+  });
+
+  final Key? key;
+
+  final String userId;
+
+  final String buildingId;
+
+  final String clinicId;
+
+  @override
+  String toString() {
+    return 'ServicesListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId}';
+  }
+}
+
+/// generated route for
+/// [SubscribeProfilesListPage]
+class SubscribeProfilesListRoute extends PageRouteInfo<void> {
+  const SubscribeProfilesListRoute({List<PageRouteInfo>? children})
+      : super(
+          SubscribeProfilesListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SubscribeProfilesListRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [DocumentPage]
-class DocumentRoute extends PageRouteInfo<DocumentRouteArgs> {
-  DocumentRoute({
+/// [CardsPage]
+class CardsRoute extends PageRouteInfo<CardsRouteArgs> {
+  CardsRoute({
     Key? key,
-    required DocumentModel document,
+    required bool isChildrenPage,
+    required bool needToGet,
     List<PageRouteInfo>? children,
   }) : super(
-          DocumentRoute.name,
-          args: DocumentRouteArgs(
+          CardsRoute.name,
+          args: CardsRouteArgs(
             key: key,
-            document: document,
+            isChildrenPage: isChildrenPage,
+            needToGet: needToGet,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'DocumentRoute';
+  static const String name = 'CardsRoute';
 
-  static const PageInfo<DocumentRouteArgs> page =
-      PageInfo<DocumentRouteArgs>(name);
+  static const PageInfo<CardsRouteArgs> page = PageInfo<CardsRouteArgs>(name);
 }
 
-class DocumentRouteArgs {
-  const DocumentRouteArgs({
+class CardsRouteArgs {
+  const CardsRouteArgs({
     this.key,
-    required this.document,
+    required this.isChildrenPage,
+    required this.needToGet,
   });
 
   final Key? key;
 
-  final DocumentModel document;
+  final bool isChildrenPage;
+
+  final bool needToGet;
 
   @override
   String toString() {
-    return 'DocumentRouteArgs{key: $key, document: $document}';
+    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage, needToGet: $needToGet}';
   }
+}
+
+/// generated route for
+/// [HealthPage]
+class HealthRoute extends PageRouteInfo<void> {
+  const HealthRoute({List<PageRouteInfo>? children})
+      : super(
+          HealthRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HealthRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HealthForMainPage]
+class HealthForMainRoute extends PageRouteInfo<void> {
+  const HealthForMainRoute({List<PageRouteInfo>? children})
+      : super(
+          HealthForMainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HealthForMainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -1086,126 +1826,55 @@ class DiaryRouteArgs {
 }
 
 /// generated route for
-/// [CardsPage]
-class CardsRoute extends PageRouteInfo<CardsRouteArgs> {
-  CardsRoute({
+/// [DocumentsPage]
+class DocumentsRoute extends PageRouteInfo<void> {
+  const DocumentsRoute({List<PageRouteInfo>? children})
+      : super(
+          DocumentsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DocumentsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [DocumentPage]
+class DocumentRoute extends PageRouteInfo<DocumentRouteArgs> {
+  DocumentRoute({
     Key? key,
-    required bool isChildrenPage,
-    required bool needToGet,
+    required DocumentModel document,
     List<PageRouteInfo>? children,
   }) : super(
-          CardsRoute.name,
-          args: CardsRouteArgs(
+          DocumentRoute.name,
+          args: DocumentRouteArgs(
             key: key,
-            isChildrenPage: isChildrenPage,
-            needToGet: needToGet,
+            document: document,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'CardsRoute';
+  static const String name = 'DocumentRoute';
 
-  static const PageInfo<CardsRouteArgs> page = PageInfo<CardsRouteArgs>(name);
+  static const PageInfo<DocumentRouteArgs> page =
+      PageInfo<DocumentRouteArgs>(name);
 }
 
-class CardsRouteArgs {
-  const CardsRouteArgs({
+class DocumentRouteArgs {
+  const DocumentRouteArgs({
     this.key,
-    required this.isChildrenPage,
-    required this.needToGet,
+    required this.document,
   });
 
   final Key? key;
 
-  final bool isChildrenPage;
-
-  final bool needToGet;
+  final DocumentModel document;
 
   @override
   String toString() {
-    return 'CardsRouteArgs{key: $key, isChildrenPage: $isChildrenPage, needToGet: $needToGet}';
+    return 'DocumentRouteArgs{key: $key, document: $document}';
   }
-}
-
-/// generated route for
-/// [HealthPage]
-class HealthRoute extends PageRouteInfo<void> {
-  const HealthRoute({List<PageRouteInfo>? children})
-      : super(
-          HealthRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HealthRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [HealthForMainPage]
-class HealthForMainRoute extends PageRouteInfo<void> {
-  const HealthForMainRoute({List<PageRouteInfo>? children})
-      : super(
-          HealthForMainRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HealthForMainRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AuthUserAgreementsPage]
-class AuthUserAgreementsRoute
-    extends PageRouteInfo<AuthUserAgreementsRouteArgs> {
-  AuthUserAgreementsRoute({
-    Key? key,
-    bool isFullScreen = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AuthUserAgreementsRoute.name,
-          args: AuthUserAgreementsRouteArgs(
-            key: key,
-            isFullScreen: isFullScreen,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'AuthUserAgreementsRoute';
-
-  static const PageInfo<AuthUserAgreementsRouteArgs> page =
-      PageInfo<AuthUserAgreementsRouteArgs>(name);
-}
-
-class AuthUserAgreementsRouteArgs {
-  const AuthUserAgreementsRouteArgs({
-    this.key,
-    this.isFullScreen = false,
-  });
-
-  final Key? key;
-
-  final bool isFullScreen;
-
-  @override
-  String toString() {
-    return 'AuthUserAgreementsRouteArgs{key: $key, isFullScreen: $isFullScreen}';
-  }
-}
-
-/// generated route for
-/// [CheckPinCodePage]
-class CheckPinCodeRoute extends PageRouteInfo<void> {
-  const CheckPinCodeRoute({List<PageRouteInfo>? children})
-      : super(
-          CheckPinCodeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CheckPinCodeRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -1244,20 +1913,6 @@ class CreatePinCodeRouteArgs {
   String toString() {
     return 'CreatePinCodeRouteArgs{key: $key, noUsedBiometric: $noUsedBiometric}';
   }
-}
-
-/// generated route for
-/// [EsiaLoginPage]
-class EsiaLoginRoute extends PageRouteInfo<void> {
-  const EsiaLoginRoute({List<PageRouteInfo>? children})
-      : super(
-          EsiaLoginRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'EsiaLoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -1354,6 +2009,111 @@ class EsiaRegisterRouteArgs {
 }
 
 /// generated route for
+/// [EsiaLoginPage]
+class EsiaLoginRoute extends PageRouteInfo<void> {
+  const EsiaLoginRoute({List<PageRouteInfo>? children})
+      : super(
+          EsiaLoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EsiaLoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AuthUserAgreementsPage]
+class AuthUserAgreementsRoute
+    extends PageRouteInfo<AuthUserAgreementsRouteArgs> {
+  AuthUserAgreementsRoute({
+    Key? key,
+    bool isFullScreen = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthUserAgreementsRoute.name,
+          args: AuthUserAgreementsRouteArgs(
+            key: key,
+            isFullScreen: isFullScreen,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthUserAgreementsRoute';
+
+  static const PageInfo<AuthUserAgreementsRouteArgs> page =
+      PageInfo<AuthUserAgreementsRouteArgs>(name);
+}
+
+class AuthUserAgreementsRouteArgs {
+  const AuthUserAgreementsRouteArgs({
+    this.key,
+    this.isFullScreen = false,
+  });
+
+  final Key? key;
+
+  final bool isFullScreen;
+
+  @override
+  String toString() {
+    return 'AuthUserAgreementsRouteArgs{key: $key, isFullScreen: $isFullScreen}';
+  }
+}
+
+/// generated route for
+/// [UnauthSupportPage]
+class UnauthSupportRoute extends PageRouteInfo<void> {
+  const UnauthSupportRoute({List<PageRouteInfo>? children})
+      : super(
+          UnauthSupportRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UnauthSupportRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StartPhoneNumberPage]
+class StartPhoneNumberRoute extends PageRouteInfo<StartPhoneNumberRouteArgs> {
+  StartPhoneNumberRoute({
+    Key? key,
+    bool isDeletingProfile = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          StartPhoneNumberRoute.name,
+          args: StartPhoneNumberRouteArgs(
+            key: key,
+            isDeletingProfile: isDeletingProfile,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'StartPhoneNumberRoute';
+
+  static const PageInfo<StartPhoneNumberRouteArgs> page =
+      PageInfo<StartPhoneNumberRouteArgs>(name);
+}
+
+class StartPhoneNumberRouteArgs {
+  const StartPhoneNumberRouteArgs({
+    this.key,
+    this.isDeletingProfile = false,
+  });
+
+  final Key? key;
+
+  final bool isDeletingProfile;
+
+  @override
+  String toString() {
+    return 'StartPhoneNumberRouteArgs{key: $key, isDeletingProfile: $isDeletingProfile}';
+  }
+}
+
+/// generated route for
 /// [PasswordPage]
 class PasswordRoute extends PageRouteInfo<PasswordRouteArgs> {
   PasswordRoute({
@@ -1388,45 +2148,6 @@ class PasswordRouteArgs {
   @override
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
-  }
-}
-
-/// generated route for
-/// [RecoverPasswordNewPage]
-class RecoverPasswordNewRoute
-    extends PageRouteInfo<RecoverPasswordNewRouteArgs> {
-  RecoverPasswordNewRoute({
-    Key? key,
-    required String smsToken,
-    List<PageRouteInfo>? children,
-  }) : super(
-          RecoverPasswordNewRoute.name,
-          args: RecoverPasswordNewRouteArgs(
-            key: key,
-            smsToken: smsToken,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'RecoverPasswordNewRoute';
-
-  static const PageInfo<RecoverPasswordNewRouteArgs> page =
-      PageInfo<RecoverPasswordNewRouteArgs>(name);
-}
-
-class RecoverPasswordNewRouteArgs {
-  const RecoverPasswordNewRouteArgs({
-    this.key,
-    required this.smsToken,
-  });
-
-  final Key? key;
-
-  final String smsToken;
-
-  @override
-  String toString() {
-    return 'RecoverPasswordNewRouteArgs{key: $key, smsToken: $smsToken}';
   }
 }
 
@@ -1470,257 +2191,56 @@ class RecoverPasswordSmsRouteArgs {
 }
 
 /// generated route for
-/// [StartPhoneNumberPage]
-class StartPhoneNumberRoute extends PageRouteInfo<StartPhoneNumberRouteArgs> {
-  StartPhoneNumberRoute({
+/// [RecoverPasswordNewPage]
+class RecoverPasswordNewRoute
+    extends PageRouteInfo<RecoverPasswordNewRouteArgs> {
+  RecoverPasswordNewRoute({
     Key? key,
-    bool isDeletingProfile = false,
+    required String smsToken,
     List<PageRouteInfo>? children,
   }) : super(
-          StartPhoneNumberRoute.name,
-          args: StartPhoneNumberRouteArgs(
+          RecoverPasswordNewRoute.name,
+          args: RecoverPasswordNewRouteArgs(
             key: key,
-            isDeletingProfile: isDeletingProfile,
+            smsToken: smsToken,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'StartPhoneNumberRoute';
+  static const String name = 'RecoverPasswordNewRoute';
 
-  static const PageInfo<StartPhoneNumberRouteArgs> page =
-      PageInfo<StartPhoneNumberRouteArgs>(name);
+  static const PageInfo<RecoverPasswordNewRouteArgs> page =
+      PageInfo<RecoverPasswordNewRouteArgs>(name);
 }
 
-class StartPhoneNumberRouteArgs {
-  const StartPhoneNumberRouteArgs({
+class RecoverPasswordNewRouteArgs {
+  const RecoverPasswordNewRouteArgs({
     this.key,
-    this.isDeletingProfile = false,
+    required this.smsToken,
   });
 
   final Key? key;
 
-  final bool isDeletingProfile;
+  final String smsToken;
 
   @override
   String toString() {
-    return 'StartPhoneNumberRouteArgs{key: $key, isDeletingProfile: $isDeletingProfile}';
+    return 'RecoverPasswordNewRouteArgs{key: $key, smsToken: $smsToken}';
   }
 }
 
 /// generated route for
-/// [UnauthSupportPage]
-class UnauthSupportRoute extends PageRouteInfo<void> {
-  const UnauthSupportRoute({List<PageRouteInfo>? children})
+/// [CheckPinCodePage]
+class CheckPinCodeRoute extends PageRouteInfo<void> {
+  const CheckPinCodeRoute({List<PageRouteInfo>? children})
       : super(
-          UnauthSupportRoute.name,
+          CheckPinCodeRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'UnauthSupportRoute';
+  static const String name = 'CheckPinCodeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [MainPage]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-      : super(
-          MainRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MainRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SplashPage]
-class SplashRoute extends PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({
-    Key? key,
-    required Future<bool> parallelAction,
-    List<PageRouteInfo>? children,
-  }) : super(
-          SplashRoute.name,
-          args: SplashRouteArgs(
-            key: key,
-            parallelAction: parallelAction,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'SplashRoute';
-
-  static const PageInfo<SplashRouteArgs> page = PageInfo<SplashRouteArgs>(name);
-}
-
-class SplashRouteArgs {
-  const SplashRouteArgs({
-    this.key,
-    required this.parallelAction,
-  });
-
-  final Key? key;
-
-  final Future<bool> parallelAction;
-
-  @override
-  String toString() {
-    return 'SplashRouteArgs{key: $key, parallelAction: $parallelAction}';
-  }
-}
-
-/// generated route for
-/// [FilesPage]
-class FilesRoute extends PageRouteInfo<FilesRouteArgs> {
-  FilesRoute({
-    Key? key,
-    required String userId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FilesRoute.name,
-          args: FilesRouteArgs(
-            key: key,
-            userId: userId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FilesRoute';
-
-  static const PageInfo<FilesRouteArgs> page = PageInfo<FilesRouteArgs>(name);
-}
-
-class FilesRouteArgs {
-  const FilesRouteArgs({
-    this.key,
-    required this.userId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  @override
-  String toString() {
-    return 'FilesRouteArgs{key: $key, userId: $userId}';
-  }
-}
-
-/// generated route for
-/// [MedcardPage]
-class MedcardRoute extends PageRouteInfo<MedcardRouteArgs> {
-  MedcardRoute({
-    Key? key,
-    required String userId,
-    required bool isChildrenPage,
-    String? eventId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          MedcardRoute.name,
-          args: MedcardRouteArgs(
-            key: key,
-            userId: userId,
-            isChildrenPage: isChildrenPage,
-            eventId: eventId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'MedcardRoute';
-
-  static const PageInfo<MedcardRouteArgs> page =
-      PageInfo<MedcardRouteArgs>(name);
-}
-
-class MedcardRouteArgs {
-  const MedcardRouteArgs({
-    this.key,
-    required this.userId,
-    required this.isChildrenPage,
-    this.eventId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final bool isChildrenPage;
-
-  final String? eventId;
-
-  @override
-  String toString() {
-    return 'MedcardRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage, eventId: $eventId}';
-  }
-}
-
-/// generated route for
-/// [MedcardProfilesListPage]
-class MedcardProfilesListRoute extends PageRouteInfo<void> {
-  const MedcardProfilesListRoute({List<PageRouteInfo>? children})
-      : super(
-          MedcardProfilesListRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MedcardProfilesListRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RequireUpdateAppPage]
-class RequireUpdateAppRoute extends PageRouteInfo<void> {
-  const RequireUpdateAppRoute({List<PageRouteInfo>? children})
-      : super(
-          RequireUpdateAppRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RequireUpdateAppRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AgreementsPage]
-class AgreementsRoute extends PageRouteInfo<AgreementsRouteArgs> {
-  AgreementsRoute({
-    Key? key,
-    bool isAppointmentAgreements = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AgreementsRoute.name,
-          args: AgreementsRouteArgs(
-            key: key,
-            isAppointmentAgreements: isAppointmentAgreements,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'AgreementsRoute';
-
-  static const PageInfo<AgreementsRouteArgs> page =
-      PageInfo<AgreementsRouteArgs>(name);
-}
-
-class AgreementsRouteArgs {
-  const AgreementsRouteArgs({
-    this.key,
-    this.isAppointmentAgreements = false,
-  });
-
-  final Key? key;
-
-  final bool isAppointmentAgreements;
-
-  @override
-  String toString() {
-    return 'AgreementsRouteArgs{key: $key, isAppointmentAgreements: $isAppointmentAgreements}';
-  }
 }
 
 /// generated route for
@@ -1781,20 +2301,6 @@ class FaqItemRouteArgs {
 }
 
 /// generated route for
-/// [SettingsPage]
-class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute({List<PageRouteInfo>? children})
-      : super(
-          SettingsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SettingsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [SupportPage]
 class SupportRoute extends PageRouteInfo<void> {
   const SupportRoute({List<PageRouteInfo>? children})
@@ -1809,559 +2315,53 @@ class SupportRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ClinicsListPage]
-class ClinicsListRoute extends PageRouteInfo<ClinicsListRouteArgs> {
-  ClinicsListRoute({
-    Key? key,
-    required String userId,
-    required bool isChildrenPage,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ClinicsListRoute.name,
-          args: ClinicsListRouteArgs(
-            key: key,
-            userId: userId,
-            isChildrenPage: isChildrenPage,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ClinicsListRoute';
-
-  static const PageInfo<ClinicsListRouteArgs> page =
-      PageInfo<ClinicsListRouteArgs>(name);
-}
-
-class ClinicsListRouteArgs {
-  const ClinicsListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.isChildrenPage,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final bool isChildrenPage;
-
-  @override
-  String toString() {
-    return 'ClinicsListRouteArgs{key: $key, userId: $userId, isChildrenPage: $isChildrenPage}';
-  }
-}
-
-/// generated route for
-/// [ConfirmationSubscribePage]
-class ConfirmationSubscribeRoute
-    extends PageRouteInfo<ConfirmationSubscribeRouteArgs> {
-  ConfirmationSubscribeRoute({
-    Key? key,
-    required String userId,
-    required int timeZoneHours,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ConfirmationSubscribeRoute.name,
-          args: ConfirmationSubscribeRouteArgs(
-            key: key,
-            userId: userId,
-            timeZoneHours: timeZoneHours,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ConfirmationSubscribeRoute';
-
-  static const PageInfo<ConfirmationSubscribeRouteArgs> page =
-      PageInfo<ConfirmationSubscribeRouteArgs>(name);
-}
-
-class ConfirmationSubscribeRouteArgs {
-  const ConfirmationSubscribeRouteArgs({
-    this.key,
-    required this.userId,
-    required this.timeZoneHours,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final int timeZoneHours;
-
-  @override
-  String toString() {
-    return 'ConfirmationSubscribeRouteArgs{key: $key, userId: $userId, timeZoneHours: $timeZoneHours}';
-  }
-}
-
-/// generated route for
-/// [PaymentPage]
-class PaymentRoute extends PageRouteInfo<PaymentRouteArgs> {
-  PaymentRoute({
-    Key? key,
-    required String userId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PaymentRoute.name,
-          args: PaymentRouteArgs(
-            key: key,
-            userId: userId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PaymentRoute';
-
-  static const PageInfo<PaymentRouteArgs> page =
-      PageInfo<PaymentRouteArgs>(name);
-}
-
-class PaymentRouteArgs {
-  const PaymentRouteArgs({
-    this.key,
-    required this.userId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  @override
-  String toString() {
-    return 'PaymentRouteArgs{key: $key, userId: $userId}';
-  }
-}
-
-/// generated route for
-/// [DoctorsListPage]
-class DoctorsListRoute extends PageRouteInfo<DoctorsListRouteArgs> {
-  DoctorsListRoute({
-    Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    required int categoryTypeId,
-    required String specialisationId,
-    required String specialisationName,
-    List<PageRouteInfo>? children,
-  }) : super(
-          DoctorsListRoute.name,
-          args: DoctorsListRouteArgs(
-            key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-            categoryTypeId: categoryTypeId,
-            specialisationId: specialisationId,
-            specialisationName: specialisationName,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'DoctorsListRoute';
-
-  static const PageInfo<DoctorsListRouteArgs> page =
-      PageInfo<DoctorsListRouteArgs>(name);
-}
-
-class DoctorsListRouteArgs {
-  const DoctorsListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-    required this.categoryTypeId,
-    required this.specialisationId,
-    required this.specialisationName,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  final int categoryTypeId;
-
-  final String specialisationId;
-
-  final String specialisationName;
-
-  @override
-  String toString() {
-    return 'DoctorsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId, specialisationId: $specialisationId, specialisationName: $specialisationName}';
-  }
-}
-
-/// generated route for
-/// [FavoriteDoctorsListPage]
-class FavoriteDoctorsListRoute
-    extends PageRouteInfo<FavoriteDoctorsListRouteArgs> {
-  FavoriteDoctorsListRoute({
-    Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FavoriteDoctorsListRoute.name,
-          args: FavoriteDoctorsListRouteArgs(
-            key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FavoriteDoctorsListRoute';
-
-  static const PageInfo<FavoriteDoctorsListRouteArgs> page =
-      PageInfo<FavoriteDoctorsListRouteArgs>(name);
-}
-
-class FavoriteDoctorsListRouteArgs {
-  const FavoriteDoctorsListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  @override
-  String toString() {
-    return 'FavoriteDoctorsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId}';
-  }
-}
-
-/// generated route for
-/// [SubscribeProfilesListPage]
-class SubscribeProfilesListRoute extends PageRouteInfo<void> {
-  const SubscribeProfilesListRoute({List<PageRouteInfo>? children})
+/// [SettingsPage]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
       : super(
-          SubscribeProfilesListRoute.name,
+          SettingsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SubscribeProfilesListRoute';
+  static const String name = 'SettingsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [ResearchesListPage]
-class ResearchesListRoute extends PageRouteInfo<ResearchesListRouteArgs> {
-  ResearchesListRoute({
+/// [AgreementsPage]
+class AgreementsRoute extends PageRouteInfo<AgreementsRouteArgs> {
+  AgreementsRoute({
     Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    required int categoryTypeId,
+    bool isAppointmentAgreements = false,
     List<PageRouteInfo>? children,
   }) : super(
-          ResearchesListRoute.name,
-          args: ResearchesListRouteArgs(
+          AgreementsRoute.name,
+          args: AgreementsRouteArgs(
             key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-            categoryTypeId: categoryTypeId,
+            isAppointmentAgreements: isAppointmentAgreements,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'ResearchesListRoute';
+  static const String name = 'AgreementsRoute';
 
-  static const PageInfo<ResearchesListRouteArgs> page =
-      PageInfo<ResearchesListRouteArgs>(name);
+  static const PageInfo<AgreementsRouteArgs> page =
+      PageInfo<AgreementsRouteArgs>(name);
 }
 
-class ResearchesListRouteArgs {
-  const ResearchesListRouteArgs({
+class AgreementsRouteArgs {
+  const AgreementsRouteArgs({
     this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-    required this.categoryTypeId,
+    this.isAppointmentAgreements = false,
   });
 
   final Key? key;
 
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  final int categoryTypeId;
+  final bool isAppointmentAgreements;
 
   @override
   String toString() {
-    return 'ResearchesListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId}';
-  }
-}
-
-/// generated route for
-/// [ResearchCabinetsListPage]
-class ResearchCabinetsListRoute
-    extends PageRouteInfo<ResearchCabinetsListRouteArgs> {
-  ResearchCabinetsListRoute({
-    Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    required int categoryTypeId,
-    required List<String> researchIds,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ResearchCabinetsListRoute.name,
-          args: ResearchCabinetsListRouteArgs(
-            key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-            categoryTypeId: categoryTypeId,
-            researchIds: researchIds,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ResearchCabinetsListRoute';
-
-  static const PageInfo<ResearchCabinetsListRouteArgs> page =
-      PageInfo<ResearchCabinetsListRouteArgs>(name);
-}
-
-class ResearchCabinetsListRouteArgs {
-  const ResearchCabinetsListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-    required this.categoryTypeId,
-    required this.researchIds,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  final int categoryTypeId;
-
-  final List<String> researchIds;
-
-  @override
-  String toString() {
-    return 'ResearchCabinetsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId, researchIds: $researchIds}';
-  }
-}
-
-/// generated route for
-/// [SchedulePage]
-class ScheduleRoute extends PageRouteInfo<ScheduleRouteArgs> {
-  ScheduleRoute({
-    Key? key,
-    required String pageTitle,
-    String pageSubtitle = '',
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    String? doctorId,
-    String? specialisationId,
-    List<String>? researchIds,
-    required int categoryTypeId,
-    String? cabinet,
-    required bool isAny,
-    bool isFavorite = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ScheduleRoute.name,
-          args: ScheduleRouteArgs(
-            key: key,
-            pageTitle: pageTitle,
-            pageSubtitle: pageSubtitle,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-            doctorId: doctorId,
-            specialisationId: specialisationId,
-            researchIds: researchIds,
-            categoryTypeId: categoryTypeId,
-            cabinet: cabinet,
-            isAny: isAny,
-            isFavorite: isFavorite,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ScheduleRoute';
-
-  static const PageInfo<ScheduleRouteArgs> page =
-      PageInfo<ScheduleRouteArgs>(name);
-}
-
-class ScheduleRouteArgs {
-  const ScheduleRouteArgs({
-    this.key,
-    required this.pageTitle,
-    this.pageSubtitle = '',
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-    this.doctorId,
-    this.specialisationId,
-    this.researchIds,
-    required this.categoryTypeId,
-    this.cabinet,
-    required this.isAny,
-    this.isFavorite = false,
-  });
-
-  final Key? key;
-
-  final String pageTitle;
-
-  final String pageSubtitle;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  final String? doctorId;
-
-  final String? specialisationId;
-
-  final List<String>? researchIds;
-
-  final int categoryTypeId;
-
-  final String? cabinet;
-
-  final bool isAny;
-
-  final bool isFavorite;
-
-  @override
-  String toString() {
-    return 'ScheduleRouteArgs{key: $key, pageTitle: $pageTitle, pageSubtitle: $pageSubtitle, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, doctorId: $doctorId, specialisationId: $specialisationId, researchIds: $researchIds, categoryTypeId: $categoryTypeId, cabinet: $cabinet, isAny: $isAny, isFavorite: $isFavorite}';
-  }
-}
-
-/// generated route for
-/// [ServicesListPage]
-class ServicesListRoute extends PageRouteInfo<ServicesListRouteArgs> {
-  ServicesListRoute({
-    Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ServicesListRoute.name,
-          args: ServicesListRouteArgs(
-            key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ServicesListRoute';
-
-  static const PageInfo<ServicesListRouteArgs> page =
-      PageInfo<ServicesListRouteArgs>(name);
-}
-
-class ServicesListRouteArgs {
-  const ServicesListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  @override
-  String toString() {
-    return 'ServicesListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId}';
-  }
-}
-
-/// generated route for
-/// [SpecialisationsListPage]
-class SpecialisationsListRoute
-    extends PageRouteInfo<SpecialisationsListRouteArgs> {
-  SpecialisationsListRoute({
-    Key? key,
-    required String userId,
-    required String buildingId,
-    required String clinicId,
-    required int categoryTypeId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          SpecialisationsListRoute.name,
-          args: SpecialisationsListRouteArgs(
-            key: key,
-            userId: userId,
-            buildingId: buildingId,
-            clinicId: clinicId,
-            categoryTypeId: categoryTypeId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'SpecialisationsListRoute';
-
-  static const PageInfo<SpecialisationsListRouteArgs> page =
-      PageInfo<SpecialisationsListRouteArgs>(name);
-}
-
-class SpecialisationsListRouteArgs {
-  const SpecialisationsListRouteArgs({
-    this.key,
-    required this.userId,
-    required this.buildingId,
-    required this.clinicId,
-    required this.categoryTypeId,
-  });
-
-  final Key? key;
-
-  final String userId;
-
-  final String buildingId;
-
-  final String clinicId;
-
-  final int categoryTypeId;
-
-  @override
-  String toString() {
-    return 'SpecialisationsListRouteArgs{key: $key, userId: $userId, buildingId: $buildingId, clinicId: $clinicId, categoryTypeId: $categoryTypeId}';
+    return 'AgreementsRouteArgs{key: $key, isAppointmentAgreements: $isAppointmentAgreements}';
   }
 }
