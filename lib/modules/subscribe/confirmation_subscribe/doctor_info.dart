@@ -4,7 +4,6 @@ import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/modules/subscribe/confirmation_subscribe/appointment_recommendations.dart';
 import 'package:medlike/utils/helpers/doctor_subtitle_helper.dart';
-import 'package:medlike/widgets/dividers/dash_divider.dart';
 import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 
 class DoctorInfo extends StatelessWidget {
@@ -18,7 +17,15 @@ class DoctorInfo extends StatelessWidget {
         return const SizedBox();
       }
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            'Врач',
+            style: Theme.of(context)
+                .textTheme
+                .headlineMedium
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: 16),
           DoctorInfoCard(
               doctorInfo: DoctorInfoModel(
@@ -49,7 +56,6 @@ class DoctorInfo extends StatelessWidget {
                   serviceName:
                       state.appointmentInfoData!.recommendations[0].serviceName)
               : const SizedBox(),
-          const DashDivider(),
           const SizedBox(height: 16),
         ],
       );

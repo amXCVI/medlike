@@ -78,6 +78,7 @@ class _ResearchCabinetsListState extends State<ResearchCabinetsList> {
     }
 
     void _handleTapOnCabinet(Cabinet cabinet) {
+      context.read<SubscribeCubit>().setSelectedCabinet(cabinet);
       context.router.push(ScheduleRoute(
         pageTitle: widget.nextPageTitle,
         pageSubtitle: widget.nextPageSubtitle,
