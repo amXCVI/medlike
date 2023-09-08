@@ -58,22 +58,13 @@ class _PinCodeViewState extends State<PinCodeView> {
   }
 
   void initBiometricValue() async {
-    String authMethod =
-        '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
-    bool isSupportedBiometric = await AuthService.canCheckBiometrics();
-    if (authMethod == SelectedAuthMethods.pinCode.toString() ||
-        authMethod == 'null' ||
-        !isSupportedBiometric) {
-      setState(() {
-        isSupportedAndEnabledBiometric = false;
-      });
-    } else if (!widget.isInit) {
-      isSupportedAndEnabledBiometric = true;
-    }
+    bool bioAuthAvalibaleAndActive = await AuthService.couldUseBio();
 
-    List<BiometricType> supportedBiometricTypesList =
-        await AuthService.getAvailableBiometrics();
-    if (supportedBiometricTypesList.contains(BiometricType.face)) {
+    setState(() {
+      isSupportedAndEnabledBiometric = bioAuthAvalibaleAndActive;
+    });
+
+    if (await AuthService.canUseFaceId()) {
       setState(() {
         isFaceId = true;
       });

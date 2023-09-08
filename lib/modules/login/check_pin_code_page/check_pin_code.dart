@@ -22,7 +22,7 @@ class CheckPinCode extends StatefulWidget {
 
 class _CheckPinCodeState extends State<CheckPinCode> {
   int countAttempts = 0;
-  bool _displayBioAuthBanner = true;
+  bool _displayBioAuthBanner = false;
 
   @override
   void initState() {

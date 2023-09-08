@@ -2,9 +2,37 @@ import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/utils/helpers/project_determiner.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 class AuthService {
-  late LocalAuthentication auth = LocalAuthentication();
+  /// Checking if we could use bio to authenticate user
+  static Future<bool> couldUseBio() async {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) return false;
+
+    String authMethod =
+        '${await UserSecureStorage.getField(AppConstants.useBiometricMethodAuthentication)}';
+    bool isSupportedBiometric = await canCheckBiometrics();
+    if (authMethod == SelectedAuthMethods.pinCode.toString() ||
+        authMethod == 'null' ||
+        !isSupportedBiometric) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Check if we could use Face id to authenticate
+  static Future<bool> canUseFaceId() async =>
+      (await getAvailableBiometrics()).contains(BiometricType.face);
+
+  /// Check if we can use finger print to authenticate user
+  static Future<bool> canUseFingerprint() async =>
+      (await getAvailableBiometrics()).contains(BiometricType.fingerprint);
+
+  /// Chech if user allows authentication
+  /// via biometric in phone settings
+  static Future<bool> userAllowsBioAuthSystem() async =>
+      await LocalAuthentication().isDeviceSupported();
 
   static Future<bool> authenticateUser() async {
     //initialize Local Authentication plugin.

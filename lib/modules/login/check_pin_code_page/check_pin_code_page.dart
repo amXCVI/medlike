@@ -31,7 +31,9 @@ class CheckPinCodePage extends StatelessWidget {
         bottomNavigationBar: const PasswordPageBottomNavigationBar(),
 
         child: FutureBuilder<bool>(
-          future: AuthService.canCheckBiometrics(),
+          future: AuthService.couldUseBio(),
+          //future: Future<bool>.delayed(const Duration(seconds: 5), () => false),
+          //
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return CheckPinCode(
