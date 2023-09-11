@@ -67,33 +67,33 @@ class _CardsPageState extends State<CardsPage> {
     //?
     return WillPopScope(
       onWillPop: () async {
-        if (isFilteringMode) {
-          handleResetFilters();
-        } else {
+        // if (isFilteringMode) {
+        //   handleResetFilters();
+        // } else {
           context.router.replaceAll([const HealthForMainRoute()]);
-        }
-        return false;
+        // }
+         return false;
       },
       child: TapCanvas(
         child: DefaultScaffold(
-          actions: [
-            isFilteringMode
-                ? IconButton(
-                    onPressed: handleTapOnFiltersButton,
-                    icon: SvgPicture.asset(
-                        'assets/icons/app_bar/ic_check_filters.svg'))
-                : IconButton(
-                    onPressed: handleTapOnFiltersButton,
-                    icon: SvgPicture.asset(
-                        'assets/icons/app_bar/filters_icon.svg'))
-          ],
+          // actions: [
+          //   isFilteringMode
+          //       ? IconButton(
+          //           onPressed: handleTapOnFiltersButton,
+          //           icon: SvgPicture.asset(
+          //               'assets/icons/app_bar/ic_check_filters.svg'))
+          //       : IconButton(
+          //           onPressed: handleTapOnFiltersButton,
+          //           icon: SvgPicture.asset(
+          //               'assets/icons/app_bar/filters_icon.svg'))
+          // ],
           appBarTitle: 'Показатели здоровья',
           isChildrenPage: true,
-          widgetOverBody: isFilteringMode
-              ? DiaryFiltersWidget(key: widgetOverBodyGlobalKey)
-              : const SizedBox(),
-          widgetOverBodyGlobalKey:
-              isFilteringMode ? widgetOverBodyGlobalKey : null,
+          // widgetOverBody: isFilteringMode
+          //     ? DiaryFiltersWidget(key: widgetOverBodyGlobalKey)
+          //     : const SizedBox(),
+          // widgetOverBodyGlobalKey:
+          //     isFilteringMode ? widgetOverBodyGlobalKey : null,
           child: BlocBuilder<DiaryCubit, DiaryState>(
             builder: (context, state) {
               if (state.getDiaryCategoriesStatuses ==
