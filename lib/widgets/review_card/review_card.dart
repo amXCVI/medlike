@@ -26,10 +26,11 @@ class _ReviewCardState extends State<ReviewCard> {
           Row(
             children: [
               CircleUserAvatar(
-                userId: '',
-                userAvatar: '',
+                userId: widget.review.peopleId ?? "",
+                userAvatar: null,
                 userName: widget.review.fio ?? '',
                 radius: 15,
+                review: true,
               ),
               const SizedBox(width: 8),
               Text(
