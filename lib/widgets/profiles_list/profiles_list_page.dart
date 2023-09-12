@@ -28,7 +28,7 @@ class ProfilesListPage extends StatefulWidget {
 class _ProfilesListPageState extends State<ProfilesListPage> {
   void _onRefreshData({bool isRefresh = false}) async {
     //? TODO: нарушает принципы BLoC, переделать?
-    //final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
+    final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
   }
 
   @override
@@ -46,7 +46,7 @@ class _ProfilesListPageState extends State<ProfilesListPage> {
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
             if (state.userProfiles!.length == 1) {
-              widget.handleTapOnUserProfile(state.userProfiles![0].id, true);
+              widget.handleTapOnUserProfile(state.userProfiles![0].id, false);
               return const SizedBox();
             }
             return ProfilesList(

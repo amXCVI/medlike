@@ -27,13 +27,6 @@ class _ProfilesListState extends State<ProfilesList> {
     super.initState();
   }
 
-  bool onlyOneUser() {
-    if (widget.profilesList.length == 1) {
-      widget.handleTapOnUserProfile(widget.profilesList[0].id, true);
-    }
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     /// TODO: переделать в Stateless
