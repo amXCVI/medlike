@@ -29,8 +29,8 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
 
   @override
   void initState() {
-    super.initState();
     initBiometricValue();
+    super.initState();
   }
 
   void initBiometricValue() async {

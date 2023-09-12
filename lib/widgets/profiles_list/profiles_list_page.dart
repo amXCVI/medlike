@@ -28,17 +28,13 @@ class ProfilesListPage extends StatefulWidget {
 class _ProfilesListPageState extends State<ProfilesListPage> {
   void _onRefreshData({bool isRefresh = false}) async {
     //? TODO: нарушает принципы BLoC, переделать?
-    final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
-
-    if (userList?.length == 1 && widget.routeName.contains(context.router.current.path)) {
-      widget.handleTapOnUserProfile(userList![0].id, false);
-    }
+    //final userList = await context.read<UserCubit>().getUserProfiles(isRefresh);
   }
 
   @override
   void initState() {
-    super.initState();
     _onRefreshData();
+    super.initState();
   }
 
   @override
@@ -49,6 +45,10 @@ class _ProfilesListPageState extends State<ProfilesListPage> {
         builder: (context, state) {
           if (state.getUserProfileStatus ==
               GetUserProfilesStatusesList.success) {
+            if (state.userProfiles!.length == 1) {
+              widget.handleTapOnUserProfile(state.userProfiles![0].id, true);
+              return const SizedBox();
+            }
             return ProfilesList(
               profilesList: state.userProfiles as List<UserProfile>,
               selectedUserId: widget.selectedId,
