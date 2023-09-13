@@ -100,9 +100,9 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             }
           },
           onPageFinished: (finish) {
-            // setState(() {
-            //   isHideWebView = true;
-            // });
+            setState(() {
+              isHideWebView = true;
+            });
             // Future.delayed(Duration(seconds: 1), () {
             //   getAuthEsiaTokenFromHTMLPage();
             // });
@@ -128,11 +128,9 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             return NavigationDecision.navigate;
           },
         ),
-        isHideWebView
-            ? Container(
-                color: AppColors.secondBackground,
-                child: const Center(child: CircularLoader(radius: 50)))
-            : const SizedBox()
+        !isHideWebView
+            ? const Center(child: Center(child: CircularLoader(radius: 50)))
+            : const SizedBox(),
       ]),
     );
   }
