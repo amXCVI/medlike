@@ -30,16 +30,6 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
     super.initState();
   }
 
-  void _showTourTooltip(BuildContext context){
-    final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
-
-    if(tourState?[TourChecked.event] ?? true) return;
-
-    TourTooltip.of(context).create(TourTooltips.resultEvent, _key, onDismiss: (){
-      context.read<TourCubit>().checkItem(TourChecked.event);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     String getAppointmentsDesc(
@@ -64,10 +54,6 @@ class _AppointmentConfirmViewState extends State<AppointmentConfirmView> {
 
     return BlocBuilder<AppointmentsCubit, AppointmentsState>(
         builder: (context, state) {
-
-          _showTourTooltip(context);
-
-
       final eventsCount = state.confirmCounter ?? 1;
 
       const title = 'Ожидает подтверждения';

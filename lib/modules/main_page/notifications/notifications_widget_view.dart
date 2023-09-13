@@ -34,199 +34,177 @@ class _NotificationsWidgetViewState extends State<NotificationsWidgetView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100), () {
-      final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
-
-      if (!(tourState?[TourChecked.notificationClose] ?? false)) {
-        animateDeleting(
-            context,
-            () => context
-                .read<TourCubit>()
-                .checkItem(TourChecked.notificationClose));
-      }
-    });
   }
+
+  void showTour() => Future.delayed(const Duration(seconds: 1), () {
+        TourCubit tc = context.read<TourCubit>();
+        if (!(tc.state.tourChecked?[TourChecked.event] ?? false)) {
+          TourTooltip.of(context).create(TourTooltips.resultEvent, _key,
+              onDismiss: () {
+            tc.checkItem(TourChecked.event);
+          });
+        }
+      });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TourCubit, TourState>(
+    showTour();
+    return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        return BlocBuilder<UserCubit, UserState>(
-          builder: (context, state) {
-            if (state.isLastNotificationShow == null ||
-                state.isLastNotificationShow == false ||
-                state.getLastNotReadEventStatus !=
-                    GetLastNotReadEventStatuses.success) {
-              return const SizedBox();
-            } else {
-              NotificationModel notificationItem =
-                  state.lastNotification as NotificationModel;
+        if (state.isLastNotificationShow == null ||
+            state.isLastNotificationShow == false ||
+            state.getLastNotReadEventStatus !=
+                GetLastNotReadEventStatuses.success) {
+          return const SizedBox();
+        } else {
+          NotificationModel notificationItem =
+              state.lastNotification as NotificationModel;
 
-              final title = notificationItem.title;
-              final description = notificationItem.description;
+          final title = notificationItem.title;
+          final description = notificationItem.description;
 
-              final content = Padding(
-                padding: const EdgeInsets.only(
-                    top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          final content = Padding(
+            padding: const EdgeInsets.only(
+                top: 16.0, left: 16.0, bottom: 16.0, right: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              title.characters
-                                  .replaceAll(
-                                      Characters(''), Characters('\u{200B}'))
-                                  .toString(),
-                              style: Theme.of(context).textTheme.titleMedium,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (isLoading)
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            if (isLoading)
-                              Lottie.asset('assets/animations/loader.json',
-                                  width: 15, height: 15),
-                          ],
+                        Text(
+                          title.characters
+                              .replaceAll(
+                                  Characters(''), Characters('\u{200B}'))
+                              .toString(),
+                          style: Theme.of(context).textTheme.titleMedium,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        BlocBuilder<TourCubit, TourState>(
-                          buildWhen: (_, state) {
-                            final Map<TourChecked, bool>? tourState = context.read<TourCubit>().state.tourChecked;
-
-                            if (!(tourState?[TourChecked.event]??false)) {
-                              TourTooltip.of(context).create(
-                                  TourTooltips.resultEvent, _key,
-                                  offset: const Offset(24, 0),
-                                  onDismiss: () => context
-                                      .read<TourCubit>()
-                                      .checkItem(TourChecked.event));
-                            }
-
-                            return true;
-                          },
-                          builder: (ctx, state) {
-                            return Container(
-                              key: _key,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 2.0, horizontal: 12.0),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.mainError,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24))),
-                              child: Text(
-                                (notificationItem.eventsCount).toString(),
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            );
-                          },
-                        )
+                        if (isLoading)
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        if (isLoading)
+                          Lottie.asset('assets/animations/loader.json',
+                              width: 15, height: 15),
                       ],
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      description.characters
-                          .replaceAll(Characters(''), Characters('\u{200B}'))
-                          .toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.lightText),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 14),
-                    NotificationBottom(
-                      notificationItem: notificationItem,
-                      isLoading: state.updatingNotificationStatusStatus ==
-                          UpdatingNotificationStatusStatuses.loading,
-                    )
-                  ],
-                ),
-              );
 
-              return Container(
-                margin: const EdgeInsets.only(
-                    top: 0, left: 16.0, bottom: 32.0, right: 16.0),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20,
-                      offset: Offset(0, 8),
+                    //#endregion
+                    Container(
+                      key: _key,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2.0, horizontal: 12.0),
+                      decoration: const BoxDecoration(
+                          color: AppColors.mainError,
+                          borderRadius: BorderRadius.all(Radius.circular(24))),
+                      child: Text(
+                        (notificationItem.eventsCount).toString(),
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ],
-                  color: Theme.of(context).colorScheme.background,
                 ),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                  child: Material(
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        switch (notificationItem.eventType) {
-                          case (NotificationsTypes.newMedcardEventPdf):
-                          case (NotificationsTypes.newMedcardEventJson):
-                            await context
-                                .read<MedcardCubit>()
-                                .downloadAndOpenPdfFileByUrl(
-                                  fileUrl:
-                                      '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
-                                  fileName: notificationItem.description,
-                                  fileId: notificationItem.entityId!,
-                                );
-                            break;
-                          case (NotificationsTypes.appointmentCanceled):
-                          case (NotificationsTypes.appointmentScheduled):
-                          case (NotificationsTypes.appointmentCompleted):
-                            context.router.push(AppointmentsRoute());
-                            break;
-                        }
+                const SizedBox(height: 6),
+                Text(
+                  description.characters
+                      .replaceAll(Characters(''), Characters('\u{200B}'))
+                      .toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: AppColors.lightText),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+                const SizedBox(height: 14),
+                NotificationBottom(
+                  notificationItem: notificationItem,
+                  isLoading: state.updatingNotificationStatusStatus ==
+                      UpdatingNotificationStatusStatuses.loading,
+                )
+              ],
+            ),
+          );
 
+          return Container(
+            margin: const EdgeInsets.only(
+                top: 0, left: 16.0, bottom: 32.0, right: 16.0),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 20,
+                  offset: Offset(0, 8),
+                ),
+              ],
+              color: Theme.of(context).colorScheme.background,
+            ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+              child: Material(
+                child: InkWell(
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    switch (notificationItem.eventType) {
+                      case (NotificationsTypes.newMedcardEventPdf):
+                      case (NotificationsTypes.newMedcardEventJson):
                         await context
-                            .read<UserCubit>()
-                            .updateNotificationStatus(notificationItem.id);
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                      child: Slidable(
-                          key: UniqueKey(),
-                          endActionPane: ActionPane(
-                            motion: const ScrollMotion(),
-                            dismissible: DismissiblePane(onDismissed: () {
-                              context
-                                  .read<UserCubit>()
-                                  .updateNotificationStatus(
-                                      notificationItem.id);
-                            }),
-                            children: [
-                              SlidableAction(
-                                flex: 2,
-                                onPressed: (ctx) {},
-                                backgroundColor: const Color(0xFFFE4A49),
-                                icon: Icons.delete,
-                              ),
-                            ],
+                            .read<MedcardCubit>()
+                            .downloadAndOpenPdfFileByUrl(
+                              fileUrl:
+                                  '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=${notificationItem.entityId}',
+                              fileName: notificationItem.description,
+                              fileId: notificationItem.entityId!,
+                            );
+                        break;
+                      case (NotificationsTypes.appointmentCanceled):
+                      case (NotificationsTypes.appointmentScheduled):
+                      case (NotificationsTypes.appointmentCompleted):
+                        context.router.push(AppointmentsRoute());
+                        break;
+                    }
+
+                    await context
+                        .read<UserCubit>()
+                        .updateNotificationStatus(notificationItem.id);
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                  child: Slidable(
+                      key: UniqueKey(),
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        dismissible: DismissiblePane(onDismissed: () {
+                          context
+                              .read<UserCubit>()
+                              .updateNotificationStatus(notificationItem.id);
+                        }),
+                        children: [
+                          SlidableAction(
+                            flex: 2,
+                            onPressed: (ctx) {},
+                            backgroundColor: const Color(0xFFFE4A49),
+                            icon: Icons.delete,
                           ),
-                          child: content),
-                    ),
-                  ),
+                        ],
+                      ),
+                      child: content),
                 ),
-              );
-            }
-          },
-        );
+              ),
+            ),
+          );
+        }
       },
     );
   }
