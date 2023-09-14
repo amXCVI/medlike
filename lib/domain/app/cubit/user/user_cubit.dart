@@ -643,6 +643,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }
+      emit(state.copyWith(
+        checkUserAccountStatus: CheckUserAccountStatuses.failed,
+      ));
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(

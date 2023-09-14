@@ -25,6 +25,7 @@ class PasswordPageWidget extends StatefulWidget {
 
 class _PasswordPageWidgetState extends State<PasswordPageWidget> {
   String? error;
+  bool _displaySkeleton = false;
 
   Future<bool> getIsSavedPinCode() async {
     String? isSavedPinCodeForAuth =
@@ -44,31 +45,32 @@ class _PasswordPageWidgetState extends State<PasswordPageWidget> {
     }
 
     void _authenticateWithPhoneAndPassword({required String password}) async {
+      setState(() {
+        _displaySkeleton = true;
+      });
       await context
           .read<UserCubit>()
           .handleSubmitPassword(password)
           .then((value) {
-                if (value == null)
-                  {
-                    checkIsAcceptedUserAgreements().then((res) {
-                          if (!res)
-                            {
-                              context.router
-                                  .replaceAll([AuthUserAgreementsRoute()]);
-                            }
-                          else
-                            {
-                              context.router.navigateNamed(
-                                            AppRoutes.loginPinCodeCreate);
-                            }
-                        });
-                  } else {
-                    setState(() {
-                      error = value.tryCount == -1 ?
-                        value.message : '${value.message}. Осталось попыток: ${value.tryCount}';
-                    });
-                  }
-              });
+        if (value == null) {
+          checkIsAcceptedUserAgreements().then((res) {
+            if (!res) {
+              context.router.replaceAll([AuthUserAgreementsRoute()]);
+            } else {
+              context.router.navigateNamed(AppRoutes.loginPinCodeCreate);
+            }
+          });
+        } else {
+          setState(() {
+            setState(() {
+              _displaySkeleton = false;
+            });
+            error = value.tryCount == -1
+                ? value.message
+                : '${value.message}. Осталось попыток: ${value.tryCount}';
+          });
+        }
+      });
     }
 
     return BlocBuilder<UserCubit, UserState>(
@@ -82,10 +84,7 @@ class _PasswordPageWidgetState extends State<PasswordPageWidget> {
             exit(0);
           }
         }
-        if (state.authStatus == UserAuthStatuses.loadingAuth ||
-            // state.authStatus == UserAuthStatuses.successAuth ||
-            state.getAllUserAgreementsStatus ==
-                GetAllUserAgreementsStatuses.loading) {
+        if (_displaySkeleton) {
           return const DefaultAuthSkeleton();
         } else {
           return SingleChildScrollView(
@@ -95,15 +94,14 @@ class _PasswordPageWidgetState extends State<PasswordPageWidget> {
               children: [
                 const DefaultLoginAnimation(),
                 PasswordInput(
-                  phoneNumber: widget.phoneNumber,
-                  onAuth: _authenticateWithPhoneAndPassword,
-                  errorReset: (() {
-                    setState(() {
-                      error = null;
-                    });
-                  }),
-                  errorMsg: error
-                ),
+                    phoneNumber: widget.phoneNumber,
+                    onAuth: _authenticateWithPhoneAndPassword,
+                    errorReset: (() {
+                      setState(() {
+                        error = null;
+                      });
+                    }),
+                    errorMsg: error),
               ],
             ),
           );

@@ -19,9 +19,9 @@ class DefaultAuthSkeleton extends StatelessWidget {
               borderRadius: BorderRadius.all(
                   Radius.circular(MediaQuery.of(context).size.width / 2))),
         ),
-        Column(
+        const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
+          children: [
             SkeletonLine(
               style: SkeletonLineStyle(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 75),
@@ -41,13 +41,6 @@ class DefaultAuthSkeleton extends StatelessWidget {
               width: 130,
               borderRadius: BorderRadius.all(Radius.circular(24))),
         ),
-        // const SkeletonLine(
-        //   style: SkeletonLineStyle(
-        //     alignment: AlignmentDirectional.center,
-        //     width: 270,
-        //     borderRadius: BorderRadius.all(Radius.circular(16)),
-        //   ),
-        // ),
       ],
     ));
   }
