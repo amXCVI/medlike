@@ -63,6 +63,8 @@ void onPayload(String? payload) {
           _router.push(AppointmentsRoute(initDay: date));
         } catch (err, stackTrace) {
           Sentry.captureException(err, stackTrace: stackTrace);
+          pushNavigationService.nextPage =
+              AppointmentsRoute(initDay: DateTime.now());
           _router.push(AppointmentsRoute());
         }
       }
