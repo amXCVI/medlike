@@ -15,12 +15,12 @@ import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
 @RoutePage()
 class MedcardPage extends StatefulWidget {
-  const MedcardPage(
-      {Key? key,
-      required this.userId,
-      required this.isChildrenPage,
-      this.eventId})
-      : super(key: key);
+  const MedcardPage({
+    Key? key,
+    required this.userId,
+    required this.isChildrenPage,
+    this.eventId,
+  }) : super(key: key);
 
   final String userId;
   final bool isChildrenPage;

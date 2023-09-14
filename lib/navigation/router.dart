@@ -129,7 +129,7 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.subscribeClinics,
             page: ClinicsListRoute.page,
-            guards: [CheckIsOneClinicForSubscribe(), CheckIsAuthUser()]),
+            guards: [CheckIsOneProfileForSubscribe(), CheckIsAuthUser()]),
         //AdaptiveRoute(path: AppRoutes.subscribeProfiles, page: SubscribeProfilesListRoute.page, guards: [CheckIsAuthUser()]),
         //AdaptiveRoute(path: AppRoutes.subscribeClinics, page: ClinicsListRoute.page, guards: [CheckIsAuthUser()]),
         AdaptiveRoute(
