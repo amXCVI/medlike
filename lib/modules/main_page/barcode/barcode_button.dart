@@ -8,6 +8,7 @@ import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/helpers/barcode_helper.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profiles_list.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 class BarcodeButton extends StatelessWidget {
   const BarcodeButton({Key? key}) : super(key: key);
@@ -16,7 +17,8 @@ class BarcodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () {
-        showModalBottomSheet(
+        ScreenBrightness().setScreenBrightness(1);
+        Future<void> bottomModalSheet = showModalBottomSheet(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             context: context,
@@ -74,6 +76,9 @@ class BarcodeButton extends StatelessWidget {
                         )),
                   ]),
                 ));
+
+        bottomModalSheet
+            .then((value) => ScreenBrightness().resetScreenBrightness());
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       child: IconWithBottomLabel(
