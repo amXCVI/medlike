@@ -17,8 +17,9 @@ class BarcodeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () {
+        // Setting screen brigthness to max value
         ScreenBrightness().setScreenBrightness(1);
-        Future<void> bottomModalSheet = showModalBottomSheet(
+        showModalBottomSheet(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             context: context,
@@ -75,10 +76,8 @@ class BarcodeButton extends StatelessWidget {
                           },
                         )),
                   ]),
-                ));
-
-        bottomModalSheet
-            .then((value) => ScreenBrightness().resetScreenBrightness());
+                  // Reset screen brighness after modal closed
+                )).then((value) => ScreenBrightness().resetScreenBrightness());
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       child: IconWithBottomLabel(
