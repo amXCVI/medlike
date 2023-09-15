@@ -8,17 +8,16 @@ bool _isAnimating = false;
 ///
 /// [onAnimationEndAction] - Action that'll be fired up after animation played
 void animateDeleting(BuildContext ctx, VoidCallback? onAnimationEndAction) {
-  // Do not play anim if already playing
-  if (_isAnimating) return;
+  // Do not play anim if already playing or slider isn't on top of route
+  if (_isAnimating || !ModalRoute.of(ctx)!.isCurrent) return;
   _isAnimating = true;
-
   Future.delayed(const Duration(seconds: 1), () {
     //Reseting animation flag
     _isAnimating = false;
 
     //Run animation
-    Slidable.of(ctx)!
-        .openEndActionPane(
+    Slidable.of(ctx)
+        ?.openEndActionPane(
           // First animate card opening
           curve: Curves.easeOutCirc,
           duration: const Duration(milliseconds: 500),

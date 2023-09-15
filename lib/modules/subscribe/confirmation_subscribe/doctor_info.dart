@@ -11,6 +11,60 @@ import 'package:medlike/widgets/doctor_info_card/doctor_info_card.dart';
 class DoctorInfo extends StatelessWidget {
   const DoctorInfo({Key? key}) : super(key: key);
 
+  List<Widget> doctorServices(BuildContext ctx, SubscribeState state) {
+    if (state.selectedResearchesIds!.isNotEmpty) {
+      return <Widget>[];
+    }
+    List<Widget> services = List<Widget>.from(<Widget>[
+      Text(
+        'Услуга',
+        style: Theme.of(ctx)
+            .textTheme
+            .headlineMedium
+            ?.copyWith(fontWeight: FontWeight.w700),
+      ),
+      const SizedBox(height: 16),
+      state.appointmentInfoData != null
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: AppColors.mainBrand[100],
+                  child: Text(
+                      state.appointmentInfoData!.serviceName[0].toUpperCase(),
+                      style: Theme.of(ctx).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(ctx).primaryColor,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w500,
+                          )),
+                ),
+                const SizedBox(width: 24),
+                Flexible(
+                  child: RichText(
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 10,
+                    softWrap: true,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: state.appointmentInfoData!.serviceName,
+                            style: Theme.of(ctx).textTheme.titleMedium),
+                        // ...appointmentItem.researches.map((e) => TextSpan(
+                        //     text: ', ${e.name}',
+                        //     style: Theme.of(context).textTheme.titleMedium))
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : const SizedBox(),
+    ]);
+
+    return services;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SubscribeCubit, SubscribeState>(
@@ -48,53 +102,7 @@ class DoctorInfo extends StatelessWidget {
           )),
           const SizedBox(height: 16),
           //#region Service offered by doctor
-
-          Text(
-            'Услуга',
-            style: Theme.of(context)
-                .textTheme
-                .headlineMedium
-                ?.copyWith(fontWeight: FontWeight.w700),
-          ),
-          const SizedBox(height: 16),
-          state.appointmentInfoData != null
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.mainBrand[100],
-                      child: Text(
-                          state.appointmentInfoData!.serviceName[0]
-                              .toUpperCase(),
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                    ),
-                    const SizedBox(width: 24),
-                    Flexible(
-                      child: RichText(
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 10,
-                        softWrap: true,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: state.appointmentInfoData!.serviceName,
-                                style: Theme.of(context).textTheme.titleMedium),
-                            // ...appointmentItem.researches.map((e) => TextSpan(
-                            //     text: ', ${e.name}',
-                            //     style: Theme.of(context).textTheme.titleMedium))
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox(),
+          ...doctorServices(context, state),
           //# Service offered by doctor
           state.appointmentInfoData != null &&
                   state.appointmentInfoData!.recommendations != null &&

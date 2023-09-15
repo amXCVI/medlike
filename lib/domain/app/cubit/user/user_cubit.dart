@@ -323,6 +323,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
+      checkUserAccountStatus: CheckUserAccountStatuses.initial,
       userProfiles: null,
       selectedUserId: null,
     ));
@@ -622,6 +623,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       );
 
       if (response.found != true) {
+        emit(state.copyWith(
+          checkUserAccountStatus: CheckUserAccountStatuses.failed,
+        ));
         return const CheckUserAccountResponse(
             found: false,
             message: 'Не найден пользователь с введенным номером телефона');

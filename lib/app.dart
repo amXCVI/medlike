@@ -75,7 +75,8 @@ class App extends StatelessWidget {
               pageTransitionsTheme: const PageTransitionsTheme(builders: {
                 // replace default CupertinoPageTransitionsBuilder with this
                 TargetPlatform.iOS: NoShadowCupertinoPageTransitionsBuilder(),
-                TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+                TargetPlatform.android:
+                    NoShadowCupertinoPageTransitionsBuilder(),
               }),
             ),
             title: 'Medlike',
@@ -116,7 +117,7 @@ class App extends StatelessWidget {
           create: (context) => DocumentsCubit(DocumentsRepository(), mediator)),
       BlocProvider(create: (context) => FAQCubit(FAQRepository(), mediator)),
       BlocProvider(create: (context) => PromptCubit()),
-      BlocProvider(create: (context) => TourCubit()..fetchStatus())
+      BlocProvider(create: (context) => TourCubit()..fetchStatus()),
     ], child: app);
   }
 }

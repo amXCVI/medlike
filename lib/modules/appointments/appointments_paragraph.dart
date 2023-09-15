@@ -9,6 +9,7 @@ import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/tour/tour_cubit.dart';
 import 'package:medlike/modules/appointments/appointment_item.dart';
 import 'package:medlike/utils/animation/animate_slidable.dart';
+import 'package:medlike/widgets/slidable/slidable_widget.dart';
 
 class AppointmentsParagraph extends StatelessWidget {
   const AppointmentsParagraph({
@@ -32,109 +33,65 @@ class AppointmentsParagraph extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          appointmentsList.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                      top: 27.0, bottom: 5.0, left: 6.0, right: 16.0),
-                  child: Text(
-                    statusItem.paragraphName,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    textAlign: TextAlign.left,
-                  ),
-                )
-              : const SizedBox(),
-          ...appointmentsList
-              .map(
-                (item) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 20,
-                            offset: Offset(0, 8),
-                          ),
-                        ],
-                        color: Theme.of(context).colorScheme.background,
-                      ),
-                      child: AppointmentStatuses.cancellableStatusIds
-                                  .contains(item.status) &&
-                              item.status != 4
-                          ? Slidable(
-                              key: UniqueKey(),
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                dismissible: DismissiblePane(
-                                  onDismissed: () {
-                                    _deleteAppointment(
-                                        item.id, item.patientInfo.id as String);
-                                  },
-                                ),
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        _deleteAppointment(item.id,
-                                            item.patientInfo.id as String);
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 34.0),
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.only(
-                                              topRight: Radius.circular(12),
-                                              bottomRight: Radius.circular(12)),
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .error,
-                                        ),
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(width: 20.0),
-                                              SvgPicture.asset(
-                                                  'assets/icons/appointments/ic_delete_appointment.svg'),
-                                              const SizedBox(width: 20.0),
-                                              Expanded(
-                                                //flex: 1,
-                                                child: Text(
-                                                  "Отменить приём ${(item.paymentStatus == 3 || item.paymentStatus == 6) ? "\nи вернуть денежные средства." : ""}",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodySmall
-                                                      ?.copyWith(
-                                                          color: Colors.white),
-                                                  //overflow: TextOverflow.fade,
-                                                  maxLines: 2,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              child: SliderChild(
-                                  item: item,
-                                  index: appointmentsList.indexOf(item)))
-                          : AppointmentItem(appointmentItem: item)),
-                ),
-              )
-              .toList(),
-        ],
-      ),
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            appointmentsList.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        top: 27.0, bottom: 5.0, left: 6.0, right: 16.0),
+                    child: Text(
+                      statusItem.paragraphName,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      textAlign: TextAlign.left,
+                    ),
+                  )
+                : const SizedBox(),
+            ...appointmentsList
+                .map((item) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 20,
+                              offset: Offset(0, 8),
+                            ),
+                          ],
+                          color: Theme.of(context).colorScheme.background,
+                        ),
+                        child: AppointmentStatuses.cancellableStatusIds
+                                    .contains(item.status) &&
+                                item.status != 4
+                            ? SlidableWidget(
+                                onDissmis: () {
+                                  _deleteAppointment(
+                                      item.id, item.patientInfo.id as String);
+                                },
+                                dissmisText:
+                                    "Отменить приём ${(item.paymentStatus == 3 || item.paymentStatus == 6) ? "\nи вернуть денежные средства." : ""}",
+                                childWidget: SliderChild(
+                                    item: item,
+                                    index: appointmentsList.indexOf(item)),
+                                previewOnSutisfy: () async {
+                                  return !(context
+                                              .read<TourCubit>()
+                                              .state
+                                              .tourChecked?[
+                                          TourChecked.removeAppointment] ??
+                                      false);
+                                }(),
+                                afterPreviewAction: () => context
+                                    .read<TourCubit>()
+                                    .checkItem(TourChecked.removeAppointment))
+                            : AppointmentItem(appointmentItem: item))))
+                .toList()
+          ],
+        ));
   }
 }
 
@@ -153,16 +110,6 @@ class _SliderChildState extends State<SliderChild> {
   @override
   void initState() {
     super.initState();
-
-    final Map<TourChecked, bool>? tourState =
-        context.read<TourCubit>().state.tourChecked;
-    if (!(tourState?[TourChecked.removeAppointment] ?? false)) {
-      animateDeleting(
-          context,
-          () => context
-              .read<TourCubit>()
-              .checkItem(TourChecked.removeAppointment));
-    }
   }
 
   @override

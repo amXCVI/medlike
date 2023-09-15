@@ -55,6 +55,19 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
     }
   }
 
+  Widget _displaySkeleton(BuildContext context, UserState state) {
+    if (state.checkUserAccountStatus == CheckUserAccountStatuses.loading ||
+        state.checkUserAccountStatus == CheckUserAccountStatuses.success) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(color: AppColors.mainAppBackground),
+        child: const DefaultAuthSkeleton(),
+      );
+    }
+    return const SizedBox();
+  }
+
   @override
   Widget build(BuildContext context) {
     void _showModal(Widget bottomSheet) {
@@ -117,16 +130,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
                   return Stack(
                     children: [
                       const StartPhoneNumberView(),
-                      state.checkUserAccountStatus ==
-                              CheckUserAccountStatuses.loading
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              decoration: const BoxDecoration(
-                                  color: AppColors.mainAppBackground),
-                              child: const DefaultAuthSkeleton(),
-                            )
-                          : const SizedBox(),
+                      _displaySkeleton(context, state),
                     ],
                   );
                 }),
