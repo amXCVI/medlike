@@ -8,8 +8,10 @@ import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.
 import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.dart';
 import 'package:medlike/modules/login/start_phone_number_page/phone_number_bottom_navigator.dart';
 import 'package:medlike/modules/login/start_phone_number_page/start_phone_number_view.dart';
+import 'package:medlike/modules/login/web_auth_page/web_auth_page.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
@@ -81,35 +83,40 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
       }
     });
 
-    return BlocListener<UserCubit, UserState>(
-      listenWhen: (prev, cur) {
-        return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
-      },
-      listener: (context, state) {
-        if (state.checkUserAccountStatus == CheckUserAccountStatuses.success &&
-            state.isFound == true &&
-            context.router.current.path == AppRoutes.loginPhone) {
-          context.read<UserCubit>().savePhoneNumber(state.userPhoneNumber!);
-          context.router
-              .push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
-        }
-      },
-      child: WillPopScope(
-        onWillPop: () async {
-          SystemNavigator.pop();
-          return false;
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      return const WebAuthPage();
+    } else {
+      return BlocListener<UserCubit, UserState>(
+        listenWhen: (prev, cur) {
+          return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
         },
-        child: TapCanvas(
-          child: DefaultScaffold(
-            appBarTitle: AppConstants.appName,
-            isChildrenPage: false,
-            onPressedAppLogo: () {},
-            actions: const [UnauthSupportButton()],
-            bottomNavigationBar: const LoginPageBottomNavigationBar(),
-            child: const StartPhoneNumberView(),
+        listener: (context, state) {
+          if (state.checkUserAccountStatus ==
+                  CheckUserAccountStatuses.success &&
+              state.isFound == true &&
+              context.router.current.path == AppRoutes.loginPhone) {
+            context.read<UserCubit>().savePhoneNumber(state.userPhoneNumber!);
+            context.router
+                .push(PasswordRoute(phoneNumber: state.userPhoneNumber!));
+          }
+        },
+        child: WillPopScope(
+          onWillPop: () async {
+            SystemNavigator.pop();
+            return false;
+          },
+          child: TapCanvas(
+            child: DefaultScaffold(
+              appBarTitle: AppConstants.appName,
+              isChildrenPage: false,
+              onPressedAppLogo: () {},
+              actions: const [UnauthSupportButton()],
+              bottomNavigationBar: const LoginPageBottomNavigationBar(),
+              child: const StartPhoneNumberView(),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

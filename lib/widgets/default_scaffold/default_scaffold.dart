@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/app_bar/auth_app_bar/auth_app_bar.dart';
 import 'package:medlike/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:medlike/widgets/default_clip_r_rect/default_clip_r_rect.dart';
 import 'package:medlike/widgets/default_scaffold/app_version_checker.dart';
+import 'package:medlike/widgets/default_scaffold/default_web_scaffold.dart';
 import 'package:medlike/widgets/default_scaffold/unauth_checker.dart';
 
 class DefaultScaffold extends StatefulWidget {
@@ -23,7 +26,7 @@ class DefaultScaffold extends StatefulWidget {
     this.rightBottomWidget,
     this.widgetOverBody,
     this.widgetOverBodyGlobalKey,
-    this.needToResize = true
+    this.needToResize = true,
   }) : super(key: key);
   final bool needToResize;
   final Widget child;
@@ -71,6 +74,11 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
     const Duration _bodyTopPaddingAnimatedDuration =
         Duration(milliseconds: 250);
+
+    /// Если web-проект, то открываем отдельный scaffold
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      return DefaultWebScaffold(child: widget.child);
+    }
 
     return Scaffold(
       appBar: widget.appBar ??

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/constants/app_constants.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/icon_with_bottom_label/icon_with_bottom_label.dart';
 import 'package:medlike/widgets/main_menu/main_menu.dart';
 import 'package:medlike/widgets/user_profiles_list/user_profiles_list.dart';
@@ -11,6 +13,9 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      return const SizedBox();
+    }
     return BottomAppBar(
       child: SizedBox(
         height: 56,

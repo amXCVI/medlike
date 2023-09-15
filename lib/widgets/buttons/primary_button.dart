@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -23,18 +25,22 @@ class PrimaryButton extends StatelessWidget {
         padding: padding,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(32)),
+          borderRadius: BorderRadius.all(Radius.circular(
+            ProjectDeterminer.getProjectType() == Projects.WEB ? 0 : 32,
+          )),
           color:
               disabled ? AppColors.lightText : Theme.of(context).primaryColor,
-          boxShadow: [
-            BoxShadow(
-              color: disabled
-                  ? AppColors.lightText
-                  : Theme.of(context).primaryColor,
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: ProjectDeterminer.getProjectType() == Projects.WEB
+              ? []
+              : [
+                  BoxShadow(
+                    color: disabled
+                        ? AppColors.lightText
+                        : Theme.of(context).primaryColor,
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
         ),
         child: label,
       ),
