@@ -20,64 +20,65 @@ class BarcodeButton extends StatelessWidget {
         // Setting screen brigthness to max value
         ScreenBrightness().setScreenBrightness(1);
         showModalBottomSheet(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            context: context,
-            builder: (context) => SafeArea(
-                  child: Wrap(children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              topLeft: Radius.circular(12)),
-                          color: Theme.of(context).colorScheme.background,
-                        ),
-                        child: BlocBuilder<UserCubit, UserState>(
-                          builder: (context, state) {
-                            return state.userProfiles != null
-                                ? Column(
-                                    children: [
-                                      const UserProfilesList(
-                                          selectableItems: true),
-                                      const Divider(),
-                                      const SizedBox(height: 24),
-                                      SvgPicture.string(buildBarcode(
-                                        Barcode.pdf417(),
-                                        state.selectedUserId == null ||
-                                                state.selectedUserId!.isEmpty
-                                            ? state.userProfiles![0].barCode
-                                                as String
-                                            : state.userProfiles
-                                                ?.firstWhere((element) =>
-                                                    element.id ==
-                                                    state.selectedUserId)
-                                                .barCode as String,
-                                        filename: '',
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        height: 90,
-                                      )),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрихкод\nмедицинскому сотруднику',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall
-                                            ?.copyWith(
-                                              color: AppColors.lightText,
-                                            ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 16),
-                                    ],
-                                  )
-                                : const BarcodeSkeleton();
-                          },
-                        )),
-                  ]),
-                  // Reset screen brighness after modal closed
-                )).then((value) => ScreenBrightness().resetScreenBrightness());
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          context: context,
+          builder: (context) => SafeArea(
+            child: Wrap(children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(12),
+                      topLeft: Radius.circular(12)),
+                  color: Theme.of(context).colorScheme.background,
+                ),
+                child: BlocBuilder<UserCubit, UserState>(
+                  builder: (context, state) {
+                    return state.userProfiles != null
+                        ? Column(
+                            children: [
+                              const UserProfilesList(selectableItems: true),
+                              const Divider(),
+                              const SizedBox(height: 24),
+                              SvgPicture.string(
+                                buildBarcode(
+                                  Barcode.pdf417(),
+                                  state.selectedUserId == null ||
+                                          state.selectedUserId!.isEmpty
+                                      ? state.userProfiles![0].barCode as String
+                                      : state.userProfiles
+                                          ?.firstWhere((element) =>
+                                              element.id ==
+                                              state.selectedUserId)
+                                          .barCode as String,
+                                  filename: '',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: 90,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                '${state.selectedUserId == null || state.selectedUserId!.isEmpty ? state.userProfiles![0].firstName as String : state.userProfiles?.firstWhere((element) => element.id == state.selectedUserId).firstName as String}, покажите данный штрихкод\nмедицинскому сотруднику',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(
+                                      color: AppColors.lightText,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          )
+                        : const BarcodeSkeleton();
+                  },
+                ),
+              ),
+            ]),
+            // Reset screen brighness after modal closed
+          ),
+        ).then((value) => ScreenBrightness().resetScreenBrightness());
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       child: IconWithBottomLabel(
