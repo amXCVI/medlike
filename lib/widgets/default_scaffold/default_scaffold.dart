@@ -7,24 +7,24 @@ import 'package:medlike/widgets/default_scaffold/app_version_checker.dart';
 import 'package:medlike/widgets/default_scaffold/unauth_checker.dart';
 
 class DefaultScaffold extends StatefulWidget {
-  const DefaultScaffold({
-    Key? key,
-    required this.child,
-    required this.appBarTitle,
-    this.isChildrenPage = true,
-    this.actionButton,
-    this.appBarSubtitle = '',
-    this.isSearch = false,
-    this.filteringFunction,
-    this.bottomNavigationBar,
-    this.onPressedAppLogo,
-    this.actions,
-    this.appBar,
-    this.rightBottomWidget,
-    this.widgetOverBody,
-    this.widgetOverBodyGlobalKey,
-    this.needToResize = true
-  }) : super(key: key);
+  const DefaultScaffold(
+      {Key? key,
+      required this.child,
+      required this.appBarTitle,
+      this.isChildrenPage = true,
+      this.actionButton,
+      this.appBarSubtitle = '',
+      this.isSearch = false,
+      this.filteringFunction,
+      this.bottomNavigationBar,
+      this.onPressedAppLogo,
+      this.actions,
+      this.appBar,
+      this.rightBottomWidget,
+      this.widgetOverBody,
+      this.widgetOverBodyGlobalKey,
+      this.needToResize = true})
+      : super(key: key);
   final bool needToResize;
   final Widget child;
   final String appBarTitle;

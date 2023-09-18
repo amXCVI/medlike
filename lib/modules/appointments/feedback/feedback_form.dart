@@ -95,8 +95,11 @@ class FeedbackForm extends StatelessWidget {
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.mainText),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: controllerEmail.text.isEmpty
+                            ? AppColors.lightText
+                            : AppColors.mainText),
                   ),
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: AppColors.mainText),
@@ -116,6 +119,9 @@ class FeedbackForm extends StatelessWidget {
                   if (!regex.hasMatch(value!) ||
                       value == null ||
                       value.isEmpty) {
+                    // Just scrolling to the top of the screen
+                    while (FocusScope.of(context)
+                        .focusInDirection(TraversalDirection.up)) {}
                     return 'Пожалуйста, введите e-mail';
                   } else {
                     return null;
@@ -148,8 +154,11 @@ class FeedbackForm extends StatelessWidget {
                       .textTheme
                       .labelLarge
                       ?.copyWith(color: AppColors.lightText),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.mainText),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: controllerMessage.text.isEmpty
+                            ? AppColors.lightText
+                            : AppColors.mainText),
                   ),
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: AppColors.mainText),
@@ -161,6 +170,9 @@ class FeedbackForm extends StatelessWidget {
                 maxLines: null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
+                    // Just scrolling to the bottom of the screen
+                    while (FocusScope.of(context)
+                        .focusInDirection(TraversalDirection.up)) {}
                     return 'Пожалуйста, заполните обязательное поле';
                   }
                   return null;
@@ -188,7 +200,10 @@ class FeedbackForm extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom == 0
+                    ? 24
+                    : MediaQuery.of(context).viewInsets.bottom),
           ],
         ),
       ),
