@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/file.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
@@ -124,6 +125,10 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   /// Получение документа по url
   Future<File> getDocumentByUrl(String fileUrl) async {
     try {
+      FileInfo? fInfo = await cacheManager.getFileFromCache(fileUrl);
+      if (fInfo != null) {
+        return fInfo.file;
+      }
       File file = await cacheManager.getSingleFile(
         fileUrl,
         // key: fileUrl,
