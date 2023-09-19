@@ -318,6 +318,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MedcardProfilesListPage(),
       );
     },
+    PdfFileViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfFileViewerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfFileViewerPage(
+          key: args.key,
+          pdfUrl: args.pdfUrl,
+          fileId: args.fileId,
+          fileName: args.fileName,
+        ),
+      );
+    },
     MedcardRoute.name: (routeData) {
       final args = routeData.argsAs<MedcardRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -344,6 +356,17 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const DocumentsPage(),
+      );
+    },
+    FullScreenPdfViewerRoute.name: (routeData) {
+      final args = routeData.argsAs<FullScreenPdfViewerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FullScreenPdfViewerPage(
+          key: args.key,
+          filePath: args.filePath,
+          fileName: args.fileName,
+        ),
       );
     },
     DocumentRoute.name: (routeData) {
@@ -468,29 +491,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: PasswordPage(
           key: args.key,
           phoneNumber: args.phoneNumber,
-        ),
-      );
-    },
-    FullScreenPdfViewerRoute.name: (routeData) {
-      final args = routeData.argsAs<FullScreenPdfViewerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: FullScreenPdfViewerPage(
-          key: args.key,
-          filePath: args.filePath,
-          fileName: args.fileName,
-        ),
-      );
-    },
-    PdfFileViewerRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfFileViewerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfFileViewerPage(
-          key: args.key,
-          pdfUrl: args.pdfUrl,
-          fileId: args.fileId,
-          fileName: args.fileName,
         ),
       );
     },
@@ -1633,6 +1633,54 @@ class MedcardProfilesListRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PdfFileViewerPage]
+class PdfFileViewerRoute extends PageRouteInfo<PdfFileViewerRouteArgs> {
+  PdfFileViewerRoute({
+    Key? key,
+    required String pdfUrl,
+    required String fileId,
+    required String fileName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfFileViewerRoute.name,
+          args: PdfFileViewerRouteArgs(
+            key: key,
+            pdfUrl: pdfUrl,
+            fileId: fileId,
+            fileName: fileName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfFileViewerRoute';
+
+  static const PageInfo<PdfFileViewerRouteArgs> page =
+      PageInfo<PdfFileViewerRouteArgs>(name);
+}
+
+class PdfFileViewerRouteArgs {
+  const PdfFileViewerRouteArgs({
+    this.key,
+    required this.pdfUrl,
+    required this.fileId,
+    required this.fileName,
+  });
+
+  final Key? key;
+
+  final String pdfUrl;
+
+  final String fileId;
+
+  final String fileName;
+
+  @override
+  String toString() {
+    return 'PdfFileViewerRouteArgs{key: $key, pdfUrl: $pdfUrl, fileId: $fileId, fileName: $fileName}';
+  }
+}
+
+/// generated route for
 /// [MedcardPage]
 class MedcardRoute extends PageRouteInfo<MedcardRouteArgs> {
   MedcardRoute({
@@ -1729,6 +1777,50 @@ class DocumentsRoute extends PageRouteInfo<void> {
   static const String name = 'DocumentsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FullScreenPdfViewerPage]
+class FullScreenPdfViewerRoute
+    extends PageRouteInfo<FullScreenPdfViewerRouteArgs> {
+  FullScreenPdfViewerRoute({
+    Key? key,
+    required String filePath,
+    required String fileName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FullScreenPdfViewerRoute.name,
+          args: FullScreenPdfViewerRouteArgs(
+            key: key,
+            filePath: filePath,
+            fileName: fileName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FullScreenPdfViewerRoute';
+
+  static const PageInfo<FullScreenPdfViewerRouteArgs> page =
+      PageInfo<FullScreenPdfViewerRouteArgs>(name);
+}
+
+class FullScreenPdfViewerRouteArgs {
+  const FullScreenPdfViewerRouteArgs({
+    this.key,
+    required this.filePath,
+    required this.fileName,
+  });
+
+  final Key? key;
+
+  final String filePath;
+
+  final String fileName;
+
+  @override
+  String toString() {
+    return 'FullScreenPdfViewerRouteArgs{key: $key, filePath: $filePath, fileName: $fileName}';
+  }
 }
 
 /// generated route for
@@ -2180,97 +2272,5 @@ class PasswordRouteArgs {
   @override
   String toString() {
     return 'PasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
-  }
-}
-
-/// generated route for
-/// [FullScreenPdfViewerPage]
-class FullScreenPdfViewerRoute
-    extends PageRouteInfo<FullScreenPdfViewerRouteArgs> {
-  FullScreenPdfViewerRoute({
-    Key? key,
-    required String filePath,
-    required String fileName,
-    List<PageRouteInfo>? children,
-  }) : super(
-          FullScreenPdfViewerRoute.name,
-          args: FullScreenPdfViewerRouteArgs(
-            key: key,
-            filePath: filePath,
-            fileName: fileName,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'FullScreenPdfViewerRoute';
-
-  static const PageInfo<FullScreenPdfViewerRouteArgs> page =
-      PageInfo<FullScreenPdfViewerRouteArgs>(name);
-}
-
-class FullScreenPdfViewerRouteArgs {
-  const FullScreenPdfViewerRouteArgs({
-    this.key,
-    required this.filePath,
-    required this.fileName,
-  });
-
-  final Key? key;
-
-  final String filePath;
-
-  final String fileName;
-
-  @override
-  String toString() {
-    return 'FullScreenPdfViewerRouteArgs{key: $key, filePath: $filePath, fileName: $fileName}';
-  }
-}
-
-/// generated route for
-/// [PdfFileViewerPage]
-class PdfFileViewerRoute extends PageRouteInfo<PdfFileViewerRouteArgs> {
-  PdfFileViewerRoute({
-    Key? key,
-    required String pdfUrl,
-    required String fileId,
-    required String fileName,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfFileViewerRoute.name,
-          args: PdfFileViewerRouteArgs(
-            key: key,
-            pdfUrl: pdfUrl,
-            fileId: fileId,
-            fileName: fileName,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfFileViewerRoute';
-
-  static const PageInfo<PdfFileViewerRouteArgs> page =
-      PageInfo<PdfFileViewerRouteArgs>(name);
-}
-
-class PdfFileViewerRouteArgs {
-  const PdfFileViewerRouteArgs({
-    this.key,
-    required this.pdfUrl,
-    required this.fileId,
-    required this.fileName,
-  });
-
-  final Key? key;
-
-  final String pdfUrl;
-
-  final String fileId;
-
-  final String fileName;
-
-  @override
-  String toString() {
-    return 'PdfFileViewerRouteArgs{key: $key, pdfUrl: $pdfUrl, fileId: $fileId, fileName: $fileName}';
   }
 }

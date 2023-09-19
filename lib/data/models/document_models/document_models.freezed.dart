@@ -426,6 +426,7 @@ mixin _$DocumentMetaModel {
   bool get isSignByClinic => throw _privateConstructorUsedError;
   DateTime? get signedByClinicAt => throw _privateConstructorUsedError;
   int? get signType => throw _privateConstructorUsedError;
+  bool get isAllowedToSign => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -454,7 +455,8 @@ abstract class $DocumentMetaModelCopyWith<$Res> {
       DateTime? signedByEmployeeAt,
       bool isSignByClinic,
       DateTime? signedByClinicAt,
-      int? signType});
+      int? signType,
+      bool isAllowedToSign});
 
   $DocumentMetaLpuModelCopyWith<$Res> get lpu;
   $DocumentMetaPatientModelCopyWith<$Res> get patient;
@@ -491,6 +493,7 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
     Object? isSignByClinic = null,
     Object? signedByClinicAt = freezed,
     Object? signType = freezed,
+    Object? isAllowedToSign = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -553,6 +556,10 @@ class _$DocumentMetaModelCopyWithImpl<$Res, $Val extends DocumentMetaModel>
           ? _value.signType
           : signType // ignore: cast_nullable_to_non_nullable
               as int?,
+      isAllowedToSign: null == isAllowedToSign
+          ? _value.isAllowedToSign
+          : isAllowedToSign // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -635,7 +642,8 @@ abstract class _$$_DocumentMetaModelCopyWith<$Res>
       DateTime? signedByEmployeeAt,
       bool isSignByClinic,
       DateTime? signedByClinicAt,
-      int? signType});
+      int? signType,
+      bool isAllowedToSign});
 
   @override
   $DocumentMetaLpuModelCopyWith<$Res> get lpu;
@@ -675,6 +683,7 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
     Object? isSignByClinic = null,
     Object? signedByClinicAt = freezed,
     Object? signType = freezed,
+    Object? isAllowedToSign = null,
   }) {
     return _then(_$_DocumentMetaModel(
       id: null == id
@@ -737,6 +746,10 @@ class __$$_DocumentMetaModelCopyWithImpl<$Res>
           ? _value.signType
           : signType // ignore: cast_nullable_to_non_nullable
               as int?,
+      isAllowedToSign: null == isAllowedToSign
+          ? _value.isAllowedToSign
+          : isAllowedToSign // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -759,7 +772,8 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
       required this.signedByEmployeeAt,
       required this.isSignByClinic,
       required this.signedByClinicAt,
-      required this.signType});
+      required this.signType,
+      required this.isAllowedToSign});
 
   factory _$_DocumentMetaModel.fromJson(Map<String, dynamic> json) =>
       _$$_DocumentMetaModelFromJson(json);
@@ -794,10 +808,12 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
   final DateTime? signedByClinicAt;
   @override
   final int? signType;
+  @override
+  final bool isAllowedToSign;
 
   @override
   String toString() {
-    return 'DocumentMetaModel(id: $id, name: $name, updatedAt: $updatedAt, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployee: $signEmployee, signClinic: $signClinic, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt, isSignByClinic: $isSignByClinic, signedByClinicAt: $signedByClinicAt, signType: $signType)';
+    return 'DocumentMetaModel(id: $id, name: $name, updatedAt: $updatedAt, lpu: $lpu, patient: $patient, documentCreator: $documentCreator, signEmployee: $signEmployee, signClinic: $signClinic, isSignByPatient: $isSignByPatient, signedByPatientAt: $signedByPatientAt, isSignByEmployee: $isSignByEmployee, signedByEmployeeAt: $signedByEmployeeAt, isSignByClinic: $isSignByClinic, signedByClinicAt: $signedByClinicAt, signType: $signType, isAllowedToSign: $isAllowedToSign)';
   }
 
   @override
@@ -830,7 +846,9 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
             (identical(other.signedByClinicAt, signedByClinicAt) ||
                 other.signedByClinicAt == signedByClinicAt) &&
             (identical(other.signType, signType) ||
-                other.signType == signType));
+                other.signType == signType) &&
+            (identical(other.isAllowedToSign, isAllowedToSign) ||
+                other.isAllowedToSign == isAllowedToSign));
   }
 
   @JsonKey(ignore: true)
@@ -851,7 +869,8 @@ class _$_DocumentMetaModel implements _DocumentMetaModel {
       signedByEmployeeAt,
       isSignByClinic,
       signedByClinicAt,
-      signType);
+      signType,
+      isAllowedToSign);
 
   @JsonKey(ignore: true)
   @override
@@ -884,7 +903,8 @@ abstract class _DocumentMetaModel implements DocumentMetaModel {
       required final DateTime? signedByEmployeeAt,
       required final bool isSignByClinic,
       required final DateTime? signedByClinicAt,
-      required final int? signType}) = _$_DocumentMetaModel;
+      required final int? signType,
+      required final bool isAllowedToSign}) = _$_DocumentMetaModel;
 
   factory _DocumentMetaModel.fromJson(Map<String, dynamic> json) =
       _$_DocumentMetaModel.fromJson;
@@ -919,6 +939,8 @@ abstract class _DocumentMetaModel implements DocumentMetaModel {
   DateTime? get signedByClinicAt;
   @override
   int? get signType;
+  @override
+  bool get isAllowedToSign;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentMetaModelCopyWith<_$_DocumentMetaModel> get copyWith =>
