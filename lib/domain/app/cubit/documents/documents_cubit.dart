@@ -1,11 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/file.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
 import 'package:medlike/data/repository/documents_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
-import 'package:medlike/modules/documents/documents_mock.dart';
+import 'package:medlike/utils/cache_manager/custom_cache_maneger.dart';
+import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 
 part 'documents_state.dart';
 
@@ -22,6 +25,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   }
 
   final DocumentsRepository documentsRepository;
+  var cacheManager = CustomCacheManager.instance;
 
   /// Получает список документов пользователя
   void getDocumentsList({required bool isRefresh}) async {
@@ -33,7 +37,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
     ));
     try {
       final List<DocumentModel> response;
-      response = documentsMock;
+      response = await documentsRepository.getDocumentsList();
       emit(state.copyWith(
         getDocumentsListStatus: GetDocumentsListStatuses.success,
         documentsList: response,
@@ -61,7 +65,10 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
       filteredList = state.documentsList!
           .where((element) => documentsFilters.entries
               .map((e) => e.value.value)
-              .contains(DocumentStatuses.getStatus(element.status).filterValue))
+              .contains(DocumentStatuses.getStatus(
+                isSignByClinic: element.isSignByEmployee,
+                isSignByPatient: element.isSignByPatient,
+              ).filterValue))
           .toList();
     } else {
       filteredList = state.documentsList ?? [];
@@ -85,13 +92,93 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   void filterDocumentsList(String filterStr) {
     final List<DocumentModel> filteredList;
     filteredList = state.documentsList!
-        .where((element) => element.documentName
-            .toLowerCase()
-            .contains(filterStr.toLowerCase()))
+        .where((element) =>
+            element.name.toLowerCase().contains(filterStr.toLowerCase()))
         .toList();
 
     emit(state.copyWith(
       filteredDocumentsList: filteredList,
     ));
+  }
+
+  /// Получает документ пользователя по id
+  void getDocumentMeta({required String documentId}) async {
+    emit(state.copyWith(
+      getDocumentMetaStatus: GetDocumentMetaStatuses.loading,
+    ));
+    try {
+      final DocumentMetaModel response;
+      response =
+          await documentsRepository.getDocumentMetaData(documentId: documentId);
+      emit(state.copyWith(
+        getDocumentMetaStatus: GetDocumentMetaStatuses.success,
+        selectedDocumentMetaData: response,
+      ));
+    } catch (e) {
+      addError(e);
+      emit(state.copyWith(
+          getDocumentMetaStatus: GetDocumentMetaStatuses.failed));
+    }
+  }
+
+  /// Получение документа по url
+  Future<File> getDocumentByUrl(String fileUrl) async {
+    try {
+      File file = await cacheManager.getSingleFile(
+        fileUrl,
+        // key: fileUrl,
+        headers: {
+          'Authorization':
+              'Bearer ${await UserSecureStorage.getField(AppConstants.accessToken)}'
+        },
+      );
+      return file;
+    } catch (err) {
+      rethrow;
+    }
+  }
+
+  /// Отправить документ на подпись (нужен токен есиа)
+  Future<bool> subscribeDocument({
+    required String documentId,
+    required String userId,
+    required String lpuId,
+    required String esiaToken,
+  }) async {
+    emit(state.copyWith(
+      subscribeDocumentStatuses: SubscribeDocumentStatuses.loading,
+    ));
+    try {
+      await documentsRepository.subscribeDocument(
+        documentId: documentId,
+        userId: userId,
+        lpuId: lpuId,
+        esiaToken: esiaToken,
+      );
+      emit(state.copyWith(
+        subscribeDocumentStatuses: SubscribeDocumentStatuses.success,
+        selectedDocumentMetaData:
+            state.selectedDocumentMetaData?.copyWith(isSignByPatient: true),
+        documentsList: state.documentsList!.map((e) {
+          return e.id == documentId ? e.copyWith(isSignByPatient: true) : e;
+        }).toList(),
+        filteredDocumentsList: state.filteredDocumentsList!.map((e) {
+          return e.id == documentId ? e.copyWith(isSignByPatient: true) : e;
+        }).toList(),
+      ));
+      Future.delayed(const Duration(seconds: 5), () {
+        emit(
+          state.copyWith(
+            subscribeDocumentStatuses: SubscribeDocumentStatuses.initial,
+          ),
+        );
+      });
+      return true;
+    } catch (e) {
+      addError(e);
+      emit(state.copyWith(
+          subscribeDocumentStatuses: SubscribeDocumentStatuses.failed));
+      rethrow;
+    }
   }
 }

@@ -184,6 +184,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           token: response.signinModel?.token,
           refreshToken: response.signinModel?.refreshToken,
           tryCount: 5,
+          esiaAuthToken: esiaToken,
         ));
         getUserProfiles(true).then((value) {
           // Сохраняем номер первого из профилей как номер владельца аккаунта. Сомнительно.
@@ -326,6 +327,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       checkUserAccountStatus: CheckUserAccountStatuses.initial,
       userProfiles: null,
       selectedUserId: null,
+      esiaAuthToken: '',
     ));
   }
 
@@ -1009,6 +1011,29 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
       addError(e);
       rethrow;
+    }
+  }
+
+  /// Возвращает токен есиа
+  String getEsiaToken() {
+    try {
+      String esiaToken = state.esiaAuthToken!;
+      return esiaToken;
+    } catch (err) {
+      return '';
+    }
+  }
+
+  /// Возвращает id первого  в осписке профиля
+  String getFirstProfile() {
+    try {
+      String userProfileId =
+          (state.userProfiles != null && state.userProfiles!.isNotEmpty)
+              ? state.userProfiles![0].id
+              : '';
+      return userProfileId;
+    } catch (err) {
+      return '';
     }
   }
 

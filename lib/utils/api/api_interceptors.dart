@@ -129,6 +129,9 @@ class DioInterceptors extends Interceptor {
       case 503:
         AppToast.showAppToast(msg: 'Проверьте подключение к сети интернет');
         return;
+      case 405:
+        AppToast.showAppToast(msg: 'Неизвестная ошибка: ${err.message!}');
+        return super.onError(err, handler);
       default:
         if (err.type == DioExceptionType.receiveTimeout) {
           AppToast.showAppToast(msg: 'Слишком долгое время ответа сервера');
