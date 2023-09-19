@@ -42,7 +42,6 @@ class DocumentMetaModel with _$DocumentMetaModel {
     required bool isSignByClinic,
     required DateTime? signedByClinicAt,
     required int? signType,
-    required bool isAllowedToSign,
   }) = _DocumentMetaModel;
 
   factory DocumentMetaModel.fromJson(Map<String, Object?> json) =>

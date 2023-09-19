@@ -92,8 +92,7 @@ class _DocumentPageState extends State<DocumentPage> {
         child: DefaultScaffold(
             appBarTitle: widget.document.name,
             actionButton: state.selectedDocumentMetaData != null &&
-                    !state.selectedDocumentMetaData!.isSignByPatient &&
-                    state.selectedDocumentMetaData!.isAllowedToSign
+                    !state.selectedDocumentMetaData!.isSignByPatient
                 ? FloatingActionButton.extended(
                     onPressed: () => _handleSubscribeDocument(
                           context: context,

@@ -80,7 +80,6 @@ _$_DocumentMetaModel _$$_DocumentMetaModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['signedByClinicAt'] as String),
       signType: json['signType'] as int?,
-      isAllowedToSign: json['isAllowedToSign'] as bool,
     );
 
 Map<String, dynamic> _$$_DocumentMetaModelToJson(
@@ -101,7 +100,6 @@ Map<String, dynamic> _$$_DocumentMetaModelToJson(
       'isSignByClinic': instance.isSignByClinic,
       'signedByClinicAt': instance.signedByClinicAt?.toIso8601String(),
       'signType': instance.signType,
-      'isAllowedToSign': instance.isAllowedToSign,
     };
 
 _$_DocumentMetaLpuModel _$$_DocumentMetaLpuModelFromJson(
