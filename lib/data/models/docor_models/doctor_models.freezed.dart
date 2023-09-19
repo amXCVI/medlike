@@ -934,8 +934,8 @@ mixin _$AvailableDoctor {
   String? get shortinfo => throw _privateConstructorUsedError;
   String? get comment => throw _privateConstructorUsedError;
   String? get experience => throw _privateConstructorUsedError;
-  num get rateAsSotr => throw _privateConstructorUsedError;
-  num get rateAsUser => throw _privateConstructorUsedError;
+  num? get rateAsSotr => throw _privateConstructorUsedError;
+  num? get rateAsUser => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -961,8 +961,8 @@ abstract class $AvailableDoctorCopyWith<$Res> {
       String? shortinfo,
       String? comment,
       String? experience,
-      num rateAsSotr,
-      num rateAsUser,
+      num? rateAsSotr,
+      num? rateAsUser,
       bool isFavorite});
 }
 
@@ -989,8 +989,8 @@ class _$AvailableDoctorCopyWithImpl<$Res, $Val extends AvailableDoctor>
     Object? shortinfo = freezed,
     Object? comment = freezed,
     Object? experience = freezed,
-    Object? rateAsSotr = null,
-    Object? rateAsUser = null,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
     Object? isFavorite = null,
   }) {
     return _then(_value.copyWith(
@@ -1034,14 +1034,14 @@ class _$AvailableDoctorCopyWithImpl<$Res, $Val extends AvailableDoctor>
           ? _value.experience
           : experience // ignore: cast_nullable_to_non_nullable
               as String?,
-      rateAsSotr: null == rateAsSotr
+      rateAsSotr: freezed == rateAsSotr
           ? _value.rateAsSotr
           : rateAsSotr // ignore: cast_nullable_to_non_nullable
-              as num,
-      rateAsUser: null == rateAsUser
+              as num?,
+      rateAsUser: freezed == rateAsUser
           ? _value.rateAsUser
           : rateAsUser // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
       isFavorite: null == isFavorite
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -1069,8 +1069,8 @@ abstract class _$$_AvailableDoctorCopyWith<$Res>
       String? shortinfo,
       String? comment,
       String? experience,
-      num rateAsSotr,
-      num rateAsUser,
+      num? rateAsSotr,
+      num? rateAsUser,
       bool isFavorite});
 }
 
@@ -1095,8 +1095,8 @@ class __$$_AvailableDoctorCopyWithImpl<$Res>
     Object? shortinfo = freezed,
     Object? comment = freezed,
     Object? experience = freezed,
-    Object? rateAsSotr = null,
-    Object? rateAsUser = null,
+    Object? rateAsSotr = freezed,
+    Object? rateAsUser = freezed,
     Object? isFavorite = null,
   }) {
     return _then(_$_AvailableDoctor(
@@ -1140,14 +1140,14 @@ class __$$_AvailableDoctorCopyWithImpl<$Res>
           ? _value.experience
           : experience // ignore: cast_nullable_to_non_nullable
               as String?,
-      rateAsSotr: null == rateAsSotr
+      rateAsSotr: freezed == rateAsSotr
           ? _value.rateAsSotr
           : rateAsSotr // ignore: cast_nullable_to_non_nullable
-              as num,
-      rateAsUser: null == rateAsUser
+              as num?,
+      rateAsUser: freezed == rateAsUser
           ? _value.rateAsUser
           : rateAsUser // ignore: cast_nullable_to_non_nullable
-              as num,
+              as num?,
       isFavorite: null == isFavorite
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -1199,9 +1199,9 @@ class _$_AvailableDoctor extends _AvailableDoctor {
   @override
   final String? experience;
   @override
-  final num rateAsSotr;
+  final num? rateAsSotr;
   @override
-  final num rateAsUser;
+  final num? rateAsUser;
   @override
   @JsonKey()
   final bool isFavorite;
@@ -1285,8 +1285,8 @@ abstract class _AvailableDoctor extends AvailableDoctor {
       required final String? shortinfo,
       required final String? comment,
       required final String? experience,
-      required final num rateAsSotr,
-      required final num rateAsUser,
+      required final num? rateAsSotr,
+      required final num? rateAsUser,
       final bool isFavorite}) = _$_AvailableDoctor;
   const _AvailableDoctor._() : super._();
 
@@ -1314,9 +1314,9 @@ abstract class _AvailableDoctor extends AvailableDoctor {
   @override
   String? get experience;
   @override
-  num get rateAsSotr;
+  num? get rateAsSotr;
   @override
-  num get rateAsUser;
+  num? get rateAsUser;
   @override
   bool get isFavorite;
   @override
