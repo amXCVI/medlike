@@ -82,6 +82,7 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
 
     return DefaultScaffold(
       appBarTitle: '',
+      isAuth: false,
       bottomNavigationBar: const SizedBox(),
       child: Stack(children: [
         WebView(

@@ -9,6 +9,7 @@ class FullScreenUserAgreements extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultScaffold(
       isChildrenPage: true,
+      isAuth: false,
       appBarTitle: 'Документы',
       bottomNavigationBar: const SizedBox(),
       child: SizedBox(

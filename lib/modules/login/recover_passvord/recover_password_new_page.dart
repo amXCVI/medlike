@@ -41,6 +41,7 @@ class RecoverPasswordNewPage extends StatelessWidget {
         return DefaultScaffold(
           appBarTitle: 'Пароль',
           isChildrenPage: true,
+          isAuth: false,
           bottomNavigationBar: const SizedBox(),
           child: state.resetPasswordStatus == ResetPasswordStatuses.loading ||
                   state.changePasswordStatus == ChangePasswordStatuses.loading

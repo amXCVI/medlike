@@ -97,6 +97,7 @@ class EsiaRegisterPage extends StatelessWidget {
       },
       child: DefaultScaffold(
           appBarTitle: 'Регистрация',
+          isAuth: false,
           actions: const [UnauthSupportButton()],
           bottomNavigationBar: const SizedBox(height: 24),
           child: Column(
