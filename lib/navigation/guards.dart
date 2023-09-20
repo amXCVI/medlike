@@ -31,10 +31,17 @@ class CheckIsAuthUser extends AutoRouteGuard {
 
     final isBlocked = await ResumeHelper.isAppBlocked();
 
-    if (isLogged &&
-        !isBlocked &&
-        (isSavedPinCode || // Для проектов в web пин-код не используем
-            ProjectDeterminer.getProjectType() == Projects.WEB)) {
+    // Для проектов в web пин-код не используем
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      if (isLogged && isAuth) {
+        resolver.next(true);
+      } else {
+        router.navigateNamed(AppRoutes.loginPhone);
+      }
+      return;
+    }
+
+    if (isLogged && !isBlocked && isSavedPinCode) {
       resolver.next(true);
     } else {
       router.navigateNamed(AppRoutes.loginPinCodeCheck);

@@ -27,6 +27,7 @@ class DefaultScaffold extends StatefulWidget {
     this.widgetOverBody,
     this.widgetOverBodyGlobalKey,
     this.needToResize = true,
+    this.isAuth = true,
   }) : super(key: key);
   final bool needToResize;
   final Widget child;
@@ -43,6 +44,8 @@ class DefaultScaffold extends StatefulWidget {
   final Widget? rightBottomWidget;
   final Widget? widgetOverBody;
   final GlobalKey? widgetOverBodyGlobalKey;
+  final bool
+      isAuth; // Использую для веб. Отображает, страница с авторизацией или нет
 
   @override
   State<DefaultScaffold> createState() => _DefaultScaffoldState();
@@ -77,7 +80,10 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
     /// Если web-проект, то открываем отдельный scaffold
     if (ProjectDeterminer.getProjectType() == Projects.WEB) {
-      return DefaultWebScaffold(child: widget.child);
+      return DefaultWebScaffold(
+        isAuth: widget.isAuth,
+        child: widget.child,
+      );
     }
 
     return Scaffold(
