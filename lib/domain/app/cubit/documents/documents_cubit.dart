@@ -102,7 +102,7 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
   }
 
   /// Получает документ пользователя по id
-  void getDocumentMeta({required String documentId}) async {
+  Future<bool> getDocumentMeta({required String documentId}) async {
     emit(state.copyWith(
       getDocumentMetaStatus: GetDocumentMetaStatuses.loading,
     ));
@@ -114,10 +114,12 @@ class DocumentsCubit extends MediatorCubit<DocumentsState, UserMediatorEvent>
         getDocumentMetaStatus: GetDocumentMetaStatuses.success,
         selectedDocumentMetaData: response,
       ));
+      return true;
     } catch (e) {
       addError(e);
       emit(state.copyWith(
           getDocumentMetaStatus: GetDocumentMetaStatuses.failed));
+      rethrow;
     }
   }
 

@@ -77,7 +77,16 @@ class _DocumentPageState extends State<DocumentPage> {
     void getDocumentData() {
       context
           .read<DocumentsCubit>()
-          .getDocumentMeta(documentId: widget.document.id);
+          .getDocumentMeta(documentId: widget.document.id)
+          .then((res) {
+        if (!res) {
+          context.router.pop();
+        }
+      }).catchError((onError) {
+        if (onError.toString().contains('404')) {
+          context.router.pop();
+        }
+      });
     }
 
     getDocumentData();
