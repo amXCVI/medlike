@@ -98,8 +98,8 @@ _$_AvailableDoctor _$$_AvailableDoctorFromJson(Map<String, dynamic> json) =>
       shortinfo: json['shortinfo'] as String?,
       comment: json['comment'] as String?,
       experience: json['experience'] as String?,
-      rateAsSotr: json['rateAsSotr'] as num,
-      rateAsUser: json['rateAsUser'] as num,
+      rateAsSotr: json['rateAsSotr'] as num?,
+      rateAsUser: json['rateAsUser'] as num?,
       isFavorite: json['isFavorite'] as bool? ?? false,
     );
 

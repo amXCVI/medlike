@@ -15,8 +15,9 @@ class DoctorInfoHeader extends StatelessWidget {
       String doctorName = state.selectedDoctor != null
           ? '${state.selectedDoctor!.lastName} ${state.selectedDoctor!.firstName} ${state.selectedDoctor!.middleName}'
           : '';
-      num doctorRating =
-          state.selectedDoctor != null ? state.selectedDoctor!.rateAsSotr : 0;
+      num doctorRating = state.selectedDoctor != null
+          ? state.selectedDoctor?.rateAsSotr ?? 0
+          : 0;
       String? doctorDescription = state.selectedDoctor != null
           ? DoctorSubtitleHelper.getSubtitle(
               specialization: state.selectedDoctor?.specialization ?? '',
