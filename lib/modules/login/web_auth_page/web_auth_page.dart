@@ -8,7 +8,6 @@ import 'package:medlike/modules/login/web_auth_page/phone_input.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-import 'package:medlike/widgets/app_bar/web_app_bars/web_app_bar_unauth.dart';
 import 'package:medlike/widgets/buttons/link_button.dart';
 import 'package:medlike/widgets/buttons/primary_button.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -143,7 +142,6 @@ class _WebAuthPageState extends State<WebAuthPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
-      appBar: UnAuthWebAppBar(),
       appBarTitle: AppConstants.appName,
       isChildrenPage: false,
       onPressedAppLogo: () {},

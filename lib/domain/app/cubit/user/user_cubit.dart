@@ -1013,4 +1013,13 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       return 0;
     }
   }
+
+  /// авторизован пользователь или нет
+  bool isAuthorizedUser() {
+    if (state.authStatus == UserAuthStatuses.successAuth) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

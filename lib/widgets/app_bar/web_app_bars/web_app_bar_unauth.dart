@@ -5,7 +5,9 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/app/app_cubit.dart';
 
 class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const UnAuthWebAppBar({Key? key}) : super(key: key);
+  const UnAuthWebAppBar({Key? key, required this.isAuth}) : super(key: key);
+
+  final bool isAuth;
 
   @override
   Size get preferredSize =>
@@ -17,6 +19,9 @@ class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!isAuth) {
+      return const SizedBox();
+    }
     return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
       bool isOpenedMenuDrawer =
           appState.isOpenedWebMenu == null || appState.isOpenedWebMenu == true;
