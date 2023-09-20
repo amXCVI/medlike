@@ -71,6 +71,8 @@ class _ReviewCardState extends State<ReviewCard> {
                   onTap: () {
                     _isOverflown
                         ? showModalBottomSheet(
+                            enableDrag: true,
+                            isScrollControlled: true,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(12),
@@ -105,7 +107,6 @@ class _ReviewCardState extends State<ReviewCard> {
                                         ),
                                         Row(
                                           children: [
-                                            const SizedBox(width: 8),
                                             Text(
                                               widget.review.fio ?? 'Аноним',
                                               style: Theme.of(context)
@@ -121,9 +122,10 @@ class _ReviewCardState extends State<ReviewCard> {
                                           ],
                                         ),
                                         const SizedBox(height: 15),
-                                        Text(
+                                        SingleChildScrollView(
+                                            child: Text(
                                           widget.review.message ?? "",
-                                        )
+                                        ))
                                       ],
                                     )
                                   ],
