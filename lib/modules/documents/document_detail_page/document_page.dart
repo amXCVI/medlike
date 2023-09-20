@@ -33,9 +33,7 @@ class _DocumentPageState extends State<DocumentPage> {
   final bool isSubscribedDoc = false;
   // Если страница уже просмотрена, чел начал подписывать док и ушел в авторизацию
   void goToEsiaAuth(BuildContext context) {
-    AppToast.showAppToast(
-        msg:
-            'Для подписания документа пожалуйста войдите в систему через госуслуги');
+    AppToast.showAppToast(msg: 'Подписание документа.\nВход через ЕСИА.');
     context.router.push(EsiaLoginRoute(
       isFromSubscribeDoc: true,
       subscribedDocument: widget.document,
