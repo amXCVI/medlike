@@ -81,6 +81,13 @@ class AppConstants {
 
   static const String esiaOAuthPageURL =
       'https://tgn.medotrade.ru:23340/MedLike/Env04/esia/login';
+
+  // Ширина открытого и закрытого меню для веб-проектов
+  static const double webMenuOpenedWidth = 300;
+  static const double webMenuClosedWidth = 100;
+
+  // Высота аппбара для веб-проектов
+  static const double webAppBarHeight = 80;
 }
 
 // Способы авторизации

@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medlike/navigation/router.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 
 /// Splash screen that will be opened every time user opens up an app
 ///
@@ -40,8 +39,14 @@ class _SplashPageState extends State<SplashPage> {
           curve: Curves.easeOutCirc,
           child: picture,
           onEnd: () {
-            widget.parallelAction.then((value) => context.router.navigateNamed(
-                value ? AppRoutes.loginPinCodeCheck : AppRoutes.loginPhone));
+            widget.parallelAction.then((value) {
+              if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+                context.router.navigateNamed(AppRoutes.main);
+              } else {
+                context.router.navigateNamed(
+                    value ? AppRoutes.loginPinCodeCheck : AppRoutes.loginPhone);
+              }
+            });
           },
         ),
       ),
