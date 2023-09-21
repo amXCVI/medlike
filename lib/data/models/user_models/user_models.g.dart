@@ -80,8 +80,9 @@ Map<String, dynamic> _$$_UserProfileClinicBuildingToJson(
 
 _$_UserProfileClinic _$$_UserProfileClinicFromJson(Map<String, dynamic> json) =>
     _$_UserProfileClinic(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       timeZoneOffset: json['timeZoneOffset'] as int?,
+      clinicName: json['clinicName'] as String?,
       buildings: (json['buildings'] as List<dynamic>?)
           ?.map((e) =>
               UserProfileClinicBuilding.fromJson(e as Map<String, dynamic>))
@@ -93,6 +94,7 @@ Map<String, dynamic> _$$_UserProfileClinicToJson(
     <String, dynamic>{
       'id': instance.id,
       'timeZoneOffset': instance.timeZoneOffset,
+      'clinicName': instance.clinicName,
       'buildings': instance.buildings,
     };
 

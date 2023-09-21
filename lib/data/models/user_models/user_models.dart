@@ -65,8 +65,9 @@ class UserProfileClinicBuilding with _$UserProfileClinicBuilding {
 @freezed
 class UserProfileClinic with _$UserProfileClinic {
   const factory UserProfileClinic({
-    String? id,
+    required String id,
     int? timeZoneOffset,
+    String? clinicName,
     List<UserProfileClinicBuilding>? buildings,
   }) = _UserProfileClinic;
 

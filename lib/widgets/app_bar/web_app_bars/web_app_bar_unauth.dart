@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/app/app_cubit.dart';
+import 'package:medlike/widgets/user_profiles_web/user_profiles_web.dart';
 
 class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UnAuthWebAppBar({Key? key, required this.isAuth}) : super(key: key);
@@ -57,6 +58,30 @@ class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ),
+            AnimatedContainer(
+              width: isOpenedMenuDrawer
+                  ? MediaQuery.of(context).size.width -
+                      AppConstants.webMenuOpenedWidth -
+                      16
+                  : MediaQuery.of(context).size.width -
+                      AppConstants.webMenuClosedWidth -
+                      16,
+              padding: EdgeInsets.symmetric(
+                  vertical: 0, horizontal: isOpenedMenuDrawer ? 22 : 12),
+              duration: const Duration(milliseconds: 500),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                      height: 38,
+                      child: SvgPicture.asset(
+                          'assets/images/clinic_logo_for_web.svg')),
+                  const Row(
+                    children: [UserProfilesWeb()],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       );

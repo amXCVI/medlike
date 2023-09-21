@@ -381,6 +381,11 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         state.userProfiles != null) {
       return state.userProfiles;
     }
+
+    if (state.getUserProfileStatus == GetUserProfilesStatusesList.loading) {
+      return state.userProfiles;
+    }
+
     emit(state.copyWith(
       getUserProfileStatus: GetUserProfilesStatusesList.loading,
     ));
@@ -427,6 +432,17 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     UserProfile userProfile =
         state.userProfiles!.firstWhere((element) => element.id == userId);
     return '${userProfile.firstName} ${userProfile.lastName?[0]}.';
+  }
+
+  /// Возвращает профиль пользователя по id
+  UserProfile? getUserProfileById(String userId) {
+    try {
+      return state.userProfiles!.firstWhere((element) => element.id == userId);
+    } catch (err) {
+      return state.userProfiles != null && state.userProfiles!.isNotEmpty
+          ? state.userProfiles![0]
+          : null;
+    }
   }
 
   /// Сбрасывает id выбранного профиля

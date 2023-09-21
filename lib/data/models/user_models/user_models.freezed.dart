@@ -860,8 +860,9 @@ UserProfileClinic _$UserProfileClinicFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserProfileClinic {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   int? get timeZoneOffset => throw _privateConstructorUsedError;
+  String? get clinicName => throw _privateConstructorUsedError;
   List<UserProfileClinicBuilding>? get buildings =>
       throw _privateConstructorUsedError;
 
@@ -878,8 +879,9 @@ abstract class $UserProfileClinicCopyWith<$Res> {
       _$UserProfileClinicCopyWithImpl<$Res, UserProfileClinic>;
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       int? timeZoneOffset,
+      String? clinicName,
       List<UserProfileClinicBuilding>? buildings});
 }
 
@@ -896,19 +898,24 @@ class _$UserProfileClinicCopyWithImpl<$Res, $Val extends UserProfileClinic>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? timeZoneOffset = freezed,
+    Object? clinicName = freezed,
     Object? buildings = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       timeZoneOffset: freezed == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int?,
+      clinicName: freezed == clinicName
+          ? _value.clinicName
+          : clinicName // ignore: cast_nullable_to_non_nullable
+              as String?,
       buildings: freezed == buildings
           ? _value.buildings
           : buildings // ignore: cast_nullable_to_non_nullable
@@ -926,8 +933,9 @@ abstract class _$$_UserProfileClinicCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       int? timeZoneOffset,
+      String? clinicName,
       List<UserProfileClinicBuilding>? buildings});
 }
 
@@ -942,19 +950,24 @@ class __$$_UserProfileClinicCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? timeZoneOffset = freezed,
+    Object? clinicName = freezed,
     Object? buildings = freezed,
   }) {
     return _then(_$_UserProfileClinic(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       timeZoneOffset: freezed == timeZoneOffset
           ? _value.timeZoneOffset
           : timeZoneOffset // ignore: cast_nullable_to_non_nullable
               as int?,
+      clinicName: freezed == clinicName
+          ? _value.clinicName
+          : clinicName // ignore: cast_nullable_to_non_nullable
+              as String?,
       buildings: freezed == buildings
           ? _value._buildings
           : buildings // ignore: cast_nullable_to_non_nullable
@@ -967,8 +980,9 @@ class __$$_UserProfileClinicCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserProfileClinic implements _UserProfileClinic {
   const _$_UserProfileClinic(
-      {this.id,
+      {required this.id,
       this.timeZoneOffset,
+      this.clinicName,
       final List<UserProfileClinicBuilding>? buildings})
       : _buildings = buildings;
 
@@ -976,9 +990,11 @@ class _$_UserProfileClinic implements _UserProfileClinic {
       _$$_UserProfileClinicFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   final int? timeZoneOffset;
+  @override
+  final String? clinicName;
   final List<UserProfileClinicBuilding>? _buildings;
   @override
   List<UserProfileClinicBuilding>? get buildings {
@@ -991,7 +1007,7 @@ class _$_UserProfileClinic implements _UserProfileClinic {
 
   @override
   String toString() {
-    return 'UserProfileClinic(id: $id, timeZoneOffset: $timeZoneOffset, buildings: $buildings)';
+    return 'UserProfileClinic(id: $id, timeZoneOffset: $timeZoneOffset, clinicName: $clinicName, buildings: $buildings)';
   }
 
   @override
@@ -1002,13 +1018,15 @@ class _$_UserProfileClinic implements _UserProfileClinic {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.timeZoneOffset, timeZoneOffset) ||
                 other.timeZoneOffset == timeZoneOffset) &&
+            (identical(other.clinicName, clinicName) ||
+                other.clinicName == clinicName) &&
             const DeepCollectionEquality()
                 .equals(other._buildings, _buildings));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, timeZoneOffset,
+  int get hashCode => Object.hash(runtimeType, id, timeZoneOffset, clinicName,
       const DeepCollectionEquality().hash(_buildings));
 
   @JsonKey(ignore: true)
@@ -1028,17 +1046,20 @@ class _$_UserProfileClinic implements _UserProfileClinic {
 
 abstract class _UserProfileClinic implements UserProfileClinic {
   const factory _UserProfileClinic(
-      {final String? id,
+      {required final String id,
       final int? timeZoneOffset,
+      final String? clinicName,
       final List<UserProfileClinicBuilding>? buildings}) = _$_UserProfileClinic;
 
   factory _UserProfileClinic.fromJson(Map<String, dynamic> json) =
       _$_UserProfileClinic.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
   int? get timeZoneOffset;
+  @override
+  String? get clinicName;
   @override
   List<UserProfileClinicBuilding>? get buildings;
   @override
