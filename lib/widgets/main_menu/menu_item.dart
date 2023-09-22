@@ -38,9 +38,7 @@ class MainMenuItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: isSelected
                             ? Theme.of(context).primaryColor
-                            : ProjectDeterminer.getProjectType() == Projects.WEB
-                                ? AppColors.lightBrandThird
-                                : AppColors.mainText,
+                            : AppColors.mainText,
                       ),
                   maxLines: 2,
                 ),
