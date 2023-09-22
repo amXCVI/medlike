@@ -36,99 +36,100 @@ class DocumentItem extends StatelessWidget {
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(14.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 72,
-                        child: Text(
-                          documentItem.documentName,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          softWrap: true,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(color: AppColors.mainText),
-                        ),
-                      ),
-                      SvgPicture.asset(
-                          'assets/icons/subscribe/right_arrow_icon.svg')
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    DocumentStatuses.getStatus(documentItem.status).statusName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppColors.lightText),
-                  ),
-                  const SizedBox(height: 14),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset('assets/icons/appointments/solid.svg'),
-                      const SizedBox(width: 8.0),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 100,
-                        child: Text(documentItem.clinicAddress,
-                            overflow: TextOverflow.fade,
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            documentItem.documentName,
+                            overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             softWrap: true,
-                            style: Theme.of(context).textTheme.bodySmall),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12.0),
-                  Row(
-                    children: [
-                      RichText(
-                        text: WidgetSpan(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.circleBgFirst,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/appointments/clock.svg'),
-                                const SizedBox(width: 8.0),
-                                Text(DateFormat('HH:mm DD.MM.yy')
-                                    .format(documentItem.documentCreateDate)),
-                              ],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(color: AppColors.mainText),
+                          ),
+                        ),
+                        SvgPicture.asset(
+                            'assets/icons/subscribe/right_arrow_icon.svg')
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      DocumentStatuses.getStatus(documentItem.status)
+                          .statusName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: AppColors.lightText),
+                    ),
+                    const SizedBox(height: 14),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset('assets/icons/appointments/solid.svg'),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Text(documentItem.clinicAddress,
+                              overflow: TextOverflow.fade,
+                              maxLines: 2,
+                              softWrap: true,
+                              style: Theme.of(context).textTheme.bodySmall),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12.0),
+                    Row(
+                      children: [
+                        RichText(
+                          text: WidgetSpan(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.circleBgFirst,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/icons/appointments/clock.svg'),
+                                  const SizedBox(width: 8.0),
+                                  Text(DateFormat('HH:mm DD.MM.yy')
+                                      .format(documentItem.documentCreateDate)),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      RichText(
-                        text: WidgetSpan(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.circleBgFirst,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/icons/appointments/profile.svg'),
-                                const SizedBox(width: 8.0),
-                                Text(documentItem.userName),
-                              ],
+                        const SizedBox(width: 8.0),
+                        RichText(
+                          text: WidgetSpan(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.circleBgFirst,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/icons/appointments/profile.svg'),
+                                  const SizedBox(width: 8.0),
+                                  Text(documentItem.userName),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

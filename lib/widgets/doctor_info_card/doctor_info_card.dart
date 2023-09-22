@@ -33,8 +33,7 @@ class DoctorInfoCard extends StatelessWidget {
                 ),
         ),
         const SizedBox(width: 24),
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 100,
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -42,9 +41,11 @@ class DoctorInfoCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '${doctorInfo.lastName ?? ''} ${(doctorInfo.firstName ?? ' ')[0]}. ${(doctorInfo.middleName ?? ' ')[0]}.',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Flexible(
+                    child: Text(
+                      '${doctorInfo.lastName ?? ''} ${(doctorInfo.firstName ?? ' ')[0]}. ${(doctorInfo.middleName ?? ' ')[0]}.',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                   DoctorRating(
                     rating: doctorInfo.rateAsSotr,
@@ -61,6 +62,9 @@ class DoctorInfoCard extends StatelessWidget {
                 maxLines: 3,
                 softWrap: true,
               ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+              )
             ],
           ),
         )

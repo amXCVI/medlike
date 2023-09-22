@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class SubscribeRowItem extends StatelessWidget {
@@ -45,7 +47,6 @@ class SubscribeRowItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Container(
-            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: Theme.of(context).dividerColor),
@@ -83,11 +84,19 @@ class SubscribeRowItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 24.0),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width -
-                            32 -
-                            44 -
-                            16 -
-                            44,
+                        width:
+                            ProjectDeterminer.getProjectType() == Projects.WEB
+                                ? MediaQuery.of(context).size.width -
+                                    32 -
+                                    44 -
+                                    16 -
+                                    44 -
+                                    AppConstants.webMenuOpenedWidth
+                                : MediaQuery.of(context).size.width -
+                                    32 -
+                                    44 -
+                                    16 -
+                                    44,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,14 +143,15 @@ class SubscribeRowItem extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const Spacer(),
                   isRightArrow
                       ? SvgPicture.asset(
                           'assets/icons/subscribe/right_arrow_icon.svg')
-                      : const Text(''),
+                      : const SizedBox(),
                   isSelected
                       ? SvgPicture.asset(
                           'assets/icons/profile/checked_icon.svg')
-                      : const Text(''),
+                      : const SizedBox(),
                   customRightAction ?? const SizedBox()
                 ],
               ),

@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/category_types.dart';
 import 'package:medlike/data/models/appointment_models/appointment_models.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
-import 'package:medlike/modules/appointments/appointment_detail/research_detail_page.dart';
 import 'package:medlike/modules/appointments/appointment_detail/review.dart';
 import 'package:medlike/modules/appointments/cabinet/cabinet_find_item.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
@@ -145,8 +144,7 @@ class AppointmentDetailPage extends StatelessWidget {
                           SvgPicture.asset(
                               'assets/icons/appointments/solid.svg'),
                           const SizedBox(width: 8.0),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width - 100,
+                          Flexible(
                             child: Text(
                                 '${appointmentItem.clinicInfo.name!}, ${appointmentItem.researchPlace ?? ''} ${appointmentItem.clinicInfo.address!}',
                                 style: Theme.of(context).textTheme.bodySmall),

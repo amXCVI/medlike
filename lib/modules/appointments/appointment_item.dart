@@ -128,8 +128,7 @@ class AppointmentItem extends StatelessWidget {
                   children: [
                     SvgPicture.asset('assets/icons/appointments/solid.svg'),
                     const SizedBox(width: 8.0),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 100,
+                    Flexible(
                       child: Text(
                           '${ClinicAddressHelper.getShortAddress(appointmentItem.clinicInfo.address ?? '')}${appointmentItem.researchPlace ?? ''}',
                           overflow: TextOverflow.fade,
