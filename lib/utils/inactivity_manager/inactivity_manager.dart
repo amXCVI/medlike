@@ -128,6 +128,11 @@ class _InactivityManagerState extends State<InactivityManager>
 
   @override
   Widget build(BuildContext context) {
+    /// Если веб-проект - ничего делать не нужно
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      return widget.child;
+    }
+
     if (isLogoutApp) {
       print('LOGOUT');
       context.read<UserCubit>().signOut();

@@ -82,6 +82,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     if (ProjectDeterminer.getProjectType() == Projects.WEB) {
       return DefaultWebScaffold(
         isAuth: widget.isAuth,
+        actionButton: widget.actionButton,
         child: widget.child,
       );
     }

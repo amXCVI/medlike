@@ -22,12 +22,12 @@ class WebAuthPagesBodyContainer extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Image.network(
-                      'assets/images/login_background.jpg',
+                      'assets/assets/images/login_background.jpg',
                       height: MediaQuery.of(context).size.height,
                       fit: BoxFit.cover,
                     ),
                     Image.network(
-                      'assets/images/full_logo.png',
+                      'assets/assets/images/full_logo.png',
                       height: MediaQuery.of(context).size.height,
                     ),
                   ],
