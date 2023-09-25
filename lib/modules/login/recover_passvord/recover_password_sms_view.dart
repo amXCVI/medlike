@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/recover_passvord/sms_code_input.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/default_login_animation/default_login_animation.dart';
 
 class RecoverPasswordSmsView extends StatelessWidget {
   const RecoverPasswordSmsView({
-    Key? key, 
+    Key? key,
     required this.phoneNumber,
     this.timerEnd,
   }) : super(key: key);
@@ -18,11 +20,10 @@ class RecoverPasswordSmsView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const DefaultLoginAnimation(),
-          SmsCodeInput(
-            phoneNumber: phoneNumber,
-            timerEnd: timerEnd
-          ),
+          ProjectDeterminer.getProjectType() == Projects.WEB
+              ? const SizedBox()
+              : const DefaultLoginAnimation(),
+          SmsCodeInput(phoneNumber: phoneNumber, timerEnd: timerEnd),
         ],
       ),
     );

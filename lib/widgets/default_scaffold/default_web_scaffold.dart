@@ -26,7 +26,7 @@ class DefaultWebScaffold extends StatelessWidget {
           ? BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
               bool isOpenedMenuDrawer = appState.isOpenedWebMenu == null ||
                   appState.isOpenedWebMenu == true;
-              return Container(
+              return SizedBox(
                 width: MediaQuery.of(context).size.width -
                     32 -
                     (isOpenedMenuDrawer
@@ -42,7 +42,10 @@ class DefaultWebScaffold extends StatelessWidget {
           isAuth ? const WebDrawerMenu() : const SizedBox(),
           Expanded(
             child: Column(
-              children: [Expanded(child: child), const SizedBox(height: 48)],
+              children: [
+                Expanded(child: child),
+                SizedBox(height: actionButton != null ? 48 : 0)
+              ],
             ),
           ),
           const UnAuthChecker(),
