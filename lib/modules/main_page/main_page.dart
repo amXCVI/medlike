@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/clinics/clinics_cubit.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -10,8 +11,10 @@ import 'package:medlike/modules/main_page/grid/grid_items_list.dart';
 import 'package:medlike/modules/main_page/notifications/appointment_confirm_widget.dart';
 import 'package:medlike/modules/main_page/notifications/notifications_widget.dart';
 import 'package:medlike/modules/main_page/slider/slider_widget.dart';
+import 'package:medlike/modules/main_page/web_main_page.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
+import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode/barcode_button.dart';
 
@@ -35,6 +38,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (ProjectDeterminer.getProjectType() == Projects.WEB) {
+      return const WebMainPage();
+    }
+
     return WillPopScope(
       onWillPop: () async {
         showDialog<void>(

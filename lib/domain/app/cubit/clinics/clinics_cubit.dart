@@ -9,9 +9,10 @@ import 'package:yandex_geocoder/yandex_geocoder.dart';
 
 part 'clinics_state.dart';
 
-class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent> 
-  with RefreshErrorHandler<ClinicsState, UserCubit> {
-  ClinicsCubit(this.clinicsRepository, mediator) : super(const ClinicsState(), mediator) {
+class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
+    with RefreshErrorHandler<ClinicsState, UserCubit> {
+  ClinicsCubit(this.clinicsRepository, mediator)
+      : super(const ClinicsState(), mediator) {
     mediator.register(this);
   }
 
@@ -20,7 +21,7 @@ class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
   /// Future<void> Для последовательного ожидания кубитов
   Future<void> getAllClinicsList(bool isRefresh) async {
     if (!isRefresh &&
-      // state.getAllClinicsListStatus == GetAllClinicsListStatuses.success &&\
+        // state.getAllClinicsListStatus == GetAllClinicsListStatuses.success &&\
         state.clinicsList != null &&
         state.clinicsList!.isNotEmpty) {
       return;
@@ -77,6 +78,9 @@ class ClinicsCubit extends MediatorCubit<ClinicsState, UserMediatorEvent>
   }
 
   void getPriceList(String clinicId, List<String>? categories) async {
+    if (state.getPriceListStatus == GetPriceListStatuses.loading) {
+      return;
+    }
     emit(state.copyWith(
       getPriceListStatus: GetPriceListStatuses.loading,
     ));

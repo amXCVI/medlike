@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/helpers/project_determiner.dart';
 import 'package:medlike/widgets/doctor_rating/doctor_rating.dart';
 
 class SubscribeRowItem extends StatelessWidget {
@@ -57,93 +55,85 @@ class SubscribeRowItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: isSelected
-                            ? Theme.of(context).primaryColor
-                            : Theme.of(context).colorScheme.background,
-                        radius: radius + 4,
-                        child: CircleAvatar(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.background,
-                            radius: radius + 2,
-                            child: isFirstSymbolForIcon
-                                ? CircleAvatar(
-                                    radius: radius,
-                                    backgroundColor: AppColors.mainBrand[50],
-                                    child: Text(title[0].toUpperCase(),
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 22.0,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'AquawaxPro',
-                                        )),
-                                  )
-                                : customIcon),
-                      ),
-                      const SizedBox(width: 24.0),
-                      SizedBox(
-                        width:
-                            ProjectDeterminer.getProjectType() == Projects.WEB
-                                ? MediaQuery.of(context).size.width -
-                                    32 -
-                                    44 -
-                                    16 -
-                                    44 -
-                                    AppConstants.webMenuOpenedWidth
-                                : MediaQuery.of(context).size.width -
-                                    32 -
-                                    44 -
-                                    16 -
-                                    44,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    title.characters
-                                        .replaceAll(Characters(''),
-                                            Characters('\u{200B}'))
-                                        .toString(),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
-                                            color: isSelected
-                                                ? Theme.of(context).primaryColor
-                                                : AppColors.mainText),
-                                  ),
-                                ),
-                                DoctorRating(rating: rating),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            subtitle.isNotEmpty
-                                ? Text(
-                                    subtitle,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(color: AppColors.lightText),
-                                  )
-                                : const SizedBox(),
-                          ],
+                  Expanded(
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: isSelected
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).colorScheme.background,
+                          radius: radius + 4,
+                          child: CircleAvatar(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.background,
+                              radius: radius + 2,
+                              child: isFirstSymbolForIcon
+                                  ? CircleAvatar(
+                                      radius: radius,
+                                      backgroundColor: AppColors.mainBrand[50],
+                                      child: Text(title[0].toUpperCase(),
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'AquawaxPro',
+                                          )),
+                                    )
+                                  : customIcon),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 24.0),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      title.characters
+                                          .replaceAll(Characters(''),
+                                              Characters('\u{200B}'))
+                                          .toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      softWrap: true,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                              color: isSelected
+                                                  ? Theme.of(context)
+                                                      .primaryColor
+                                                  : AppColors.mainText),
+                                    ),
+                                  ),
+                                  DoctorRating(rating: rating),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              subtitle.isNotEmpty
+                                  ? Text(
+                                      subtitle,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      softWrap: true,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              color: AppColors.lightText),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   isRightArrow
                       ? SvgPicture.asset(
                           'assets/icons/subscribe/right_arrow_icon.svg')
