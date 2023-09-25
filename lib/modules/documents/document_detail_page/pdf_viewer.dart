@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/navigation/router.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:printing/printing.dart';
 
@@ -23,7 +24,11 @@ class PdfViewerWidget extends StatelessWidget {
   final String fileName;
 
   Future<Widget> openPDF(BuildContext context) async {
-    List<Image> imgs = <Image>[];
+    List<Widget> widgets = <Widget>[];
+
+    const Divider pageSeparator = Divider(
+      color: AppColors.lightText,
+    );
 
     // Retrieving style here so we won get 'context in async gap warning'
     final TextStyle? errTextStyle = Theme.of(context).textTheme.titleMedium;
@@ -39,16 +44,47 @@ class PdfViewerWidget extends StatelessWidget {
     }
 
     Uint8List pfdData = await file.readAsBytes();
-    await for (PdfRaster img in Printing.raster(pfdData)) {
-      imgs.add(Image.memory(await img.toPng()));
+    await for (PdfRaster img in Printing.raster(pfdData, dpi: 150)) {
+      Image finImage = Image.memory(
+        await img.toPng(),
+        isAntiAlias: true,
+        filterQuality: FilterQuality.high,
+      );
+
+      widgets.add(
+        GestureDetector(
+          onTap: () async => showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => InteractiveViewer(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                width: MediaQuery.of(context).size.width,
+                child: finImage,
+              ),
+            ),
+          ),
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.lightText,
+                  spreadRadius: 0.1,
+                  blurRadius: 1,
+                ),
+              ],
+            ),
+            child: finImage,
+          ),
+        ),
+      );
+      widgets.add(pageSeparator);
     }
-    return GestureDetector(
-      onTap: () {
-        context.router.push(PdfFileViewerRoute(
-            pdfUrl: pdfUrl, fileId: fileId, fileName: fileName));
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
       child: Column(
-        children: [...imgs],
+        children: [...widgets],
       ),
     );
   }

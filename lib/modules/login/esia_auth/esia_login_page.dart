@@ -32,7 +32,7 @@ class EsiaLoginPage extends StatefulWidget {
 class _EsiaLoginPageState extends State<EsiaLoginPage> {
   final String authorizationUrl = AppConstants.esiaOAuthPageURL;
 
-  late bool isHideWebView = false;
+  late bool isHideWebView = true;
   late WebViewController _webViewController;
 
   @override
@@ -124,9 +124,9 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             }
           },
           onPageFinished: (finish) {
-            setState(() {
-              isHideWebView = true;
-            });
+            // setState(() {
+            //   isHideWebView = true;
+            // });
             // Future.delayed(Duration(seconds: 1), () {
             //   getAuthEsiaTokenFromHTMLPage();
             // });
@@ -152,8 +152,13 @@ class _EsiaLoginPageState extends State<EsiaLoginPage> {
             return NavigationDecision.navigate;
           },
         ),
-        !isHideWebView
-            ? const Center(child: Center(child: CircularLoader(radius: 50)))
+        isHideWebView
+            ? Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration:
+                    const BoxDecoration(color: AppColors.mainAppBackground),
+                child: const Center(child: CircularLoader(radius: 50)))
             : const SizedBox(),
       ]),
     );
