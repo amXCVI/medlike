@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
-import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:printing/printing.dart';
@@ -24,8 +22,7 @@ class PdfViewerWidget extends StatelessWidget {
   final String fileName;
 
   Future<Widget> openPDF(BuildContext context) async {
-    List<Widget> widgets = <Widget>[];
-
+    final List<Widget> widgets = <Widget>[];
     const Divider pageSeparator = Divider(
       color: AppColors.lightText,
     );
@@ -53,15 +50,32 @@ class PdfViewerWidget extends StatelessWidget {
 
       widgets.add(
         GestureDetector(
-          onTap: () async => showDialog(
+          onTap: () => showDialog(
+            barrierColor: AppColors.mainAppBackground,
             context: context,
             barrierDismissible: true,
-            builder: (context) => InteractiveViewer(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                width: MediaQuery.of(context).size.width,
-                child: finImage,
-              ),
+            builder: (context) => Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                InteractiveViewer(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: finImage,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    alignment: AlignmentDirectional.topEnd,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: SvgPicture.asset(
+                        "assets/icons/app_bar/close_page_icon.svg"),
+                  ),
+                ),
+              ],
             ),
           ),
           child: Container(
