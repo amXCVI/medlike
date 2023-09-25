@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,22 +43,41 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDyFZ7wnuA8OBcq5GgD5bJvANEf2YpXxw8',
+    appId: '1:1083145779008:web:9911fb9cd9d55d9d742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    authDomain: 'z-clinic-flutter-project.firebaseapp.com',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
+    measurementId: 'G-2QW4MXF96V',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBxQuPP34JvaQNWnDbe0-a7dWSuAJ5ZGnU',
-    appId: '1:287955580453:android:9b53b01b573d22453cf1cc',
-    messagingSenderId: '287955580453',
-    projectId: 'z-clinic-46d2c',
-    storageBucket: 'z-clinic-46d2c.appspot.com',
+    apiKey: 'AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4',
+    appId: '1:1083145779008:android:487e71139690f03c742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDbV0y5JOVJYRm00A00rsVEZlC-SqiQZx0',
-    appId: '1:287955580453:ios:066476695468d5033cf1cc',
-    messagingSenderId: '287955580453',
-    projectId: 'z-clinic-46d2c',
-    storageBucket: 'z-clinic-46d2c.appspot.com',
-    androidClientId: '287955580453-em5f05oaqgvhrjqn5438rur34v4rifd9.apps.googleusercontent.com',
-    iosClientId: '287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
+    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
+    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
+    iosBundleId: 'com.example.medlike',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBAqkajsf-AA3mZ8iWInLMukxyLUCqSJcw',
+    appId: '1:1083145779008:ios:8ba106478404758c742ca5',
+    messagingSenderId: '1083145779008',
+    projectId: 'z-clinic-flutter-project',
+    storageBucket: 'z-clinic-flutter-project.appspot.com',
+    iosClientId: '1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com',
     iosBundleId: 'com.example.medlike',
   );
 }
