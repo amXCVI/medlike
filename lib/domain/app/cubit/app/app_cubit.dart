@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:medlike/utils/media/media_queryes.dart';
 
 part 'app_state.dart';
 
@@ -6,6 +8,17 @@ part 'app_state.dart';
 /// Чтобы не засорять UserCubit ими
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppState());
+
+  /// Закрывает менб слева при инициализации на мелких экранах. Чтобы оно не закрывало все на свете
+  void closeWebMenuInitial(BuildContext context) {
+    if (AppMediaQuery.isDesktop(context) || state.isOpenedWebMenu == true) {
+      return;
+    }
+
+    emit(state.copyWith(
+      isOpenedWebMenu: false,
+    ));
+  }
 
   /// Закрывает меню слева
   void closeWebMenu() {
