@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/data/models/user_models/user_models.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
-import 'package:medlike/modules/subscribe/services_list/services_list_skeleton.dart';
-import 'package:medlike/themes/colors.dart';
 import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/profiles_list/profiles_list.dart';
-import 'package:medlike/widgets/profiles_list/profiles_list_skeleton.dart';
-import 'package:skeletons/skeletons.dart';
 
 class ProfilesListPage extends StatefulWidget {
   const ProfilesListPage(
@@ -48,27 +43,32 @@ class _ProfilesListPageState extends State<ProfilesListPage> {
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state.getUserProfileStatus ==
-              GetUserProfilesStatusesList.success) {
-            if (state.userProfiles!.length == 1) {
-              widget.handleTapOnUserProfile(state.userProfiles![0].id, false);
-              return const SizedBox();
-            }
-            return ProfilesList(
-              profilesList: state.userProfiles as List<UserProfile>,
-              selectedUserId: widget.selectedId,
-              onRefreshData: _onRefreshData,
-              handleTapOnUserProfile: widget.handleTapOnUserProfile,
-            );
-          } else if (state.getUserProfileStatus ==
-              GetUserProfilesStatusesList.failure) {
-            return const Text('');
-          } else {
-            // return const ProfilesListSkeleton();
+              GetUserProfilesStatusesList.loading) {
             return const Center(
               child: CircularLoader(
                 radius: 50,
               ),
             );
+          } else if (state.getUserProfileStatus ==
+              GetUserProfilesStatusesList.failure) {
+            return Center(
+              child: Text(
+                "Не удалось загрузить пользователя!",
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            );
+          } else {
+            if (state.userProfiles?.length == 1) {
+              widget.handleTapOnUserProfile(state.userProfiles![0].id, true);
+              return const Text('');
+            } else {
+              return ProfilesList(
+                profilesList: state.userProfiles as List<UserProfile>,
+                selectedUserId: widget.selectedId,
+                onRefreshData: _onRefreshData,
+                handleTapOnUserProfile: widget.handleTapOnUserProfile,
+              );
+            }
           }
         },
       ),
