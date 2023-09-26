@@ -46,7 +46,7 @@ class MainMenuItem extends StatelessWidget {
           selectedTileColor: Theme.of(context).hoverColor,
           tileColor: Theme.of(context).colorScheme.background,
           contentPadding: ProjectDeterminer.getProjectType() == Projects.WEB
-              ? const EdgeInsets.symmetric(horizontal: 20, vertical: 8)
+              ? const EdgeInsets.symmetric(horizontal: 15, vertical: 8)
               : const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           onTap: () {
