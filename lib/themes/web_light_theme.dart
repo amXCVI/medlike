@@ -159,6 +159,7 @@ final webLightTheme = ThemeData(
 
   appBarTheme: const AppBarTheme(
     color: AppColors.mainAppBackground,
+    titleSpacing: 0,
   ),
   colorScheme: const ColorScheme(
     background: AppColors.mainAppBackground,

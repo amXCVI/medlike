@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/app/app_cubit.dart';
+import 'package:medlike/utils/media/media_queryes.dart';
 import 'package:medlike/widgets/user_profiles_web/user_profiles_web.dart';
 
 class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -41,8 +42,8 @@ class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               width: isOpenedMenuDrawer
-                  ? AppConstants.webMenuOpenedWidth - 16
-                  : AppConstants.webMenuClosedWidth - 16,
+                  ? AppConstants.webMenuOpenedWidth
+                  : AppConstants.webMenuClosedWidth,
               padding: EdgeInsets.symmetric(
                   vertical: 12, horizontal: isOpenedMenuDrawer ? 22 : 12),
               duration: const Duration(milliseconds: 500),
@@ -61,23 +62,37 @@ class UnAuthWebAppBar extends StatelessWidget implements PreferredSizeWidget {
             AnimatedContainer(
               width: isOpenedMenuDrawer
                   ? MediaQuery.of(context).size.width -
-                      AppConstants.webMenuOpenedWidth -
-                      16
+                      AppConstants.webMenuOpenedWidth
                   : MediaQuery.of(context).size.width -
-                      AppConstants.webMenuClosedWidth -
-                      16,
-              padding: EdgeInsets.symmetric(
-                  vertical: 0, horizontal: isOpenedMenuDrawer ? 22 : 12),
+                      AppConstants.webMenuClosedWidth,
               duration: const Duration(milliseconds: 500),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                      height: 38,
-                      child: SvgPicture.asset(
-                          'assets/images/clinic_logo_for_web.svg')),
-                  const Row(
-                    children: [UserProfilesWeb()],
+                  AppMediaQuery.isDesktop(context)
+                      ? Expanded(
+                          flex: 3,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                right: BorderSide(
+                                    color: Theme.of(context).dividerColor),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(
+                                top: 12, bottom: 12, left: 16),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/images/clinic_logo_for_web.svg'),
+                              ],
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                  const Expanded(
+                    flex: 2,
+                    child: UserProfilesWeb(),
                   ),
                 ],
               ),

@@ -39,26 +39,18 @@ class _UserProfilesWebState extends State<UserProfilesWeb> {
         return const SizedBox();
       }
 
-      return Container(
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(color: Theme.of(context).dividerColor),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          UserProfileItem(
+            userProfileDate: selectedUser,
+            isSelectedItem: false,
           ),
-        ),
-        width: 350,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            UserProfileItem(
-              userProfileDate: selectedUser,
-              isSelectedItem: false,
-            ),
-            UserProfilesListPopup(
-              userProfilesList: userState.userProfiles ?? [],
-              selectedUserProfileId: selectedUser.id,
-            ),
-          ],
-        ),
+          UserProfilesListPopup(
+            userProfilesList: userState.userProfiles ?? [],
+            selectedUserProfileId: selectedUser.id,
+          ),
+        ],
       );
     });
   }
