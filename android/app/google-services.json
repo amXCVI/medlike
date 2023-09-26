@@ -1,37 +1,37 @@
 {
   "project_info": {
-    "project_number": "1083145779008",
-    "project_id": "z-clinic-flutter-project",
-    "storage_bucket": "z-clinic-flutter-project.appspot.com"
+    "project_number": "287955580453",
+    "project_id": "z-clinic-46d2c",
+    "storage_bucket": "z-clinic-46d2c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1083145779008:android:4b162a5ecbd2536a742ca5",
+        "mobilesdk_app_id": "1:287955580453:android:9b53b01b573d22453cf1cc",
         "android_client_info": {
-          "package_name": "com.example.medlike"
+          "package_name": "com.medotrade.flutter.zclinic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+          "client_id": "287955580453-t6hajsrkdki0lmoftmu67h027q5pej4c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4"
+          "current_key": "AIzaSyBxQuPP34JvaQNWnDbe0-a7dWSuAJ5ZGnU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+              "client_id": "287955580453-t6hajsrkdki0lmoftmu67h027q5pej4c.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com",
+              "client_id": "287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.medlike"
@@ -43,31 +43,39 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1083145779008:android:487e71139690f03c742ca5",
+        "mobilesdk_app_id": "1:287955580453:android:8b77ee23cb93b2413cf1cc",
         "android_client_info": {
-          "package_name": "com.medotrade.flutter.zclinic"
+          "package_name": "ru.zapolarye.zclinic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+          "client_id": "287955580453-em5f05oaqgvhrjqn5438rur34v4rifd9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.zapolarye.zclinic",
+            "certificate_hash": "644f145d68a124660b47858c7470153c560dfbf0"
+          }
+        },
+        {
+          "client_id": "287955580453-t6hajsrkdki0lmoftmu67h027q5pej4c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBqIHlQlHTa4omDCLDIc4qZnW7RHhKw6Y4"
+          "current_key": "AIzaSyBxQuPP34JvaQNWnDbe0-a7dWSuAJ5ZGnU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1083145779008-aflhjoeh4ejfcnafavf8eafv3pfkjaku.apps.googleusercontent.com",
+              "client_id": "287955580453-t6hajsrkdki0lmoftmu67h027q5pej4c.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1083145779008-128t6iagq182gbf2k702uo0066ot8t50.apps.googleusercontent.com",
+              "client_id": "287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.medlike"
