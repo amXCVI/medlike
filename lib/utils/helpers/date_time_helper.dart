@@ -18,13 +18,16 @@ DateTime dateTimeToUTC(DateTime date, int timeZoneOffset) {
 /// Часовой пояс брать из UserSecureStorage
 String dateTimeToServerFormat(DateTime date, int timeZoneOffset) {
   Duration duration = Duration(hours: timeZoneOffset);
+  String finDate = '';
   if (duration.isNegative) {
-    return (DateFormat("yyyy-MM-ddTHH:mm:ss-").format(date) +
+    finDate = (DateFormat("yyyy-MM-ddTHH:mm:ss-").format(date) +
         "${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
   } else {
-    return (DateFormat("yyyy-MM-ddTHH:mm:ss+").format(date) +
+    finDate = (DateFormat("yyyy-MM-ddTHH:mm:ss+").format(date) +
         "${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
   }
+
+  return finDate;
 }
 
 /// Ф-я приводит даты к формату, принятому на сервере
@@ -88,15 +91,15 @@ DateTime getAppointmentTimeObject(DateTime dateTime, int timeZoneOffset,
 
 DateTime? getFromAppointment(String? message) {
   final parts = message?.split(',');
-  if((parts?.length ?? 0) > 1) {
-    try{
+  if ((parts?.length ?? 0) > 1) {
+    try {
       final dt = parts![1];
       final dateString = dt.split(" ")[1];
       DateFormat dateFormat = DateFormat("dd.MM.yyyy");
 
       final date = dateFormat.parse(dateString);
       return date;
-    } catch(err, stackTrace) {
+    } catch (err, stackTrace) {
       Sentry.captureException(err, stackTrace: stackTrace);
       return null;
     }
