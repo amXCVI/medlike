@@ -9,7 +9,9 @@ import 'package:medlike/data/repository/medcard_repository.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/domain/app/mediator/base_mediator.dart';
 import 'package:medlike/domain/app/mediator/user_mediator.dart';
+import 'package:medlike/utils/api/api_constants.dart';
 import 'package:medlike/utils/cache_manager/custom_cache_maneger.dart';
+import 'package:medlike/utils/helpers/getBlobPdfContent.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:mime/mime.dart';
@@ -293,5 +295,14 @@ class MedcardCubit extends MediatorCubit<MedcardState, UserMediatorEvent>
       addError(e);
       emit(state.copyWith(deletingUserFile: ''));
     }
+  }
+
+  /// открывает в новой вкладке pdf файлик медкарты
+  void openPdfFileInMedcard(String pdfId) async {
+    emit(state.copyWith(downloadingFileId: pdfId));
+    String pdfUrl =
+        '${ApiConstants.baseUrl}/api/v1.0/profile/mdoc/result/pdf?PrescId=$pdfId';
+    await openPdfInNewTab(pdfUrl);
+    emit(state.copyWith(downloadingFileId: ''));
   }
 }
