@@ -33,10 +33,21 @@ class PayedCardItem extends StatelessWidget {
                         .textTheme
                         .headlineSmall
                         ?.copyWith(fontSize: 12)),
-                Text(amount.toString(),
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.primary)),
+                Row(
+                  children: [
+                    Text(amount.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.primary)),
+                    SvgPicture.asset(
+                      "assets/icons/clinics/ic_attention_circle.svg",
+                      height: 12,
+                    )
+                  ],
+                )
               ],
             ),
           ],
