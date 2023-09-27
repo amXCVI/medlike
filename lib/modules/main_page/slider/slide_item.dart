@@ -48,6 +48,7 @@ class SlideItem extends StatelessWidget {
                       'Authorization': 'Bearer ${state.token}',
                     },
                     height: MediaQuery.of(context).size.width / 16 * 9,
+                    width: MediaQuery.of(context).size.width - 32 - 4,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       context.read<UserCubit>().saveAccessToken();
