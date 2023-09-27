@@ -72,7 +72,7 @@ class PdfViewerWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: SvgPicture.asset(
-                        "assets/icons/app_bar/close_page_icon.svg"),
+                        "assets/icons/subscribe/ic_close_tips_filled.svg"),
                   ),
                 ),
               ],
@@ -80,14 +80,9 @@ class PdfViewerWidget extends StatelessWidget {
           ),
           child: Container(
             margin: const EdgeInsets.all(5),
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.lightText,
-                  spreadRadius: 0.1,
-                  blurRadius: 1,
-                ),
-              ],
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: AppColors.lightText, style: BorderStyle.solid),
             ),
             child: finImage,
           ),
@@ -115,10 +110,9 @@ class PdfViewerWidget extends StatelessWidget {
         return const Padding(
           padding: EdgeInsets.all(100),
           child: Center(
-            child: CircularLoader(
-              radius: 50,
-            ),
-          ),
+              child: CircularLoader(
+            radius: 50,
+          )),
         );
       },
     );
