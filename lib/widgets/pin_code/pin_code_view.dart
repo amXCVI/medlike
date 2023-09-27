@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/modules/login/create_pin_code_page/pin_code_keyboard.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
-import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
-
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
 
@@ -43,7 +42,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   late bool isShowingBiometricModal = true;
   late bool isFaceId = false;
   final LocalAuthentication auth = LocalAuthentication();
-
+  bool isAwainting = false; //TODO:Change on false after debug
   @override
   void initState() {
     pointsArray = List<int>.from(initPointsArray);
@@ -92,6 +91,7 @@ class _PinCodeViewState extends State<PinCodeView> {
   }
 
   void onItemInput(PinCodeKeyboardItem e) async {
+    if (isAwainting) return;
     // Check if using biometric input
     if (e.buttonType == PinCodeKeyboardTypes.biometric &&
         isSupportedAndEnabledBiometric) {
@@ -121,11 +121,15 @@ class _PinCodeViewState extends State<PinCodeView> {
     //Check last time if we input the last value
     firstEpmtyIndex = pointsArray.indexOf(-1);
     if (firstEpmtyIndex == -1) {
+      setState(() {
+        isAwainting = true;
+      });
       bool res = await widget.setPinCode(pointsArray);
       if (!res) {
         HapticFeedback.heavyImpact();
         setState(() {
           pointsArray.setAll(0, initPointsArray);
+          isAwainting = false;
         });
       }
     }
@@ -133,6 +137,7 @@ class _PinCodeViewState extends State<PinCodeView> {
 
   Future<void> _authenticate() async {
     bool authenticated = false;
+
     try {
       authenticated = await auth.authenticate(
         localizedReason: 'Прикоснитесь к сенсору устройства',
@@ -160,6 +165,9 @@ class _PinCodeViewState extends State<PinCodeView> {
     }
 
     if (authenticated) {
+      setState(() {
+        isAwainting = true;
+      });
       onSuccessAuthBiometric();
     } else {
       onCancelBiometricAuthMethod();
@@ -212,16 +220,23 @@ class _PinCodeViewState extends State<PinCodeView> {
                           .map((e) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                child: Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: e == -1
-                                        ? AppColors.circleBgFirst
-                                        : AppColors.mainBrandColor,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
+                                child: isAwainting
+                                    ? Lottie.asset(
+                                        "assets/animations/pulsing-dot-lottie.json",
+                                        repeat: true,
+                                        width: 20,
+                                        height: 20,
+                                      )
+                                    : Container(
+                                        width: 10,
+                                        height: 10,
+                                        decoration: BoxDecoration(
+                                          color: e == -1
+                                              ? AppColors.circleBgFirst
+                                              : AppColors.mainBrandColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
                               ))
                           .toList(),
                     ],
@@ -232,7 +247,7 @@ class _PinCodeViewState extends State<PinCodeView> {
           ),
           Material(
             color: Theme.of(context).colorScheme.background,
-            child: SizedBox(
+            child: Container(
               width: 300,
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -244,7 +259,8 @@ class _PinCodeViewState extends State<PinCodeView> {
                 children: [
                   ...keyboardList
                       .map((item) => InkWell(
-                            onTap: () => {onItemInput(item)},
+                            onTap:
+                                isAwainting ? null : () => {onItemInput(item)},
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(100)),
                             child: Padding(

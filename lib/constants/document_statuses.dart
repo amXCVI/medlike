@@ -6,6 +6,8 @@ class DocumentStatuses {
       statusName: 'Не подписан',
       filterValue: 'Не подписан',
       isSubscribed: false,
+      isSignByPatient: false,
+      isSignByEmployee: false,
     ),
     StatusItem(
       statusId: 2,
@@ -13,6 +15,8 @@ class DocumentStatuses {
       statusName: 'Подписан клиникой',
       filterValue: 'Подписан',
       isSubscribed: false,
+      isSignByPatient: false,
+      isSignByEmployee: true,
     ),
     StatusItem(
       statusId: 3,
@@ -20,6 +24,8 @@ class DocumentStatuses {
       statusName: 'Подписан пациентом',
       filterValue: 'Подписан',
       isSubscribed: true,
+      isSignByPatient: true,
+      isSignByEmployee: false,
     ),
     StatusItem(
       statusId: 4,
@@ -27,13 +33,19 @@ class DocumentStatuses {
       statusName: 'Подписан пациентом и клиникой',
       filterValue: 'Подписан',
       isSubscribed: true,
+      isSignByPatient: true,
+      isSignByEmployee: true,
     ),
   ];
 
-  static StatusItem getStatus(int statusId) {
+  static StatusItem getStatus({
+    required bool isSignByPatient,
+    required bool isSignByClinic,
+  }) {
     try {
-      StatusItem findStatus = statusesList
-          .firstWhere((categoryType) => categoryType.statusId == statusId);
+      StatusItem findStatus = statusesList.firstWhere((e) =>
+          e.isSignByPatient == isSignByPatient &&
+          e.isSignByEmployee == isSignByClinic);
       return findStatus;
     } catch (err) {
       return StatusItem(
@@ -42,6 +54,8 @@ class DocumentStatuses {
         statusName: 'Статус неизвестен',
         filterValue: 'Не подписан',
         isSubscribed: false,
+        isSignByPatient: false,
+        isSignByEmployee: false,
       );
     }
   }
@@ -55,6 +69,8 @@ class StatusItem {
   final String statusName;
   final String filterValue;
   final bool isSubscribed;
+  final bool isSignByPatient;
+  final bool isSignByEmployee;
 
   StatusItem({
     required this.statusId,
@@ -62,5 +78,7 @@ class StatusItem {
     required this.id,
     required this.filterValue,
     required this.isSubscribed,
+    required this.isSignByPatient,
+    required this.isSignByEmployee,
   });
 }

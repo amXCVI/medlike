@@ -10,6 +10,7 @@ import 'package:medlike/modules/appointments/appointment_detail/appointment_deta
 import 'package:medlike/modules/appointments/appointments_page.dart';
 import 'package:medlike/modules/appointments/feedback/feedback_page.dart';
 import 'package:medlike/modules/documents/document_detail_page/document_page.dart';
+import 'package:medlike/modules/documents/document_detail_page/full_screen_pdf_viewer_page.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_page.dart';
 import 'package:medlike/modules/main_page/splash_page.dart';
 import 'package:medlike/modules/settings/faq/faq_item_page/faq_item_page.dart';
@@ -31,6 +32,7 @@ import 'package:medlike/modules/login/unauth_support/unauth_support_page.dart';
 import 'package:medlike/modules/main_page/main_page.dart';
 import 'package:medlike/modules/medcard/files/files_page.dart';
 import 'package:medlike/modules/medcard/medcard_docs_list/medcard_page.dart';
+import 'package:medlike/modules/medcard/pdf_file_viewer/pdf_file_viewer.dart';
 import 'package:medlike/modules/medcard/profiles_list/profiles_list_page.dart';
 import 'package:medlike/modules/require_update_app/require_update_app_page.dart';
 import 'package:medlike/modules/settings/agreements/agreements_page.dart';
@@ -183,6 +185,10 @@ class AppRouter extends _$AppRouter {
             path: AppRoutes.medcardUserFilesList,
             page: FilesRoute.page,
             guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.medcardPDFViewer,
+            page: PdfFileViewerRoute.page,
+            guards: [CheckIsAuthUser()]),
 
         /// Настройки
         AdaptiveRoute(
@@ -246,7 +252,7 @@ class AppRouter extends _$AppRouter {
             page: DiaryAddRoute.page,
             guards: [CheckIsAuthUser()]),
 
-        /// Документы
+        /// Мои документы
         AdaptiveRoute(
             path: AppRoutes.documents,
             page: DocumentsRoute.page,
@@ -254,6 +260,10 @@ class AppRouter extends _$AppRouter {
         AdaptiveRoute(
             path: AppRoutes.documentDetail,
             page: DocumentRoute.page,
+            guards: [CheckIsAuthUser()]),
+        AdaptiveRoute(
+            path: AppRoutes.fullScreenDocument,
+            page: FullScreenPdfViewerRoute.page,
             guards: [CheckIsAuthUser()]),
 
         /// FAQ

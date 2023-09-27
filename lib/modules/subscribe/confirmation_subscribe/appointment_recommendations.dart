@@ -32,6 +32,7 @@ class AppointmentRecommendations extends StatelessWidget {
                     ));
           },
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 14),
               Center(

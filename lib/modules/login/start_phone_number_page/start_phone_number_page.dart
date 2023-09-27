@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/login/auth_skeletons/default_auth_skeleton.dart';
 import 'package:medlike/modules/login/bottom_sheets/delete_account_bottom_sheet.dart';
 import 'package:medlike/modules/login/bottom_sheets/first_auth_app_bottom_sheet.dart';
 import 'package:medlike/modules/login/start_phone_number_page/phone_number_bottom_navigator.dart';
@@ -12,6 +13,7 @@ import 'package:medlike/modules/login/web_auth_page/web_auth_page.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/utils/helpers/project_determiner.dart';
+import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/unauth_support_button/unauth_support_button.dart';
@@ -36,6 +38,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
   void initState() {
     getUserPhoneNumber();
     isShowingDeleteProfileAlert = widget.isDeletingProfile;
+
     super.initState();
   }
 
@@ -52,6 +55,19 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
         isShowingFirstAuthAppAlert = false;
       });
     }
+  }
+
+  Widget _displaySkeleton(BuildContext context, UserState state) {
+    if (state.checkUserAccountStatus == CheckUserAccountStatuses.loading ||
+        state.checkUserAccountStatus == CheckUserAccountStatuses.success) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(color: AppColors.mainAppBackground),
+        child: const DefaultAuthSkeleton(),
+      );
+    }
+    return const SizedBox();
   }
 
   @override
@@ -112,7 +128,18 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
               onPressedAppLogo: () {},
               actions: const [UnauthSupportButton()],
               bottomNavigationBar: const LoginPageBottomNavigationBar(),
-              child: const StartPhoneNumberView(),
+              child: BlocBuilder<UserCubit, UserState>(
+                  buildWhen: (previous, current) =>
+                  current.checkUserAccountStatus !=
+                      previous.checkUserAccountStatus,
+                  builder: (context, state) {
+                    return Stack(
+                      children: [
+                        const StartPhoneNumberView(),
+                        _displaySkeleton(context, state),
+                      ],
+                    );
+                  }),
             ),
           ),
         ),

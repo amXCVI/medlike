@@ -157,15 +157,11 @@ class _PopupState extends State<Popup> with SingleTickerProviderStateMixin {
                         borderRadius: widget._borderRadius,
                       ),
                       child: SingleChildScrollView(
-                        child: Text(
-                          widget._text,
-                          style: !_loaded
-                              ? const TextStyle(color: Colors.transparent)
-                              : widget._textStyle,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                      )),
+                          child: RichText(
+                        maxLines: 2,
+                        text: TextSpan(
+                            text: widget._text, style: widget._textStyle),
+                      ))),
                 )
               ],
             ),

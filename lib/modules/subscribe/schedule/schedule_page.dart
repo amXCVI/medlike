@@ -147,89 +147,96 @@ class _SchedulePageState extends State<SchedulePage> {
   Widget build(BuildContext context) {
     getDoctorInfo(context);
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      bottomNavigationBar: const BottomBar(),
-      body: BlocBuilder<SubscribeCubit, SubscribeState>(
-        builder: (context, state) {
-          return CustomScrollView(
-            slivers: <Widget>[
-              ScheduleAppBar(
-                title: widget.pageTitle,
-                isChildrenPage: true,
-                isDoctorAppBar: widget.doctorId != null,
-                actions: widget.doctorId != null
-                    ? [
-                        FavoriteDoctorButton(
-                          userId: widget.userId,
-                          buildingId: widget.buildingId,
-                          clinicId: widget.clinicId,
-                          doctorId: widget.doctorId as String,
-                          categoryTypeId: widget.categoryTypeId,
-                          isFavorite: state.selectedDoctor != null
-                              ? state.selectedDoctor!.isFavorite
-                              : false,
-                        )
-                      ]
-                    : [],
-                backgroundImageUrl: state.selectedDoctor != null &&
-                        state.selectedDoctor!.imageId != null
-                    ? '${ApiConstants.baseUrl}/api/v1.0/doctors/image/${state.selectedDoctor?.imageId}?isThumbnail=false'
-                    : null,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (_, int index) {
-                    return Column(
-                      children: [
-                        widget.doctorId != null
-                            ? const DoctorInfoHeader()
-                            : const SizedBox(),
-                        // Смотрим, если это не кабинет и на врача есть описание или отзывы
-                        // Тогда рисуем переключатель
-                        widget.doctorId != null &&
-                                state.selectedDoctorFullData != null &&
-                                (state.selectedDoctorFullData!.shortinfo !=
-                                        null ||
-                                    state.selectedDoctorFullData!.reviews
-                                        .isNotEmpty)
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 24, horizontal: 18),
-                                child: ToggleButton(
-                                  itemsList: togglePageValuesList
-                                      .map((e) => e.label)
-                                      .toList(),
-                                  setValue: setTogglePageValue,
-                                  value: togglePageValue.label,
-                                ),
-                              )
-                            : const SizedBox(),
-                        togglePageValue.id == togglePageValuesList[0].id
-                            ? ScheduleSubpage(
-                                userId: widget.userId,
-                                buildingId: widget.buildingId,
-                                clinicId: widget.clinicId,
-                                categoryTypeId: widget.categoryTypeId,
-                                isAny: widget.isAny,
-                                doctorId: widget.doctorId,
-                                specialisationId: widget.specialisationId,
-                                researchIds: widget.researchIds,
-                                cabinet: widget.cabinetId,
-                                getCalendarList: _getCalendarList,
-                                getCellsList: _getCellsList,
-                                setSelectedDate: _setSelectedDate,
-                              )
-                            : const DoctorSubpage(),
-                      ],
-                    );
-                  },
-                  childCount: 1,
+    return WillPopScope(
+      onWillPop: () async {
+        context.read<SubscribeCubit>().clearSelectedDoctor();
+        Navigator.pop(context);
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        bottomNavigationBar: const BottomBar(),
+        body: BlocBuilder<SubscribeCubit, SubscribeState>(
+          builder: (context, state) {
+            return CustomScrollView(
+              slivers: <Widget>[
+                ScheduleAppBar(
+                  title: widget.pageTitle,
+                  isChildrenPage: true,
+                  isDoctorAppBar: widget.doctorId != null,
+                  actions: widget.doctorId != null
+                      ? [
+                          FavoriteDoctorButton(
+                            userId: widget.userId,
+                            buildingId: widget.buildingId,
+                            clinicId: widget.clinicId,
+                            doctorId: widget.doctorId as String,
+                            categoryTypeId: widget.categoryTypeId,
+                            isFavorite: state.selectedDoctor != null
+                                ? state.selectedDoctor!.isFavorite
+                                : false,
+                          )
+                        ]
+                      : [],
+                  backgroundImageUrl: state.selectedDoctor != null &&
+                          state.selectedDoctor!.imageId != null
+                      ? '${ApiConstants.baseUrl}/api/v1.0/doctors/image/${state.selectedDoctor?.imageId}?isThumbnail=false'
+                      : null,
                 ),
-              ),
-            ],
-          );
-        },
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (_, int index) {
+                      return Column(
+                        children: [
+                          widget.doctorId != null
+                              ? const DoctorInfoHeader()
+                              : const SizedBox(),
+                          // Смотрим, если это не кабинет и на врача есть описание или отзывы
+                          // Тогда рисуем переключатель
+                          widget.doctorId != null &&
+                                  state.selectedDoctorFullData != null &&
+                                  (state.selectedDoctorFullData!.shortinfo !=
+                                          null ||
+                                      state.selectedDoctorFullData!.reviews
+                                          .isNotEmpty)
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 24, horizontal: 18),
+                                  child: ToggleButton(
+                                    itemsList: togglePageValuesList
+                                        .map((e) => e.label)
+                                        .toList(),
+                                    setValue: setTogglePageValue,
+                                    value: togglePageValue.label,
+                                  ),
+                                )
+                              : const SizedBox(),
+                          togglePageValue.id == togglePageValuesList[0].id
+                              ? ScheduleSubpage(
+                                  userId: widget.userId,
+                                  buildingId: widget.buildingId,
+                                  clinicId: widget.clinicId,
+                                  categoryTypeId: widget.categoryTypeId,
+                                  isAny: widget.isAny,
+                                  doctorId: widget.doctorId,
+                                  specialisationId: widget.specialisationId,
+                                  researchIds: widget.researchIds,
+                                  cabinet: widget.cabinetId,
+                                  getCalendarList: _getCalendarList,
+                                  getCellsList: _getCellsList,
+                                  setSelectedDate: _setSelectedDate,
+                                )
+                              : const DoctorSubpage(),
+                        ],
+                      );
+                    },
+                    childCount: 1,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

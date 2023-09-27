@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_list.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_list_filter.dart';
 import 'package:medlike/modules/documents/documents_list_page/selected_filters_widget.dart';
+import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 
@@ -62,46 +63,55 @@ class _DocumentsPageState extends State<DocumentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultScaffold(
-      appBarTitle: 'Мои документы',
-      isSearch: true,
-      filteringFunction: _filteringDocuments,
-      appBar: MedcardAppBar(
-        title: 'Мои документы',
+    return WillPopScope(
+      onWillPop: () async {
+        context.router.replaceAll([const MainRoute()]);
+        return false;
+      },
+      child: DefaultScaffold(
+        appBarTitle: 'Мои документы',
+        isSearch: true,
         filteringFunction: _filteringDocuments,
-        isChildrenPage: true,
-        handleTapOnFiltersButton: handleTapOnFiltersButton,
-        handleResetFilters: handleResetFilters,
-        isFilteringMode: isFilteringMode,
-      ),
-      widgetOverBody: isFilteringMode
-          ? DocumentsFiltersWidget(key: widgetOverBodyGlobalKey)
-          : GestureDetector(
-              onTap: () {
-                handleTapOnFiltersButton();
-                ModalRoute.of(context)
-                    ?.addLocalHistoryEntry(LocalHistoryEntry());
-              },
-              child: SelectedFiltersWidget(
-                  key: widgetOverBodyGlobalKey,
-                  isShowingWidget: isShowingFilters && !isFilteringMode),
-            ),
-      widgetOverBodyGlobalKey:
-          isShowingFilters || isFilteringMode ? widgetOverBodyGlobalKey : null,
-      child: BlocBuilder<DocumentsCubit, DocumentsState>(
-        builder: (context, state) {
-          if (state.getDocumentsListStatus == GetDocumentsListStatuses.failed) {
-            return const Text('');
-          } else if (state.getDocumentsListStatus ==
-              GetDocumentsListStatuses.success) {
-            return DocumentsList(
-              documentsList: state.filteredDocumentsList as List<DocumentModel>,
-              onRefreshData: _onLoadDada,
-            );
-          } else {
-            return const DocumentsListSkeleton();
-          }
-        },
+        appBar: MedcardAppBar(
+          title: 'Мои документы',
+          filteringFunction: _filteringDocuments,
+          isChildrenPage: true,
+          handleTapOnFiltersButton: handleTapOnFiltersButton,
+          handleResetFilters: handleResetFilters,
+          isFilteringMode: isFilteringMode,
+        ),
+        widgetOverBody: isFilteringMode
+            ? DocumentsFiltersWidget(key: widgetOverBodyGlobalKey)
+            : GestureDetector(
+                onTap: () {
+                  handleTapOnFiltersButton();
+                  ModalRoute.of(context)
+                      ?.addLocalHistoryEntry(LocalHistoryEntry());
+                },
+                child: SelectedFiltersWidget(
+                    key: widgetOverBodyGlobalKey,
+                    isShowingWidget: isShowingFilters && !isFilteringMode),
+              ),
+        widgetOverBodyGlobalKey: isShowingFilters || isFilteringMode
+            ? widgetOverBodyGlobalKey
+            : null,
+        child: BlocBuilder<DocumentsCubit, DocumentsState>(
+          builder: (context, state) {
+            if (state.getDocumentsListStatus ==
+                GetDocumentsListStatuses.failed) {
+              return const Text('');
+            } else if (state.getDocumentsListStatus ==
+                GetDocumentsListStatuses.success) {
+              return DocumentsList(
+                documentsList:
+                    state.filteredDocumentsList as List<DocumentModel>,
+                onRefreshData: _onLoadDada,
+              );
+            } else {
+              return const DocumentsListSkeleton();
+            }
+          },
+        ),
       ),
     );
   }

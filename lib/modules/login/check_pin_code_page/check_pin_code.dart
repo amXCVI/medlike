@@ -5,7 +5,6 @@ import 'package:medlike/constants/app_constants.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
 import 'package:medlike/navigation/guards.dart';
 import 'package:medlike/navigation/router.dart';
-import 'package:medlike/modules/login/biometric_authentication/local_auth_service.dart';
 import 'package:medlike/utils/helpers/resume_helper.dart';
 import 'package:medlike/utils/notifications/push_navigation_service.dart';
 import 'package:medlike/utils/user_secure_storage/user_secure_storage.dart';
@@ -36,7 +35,10 @@ class _CheckPinCodeState extends State<CheckPinCode> {
     });
     if (result) {
       context.read<UserCubit>().signInBiometric();
-      context.router.replaceAll([const MainRoute()]);
+      context
+          .read<UserCubit>()
+          .getUserProfiles(false)
+          .then((profiles) => context.router.replaceAll([const MainRoute()]));
     }
   }
 
@@ -82,9 +84,11 @@ class _CheckPinCodeState extends State<CheckPinCode> {
   @override
   Widget build(BuildContext context) {
     Future<bool> _checkPinCode(List<int> pinCode) async {
-      bool isSuccess = await context.read<UserCubit>().checkPinCodeToStorage(
+      UserCubit userCubit = context.read<UserCubit>();
+      bool isSuccess = await userCubit.checkPinCodeToStorage(
           pinCode, AppConstants.countLoginAttemps - countAttempts - 1);
       if (isSuccess) {
+        await userCubit.getUserProfiles(false);
         if (await UserSecureStorage.getField(
                 AppConstants.isAcceptedAgreements) ==
             'true') {
@@ -102,7 +106,7 @@ class _CheckPinCodeState extends State<CheckPinCode> {
         return true;
       } else {
         if (countAttempts + 1 == AppConstants.countLoginAttemps) {
-          context.read<UserCubit>().forceLogout();
+          userCubit.forceLogout();
           context.router.replaceAll([StartPhoneNumberRoute()]);
           return false;
         }

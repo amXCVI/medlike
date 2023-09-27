@@ -70,6 +70,11 @@ class UnauthSupportForm extends StatelessWidget {
                       if (!regex.hasMatch(value!) ||
                           value == null ||
                           value.isEmpty) {
+                        // Focusing to the top of the context while could
+                        // Equivalent of scrolling to the top of view
+                        while (FocusScope.of(context)
+                            .focusInDirection(TraversalDirection.up)) {}
+
                         return 'Заполните обязательное поле';
                       } else {
                         return null;

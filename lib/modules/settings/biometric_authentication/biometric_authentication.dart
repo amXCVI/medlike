@@ -29,8 +29,8 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
 
   @override
   void initState() {
-    super.initState();
     initBiometricValue();
+    super.initState();
   }
 
   void initBiometricValue() async {
@@ -98,11 +98,7 @@ class _BiometricAuthenticationState extends State<BiometricAuthentication> {
 
   void _onChanged(bool value) {
     if (!isBiometricAuthenticate) {
-      AppSettings.openAppSettings(
-          type: Platform.isAndroid
-              ? AppSettingsType.lockAndPassword
-              : AppSettingsType.security,
-          asAnotherTask: false);
+      AppSettings.openAppSettings(type: AppSettingsType.device);
     }
 
     if (value) {

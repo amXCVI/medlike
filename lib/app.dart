@@ -120,7 +120,7 @@ class App extends StatelessWidget {
       BlocProvider(create: (context) => FAQCubit(FAQRepository(), mediator)),
       BlocProvider(create: (context) => PromptCubit()),
       BlocProvider(create: (context) => AppCubit()),
-      BlocProvider(create: (context) => TourCubit()..fetchStatus())
+      BlocProvider(create: (context) => TourCubit()..fetchStatus()),
     ], child: app);
   }
 }

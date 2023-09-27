@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import './popup.dart';
 
 class TourTooltip {
-
   /// Just a flag so we won't display more then 1 popup at the time
   static bool _isOnScreen = false;
 
@@ -29,10 +26,12 @@ class TourTooltip {
       double? width,
       Function? onDismiss,
       Offset? offset}) async {
-    // Не рисуем, если какой-то popup уже отрисован и если наш виджет всё ещё отрисован
-    if(_isOnScreen || widgetKey.currentContext == null) return;
+    //Проверяем есть ли виджет на экране в данный момент(Т.К. при блокировке экрана - не меняет обратно)
+    _isOnScreen = widgetKey.currentContext == null;
+    // Не рисуем, если какой-то popup уже отрисован или если наш виджет не отрисован
+    if (_isOnScreen || widgetKey.currentContext == null) return;
     // Проверяем - находится ли цель нашего popup'a наверху отрисовки(Стэка)
-    if(!ModalRoute.of(context)!.isCurrent) return;
+    if (!ModalRoute.of(context)!.isCurrent) return;
     _isOnScreen = true;
     await showDialog(
         barrierColor: Colors.transparent,

@@ -47,16 +47,6 @@ class _CabinetFindImageState extends State<CabinetFindImage>
           heightFactor: 10,
           child: CircularProgressIndicator(),
         ),
-        // onFetchCompleted: () {
-        //   final Map<TourChecked, bool>? tourState =
-        //       context.read<TourCubit>().state.tourChecked;
-        //   if (!(tourState?[TourChecked.gifReload] ?? false)) {
-        //     TourTooltip.of(context).create(
-        //         "Нажмите чтобы перезапустить анимацию", _gifKey,
-        //         onDismiss: () =>
-        //             context.read<TourCubit>().checkItem(TourChecked.gifReload));
-        //   }
-        // },
       );
 
   @override

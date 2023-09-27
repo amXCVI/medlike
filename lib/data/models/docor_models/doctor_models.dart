@@ -70,8 +70,8 @@ class AvailableDoctor with _$AvailableDoctor {
     required String? shortinfo,
     required String? comment,
     required String? experience,
-    required num rateAsSotr,
-    required num rateAsUser,
+    required num? rateAsSotr,
+    required num? rateAsUser,
     @Default(false) bool isFavorite,
   }) = _AvailableDoctor;
 

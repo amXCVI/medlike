@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:medlike/constants/document_statuses.dart';
 import 'package:medlike/data/models/document_models/document_models.dart';
+import 'package:medlike/modules/documents/get_last_date.dart';
 import 'package:medlike/themes/colors.dart';
 
 class DocumentItem extends StatelessWidget {
@@ -45,7 +46,7 @@ class DocumentItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            documentItem.documentName,
+                            documentItem.name,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             softWrap: true,
@@ -61,8 +62,10 @@ class DocumentItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      DocumentStatuses.getStatus(documentItem.status)
-                          .statusName,
+                      DocumentStatuses.getStatus(
+                        isSignByPatient: documentItem.isSignByPatient,
+                        isSignByClinic: documentItem.isSignByClinic,
+                      ).statusName,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
@@ -75,7 +78,7 @@ class DocumentItem extends StatelessWidget {
                         SvgPicture.asset('assets/icons/appointments/solid.svg'),
                         const SizedBox(width: 8.0),
                         Expanded(
-                          child: Text(documentItem.clinicAddress,
+                          child: Text(documentItem.lpu.address,
                               overflow: TextOverflow.fade,
                               maxLines: 2,
                               softWrap: true,
@@ -86,7 +89,8 @@ class DocumentItem extends StatelessWidget {
                     const SizedBox(height: 12.0),
                     Row(
                       children: [
-                        RichText(
+                        documentItem.updatedAt != null
+                            ? RichText(
                           text: WidgetSpan(
                             child: Container(
                               decoration: BoxDecoration(
@@ -99,15 +103,23 @@ class DocumentItem extends StatelessWidget {
                                   SvgPicture.asset(
                                       'assets/icons/appointments/clock.svg'),
                                   const SizedBox(width: 8.0),
-                                  Text(DateFormat('HH:mm DD.MM.yy')
-                                      .format(documentItem.documentCreateDate)),
+                                  Text(DateFormat('HH:mm dd.MM.yy')
+                                      .format(getLastDate(
+                                    dateOne: documentItem.updatedAt,
+                                    dateTwo:
+                                    documentItem.signedByEmployeeAt,
+                                    dateThree:
+                                    documentItem.signedByPatientAt,
+                                  ))),
                                 ],
                               ),
                             ),
                           ),
-                        ),
+                        )
+                            : const SizedBox(),
                         const SizedBox(width: 8.0),
-                        RichText(
+                        documentItem.patient != null
+                            ? RichText(
                           text: WidgetSpan(
                             child: Container(
                               decoration: BoxDecoration(
@@ -120,12 +132,14 @@ class DocumentItem extends StatelessWidget {
                                   SvgPicture.asset(
                                       'assets/icons/appointments/profile.svg'),
                                   const SizedBox(width: 8.0),
-                                  Text(documentItem.userName),
+                                  Text(
+                                      '${documentItem.patient!.firstname} ${documentItem.patient!.lastname[0]}.'),
                                 ],
                               ),
                             ),
                           ),
-                        ),
+                        )
+                            : const SizedBox(),
                       ],
                     ),
                   ],

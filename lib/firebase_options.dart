@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '287955580453',
     projectId: 'z-clinic-46d2c',
     storageBucket: 'z-clinic-46d2c.appspot.com',
-    androidClientId: '287955580453-em5f05oaqgvhrjqn5438rur34v4rifd9.apps.googleusercontent.com',
-    iosClientId: '287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com',
+    androidClientId:
+        '287955580453-em5f05oaqgvhrjqn5438rur34v4rifd9.apps.googleusercontent.com',
+    iosClientId:
+        '287955580453-3nlefg1uhj7p1oulg1gpltsg3fu9n17b.apps.googleusercontent.com',
     iosBundleId: 'com.example.medlike',
   );
 }

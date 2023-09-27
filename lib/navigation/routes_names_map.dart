@@ -30,6 +30,7 @@ class AppRoutes {
   static const medcard = '/medcard';
   static const medcardFilesList = '/medcard_files_list';
   static const medcardUserFilesList = '/medcard_user_files_list';
+  static const medcardPDFViewer = '/medcard_pdf_file_viewer';
   static const healthProfiles = '/health_profiles';
   static const healthProfilesForMain = '/health_profiles_for_main';
   static const health = '/health';
@@ -38,6 +39,7 @@ class AppRoutes {
   static const healthFilters = '/health_filters';
   static const documents = '/documents';
   static const documentDetail = '/document_detail';
+  static const fullScreenDocument = '/document_full_screen';
   static const clinicInfo = '/clinic_info';
   static const clinicInfoForDetails = '/clinic_info_for_details';
   static const clinicInfoForMain = '/clinic_info_for_main';

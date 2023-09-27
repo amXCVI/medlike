@@ -184,6 +184,7 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
           token: response.signinModel?.token,
           refreshToken: response.signinModel?.refreshToken,
           tryCount: 5,
+          esiaAuthToken: esiaToken,
         ));
         getUserProfiles(true).then((value) {
           // Сохраняем номер первого из профилей как номер владельца аккаунта. Сомнительно.
@@ -323,8 +324,10 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
     emit(state.copyWith(
       authStatus: UserAuthStatuses.unAuth,
       authScreen: UserAuthScreens.inputPhone,
+      checkUserAccountStatus: CheckUserAccountStatuses.initial,
       userProfiles: null,
       selectedUserId: null,
+      esiaAuthToken: '',
     ));
   }
 
@@ -638,6 +641,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       );
 
       if (response.found != true) {
+        emit(state.copyWith(
+          checkUserAccountStatus: CheckUserAccountStatuses.failed,
+        ));
         return const CheckUserAccountResponse(
             found: false,
             message: 'Не найден пользователь с введенным номером телефона');
@@ -659,6 +665,9 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
         return const CheckUserAccountResponse(
             found: false, message: 'Ошибка соединения с сервером');
       }
+      emit(state.copyWith(
+        checkUserAccountStatus: CheckUserAccountStatuses.failed,
+      ));
       return CheckUserAccountResponse.fromJson(e.response?.data);
     } catch (e) {
       emit(state.copyWith(
@@ -1018,6 +1027,29 @@ class UserCubit extends MediatorCubit<UserState, UserMediatorEvent> {
       ));
       addError(e);
       rethrow;
+    }
+  }
+
+  /// Возвращает токен есиа
+  String getEsiaToken() {
+    try {
+      String esiaToken = state.esiaAuthToken!;
+      return esiaToken;
+    } catch (err) {
+      return '';
+    }
+  }
+
+  /// Возвращает id первого  в осписке профиля
+  String getFirstProfile() {
+    try {
+      String userProfileId =
+          (state.userProfiles != null && state.userProfiles!.isNotEmpty)
+              ? state.userProfiles![0].id
+              : '';
+      return userProfileId;
+    } catch (err) {
+      return '';
     }
   }
 

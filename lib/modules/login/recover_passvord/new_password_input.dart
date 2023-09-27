@@ -9,12 +9,12 @@ import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 
 class NewPasswordInput extends StatefulWidget {
-  const NewPasswordInput({
-    Key? key,
-    required this.token,
-    required this.phoneNumberFromState,
-    required this.onAuth
-  }) : super(key: key);
+  const NewPasswordInput(
+      {Key? key,
+      required this.token,
+      required this.phoneNumberFromState,
+      required this.onAuth})
+      : super(key: key);
 
   final String token;
   final String phoneNumberFromState;
@@ -45,6 +45,10 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
   }
 
   bool validatePassword(String value) {
+    /// для medlike
+    return value.length == 5;
+
+    /// для zClinic
     RegExp regex = RegExp(
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,16}$');
     return regex.hasMatch(value);
@@ -103,7 +107,6 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
               userName: phoneString,
               newPassword: _password,
             );
-
       } else {
         await context.read<UserCubit>().resetPassword(
               phoneNumber: phoneString,
@@ -140,15 +143,13 @@ class _NewPasswordInputState extends State<NewPasswordInput> {
           context.router.replaceAll([StartPhoneNumberRoute()]);
         }
 
-        if (state.resetPasswordStatus == ResetPasswordStatuses.success
-          && context.router.current.name != CreatePinCodeRoute.name
-        ) {
+        if (state.resetPasswordStatus == ResetPasswordStatuses.success &&
+            context.router.current.name != CreatePinCodeRoute.name) {
           context.router.push(CreatePinCodeRoute());
         }
 
-        if (state.changePasswordStatus == ChangePasswordStatuses.success
-          && context.router.current.name != SettingsRoute.name
-        ) {
+        if (state.changePasswordStatus == ChangePasswordStatuses.success &&
+            context.router.current.name != SettingsRoute.name) {
           context.router.replace(const SettingsRoute());
         }
 

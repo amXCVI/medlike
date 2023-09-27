@@ -4,13 +4,13 @@ import 'package:medlike/widgets/profiles_list/profile_item.dart';
 import 'package:medlike/widgets/scrollbar/default_scrollbar.dart';
 
 class ProfilesList extends StatefulWidget {
-  const ProfilesList({
-    Key? key,
-    required this.profilesList,
-    this.selectedUserId,
-    this.onRefreshData,
-    required this.handleTapOnUserProfile
-  }) : super(key: key);
+  const ProfilesList(
+      {Key? key,
+      required this.profilesList,
+      this.selectedUserId,
+      this.onRefreshData,
+      required this.handleTapOnUserProfile})
+      : super(key: key);
 
   final List<UserProfile> profilesList;
   final String? selectedUserId;
@@ -23,8 +23,12 @@ class ProfilesList extends StatefulWidget {
 
 class _ProfilesListState extends State<ProfilesList> {
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     /// TODO: переделать в Stateless
     return RefreshIndicator(
       onRefresh: () => widget.onRefreshData(isRefresh: true),

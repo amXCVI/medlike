@@ -11,8 +11,6 @@ import 'package:medlike/modules/appointments/cabinet/cabinet_find_item.dart';
 import 'package:medlike/modules/appointments/feedback/visibility_list.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/themes/colors.dart';
-import 'package:medlike/utils/helpers/timestamp_converter.dart';
-import 'package:medlike/utils/helpers/timestamp_helper.dart';
 import 'package:medlike/widgets/apply_or_cancell_appointment/apply_or_cancell_appointment.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/widgets/next_appointment_time_chip/next_appointment_time_chip.dart';
@@ -84,33 +82,12 @@ class AppointmentDetailPage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BlocBuilder<AppointmentsCubit, AppointmentsState>(
-                        builder: (context, state) {
-                      if (state.getAppointmentStatus !=
-                          GetAppointmentStatuses.success) {
-                        return Expanded(
-                          child: SkeletonParagraph(
-                            style: SkeletonParagraphStyle(
-                                lines: 1,
-                                lineStyle: SkeletonLineStyle(
-                                  randomLength: true,
-                                  height: 20,
-                                  borderRadius: BorderRadius.circular(8),
-                                )),
-                          ),
-                        );
-                      } else {
-                        return NextAppointmentTimeChip(
-                          appointmentDateTime: const TimestampConverter()
-                              .fromJson(state
-                                  .selectedAppointment!.appointmentDateTime),
-                          timeZoneOffset: getTimezoneOffset(
-                              state.selectedAppointment!.appointmentDateTime),
-                          isBottomLabel: true,
-                          isFullDateTime: true,
-                        );
-                      }
-                    }),
+                    NextAppointmentTimeChip(
+                      appointmentDateTime: appointmentItem.appointmentDateTime,
+                      timeZoneOffset: appointmentItem.timeZoneOffset,
+                      isBottomLabel: true,
+                      isFullDateTime: true,
+                    ),
                     const SizedBox(width: 8),
                     RichText(
                       text: WidgetSpan(
@@ -153,18 +130,13 @@ class AppointmentDetailPage extends StatelessWidget {
                       ),
                     )
                   : const SizedBox(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Услуга',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(fontWeight: FontWeight.w700),
-                ),
-              ),
               DoctorAppointmentDetailInfo(
                 doctorInfo: appointmentItem.doctorInfo,
+                appointmentReview: appointmentItem.review,
+              ),
+              ResearchesAppointmentDetailInfo(
+                appointmentItem: appointmentItem,
+                serviceName: serviceName,
               ),
               (appointmentItem.paymentStatus == 3 ||
                       appointmentItem.paymentStatus == 6)

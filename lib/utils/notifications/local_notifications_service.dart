@@ -12,14 +12,15 @@ class LocalNotificationService {
   static Future<PermissionStatus> requestPermission() async {
     const permission = Permission.notification;
     final status = await permission.status;
-    if (status.isGranted) {
+    final storageStatus = await Permission.storage.status;
+    if (status.isGranted && storageStatus.isGranted) {
       print('User granted this permission before');
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       print('!!!!!!!!! FCM Token: $fcmToken');
       return status;
     } else {
       final before = await permission.shouldShowRequestRationale;
-      final rs = await [permission, Permission.photos].request();
+      final rs = await [permission, Permission.storage].request();
       final after = await permission.shouldShowRequestRationale;
 
       if (rs[0]?.isGranted == true) {
@@ -40,15 +41,16 @@ class LocalNotificationService {
   }
 
   /// TODO: понять где вызывать
-  static Future<void> initializeSelect(Function(NotificationResponse notificationResponse) onSelectNotification) async {
+  static Future<void> initializeSelect(
+      Function(NotificationResponse notificationResponse)
+          onSelectNotification) async {
     final InitializationSettings _initializationSettings =
         InitializationSettings(
       android: const AndroidInitializationSettings("@drawable/ic_notification"),
       iOS: DarwinInitializationSettings(
-        onDidReceiveLocalNotification: ((id, title, body, payload) {
-          Sentry.captureMessage("$id $title $body $payload");
-        })
-      ),
+          onDidReceiveLocalNotification: ((id, title, body, payload) {
+        Sentry.captureMessage("$id $title $body $payload");
+      })),
     );
 
     _notificationsPlugin.initialize(
@@ -57,9 +59,9 @@ class LocalNotificationService {
   }
 
   static Future<void> checkNotificationClicked(
-    Function(NotificationResponse notificationResponse) onSelectNotification
-  ) async {
-     Sentry.captureMessage("NotificationService.checkNotificationClicked()");
+      Function(NotificationResponse notificationResponse)
+          onSelectNotification) async {
+    Sentry.captureMessage("NotificationService.checkNotificationClicked()");
     NotificationAppLaunchDetails? details =
         await _notificationsPlugin.getNotificationAppLaunchDetails();
 
@@ -85,15 +87,12 @@ class LocalNotificationService {
       );
 
       /// pop up show
-      await _notificationsPlugin.show(
-        id,
-        message.data['title'],
-        message.data['message'],
-        notificationDetails,
-        payload: jsonEncode(message.data)
-      );
+      await _notificationsPlugin.show(id, message.data['title'],
+          message.data['message'], notificationDetails,
+          payload: jsonEncode(message.data));
     } on Exception catch (e) {
-      Sentry.captureMessage("${message.data['title']} error: $e ${StackTrace.current}");
+      Sentry.captureMessage(
+          "${message.data['title']} error: $e ${StackTrace.current}");
       Sentry.captureException(e, stackTrace: StackTrace.current);
     }
   }

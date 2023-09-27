@@ -170,6 +170,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 );
         }),
       ),
+      needToResize: false,
       child: SingleChildScrollView(
         child: FeedbackForm(
           ratingValue: rating,

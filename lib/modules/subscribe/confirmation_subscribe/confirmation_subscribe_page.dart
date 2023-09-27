@@ -63,21 +63,24 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
       }
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        context.read<SubscribeCubit>().unlockCell(userId: widget.userId);
-        Navigator.pop(context);
-        return false;
-      },
-      child: BlocBuilder<SubscribeCubit, SubscribeState>(
-        builder: (context, state) {
-          bool isDisabledButton = !isCheckedAgreements ||
-              state.getAppointmentInfoStatus ==
-                  GetAppointmentInfoStatuses.loading ||
-              state.creatingAppointmentStatus ==
-                  CreatingAppointmentStatuses.loading ||
-              state.registerOrderStatus == RegisterOrderStatuses.loading;
-          return DefaultScaffold(
+    return BlocBuilder<SubscribeCubit, SubscribeState>(
+      builder: (context, state) {
+        bool isDisabledButton = !isCheckedAgreements ||
+            state.getAppointmentInfoStatus ==
+                GetAppointmentInfoStatuses.loading ||
+            state.creatingAppointmentStatus ==
+                CreatingAppointmentStatuses.loading ||
+            state.registerOrderStatus == RegisterOrderStatuses.loading;
+        return WillPopScope(
+          onWillPop: () async {
+            context.read<SubscribeCubit>().unlockCell(userId: widget.userId);
+            if (state.isAnyDoctor == true) {
+              context.read<SubscribeCubit>().clearSelectedDoctor();
+            }
+            Navigator.pop(context);
+            return false;
+          },
+          child: DefaultScaffold(
             appBarTitle: state.getAppointmentInfoStatus ==
                         GetAppointmentInfoStatuses.success &&
                     state.appointmentInfoData?.serviceName != null
@@ -141,9 +144,9 @@ class _ConfirmationSubscribePageState extends State<ConfirmationSubscribePage> {
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

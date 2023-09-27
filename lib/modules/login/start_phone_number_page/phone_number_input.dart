@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
+import 'package:medlike/modules/login/auth_skeletons/default_auth_skeleton.dart';
 import 'package:medlike/themes/colors.dart';
 import 'package:medlike/utils/validators/phone_validator.dart';
 import 'package:tap_canvas/tap_canvas.dart';
 
 class PhoneNumberInput extends StatefulWidget {
-  const PhoneNumberInput({
-    Key? key,
-  }) : super(key: key);
+  const PhoneNumberInput({Key? key}) : super(key: key);
 
   @override
   State<PhoneNumberInput> createState() => _PhoneNumberInputState();
@@ -16,6 +15,7 @@ class PhoneNumberInput extends StatefulWidget {
 
 class _PhoneNumberInputState extends State<PhoneNumberInput> {
   final FocusNode _focus = FocusNode();
+
   String? error;
 
   late final TextEditingController _controller =
@@ -39,11 +39,11 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
       return;
     }
 
-    final response = await context.read<UserCubit>().checkUserAccount(
-      phoneNumber: phoneString
-    );
+    final response = await context
+        .read<UserCubit>()
+        .checkUserAccount(phoneNumber: phoneString);
 
-    if(response.message != null) {
+    if (response.message != null) {
       setState(() {
         error = response.message;
       });
@@ -63,7 +63,7 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
   }
 
   void _onFocus() {
-    if(error != null) {
+    if (error != null) {
       setState(() {
         error = null;
       });
@@ -86,9 +86,9 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
         return prev.checkUserAccountStatus != cur.checkUserAccountStatus;
       },
       listener: (context, state) {
-        if(state.checkUserAccountStatus == CheckUserAccountStatuses.failed
-          || state.checkUserAccountStatus == CheckUserAccountStatuses.continued
-        ) {
+        if (state.checkUserAccountStatus == CheckUserAccountStatuses.failed ||
+            state.checkUserAccountStatus ==
+                CheckUserAccountStatuses.continued) {
           if (!mounted) {
             return;
           }
@@ -116,9 +116,11 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
                 inputFormatters: [phoneMaskFormatter],
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: error == null 
-                      ? const BorderSide(color: AppColors.lightText, width: 1.0)
-                      : const BorderSide(color: AppColors.mainError, width: 1.0),
+                    borderSide: error == null
+                        ? const BorderSide(
+                            color: AppColors.lightText, width: 1.0)
+                        : const BorderSide(
+                            color: AppColors.mainError, width: 1.0),
                   ),
                   hintText: '+7 (XXX) XXX XX XX',
                   hintStyle: Theme.of(context)
@@ -138,14 +140,15 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
               ),
             ),
           ),
-          if(error != null) Text(
-            error!,
-            style: Theme.of(context)
-                        .textTheme
-                        .labelSmall
-                        ?.copyWith(color: AppColors.mainError),
-            textAlign: TextAlign.center,
-          ),
+          if (error != null)
+            Text(
+              error!,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall
+                  ?.copyWith(color: AppColors.mainError),
+              textAlign: TextAlign.center,
+            ),
           const SizedBox(height: 32),
         ],
       ),

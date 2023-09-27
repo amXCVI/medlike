@@ -11,6 +11,7 @@ class HealthFiltersHelper {
     final json = await UserSecureStorage.getField(AppConstants.healthFilters) ?? "{}";
     final filters = jsonDecode(json) as Map<String, dynamic>;
     final result = filters.map((key, value) => MapEntry(key, List<String>.from(value)));
+    //TODO: copy whole filter list if no filter was uploaded before
     return result;
   }
 

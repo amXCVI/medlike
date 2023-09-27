@@ -82,6 +82,9 @@ class AppColors {
 
   static const Color lightBgAlpha = Color.fromRGBO(255, 255, 255, 0.5);
 
+  // Цвет для подписей в разделе Мои документы
+  static const Color signedBlueColor = Color.fromRGBO(13, 76, 211, 1);
+
   static const Color mainAlarm = Color.fromRGBO(255, 165, 82, 1);
 
   static const Map<int, Color> mainBrand = {

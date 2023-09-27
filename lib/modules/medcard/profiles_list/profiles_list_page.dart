@@ -18,13 +18,8 @@ class MedcardProfilesListPage extends StatelessWidget {
 
     void _handleTapOnUserProfile(String userId, bool isChildren) {
       context.read<UserCubit>().setSelectedUserId(userId);
-
-      if (isChildren) {
-        context.router.push(MedcardRoute(userId: userId, isChildrenPage: true));
-      } else {
-        context.router
-            .replace(MedcardRoute(userId: userId, isChildrenPage: false));
-      }
+      context.router
+          .replace(MedcardRoute(userId: userId, isChildrenPage: false));
     }
 
     _onRefreshData();

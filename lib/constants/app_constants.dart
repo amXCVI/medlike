@@ -1,3 +1,5 @@
+import 'package:medlike/utils/api/api_constants.dart';
+
 class AppConstants {
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
@@ -79,15 +81,14 @@ class AppConstants {
   // Меняется в интерсепторе, проверяется в Guards
   static const String isActualAppVersion = 'true';
 
-  static const String esiaOAuthPageURL =
-      'https://tgn.medotrade.ru:23340/MedLike/Env04/esia/login';
-
   // Ширина открытого и закрытого меню для веб-проектов
   static const double webMenuOpenedWidth = 300;
   static const double webMenuClosedWidth = 100;
 
   // Высота аппбара для веб-проектов
   static const double webAppBarHeight = 80;
+
+  static String esiaOAuthPageURL = '${ApiConstants.baseUrl}/esia/login';
 }
 
 // Способы авторизации
