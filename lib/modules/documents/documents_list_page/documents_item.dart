@@ -91,54 +91,54 @@ class DocumentItem extends StatelessWidget {
                       children: [
                         documentItem.updatedAt != null
                             ? RichText(
-                          text: WidgetSpan(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.circleBgFirst,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/icons/appointments/clock.svg'),
-                                  const SizedBox(width: 8.0),
-                                  Text(DateFormat('HH:mm dd.MM.yy')
-                                      .format(getLastDate(
-                                    dateOne: documentItem.updatedAt,
-                                    dateTwo:
-                                    documentItem.signedByEmployeeAt,
-                                    dateThree:
-                                    documentItem.signedByPatientAt,
-                                  ))),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
+                                text: WidgetSpan(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.circleBgFirst,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/appointments/clock.svg'),
+                                        const SizedBox(width: 8.0),
+                                        Text(DateFormat('HH:mm dd.MM.yy')
+                                            .format(getLastDate(
+                                          dateOne: documentItem.updatedAt,
+                                          dateTwo:
+                                              documentItem.signedByEmployeeAt,
+                                          dateThree:
+                                              documentItem.signedByPatientAt,
+                                        ))),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
                             : const SizedBox(),
                         const SizedBox(width: 8.0),
                         documentItem.patient != null
                             ? RichText(
-                          text: WidgetSpan(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.circleBgFirst,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/icons/appointments/profile.svg'),
-                                  const SizedBox(width: 8.0),
-                                  Text(
-                                      '${documentItem.patient!.firstname} ${documentItem.patient!.lastname[0]}.'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
+                                text: WidgetSpan(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.circleBgFirst,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/appointments/profile.svg'),
+                                        const SizedBox(width: 8.0),
+                                        Text(
+                                            '${documentItem.patient!.firstname} ${documentItem.patient!.lastname[0]}.'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
                             : const SizedBox(),
                       ],
                     ),

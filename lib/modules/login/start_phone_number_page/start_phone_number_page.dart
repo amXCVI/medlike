@@ -130,7 +130,7 @@ class _StartPhoneNumberPageState extends State<StartPhoneNumberPage> {
               bottomNavigationBar: const LoginPageBottomNavigationBar(),
               child: BlocBuilder<UserCubit, UserState>(
                   buildWhen: (previous, current) =>
-                  current.checkUserAccountStatus !=
+                      current.checkUserAccountStatus !=
                       previous.checkUserAccountStatus,
                   builder: (context, state) {
                     return Stack(
