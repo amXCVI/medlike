@@ -145,6 +145,7 @@ class _WebAuthPageState extends State<WebAuthPage> {
       appBarTitle: AppConstants.appName,
       isChildrenPage: false,
       isAuth: false,
+      isBottomIndent: false,
       onPressedAppLogo: () {},
       actions: const [UnauthSupportButton()],
       child: WebAuthPagesBodyContainer(

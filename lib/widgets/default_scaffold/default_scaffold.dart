@@ -28,6 +28,7 @@ class DefaultScaffold extends StatefulWidget {
     this.widgetOverBodyGlobalKey,
     this.needToResize = true,
     this.isAuth = true,
+    this.isBottomIndent = true,
   }) : super(key: key);
   final bool needToResize;
   final Widget child;
@@ -46,6 +47,8 @@ class DefaultScaffold extends StatefulWidget {
   final GlobalKey? widgetOverBodyGlobalKey;
   final bool
       isAuth; // Использую для веб. Отображает, страница с авторизацией или нет
+  final bool
+      isBottomIndent; // использую для веб. Для страниц с авторизацией и action button задает отступ контента снизу
 
   @override
   State<DefaultScaffold> createState() => _DefaultScaffoldState();
@@ -82,6 +85,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     if (ProjectDeterminer.getProjectType() == Projects.WEB) {
       return DefaultWebScaffold(
         isAuth: widget.isAuth,
+        isBottomIndent: widget.isBottomIndent,
         actionButton: widget.actionButton,
         child: widget.child,
       );

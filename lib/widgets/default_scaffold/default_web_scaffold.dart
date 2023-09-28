@@ -13,11 +13,13 @@ class DefaultWebScaffold extends StatelessWidget {
     required this.child,
     required this.isAuth,
     this.actionButton,
+    this.isBottomIndent = true,
   }) : super(key: key);
 
   final Widget child;
   final bool isAuth;
   final Widget? actionButton;
+  final bool isBottomIndent;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,8 @@ class DefaultWebScaffold extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(child: child),
-                SizedBox(height: actionButton != null ? 48 : 0)
+                SizedBox(
+                    height: actionButton != null && isBottomIndent ? 48 : 0)
               ],
             ),
           ),
