@@ -28,7 +28,7 @@ class WebAuthPagesBodyContainer extends StatelessWidget {
                     ),
                     Image.network(
                       'assets/assets/images/full_logo.png',
-                      height: MediaQuery.of(context).size.height,
+                      height: 250,
                     ),
                   ],
                 ),
