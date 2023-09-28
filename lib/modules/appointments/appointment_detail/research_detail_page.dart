@@ -37,7 +37,7 @@ class ResearchesAppointmentDetailInfo extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       radius: 20,

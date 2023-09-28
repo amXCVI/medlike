@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medlike/domain/app/cubit/appointments/appointments_cubit.dart';
 import 'package:medlike/domain/app/cubit/subscribe/subscribe_cubit.dart';
 import 'package:medlike/navigation/router.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
+import 'package:medlike/widgets/dotted_loader/dotted_loader.dart';
 import 'package:medlike/widgets/fluttertoast/toast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -20,6 +22,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   late WebViewController webViewController;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +42,58 @@ class _PaymentPageState extends State<PaymentPage> {
             return false;
           },
           child: DefaultScaffold(
-            appBarTitle: 'Оплата',
-            bottomNavigationBar: const SizedBox(),
-            child: WebView(
-              onWebViewCreated: (WebViewController controller) {
-                setState(() {
-                  webViewController = controller;
-                });
-              },
-              initialUrl: state.paymentUrl,
-              javascriptMode: JavascriptMode.unrestricted,
-              navigationDelegate: (NavigationRequest request) {
-                if (request.url.contains("result=true")) {
-                  context.read<SubscribeCubit>().resetSubscribeStoryState();
-                  context.router.push(AppointmentsRoute(isRefresh: true));
-                  return NavigationDecision.prevent;
-                }
-                if (request.url.contains("result=false")) {
-                  context.router.pop();
-                  AppToast.showAppToast(
-                      msg:
-                          "Ошибка оплаты. Попробуйте оплатить прием позднее или наличными");
-                  return NavigationDecision.prevent;
-                }
-                return NavigationDecision.navigate;
-              },
-            ),
-          ),
+              appBarTitle: 'Оплата',
+              bottomNavigationBar: const SizedBox(),
+              child: Stack(
+                children: [
+                  WebView(
+                    onWebViewCreated: (WebViewController controller) {
+                      setState(() {
+                        webViewController = controller;
+                      });
+                    },
+                    onPageStarted: (url) {
+                      setState(() {
+                        loading = true;
+                      });
+                    },
+                    onPageFinished: (url) {
+                      setState(() {
+                        loading = false;
+                      });
+                    },
+                    initialUrl: state.paymentUrl,
+                    javascriptMode: JavascriptMode.unrestricted,
+                    navigationDelegate: (NavigationRequest request) {
+                      if (request.url.contains("result=true")) {
+                        context
+                            .read<SubscribeCubit>()
+                            .resetSubscribeStoryState();
+                        context.router.push(AppointmentsRoute(isRefresh: true));
+                        return NavigationDecision.prevent;
+                      }
+                      if (request.url.contains("result=false")) {
+                        context.router.pop();
+                        AppToast.showAppToast(
+                            msg:
+                                "Ошибка оплаты. Попробуйте оплатить прием позднее или наличными");
+                        return NavigationDecision.prevent;
+                      }
+                      return NavigationDecision.navigate;
+                    },
+                  ),
+                  !loading
+                      ? const SizedBox()
+                      : Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          decoration: const BoxDecoration(),
+                          child: const CircularLoader(
+                            radius: 5,
+                          ),
+                        )
+                ],
+              )),
         );
       },
     );

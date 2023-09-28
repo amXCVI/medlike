@@ -6,6 +6,7 @@ import 'package:medlike/domain/app/cubit/documents/documents_cubit.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_list.dart';
 import 'package:medlike/modules/documents/documents_list_page/documents_list_filter.dart';
 import 'package:medlike/modules/documents/documents_list_page/selected_filters_widget.dart';
+import 'package:medlike/modules/medcard/files/not_found_user_files.dart';
 import 'package:medlike/navigation/router.dart';
 import 'package:medlike/widgets/app_bar/medcard_app_bar/medcard_app_bar.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
@@ -99,7 +100,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
           builder: (context, state) {
             if (state.getDocumentsListStatus ==
                 GetDocumentsListStatuses.failed) {
-              return const Text('');
+              return const NotFoundUserFiles();
             } else if (state.getDocumentsListStatus ==
                 GetDocumentsListStatuses.success) {
               return DocumentsList(

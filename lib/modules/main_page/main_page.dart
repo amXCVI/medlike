@@ -14,6 +14,7 @@ import 'package:medlike/modules/main_page/slider/slider_widget.dart';
 import 'package:medlike/modules/settings/exit_app/exit_app_dialog.dart';
 import 'package:medlike/navigation/routes_names_map.dart';
 import 'package:medlike/themes/colors.dart';
+import 'package:medlike/widgets/circular_loader/circular_loader.dart';
 import 'package:medlike/widgets/default_scaffold/default_scaffold.dart';
 import 'package:medlike/modules/main_page/barcode/barcode_button.dart';
 
@@ -59,13 +60,12 @@ class _MainPageState extends State<MainPage> {
       child: FutureBuilder(
         future: loadData(),
         builder: (context, snapshot) => !snapshot.hasData
-            ? Scaffold(
+            ? const Scaffold(
                 backgroundColor: AppColors.mainAppBackground,
                 body: Center(
-                  child: Lottie.asset(
-                      "assets/animations/pin_loading_lottie.json",
-                      repeat: true,
-                      alignment: AlignmentDirectional.center),
+                  child: CircularLoader(
+                    radius: 70,
+                  ),
                 ),
               )
             : DefaultScaffold(
