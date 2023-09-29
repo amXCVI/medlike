@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medlike/domain/app/cubit/user/user_cubit.dart';
@@ -39,7 +40,7 @@ class SettingsList extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const BiometricAuthentication(),
+          kIsWeb ? const SizedBox() : const BiometricAuthentication(),
           SettingsListItem(
             title: 'Сменить пароль',
             iconSrc: 'assets/icons/settings/ic_password_outline.svg',
@@ -47,13 +48,15 @@ class SettingsList extends StatelessWidget {
             rightActionWidget:
                 SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
           ),
-          SettingsListItem(
-            title: 'Сменить пин-код',
-            iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
-            onTap: handleChangePinCode,
-            rightActionWidget:
-                SvgPicture.asset('assets/icons/subscribe/right_arrow_icon.svg'),
-          ),
+          kIsWeb
+              ? const SizedBox()
+              : SettingsListItem(
+                  title: 'Сменить пин-код',
+                  iconSrc: 'assets/icons/settings/ic_pin_outline.svg',
+                  onTap: handleChangePinCode,
+                  rightActionWidget: SvgPicture.asset(
+                      'assets/icons/subscribe/right_arrow_icon.svg'),
+                ),
           SettingsListItem(
             title: 'Тех. поддержка',
             subtitle: 'Обратная связь',
@@ -88,7 +91,7 @@ class SettingsList extends StatelessWidget {
             },
           ),
           SettingsListItem(
-            title: 'Выйти из приложения',
+            title: kIsWeb ? "Выйти из аккаунта" : 'Выйти из приложения',
             iconSrc: 'assets/icons/settings/ic_exit_outline.svg',
             onTap: () {
               showDialog<void>(
